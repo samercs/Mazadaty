@@ -1,6 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Mzayad.Models
@@ -18,9 +21,9 @@ namespace Mzayad.Models
         //    get { return DateTimeFormatter.ToLocalTime(CreatedUtc); }
         //}
 
-        //public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
-        //{
-        //    return await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-        //}
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
+        {
+            return await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+        }
     }
 }

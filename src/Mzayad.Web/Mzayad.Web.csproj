@@ -165,6 +165,10 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Core\Identity\ApplicationRoleManager.cs" />
+    <Compile Include="Core\Identity\ApplicationSignInManager.cs" />
+    <Compile Include="Core\Identity\ApplicationUserManager.cs" />
+    <Compile Include="Core\Identity\Role.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -247,6 +251,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mzayad.Data\Mzayad.Data.csproj">
+      <Project>{e723590f-d2bf-411c-a710-9677e2629ffd}</Project>
+      <Name>Mzayad.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mzayad.Models\Mzayad.Models.csproj">
+      <Project>{71f89204-ebb2-438a-b56f-c0521c0bbe3c}</Project>
+      <Name>Mzayad.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

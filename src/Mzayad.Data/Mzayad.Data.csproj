@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{71F89204-EBB2-438A-B56F-C0521C0BBE3C}</ProjectGuid>
+    <ProjectGuid>{E723590F-D2BF-411C-A710-9677E2629FFD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mzayad.Models</RootNamespace>
-    <AssemblyName>Mzayad.Models</AssemblyName>
+    <RootNamespace>Mzayad.Data</RootNamespace>
+    <AssemblyName>Mzayad.Data</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
@@ -44,19 +44,27 @@
     <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
       <HintPath>..\..\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="OrangeJetpack.Base.Data">
+      <HintPath>..\..\packages\OrangeJetpack.Base.Data.0.1.0\lib\OrangeJetpack.Base.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationUser.cs" />
-    <Compile Include="ModelBase.cs" />
+    <Compile Include="DataContext.cs" />
+    <Compile Include="DataContextFactory.cs" />
+    <Compile Include="IDataContext.cs" />
+    <Compile Include="IDataContextFactory.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mzayad.Models\Mzayad.Models.csproj">
+      <Project>{71f89204-ebb2-438a-b56f-c0521c0bbe3c}</Project>
+      <Name>Mzayad.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
