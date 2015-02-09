@@ -1,9 +1,11 @@
-﻿using System.Reflection;
+﻿using System.Configuration;
+using System.Reflection;
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Mzayad.Data;
 using Mzayad.Web.Core.Services;
+using OrangeJetpack.Services.Client.Messaging;
 
 namespace Mzayad.Web
 {
@@ -20,13 +22,8 @@ namespace Mzayad.Web
             builder.RegisterType<AuthService>().As<IAuthService>();
             builder.RegisterType<CookieService>().As<ICookieService>();
             
-            //builder.Register<IAppSettings>(c => new AppSettings(ConfigurationManager.AppSettings));
-
-            //builder.Register<IMessageService>(c =>
-            //{
-            //    var appSettings = c.Resolve<IAppSettings>();
-            //    return new EmailService(appSettings.EmailSettings);
-            //});
+            builder.Register<IAppSettings>(c => new AppSettings(ConfigurationManager.AppSettings));
+            builder.Register<IMessageService>(c => new EmailService(c.Resolve<IAppSettings>().EmailSettings));
 
             return Container(builder);
         }

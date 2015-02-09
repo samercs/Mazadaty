@@ -1,5 +1,5 @@
-﻿using System.Web.Mvc;
-using Mzayad.Web.Core.Services;
+﻿using Mzayad.Web.Core.Services;
+using System.Web.Mvc;
 
 namespace Mzayad.Web.Controllers
 {
@@ -10,7 +10,7 @@ namespace Mzayad.Web.Controllers
         }
 
         public ActionResult Index()
-        {
+        {        
             return View();
         }
     }
