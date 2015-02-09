@@ -39,7 +39,7 @@ namespace Mzayad.Web.Core.Services
             return _httpContext.Request.IsAuthenticated;
         }
 
-        public string GetCurrentUserId()
+        public string CurrentUserId()
         {
             if (!IsAuthenticated())
             {
@@ -49,7 +49,7 @@ namespace Mzayad.Web.Core.Services
             return _httpContext.User.Identity.GetUserId();
         }
 
-        public string GetAnonymousId()
+        public string AnonymousId()
         {
             return _httpContext.Request.AnonymousID;
         }
@@ -73,14 +73,14 @@ namespace Mzayad.Web.Core.Services
             _authenticationManager.SignOut();
         }
 
-        public async Task<ApplicationUser> GetCurrentUser()
+        public async Task<ApplicationUser> CurrentUser()
         {
             if (!IsAuthenticated())
             {
                 return null;
             }
 
-            return await _userManager.FindByIdAsync(GetCurrentUserId());
+            return await _userManager.FindByIdAsync(CurrentUserId());
         }
 
         public async Task<ApplicationUser> GetUserByLogin(string userName, string password)
@@ -194,7 +194,7 @@ namespace Mzayad.Web.Core.Services
                 return false;
             }
 
-            var user = await GetCurrentUser();
+            var user = await CurrentUser();
             return await UserIsInRole(user, role);
         }
 
