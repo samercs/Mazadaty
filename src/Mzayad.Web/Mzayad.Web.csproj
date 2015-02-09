@@ -172,10 +172,17 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Core\Configuration\CookieKeys.cs" />
     <Compile Include="Core\Identity\ApplicationRoleManager.cs" />
     <Compile Include="Core\Identity\ApplicationSignInManager.cs" />
     <Compile Include="Core\Identity\ApplicationUserManager.cs" />
     <Compile Include="Core\Identity\Role.cs" />
+    <Compile Include="Core\Services\AuthService.cs" />
+    <Compile Include="Core\Services\ControllerServices.cs" />
+    <Compile Include="Core\Services\CookieService.cs" />
+    <Compile Include="Core\Services\IAuthService.cs" />
+    <Compile Include="Core\Services\IControllerServices.cs" />
+    <Compile Include="Core\Services\ICookieService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -253,7 +260,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Core\Services\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Account\" />
   </ItemGroup>
