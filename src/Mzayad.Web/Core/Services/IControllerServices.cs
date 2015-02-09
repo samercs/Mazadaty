@@ -1,4 +1,5 @@
 ﻿using Mzayad.Data;
+using OrangeJetpack.Services.Client.Messaging;
 
 namespace Mzayad.Web.Core.Services
 {
@@ -8,5 +9,6 @@ namespace Mzayad.Web.Core.Services
         IAppSettings AppSettings { get; }
         IAuthService AuthService { get; }
         ICookieService CookieService { get; }
+        IMessageService MessageService { get; }
     }
 }
