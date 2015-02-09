@@ -13,6 +13,7 @@ namespace Mzayad.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            AutofacConfig.RegisterAll();
         }
 
         protected void Application_PreSendRequestHeaders()
