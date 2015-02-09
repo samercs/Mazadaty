@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Configuration;
+using System.Reflection;
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
@@ -20,7 +21,7 @@ namespace Mzayad.Web
             builder.RegisterType<AuthService>().As<IAuthService>();
             builder.RegisterType<CookieService>().As<ICookieService>();
             
-            //builder.Register<IAppSettings>(c => new AppSettings(ConfigurationManager.AppSettings));
+            builder.Register<IAppSettings>(c => new AppSettings(ConfigurationManager.AppSettings));
 
             //builder.Register<IMessageService>(c =>
             //{

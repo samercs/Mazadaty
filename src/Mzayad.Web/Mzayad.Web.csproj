@@ -177,9 +177,11 @@
     <Compile Include="Core\Identity\ApplicationSignInManager.cs" />
     <Compile Include="Core\Identity\ApplicationUserManager.cs" />
     <Compile Include="Core\Identity\Role.cs" />
+    <Compile Include="Core\Services\AppSettings.cs" />
     <Compile Include="Core\Services\AuthService.cs" />
     <Compile Include="Core\Services\ControllerServices.cs" />
     <Compile Include="Core\Services\CookieService.cs" />
+    <Compile Include="Core\Services\IAppSettings.cs" />
     <Compile Include="Core\Services\IAuthService.cs" />
     <Compile Include="Core\Services\IControllerServices.cs" />
     <Compile Include="Core\Services\ICookieService.cs" />
