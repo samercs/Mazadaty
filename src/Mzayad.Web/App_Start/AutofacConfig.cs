@@ -2,6 +2,8 @@
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
+using Mzayad.Data;
+using Mzayad.Web.Core.Services;
 
 namespace Mzayad.Web
 {
@@ -10,17 +12,14 @@ namespace Mzayad.Web
         public static IContainer RegisterAll()
         {
             var builder = new ContainerBuilder();
-            //builder.RegisterModule(new AutofacWebTypesModule());
+            builder.RegisterModule(new AutofacWebTypesModule());
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
 
-            //builder.RegisterType<DataContextFactory>().As<IDataContextFactory>();
-            //builder.RegisterType<AzureBlobService>().As<IStorageService>();
-            //builder.RegisterType<ElmahErrorLogger>().As<IErrorLogger>();
-            //builder.RegisterType<AuthService>().As<IAuthService>();
-            //builder.RegisterType<HttpContextService>().As<IHttpContextService>();
-            //builder.RegisterType<GeolocationService>().As<IGeolocationService>();
-            //builder.RegisterType<CookieService>().As<ICookieService>().InstancePerRequest();
-            //builder.RegisterType<ControllerServices>().As<IControllerServices>().InstancePerRequest();
+            builder.RegisterType<ControllerServices>().As<IControllerServices>();
+            builder.RegisterType<DataContextFactory>().As<IDataContextFactory>();
+            builder.RegisterType<AuthService>().As<IAuthService>();
+            builder.RegisterType<CookieService>().As<ICookieService>();
+            
             //builder.Register<IAppSettings>(c => new AppSettings(ConfigurationManager.AppSettings));
 
             //builder.Register<IMessageService>(c =>
@@ -28,8 +27,6 @@ namespace Mzayad.Web
             //    var appSettings = c.Resolve<IAppSettings>();
             //    return new EmailService(appSettings.EmailSettings);
             //});
-
-
 
             return Container(builder);
         }
