@@ -9,9 +9,19 @@ namespace Mzayad.Web.Controllers
         {
         }
 
-        public ActionResult Index()
-        {        
+        public ActionResult Index(string languageCode)
+        {
+            if (languageCode == null)
+            {
+                return RedirectToAction("Index", new { LanguageCode });
+            }
+
             return View();
+        }
+
+        public ActionResult About()
+        {
+            return Content(LanguageCode);
         }
     }
 }

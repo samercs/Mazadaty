@@ -186,6 +186,7 @@
     <Compile Include="Core\Services\IAuthService.cs" />
     <Compile Include="Core\Services\IControllerServices.cs" />
     <Compile Include="Core\Services\ICookieService.cs" />
+    <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
