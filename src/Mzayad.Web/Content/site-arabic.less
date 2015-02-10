@@ -1,0 +1,96 @@
+﻿:lang(ar) {
+
+    body {
+        font-size: 1.6rem;
+    }
+
+    .nav {
+        padding-right: 0;
+    }
+
+    .navbar-brand {
+        float: right !important;
+    }
+
+    .navbar-right {
+        float: left !important;
+    }
+
+    .navbar-toggle {
+        float: left !important;
+    }
+
+    @media (min-width: 768px) {
+        
+        .navbar-brand {
+            margin-left: 0;
+            margin-right: -15px;
+        }
+
+        .navbar-right {
+            margin-right: 0;
+            margin-left: -15px;     
+        }
+
+        .navbar-header {
+            float: right !important;
+        }
+
+        .navbar-nav > li {
+            float: right;
+        }
+
+        .navbar-right .dropdown-menu {
+            right: auto;
+            left: 0;
+        }
+    }
+
+    .dropdown-menu {
+        text-align: right;
+    }
+
+    .fa-pad-left {
+        padding-left: 0;
+        padding-right: 4px;
+    }
+
+    .fa-pad-right {
+        padding-left: 4px;
+        padding-right: 0;
+    }
+
+    .fa-fw.fa-pad-right {
+        margin-left: 6px;
+        margin-right: 0;
+    }
+
+    .radio label, .checkbox label {
+        padding-right: 20px;
+        padding-left: 0;
+    }
+
+    .radio input[type="radio"], 
+    .radio-inline input[type="radio"], 
+    .checkbox input[type="checkbox"], 
+    .checkbox-inline input[type="checkbox"] {
+        margin-right: -20px;
+        margin-left: 0;
+    }
+
+    .close {
+        float: left;
+    }
+
+    .input-group-addon {
+        border: 1px solid #ccc;
+
+        &:first-child {       
+            border-left: 0;
+        }
+
+        &:last-child {
+            border-right: 0;
+        }
+    }
+}

@@ -197,6 +197,7 @@
     <Compile Include="Core\Services\IControllerServices.cs" />
     <Compile Include="Core\Services\ICookieService.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
+    <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -210,6 +211,12 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\site-arabic.css">
+      <DependentUpon>site-arabic.less</DependentUpon>
+    </Content>
+    <Content Include="Content\site-arabic.min.css">
+      <DependentUpon>site-arabic.css</DependentUpon>
+    </Content>
     <Content Include="Content\site-layout.css">
       <DependentUpon>site-layout.less</DependentUpon>
     </Content>
@@ -231,6 +238,10 @@
     <Content Include="Content\site-layout.less" />
     <Content Include="Content\site-layout.css.map">
       <DependentUpon>site-layout.css</DependentUpon>
+    </Content>
+    <Content Include="Content\site-arabic.less" />
+    <Content Include="Content\site-arabic.css.map">
+      <DependentUpon>site-arabic.css</DependentUpon>
     </Content>
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
@@ -271,11 +282,11 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\EmailTemplate.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\LocalizedContent.cshtml" />
     <Content Include="Views\Shared\_Layout_LanguageSelector.cshtml" />
+    <Content Include="Views\Shared\_Layout_UserMyAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

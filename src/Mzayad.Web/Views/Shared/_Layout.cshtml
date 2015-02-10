@@ -1,5 +1,6 @@
-﻿<!DOCTYPE html>
-<html>
+﻿@using Mzayad.Web.Extensions
+<!DOCTYPE html>
+<html lang="@Html.LanguageCode()" dir="@(Html.IsArabic() ? "rtl" : "ltr")">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,8 +21,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li>@Html.ActionLink(Global.Home, "Index", "Home")</li>
-
-                    @Html.Partial("_LoginPartial")
+                    @Html.Partial("_Layout_UserMyAccount")
                     @Html.Partial("_Layout_LanguageSelector")
                 </ul>
             </div>

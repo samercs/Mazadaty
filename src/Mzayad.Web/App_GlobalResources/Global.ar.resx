@@ -120,7 +120,19 @@
   <data name="ChangeLanguage" xml:space="preserve">
     <value>تغيير اللغة</value>
   </data>
+  <data name="HelloFirstName" xml:space="preserve">
+    <value>أهلاً {0}</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>الصفحة الرئيسية</value>
+  </data>
+  <data name="MyAccount" xml:space="preserve">
+    <value>حسابي</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>تسجيل الدخول</value>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>تسجيل الخروج</value>
   </data>
 </root>
