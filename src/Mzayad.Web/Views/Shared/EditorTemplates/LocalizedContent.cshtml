@@ -1,0 +1,81 @@
+﻿@using OrangeJetpack.Localization;
+
+@{
+    var localizedContents = new LocalizedContent[] { };
+    LocalizedContent.TryDeserialize(Model, out localizedContents);
+    var isRequired = ViewData.ModelMetadata.IsRequired;
+    var templateHint = ViewData.ModelMetadata.TemplateHint;
+    var propertyName = ViewData.ModelMetadata.PropertyName;
+}
+
+@functions
+{
+    private static TagBuilder GetTextTag(string templateHint, string value)
+    {
+        if (string.Equals(templateHint, "TextArea", StringComparison.OrdinalIgnoreCase))
+        {
+            return GetTextArea(value);
+        }
+        
+        return GetTextInput(value);
+    }
+
+    private static TagBuilder GetTextArea(string value)
+    {
+        var tagBuilder = new TagBuilder("textarea");
+        tagBuilder.SetInnerText(value);
+        return tagBuilder;
+    }
+
+    private static TagBuilder GetTextInput(string value)
+    {
+        var tagBuilder = new TagBuilder("input");
+        tagBuilder.MergeAttribute("type", "text");
+        tagBuilder.MergeAttribute("value", value);
+        return tagBuilder;
+    }
+}
+
+<ul class="localized-content list-unstyled" style="margin-bottom: 0">
+    @for (var i = 0; i < localizedContents.Length; i++)
+    {
+        var isPrimary = i == 0;
+        var localizedKey = localizedContents[i].Key;
+        var localizedValue = localizedContents[i].Value;
+        var inputIdPrefix = string.Format("{0}_{1}", propertyName, i);
+        var inputNamePrefix = string.Format("{0}[{1}]", propertyName, i);
+        <li>
+            <input type="hidden" name="@(inputNamePrefix).Key" value="@localizedKey" />
+            <div class="input-group">
+
+                @if (isPrimary) // add hidden input for "primary" aka first language
+                {
+                    <input type="hidden" name="@Html.NameForModel()" value="@localizedValue" @(isRequired ? "data-val=true data-val-required=true" : "") />
+                }
+
+                @{
+                    var tagBuilder = GetTextTag(templateHint, localizedValue);
+                    tagBuilder.AddCssClass("form-control localized-input");
+                    tagBuilder.MergeAttribute("id", inputIdPrefix + "_Value");
+                    tagBuilder.MergeAttribute("name", inputNamePrefix + ".Value");
+                    tagBuilder.MergeAttribute("data-language", localizedKey);
+
+                    if (isPrimary)
+                    {
+                        tagBuilder.MergeAttribute("data-primary", "true");
+
+                        if (isRequired)
+                        {
+                            tagBuilder.MergeAttribute("data-val", "true");
+                            tagBuilder.MergeAttribute("data-val-required", "true");
+                        }
+                    }
+                }
+
+                @Html.Raw(tagBuilder.ToString())
+
+                <span class="input-group-addon">@localizedKey</span>
+            </div>
+        </li>
+    }
+</ul>
