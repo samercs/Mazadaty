@@ -3,6 +3,7 @@ using System.Web.Mvc;
 
 namespace Mzayad.Web.Controllers
 {
+    [RoutePrefix("")]
     public class HomeController : ApplicationController
     {
         public HomeController(IControllerServices controllerServices) : base(controllerServices)
@@ -22,6 +23,13 @@ namespace Mzayad.Web.Controllers
         public ActionResult About()
         {
             return Content(LanguageCode);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        [Route("change-language")]
+        public ActionResult ChangeLanguage()
+        {
+            return Content("...");
         }
     }
 }
