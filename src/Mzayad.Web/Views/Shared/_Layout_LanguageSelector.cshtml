@@ -1,6 +1,7 @@
 ﻿@using System.Globalization
+@using Mzayad.Web.Extensions
 @{
-    var otherLanguage = CultureInfo.GetCultureInfo(ViewBag.LanguageCode == "en" ? "ar" : "ar");  
+    var otherLanguage = CultureInfo.GetCultureInfo(Html.LanguageCode() == "en" ? "ar" : "en");  
 }
 
 <li>
