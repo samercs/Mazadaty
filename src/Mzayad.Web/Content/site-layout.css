@@ -5,4 +5,9 @@
 .navbar-inverse .navbar-nav > li > a {
   color: white;
 }
+.navbar-nav .btn-link {
+  border: 0;
+  padding: 15px;
+  color: white !important;
+}
 /*# sourceMappingURL=site-layout.css.map */
