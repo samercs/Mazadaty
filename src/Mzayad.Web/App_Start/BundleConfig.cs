@@ -23,6 +23,7 @@ namespace Mzayad.Web
                 "~/content/font-awesome.css",
                 "~/content/site-forms.css",
                 "~/content/site-layout.css",
+                "~/content/site-arabic.css",
                 "~/content/site.css"));
         }
     }

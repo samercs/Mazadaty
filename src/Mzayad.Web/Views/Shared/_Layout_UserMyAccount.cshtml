@@ -1,0 +1,15 @@
+﻿@using Mzayad.Web.Extensions
+@if (Request.IsAuthenticated)
+{
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@string.Format(Global.HelloFirstName, User.Identity.GetDisplayName())<i class="fa fa-caret-down fa-pad-left"></i></a>
+        <ul class="dropdown-menu">
+            <li>@Html.ActionLink(Global.MyAccount, "MyAccount", "User", new { area = "" }, null)</li>
+            <li><a href="javascript:document.getElementById('navbar-signout').submit()">@Global.SignOut</a></li>
+        </ul>
+    </li>
+}
+else
+{
+    <li><a href="@Url.Action("SignIn", "Account")">@Global.MyAccount</a></li>
+}

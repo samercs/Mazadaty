@@ -1,0 +1,116 @@
+﻿@import url("variables");
+
+form section, section.form-section {
+    background: #F9F9FB;
+    
+    @media screen {
+        padding: 32px;
+    }
+
+    &:not(:last-child) {
+        margin-bottom: 32px;
+    }
+}
+
+.form-buttons {
+    margin-top: 15px;
+    padding: 32px 0 0 0;
+    background: none;
+    border-top: 1px solid @base;
+    text-align: right;
+}
+
+textarea {
+    resize: vertical;
+}
+
+input[type=number].no-spinner::-webkit-inner-spin-button, 
+input[type=number].no-spinner::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.form-control {
+    height: auto;
+    font-size: 1.4rem;
+}
+
+.form-control, .btn {
+    border-radius: 0;
+}
+
+.form-control-sm {
+    width: 75px !important;
+
+    @media @media-smallscreen {
+        width: 60px !important;
+    }
+}
+
+.form-control-md {
+    width: 125px !important;
+}
+
+.form-control-static:after {
+    content: '\0000a0' // add &nbsp; to prevent empty contents from collapsing
+}
+
+.form-readonly {
+    opacity: 0.5;
+}
+
+.form-group .form-control {
+    margin-bottom: 5px;
+}
+
+.input-group .form-control {
+    margin-bottom: 0;
+}
+
+.form-group .form-control:last-child {
+    margin-bottom: 0;
+}
+
+.btn {
+    outline: none !important;
+}
+
+.field-validation-error {
+    color: @danger;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error,
+textarea.input-validation-error {
+    border: 1px solid @danger;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: @danger;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.localized-content {
+    > li {
+        margin-bottom: 5px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    
+    .input-group-addon {
+        min-width: 50px;
+    }
+}
+

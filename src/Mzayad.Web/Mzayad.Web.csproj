@@ -164,11 +164,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_GlobalResources\Global.ar.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Global.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Global.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Global.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Core\Configuration\RouteInfo.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
@@ -186,6 +197,8 @@
     <Compile Include="Core\Services\IAuthService.cs" />
     <Compile Include="Core\Services\IControllerServices.cs" />
     <Compile Include="Core\Services\ICookieService.cs" />
+    <Compile Include="Extensions\HtmlExtensions.cs" />
+    <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -199,6 +212,18 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\site-arabic.css">
+      <DependentUpon>site-arabic.less</DependentUpon>
+    </Content>
+    <Content Include="Content\site-arabic.min.css">
+      <DependentUpon>site-arabic.css</DependentUpon>
+    </Content>
+    <Content Include="Content\site-forms.css">
+      <DependentUpon>site-forms.less</DependentUpon>
+    </Content>
+    <Content Include="Content\site-forms.min.css">
+      <DependentUpon>site-forms.css</DependentUpon>
+    </Content>
     <Content Include="Content\site-layout.css">
       <DependentUpon>site-layout.less</DependentUpon>
     </Content>
@@ -220,6 +245,14 @@
     <Content Include="Content\site-layout.less" />
     <Content Include="Content\site-layout.css.map">
       <DependentUpon>site-layout.css</DependentUpon>
+    </Content>
+    <Content Include="Content\site-arabic.less" />
+    <Content Include="Content\site-arabic.css.map">
+      <DependentUpon>site-arabic.css</DependentUpon>
+    </Content>
+    <Content Include="Content\site-forms.less" />
+    <Content Include="Content\site-forms.css.map">
+      <DependentUpon>site-forms.css</DependentUpon>
     </Content>
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
@@ -260,10 +293,11 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\EmailTemplate.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\LocalizedContent.cshtml" />
+    <Content Include="Views\Shared\_Layout_LanguageSelector.cshtml" />
+    <Content Include="Views\Shared\_Layout_UserMyAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -282,6 +316,18 @@
       <Project>{71f89204-ebb2-438a-b56f-c0521c0bbe3c}</Project>
       <Name>Mzayad.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="App_GlobalResources\Global.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Global.ar.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Mzayad.Web.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_GlobalResources\Global.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Global.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Mzayad.Web.Resources</CustomToolNamespace>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
