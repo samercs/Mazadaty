@@ -22,13 +22,28 @@ h1, h2, h3, h4 {
     margin-bottom: 1em;
 }
 
+h1 {
+    font-size: 3rem;
+}
+
+.lead {
+    font-size: 1.6rem;
+    font-weight: normal;
+
+    @media @media-desktop {
+        font-size: 2rem;
+    }
+}
+
 .alert {
     border-radius: 0;
     border-width: 2px;
     border-left-width: 10px;
+    font-size: 1.6rem;
 
     .alert-link {
         font-weight: normal;
+        text-decoration: underline !important;
     }
 }
 

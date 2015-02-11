@@ -39,6 +39,11 @@ namespace Mzayad.Web.Core.Services
             return _httpContext.Request.IsAuthenticated;
         }
 
+        public bool IsLocal()
+        {
+            return _httpContext.Request.IsLocal;
+        }
+
         public string CurrentUserId()
         {
             if (!IsAuthenticated())
@@ -65,6 +70,13 @@ namespace Mzayad.Web.Core.Services
             var user = await _userManager.FindByNameAsync(userName);
             SetLoginCookies(user);
 
+            return true;
+        }
+
+        public async Task<bool> SignIn(ApplicationUser user)
+        {
+            await _signInManager.SignInAsync(user, false, false);
+            SetLoginCookies(user);
             return true;
         }
 

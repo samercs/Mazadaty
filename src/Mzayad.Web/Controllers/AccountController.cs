@@ -1,13 +1,275 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Linq;
+using System.Web.Mvc;
+using System.Threading.Tasks;
+using Mzayad.Models;
+using Mzayad.Web.Core.Configuration;
+using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
+using Mzayad.Web.Extensions;
+using Mzayad.Web.Models.Account;
+using Mzayad.Web.Resources;
+using OrangeJetpack.Base.Web;
+using OrangeJetpack.Services.Models;
+using OrangeJetpack.Base.Core.Security;
 
 namespace Mzayad.Web.Controllers
 {
-    [Authorize]
+    [RoutePrefix("{language}/account")]
     public class AccountController : ApplicationController
     {
         public AccountController(IControllerServices controllerServices) : base(controllerServices)
         {
+        }
+
+        [Route("sign-in")]
+        public ActionResult SignIn(string returnUrl, int? shipmentId)
+        {
+            var viewModel = new SignInViewModel
+            {
+                ReturnUrl = returnUrl,
+                Email = CookieService.Get(CookieKeys.LastSignInEmail)
+            };
+
+            return View(viewModel);
+        }
+
+        [Route("sign-in")]
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> SignIn(SignInViewModel model, string returnUrl, int? shipmentId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var success = await AuthService.SignIn(model.Email, model.Password, model.RememberMe);
+            if (!success)
+            {
+                SetStatusMessage(Global.InvalidUserNameOrPassword, StatusMessageType.Error);
+                return View(model);
+            }
+
+            await SetNameAndEmailCookies(model.Email);
+
+            if (!string.IsNullOrEmpty(returnUrl))
+            {
+                return RedirectToLocal(returnUrl);
+            }
+
+            return RedirectToAction("MyAccount", "User", new { Language });
+        }
+
+        private async Task SetNameAndEmailCookies(string email)
+        {
+            var user = await AuthService.GetUserByName(email);
+            CookieService.Add(CookieKeys.DisplayName, user.FirstName, DateTime.Today.AddYears(10));
+            CookieService.Add(CookieKeys.LastSignInEmail, user.Email, DateTime.Today.AddYears(10));
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult SignOut()
+        {
+            AuthService.SignOut();
+            return RedirectToAction("Index", "Home", new { Language });
+        }
+
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> Register(RegisterViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = new ApplicationUser
+            {
+                UserName = model.Email,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName
+            };
+
+            var result = await AuthService.CreateUser(user, model.Password);
+            if (!result.Succeeded)
+            {
+                SetStatusMessage(string.Format(Global.RegistrationErrorMessage));
+                return View(model);
+            }
+
+            await SetNameAndEmailCookies(user.Email);
+
+            SetStatusMessage(string.Format(Global.RegistrationWelcomeMessage, user.FirstName));
+
+            if (await TryAddUserAsAdmin(user.Email))
+            {
+                SetStatusMessage(string.Format("Welcome to Mzayad {0}! Your account has been set as a site administrator account, to access admin features you'll need to sign out and back in again.", user.FirstName));
+            }
+
+            return RedirectToAction("MyAccount", "User", new { Language });
+        }
+
+        private async Task<bool> TryAddUserAsAdmin(string email)
+        {
+            var shouldBeAdmins = new[]
+            {
+                "andy.mehalick@orangejetpack.com", 
+                "samer_mail_2006@yahoo.com",
+                "badder.alghanim@alawama.com",
+                "alghanim@mzayad.com",
+                "alsarraf@mzayad.com",
+                "alghanim.a@alghanimequipment.com"
+            };
+
+            email = email.ToLowerInvariant();
+
+            if (shouldBeAdmins.Contains(email) || email.EndsWith("@mzayad.com"))
+            {
+                var user = await AuthService.GetUserByName(email);          
+                await AuthService.AddUserToRole(user.Id, Role.Administrator.ToString());
+
+                return true;
+            }
+
+            return false;
+        }
+
+        [Route("need-password")]
+        public ActionResult NeedPassword()
+        {
+            var viewModel = new NeedPasswordViewModel();
+
+            return View(viewModel);
+        }
+
+        [Route("need-password")]
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> NeedPassword(NeedPasswordViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(new NeedPasswordViewModel());
+            }
+
+            await SendPasswordResetNotification(viewModel.Email);
+
+            SetStatusMessage(string.Format(Global.ResetPasswordEmailSentAcknowledgement, viewModel.Email));
+
+            return RedirectToAction("SignIn", new { Language });
+        }
+
+        private async Task<EmailResponse> SendPasswordResetNotification(string emailAddress)
+        {
+            var email = new Email
+            {
+                ToAddress = emailAddress,
+                Subject = Global.ResetPassword
+            };
+
+            // TODO - wait on Email Template feature
+
+            //var user = await AuthService.GetUserByName(emailAddress);
+            //if (user == null)
+            //{
+            //    email.Message = string.Format(Global.ResetPasswordNoAccountEmailMessage, emailAddress, GetRegistrationUrl());
+            //}
+            //else
+            //{
+            //    var resetUrl = GetPasswordResetUrl(user.UserName);
+            //    email.Message = string.Format(Global.ResetPasswordEmailMessageInstructions, user.FirstName, resetUrl);
+            //}
+
+            return await MessageService.SendMessage(email.WithTemplate(this));
+        }
+
+        [AllowAnonymous]
+        public ActionResult ResetPassword(UrlTokenParameters tokenParameters)
+        {
+            string errorMessage;
+            if (!ValidateTokenParameters(tokenParameters, out errorMessage))
+            {
+                return StatusMessage(errorMessage, StatusMessageType.Error);
+            }
+
+            return View(new ResetPasswordViewModel());
+        }
+
+        [AllowAnonymous]
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> ResetPassword(UrlTokenParameters tokenParameters, ResetPasswordViewModel viewModel)
+        {
+            string errorMessage;
+            if (!ValidateTokenParameters(tokenParameters, out errorMessage))
+            {
+                return Error(errorMessage);
+            }
+
+            var user = await AuthService.GetUserByName(tokenParameters.Email);
+            if (user == null)
+            {
+                return Error(Global.ResetPasswordCannotFindUserAccount);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            user.PasswordHash = AuthService.HashPassword(viewModel.NewPassword);
+            await AuthService.UpdateUser(user);
+            await AuthService.SignIn(user);
+
+            SetStatusMessage(Global.PasswordSuccessfullyChanged);
+
+            return RedirectToAction("MyAccount", "User", new { Language });
+        }
+
+        private string GetRegistrationUrl()
+        {
+            return GetBaseUrl("Register");
+        }
+
+        private string GetBaseUrl(string action)
+        {
+            var urlHelper = new UrlHelper(ControllerContext.RequestContext);
+            return urlHelper.Action(action, "Account", null, "https");
+        }
+
+        private string GetPasswordResetUrl(string email)
+        {
+            var baseUrl = GetBaseUrl("ResetPassword");
+
+            return PasswordUtilities.GenerateResetPasswordUrl(baseUrl, email);
+        }
+
+        private static bool ValidateTokenParameters(UrlTokenParameters urlTokenParameters, out string errorMessage)
+        {
+            try
+            {
+                PasswordUtilities.ValidateResetPasswordParameters(urlTokenParameters);
+            }
+            catch (MissingParametersException)
+            {
+                errorMessage = Global.ResetPasswordMissingParametersException;
+                return false;
+            }
+            catch (ExpiredTimestampException)
+            {
+                errorMessage = Global.ResetPasswordExpiredTimestampException;
+                return false;
+            }
+            catch (InvalidTokenException)
+            {
+                errorMessage = Global.ResetPasswordInvalidTokenException;
+                return false;
+            }
+            errorMessage = null;
+            return true;
         }
     }
 }

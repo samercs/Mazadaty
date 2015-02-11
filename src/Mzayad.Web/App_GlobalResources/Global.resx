@@ -120,6 +120,15 @@
   <data name="ChangeLanguage" xml:space="preserve">
     <value>Change Language</value>
   </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="EmailRequiredErrorMessage" xml:space="preserve">
+    <value>Please a valid email address.</value>
+  </data>
   <data name="HelloFirstName" xml:space="preserve">
     <value>Hello {0}</value>
   </data>
@@ -129,10 +138,100 @@
   <data name="MyAccount" xml:space="preserve">
     <value>My Account</value>
   </data>
+  <data name="NeedPasswordQuestion" xml:space="preserve">
+    <value>Need Password?</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PasswordRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your password.</value>
+  </data>
+  <data name="RegisteredUsers" xml:space="preserve">
+    <value>Registered Users</value>
+  </data>
+  <data name="RegisterNow" xml:space="preserve">
+    <value>Register Now</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Remember me</value>
+  </data>
   <data name="SignIn" xml:space="preserve">
     <value>Sign In</value>
   </data>
   <data name="SignOut" xml:space="preserve">
     <value>Sign Out</value>
+  </data>
+  <data name="DontHaveAccountQuestion" xml:space="preserve">
+    <value>Don't have an account?</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="FirstNameRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your first name.</value>
+  </data>
+  <data name="InvalidUserNameOrPassword" xml:space="preserve">
+    <value>We're sorry, but the email address or password you have entered is incorrect.</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="LastNameRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your last name.</value>
+  </data>
+  <data name="NeedPassword" xml:space="preserve">
+    <value>Need Password</value>
+  </data>
+  <data name="NeedPasswordInstructions" xml:space="preserve">
+    <value>If you have lost or forgotten your password please enter your email address in the form below and we will send you instructions on how to reset your password.</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="PasswordInvalidErrorMessage" xml:space="preserve">
+    <value>Please enter a password, it must be at least 6 characters.</value>
+  </data>
+  <data name="PasswordSuccessfullyChanged" xml:space="preserve">
+    <value>Password successfully changed.</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="RegisterLinkText" xml:space="preserve">
+    <value>Register for free&lt;i class="fa fa-pad-left fa-angle-right"&gt;&lt;/i&gt;</value>
+  </data>
+  <data name="RegistrationErrorMessage" xml:space="preserve">
+    <value>We're sorry, an error occurred registering your account: {0}.</value>
+  </data>
+  <data name="RegistrationWelcomeMessage" xml:space="preserve">
+    <value>Welcome to Mzayad {0}! As soon as you are ready &lt;a class='alert-link' href='#'&gt;check out our upcoming bids&lt;i class='fa fa-pad-left fa-angle-right'&gt;&lt;/i&gt;&lt;/a&gt;</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="ResetPasswordCannotFindUserAccount" xml:space="preserve">
+    <value>We're sorry, we cannot find a user account for this password reset attempt.</value>
+  </data>
+  <data name="ResetPasswordEmailSentAcknowledgement" xml:space="preserve">
+    <value>A password reset email has been sent to &lt;strong&gt;{0}&lt;/strong&gt;, simply follow the instructions in the email to complete the reset.</value>
+  </data>
+  <data name="ResetPasswordExpiredTimestampException" xml:space="preserve">
+    <value>We're sorry, the URL that you are attempting to use to reset your password has expired.</value>
+  </data>
+  <data name="ResetPasswordInstructions" xml:space="preserve">
+    <value>To finish resetting your password please enter your new password below.</value>
+  </data>
+  <data name="ResetPasswordInvalidTokenException" xml:space="preserve">
+    <value>We're sorry, the URL that you are attempting to use to reset your password is invalid.</value>
+  </data>
+  <data name="ResetPasswordMissingParametersException" xml:space="preserve">
+    <value>We're sorry, the URL that you are attempting to use is missing one or more parameters.</value>
+  </data>
+  <data name="SendInstructions" xml:space="preserve">
+    <value>Send Instructions</value>
   </data>
 </root>

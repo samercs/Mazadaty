@@ -20,13 +20,27 @@ h4 {
   margin-top: 0;
   margin-bottom: 1em;
 }
+h1 {
+  font-size: 3rem;
+}
+.lead {
+  font-size: 1.6rem;
+  font-weight: normal;
+}
+@media (min-width: 768px) {
+  .lead {
+    font-size: 2rem;
+  }
+}
 .alert {
   border-radius: 0;
   border-width: 2px;
   border-left-width: 10px;
+  font-size: 1.6rem;
 }
 .alert .alert-link {
   font-weight: normal;
+  text-decoration: underline !important;
 }
 .alert-success {
   border-color: #008c00;
@@ -117,3 +131,4 @@ h4 {
 .fa-fw.fa-pad-right {
   margin-right: 6px;
 }
+/*# sourceMappingURL=site.css.map */

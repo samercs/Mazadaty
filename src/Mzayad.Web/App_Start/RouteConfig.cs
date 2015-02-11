@@ -14,9 +14,9 @@ namespace Mzayad.Web
 
             routes.MapRoute(
                 "Localization",
-                "{languageCode}/{controller}/{action}/{id}",
+                "{language}/{controller}/{action}/{id}",
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                new { languageCode = @"\w{2}?" }
+                new { language = @"\w{2}?" }
             );
 
             routes.MapRoute(

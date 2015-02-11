@@ -12,10 +12,12 @@ namespace Mzayad.Web.Core.Services
     public interface IAuthService
     {
         bool IsAuthenticated();
+        bool IsLocal();
         string CurrentUserId();
         string AnonymousId();
 
         Task<bool> SignIn(string userName, string password, bool rememberMe);
+        Task<bool> SignIn(ApplicationUser user);
         void SignOut();
 
         Task<ApplicationUser> CurrentUser();

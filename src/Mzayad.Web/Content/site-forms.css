@@ -83,6 +83,13 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
   display: none;
 }
+.required-label {
+  display: inline-block;
+  margin: -4px 0 0 8px;
+  color: #b94a48;
+  font-size: 1rem;
+  vertical-align: text-top;
+}
 .localized-content > li {
   margin-bottom: 5px;
 }
