@@ -20,6 +20,9 @@ h4 {
   margin-top: 0;
   margin-bottom: 1em;
 }
+h1 {
+  font-size: 3rem;
+}
 .alert {
   border-radius: 0;
   border-width: 2px;
@@ -117,3 +120,4 @@ h4 {
 .fa-fw.fa-pad-right {
   margin-right: 6px;
 }
+/*# sourceMappingURL=site.css.map */
