@@ -1,4 +1,4 @@
-﻿@import url("variables");
+﻿@import url('variables.less');
 
 html { font-size: 62.5%; } 
 
@@ -89,6 +89,37 @@ h1, h2, h3, h4 {
 
     form {
         display: inline-block;
+    }
+}
+
+
+.menu-list {
+    margin: 0 0 20px 0;
+    padding: 8px;
+    background-color: @dark2;
+    border-top: 16px solid @dark1;
+
+    li {
+        list-style: none;
+
+        &.menu-list-hidden {
+            display: none;
+        }
+    }
+
+    a {
+        display: inline-block;
+        width: 100%;
+        padding: 8px;
+        color: @white;
+        text-decoration: none !important;
+        border-left: 4px solid @dark2;
+
+        &:hover {
+            background-color: lighten(@dark2, 5);
+            border-left: 4px solid @white;
+            color: white !important;
+        }
     }
 }
 

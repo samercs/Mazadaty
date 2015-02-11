@@ -60,6 +60,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Kendo.Mvc">
+      <HintPath>..\..\..\KendoUI\KendoUI\wrappers\aspnetmvc\Binaries\Mvc5\Kendo.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -179,6 +182,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\admin\adminAreaRegistration.cs" />
+    <Compile Include="Areas\admin\Controllers\AuctionsController.cs" />
+    <Compile Include="Areas\admin\Controllers\CategoriesController.cs" />
+    <Compile Include="Areas\admin\Controllers\ProductsController.cs" />
+    <Compile Include="Areas\admin\Controllers\ReportsController.cs" />
+    <Compile Include="Areas\admin\Controllers\UsersController.cs" />
     <Compile Include="Core\Configuration\RouteInfo.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -212,6 +221,13 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\kendo\images\grab.cur" />
+    <Content Include="Content\kendo\images\grabbing.cur" />
+    <Content Include="Content\kendo\kendo.common.css" />
+    <Content Include="Content\kendo\kendo.css" />
+    <Content Include="Content\kendo\kendo.min.css" />
+    <Content Include="Content\site-admin.css" />
+    <Content Include="Content\site-admin.min.css" />
     <Content Include="Content\site-arabic.css">
       <DependentUpon>site-arabic.less</DependentUpon>
     </Content>
@@ -224,6 +240,8 @@
     <Content Include="Content\site-forms.min.css">
       <DependentUpon>site-forms.css</DependentUpon>
     </Content>
+    <Content Include="Content\site-kendo.css" />
+    <Content Include="Content\site-kendo.min.css" />
     <Content Include="Content\site-layout.css">
       <DependentUpon>site-layout.less</DependentUpon>
     </Content>
@@ -235,6 +253,12 @@
     </Content>
     <Content Include="Content\site.min.css">
       <DependentUpon>site.css</DependentUpon>
+    </Content>
+    <Content Include="Content\variables.css">
+      <DependentUpon>variables.less</DependentUpon>
+    </Content>
+    <Content Include="Content\variables.min.css">
+      <DependentUpon>variables.less</DependentUpon>
     </Content>
     <Content Include="Fonts\fontawesome-webfont.svg" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
@@ -254,6 +278,47 @@
     <Content Include="Content\site-forms.css.map">
       <DependentUpon>site-forms.css</DependentUpon>
     </Content>
+    <Content Include="Areas\admin\Views\web.config" />
+    <Content Include="Areas\admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\admin\Views\Categories\Index.cshtml" />
+    <Content Include="Content\kendo\common\adaptive.less" />
+    <Content Include="Content\kendo\common\all.less" />
+    <Content Include="Content\kendo\common\base.less" />
+    <Content Include="Content\kendo\common\calendar.less" />
+    <Content Include="Content\kendo\common\core.less" />
+    <Content Include="Content\kendo\common\editor.less" />
+    <Content Include="Content\kendo\common\forms.less" />
+    <Content Include="Content\kendo\common\grid.less" />
+    <Content Include="Content\kendo\common\ie7.less" />
+    <Content Include="Content\kendo\common\imagebrowser.less" />
+    <Content Include="Content\kendo\common\inputs.less" />
+    <Content Include="Content\kendo\common\menu.less" />
+    <Content Include="Content\kendo\common\mixins.less" />
+    <Content Include="Content\kendo\common\notification.less" />
+    <Content Include="Content\kendo\common\panelbar.less" />
+    <Content Include="Content\kendo\common\progressbar.less" />
+    <Content Include="Content\kendo\common\scheduler.less" />
+    <Content Include="Content\kendo\common\slider.less" />
+    <Content Include="Content\kendo\common\splitter.less" />
+    <Content Include="Content\kendo\common\tabstrip.less" />
+    <Content Include="Content\kendo\common\tooltip.less" />
+    <Content Include="Content\kendo\common\transitions.less" />
+    <Content Include="Content\kendo\common\treeview.less" />
+    <Content Include="Content\kendo\common\upload.less" />
+    <Content Include="Content\kendo\common\window.less" />
+    <Content Include="Content\kendo\kendo.common.css.map" />
+    <Content Include="Content\kendo\kendo.common.less" />
+    <Content Include="Content\kendo\kendo.css.map" />
+    <Content Include="Content\kendo\kendo.less" />
+    <Content Include="Content\site-admin.css.map" />
+    <Content Include="Content\site-admin.less" />
+    <Content Include="Content\site-kendo.css.map" />
+    <Content Include="Content\site-kendo.less" />
+    <Content Include="Areas\admin\Views\Products\Index.cshtml" />
+    <Content Include="Areas\admin\Views\Auctions\Index.cshtml" />
+    <Content Include="Areas\admin\Views\Users\Index.cshtml" />
+    <Content Include="Areas\admin\Views\Reports\Index.cshtml" />
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
@@ -277,6 +342,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\kendo.aspnetmvc.min.js" />
+    <Content Include="Scripts\kendo.web.min.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\_references.js" />
@@ -298,9 +365,13 @@
     <Content Include="Views\Shared\EditorTemplates\LocalizedContent.cshtml" />
     <Content Include="Views\Shared\_Layout_LanguageSelector.cshtml" />
     <Content Include="Views\Shared\_Layout_UserMyAccount.cshtml" />
+    <Content Include="Scripts\site.min.js.map">
+      <DependentUpon>site.js</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\admin\Models\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Account\" />
   </ItemGroup>

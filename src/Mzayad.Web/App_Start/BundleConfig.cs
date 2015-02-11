@@ -25,6 +25,12 @@ namespace Mzayad.Web
                 "~/content/site-layout.css",
                 "~/content/site-arabic.css",
                 "~/content/site.css"));
+
+            bundles.Add(new StyleBundle("~/css/admin").Include(
+                "~/content/kendo/kendo.common.css",
+                "~/content/kendo/kendo.css",
+                "~/content/site-kendo.css",
+                "~/content/site-admin.css"));
         }
     }
 }
