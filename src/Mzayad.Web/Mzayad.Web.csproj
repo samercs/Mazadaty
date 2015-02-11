@@ -188,6 +188,7 @@
     <Compile Include="Areas\admin\Controllers\ProductsController.cs" />
     <Compile Include="Areas\admin\Controllers\ReportsController.cs" />
     <Compile Include="Areas\admin\Controllers\UsersController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Core\Configuration\RouteInfo.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -383,6 +384,7 @@
     <Content Include="Views\Shared\_Layout_StatusMessage.cshtml" />
     <Content Include="Views\Shared\Blank.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\User\MyAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,12 +4,18 @@
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">@string.Format(Global.HelloFirstName, User.Identity.GetDisplayName())<i class="fa fa-caret-down fa-pad-left"></i></a>
         <ul class="dropdown-menu">
-            <li>@Html.ActionLink(Global.MyAccount, "MyAccount", "User", new { area = "" }, null)</li>
-            <li><a href="javascript:document.getElementById('navbar-signout').submit()">@Global.SignOut</a></li>
+            <li>@Html.ActionLink(Global.MyAccount, "MyAccount", "User", new { area = "", language = Html.Language() }, null)</li>
+            <li>
+                <a href="javascript:document.getElementById('signout').submit();">@Global.SignOut</a>
+                @using (Html.BeginForm("SignOut", "Account", new { area = "", language = Html.Language() }, FormMethod.Post, new { id = "signout" }))
+                {
+                    @Html.AntiForgeryToken()
+                }
+            </li>
         </ul>
     </li>
 }
 else
 {
-    <li><a href="@Url.Action("SignIn", "Account", new { area = "", language = Html.Language() })">@Global.MyAccount</a></li>
+    <li><a href="@Url.Action("SignIn", "Account", new { area = "", language = Html.Language() }, null)">@Global.MyAccount</a></li>
 }

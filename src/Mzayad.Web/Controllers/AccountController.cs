@@ -54,7 +54,7 @@ namespace Mzayad.Web.Controllers
                 return RedirectToLocal(returnUrl);
             }
 
-            return RedirectToAction("MyAccount", "User");
+            return RedirectToAction("MyAccount", "User", new { Language });
         }
 
         private async Task SetNameAndEmailCookies(string email)
@@ -62,6 +62,13 @@ namespace Mzayad.Web.Controllers
             var user = await AuthService.GetUserByName(email);
             CookieService.Add(CookieKeys.DisplayName, user.FirstName, DateTime.Today.AddYears(10));
             CookieService.Add(CookieKeys.LastSignInEmail, user.Email, DateTime.Today.AddYears(10));
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult SignOut()
+        {
+            AuthService.SignOut();
+            return RedirectToAction("Index", "Home", new { Language });
         }
 
         [AllowAnonymous]
@@ -103,7 +110,7 @@ namespace Mzayad.Web.Controllers
                 SetStatusMessage(string.Format("Welcome to Mzayad {0}! Your account has been set as a site administrator account, to access admin features you'll need to sign out and back in again.", user.FirstName));
             }
 
-            return RedirectToAction("MyAccount", "User");
+            return RedirectToAction("MyAccount", "User", new { Language });
         }
 
         private async Task<bool> TryAddUserAsAdmin(string email)
