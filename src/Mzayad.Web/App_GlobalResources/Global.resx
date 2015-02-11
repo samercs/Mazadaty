@@ -234,4 +234,16 @@
   <data name="SendInstructions" xml:space="preserve">
     <value>Send Instructions</value>
   </data>
+  <data name="NameOrEmailRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your username or email address.</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="UserNameOrEmail" xml:space="preserve">
+    <value>Username or Email</value>
+  </data>
+  <data name="UserNameRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter a username containing only letters and numbers.</value>
+  </data>
 </root>

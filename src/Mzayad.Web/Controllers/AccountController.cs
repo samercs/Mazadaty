@@ -28,7 +28,7 @@ namespace Mzayad.Web.Controllers
             var viewModel = new SignInViewModel
             {
                 ReturnUrl = returnUrl,
-                Email = CookieService.Get(CookieKeys.LastSignInEmail)
+                UsernameOrEmail = CookieService.Get(CookieKeys.LastSignInEmail)
             };
 
             return View(viewModel);
@@ -43,28 +43,24 @@ namespace Mzayad.Web.Controllers
                 return View(model);
             }
 
-            var success = await AuthService.SignIn(model.Email, model.Password, model.RememberMe);
-            if (!success)
+            var user = await AuthService.SignIn(model.UsernameOrEmail, model.Password, model.RememberMe);
+            if (user == null)
             {
                 SetStatusMessage(Global.InvalidUserNameOrPassword, StatusMessageType.Error);
                 return View(model);
             }
 
-            await SetNameAndEmailCookies(model.Email);
+            SetNameAndEmailCookies(user, model.UsernameOrEmail);
 
-            if (!string.IsNullOrEmpty(returnUrl))
-            {
-                return RedirectToLocal(returnUrl);
-            }
-
-            return RedirectToAction("MyAccount", "User", new { Language });
+            return !string.IsNullOrEmpty(returnUrl) 
+                ? RedirectToLocal(returnUrl) 
+                : RedirectToAction("MyAccount", "User", new { Language });
         }
 
-        private async Task SetNameAndEmailCookies(string email)
+        private void SetNameAndEmailCookies(ApplicationUser user, string usernameOrEmail)
         {
-            var user = await AuthService.GetUserByName(email);
             CookieService.Add(CookieKeys.DisplayName, user.FirstName, DateTime.Today.AddYears(10));
-            CookieService.Add(CookieKeys.LastSignInEmail, user.Email, DateTime.Today.AddYears(10));
+            CookieService.Add(CookieKeys.LastSignInEmail, usernameOrEmail, DateTime.Today.AddYears(10));
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -89,7 +85,7 @@ namespace Mzayad.Web.Controllers
 
             var user = new ApplicationUser
             {
-                UserName = model.Email,
+                UserName = model.UserName,
                 Email = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName
@@ -102,7 +98,7 @@ namespace Mzayad.Web.Controllers
                 return View(model);
             }
 
-            await SetNameAndEmailCookies(user.Email);
+            SetNameAndEmailCookies(user, "");
 
             SetStatusMessage(string.Format(Global.RegistrationWelcomeMessage, user.FirstName));
 
@@ -130,7 +126,7 @@ namespace Mzayad.Web.Controllers
 
             if (shouldBeAdmins.Contains(email) || email.EndsWith("@mzayad.com"))
             {
-                var user = await AuthService.GetUserByName(email);          
+                var user = await AuthService.GetUserByEmail(email);          
                 await AuthService.AddUserToRole(user.Id, Role.Administrator.ToString());
 
                 return true;
@@ -209,7 +205,7 @@ namespace Mzayad.Web.Controllers
                 return Error(errorMessage);
             }
 
-            var user = await AuthService.GetUserByName(tokenParameters.Email);
+            var user = await AuthService.GetUserByEmail(tokenParameters.Email);
             if (user == null)
             {
                 return Error(Global.ResetPasswordCannotFindUserAccount);

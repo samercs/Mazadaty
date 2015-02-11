@@ -21,15 +21,22 @@
                     @Html.ValidationMessageFor(m => m.LastName, Global.LastNameRequiredErrorMessage)
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Email, Global.Email).Required()
-                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
-                    @Html.ValidationMessageFor(m => m.Email, Global.EmailRequiredErrorMessage)
+                    @Html.LabelFor(m => m.UserName, Global.UserName).Required()
+                    @Html.TextBoxFor(m => m.UserName, new {@class = "form-control", autocorrect = "off", spellcheck = "false"})
+                    @Html.ValidationMessageFor(m => m.UserName, Global.UserNameRequiredErrorMessage)
+                    <div class="help-block">Hellow andnalks djfasoidjf;alskdjf</div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Password, Global.Password).Required()
                     @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.Password, Global.PasswordInvalidErrorMessage)
                 </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, Global.Email).Required()
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
+                    @Html.ValidationMessageFor(m => m.Email, Global.EmailRequiredErrorMessage)
+                </div>
+                
 
             </section>
 

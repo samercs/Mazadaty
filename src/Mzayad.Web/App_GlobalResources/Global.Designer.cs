@@ -178,6 +178,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please enter your username or email address..
+        /// </summary>
+        public static string NameOrEmailRequiredErrorMessage {
+            get {
+                return ResourceManager.GetString("NameOrEmailRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Need Password.
         /// </summary>
         public static string NeedPassword {
@@ -408,6 +417,33 @@ namespace Mzayad.Web.Resources {
         public static string SignOut {
             get {
                 return ResourceManager.GetString("SignOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string UserName {
+            get {
+                return ResourceManager.GetString("UserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username or Email.
+        /// </summary>
+        public static string UserNameOrEmail {
+            get {
+                return ResourceManager.GetString("UserNameOrEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter a username containing only letters and numbers..
+        /// </summary>
+        public static string UserNameRequiredErrorMessage {
+            get {
+                return ResourceManager.GetString("UserNameRequiredErrorMessage", resourceCulture);
             }
         }
     }

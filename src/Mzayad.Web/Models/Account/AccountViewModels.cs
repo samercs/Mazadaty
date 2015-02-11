@@ -6,6 +6,7 @@ namespace Mzayad.Web.Models.Account
     public class NeedPasswordViewModel
     {
         [Required]
+        [StringLength(256)]
         [EmailAddress]
         public string Email { get; set; }
     }
@@ -13,8 +14,8 @@ namespace Mzayad.Web.Models.Account
     public class SignInViewModel
     {
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        [StringLength(256)]
+        public string UsernameOrEmail { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -32,8 +33,14 @@ namespace Mzayad.Web.Models.Account
         public string LastName { get; set; }
         
         [Required]
+        [StringLength(256)]
         [EmailAddress]
         public string Email { get; set; }
+
+        [Required]
+        [StringLength(256)]
+        [RegularExpression(@"^[a-zA-Z0-9-]+$")]
+        public string UserName { get; set; }
 
         [Required]
         [StringLength(int.MaxValue, MinimumLength = 6)]

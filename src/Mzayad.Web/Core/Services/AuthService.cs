@@ -59,25 +59,35 @@ namespace Mzayad.Web.Core.Services
             return _httpContext.Request.AnonymousID;
         }
 
-        public async Task<bool> SignIn(string userName, string password, bool rememberMe)
+        public async Task<ApplicationUser> SignIn(string username, string password, bool rememberMe)
         {
-            var result = await _signInManager.PasswordSignInAsync(userName, password, rememberMe, false);
+            ApplicationUser user;
+
+            if (username.Contains("@"))
+            {
+                user = await _userManager.FindByEmailAsync(username);
+            }
+            else
+            {
+                user = await _userManager.FindByNameAsync(username);
+            }
+            
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, password, rememberMe, false);
             if (result != SignInStatus.Success)
             {
-                return false;
+                return null;
             }
-
-            var user = await _userManager.FindByNameAsync(userName);
+        
             SetLoginCookies(user);
 
-            return true;
+            return user;
         }
 
-        public async Task<bool> SignIn(ApplicationUser user)
+        public async Task<ApplicationUser> SignIn(ApplicationUser user)
         {
             await _signInManager.SignInAsync(user, false, false);
             SetLoginCookies(user);
-            return true;
+            return user;
         }
 
         public void SignOut()
@@ -95,11 +105,6 @@ namespace Mzayad.Web.Core.Services
             return await _userManager.FindByIdAsync(CurrentUserId());
         }
 
-        public async Task<ApplicationUser> GetUserByLogin(string userName, string password)
-        {
-            return await _userManager.FindAsync(userName, password);
-        }
-
         public async Task<ApplicationUser> GetUserById(string userId)
         {
             return await _userManager.FindByIdAsync(userId);
@@ -108,6 +113,11 @@ namespace Mzayad.Web.Core.Services
         public async Task<ApplicationUser> GetUserByName(string userName)
         {
             return await _userManager.FindByNameAsync(userName);
+        }
+
+        public async Task<ApplicationUser> GetUserByEmail(string email)
+        {
+            return await _userManager.FindByEmailAsync(email);
         }
 
         public async Task<IEnumerable<ApplicationUser>> GetUsers(string search = "", string roleName = "")
