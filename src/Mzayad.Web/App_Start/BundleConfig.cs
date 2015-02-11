@@ -17,6 +17,8 @@ namespace Mzayad.Web
                 "~/scripts/bootstrap.js",
                 "~/scripts/site.js"));
 
+            bundles.Add(new ScriptBundle("~/js/validate").Include("~/scripts/jquery.validate*"));
+
             bundles.Add(new StyleBundle("~/css").Include(
                 "~/content/bootstrap.css",
                 "~/content/bootstrap-theme.css",
