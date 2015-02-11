@@ -6,20 +6,23 @@ using Mzayad.Models;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
+using Mzayad.Web.Extensions;
 using Mzayad.Web.Models.Account;
 using Mzayad.Web.Resources;
 using OrangeJetpack.Base.Web;
+using OrangeJetpack.Services.Models;
+using OrangeJetpack.Base.Core.Security;
 
 namespace Mzayad.Web.Controllers
 {
-    [Authorize, RoutePrefix("{language}/account")]
+    [RoutePrefix("{language}/account")]
     public class AccountController : ApplicationController
     {
         public AccountController(IControllerServices controllerServices) : base(controllerServices)
         {
         }
 
-        [AllowAnonymous, Route("sign-in")]
+        [Route("sign-in")]
         public ActionResult SignIn(string returnUrl, int? shipmentId)
         {
             var viewModel = new SignInViewModel
@@ -31,7 +34,7 @@ namespace Mzayad.Web.Controllers
             return View(viewModel);
         }
 
-        [AllowAnonymous, Route("sign-in")]
+        [Route("sign-in")]
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> SignIn(SignInViewModel model, string returnUrl, int? shipmentId)
         {
@@ -71,13 +74,11 @@ namespace Mzayad.Web.Controllers
             return RedirectToAction("Index", "Home", new { Language });
         }
 
-        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
 
-        [AllowAnonymous]
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -136,6 +137,139 @@ namespace Mzayad.Web.Controllers
             }
 
             return false;
+        }
+
+        [Route("need-password")]
+        public ActionResult NeedPassword()
+        {
+            var viewModel = new NeedPasswordViewModel();
+
+            return View(viewModel);
+        }
+
+        [Route("need-password")]
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> NeedPassword(NeedPasswordViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(new NeedPasswordViewModel());
+            }
+
+            await SendPasswordResetNotification(viewModel.Email);
+
+            SetStatusMessage(string.Format(Global.ResetPasswordEmailSentAcknowledgement, viewModel.Email));
+
+            return RedirectToAction("SignIn", new { Language });
+        }
+
+        private async Task<EmailResponse> SendPasswordResetNotification(string emailAddress)
+        {
+            var email = new Email
+            {
+                ToAddress = emailAddress,
+                Subject = Global.ResetPassword
+            };
+
+            // TODO - wait on Email Template feature
+
+            //var user = await AuthService.GetUserByName(emailAddress);
+            //if (user == null)
+            //{
+            //    email.Message = string.Format(Global.ResetPasswordNoAccountEmailMessage, emailAddress, GetRegistrationUrl());
+            //}
+            //else
+            //{
+            //    var resetUrl = GetPasswordResetUrl(user.UserName);
+            //    email.Message = string.Format(Global.ResetPasswordEmailMessageInstructions, user.FirstName, resetUrl);
+            //}
+
+            return await MessageService.SendMessage(email.WithTemplate(this));
+        }
+
+        [AllowAnonymous]
+        public ActionResult ResetPassword(UrlTokenParameters tokenParameters)
+        {
+            string errorMessage;
+            if (!ValidateTokenParameters(tokenParameters, out errorMessage))
+            {
+                return StatusMessage(errorMessage, StatusMessageType.Error);
+            }
+
+            return View(new ResetPasswordViewModel());
+        }
+
+        [AllowAnonymous]
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> ResetPassword(UrlTokenParameters tokenParameters, ResetPasswordViewModel viewModel)
+        {
+            string errorMessage;
+            if (!ValidateTokenParameters(tokenParameters, out errorMessage))
+            {
+                return Error(errorMessage);
+            }
+
+            var user = await AuthService.GetUserByName(tokenParameters.Email);
+            if (user == null)
+            {
+                return Error(Global.ResetPasswordCannotFindUserAccount);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            user.PasswordHash = AuthService.HashPassword(viewModel.NewPassword);
+            await AuthService.UpdateUser(user);
+            await AuthService.SignIn(user);
+
+            SetStatusMessage(Global.PasswordSuccessfullyChanged);
+
+            return RedirectToAction("MyAccount", "User", new { Language });
+        }
+
+        private string GetRegistrationUrl()
+        {
+            return GetBaseUrl("Register");
+        }
+
+        private string GetBaseUrl(string action)
+        {
+            var urlHelper = new UrlHelper(ControllerContext.RequestContext);
+            return urlHelper.Action(action, "Account", null, "https");
+        }
+
+        private string GetPasswordResetUrl(string email)
+        {
+            var baseUrl = GetBaseUrl("ResetPassword");
+
+            return PasswordUtilities.GenerateResetPasswordUrl(baseUrl, email);
+        }
+
+        private static bool ValidateTokenParameters(UrlTokenParameters urlTokenParameters, out string errorMessage)
+        {
+            try
+            {
+                PasswordUtilities.ValidateResetPasswordParameters(urlTokenParameters);
+            }
+            catch (MissingParametersException)
+            {
+                errorMessage = Global.ResetPasswordMissingParametersException;
+                return false;
+            }
+            catch (ExpiredTimestampException)
+            {
+                errorMessage = Global.ResetPasswordExpiredTimestampException;
+                return false;
+            }
+            catch (InvalidTokenException)
+            {
+                errorMessage = Global.ResetPasswordInvalidTokenException;
+                return false;
+            }
+            errorMessage = null;
+            return true;
         }
     }
 }

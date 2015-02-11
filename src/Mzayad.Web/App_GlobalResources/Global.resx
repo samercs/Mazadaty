@@ -180,8 +180,20 @@
   <data name="LastNameRequiredErrorMessage" xml:space="preserve">
     <value>Please enter your last name.</value>
   </data>
+  <data name="NeedPassword" xml:space="preserve">
+    <value>Need Password</value>
+  </data>
+  <data name="NeedPasswordInstructions" xml:space="preserve">
+    <value>If you have lost or forgotten your password please enter your email address in the form below and we will send you instructions on how to reset your password.</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New Password</value>
+  </data>
   <data name="PasswordInvalidErrorMessage" xml:space="preserve">
     <value>Please enter a password, it must be at least 6 characters.</value>
+  </data>
+  <data name="PasswordSuccessfullyChanged" xml:space="preserve">
+    <value>Password successfully changed.</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Register</value>
@@ -197,5 +209,29 @@
   </data>
   <data name="Required" xml:space="preserve">
     <value>Required</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="ResetPasswordCannotFindUserAccount" xml:space="preserve">
+    <value>We're sorry, we cannot find a user account for this password reset attempt.</value>
+  </data>
+  <data name="ResetPasswordEmailSentAcknowledgement" xml:space="preserve">
+    <value>A password reset email has been sent to &lt;strong&gt;{0}&lt;/strong&gt;, simply follow the instructions in the email to complete the reset.</value>
+  </data>
+  <data name="ResetPasswordExpiredTimestampException" xml:space="preserve">
+    <value>We're sorry, the URL that you are attempting to use to reset your password has expired.</value>
+  </data>
+  <data name="ResetPasswordInstructions" xml:space="preserve">
+    <value>To finish resetting your password please enter your new password below.</value>
+  </data>
+  <data name="ResetPasswordInvalidTokenException" xml:space="preserve">
+    <value>We're sorry, the URL that you are attempting to use to reset your password is invalid.</value>
+  </data>
+  <data name="ResetPasswordMissingParametersException" xml:space="preserve">
+    <value>We're sorry, the URL that you are attempting to use is missing one or more parameters.</value>
+  </data>
+  <data name="SendInstructions" xml:space="preserve">
+    <value>Send Instructions</value>
   </data>
 </root>

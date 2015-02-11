@@ -17,6 +17,7 @@ namespace Mzayad.Web.Core.Services
         string AnonymousId();
 
         Task<bool> SignIn(string userName, string password, bool rememberMe);
+        Task<bool> SignIn(ApplicationUser user);
         void SignOut();
 
         Task<ApplicationUser> CurrentUser();

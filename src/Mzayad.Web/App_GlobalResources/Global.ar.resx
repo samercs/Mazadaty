@@ -153,14 +153,26 @@
   <data name="MyAccount" xml:space="preserve">
     <value>حسابي</value>
   </data>
+  <data name="NeedPassword" xml:space="preserve">
+    <value>كلمة مرور جديدة</value>
+  </data>
+  <data name="NeedPasswordInstructions" xml:space="preserve">
+    <value>إذا فقدت أو نسيت كلمة مرورك، الرجاء إدخال عنوان بريدك الإلكتروني في الاستمارة أدناه وسنرسل لك تعليمات حول كيفية إعادة ضبط كلمة مرورك.</value>
+  </data>
   <data name="NeedPasswordQuestion" xml:space="preserve">
     <value>هل تحتاجين إلى كلمة المرور؟</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>عملاء جدد</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>كلمة المرور</value>
   </data>
   <data name="PasswordRequiredErrorMessage" xml:space="preserve">
     <value>الرجاء إدخال كلمة مرورك.</value>
+  </data>
+  <data name="PasswordSuccessfullyChanged" xml:space="preserve">
+    <value>تم تغيير كلمة المرور بنجاح.</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>التسجيل</value>
@@ -173,6 +185,30 @@
   </data>
   <data name="Required" xml:space="preserve">
     <value>مطلوب</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>إعادة ضبط كلمة المرور</value>
+  </data>
+  <data name="ResetPasswordCannotFindUserAccount" xml:space="preserve">
+    <value>عذراً، لكننا لم نجد حساب مستخدم لمحاولة إعادة ضبط كلمة المرور هذه.</value>
+  </data>
+  <data name="ResetPasswordEmailSentAcknowledgement" xml:space="preserve">
+    <value>تم إرسال بريد إلكتروني إلى &lt;strong&gt;{0}&lt;/strong&gt; لإعادة ضبط كلمة المرور، اتبعي من فضلك التعليمات المدونة في البريد الإلكتروني لإتمام عملية إعادة الضبط.</value>
+  </data>
+  <data name="ResetPasswordExpiredTimestampException" xml:space="preserve">
+    <value>عذراً، لقد انتهت صلاحية الرابط الذي تحاولين استخدامه لإعادة ضبط كلمة مرورك.</value>
+  </data>
+  <data name="ResetPasswordInstructions" xml:space="preserve">
+    <value>لإنهاء إعادة ضبط كلمة مرورك، الرجاء إدخال كلمة المرور الجديدة أدناه.</value>
+  </data>
+  <data name="ResetPasswordInvalidTokenException" xml:space="preserve">
+    <value>عذراً، إنّ الرابط الذي تحاولين استخدامه لإعادة ضبط كلمة المرور غير صالح.</value>
+  </data>
+  <data name="ResetPasswordMissingParametersException" xml:space="preserve">
+    <value>عذراً، إنّ الرابط الذي تحاولين استخدامه ينقصه عنصراً واحد أو أكثر.</value>
+  </data>
+  <data name="SendInstructions" xml:space="preserve">
+    <value>إرسال التعليمات</value>
   </data>
   <data name="SignIn" xml:space="preserve">
     <value>تسجيل الدخول</value>

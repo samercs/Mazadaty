@@ -73,6 +73,13 @@ namespace Mzayad.Web.Core.Services
             return true;
         }
 
+        public async Task<bool> SignIn(ApplicationUser user)
+        {
+            await _signInManager.SignInAsync(user, false, false);
+            SetLoginCookies(user);
+            return true;
+        }
+
         public void SignOut()
         {
             _authenticationManager.SignOut();

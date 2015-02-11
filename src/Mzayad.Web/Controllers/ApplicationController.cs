@@ -93,10 +93,10 @@ namespace Mzayad.Web.Controllers
         /// <summary>
         /// Gets a ViewResult for Error with the supplied error message applied.
         /// </summary>
-        protected ActionResult ErrorView(string errorMessage)
+        protected ActionResult Error(string errorMessage)
         {
             SetStatusMessage(errorMessage, StatusMessageType.Error);
-            return View("Error");
+            return View("Blank");
         }
 
         /// <summary>

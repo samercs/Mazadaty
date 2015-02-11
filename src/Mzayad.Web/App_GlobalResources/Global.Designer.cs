@@ -178,11 +178,38 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Need Password.
+        /// </summary>
+        public static string NeedPassword {
+            get {
+                return ResourceManager.GetString("NeedPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you have lost or forgotten your password please enter your email address in the form below and we will send you instructions on how to reset your password..
+        /// </summary>
+        public static string NeedPasswordInstructions {
+            get {
+                return ResourceManager.GetString("NeedPasswordInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Need Password?.
         /// </summary>
         public static string NeedPasswordQuestion {
             get {
                 return ResourceManager.GetString("NeedPasswordQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Password.
+        /// </summary>
+        public static string NewPassword {
+            get {
+                return ResourceManager.GetString("NewPassword", resourceCulture);
             }
         }
         
@@ -210,6 +237,15 @@ namespace Mzayad.Web.Resources {
         public static string PasswordRequiredErrorMessage {
             get {
                 return ResourceManager.GetString("PasswordRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password successfully changed..
+        /// </summary>
+        public static string PasswordSuccessfullyChanged {
+            get {
+                return ResourceManager.GetString("PasswordSuccessfullyChanged", resourceCulture);
             }
         }
         
@@ -282,6 +318,78 @@ namespace Mzayad.Web.Resources {
         public static string Required {
             get {
                 return ResourceManager.GetString("Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset Password.
+        /// </summary>
+        public static string ResetPassword {
+            get {
+                return ResourceManager.GetString("ResetPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We&apos;re sorry, we cannot find a user account for this password reset attempt..
+        /// </summary>
+        public static string ResetPasswordCannotFindUserAccount {
+            get {
+                return ResourceManager.GetString("ResetPasswordCannotFindUserAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A password reset email has been sent to &lt;strong&gt;{0}&lt;/strong&gt;, simply follow the instructions in the email to complete the reset..
+        /// </summary>
+        public static string ResetPasswordEmailSentAcknowledgement {
+            get {
+                return ResourceManager.GetString("ResetPasswordEmailSentAcknowledgement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We&apos;re sorry, the URL that you are attempting to use to reset your password has expired..
+        /// </summary>
+        public static string ResetPasswordExpiredTimestampException {
+            get {
+                return ResourceManager.GetString("ResetPasswordExpiredTimestampException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To finish resetting your password please enter your new password below..
+        /// </summary>
+        public static string ResetPasswordInstructions {
+            get {
+                return ResourceManager.GetString("ResetPasswordInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We&apos;re sorry, the URL that you are attempting to use to reset your password is invalid..
+        /// </summary>
+        public static string ResetPasswordInvalidTokenException {
+            get {
+                return ResourceManager.GetString("ResetPasswordInvalidTokenException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We&apos;re sorry, the URL that you are attempting to use is missing one or more parameters..
+        /// </summary>
+        public static string ResetPasswordMissingParametersException {
+            get {
+                return ResourceManager.GetString("ResetPasswordMissingParametersException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send Instructions.
+        /// </summary>
+        public static string SendInstructions {
+            get {
+                return ResourceManager.GetString("SendInstructions", resourceCulture);
             }
         }
         
