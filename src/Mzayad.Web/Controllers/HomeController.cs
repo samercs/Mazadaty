@@ -22,7 +22,8 @@ namespace Mzayad.Web.Controllers
             return View();
         }
 
-        public ActionResult About()
+        [Route("terms-and-conditions")]
+        public ActionResult TermsAndConditions()
         {
             return View();
         }

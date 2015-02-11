@@ -237,6 +237,9 @@
   <data name="NameOrEmailRequiredErrorMessage" xml:space="preserve">
     <value>Please enter your username or email address.</value>
   </data>
+  <data name="TermsAndConditions" xml:space="preserve">
+    <value>Terms and Conditions</value>
+  </data>
   <data name="UserName" xml:space="preserve">
     <value>Username</value>
   </data>
@@ -254,5 +257,8 @@
   </data>
   <data name="UserNameValidateIsValid" xml:space="preserve">
     <value>Great username!</value>
+  </data>
+  <data name="RegistrationAgreementAcknowledgement" xml:space="preserve">
+    <value>I agree with Mzayad's &lt;a href="{0}"&gt;terms and conditions&lt;/a&gt;.</value>
   </data>
 </root>

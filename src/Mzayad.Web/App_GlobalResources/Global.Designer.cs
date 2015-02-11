@@ -295,6 +295,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to I agree with Mzayad&apos;s &lt;a href=&quot;{0}&quot;&gt;terms and conditions&lt;/a&gt;..
+        /// </summary>
+        public static string RegistrationAgreementAcknowledgement {
+            get {
+                return ResourceManager.GetString("RegistrationAgreementAcknowledgement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to We&apos;re sorry, an error occurred registering your account: {0}..
         /// </summary>
         public static string RegistrationErrorMessage {
@@ -417,6 +426,15 @@ namespace Mzayad.Web.Resources {
         public static string SignOut {
             get {
                 return ResourceManager.GetString("SignOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terms and Conditions.
+        /// </summary>
+        public static string TermsAndConditions {
+            get {
+                return ResourceManager.GetString("TermsAndConditions", resourceCulture);
             }
         }
         
