@@ -11,12 +11,12 @@
             @Html.AntiForgeryToken()
             <section>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "sr-only" })
+                    @Html.LabelFor(m => m.UsernameOrEmail, new { @class = "sr-only" })
                     <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-user fa-fw"></i></div>
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Global.Email, autofocus = "autofocus" })
+                        @Html.TextBoxFor(m => m.UsernameOrEmail, new { @class = "form-control", placeholder = Global.UserNameOrEmail, autofocus = "autofocus" })
                     </div>
-                    @Html.ValidationMessageFor(m => m.Email, Global.EmailRequiredErrorMessage)
+                    @Html.ValidationMessageFor(m => m.UsernameOrEmail, Global.NameOrEmailRequiredErrorMessage)
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Password, new { @class = "sr-only" })

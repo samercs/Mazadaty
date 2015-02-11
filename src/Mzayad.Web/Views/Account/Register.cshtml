@@ -3,6 +3,22 @@
     ViewBag.Title = Global.Register;
 }
 
+@section styles {
+    <style>
+        
+        #username-validate {
+            display: none;
+            margin: 8px 0;
+            line-height: normal;
+        }
+
+        #username-checking {
+            font-style: italic;
+        }
+
+    </style>
+}
+
 <div class="row">
     <div class="@Html.Css().FormNarrow">
         @using (Html.BeginForm())
@@ -11,26 +27,57 @@
 
             <section>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.FirstName, Global.FirstName).Required()
-                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", autocorrect = "off", spellcheck = "false", autofocus = "autofocus" })
+                    @Html.LabelFor(m => m.FirstName, Global.FirstName).Required("All Fields Required")
+                    @Html.TextBoxFor(m => m.FirstName, new {@class = "form-control", autocorrect = "off", spellcheck = "false", autofocus = "autofocus"})
                     @Html.ValidationMessageFor(m => m.FirstName, Global.FirstNameRequiredErrorMessage)
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.LastName, Global.LastName).Required()
-                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", autocorrect = "off", spellcheck = "false" })
+                    @Html.LabelFor(m => m.LastName, Global.LastName)
+                    @Html.TextBoxFor(m => m.LastName, new {@class = "form-control", autocorrect = "off", spellcheck = "false"})
                     @Html.ValidationMessageFor(m => m.LastName, Global.LastNameRequiredErrorMessage)
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Email, Global.Email).Required()
-                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
+                    @Html.LabelFor(m => m.Email, Global.Email)
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-fw fa-at"></i></span>
+                        @Html.TextBoxFor(m => m.Email, new {@class = "form-control", type = "email"})
+                    </div>
                     @Html.ValidationMessageFor(m => m.Email, Global.EmailRequiredErrorMessage)
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Password, Global.Password).Required()
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.LabelFor(m => m.Password, Global.Password)
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
+                        @Html.PasswordFor(m => m.Password, new {@class = "form-control"})
+                    </div>
                     @Html.ValidationMessageFor(m => m.Password, Global.PasswordInvalidErrorMessage)
                 </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UserName, Global.UserName)
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-fw fa-user"></i></span>
+                        @Html.TextBoxFor(m => m.UserName, new {@class = "form-control", autocorrect = "off", spellcheck = "false"})
+                    </div>
+                    @Html.ValidationMessageFor(m => m.UserName, Global.UserNameRequiredErrorMessage)
+                    <div id="username-validate" class="text-right">
+                        <div id="username-checking" class="text-warning">
+                            <i class="fa fa-spin fa-cog fa-lg"></i> @Global.UserNameValidateChecking
+                        </div>
+                        <div id="username-valid" class="text-success">
+                            <i class="fa fa-lg fa-check-square-o"></i> @Global.UserNameValidateIsValid
+                        </div>
+                        <div id="username-error" class="text-danger">
+                            <i class="fa fa-lg fa-frown-o"></i> @Global.UserNameValidateError
+                        </div>
+                    </div>
+                </div>
+            </section>
 
+            <section>
+                <div class="form-group">
+                    <i class="fa fa-lg fa-check-square-o"></i>
+                    @Html.Raw(string.Format(Global.RegistrationAgreementAcknowledgement, Url.Action("TermsAndConditions", "Home", new { Language = Html.Language() })))
+                </div>
             </section>
 
             <section class="form-buttons">
@@ -42,4 +89,39 @@
 
 @section Scripts {
     @Scripts.Render("~/js/validate")
+    <script>
+        (function($) {
+
+            $(function() {
+                bindEvents();
+            });
+
+            var bindEvents = function() {
+                $("#UserName").on("blur", validateUserName);
+            };
+
+            var validateUserName = function() {
+                var username = $(this).val();
+                if (username.length === 0) {
+                    return;
+                }
+                
+                $("#username-validate").show().children("div").hide();
+                $("#username-checking").show();
+
+                var url = "@Url.Action("ValidateUserName")";
+                var data = { username: username };
+
+                $.getJSON(url, data, function(d) {
+                    $("#username-checking").hide();
+                    if (d.IsValid) {
+                        $("#username-valid").show();
+                    } else {
+                        $("#username-error").show();
+                    }
+                });
+            };
+
+        })(jQuery);
+    </script>
 }

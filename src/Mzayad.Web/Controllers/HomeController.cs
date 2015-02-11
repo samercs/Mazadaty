@@ -22,19 +22,20 @@ namespace Mzayad.Web.Controllers
             return View();
         }
 
-        public ActionResult About()
+        [Route("terms-and-conditions")]
+        public ActionResult TermsAndConditions()
         {
             return View();
         }
 
         [HttpPost, ValidateAntiForgeryToken]
         [Route("change-language")]
-        public ActionResult ChangeLanguage(string languageCode, Uri returnUrl)
+        public ActionResult ChangeLanguage(string language, Uri returnUrl)
         {
-            CookieService.Add(CookieKeys.LanguageCode, languageCode, DateTime.Today.AddYears(10));
+            CookieService.Add(CookieKeys.LanguageCode, language, DateTime.Today.AddYears(10));
 
             var routeInfo = new RouteInfo(returnUrl, "/");
-            routeInfo.RouteData.Values["LanguageCode"] = languageCode;
+            routeInfo.RouteData.Values["language"] = language;
 
             return RedirectToRoute(routeInfo.RouteData.Values);
         }

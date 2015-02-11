@@ -265,12 +265,6 @@
     <Content Include="Content\site.min.css">
       <DependentUpon>site.css</DependentUpon>
     </Content>
-    <Content Include="Content\variables.css">
-      <DependentUpon>variables.less</DependentUpon>
-    </Content>
-    <Content Include="Content\variables.min.css">
-      <DependentUpon>variables.less</DependentUpon>
-    </Content>
     <Content Include="Fonts\fontawesome-webfont.svg" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -392,6 +386,7 @@
     <Content Include="Views\Shared\Blank.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\User\MyAccount.cshtml" />
+    <Content Include="Views\Home\TermsAndConditions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

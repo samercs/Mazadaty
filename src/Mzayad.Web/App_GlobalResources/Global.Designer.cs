@@ -178,6 +178,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please enter your username or email address..
+        /// </summary>
+        public static string NameOrEmailRequiredErrorMessage {
+            get {
+                return ResourceManager.GetString("NameOrEmailRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Need Password.
         /// </summary>
         public static string NeedPassword {
@@ -282,6 +291,15 @@ namespace Mzayad.Web.Resources {
         public static string RegisterNow {
             get {
                 return ResourceManager.GetString("RegisterNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I agree with Mzayad&apos;s &lt;a href=&quot;{0}&quot;&gt;terms and conditions&lt;/a&gt;..
+        /// </summary>
+        public static string RegistrationAgreementAcknowledgement {
+            get {
+                return ResourceManager.GetString("RegistrationAgreementAcknowledgement", resourceCulture);
             }
         }
         
@@ -408,6 +426,69 @@ namespace Mzayad.Web.Resources {
         public static string SignOut {
             get {
                 return ResourceManager.GetString("SignOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terms and Conditions.
+        /// </summary>
+        public static string TermsAndConditions {
+            get {
+                return ResourceManager.GetString("TermsAndConditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string UserName {
+            get {
+                return ResourceManager.GetString("UserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username or Email.
+        /// </summary>
+        public static string UserNameOrEmail {
+            get {
+                return ResourceManager.GetString("UserNameOrEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter a username containing only letters and numbers..
+        /// </summary>
+        public static string UserNameRequiredErrorMessage {
+            get {
+                return ResourceManager.GetString("UserNameRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checking username....
+        /// </summary>
+        public static string UserNameValidateChecking {
+            get {
+                return ResourceManager.GetString("UserNameValidateChecking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops sorry, username not available..
+        /// </summary>
+        public static string UserNameValidateError {
+            get {
+                return ResourceManager.GetString("UserNameValidateError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Great username!.
+        /// </summary>
+        public static string UserNameValidateIsValid {
+            get {
+                return ResourceManager.GetString("UserNameValidateIsValid", resourceCulture);
             }
         }
     }

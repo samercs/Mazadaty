@@ -21,8 +21,8 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink(Global.Home, "Index", "Home", new { area = "", language = Html.Language() }, null)</li>
                     @Html.Partial("_Layout_UserMyAccount")
+                    <li>@Html.ActionLink(Global.Home, "Index", "Home", new { area = "", language = Html.Language() }, null)</li>
                     @Html.Partial("_Layout_LanguageSelector")
                 </ul>
             </div>
