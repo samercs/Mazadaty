@@ -62,6 +62,9 @@
     </Reference>
     <Reference Include="Kendo.Mvc">
       <HintPath>..\..\libs\Kendo.Mvc.dll</HintPath>
+    </Reference>  
+    <Reference Include="MarkdownSharp">
+      <HintPath>..\..\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -192,6 +195,7 @@
     <Compile Include="Areas\admin\Controllers\ReportsController.cs" />
     <Compile Include="Areas\admin\Controllers\UsersController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\DocsXController.cs" />
     <Compile Include="Core\Configuration\RouteInfo.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -392,6 +396,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\admin\Models\" />
+    <Folder Include="Models\" />
+    <Folder Include="Views\Account\" />
+    <Folder Include="Views\DocsX\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
