@@ -1,6 +1,13 @@
-﻿@using Mzayad.Web.Extensions
+﻿@using Mzayad.Web.Core.Identity
+@using Mzayad.Web.Extensions
 @if (Request.IsAuthenticated)
 {
+    if (User.IsInRole(Role.Administrator.ToString()))
+    {
+        <li>
+            <a href="#"><i class="fa fa-cog fa-pad-right"></i>Admin</a>
+        </li>
+    }
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">@string.Format(Global.HelloFirstName, User.Identity.GetDisplayName())<i class="fa fa-caret-down fa-pad-left"></i></a>
         <ul class="dropdown-menu">
