@@ -8,8 +8,8 @@ body {
 }
 
 body > div { 
-    font-size: 1.5rem; 
-    line-height: 2.4rem;
+    font-size: @font-size; 
+    line-height: @line-height;
 }
 
 .body-content {
@@ -27,11 +27,11 @@ h1 {
 }
 
 .lead {
-    font-size: 1.6rem;
+    font-size: @font-size + 0.1;
     font-weight: normal;
 
     @media @media-desktop {
-        font-size: 2rem;
+        font-size: @font-size + 0.5;
     }
 }
 
@@ -39,7 +39,7 @@ h1 {
     border-radius: 0;
     border-width: 2px;
     border-left-width: 10px;
-    font-size: 1.6rem;
+    font-size: @font-size + 0.1;
 
     .alert-link {
         font-weight: normal;

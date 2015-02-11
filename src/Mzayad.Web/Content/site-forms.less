@@ -2,7 +2,7 @@
 
 form section, section.form-section {
     background: #F9F9FB;
-    
+
     @media screen {
         padding: 32px;
     }
@@ -32,7 +32,10 @@ input[type=number].no-spinner::-webkit-outer-spin-button {
 
 .form-control {
     height: auto;
-    font-size: 1.4rem;
+    min-height: 38px;
+    font-size: @font-size;
+    line-height: @line-height;
+    box-shadow: none;
 }
 
 .form-control, .btn {
@@ -71,8 +74,47 @@ input[type=number].no-spinner::-webkit-outer-spin-button {
     margin-bottom: 0;
 }
 
-.btn {
+.input-group-addon {
+    border-radius: 0;
+    font-size: @font-size;
+    line-height: @line-height;
+}
+
+.btn, .btn:hover, .btn:focus {
+    padding: 10px 24px;
     outline: none !important;
+    border: none !important;
+    box-shadow: none;
+    text-shadow: none;
+    opacity: 1;
+    -moz-transition: opacity .25s ease-in-out;
+    -o-transition: opacity .25s ease-in-out;
+    -webkit-transition: opacity .25s ease-in-out;
+    transition: opacity .25s ease-in-out;
+    font-size: @font-size + 0.1;
+    font-weight: normal;
+    letter-spacing: 2px;
+
+    @media @media-smallscreen {
+        font-size: 14px;
+    }
+
+    &:lang(ar) {
+        letter-spacing: normal;
+    }
+
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+.btn-default, .btn-default:hover, .btn-default:focus {
+    background: @base;
+    color: @white;
+}
+
+.btn-link {
+    opacity: 1 !important;
 }
 
 .field-validation-error {

@@ -1,19 +1,18 @@
-﻿using Mzayad.Web.Core.Services;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
+using Mzayad.Web.Controllers;
+using Mzayad.Web.Core.Services;
 
-namespace Mzayad.Web.Controllers
+namespace Mzayad.Web.Areas.admin.Controllers
 {
-    public class DocsXController : ApplicationController
+    public class DocsController : ApplicationController
     {
-        public DocsXController(IControllerServices controllerServices) : base(controllerServices)
+        public DocsController(IControllerServices controllerServices) : base(controllerServices)
         {
         }
 
-        // GET: Docs
         public ActionResult Index()
         {
             var x = Environment.GetEnvironmentVariable("HOME");
