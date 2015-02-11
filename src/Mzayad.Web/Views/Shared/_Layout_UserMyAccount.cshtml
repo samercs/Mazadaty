@@ -11,5 +11,5 @@
 }
 else
 {
-    <li><a href="@Url.Action("SignIn", "Account")">@Global.MyAccount</a></li>
+    <li><a href="@Url.Action("SignIn", "Account", new { LanguageCode = Html.LanguageCode() })">@Global.MyAccount</a></li>
 }
