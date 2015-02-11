@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Web.Mvc;
 using Mzayad.Data;
+using Mzayad.Models;
+using Mzayad.Services;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Services.Client.Messaging;
 
@@ -16,6 +18,7 @@ namespace Mzayad.Web.Controllers
         protected readonly IAuthService AuthService;
         protected readonly ICookieService CookieService;
         protected readonly IMessageService MessageService;
+        protected readonly EmailTemplateService _EmailTemplateService;
         
         protected ApplicationController(IControllerServices controllerServices)
         {
@@ -24,6 +27,7 @@ namespace Mzayad.Web.Controllers
             AuthService = controllerServices.AuthService;
             CookieService = controllerServices.CookieService;
             MessageService = controllerServices.MessageService;
+            _EmailTemplateService=new EmailTemplateService(controllerServices.DataContextFactory);
         }
 
         //protected override void ExecuteCore()
