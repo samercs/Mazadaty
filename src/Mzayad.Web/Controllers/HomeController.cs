@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
+using System;
 using System.Web.Mvc;
-using Mzayad.Web.Core.Configuration;
 
 namespace Mzayad.Web.Controllers
 {
@@ -13,7 +13,7 @@ namespace Mzayad.Web.Controllers
         }
 
         public ActionResult Index(string languageCode)
-        {
+        {         
             if (languageCode == null)
             {
                 return RedirectToAction("Index", new { LanguageCode });
