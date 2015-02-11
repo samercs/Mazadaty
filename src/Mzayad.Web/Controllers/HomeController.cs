@@ -5,18 +5,18 @@ using Mzayad.Web.Core.Configuration;
 
 namespace Mzayad.Web.Controllers
 {
-    [RoutePrefix("")]
+    [RoutePrefix("{language}")]
     public class HomeController : ApplicationController
     {
         public HomeController(IControllerServices controllerServices) : base(controllerServices)
         {
         }
 
-        public ActionResult Index(string languageCode)
+        public ActionResult Index(string language)
         {
-            if (languageCode == null)
+            if (language == null)
             {
-                return RedirectToAction("Index", new { LanguageCode });
+                return RedirectToAction("Index", new { Language });
             }
 
             return View();
@@ -34,7 +34,7 @@ namespace Mzayad.Web.Controllers
             CookieService.Add(CookieKeys.LanguageCode, languageCode, DateTime.Today.AddYears(10));
 
             var routeInfo = new RouteInfo(returnUrl, "/");
-            routeInfo.RouteData.Values["LanguageCode"] = languageCode;
+            routeInfo.RouteData.Values["language"] = languageCode;
 
             return RedirectToRoute(routeInfo.RouteData.Values);
         }

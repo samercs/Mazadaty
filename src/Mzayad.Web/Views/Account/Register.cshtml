@@ -1,57 +1,45 @@
-﻿@model RegisterViewModel
+﻿@model Mzayad.Web.Models.Account.RegisterViewModel
 @{
     ViewBag.Title = Global.Register;
 }
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+<div class="row">
+    <div class="@Html.Css().FormNarrow">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-    <section>
-        <h3>@Global.PersonalInformation</h3>
-        <div class="row">
-            <div class="form-group col-sm-4">
-                @Html.LabelFor(m => m.FirstName, Global.FirstName).Required()
-                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", autocorrect = "off", spellcheck = "false", autofocus = "autofocus" })
-                @Html.ValidationMessageFor(m => m.FirstName, Global.FirstNameRequiredErrorMessage)
-            </div>
-            <div class="form-group col-sm-4">
-                @Html.LabelFor(m => m.LastName, Global.LastName).Required()
-                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", autocorrect = "off", spellcheck = "false" })
-                @Html.ValidationMessageFor(m => m.LastName, Global.LastNameRequiredErrorMessage)
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-sm-4">
-                @Html.LabelFor(m => m.Email, Global.Email).Required()
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
-                @Html.ValidationMessageFor(m => m.Email, Global.EmailRequiredErrorMessage)
-            </div>
-        </div>
-    </section>
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FirstName, Global.FirstName).Required()
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", autocorrect = "off", spellcheck = "false", autofocus = "autofocus" })
+                    @Html.ValidationMessageFor(m => m.FirstName, Global.FirstNameRequiredErrorMessage)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.LastName, Global.LastName).Required()
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", autocorrect = "off", spellcheck = "false" })
+                    @Html.ValidationMessageFor(m => m.LastName, Global.LastNameRequiredErrorMessage)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, Global.Email).Required()
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
+                    @Html.ValidationMessageFor(m => m.Email, Global.EmailRequiredErrorMessage)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, Global.Password).Required()
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, Global.PasswordInvalidErrorMessage)
+                </div>
 
-    <section>
-        <h3>@Global.SigninInformation</h3>
-        <div class="row">
-            <div class="form-group col-sm-4">
-                @Html.LabelFor(m => m.Password, Global.Password).Required()
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Password, Global.NewPasswordValidationMessage)
-            </div>
-            <div class="form-group col-sm-4">
-                @Html.LabelFor(m => m.ConfirmPassword, Global.ConfirmPassword).Required()
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.ConfirmPassword, Global.ConfirmPasswordMatchErrorMessage)
-            </div>
-        </div>
+            </section>
 
-    </section>
-
-    <section class="form-buttons">
-        <button type="submit" class="btn btn-default">@Global.Register</button>
-    </section>
-}
+            <section class="form-buttons">
+                <button type="submit" class="btn btn-default">@Global.Register</button>
+            </section>
+        }
+    </div>
+</div>
 
 @section Scripts {
-    @Scripts.Render("/js/validate")
+    @Scripts.Render("~/js/validate")
 }

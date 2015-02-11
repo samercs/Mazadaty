@@ -129,6 +129,12 @@
   <data name="EmailRequiredErrorMessage" xml:space="preserve">
     <value>الرجاء إدخال عنوان بريد إلكتروني صالح</value>
   </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>الاسم الأول</value>
+  </data>
+  <data name="FirstNameRequiredErrorMessage" xml:space="preserve">
+    <value>الرجاء إدخال اسمك الأول</value>
+  </data>
   <data name="HelloFirstName" xml:space="preserve">
     <value>أهلاً {0}</value>
   </data>
@@ -137,6 +143,12 @@
   </data>
   <data name="InvalidUserNameOrPassword" xml:space="preserve">
     <value>عذراً، لكنّ كلمة المرور أو عنوان البريد الإلكتروني غير صحيح.</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>اسم العائلة</value>
+  </data>
+  <data name="LastNameRequiredErrorMessage" xml:space="preserve">
+    <value>الرجاء إدخال اسم عائلتك.</value>
   </data>
   <data name="MyAccount" xml:space="preserve">
     <value>حسابي</value>
@@ -150,11 +162,17 @@
   <data name="PasswordRequiredErrorMessage" xml:space="preserve">
     <value>الرجاء إدخال كلمة مرورك.</value>
   </data>
+  <data name="Register" xml:space="preserve">
+    <value>التسجيل</value>
+  </data>
   <data name="RegisteredUsers" xml:space="preserve">
     <value>العملاء المسجلون</value>
   </data>
   <data name="RememberMe" xml:space="preserve">
     <value>تذكرني</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>مطلوب</value>
   </data>
   <data name="SignIn" xml:space="preserve">
     <value>تسجيل الدخول</value>

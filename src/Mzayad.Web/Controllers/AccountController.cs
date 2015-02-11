@@ -9,7 +9,7 @@ using OrangeJetpack.Base.Web;
 
 namespace Mzayad.Web.Controllers
 {
-    [Authorize, RoutePrefix("{languageCode}/account")]
+    [Authorize, RoutePrefix("{language}/account")]
     public class AccountController : ApplicationController
     {
         public AccountController(IControllerServices controllerServices) : base(controllerServices)
@@ -59,6 +59,12 @@ namespace Mzayad.Web.Controllers
             var user = await AuthService.GetUserByName(email);
             CookieService.Add(CookieKeys.DisplayName, user.FirstName, DateTime.Today.AddYears(10));
             CookieService.Add(CookieKeys.LastSignInEmail, user.Email, DateTime.Today.AddYears(10));
+        }
+
+        [AllowAnonymous]
+        public ActionResult Register()
+        {
+            return View();
         }
     }
 }

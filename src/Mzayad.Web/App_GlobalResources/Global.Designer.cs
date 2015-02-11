@@ -79,6 +79,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t have an account?.
+        /// </summary>
+        public static string DontHaveAccountQuestion {
+            get {
+                return ResourceManager.GetString("DontHaveAccountQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string Email {
@@ -93,6 +102,24 @@ namespace Mzayad.Web.Resources {
         public static string EmailRequiredErrorMessage {
             get {
                 return ResourceManager.GetString("EmailRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First Name.
+        /// </summary>
+        public static string FirstName {
+            get {
+                return ResourceManager.GetString("FirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter your first name..
+        /// </summary>
+        public static string FirstNameRequiredErrorMessage {
+            get {
+                return ResourceManager.GetString("FirstNameRequiredErrorMessage", resourceCulture);
             }
         }
         
@@ -124,6 +151,24 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last Name.
+        /// </summary>
+        public static string LastName {
+            get {
+                return ResourceManager.GetString("LastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter your last name..
+        /// </summary>
+        public static string LastNameRequiredErrorMessage {
+            get {
+                return ResourceManager.GetString("LastNameRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to My Account.
         /// </summary>
         public static string MyAccount {
@@ -151,6 +196,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please enter a password, it must be at least 6 characters..
+        /// </summary>
+        public static string PasswordInvalidErrorMessage {
+            get {
+                return ResourceManager.GetString("PasswordInvalidErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please enter your password..
         /// </summary>
         public static string PasswordRequiredErrorMessage {
@@ -160,11 +214,29 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        public static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registered Users.
         /// </summary>
         public static string RegisteredUsers {
             get {
                 return ResourceManager.GetString("RegisteredUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register for free&lt;i class=&quot;fa fa-pad-left fa-angle-right&quot;&gt;&lt;/i&gt;.
+        /// </summary>
+        public static string RegisterLinkText {
+            get {
+                return ResourceManager.GetString("RegisterLinkText", resourceCulture);
             }
         }
         
@@ -183,6 +255,15 @@ namespace Mzayad.Web.Resources {
         public static string RememberMe {
             get {
                 return ResourceManager.GetString("RememberMe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Required.
+        /// </summary>
+        public static string Required {
+            get {
+                return ResourceManager.GetString("Required", resourceCulture);
             }
         }
         

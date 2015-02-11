@@ -162,7 +162,34 @@
   <data name="SignOut" xml:space="preserve">
     <value>Sign Out</value>
   </data>
+  <data name="DontHaveAccountQuestion" xml:space="preserve">
+    <value>Don't have an account?</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="FirstNameRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your first name.</value>
+  </data>
   <data name="InvalidUserNameOrPassword" xml:space="preserve">
     <value>We're sorry, but the email address or password you have entered is incorrect.</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="LastNameRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your last name.</value>
+  </data>
+  <data name="PasswordInvalidErrorMessage" xml:space="preserve">
+    <value>Please enter a password, it must be at least 6 characters.</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="RegisterLinkText" xml:space="preserve">
+    <value>Register for free&lt;i class="fa fa-pad-left fa-angle-right"&gt;&lt;/i&gt;</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Required</value>
   </data>
 </root>

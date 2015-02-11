@@ -208,6 +208,7 @@
     <Compile Include="Core\Services\ICookieService.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
+    <Compile Include="Extensions\MvcHtmlStringExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -377,11 +378,11 @@
       <DependentUpon>site.js</DependentUpon>
     </Content>
     <Content Include="Views\Account\NeedPassword.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\SignIn.cshtml" />
     <Content Include="Views\Shared\_Layout_StatusMessage.cshtml" />
     <Content Include="Views\Shared\Blank.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

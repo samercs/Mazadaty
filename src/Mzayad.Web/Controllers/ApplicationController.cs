@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Threading;
-using System.Web.Mvc;
-using Mzayad.Data;
+﻿using Mzayad.Data;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Services.Client.Messaging;
+using System;
+using System.Net;
+using System.Threading;
+using System.Web.Mvc;
 
 namespace Mzayad.Web.Controllers
 {
     public abstract class ApplicationController : Controller
     {
-        protected string LanguageCode { get; set; }
+        protected string Language { get; set; }
         
         protected readonly IDataContextFactory DataContextFactory;
         protected readonly IAppSettings AppSettings;
@@ -40,7 +39,7 @@ namespace Mzayad.Web.Controllers
         {
             var languagecode = filterContext.RouteData.Values["languageCode"] ?? GetLanguageCode();
             ViewBag.LanguageCode = languagecode.ToString();
-            LanguageCode = languagecode.ToString();
+            Language = languagecode.ToString();
 
             base.OnActionExecuting(filterContext);
         }

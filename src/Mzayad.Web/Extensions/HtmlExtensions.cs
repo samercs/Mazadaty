@@ -5,7 +5,7 @@ namespace Mzayad.Web.Extensions
 {
     public static class HtmlExtensions
     {
-        public static string LanguageCode(this HtmlHelper htmlHelper)
+        public static string Language(this HtmlHelper htmlHelper)
         {
             var languagCode = htmlHelper.ViewBag.LanguageCode ?? "en";
 
@@ -14,7 +14,7 @@ namespace Mzayad.Web.Extensions
 
         public static bool IsArabic(this HtmlHelper htmlHelper)
         {
-            return htmlHelper.LanguageCode().Equals("ar");
+            return htmlHelper.Language().Equals("ar");
         }
 
         public static MvcHtmlString StatusMessage(this HtmlHelper htmlHelper, StatusMessage statusMessage)

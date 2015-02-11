@@ -45,7 +45,7 @@ namespace Mzayad.Web
             
             var handler = Context.Handler as MvcHandler;
             var routeData = handler == null ? null : handler.RequestContext.RouteData;
-            var languageRoute = routeData == null ? null : routeData.Values["LanguageCode"];        
+            var languageRoute = routeData == null ? null : routeData.Values["language"];        
             return languageRoute == null ? null : CultureInfo.CreateSpecificCulture(languageRoute.ToString());
         }
 

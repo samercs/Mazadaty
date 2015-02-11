@@ -1,15 +1,4 @@
-﻿(function ($) {
-
-    $(function () {
-        bindEvents();
-        new WOW().init();
-    });
-
-    var bindEvents = function() {
-        $("form").on("change", ".auto-submit", autoSubmitForm);
-        $(".localized-content").on("input", ".localized-input[data-primary='true']", setHiddenLocalizedContent);
-        $(".menu-list").on("click", ".show-hidden", showHiddenMenuList);
-    };
+﻿(function ($, wow) {
 
     var setHiddenLocalizedContent = function () {
         var $this = $(this);
@@ -28,4 +17,24 @@
         console.log("a");
     };
 
-})(jQuery);
+    var bindEvents = function () {
+        $("form").on("change", ".auto-submit", autoSubmitForm);
+        $(".localized-content").on("input", ".localized-input[data-primary='true']", setHiddenLocalizedContent);
+        $(".menu-list").on("click", ".show-hidden", showHiddenMenuList);
+    };
+
+    var initRequiredLabels = function() {
+        $(".required-label").slice(1).children("span").hide();
+    }
+
+    var initWowAnimations = function() {
+        new wow().init();
+    };
+
+    $(function () {
+        bindEvents();
+        initRequiredLabels();
+        initWowAnimations();
+    });
+
+})(jQuery, WOW);
