@@ -250,6 +250,24 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to We&apos;re sorry, an error occurred registering your account: {0}..
+        /// </summary>
+        public static string RegistrationErrorMessage {
+            get {
+                return ResourceManager.GetString("RegistrationErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome to Mzayad {0}! As soon as you are ready &lt;a class=&apos;alert-link&apos; href=&apos;#&apos;&gt;check out our upcoming bids&lt;i class=&apos;fa fa-pad-left fa-angle-right&apos;&gt;&lt;/i&gt;&lt;/a&gt;.
+        /// </summary>
+        public static string RegistrationWelcomeMessage {
+            get {
+                return ResourceManager.GetString("RegistrationWelcomeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remember me.
         /// </summary>
         public static string RememberMe {

@@ -28,7 +28,7 @@
     }
 
     var initWowAnimations = function() {
-        new wow().init();
+        wow.init();
     };
 
     $(function () {
@@ -37,4 +37,4 @@
         initWowAnimations();
     });
 
-})(jQuery, WOW);
+})(jQuery, new WOW());

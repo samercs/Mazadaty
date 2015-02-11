@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using System.Threading.Tasks;
+using Mzayad.Models;
 using Mzayad.Web.Core.Configuration;
+using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Models.Account;
 using Mzayad.Web.Resources;
@@ -65,6 +68,67 @@ namespace Mzayad.Web.Controllers
         public ActionResult Register()
         {
             return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> Register(RegisterViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = new ApplicationUser
+            {
+                UserName = model.Email,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName
+            };
+
+            var result = await AuthService.CreateUser(user, model.Password);
+            if (!result.Succeeded)
+            {
+                SetStatusMessage(string.Format(Global.RegistrationErrorMessage));
+                return View(model);
+            }
+
+            await SetNameAndEmailCookies(user.Email);
+
+            SetStatusMessage(string.Format(Global.RegistrationWelcomeMessage, user.FirstName));
+
+            if (await TryAddUserAsAdmin(user.Email))
+            {
+                SetStatusMessage(string.Format("Welcome to Mzayad {0}! Your account has been set as a site administrator account, to access admin features you'll need to sign out and back in again.", user.FirstName));
+            }
+
+            return RedirectToAction("MyAccount", "User");
+        }
+
+        private async Task<bool> TryAddUserAsAdmin(string email)
+        {
+            var shouldBeAdmins = new[]
+            {
+                "andy.mehalick@orangejetpack.com", 
+                "samer_mail_2006@yahoo.com",
+                "badder.alghanim@alawama.com",
+                "alghanim@mzayad.com",
+                "alsarraf@mzayad.com",
+                "alghanim.a@alghanimequipment.com"
+            };
+
+            email = email.ToLowerInvariant();
+
+            if (shouldBeAdmins.Contains(email) || email.EndsWith("@mzayad.com"))
+            {
+                var user = await AuthService.GetUserByName(email);          
+                await AuthService.AddUserToRole(user.Id, Role.Administrator.ToString());
+
+                return true;
+            }
+
+            return false;
         }
     }
 }

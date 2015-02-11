@@ -27,9 +27,11 @@ h1 {
   border-radius: 0;
   border-width: 2px;
   border-left-width: 10px;
+  font-size: 1.6rem;
 }
 .alert .alert-link {
   font-weight: normal;
+  text-decoration: underline !important;
 }
 .alert-success {
   border-color: #008c00;

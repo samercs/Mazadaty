@@ -189,6 +189,12 @@
   <data name="RegisterLinkText" xml:space="preserve">
     <value>Register for free&lt;i class="fa fa-pad-left fa-angle-right"&gt;&lt;/i&gt;</value>
   </data>
+  <data name="RegistrationErrorMessage" xml:space="preserve">
+    <value>We're sorry, an error occurred registering your account: {0}.</value>
+  </data>
+  <data name="RegistrationWelcomeMessage" xml:space="preserve">
+    <value>Welcome to Mzayad {0}! As soon as you are ready &lt;a class='alert-link' href='#'&gt;check out our upcoming bids&lt;i class='fa fa-pad-left fa-angle-right'&gt;&lt;/i&gt;&lt;/a&gt;</value>
+  </data>
   <data name="Required" xml:space="preserve">
     <value>Required</value>
   </data>
