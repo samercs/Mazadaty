@@ -2,6 +2,7 @@
 
     $(function () {
         bindEvents();
+        new WOW().init();
     });
 
     var bindEvents = function() {
@@ -18,9 +19,6 @@
     var autoSubmitForm = function() {
         $(this).parents("form").submit();
     };
-
-    
-
 
     var showHiddenMenuList = function (e) {
         var li = $(this).parent();

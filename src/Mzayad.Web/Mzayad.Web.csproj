@@ -216,6 +216,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -348,6 +349,11 @@
     <Content Include="Scripts\kendo.web.min.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\site.js" />
+    <Content Include="Scripts\site.min.js">
+      <DependentUpon>site.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\wow.js" />
+    <Content Include="Scripts\wow.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Shared\404.html" />
     <Content Include="Views\Shared\500.html" />

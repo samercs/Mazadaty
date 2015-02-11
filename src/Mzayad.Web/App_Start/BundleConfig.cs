@@ -15,6 +15,7 @@ namespace Mzayad.Web
 
             bundles.Add(new ScriptBundle("~/js/site").Include(
                 "~/scripts/bootstrap.js",
+                "~/scripts/wow.js",
                 "~/scripts/site.js"));
 
             bundles.Add(new ScriptBundle("~/js/validate").Include("~/scripts/jquery.validate*"));
@@ -23,6 +24,7 @@ namespace Mzayad.Web
                 "~/content/bootstrap.css",
                 "~/content/bootstrap-theme.css",
                 "~/content/font-awesome.css",
+                "~/content/animate.css",
                 "~/content/site-forms.css",
                 "~/content/site-layout.css",
                 "~/content/site-arabic.css",
