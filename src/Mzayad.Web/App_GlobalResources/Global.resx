@@ -120,6 +120,15 @@
   <data name="ChangeLanguage" xml:space="preserve">
     <value>Change Language</value>
   </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="EmailRequiredErrorMessage" xml:space="preserve">
+    <value>Please a valid email address.</value>
+  </data>
   <data name="HelloFirstName" xml:space="preserve">
     <value>Hello {0}</value>
   </data>
@@ -128,6 +137,24 @@
   </data>
   <data name="MyAccount" xml:space="preserve">
     <value>My Account</value>
+  </data>
+  <data name="NeedPasswordQuestion" xml:space="preserve">
+    <value>Need Password?</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PasswordRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your password.</value>
+  </data>
+  <data name="RegisteredUsers" xml:space="preserve">
+    <value>Registered Users</value>
+  </data>
+  <data name="RegisterNow" xml:space="preserve">
+    <value>Register Now</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Remember me</value>
   </data>
   <data name="SignIn" xml:space="preserve">
     <value>Sign In</value>

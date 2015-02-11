@@ -120,6 +120,15 @@
   <data name="ChangeLanguage" xml:space="preserve">
     <value>تغيير اللغة</value>
   </data>
+  <data name="Continue" xml:space="preserve">
+    <value>المتابعة</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>عنوان البريد الإلكتروني</value>
+  </data>
+  <data name="EmailRequiredErrorMessage" xml:space="preserve">
+    <value>الرجاء إدخال عنوان بريد إلكتروني صالح</value>
+  </data>
   <data name="HelloFirstName" xml:space="preserve">
     <value>أهلاً {0}</value>
   </data>
@@ -128,6 +137,21 @@
   </data>
   <data name="MyAccount" xml:space="preserve">
     <value>حسابي</value>
+  </data>
+  <data name="NeedPasswordQuestion" xml:space="preserve">
+    <value>هل تحتاجين إلى كلمة المرور؟</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>كلمة المرور</value>
+  </data>
+  <data name="PasswordRequiredErrorMessage" xml:space="preserve">
+    <value>الرجاء إدخال كلمة مرورك.</value>
+  </data>
+  <data name="RegisteredUsers" xml:space="preserve">
+    <value>العملاء المسجلون</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>تذكرني</value>
   </data>
   <data name="SignIn" xml:space="preserve">
     <value>تسجيل الدخول</value>
