@@ -76,6 +76,31 @@ h4 {
 .link-list form {
   display: inline-block;
 }
+.menu-list {
+  margin: 0 0 20px 0;
+  padding: 8px;
+  background-color: #292929;
+  border-top: 16px solid #191919;
+}
+.menu-list li {
+  list-style: none;
+}
+.menu-list li.menu-list-hidden {
+  display: none;
+}
+.menu-list a {
+  display: inline-block;
+  width: 100%;
+  padding: 8px;
+  color: #ffffff;
+  text-decoration: none !important;
+  border-left: 4px solid #292929;
+}
+.menu-list a:hover {
+  background-color: #363636;
+  border-left: 4px solid #ffffff;
+  color: white !important;
+}
 @media screen {
   .fit-cell,
   .link-cell {
@@ -92,4 +117,3 @@ h4 {
 .fa-fw.fa-pad-right {
   margin-right: 6px;
 }
-/*# sourceMappingURL=site.css.map */

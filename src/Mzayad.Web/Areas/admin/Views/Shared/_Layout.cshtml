@@ -1,0 +1,38 @@
+﻿@using Kendo.Mvc.UI
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+    @Styles.Render("~/css/admin")
+    @RenderSection("styles", false)
+}
+
+<div class="row">
+    <div class="col-lg-3 col-md-4 hidden-print">
+        <ul class="menu-list">
+            
+            <li><a href="@Url.Action("Index", "Categories")"><i class="fa fa-fw fa-pad-right fa-sitemap"></i>Categories</a></li>
+            <li><a href="@Url.Action("Index", "Products")"><i class="fa fa-fw fa-pad-right fa-sitemap"></i>Products</a></li>
+            <li><a href="@Url.Action("Index", "Auctions")"><i class="fa fa-fw fa-pad-right fa-sitemap"></i>Auctions</a></li>
+            <li><a href="@Url.Action("Index", "Users")"><i class="fa fa-fw fa-pad-right fa-sitemap"></i>Users</a></li>
+            <li><a href="@Url.Action("Index", "Reports")"><i class="fa fa-fw fa-pad-right fa-sitemap"></i>Reports</a></li>
+            <li><a href="#" class="show-hidden"><i class="fa fa-fw fa-pad-right fa-ellipsis-v"></i>More</a></li>
+            <li class="menu-list-hidden"><a href="@Url.Action("Index", "Knet")"><i class="fa fa-fw fa-pad-right fa-credit-card"></i>KNET Transactions</a></li>
+            <li class="menu-list-hidden"><a href="@Url.Action("Index", "Migs")"><i class="fa fa-fw fa-pad-right fa-cc-mastercard"></i>MiGS Transactions</a></li>
+            <li class="menu-list-hidden"><a href="@Url.Action("Index", "Notifications")"><i class="fa fa-fw fa-pad-right fa-envelope"></i>Notification Settings</a></li>
+            <li class="menu-list-hidden"><a href="@Url.Action("EmailTemplates", "Settings")"><i class="fa fa-fw fa-pad-right fa-envelope"></i>Email Templates</a></li>
+        </ul>
+    </div>
+    <div class="col-lg-9 col-md-8">
+        @RenderBody()
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/scripts/kendo.web.min.js"></script>
+    <script src="~/Scripts/kendo.aspnetmvc.min.js"></script>
+    @Html.Kendo().DeferredScripts()
+    @RenderSection("scripts", false)
+}
