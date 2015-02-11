@@ -39,6 +39,11 @@ namespace Mzayad.Web.Core.Services
             return _httpContext.Request.IsAuthenticated;
         }
 
+        public bool IsLocal()
+        {
+            return _httpContext.Request.IsLocal;
+        }
+
         public string CurrentUserId()
         {
             if (!IsAuthenticated())

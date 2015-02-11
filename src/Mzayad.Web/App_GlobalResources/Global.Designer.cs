@@ -115,6 +115,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to We&apos;re sorry, but the email address or password you have entered is incorrect..
+        /// </summary>
+        public static string InvalidUserNameOrPassword {
+            get {
+                return ResourceManager.GetString("InvalidUserNameOrPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to My Account.
         /// </summary>
         public static string MyAccount {

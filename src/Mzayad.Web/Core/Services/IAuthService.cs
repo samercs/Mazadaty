@@ -12,6 +12,7 @@ namespace Mzayad.Web.Core.Services
     public interface IAuthService
     {
         bool IsAuthenticated();
+        bool IsLocal();
         string CurrentUserId();
         string AnonymousId();
 

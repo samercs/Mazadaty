@@ -162,4 +162,7 @@
   <data name="SignOut" xml:space="preserve">
     <value>Sign Out</value>
   </data>
+  <data name="InvalidUserNameOrPassword" xml:space="preserve">
+    <value>We're sorry, but the email address or password you have entered is incorrect.</value>
+  </data>
 </root>

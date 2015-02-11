@@ -135,6 +135,9 @@
   <data name="Home" xml:space="preserve">
     <value>الصفحة الرئيسية</value>
   </data>
+  <data name="InvalidUserNameOrPassword" xml:space="preserve">
+    <value>عذراً، لكنّ كلمة المرور أو عنوان البريد الإلكتروني غير صحيح.</value>
+  </data>
   <data name="MyAccount" xml:space="preserve">
     <value>حسابي</value>
   </data>
