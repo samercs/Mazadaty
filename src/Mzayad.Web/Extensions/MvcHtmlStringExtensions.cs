@@ -10,7 +10,7 @@ namespace Mzayad.Web.Extensions
         /// </summary>
         public static MvcHtmlString Required(this MvcHtmlString htmlString)
         {
-            var requiredLabel = "<span class='required-label'><i class='fa fa-pad-right fa-square'></i><span>" + Global.Required + "</span></span>";
+            var requiredLabel = "<span class='required-label'><i class='fa fa-pad-right fa-plus'></i><span>" + Global.Required + "</span></span>";
 
             return MvcHtmlString.Create(htmlString + requiredLabel);
         }

@@ -446,5 +446,32 @@ namespace Mzayad.Web.Resources {
                 return ResourceManager.GetString("UserNameRequiredErrorMessage", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checking username....
+        /// </summary>
+        public static string UserNameValidateChecking {
+            get {
+                return ResourceManager.GetString("UserNameValidateChecking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops sorry, username not available..
+        /// </summary>
+        public static string UserNameValidateError {
+            get {
+                return ResourceManager.GetString("UserNameValidateError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Great username!.
+        /// </summary>
+        public static string UserNameValidateIsValid {
+            get {
+                return ResourceManager.GetString("UserNameValidateIsValid", resourceCulture);
+            }
+        }
     }
 }

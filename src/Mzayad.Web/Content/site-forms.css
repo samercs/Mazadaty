@@ -120,7 +120,7 @@ input[type=number].no-spinner::-webkit-outer-spin-button {
 }
 input.input-validation-error,
 textarea.input-validation-error {
-  border: 1px solid #b94a48;
+  border-color: #b94a48;
 }
 input[type="checkbox"].input-validation-error {
   border: 0 none;

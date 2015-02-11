@@ -246,4 +246,13 @@
   <data name="UserNameRequiredErrorMessage" xml:space="preserve">
     <value>Please enter a username containing only letters and numbers.</value>
   </data>
+  <data name="UserNameValidateChecking" xml:space="preserve">
+    <value>Checking username...</value>
+  </data>
+  <data name="UserNameValidateError" xml:space="preserve">
+    <value>Oops sorry, username not available.</value>
+  </data>
+  <data name="UserNameValidateIsValid" xml:space="preserve">
+    <value>Great username!</value>
+  </data>
 </root>

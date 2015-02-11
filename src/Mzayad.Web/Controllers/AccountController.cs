@@ -135,6 +135,17 @@ namespace Mzayad.Web.Controllers
             return false;
         }
 
+        public async Task<JsonResult> ValidateUserName(string username)
+        {
+            var exists = await AuthService.UserExists(username);
+            var results = new
+            {
+                IsValid = !exists
+            };
+
+            return Json(results, JsonRequestBehavior.AllowGet);
+        }
+
         [Route("need-password")]
         public ActionResult NeedPassword()
         {
