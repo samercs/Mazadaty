@@ -1,0 +1,9 @@
+﻿@model FileInfo
+@{
+    ViewBag.Title = "Docs - " + Path.GetFileNameWithoutExtension(Model.FullName);
+
+    var markdown = new MarkdownSharp.Markdown();
+    var content = markdown.Transform(File.ReadAllText(Model.FullName));
+}
+
+@Html.Raw(content)

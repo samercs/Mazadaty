@@ -3,7 +3,7 @@ using OrangeJetpack.Base.Web;
 
 namespace Mzayad.Web.Extensions
 {
-    public static class HtmlExtensions
+    public static class HtmlHelperExtensions
     {
         public static string Language(this HtmlHelper htmlHelper)
         {
@@ -15,6 +15,18 @@ namespace Mzayad.Web.Extensions
         public static bool IsArabic(this HtmlHelper htmlHelper)
         {
             return htmlHelper.Language().Equals("ar");
+        }
+
+        public static MvcHtmlString PageTitle(this HtmlHelper htmlHelper)
+        {
+            var pageTitle = "Mzayad";
+
+            if (!string.IsNullOrWhiteSpace(htmlHelper.ViewBag.Title))
+            {
+                pageTitle = htmlHelper.ViewBag.Title + " | " + pageTitle;
+            }
+
+            return new MvcHtmlString(pageTitle);
         }
 
         public static MvcHtmlString StatusMessage(this HtmlHelper htmlHelper, StatusMessage statusMessage)

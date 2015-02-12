@@ -214,7 +214,7 @@
     <Compile Include="Core\Services\IAuthService.cs" />
     <Compile Include="Core\Services\IControllerServices.cs" />
     <Compile Include="Core\Services\ICookieService.cs" />
-    <Compile Include="Extensions\HtmlExtensions.cs" />
+    <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Extensions\MvcHtmlStringExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -265,6 +265,7 @@
     <Content Include="Content\site.min.css">
       <DependentUpon>site.css</DependentUpon>
     </Content>
+    <Content Include="favicon.ico" />
     <Content Include="Fonts\fontawesome-webfont.svg" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -324,6 +325,8 @@
     <Content Include="Areas\admin\Views\Auctions\Index.cshtml" />
     <Content Include="Areas\admin\Views\Users\Index.cshtml" />
     <Content Include="Areas\admin\Views\Reports\Index.cshtml" />
+    <Content Include="Areas\admin\Views\Docs\Index.cshtml" />
+    <Content Include="Areas\admin\Views\Docs\Item.cshtml" />
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
@@ -366,6 +369,7 @@
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
