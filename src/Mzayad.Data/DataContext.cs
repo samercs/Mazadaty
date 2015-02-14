@@ -11,6 +11,8 @@ namespace Mzayad.Data
     {
         // TODO added IDbSets
 
+        public IDbSet<EmailTemplate> EmailTemplates { get; set; } 
+
         public DataContext(): base("DefaultConnection")
         {
             Configuration.ProxyCreationEnabled = false;

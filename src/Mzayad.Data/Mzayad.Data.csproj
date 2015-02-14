@@ -44,8 +44,16 @@
     <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
       <HintPath>..\..\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="OrangeJetpack.Base.Data">
       <HintPath>..\..\packages\OrangeJetpack.Base.Data.0.1.0\lib\OrangeJetpack.Base.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="OrangeJetpack.Localization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\OrangeJetpack.Localization.1.5.6\lib\OrangeJetpack.Localization.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -60,6 +68,14 @@
     <Compile Include="Migrations\201502081706012_InitDatabase.cs" />
     <Compile Include="Migrations\201502081706012_InitDatabase.Designer.cs">
       <DependentUpon>201502081706012_InitDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502110948210_addEmailTemplate.cs" />
+    <Compile Include="Migrations\201502110948210_addEmailTemplate.Designer.cs">
+      <DependentUpon>201502110948210_addEmailTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502111035575_InsertEmailTemplate.cs" />
+    <Compile Include="Migrations\201502111035575_InsertEmailTemplate.Designer.cs">
+      <DependentUpon>201502111035575_InsertEmailTemplate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,6 +93,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201502081706012_InitDatabase.resx">
       <DependentUpon>201502081706012_InitDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502110948210_addEmailTemplate.resx">
+      <DependentUpon>201502110948210_addEmailTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502111035575_InsertEmailTemplate.resx">
+      <DependentUpon>201502111035575_InsertEmailTemplate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

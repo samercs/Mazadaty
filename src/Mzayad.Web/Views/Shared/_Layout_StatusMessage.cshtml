@@ -1,4 +1,6 @@
-﻿@using OrangeJetpack.Base.Web
+﻿@using Mzayad.Web.Extensions
+@using OrangeJetpack.Base.Web
+
 @{
     var statusMessage = TempData["StatusMessage"] as StatusMessage;
 }
@@ -6,6 +8,6 @@
 @if (statusMessage != null)
 {
     <div class="wow fadeIn">
-        @Html.StatusMessage(statusMessage)
+    @Html.StatusMessage(statusMessage)
     </div>
 }

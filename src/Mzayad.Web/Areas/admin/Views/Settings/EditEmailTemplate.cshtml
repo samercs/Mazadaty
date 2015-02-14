@@ -1,0 +1,72 @@
+﻿
+@using Mzayad.Web.Extensions
+@model Mzayad.Models.EmailTemplate
+
+@{
+    ViewBag.Title = "Email Template";
+
+}
+
+<div class="row">
+
+    <div class="@Html.Css().FormWide">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Subject)
+                    @Html.EditorFor(i => i.Subject, "LocalizedContent", "EmailSubject", null)
+                    @Html.ValidationMessageFor(i => i.Subject, "Please enter a email subject.")
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Message, "Message")
+                    @Html.EditorFor(i => i.Message, "LocalizedContent", "EmailMessage", null)
+                    @Html.ValidationMessageFor(i => i.Message, "Please enter a email message.")
+                </div>
+
+
+            </section>
+            <section class="form-buttons">
+                @Html.HiddenFor(i => i.EmailTemplateId)
+                @Html.HiddenFor(i => i.TemplateType)
+                <button type="submit" class="btn btn-default">Save</button>
+            </section>
+        }
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/js/validate")
+    <script src="//cdn.ckeditor.com/4.4.4/basic/ckeditor.js"></script>
+    <script>
+        (function ($) {
+
+
+
+            $(function () {
+
+                initCkEditor();
+            });
+
+
+
+            var initCkEditor = function () {
+                $("textarea.localized-input[data-language!='ar']").each(function () {
+                    CKEDITOR.replace(this.id, { height: 300 });
+                });
+
+                $("textarea.localized-input[data-language='ar']").each(function () {
+                    CKEDITOR.replace(this.id, { height: 300, contentsLangDirection: "rtl" });
+                });
+
+                // CK editor breaks localized content validation so disable with hack
+                var hiddenValidator = $("input[name='Message']");
+                hiddenValidator.val(hiddenValidator.val() + "...");
+            };
+
+        })(jQuery);
+    </script>
+}

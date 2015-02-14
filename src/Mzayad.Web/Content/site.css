@@ -140,4 +140,25 @@ h1 {
 .fa-fw.fa-pad-right {
   margin-right: 6px;
 }
+.table > thead > tr > th {
+  vertical-align: top;
+  border-bottom: none;
+  background-color: #132e72 !important;
+  color: white !important;
+  font-weight: normal;
+}
+.table > tbody > tr > td {
+  border-top: none;
+  border-bottom: 1px solid #ddd;
+}
+.table > tbody > tr:last-child > td {
+  border-bottom-width: 2px;
+}
+.table.table-bordered {
+  border: none;
+}
+.table.table-bordered > thead > tr > th,
+.table.table-bordered > tfoot > tr > th {
+  border: 1px solid #132e72;
+}
 /*# sourceMappingURL=site.css.map */

@@ -169,3 +169,33 @@ h1 {
 .fa-fw.fa-pad-right {
   margin-right: 6px;
 }
+
+.table {
+    
+    > thead > tr > th {
+        vertical-align: top;
+        border-bottom: none;
+        background-color: @base !important;
+        color: white !important;
+        font-weight: normal;
+    }
+
+    > tbody {
+         > tr > td {
+            border-top: none;
+            border-bottom: 1px solid #ddd;
+        }
+        > tr:last-child > td {
+            border-bottom-width: 2px;
+        }
+    }
+
+    &.table-bordered {
+        border: none;
+
+        > thead > tr > th, 
+        > tfoot > tr > th {
+            border: 1px solid @base;
+        }
+    }
+}
