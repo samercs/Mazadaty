@@ -9,7 +9,7 @@
 
 <div class="row">
 
-    <div class="@Html.Css().FormWrapper">
+    <div class="@Html.Css().FormWide">
 
         @using (Html.BeginForm())
         {
@@ -40,7 +40,7 @@
 
 @section scripts {
     @Scripts.Render("~/js/validate")
-    <script src="//cdn.ckeditor.com/4.4.4/standard/ckeditor.js"></script>
+    <script src="//cdn.ckeditor.com/4.4.4/basic/ckeditor.js"></script>
     <script>
         (function ($) {
 
