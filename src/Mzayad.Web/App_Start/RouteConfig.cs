@@ -12,6 +12,8 @@ namespace Mzayad.Web
             routes.LowercaseUrls = true;
             routes.MapMvcAttributeRoutes();
 
+            AreaRegistration.RegisterAllAreas();
+
             routes.MapRoute(
                 "Localization",
                 "{language}/{controller}/{action}/{id}",

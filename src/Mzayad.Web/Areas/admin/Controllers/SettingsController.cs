@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Mzayad.Models.Enum;
+﻿using Mzayad.Models.Enum;
 using Mzayad.Web.Controllers;
 using Mzayad.Web.Core.Formatting;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Localization;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
+    [RouteArea("admin"), RoutePrefix("settings")]
     public class SettingsController : ApplicationController
     {
-        //
-        // GET: /admin/Settings/
         public SettingsController(IControllerServices controllerServices) : base(controllerServices)
         {
         }
@@ -25,12 +20,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
             return RedirectToAction("EmailTemplates");
         }
 
+        [Route("email-templates")]
         public async Task<ActionResult> EmailTemplates()
         {
             var model = await _EmailTemplateService.GetAll();
             return View(model);
         }
 
+        [Route("edit-email-template")]
         public async Task<ActionResult> EditEmailTemplate(EmailTemplateType id)
         {
             var template = await _EmailTemplateService.GetByTemplateType(id);
@@ -42,6 +39,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
         }
 
+        [Route("edit-email-template")]
         [HttpPost, ValidateAntiForgeryToken, ValidateInput(false)]
         public async Task<ActionResult> EditEmailTemplate(EmailTemplateType id, LocalizedContent[] Subject, LocalizedContent[] Message)
         {
