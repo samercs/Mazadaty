@@ -61,12 +61,18 @@
       <HintPath>..\..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Kendo.Mvc">
-      <HintPath>..\..\..\KendoUI\KendoUI\wrappers\aspnetmvc\Binaries\Mvc5\Kendo.Mvc.dll</HintPath>
+      <HintPath>..\..\libs\Kendo.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="MarkdownSharp">
+      <HintPath>..\..\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OrangeJetpack.Base.Core">
+      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.3\lib\OrangeJetpack.Base.Core.dll</HintPath>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Web">
       <HintPath>..\..\packages\OrangeJetpack.Base.Web.0.0.6\lib\OrangeJetpack.Base.Web.dll</HintPath>
@@ -192,6 +198,10 @@
     <Compile Include="Core\Configuration\RouteInfo.cs" />
     <Compile Include="Core\Formatting\EnumFormatter.cs" />
     <Compile Include="Core\Formatting\StringFormatter.cs" />
+    <Compile Include="Areas\admin\Controllers\UsersController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Areas\admin\Controllers\DocsController.cs" />
+    <Compile Include="Core\Configuration\RouteInfo.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
@@ -210,15 +220,18 @@
     <Compile Include="Core\Services\IControllerServices.cs" />
     <Compile Include="Core\Services\ICookieService.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
-    <Compile Include="Extensions\HtmlExtensions.cs" />
+    <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
+    <Compile Include="Extensions\MvcHtmlStringExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Account\AccountViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -258,12 +271,7 @@
     <Content Include="Content\site.min.css">
       <DependentUpon>site.css</DependentUpon>
     </Content>
-    <Content Include="Content\variables.css">
-      <DependentUpon>variables.less</DependentUpon>
-    </Content>
-    <Content Include="Content\variables.min.css">
-      <DependentUpon>variables.less</DependentUpon>
-    </Content>
+    <Content Include="favicon.ico" />
     <Content Include="Fonts\fontawesome-webfont.svg" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -325,6 +333,8 @@
     <Content Include="Areas\admin\Views\Reports\Index.cshtml" />
     <Content Include="Areas\admin\Views\Settings\EmailTemplates.cshtml" />
     <Content Include="Areas\admin\Views\Settings\EditEmailTemplate.cshtml" />
+    <Content Include="Areas\admin\Views\Docs\Index.cshtml" />
+    <Content Include="Areas\admin\Views\Docs\Item.cshtml" />
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
@@ -348,10 +358,16 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquery.validate._defaults.js" />
     <Content Include="Scripts\kendo.aspnetmvc.min.js" />
     <Content Include="Scripts\kendo.web.min.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\site.js" />
+    <Content Include="Scripts\site.min.js">
+      <DependentUpon>site.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\wow.js" />
+    <Content Include="Scripts\wow.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Shared\404.html" />
     <Content Include="Views\Shared\500.html" />
@@ -361,6 +377,7 @@
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -374,13 +391,18 @@
     <Content Include="Scripts\site.min.js.map">
       <DependentUpon>site.js</DependentUpon>
     </Content>
+    <Content Include="Views\Account\NeedPassword.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\SignIn.cshtml" />
     <Content Include="Views\Shared\_Layout_StatusMessage.cshtml" />
+    <Content Include="Views\Shared\Blank.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\User\MyAccount.cshtml" />
+    <Content Include="Views\Home\TermsAndConditions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\admin\Models\" />
-    <Folder Include="Models\" />
-    <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

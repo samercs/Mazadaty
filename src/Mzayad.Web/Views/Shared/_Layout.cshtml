@@ -1,12 +1,17 @@
 ﻿@using Mzayad.Web.Extensions
 <!DOCTYPE html>
-<html lang="@Html.LanguageCode()" dir="@(Html.IsArabic() ? "rtl" : "ltr")">
+<html lang="@Html.Language()" dir="@(Html.IsArabic() ? "rtl" : "ltr")">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mzayad</title>
+    <title>@Html.PageTitle()</title> 
+    <link rel="apple-touch-icon" href="http://az723232.vo.msecnd.net/assets/mzayad-favicon-32x32-635593381391686784.png"> @* should be 152x152 *@
+    <link rel="icon" href="http://az723232.vo.msecnd.net/assets/mzayad-favicon-32x32-635593381391686784.png">@* should be 96x96 *@
+    <!--[if IE]><link rel="shortcut icon" href="/favicon.ico"><![endif]--> @* should be 16x16 and 32x32 *@
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="http://az723232.vo.msecnd.net/assets/mzayad-favicon-32x32-635593381391686784.png">@* should be 144x144 *@
     @Styles.Render("~/css")
-    @RenderSection("styles",false)
+    @RenderSection("styles", false)
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -17,18 +22,22 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Mzayad", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a href="@Url.Action("Index", "Home", new {area = "", language = Html.Language()})" class="navbar-brand"><i class="fa fa-gavel fa-lg"></i> Mzayad</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink(Global.Home, "Index", "Home")</li>
                     @Html.Partial("_Layout_UserMyAccount")
+                    <li>@Html.ActionLink(Global.Home, "Index", "Home", new { area = "", language = Html.Language() }, null)</li>
                     @Html.Partial("_Layout_LanguageSelector")
                 </ul>
             </div>
         </div>
     </div>
     <div class="container body-content">
+        @if (!string.IsNullOrWhiteSpace(ViewBag.Title))
+        {
+            <h1 id="page-title">@ViewBag.Title</h1>
+        }
         @Html.Partial("_Layout_StatusMessage")
         @RenderBody()
         <hr />

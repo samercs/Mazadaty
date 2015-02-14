@@ -1,15 +1,15 @@
 ﻿@using System.Globalization
 @using Mzayad.Web.Extensions
 @{
-    var otherLanguage = CultureInfo.GetCultureInfo(Html.LanguageCode() == "en" ? "ar" : "en");  
+    var otherLanguage = CultureInfo.GetCultureInfo(Html.Language() == "en" ? "ar" : "en");  
 }
 
 <li>
-    @using (Html.BeginForm("ChangeLanguage", "Home", new { area = ""}))
+    @using (Html.BeginForm("ChangeLanguage", "Home", new { area = "" }))
     {
         @Html.AntiForgeryToken()
         <input type="hidden" name="returnUrl" value="@Request.Url" />
-        <input type="hidden" name="languageCode" value="@otherLanguage.TwoLetterISOLanguageName" />
+        <input type="hidden" name="language" value="@otherLanguage.TwoLetterISOLanguageName" />
         <button type="submit" class="btn btn-link" lang="@otherLanguage.TwoLetterISOLanguageName" title="@Global.ChangeLanguage">@otherLanguage.NativeName</button>
     }
 </li>

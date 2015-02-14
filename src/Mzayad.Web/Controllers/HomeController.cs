@@ -1,40 +1,41 @@
-﻿using System;
+﻿using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
+using System;
 using System.Web.Mvc;
-using Mzayad.Web.Core.Configuration;
 
 namespace Mzayad.Web.Controllers
 {
-    [RoutePrefix("")]
+    [RoutePrefix("{language}")]
     public class HomeController : ApplicationController
     {
         public HomeController(IControllerServices controllerServices) : base(controllerServices)
         {
         }
 
-        public ActionResult Index(string languageCode)
+        public ActionResult Index(string language)
         {
-            if (languageCode == null)
+            if (language == null)
             {
-                return RedirectToAction("Index", new { LanguageCode });
+                return RedirectToAction("Index", new { Language });
             }
 
             return View();
         }
 
-        public ActionResult About()
+        [Route("terms-and-conditions")]
+        public ActionResult TermsAndConditions()
         {
             return View();
         }
 
         [HttpPost, ValidateAntiForgeryToken]
         [Route("change-language")]
-        public ActionResult ChangeLanguage(string languageCode, Uri returnUrl)
+        public ActionResult ChangeLanguage(string language, Uri returnUrl)
         {
-            CookieService.Add(CookieKeys.LanguageCode, languageCode, DateTime.Today.AddYears(10));
+            CookieService.Add(CookieKeys.LanguageCode, language, DateTime.Today.AddYears(10));
 
             var routeInfo = new RouteInfo(returnUrl, "/");
-            routeInfo.RouteData.Values["LanguageCode"] = languageCode;
+            routeInfo.RouteData.Values["language"] = language;
 
             return RedirectToRoute(routeInfo.RouteData.Values);
         }

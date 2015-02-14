@@ -12,16 +12,18 @@ namespace Mzayad.Web.Core.Services
     public interface IAuthService
     {
         bool IsAuthenticated();
+        bool IsLocal();
         string CurrentUserId();
         string AnonymousId();
 
-        Task<bool> SignIn(string userName, string password, bool rememberMe);
+        Task<ApplicationUser> SignIn(string userName, string password, bool rememberMe);
+        Task<ApplicationUser> SignIn(ApplicationUser user);
         void SignOut();
 
         Task<ApplicationUser> CurrentUser();
-        Task<ApplicationUser> GetUserByLogin(string userName, string password);
         Task<ApplicationUser> GetUserById(string userId);
         Task<ApplicationUser> GetUserByName(string userName);
+        Task<ApplicationUser> GetUserByEmail(string email);
         Task<IEnumerable<ApplicationUser>> GetUsers(string search = "", string roleName = "");
 
         Task<bool> UserExists(string userName);

@@ -8,8 +8,8 @@ body {
 }
 
 body > div { 
-    font-size: 1.5rem; 
-    line-height: 2.4rem;
+    font-size: @font-size; 
+    line-height: @line-height;
 }
 
 .body-content {
@@ -22,13 +22,40 @@ h1, h2, h3, h4 {
     margin-bottom: 1em;
 }
 
+h1 {
+    font-size: 3rem;
+}
+
+.lead {
+    font-size: @font-size + 0.1;
+    font-weight: normal;
+
+    @media @media-desktop {
+        font-size: @font-size + 0.5;
+    }
+}
+
+.text-success {
+    color: @success;
+}
+
+.text-danger {
+    color: @danger;
+}
+
+.text-warning {
+    color: @warning;
+}
+
 .alert {
     border-radius: 0;
     border-width: 2px;
     border-left-width: 10px;
+    font-size: @font-size + 0.1;
 
     .alert-link {
         font-weight: normal;
+        text-decoration: underline !important;
     }
 }
 
