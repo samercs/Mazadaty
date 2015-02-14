@@ -5,6 +5,7 @@ using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Services;
 using Mzayad.Web.Core.Services;
+using OrangeJetpack.Base.Web;
 using OrangeJetpack.Services.Client.Messaging;
 
 namespace Mzayad.Web.Controllers
@@ -55,6 +56,36 @@ namespace Mzayad.Web.Controllers
             }
 
             return languageCode;
+        }
+
+
+        public void SetStatusMessage(string message, StatusMessageType statusMessageType = StatusMessageType.Success, StatusMessageFormat statusMessageFormat = StatusMessageFormat.Normal)
+        {
+            if (string.IsNullOrEmpty(message))
+            {
+                return;
+            }
+
+            TempData["StatusMessage"] = new StatusMessage(message, statusMessageType, statusMessageFormat, false);
+        }
+
+        /// <summary>
+        /// Gets a status message if one is set.
+        /// </summary>
+        public StatusMessage GetStatusMessage()
+        {
+            return TempData["StatusMessage"] as StatusMessage;
+        }
+
+        /// <summary>
+        /// Gets a blank view with a status message.
+        /// </summary>
+        /// <param name="message">The message text to display.</param>
+        /// <param name="statusMessageType">The <see cref="StatusMessageType"/> to use.</param>
+        public ActionResult StatusMessage(string message, StatusMessageType statusMessageType = StatusMessageType.Success)
+        {
+            SetStatusMessage(message, statusMessageType);
+            return View("Blank");
         }
     }
 }

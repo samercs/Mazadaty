@@ -324,6 +324,7 @@
     <Content Include="Areas\admin\Views\Users\Index.cshtml" />
     <Content Include="Areas\admin\Views\Reports\Index.cshtml" />
     <Content Include="Areas\admin\Views\Settings\EmailTemplates.cshtml" />
+    <Content Include="Areas\admin\Views\Settings\EditEmailTemplate.cshtml" />
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
@@ -373,6 +374,7 @@
     <Content Include="Scripts\site.min.js.map">
       <DependentUpon>site.js</DependentUpon>
     </Content>
+    <Content Include="Views\Shared\_Layout_StatusMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
