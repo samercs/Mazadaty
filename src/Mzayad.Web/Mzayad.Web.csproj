@@ -198,10 +198,8 @@
     <Compile Include="Core\Configuration\RouteInfo.cs" />
     <Compile Include="Core\Formatting\EnumFormatter.cs" />
     <Compile Include="Core\Formatting\StringFormatter.cs" />
-    <Compile Include="Areas\admin\Controllers\UsersController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Areas\admin\Controllers\DocsController.cs" />
-    <Compile Include="Core\Configuration\RouteInfo.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
