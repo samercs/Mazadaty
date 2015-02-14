@@ -34,7 +34,7 @@
     $(function () {
         bindEvents();
         initRequiredLabels();
-        initWowAnimations();
+        initWowAnimations();  
     });
 
 })(jQuery, new WOW());
