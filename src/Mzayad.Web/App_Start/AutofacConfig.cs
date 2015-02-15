@@ -21,6 +21,7 @@ namespace Mzayad.Web
             builder.RegisterType<DataContextFactory>().As<IDataContextFactory>();
             builder.RegisterType<AuthService>().As<IAuthService>();
             builder.RegisterType<CookieService>().As<ICookieService>();
+            builder.RegisterType<GeolocationService>().As<IGeolocationService>();
             
             builder.Register<IAppSettings>(c => new AppSettings(ConfigurationManager.AppSettings));
             builder.Register<IMessageService>(c => new EmailService(c.Resolve<IAppSettings>().EmailSettings));

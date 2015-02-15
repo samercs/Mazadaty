@@ -20,6 +20,7 @@ namespace Mzayad.Web.Controllers
         protected readonly IAuthService AuthService;
         protected readonly ICookieService CookieService;
         protected readonly IMessageService MessageService;
+        protected readonly IGeolocationService GeolocationService;
         protected readonly EmailTemplateService _EmailTemplateService;
         
         protected ApplicationController(IControllerServices controllerServices)
@@ -29,6 +30,7 @@ namespace Mzayad.Web.Controllers
             AuthService = controllerServices.AuthService;
             CookieService = controllerServices.CookieService;
             MessageService = controllerServices.MessageService;
+            GeolocationService = controllerServices.GeolocationService;
             _EmailTemplateService=new EmailTemplateService(controllerServices.DataContextFactory);
         }
 
