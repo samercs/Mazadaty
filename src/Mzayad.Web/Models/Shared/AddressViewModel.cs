@@ -26,6 +26,19 @@ namespace Mzayad.Web.Models.Shared
             CountryCode = address.CountryCode;
         }
 
+        public AddressViewModel Hydrate()
+        {
+            CountriesList = new List<SelectListItem>();
+            CountriesList.Add(new SelectListItem()
+            {
+                Text = "Kuwait",
+                Value = "KW",
+                Selected = true
+            });
+
+            return this;
+        }
+
         //public AddressViewModel Hydrate(IShipmentSettings shipmentSettings)
         //{
         //    CountriesList = shipmentSettings.GetCountries()
