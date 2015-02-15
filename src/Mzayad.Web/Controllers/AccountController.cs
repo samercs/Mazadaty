@@ -8,6 +8,7 @@ using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Extensions;
 using Mzayad.Web.Models.Account;
+using Mzayad.Web.Models.Shared;
 using Mzayad.Web.Resources;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Services.Models;
@@ -74,10 +75,31 @@ namespace Mzayad.Web.Controllers
         {
             var viewModel = new RegisterViewModel
             {
-                PhoneCountryCode = "+965"
+                PhoneCountryCode = "+965",
+                Address = new AddressViewModel(TryGetGeolocatedAddress()).Hydrate()
             };
 
             return View(viewModel);
+        }
+
+        private Address TryGetGeolocatedAddress()
+        {
+            var address = new Address { CountryCode = "KW" };
+            if (AuthService.IsLocal())
+            {
+                return address;
+            }
+
+            try
+            {
+                var country = GeolocationService.GetCountry(AuthService.UserHostAddress());
+                address.CountryCode = country.IsoCode;
+            }
+            catch (Exception ex)
+            {
+                //_errorLogger.Log(ex);
+            }
+            return address;
         }
 
         [HttpPost, ValidateAntiForgeryToken]

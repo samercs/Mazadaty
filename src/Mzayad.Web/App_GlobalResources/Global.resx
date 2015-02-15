@@ -261,4 +261,73 @@
   <data name="RegistrationAgreementAcknowledgement" xml:space="preserve">
     <value>I agree with Mzayad's &lt;a href="{0}"&gt;terms and conditions&lt;/a&gt;.</value>
   </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="AddressRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your address.</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>Area</value>
+  </data>
+  <data name="AreaRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your area.</value>
+  </data>
+  <data name="Block" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="BlockRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your block.</value>
+  </data>
+  <data name="Building" xml:space="preserve">
+    <value>Building</value>
+  </data>
+  <data name="BuildingRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your building.</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="CityRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your city.</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="CountryRequiredErrorMessage" xml:space="preserve">
+    <value>Please select your country.</value>
+  </data>
+  <data name="Jadda" xml:space="preserve">
+    <value>Jadda</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="OptionLabel" xml:space="preserve">
+    <value>select...</value>
+  </data>
+  <data name="PostalCode" xml:space="preserve">
+    <value>Postal Code</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="StateOrProvince" xml:space="preserve">
+    <value>State or Province</value>
+  </data>
+  <data name="StateRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your state.</value>
+  </data>
+  <data name="Street" xml:space="preserve">
+    <value>Street</value>
+  </data>
+  <data name="StreetRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your street.</value>
+  </data>
+  <data name="ZipCode" xml:space="preserve">
+    <value>Zip Code</value>
+  </data>
+  <data name="ZipCodeRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your zip code.</value>
+  </data>
 </root>

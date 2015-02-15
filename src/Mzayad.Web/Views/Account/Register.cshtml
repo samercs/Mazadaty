@@ -4,6 +4,7 @@
 }
 
 @section styles {
+    <link rel="stylesheet" href="/content/flags/flags.css" />
     <style>
         
         #username-validate {
@@ -83,6 +84,8 @@
                     @Html.ValidationMessageFor(m => m.PhoneNumber, "Please enter a valid phone number.")
                 </div>
             </section>
+            
+            @Html.EditorFor(m => m.Address)
 
             <section>
                 <div class="form-group">
@@ -100,6 +103,7 @@
 
 @section Scripts {
     @Scripts.Render("~/js/validate")
+    <script src="~/scripts/address.js"></script>
     <script>
         (function($) {
 
