@@ -77,6 +77,10 @@
     <Compile Include="Migrations\201502111035575_InsertEmailTemplate.Designer.cs">
       <DependentUpon>201502111035575_InsertEmailTemplate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502151024093_AddUserPhoneAddress.cs" />
+    <Compile Include="Migrations\201502151024093_AddUserPhoneAddress.Designer.cs">
+      <DependentUpon>201502151024093_AddUserPhoneAddress.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -99,6 +103,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502111035575_InsertEmailTemplate.resx">
       <DependentUpon>201502111035575_InsertEmailTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502151024093_AddUserPhoneAddress.resx">
+      <DependentUpon>201502151024093_AddUserPhoneAddress.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

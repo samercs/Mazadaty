@@ -16,6 +16,16 @@ namespace Mzayad.Models
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedUtc { get; set; }
 
+        [Required, StringLength(3, MinimumLength = 1)]
+        public string PhoneCountryCode { get; set; }
+
+        [Required, StringLength(12, MinimumLength = 7)]
+        public override string PhoneNumber { get; set; }
+
+        public int? AddressId { get; set; }
+
+        public virtual Address Address { get; set; }
+
         //public string CreatedLocalTime
         //{
         //    get { return DateTimeFormatter.ToLocalTime(CreatedUtc); }
