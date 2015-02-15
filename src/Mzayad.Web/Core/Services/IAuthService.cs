@@ -15,6 +15,7 @@ namespace Mzayad.Web.Core.Services
         bool IsLocal();
         string CurrentUserId();
         string AnonymousId();
+        string UserHostAddress();
 
         Task<ApplicationUser> SignIn(string userName, string password, bool rememberMe);
         Task<ApplicationUser> SignIn(ApplicationUser user);
