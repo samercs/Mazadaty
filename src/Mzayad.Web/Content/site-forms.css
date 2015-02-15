@@ -64,6 +64,9 @@ input[type=number].no-spinner::-webkit-outer-spin-button {
 .form-group .form-control:last-child {
   margin-bottom: 0;
 }
+.form-inline .form-control:last-child {
+  margin-bottom: 5px;
+}
 .input-group-addon {
   border-radius: 0;
   font-size: 1.5rem;

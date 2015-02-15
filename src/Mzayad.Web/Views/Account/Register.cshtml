@@ -75,6 +75,17 @@
 
             <section>
                 <div class="form-group">
+                    @Html.LabelFor(m => m.PhoneNumber, "Phone Number")
+                    <div class="form-inline">
+                        @Html.TextBoxFor(m => m.PhoneCountryCode, new {@class = "form-control form-control-sm", @type = "tel", maxlength = 4})
+                        @Html.TextBoxFor(m => m.PhoneNumber, new {@class = "form-control", @type = "tel"})
+                    </div>
+                    @Html.ValidationMessageFor(m => m.PhoneNumber, "Please enter a valid phone number.")
+                </div>
+            </section>
+
+            <section>
+                <div class="form-group">
                     <i class="fa fa-lg fa-check-square-o"></i>
                     @Html.Raw(string.Format(Global.RegistrationAgreementAcknowledgement, Url.Action("TermsAndConditions", "Home", new { Language = Html.Language() })))
                 </div>

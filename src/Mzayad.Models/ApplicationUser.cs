@@ -16,10 +16,10 @@ namespace Mzayad.Models
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedUtc { get; set; }
 
-        [Required, StringLength(3, MinimumLength = 1)]
+        [Required, StringLength(4, MinimumLength = 1)]
         public string PhoneCountryCode { get; set; }
 
-        [Required, StringLength(12, MinimumLength = 7)]
+        [Required, StringLength(15, MinimumLength = 7)]
         public override string PhoneNumber { get; set; }
 
         public int? AddressId { get; set; }

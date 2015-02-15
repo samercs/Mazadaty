@@ -72,7 +72,12 @@ namespace Mzayad.Web.Controllers
 
         public ActionResult Register()
         {
-            return View();
+            var viewModel = new RegisterViewModel
+            {
+                PhoneCountryCode = "+965"
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost, ValidateAntiForgeryToken]

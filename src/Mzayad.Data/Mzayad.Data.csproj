@@ -81,6 +81,10 @@
     <Compile Include="Migrations\201502151024093_AddUserPhoneAddress.Designer.cs">
       <DependentUpon>201502151024093_AddUserPhoneAddress.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502151052444_IncreasePhoneFieldLength.cs" />
+    <Compile Include="Migrations\201502151052444_IncreasePhoneFieldLength.Designer.cs">
+      <DependentUpon>201502151052444_IncreasePhoneFieldLength.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -106,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502151024093_AddUserPhoneAddress.resx">
       <DependentUpon>201502151024093_AddUserPhoneAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502151052444_IncreasePhoneFieldLength.resx">
+      <DependentUpon>201502151052444_IncreasePhoneFieldLength.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
