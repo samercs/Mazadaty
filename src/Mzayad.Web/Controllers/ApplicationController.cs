@@ -1,5 +1,4 @@
 ﻿using Mzayad.Data;
-using Mzayad.Models;
 using Mzayad.Services;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Base.Web;
@@ -21,6 +20,7 @@ namespace Mzayad.Web.Controllers
         protected readonly ICookieService CookieService;
         protected readonly IMessageService MessageService;
         protected readonly IGeolocationService GeolocationService;
+        protected readonly EmailService EmailService;
         protected readonly EmailTemplateService _EmailTemplateService;
         
         protected ApplicationController(IControllerServices controllerServices)
@@ -31,21 +31,16 @@ namespace Mzayad.Web.Controllers
             CookieService = controllerServices.CookieService;
             MessageService = controllerServices.MessageService;
             GeolocationService = controllerServices.GeolocationService;
+            
+            EmailService = new EmailService(AppSettings.EmailSettings);
             _EmailTemplateService=new EmailTemplateService(controllerServices.DataContextFactory);
         }
 
-        //protected override void ExecuteCore()
-        //{
-        //    RouteData.Values["languageCode"] = "ar";
-            
-        //    base.ExecuteCore();
-        //}
-
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var languagecode = filterContext.RouteData.Values["languageCode"] ?? GetLanguageCode();
-            ViewBag.LanguageCode = languagecode.ToString();
-            Language = languagecode.ToString();
+            var languagecode = filterContext.RouteData.Values["language"] ?? GetLanguageCode();
+            Language = ViewBag.Language = languagecode.ToString();
+            //Language = languagecode.ToString();
 
             base.OnActionExecuting(filterContext);
         }
@@ -61,6 +56,7 @@ namespace Mzayad.Web.Controllers
             return languageCode;
         }
 
+        /// <summary>
         /// Sets a view status message for display.
         /// </summary>
         /// <param name="message">The message text to display.</param>

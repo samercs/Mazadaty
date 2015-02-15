@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
+using OrangeJetpack.Localization;
 
 namespace Mzayad.Services
 {
@@ -25,11 +26,13 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<EmailTemplate> GetByTemplateType(EmailTemplateType emailTemplateType)
+        public async Task<EmailTemplate> GetByTemplateType(EmailTemplateType emailTemplateType, string languageCode = "en")
         {
             using (var dc = DataContext())
             {
-                return await dc.EmailTemplates.SingleOrDefaultAsync(i => i.TemplateType == emailTemplateType);
+                var template = await dc.EmailTemplates.SingleOrDefaultAsync(i => i.TemplateType == emailTemplateType);
+
+                return template.Localize(languageCode, i => i.Subject, i => i.Message);
             }
         }
 

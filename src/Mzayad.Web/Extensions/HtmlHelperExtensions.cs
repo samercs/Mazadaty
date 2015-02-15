@@ -7,7 +7,7 @@ namespace Mzayad.Web.Extensions
     {
         public static string Language(this HtmlHelper htmlHelper)
         {
-            var languagCode = htmlHelper.ViewBag.LanguageCode ?? "en";
+            var languagCode = htmlHelper.ViewBag.Language ?? "en";
 
             return languagCode.ToString().ToLowerInvariant();
         }

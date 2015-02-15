@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Threading.Tasks;
 using Mzayad.Models;
+using Mzayad.Models.Enum;
 using Mzayad.Services;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Identity;
@@ -15,6 +16,8 @@ using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Services.Models;
 using OrangeJetpack.Base.Core.Security;
+using OrangeJetpack.Services.Client.Messaging;
+using OrangeJetpack.Localization;
 
 namespace Mzayad.Web.Controllers
 {
@@ -152,6 +155,7 @@ namespace Mzayad.Web.Controllers
             user.AddressId = address.AddressId;
             await AuthService.UpdateUser(user);
 
+            await SendNewUserWelcomeEmail(user);
             SetNameAndEmailCookies(user, "");
 
             SetStatusMessage(string.Format(Global.RegistrationWelcomeMessage, user.FirstName));
@@ -185,6 +189,34 @@ namespace Mzayad.Web.Controllers
             }
 
             return false;
+        }
+
+        public async Task<ActionResult> Test()
+        {
+            await SendNewUserWelcomeEmail(await AuthService.CurrentUser());
+
+            return Content("..");
+        }
+
+        private async Task SendNewUserWelcomeEmail(ApplicationUser user)
+        {
+            var template = await _EmailTemplateService.GetByTemplateType(EmailTemplateType.AccountRegistration, Language);
+            var email = new Email
+            {
+                ToAddress = user.Email,
+                Subject = template.Subject,
+                Message = string.Format(template.Message, user.FirstName)
+            };
+
+            try
+            {
+                await EmailService.SendMessage(email.WithTemplate(this));
+            }
+            catch (Exception ex)
+            {
+                // TODO added exception logging, for example Raygun or ELMAH
+                throw ex;
+            }
         }
 
         public async Task<JsonResult> ValidateUserName(string username)
