@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Web.Configuration;
+using System.Web.Mvc;
 using Mzayad.Web.Resources;
 
 namespace Mzayad.Web.Extensions
@@ -12,7 +13,9 @@ namespace Mzayad.Web.Extensions
         {
             textLabel = textLabel ?? Global.Required;
 
-            var requiredLabel = "<span class='required-label'><i class='fa fa-pad-right fa-plus'></i><span>" + textLabel + "</span></span>";
+            var requiredIcon = WebConfigurationManager.AppSettings["RequiredIcon"];
+
+            var requiredLabel = "<span class='required-label'><i class='fa fa-pad-right " + requiredIcon + "'></i><span>" + textLabel + "</span></span>";
 
             return MvcHtmlString.Create(htmlString + requiredLabel);
         }

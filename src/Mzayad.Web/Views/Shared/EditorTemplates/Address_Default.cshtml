@@ -8,14 +8,14 @@
     @Html.ValidationMessageFor(m => m.AddressLine1, Global.AddressRequiredErrorMessage)
 </div>
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-5">
         <div class="form-group">
             @Html.LabelFor(m => m.CityArea, Global.City).Required()
             @Html.TextBoxFor(m => m.CityArea, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.CityArea, Global.CityRequiredErrorMessage)
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="form-group">
             @Html.LabelFor(m => m.StateProvince, Global.StateOrProvince)
             @Html.TextBoxFor(m => m.StateProvince, new { @class = "form-control" })

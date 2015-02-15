@@ -583,7 +583,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to State or Province.
+        ///   Looks up a localized string similar to State/Province.
         /// </summary>
         public static string StateOrProvince {
             get {

@@ -1,7 +1,7 @@
 ﻿(function ($) {
 
     $(function () {
-        $("#AddressViewModel_CountryCode").on("change", changeCountry);
+        $("#Address_CountryCode").on("change", changeCountry);
     });
 
     var addressLoading = $("#AddressEntryLoading");
@@ -17,7 +17,7 @@
 
         setCountryFlag(countryCode);
         showLoading();
-        addressForm.load("/Checkout/ChangeCountry?countryCode=" + countryCode, hideLoading);
+        addressForm.load("/account/changecountry?countryCode=" + countryCode, hideLoading);
     };
 
     var setCountryFlag = function (countryCode) {

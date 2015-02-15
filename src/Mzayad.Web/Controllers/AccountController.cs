@@ -102,6 +102,19 @@ namespace Mzayad.Web.Controllers
             return address;
         }
 
+        public PartialViewResult ChangeCountry(string countryCode)
+        {
+            var viewName = AddressPartialResolver.GetViewName(countryCode);
+            var viewModel = new AddressViewModel();
+
+            ViewData.TemplateInfo = new TemplateInfo
+            {
+                HtmlFieldPrefix = "Address"
+            };
+
+            return PartialView(viewName, viewModel);
+        }
+
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {

@@ -12,8 +12,7 @@
         @Html.ValidationMessageFor(m => m.CountryCode, Global.CountryRequiredErrorMessage)
     </div>
     <div id="AddressEntryLoading" class="text-center" style="color: #999; display: none;">
-        <i class="fa fa-spin fa-spinner"></i> @Global.Loading
-        @Global.Loading
+        <i class="fa fa-spin fa-spinner fa-lg"></i> @Global.Loading
     </div>
     <div id="AddressEntryAddress">       
         @Html.Partial(AddressPartialResolver.GetViewName(Model.CountryCode))

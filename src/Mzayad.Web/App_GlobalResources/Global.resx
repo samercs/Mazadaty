@@ -313,7 +313,7 @@
     <value>State</value>
   </data>
   <data name="StateOrProvince" xml:space="preserve">
-    <value>State or Province</value>
+    <value>State/Province</value>
   </data>
   <data name="StateRequiredErrorMessage" xml:space="preserve">
     <value>Please enter your state.</value>

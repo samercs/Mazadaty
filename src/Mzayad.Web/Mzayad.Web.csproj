@@ -86,6 +86,10 @@
     <Reference Include="OrangeJetpack.Localization">
       <HintPath>..\..\packages\OrangeJetpack.Localization.1.5.6\lib\OrangeJetpack.Localization.dll</HintPath>
     </Reference>
+    <Reference Include="OrangeJetpack.Regionalization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\OrangeJetpack.Regionalization.0.0.6\lib\OrangeJetpack.Regionalization.dll</HintPath>
+    </Reference>
     <Reference Include="OrangeJetpack.Services.Client">
       <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.21\lib\OrangeJetpack.Services.Client.dll</HintPath>
     </Reference>
