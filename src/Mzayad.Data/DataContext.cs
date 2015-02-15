@@ -9,8 +9,7 @@ namespace Mzayad.Data
 {
     public class DataContext : IdentityDbContext<ApplicationUser>, IDataContext
     {
-        // TODO added IDbSets
-
+        public IDbSet<Address> Addresses { get; set; }
         public IDbSet<EmailTemplate> EmailTemplates { get; set; } 
 
         public DataContext(): base("DefaultConnection")

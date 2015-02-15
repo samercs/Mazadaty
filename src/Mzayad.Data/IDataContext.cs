@@ -7,9 +7,8 @@ namespace Mzayad.Data
 {
     public interface IDataContext : IDisposable
     {
-        // TODO add IDbSets
+        IDbSet<Address> Addresses { get; set; }
         IDbSet<EmailTemplate> EmailTemplates { get; set; } 
-
 
         int SaveChanges();
         Task<int> SaveChangesAsync();

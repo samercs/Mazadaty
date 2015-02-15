@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Threading.Tasks;
 using Mzayad.Models;
+using Mzayad.Services;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
@@ -20,8 +21,11 @@ namespace Mzayad.Web.Controllers
     [RoutePrefix("{language}/account")]
     public class AccountController : ApplicationController
     {
+        private readonly AddressService _addressService;
+        
         public AccountController(IControllerServices controllerServices) : base(controllerServices)
         {
+            _addressService = new AddressService(controllerServices.DataContextFactory);
         }
 
         [Route("sign-in")]
@@ -124,6 +128,9 @@ namespace Mzayad.Web.Controllers
                 return View(model);
             }
 
+            model.PhoneCountryCode = "+" + StringFormatter.StripNonDigits(model.PhoneCountryCode);
+            model.PhoneNumber = StringFormatter.StripNonDigits(model.PhoneNumber);
+
             var user = new ApplicationUser
             {
                 UserName = model.UserName,
@@ -131,7 +138,7 @@ namespace Mzayad.Web.Controllers
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 PhoneCountryCode = model.PhoneCountryCode,
-                PhoneNumber = StringFormatter.StripNonDigits(model.PhoneNumber)
+                PhoneNumber = model.PhoneNumber
             };
 
             var result = await AuthService.CreateUser(user, model.Password);
@@ -140,6 +147,10 @@ namespace Mzayad.Web.Controllers
                 SetStatusMessage(string.Format(Global.RegistrationErrorMessage));
                 return View(model);
             }
+
+            var address = await _addressService.SaveAddress(model.Address);
+            user.AddressId = address.AddressId;
+            await AuthService.UpdateUser(user);
 
             SetNameAndEmailCookies(user, "");
 
@@ -160,8 +171,6 @@ namespace Mzayad.Web.Controllers
                 "andy.mehalick@orangejetpack.com", 
                 "samer_mail_2006@yahoo.com",
                 "badder.alghanim@alawama.com",
-                "alghanim@mzayad.com",
-                "alsarraf@mzayad.com",
                 "alghanim.a@alghanimequipment.com"
             };
 
