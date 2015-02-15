@@ -77,8 +77,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="OrangeJetpack.Base.Core">
-      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.3\lib\OrangeJetpack.Base.Core.dll</HintPath>
+    <Reference Include="OrangeJetpack.Base.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.4\lib\OrangeJetpack.Base.Core.dll</HintPath>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Web">
       <HintPath>..\..\packages\OrangeJetpack.Base.Web.0.0.6\lib\OrangeJetpack.Base.Web.dll</HintPath>
@@ -210,8 +211,6 @@
     <Compile Include="Areas\admin\Controllers\UsersController.cs" />
     <Compile Include="Core\Configuration\AddressPartialResolver.cs" />
     <Compile Include="Core\Configuration\RouteInfo.cs" />
-    <Compile Include="Core\Formatting\EnumFormatter.cs" />
-    <Compile Include="Core\Formatting\StringFormatter.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Areas\admin\Controllers\DocsController.cs" />
     <Compile Include="Core\Services\GeolocationService.cs" />
@@ -233,7 +232,6 @@
     <Compile Include="Core\Services\IAuthService.cs" />
     <Compile Include="Core\Services\IControllerServices.cs" />
     <Compile Include="Core\Services\ICookieService.cs" />
-    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Extensions\MvcHtmlStringExtensions.cs" />

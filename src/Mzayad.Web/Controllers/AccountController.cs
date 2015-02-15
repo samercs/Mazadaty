@@ -10,6 +10,7 @@ using Mzayad.Web.Extensions;
 using Mzayad.Web.Models.Account;
 using Mzayad.Web.Models.Shared;
 using Mzayad.Web.Resources;
+using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Services.Models;
 using OrangeJetpack.Base.Core.Security;
@@ -128,7 +129,9 @@ namespace Mzayad.Web.Controllers
                 UserName = model.UserName,
                 Email = model.Email,
                 FirstName = model.FirstName,
-                LastName = model.LastName
+                LastName = model.LastName,
+                PhoneCountryCode = model.PhoneCountryCode,
+                PhoneNumber = StringFormatter.StripNonDigits(model.PhoneNumber)
             };
 
             var result = await AuthService.CreateUser(user, model.Password);
