@@ -1,10 +1,10 @@
 ﻿using Mzayad.Models.Enum;
 using Mzayad.Web.Controllers;
-using Mzayad.Web.Core.Formatting;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Localization;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using OrangeJetpack.Base.Core.Formatting;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {

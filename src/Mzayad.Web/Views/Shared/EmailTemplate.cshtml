@@ -3,9 +3,9 @@
     const string bodyBackground = "#ebedee";
     const string headerBackground = "#f7f7f7";
     const string emailBackground = "#ffffff";
-    const string logoUrl = "https://az688617.vo.msecnd.net/template/easy-shippings-logo-635515895924358873.png";
-    const int logoWidth = 186;
-    const int logoHeight = 93;
+    const string logoUrl = "https://az723232.vo.msecnd.net/assets/mzayad-favicon-32x32-635593381391686784.png";
+    const int logoWidth = 32;
+    const int logoHeight = 32;
     const string fontFamily = "Arial, sans-serif";
 }
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -90,7 +90,9 @@
                 <div class="content" style="display: block !important; max-width: 600px; margin: 0 auto; padding: 0;">
                     <table bgcolor="@headerBackground" style="width: 100%; background-color: @headerBackground">
                         <tr>
-                            <td style="padding: 15px;"><img src="@logoUrl" style="max-width: 100%; width: @(logoWidth)px; height: @(logoHeight)px;" width="@logoWidth" height="@logoHeight" alt="Easy Shippings" /></td>
+                            <td style="padding: 15px;">
+                                <img src="@logoUrl" style="max-width: 100%; width: @(logoWidth)px; height: @(logoHeight)px;" width="@logoWidth" height="@logoHeight" alt="Easy Shippings" />
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -107,7 +109,7 @@
                         <tr>
                             <td style="padding: 15px; font-family: @fontFamily;">
                                 @Html.Raw(Model.Message)
-                                <p>Easy Shippings</p>
+                                <p>Mzayad Team</p>
                             </td>
                         </tr>
                     </table>

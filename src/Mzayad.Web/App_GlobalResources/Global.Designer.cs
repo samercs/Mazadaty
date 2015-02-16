@@ -61,6 +61,78 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        public static string Address {
+            get {
+                return ResourceManager.GetString("Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter your address..
+        /// </summary>
+        public static string AddressRequiredErrorMessage {
+            get {
+                return ResourceManager.GetString("AddressRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Area.
+        /// </summary>
+        public static string Area {
+            get {
+                return ResourceManager.GetString("Area", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter your area..
+        /// </summary>
+        public static string AreaRequiredErrorMessage {
+            get {
+                return ResourceManager.GetString("AreaRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Block.
+        /// </summary>
+        public static string Block {
+            get {
+                return ResourceManager.GetString("Block", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter your block..
+        /// </summary>
+        public static string BlockRequiredErrorMessage {
+            get {
+                return ResourceManager.GetString("BlockRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Building.
+        /// </summary>
+        public static string Building {
+            get {
+                return ResourceManager.GetString("Building", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter your building..
+        /// </summary>
+        public static string BuildingRequiredErrorMessage {
+            get {
+                return ResourceManager.GetString("BuildingRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change Language.
         /// </summary>
         public static string ChangeLanguage {
@@ -70,11 +142,47 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to City.
+        /// </summary>
+        public static string City {
+            get {
+                return ResourceManager.GetString("City", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter your city..
+        /// </summary>
+        public static string CityRequiredErrorMessage {
+            get {
+                return ResourceManager.GetString("CityRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
         public static string Continue {
             get {
                 return ResourceManager.GetString("Continue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Country.
+        /// </summary>
+        public static string Country {
+            get {
+                return ResourceManager.GetString("Country", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select your country..
+        /// </summary>
+        public static string CountryRequiredErrorMessage {
+            get {
+                return ResourceManager.GetString("CountryRequiredErrorMessage", resourceCulture);
             }
         }
         
@@ -151,6 +259,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Jadda.
+        /// </summary>
+        public static string Jadda {
+            get {
+                return ResourceManager.GetString("Jadda", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last Name.
         /// </summary>
         public static string LastName {
@@ -165,6 +282,15 @@ namespace Mzayad.Web.Resources {
         public static string LastNameRequiredErrorMessage {
             get {
                 return ResourceManager.GetString("LastNameRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        public static string Loading {
+            get {
+                return ResourceManager.GetString("Loading", resourceCulture);
             }
         }
         
@@ -223,6 +349,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to select....
+        /// </summary>
+        public static string OptionLabel {
+            get {
+                return ResourceManager.GetString("OptionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         public static string Password {
@@ -255,6 +390,15 @@ namespace Mzayad.Web.Resources {
         public static string PasswordSuccessfullyChanged {
             get {
                 return ResourceManager.GetString("PasswordSuccessfullyChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Postal Code.
+        /// </summary>
+        public static string PostalCode {
+            get {
+                return ResourceManager.GetString("PostalCode", resourceCulture);
             }
         }
         
@@ -430,6 +574,51 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to State.
+        /// </summary>
+        public static string State {
+            get {
+                return ResourceManager.GetString("State", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to State/Province.
+        /// </summary>
+        public static string StateOrProvince {
+            get {
+                return ResourceManager.GetString("StateOrProvince", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter your state..
+        /// </summary>
+        public static string StateRequiredErrorMessage {
+            get {
+                return ResourceManager.GetString("StateRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Street.
+        /// </summary>
+        public static string Street {
+            get {
+                return ResourceManager.GetString("Street", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter your street..
+        /// </summary>
+        public static string StreetRequiredErrorMessage {
+            get {
+                return ResourceManager.GetString("StreetRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Terms and Conditions.
         /// </summary>
         public static string TermsAndConditions {
@@ -489,6 +678,33 @@ namespace Mzayad.Web.Resources {
         public static string UserNameValidateIsValid {
             get {
                 return ResourceManager.GetString("UserNameValidateIsValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome!.
+        /// </summary>
+        public static string Welcome {
+            get {
+                return ResourceManager.GetString("Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zip Code.
+        /// </summary>
+        public static string ZipCode {
+            get {
+                return ResourceManager.GetString("ZipCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter your zip code..
+        /// </summary>
+        public static string ZipCodeRequiredErrorMessage {
+            get {
+                return ResourceManager.GetString("ZipCodeRequiredErrorMessage", resourceCulture);
             }
         }
     }

@@ -36,7 +36,9 @@ namespace Mzayad.Web.Controllers
 
             var routeInfo = new RouteInfo(returnUrl, "/");
             routeInfo.RouteData.Values["language"] = language;
-
+            //routeInfo.RouteData.Values.Add("language", language);
+            routeInfo.RouteData.Values.Remove("MS_DirectRouteMatches");
+            
             return RedirectToRoute(routeInfo.RouteData.Values);
         }
     }

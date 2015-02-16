@@ -1,9 +1,12 @@
-﻿@model Mzayad.Web.Models.Account.RegisterViewModel
+﻿@using Newtonsoft.Json
+@model Mzayad.Web.Models.Account.RegisterViewModel
 @{
     ViewBag.Title = Global.Register;
 }
 
 @section styles {
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" href="/content/flags/flags.css" />
     <style>
         
         #username-validate {
@@ -27,36 +30,20 @@
 
             <section>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.FirstName, Global.FirstName).Required("All Fields Required")
+                    @Html.LabelFor(m => m.FirstName, Global.FirstName).Required("Required")
                     @Html.TextBoxFor(m => m.FirstName, new {@class = "form-control", autocorrect = "off", spellcheck = "false", autofocus = "autofocus"})
                     @Html.ValidationMessageFor(m => m.FirstName, Global.FirstNameRequiredErrorMessage)
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.LastName, Global.LastName)
+                    @Html.LabelFor(m => m.LastName, Global.LastName).Required()
                     @Html.TextBoxFor(m => m.LastName, new {@class = "form-control", autocorrect = "off", spellcheck = "false"})
                     @Html.ValidationMessageFor(m => m.LastName, Global.LastNameRequiredErrorMessage)
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Email, Global.Email)
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-fw fa-at"></i></span>
-                        @Html.TextBoxFor(m => m.Email, new {@class = "form-control", type = "email"})
-                    </div>
-                    @Html.ValidationMessageFor(m => m.Email, Global.EmailRequiredErrorMessage)
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, Global.Password)
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
-                        @Html.PasswordFor(m => m.Password, new {@class = "form-control"})
-                    </div>
-                    @Html.ValidationMessageFor(m => m.Password, Global.PasswordInvalidErrorMessage)
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.UserName, Global.UserName)
+                    @Html.LabelFor(m => m.UserName, Global.UserName).Required()
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-fw fa-user"></i></span>
-                        @Html.TextBoxFor(m => m.UserName, new {@class = "form-control", autocorrect = "off", spellcheck = "false"})
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", autocorrect = "off", spellcheck = "false" })
                     </div>
                     @Html.ValidationMessageFor(m => m.UserName, Global.UserNameRequiredErrorMessage)
                     <div id="username-validate" class="text-right">
@@ -71,11 +58,24 @@
                         </div>
                     </div>
                 </div>
-            </section>
-
-            <section>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.PhoneNumber, "Phone Number")
+                    @Html.LabelFor(m => m.Email, Global.Email).Required()
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-fw fa-at"></i></span>
+                        @Html.TextBoxFor(m => m.Email, new {@class = "form-control", type = "email"})
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Email, Global.EmailRequiredErrorMessage)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, Global.Password).Required()
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
+                        @Html.PasswordFor(m => m.Password, new {@class = "form-control"})
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Password, Global.PasswordInvalidErrorMessage)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PhoneNumber, "Phone Number").Required()
                     <div class="form-inline">
                         @Html.TextBoxFor(m => m.PhoneCountryCode, new {@class = "form-control form-control-sm", @type = "tel", maxlength = 4})
                         @Html.TextBoxFor(m => m.PhoneNumber, new {@class = "form-control", @type = "tel"})
@@ -83,6 +83,8 @@
                     @Html.ValidationMessageFor(m => m.PhoneNumber, "Please enter a valid phone number.")
                 </div>
             </section>
+            
+            @Html.EditorFor(m => m.Address)
 
             <section>
                 <div class="form-group">
@@ -99,28 +101,31 @@
 </div>
 
 @section Scripts {
+    @Scripts.Render("~/js/jquery-ui")
     @Scripts.Render("~/js/validate")
+    <script src="~/scripts/address.js"></script>
     <script>
-        (function($) {
+    (function($) {
 
-            $(function() {
-                bindEvents();
-            });
+        $(function() {
+            bindEvents();
+            initAutocomplete();
+        });
 
-            var bindEvents = function() {
-                $("#UserName").on("blur", validateUserName);
-            };
+        var bindEvents = function() {
+            $("#UserName").on("blur", validateUserName);
+        };
 
-            var validateUserName = function() {
-                var username = $(this).val();
-                if (username.length === 0) {
-                    return;
-                }
-                
-                $("#username-validate").show().children("div").hide();
-                $("#username-checking").show();
+        var validateUserName = function() {
+            var username = $(this).val();
+            if (username.length === 0) {
+                return;
+            }
 
-                var url = "@Url.Action("ValidateUserName")";
+            $("#username-validate").show().children("div").hide();
+            $("#username-checking").show();
+
+            var url = "@Url.Action("ValidateUserName")";
                 var data = { username: username };
 
                 $.getJSON(url, data, function(d) {
@@ -130,6 +135,13 @@
                     } else {
                         $("#username-error").show();
                     }
+                });
+            };
+
+            var initAutocomplete = function() {
+                var areas =  @Html.Raw(JsonConvert.SerializeObject(Model.Address.KuwaitAreas));
+                $(".kuwait-area").autocomplete({
+                    source: areas
                 });
             };
 

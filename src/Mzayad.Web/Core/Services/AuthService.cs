@@ -59,6 +59,11 @@ namespace Mzayad.Web.Core.Services
             return _httpContext.Request.AnonymousID;
         }
 
+        public string UserHostAddress()
+        {
+            return _httpContext.Request.UserHostAddress;
+        }
+
         public async Task<ApplicationUser> SignIn(string username, string password, bool rememberMe)
         {
             ApplicationUser user;

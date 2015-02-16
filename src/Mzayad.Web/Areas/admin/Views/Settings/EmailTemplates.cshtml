@@ -1,5 +1,6 @@
 ﻿@using Mzayad.Web.Extensions
-@model System.Collections.Generic.IEnumerable<Mzayad.Models.EmailTemplate>
+@using OrangeJetpack.Base.Core.Formatting
+@model IEnumerable<Mzayad.Models.EmailTemplate>
 
 @{
     ViewBag.Title = "Email Template";
@@ -17,7 +18,7 @@
     @foreach (var template in Model)
     {
         <tr>
-            <td>@template.TemplateType.GetDescription()</td>
+            <td>@EnumFormatter.Description(template.TemplateType)</td>
             <td>@template.Description</td>
             <td class="link-cell">
                 @Html.ActionLink("Edit", "EditEmailTemplate", "Settings", new { id = template.TemplateType }, null)

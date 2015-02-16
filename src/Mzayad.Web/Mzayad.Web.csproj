@@ -66,13 +66,20 @@
     <Reference Include="MarkdownSharp">
       <HintPath>..\..\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
     </Reference>
+    <Reference Include="MaxMind.Db">
+      <HintPath>..\..\packages\MaxMind.Db.1.0.0.0\lib\net40\MaxMind.Db.dll</HintPath>
+    </Reference>
+    <Reference Include="MaxMind.GeoIP2">
+      <HintPath>..\..\packages\MaxMind.GeoIP2.2.1.0.0\lib\net40\MaxMind.GeoIP2.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="OrangeJetpack.Base.Core">
-      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.3\lib\OrangeJetpack.Base.Core.dll</HintPath>
+    <Reference Include="OrangeJetpack.Base.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.4\lib\OrangeJetpack.Base.Core.dll</HintPath>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Web">
       <HintPath>..\..\packages\OrangeJetpack.Base.Web.0.0.6\lib\OrangeJetpack.Base.Web.dll</HintPath>
@@ -80,16 +87,26 @@
     <Reference Include="OrangeJetpack.Localization">
       <HintPath>..\..\packages\OrangeJetpack.Localization.1.5.6\lib\OrangeJetpack.Localization.dll</HintPath>
     </Reference>
+    <Reference Include="OrangeJetpack.Regionalization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\OrangeJetpack.Regionalization.0.0.6\lib\OrangeJetpack.Regionalization.dll</HintPath>
+    </Reference>
     <Reference Include="OrangeJetpack.Services.Client">
       <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.21\lib\OrangeJetpack.Services.Client.dll</HintPath>
     </Reference>
     <Reference Include="OrangeJetpack.Services.Models">
       <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.21\lib\OrangeJetpack.Services.Models.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\..\packages\RestSharp.105.0.0\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -195,11 +212,12 @@
     <Compile Include="Areas\admin\Controllers\ReportsController.cs" />
     <Compile Include="Areas\admin\Controllers\SettingsController.cs" />
     <Compile Include="Areas\admin\Controllers\UsersController.cs" />
+    <Compile Include="Core\Configuration\AddressPartialResolver.cs" />
     <Compile Include="Core\Configuration\RouteInfo.cs" />
-    <Compile Include="Core\Formatting\EnumFormatter.cs" />
-    <Compile Include="Core\Formatting\StringFormatter.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Areas\admin\Controllers\DocsController.cs" />
+    <Compile Include="Core\Services\GeolocationService.cs" />
+    <Compile Include="Core\Services\IGeolocationService.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
@@ -217,7 +235,6 @@
     <Compile Include="Core\Services\IAuthService.cs" />
     <Compile Include="Core\Services\IControllerServices.cs" />
     <Compile Include="Core\Services\ICookieService.cs" />
-    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Extensions\MvcHtmlStringExtensions.cs" />
@@ -235,6 +252,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\flags\flags.css" />
+    <Content Include="Content\flags\flags.png" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\kendo\images\grab.cur" />
@@ -270,6 +289,39 @@
     <Content Include="Content\site.min.css">
       <DependentUpon>site.css</DependentUpon>
     </Content>
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\menu.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\theme.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="favicon.ico" />
     <Content Include="Fonts\fontawesome-webfont.svg" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
@@ -347,12 +399,15 @@
     <None Include="Content\variables.less" />
     <None Include="Properties\PublishProfiles\Mzayad.pubxml" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
+    <Content Include="Scripts\address.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />
     <Content Include="Scripts\jquery-2.1.3.min.js" />
     <Content Include="Scripts\jquery-2.1.3.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.11.3.js" />
+    <Content Include="Scripts\jquery-ui-1.11.3.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -398,6 +453,10 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\User\MyAccount.cshtml" />
     <Content Include="Views\Home\TermsAndConditions.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Address.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Address_Default.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Address_KW.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Address_US.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

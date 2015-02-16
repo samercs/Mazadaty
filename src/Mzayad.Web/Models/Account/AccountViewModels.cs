@@ -40,7 +40,7 @@ namespace Mzayad.Web.Models.Account
 
         [Required]
         [StringLength(256)]
-        [RegularExpression(@"^[a-zA-Z0-9-]+$")]
+        [RegularExpression(@"^[a-zA-Z0-9-\._]+$")]
         public string UserName { get; set; }
 
         [Required]

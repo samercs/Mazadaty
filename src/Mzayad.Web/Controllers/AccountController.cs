@@ -3,23 +3,32 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Threading.Tasks;
 using Mzayad.Models;
+using Mzayad.Models.Enum;
+using Mzayad.Services;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Extensions;
 using Mzayad.Web.Models.Account;
+using Mzayad.Web.Models.Shared;
 using Mzayad.Web.Resources;
+using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Services.Models;
 using OrangeJetpack.Base.Core.Security;
+using OrangeJetpack.Services.Client.Messaging;
+using OrangeJetpack.Localization;
 
 namespace Mzayad.Web.Controllers
 {
     [RoutePrefix("{language}/account")]
     public class AccountController : ApplicationController
     {
+        private readonly AddressService _addressService;
+        
         public AccountController(IControllerServices controllerServices) : base(controllerServices)
         {
+            _addressService = new AddressService(controllerServices.DataContextFactory);
         }
 
         [Route("sign-in")]
@@ -74,10 +83,44 @@ namespace Mzayad.Web.Controllers
         {
             var viewModel = new RegisterViewModel
             {
-                PhoneCountryCode = "+965"
+                PhoneCountryCode = "+965",
+                Address = new AddressViewModel(TryGetGeolocatedAddress()).Hydrate()
             };
 
             return View(viewModel);
+        }
+
+        private Address TryGetGeolocatedAddress()
+        {
+            var address = new Address { CountryCode = "KW" };
+            if (AuthService.IsLocal())
+            {
+                return address;
+            }
+
+            try
+            {
+                var country = GeolocationService.GetCountry(AuthService.UserHostAddress());
+                address.CountryCode = country.IsoCode;
+            }
+            catch (Exception ex)
+            {
+                //_errorLogger.Log(ex);
+            }
+            return address;
+        }
+
+        public PartialViewResult ChangeCountry(string countryCode)
+        {
+            var viewName = AddressPartialResolver.GetViewName(countryCode);
+            var viewModel = new AddressViewModel();
+
+            ViewData.TemplateInfo = new TemplateInfo
+            {
+                HtmlFieldPrefix = "Address"
+            };
+
+            return PartialView(viewName, viewModel);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -88,12 +131,17 @@ namespace Mzayad.Web.Controllers
                 return View(model);
             }
 
+            model.PhoneCountryCode = "+" + StringFormatter.StripNonDigits(model.PhoneCountryCode);
+            model.PhoneNumber = StringFormatter.StripNonDigits(model.PhoneNumber);
+
             var user = new ApplicationUser
             {
                 UserName = model.UserName,
                 Email = model.Email,
                 FirstName = model.FirstName,
-                LastName = model.LastName
+                LastName = model.LastName,
+                PhoneCountryCode = model.PhoneCountryCode,
+                PhoneNumber = model.PhoneNumber
             };
 
             var result = await AuthService.CreateUser(user, model.Password);
@@ -103,6 +151,11 @@ namespace Mzayad.Web.Controllers
                 return View(model);
             }
 
+            var address = await _addressService.SaveAddress(model.Address);
+            user.AddressId = address.AddressId;
+            await AuthService.UpdateUser(user);
+
+            await SendNewUserWelcomeEmail(user);
             SetNameAndEmailCookies(user, "");
 
             SetStatusMessage(string.Format(Global.RegistrationWelcomeMessage, user.FirstName));
@@ -122,8 +175,6 @@ namespace Mzayad.Web.Controllers
                 "andy.mehalick@orangejetpack.com", 
                 "samer_mail_2006@yahoo.com",
                 "badder.alghanim@alawama.com",
-                "alghanim@mzayad.com",
-                "alsarraf@mzayad.com",
                 "alghanim.a@alghanimequipment.com"
             };
 
@@ -138,6 +189,33 @@ namespace Mzayad.Web.Controllers
             }
 
             return false;
+        }
+
+        public async Task<ActionResult> Test()
+        {
+            await SendNewUserWelcomeEmail(await AuthService.CurrentUser());
+
+            return Content("..");
+        }
+
+        private async Task SendNewUserWelcomeEmail(ApplicationUser user)
+        {
+            var template = await _EmailTemplateService.GetByTemplateType(EmailTemplateType.AccountRegistration, Language);
+            var email = new Email
+            {
+                ToAddress = user.Email,
+                Subject = template.Subject,
+                Message = string.Format(template.Message, user.FirstName)
+            };
+
+            try
+            {
+                await EmailService.SendMessage(email.WithTemplate(this));
+            }
+            catch (Exception ex)
+            {
+                // TODO added exception logging, for example Raygun or ELMAH
+            }
         }
 
         public async Task<JsonResult> ValidateUserName(string username)
@@ -175,28 +253,38 @@ namespace Mzayad.Web.Controllers
             return RedirectToAction("SignIn", new { Language });
         }
 
-        private async Task<EmailResponse> SendPasswordResetNotification(string emailAddress)
+        private async Task SendPasswordResetNotification(string emailAddress)
         {
+            EmailTemplate template;
             var email = new Email
             {
                 ToAddress = emailAddress,
                 Subject = Global.ResetPassword
             };
 
-            // TODO - wait on Email Template feature
+            var user = await AuthService.GetUserByEmail(emailAddress);
+            if (user == null)
+            {
+                template = await _EmailTemplateService.GetByTemplateType(EmailTemplateType.NoAccount, Language);
+                email.Subject = template.Subject;
+                email.Message = string.Format(template.Message, emailAddress);
+            }
+            else
+            {
+                template = await _EmailTemplateService.GetByTemplateType(EmailTemplateType.PasswordReset, Language);
+                email.Subject = template.Subject;
+                email.Message = string.Format(template.Message, user.FirstName, GetPasswordResetUrl(user.Email));
+            }
 
-            //var user = await AuthService.GetUserByName(emailAddress);
-            //if (user == null)
-            //{
-            //    email.Message = string.Format(Global.ResetPasswordNoAccountEmailMessage, emailAddress, GetRegistrationUrl());
-            //}
-            //else
-            //{
-            //    var resetUrl = GetPasswordResetUrl(user.UserName);
-            //    email.Message = string.Format(Global.ResetPasswordEmailMessageInstructions, user.FirstName, resetUrl);
-            //}
-
-            return await MessageService.SendMessage(email.WithTemplate(this));
+            try
+            {
+                await MessageService.SendMessage(email.WithTemplate(this));
+            }
+            catch (Exception ex)
+            {
+                // TODO log exception
+                throw ex;
+            }
         }
 
         [AllowAnonymous]
