@@ -38,10 +38,8 @@ namespace Mzayad.Web.Controllers
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var languagecode = filterContext.RouteData.Values["language"] ?? GetLanguageCode();
-            Language = ViewBag.Language = languagecode.ToString();
-            //Language = languagecode.ToString();
-
+            Language = ViewBag.Language = GetLanguageCode();
+            
             base.OnActionExecuting(filterContext);
         }
 

@@ -8,10 +8,17 @@ namespace Mzayad.Web
         {
             bundles.UseCdn = true;
 
-            var jquery = new ScriptBundle("~/js/jquery", "//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js").Include(
+            var jquery = new ScriptBundle("~/js/jquery", 
+                "//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js").Include(
                 "~/scripts/jquery-{version}.js");
             jquery.CdnFallbackExpression = "window.jQuery";
             bundles.Add(jquery);
+
+            var jqueryui = new ScriptBundle("~/js/jquery-ui",
+                "//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js").Include(
+                "~/scripts/jquery-ui-{version}.js");
+            jquery.CdnFallbackExpression = "window.jQuery.ui";
+            bundles.Add(jqueryui);
 
             bundles.Add(new ScriptBundle("~/js/site").Include(
                 "~/scripts/bootstrap.js",

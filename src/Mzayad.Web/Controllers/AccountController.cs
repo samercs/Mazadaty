@@ -215,7 +215,6 @@ namespace Mzayad.Web.Controllers
             catch (Exception ex)
             {
                 // TODO added exception logging, for example Raygun or ELMAH
-                throw ex;
             }
         }
 
@@ -254,28 +253,38 @@ namespace Mzayad.Web.Controllers
             return RedirectToAction("SignIn", new { Language });
         }
 
-        private async Task<EmailResponse> SendPasswordResetNotification(string emailAddress)
+        private async Task SendPasswordResetNotification(string emailAddress)
         {
+            EmailTemplate template;
             var email = new Email
             {
                 ToAddress = emailAddress,
                 Subject = Global.ResetPassword
             };
 
-            // TODO - wait on Email Template feature
+            var user = await AuthService.GetUserByEmail(emailAddress);
+            if (user == null)
+            {
+                template = await _EmailTemplateService.GetByTemplateType(EmailTemplateType.NoAccount, Language);
+                email.Subject = template.Subject;
+                email.Message = string.Format(template.Message, emailAddress);
+            }
+            else
+            {
+                template = await _EmailTemplateService.GetByTemplateType(EmailTemplateType.PasswordReset, Language);
+                email.Subject = template.Subject;
+                email.Message = string.Format(template.Message, user.FirstName, GetPasswordResetUrl(user.Email));
+            }
 
-            //var user = await AuthService.GetUserByName(emailAddress);
-            //if (user == null)
-            //{
-            //    email.Message = string.Format(Global.ResetPasswordNoAccountEmailMessage, emailAddress, GetRegistrationUrl());
-            //}
-            //else
-            //{
-            //    var resetUrl = GetPasswordResetUrl(user.UserName);
-            //    email.Message = string.Format(Global.ResetPasswordEmailMessageInstructions, user.FirstName, resetUrl);
-            //}
-
-            return await MessageService.SendMessage(email.WithTemplate(this));
+            try
+            {
+                await MessageService.SendMessage(email.WithTemplate(this));
+            }
+            catch (Exception ex)
+            {
+                // TODO log exception
+                throw ex;
+            }
         }
 
         [AllowAnonymous]

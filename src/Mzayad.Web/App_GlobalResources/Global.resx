@@ -330,4 +330,7 @@
   <data name="ZipCodeRequiredErrorMessage" xml:space="preserve">
     <value>Please enter your zip code.</value>
   </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Welcome!</value>
+  </data>
 </root>

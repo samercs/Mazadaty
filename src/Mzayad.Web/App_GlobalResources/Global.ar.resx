@@ -279,6 +279,9 @@
   <data name="StreetRequiredErrorMessage" xml:space="preserve">
     <value>الرجاء إدخال رقم الشارع.</value>
   </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>مرحبا!</value>
+  </data>
   <data name="ZipCode" xml:space="preserve">
     <value>رقم المنطقة البريدية</value>
   </data>

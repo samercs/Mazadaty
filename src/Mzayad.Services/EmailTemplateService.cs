@@ -26,7 +26,15 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<EmailTemplate> GetByTemplateType(EmailTemplateType emailTemplateType, string languageCode = "en")
+        public async Task<EmailTemplate> GetByTemplateType(EmailTemplateType emailTemplateType)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.EmailTemplates.SingleOrDefaultAsync(i => i.TemplateType == emailTemplateType);
+            }
+        }
+
+        public async Task<EmailTemplate> GetByTemplateType(EmailTemplateType emailTemplateType, string languageCode)
         {
             using (var dc = DataContext())
             {

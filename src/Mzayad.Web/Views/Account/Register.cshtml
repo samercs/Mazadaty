@@ -1,9 +1,11 @@
-﻿@model Mzayad.Web.Models.Account.RegisterViewModel
+﻿@using Newtonsoft.Json
+@model Mzayad.Web.Models.Account.RegisterViewModel
 @{
     ViewBag.Title = Global.Register;
 }
 
 @section styles {
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
     <link rel="stylesheet" href="/content/flags/flags.css" />
     <style>
         
@@ -99,29 +101,31 @@
 </div>
 
 @section Scripts {
+    @Scripts.Render("~/js/jquery-ui")
     @Scripts.Render("~/js/validate")
     <script src="~/scripts/address.js"></script>
     <script>
-        (function($) {
+    (function($) {
 
-            $(function() {
-                bindEvents();
-            });
+        $(function() {
+            bindEvents();
+            initAutocomplete();
+        });
 
-            var bindEvents = function() {
-                $("#UserName").on("blur", validateUserName);
-            };
+        var bindEvents = function() {
+            $("#UserName").on("blur", validateUserName);
+        };
 
-            var validateUserName = function() {
-                var username = $(this).val();
-                if (username.length === 0) {
-                    return;
-                }
-                
-                $("#username-validate").show().children("div").hide();
-                $("#username-checking").show();
+        var validateUserName = function() {
+            var username = $(this).val();
+            if (username.length === 0) {
+                return;
+            }
 
-                var url = "@Url.Action("ValidateUserName")";
+            $("#username-validate").show().children("div").hide();
+            $("#username-checking").show();
+
+            var url = "@Url.Action("ValidateUserName")";
                 var data = { username: username };
 
                 $.getJSON(url, data, function(d) {
@@ -131,6 +135,13 @@
                     } else {
                         $("#username-error").show();
                     }
+                });
+            };
+
+            var initAutocomplete = function() {
+                var areas =  @Html.Raw(JsonConvert.SerializeObject(Model.Address.KuwaitAreas));
+                $(".kuwait-area").autocomplete({
+                    source: areas
                 });
             };
 
