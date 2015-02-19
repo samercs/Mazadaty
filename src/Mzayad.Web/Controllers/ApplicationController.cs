@@ -22,6 +22,7 @@ namespace Mzayad.Web.Controllers
         protected readonly IGeolocationService GeolocationService;
         protected readonly EmailService EmailService;
         protected readonly EmailTemplateService _EmailTemplateService;
+        protected readonly CategoryService _CategoryService;
         
         protected ApplicationController(IControllerServices controllerServices)
         {
@@ -34,6 +35,7 @@ namespace Mzayad.Web.Controllers
             
             EmailService = new EmailService(AppSettings.EmailSettings);
             _EmailTemplateService=new EmailTemplateService(controllerServices.DataContextFactory);
+            _CategoryService=new CategoryService(controllerServices.DataContextFactory);
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)

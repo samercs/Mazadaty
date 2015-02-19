@@ -1,8 +1,51 @@
-﻿@model dynamic
+﻿
+@using Mzayad.Models
+@using Mzayad.Web.Extensions
+@model IEnumerable<Mzayad.Models.Category>
 
 @{
     ViewBag.Title = "Categories";
-    
 }
 
-<h2>Categories</h2>
+@helper RenderCategory(Category category, int depth)
+{
+    var scheme = Request.Url.Scheme;
+    var url = Url.Action("Index", "Categories",null , scheme);
+    var uri = new Uri(url);
+
+    <tr>
+        <td>
+            <span style="padding-left: @(depth * 20)px;">@category.Name</span>
+        </td>
+        <td><a href="@url">@uri.PathAndQuery</a></td>
+        <td class="link-cell">@Html.ActionLink("Edit", "Edit", "Categories", new { id = category.CategoryId }, null)</td>
+    </tr>
+
+    if (category.Children.Any())
+    {
+        foreach (var child in category.Children)
+        {
+            @RenderCategory(child, depth + 1)
+        }
+    }
+}
+
+<ul class="link-list">
+    <li>@Html.ActionLink("Add Category", "Add", "Categories")</li>
+</ul>
+
+<table class="@Html.Css().GridTable">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>URL</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            @RenderCategory(category, 0)
+        }
+    </tbody>
+</table>
