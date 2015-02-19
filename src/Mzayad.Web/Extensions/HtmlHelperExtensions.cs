@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Text;
+using System.Web.Mvc;
 using OrangeJetpack.Base.Web;
 
 namespace Mzayad.Web.Extensions
@@ -68,6 +70,26 @@ namespace Mzayad.Web.Extensions
                     break;
             }
             return icon.ToString();
+        }
+
+        /// <summary>
+        /// Gets an HTML checkbox list.
+        /// </summary>
+        public static MvcHtmlString CheckBoxList(this HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectListItems)
+        {
+            var sb = new StringBuilder();
+
+            foreach (var selectListItem in selectListItems)
+            {
+                sb.Append(string.Format(@"<div class='checkbox'>
+                                            <label class='checkbox'>
+                                                <input type='checkbox' value='{0}' name='{1}' id='{1}_{0}' {3}>
+                                                {2}
+                                            </label>
+                                          </div>", selectListItem.Value, name, selectListItem.Text, selectListItem.Selected ? "checked" : ""));
+            }
+
+            return new MvcHtmlString(sb.ToString());
         }
 
         public static Css Css(this HtmlHelper htmlHelper)

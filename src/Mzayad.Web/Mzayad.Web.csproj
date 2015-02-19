@@ -63,6 +63,9 @@
     <Reference Include="EPPlus">
       <HintPath>..\..\packages\EPPlus.4.0.3\lib\net20\EPPlus.dll</HintPath>
     </Reference>
+    <Reference Include="Humanizer">
+      <HintPath>..\..\packages\Humanizer.1.33.7\lib\portable-win+net40+sl50+wp8+wpa81\Humanizer.dll</HintPath>
+    </Reference>
     <Reference Include="Kendo.Mvc">
       <HintPath>..\..\libs\Kendo.Mvc.dll</HintPath>
     </Reference>
@@ -268,8 +271,12 @@
     <Content Include="Content\kendo\kendo.common.css" />
     <Content Include="Content\kendo\kendo.css" />
     <Content Include="Content\kendo\kendo.min.css" />
-    <Content Include="Content\site-admin.css" />
-    <Content Include="Content\site-admin.min.css" />
+    <Content Include="Content\site-admin.css">
+      <DependentUpon>site-admin.less</DependentUpon>
+    </Content>
+    <Content Include="Content\site-admin.min.css">
+      <DependentUpon>site-admin.css</DependentUpon>
+    </Content>
     <Content Include="Content\site-arabic.css">
       <DependentUpon>site-arabic.less</DependentUpon>
     </Content>
@@ -285,7 +292,6 @@
     <Content Include="Content\site-kendo.css">
       <DependentUpon>site-kendo.less</DependentUpon>
     </Content>
-    <Content Include="Content\site-kendo.min.css" />
     <Content Include="Content\site-layout.css">
       <DependentUpon>site-layout.less</DependentUpon>
     </Content>
@@ -383,7 +389,6 @@
     <Content Include="Content\kendo\kendo.common.less" />
     <Content Include="Content\kendo\kendo.css.map" />
     <Content Include="Content\kendo\kendo.less" />
-    <Content Include="Content\site-admin.css.map" />
     <Content Include="Content\site-admin.less" />
     <Content Include="Content\site-kendo.less" />
     <Content Include="Areas\admin\Views\Products\Index.cshtml" />
@@ -397,6 +402,9 @@
     <Content Include="Areas\admin\Views\Users\Index.cshtml" />
     <Content Include="Content\site-kendo.css.map">
       <DependentUpon>site-kendo.css</DependentUpon>
+    </Content>
+    <Content Include="Content\site-admin.css.map">
+      <DependentUpon>site-admin.css</DependentUpon>
     </Content>
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />

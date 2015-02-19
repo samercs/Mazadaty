@@ -67,5 +67,74 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             return Excel(results, "users");
         }
+
+        public async Task<ActionResult> Details(string id)
+        {
+            var user = await AuthService.GetUserById(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            var model = await new DetailsViewModel().Hydrate(user, AuthService);
+
+            return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> Details(string id, DetailsViewModel model, string[] selectedRoles)
+        {
+            var user = await AuthService.GetUserById(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                await model.Hydrate(user, AuthService);
+
+                return View("Details", model);
+            }
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.UserName = model.UserName;
+            user.Email = model.Email;
+            
+            await UpdateRoles(id, selectedRoles);
+            await AuthService.UpdateUser(user);
+
+            SetStatusMessage(string.Format("User {0} successfully updated.", user.UserName));
+
+            return RedirectToAction("Details", new { id });
+        }
+
+        private async Task UpdateRoles(string userId, IEnumerable<string> selectedRoles)
+        {
+            await RemoveUserFromRoles(userId);
+
+            if (selectedRoles != null)
+            {
+                await AddUserToRoles(userId, selectedRoles);
+            }
+        }
+
+        private async Task RemoveUserFromRoles(string userId)
+        {
+            var roles = await AuthService.GetAllRoles();
+            foreach (var role in roles)
+            {
+                await AuthService.RemoveUserFromRole(userId, role.Name);
+            }
+        }
+
+        private async Task AddUserToRoles(string userId, IEnumerable<string> roles)
+        {
+            foreach (var role in roles)
+            {
+                await AuthService.AddUserToRole(userId, role);
+            }
+        }
 	}
 }
