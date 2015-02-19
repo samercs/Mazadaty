@@ -10,7 +10,8 @@ namespace Mzayad.Data
     public class DataContext : IdentityDbContext<ApplicationUser>, IDataContext
     {
         public IDbSet<Address> Addresses { get; set; }
-        public IDbSet<EmailTemplate> EmailTemplates { get; set; } 
+        public IDbSet<EmailTemplate> EmailTemplates { get; set; }
+        public IDbSet<Category> Categories { get; set; } 
 
         public DataContext(): base("DefaultConnection")
         {

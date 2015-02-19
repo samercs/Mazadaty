@@ -259,6 +259,9 @@
     <Content Include="Content\kendo\images\grab.cur" />
     <Content Include="Content\kendo\images\grabbing.cur" />
     <Content Include="Content\kendo\kendo.common.css" />
+    <Content Include="Content\kendo\kendo.common.min.css">
+      <DependentUpon>kendo.common.less</DependentUpon>
+    </Content>
     <Content Include="Content\kendo\kendo.css" />
     <Content Include="Content\kendo\kendo.min.css" />
     <Content Include="Content\site-admin.css" />
