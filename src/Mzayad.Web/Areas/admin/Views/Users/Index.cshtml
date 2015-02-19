@@ -5,7 +5,7 @@
     ViewBag.Title = "Users";
 }
 
-@using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "form-inline" }))
+@using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "form-inline form-search" }))
 {
     <div class="form-group">
         <div class="input-group">
@@ -14,11 +14,16 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.DropDownList("Role", Model.Roles,  "All Roles", new { @class = "form-control auto-submit" })
+        @Html.DropDownList("Role", Model.RoleList,  "All Roles", new { @class = "form-control auto-submit" })
     </div>
 }
 
-<p>&nbsp;</p>
+@if (!Model.Users.Any())
+{
+    @Html.StatusMessage("No users match search criteria.")
+
+    return;
+}
 
 <ul class="link-list">
     <li><a href="@Url.Action("UsersExcel", "Users", new { search = Model.Search, role = Model.Role })"><i class="fa fa-file-excel-o fa-pad-right"></i>Download Excel</a></li>

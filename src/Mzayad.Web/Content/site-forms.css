@@ -52,6 +52,9 @@ input[type=number].no-spinner::-webkit-outer-spin-button {
 .form-control-static:after {
   content: '\0000a0';
 }
+.form-search {
+  margin-bottom: 25px;
+}
 .form-readonly {
   opacity: 0.5;
 }

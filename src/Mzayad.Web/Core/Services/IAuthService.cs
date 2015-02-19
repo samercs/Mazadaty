@@ -25,7 +25,7 @@ namespace Mzayad.Web.Core.Services
         Task<ApplicationUser> GetUserById(string userId);
         Task<ApplicationUser> GetUserByName(string userName);
         Task<ApplicationUser> GetUserByEmail(string email);
-        Task<IEnumerable<ApplicationUser>> GetUsers(string search = "", string roleName = "");
+        Task<IEnumerable<ApplicationUser>> GetUsers(string search = "", Role? roleName = null);
 
         Task<bool> UserExists(string userName);
         Task<IdentityResult> CreateUser(ApplicationUser user, string password, Func<ApplicationUser, Task> onSuccess = null);

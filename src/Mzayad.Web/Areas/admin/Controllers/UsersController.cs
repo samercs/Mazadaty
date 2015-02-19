@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Mzayad.Web.Controllers;
@@ -9,6 +10,7 @@ using Kendo.Mvc.UI;
 using Mzayad.Web.Areas.admin.Models.Users;
 using Mzayad.Web.Core.ActionResults;
 using Mzayad.Web.Core.Identity;
+using OrangeJetpack.Base.Core.Formatting;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
@@ -18,31 +20,39 @@ namespace Mzayad.Web.Areas.admin.Controllers
         {
         }
 
-        public async Task<ActionResult> Index(string search = "", string role = "")
+        public async Task<ActionResult> Index(string search = "", Role? role = null)
         {
-            var roles = from Role r in Enum.GetValues(typeof(Role))
-                        orderby r.ToString()
-                        select new { Id = r, Name = r.ToString() };
-
             var viewModel = new IndexViewModel
             {
                 Search = search,
                 Users = await AuthService.GetUsers(search, role),
                 Role = role,
-                Roles = new SelectList(roles, "Id", "Name")
+                RoleList = GetRoleList()
             };
 
             return View(viewModel);
         }
 
+        private static SelectList GetRoleList()
+        {
+            var roles = from Role r in Enum.GetValues(typeof (Role))
+                select new
+                {
+                    Id = r, 
+                    Name = EnumFormatter.Description(r)
+                };
+            
+            return new SelectList(roles, "Id", "Name");
+        }
+
         [HttpPost]
-        public async Task<JsonResult> GetUsers([DataSourceRequest] DataSourceRequest request, string search = "", string role = "")
+        public async Task<JsonResult> GetUsers([DataSourceRequest] DataSourceRequest request, string search = null, Role? role = null)
         {
             var results = await AuthService.GetUsers(search, role);
             return Json(results.ToDataSourceResult(request));
         }
 
-        public async Task<ExcelResult> UsersExcel(string search = "", string role = "")
+        public async Task<ExcelResult> UsersExcel(string search = "", Role? role = null)
         {
             var users = await AuthService.GetUsers(search, role);
             var results = users.Select(i => new

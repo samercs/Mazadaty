@@ -282,7 +282,9 @@
     <Content Include="Content\site-forms.min.css">
       <DependentUpon>site-forms.css</DependentUpon>
     </Content>
-    <Content Include="Content\site-kendo.css" />
+    <Content Include="Content\site-kendo.css">
+      <DependentUpon>site-kendo.less</DependentUpon>
+    </Content>
     <Content Include="Content\site-kendo.min.css" />
     <Content Include="Content\site-layout.css">
       <DependentUpon>site-layout.less</DependentUpon>
@@ -383,7 +385,6 @@
     <Content Include="Content\kendo\kendo.less" />
     <Content Include="Content\site-admin.css.map" />
     <Content Include="Content\site-admin.less" />
-    <Content Include="Content\site-kendo.css.map" />
     <Content Include="Content\site-kendo.less" />
     <Content Include="Areas\admin\Views\Products\Index.cshtml" />
     <Content Include="Areas\admin\Views\Auctions\Index.cshtml" />
@@ -394,6 +395,9 @@
     <Content Include="Areas\admin\Views\Docs\Item.cshtml" />
     <Content Include="Areas\admin\Views\Users\Details.cshtml" />
     <Content Include="Areas\admin\Views\Users\Index.cshtml" />
+    <Content Include="Content\site-kendo.css.map">
+      <DependentUpon>site-kendo.css</DependentUpon>
+    </Content>
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />

@@ -44,6 +44,11 @@ namespace Mzayad.Web.Core.ActionResults
 
         private void FormatDateColumns(ExcelWorksheet ws)
         {
+            if (_dataTable.Rows.Count == 0)
+            {
+                return;
+            }
+            
             var dateColumns = from DataColumn d in _dataTable.Columns
                 where d.DataType == typeof (DateTime)
                 select d.Ordinal + 1;
