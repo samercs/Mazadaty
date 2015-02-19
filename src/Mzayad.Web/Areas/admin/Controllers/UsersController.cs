@@ -4,7 +4,10 @@ using System.Threading.Tasks;
 using Mzayad.Web.Controllers;
 using Mzayad.Web.Core.Services;
 using System.Web.Mvc;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 using Mzayad.Web.Areas.admin.Models.Users;
+using Mzayad.Web.Core.ActionResults;
 using Mzayad.Web.Core.Identity;
 
 namespace Mzayad.Web.Areas.admin.Controllers
@@ -30,6 +33,29 @@ namespace Mzayad.Web.Areas.admin.Controllers
             };
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> GetUsers([DataSourceRequest] DataSourceRequest request, string search = "", string role = "")
+        {
+            var results = await AuthService.GetUsers(search, role);
+            return Json(results.ToDataSourceResult(request));
+        }
+
+        public async Task<ExcelResult> UsersExcel(string search = "", string role = "")
+        {
+            var users = await AuthService.GetUsers(search, role);
+            var results = users.Select(i => new
+            {
+                i.FirstName,
+                i.LastName,
+                i.UserName,
+                i.Email,
+                i.CreatedUtc,
+                PhoneNumber = i.PhoneCountryCode + i.PhoneNumber
+            });
+
+            return Excel(results, "users");
         }
 	}
 }

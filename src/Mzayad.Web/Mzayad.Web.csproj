@@ -60,6 +60,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus">
+      <HintPath>..\..\packages\EPPlus.4.0.3\lib\net20\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Kendo.Mvc">
       <HintPath>..\..\libs\Kendo.Mvc.dll</HintPath>
     </Reference>
@@ -79,7 +82,7 @@
     </Reference>
     <Reference Include="OrangeJetpack.Base.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.4\lib\OrangeJetpack.Base.Core.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.5\lib\OrangeJetpack.Base.Core.dll</HintPath>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Web">
       <HintPath>..\..\packages\OrangeJetpack.Base.Web.0.0.6\lib\OrangeJetpack.Base.Web.dll</HintPath>
@@ -214,6 +217,7 @@
     <Compile Include="Areas\admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\admin\Models\Users\DetailsViewModel.cs" />
     <Compile Include="Areas\admin\Models\Users\IndexViewModel.cs" />
+    <Compile Include="Core\ActionResults\ExcelResult.cs" />
     <Compile Include="Core\Configuration\AddressPartialResolver.cs" />
     <Compile Include="Core\Configuration\RouteInfo.cs" />
     <Compile Include="Controllers\UserController.cs" />

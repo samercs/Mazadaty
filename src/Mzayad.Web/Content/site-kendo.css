@@ -4,6 +4,9 @@
 .k-grid table {
   border-collapse: collapse;
 }
+.k-grid table tbody {
+  font-size: 1.3rem;
+}
 .k-grid-header .k-header:first-child,
 .k-grid tbody td:first-child,
 .k-grid tfoot td:first-child {
