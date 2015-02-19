@@ -52,6 +52,9 @@ input[type=number].no-spinner::-webkit-outer-spin-button {
 .form-control-static:after {
   content: '\0000a0';
 }
+.form-search {
+  margin-bottom: 25px;
+}
 .form-readonly {
   opacity: 0.5;
 }
@@ -66,6 +69,12 @@ input[type=number].no-spinner::-webkit-outer-spin-button {
 }
 .form-inline .form-control:last-child {
   margin-bottom: 5px;
+}
+.input-group {
+  margin-bottom: 5px;
+}
+.input-group .form-control {
+  margin-bottom: 0 !important;
 }
 .input-group-addon {
   border-radius: 0;

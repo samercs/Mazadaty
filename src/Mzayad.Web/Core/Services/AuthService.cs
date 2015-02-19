@@ -125,7 +125,7 @@ namespace Mzayad.Web.Core.Services
             return await _userManager.FindByEmailAsync(email);
         }
 
-        public async Task<IEnumerable<ApplicationUser>> GetUsers(string search = "", string roleName = "")
+        public async Task<IEnumerable<ApplicationUser>> GetUsers(string search = "", Role? role = null)
         {
             var users = _userManager.Users;
 
@@ -134,17 +134,19 @@ namespace Mzayad.Web.Core.Services
                 users = users.Where(i =>
                     i.FirstName.Contains(search) ||
                     i.LastName.Contains(search) ||
+                    i.UserName.Contains(search) ||
                     i.Email.Contains(search));
             }
 
-            if (!string.IsNullOrWhiteSpace(roleName))
+            if (role != null)
             {
-                var role = _roleManager.FindByName(roleName);
-
-                if (role == null)
+                var identityRole = _roleManager.FindByName(role.ToString());
+                if (identityRole == null)
+                {
                     throw new ArgumentException("Please specify a valid role.");
+                }
 
-                users = users.Where(i => i.Roles.Select(r => r.RoleId).Contains(role.Id));
+                users = users.Where(i => i.Roles.Select(r => r.RoleId).Contains(identityRole.Id));
             }
 
             return await users.ToListAsync();

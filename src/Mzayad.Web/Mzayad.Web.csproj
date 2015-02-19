@@ -60,6 +60,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus">
+      <HintPath>..\..\packages\EPPlus.4.0.3\lib\net20\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="Humanizer">
+      <HintPath>..\..\packages\Humanizer.1.33.7\lib\portable-win+net40+sl50+wp8+wpa81\Humanizer.dll</HintPath>
+    </Reference>
     <Reference Include="Kendo.Mvc">
       <HintPath>..\..\libs\Kendo.Mvc.dll</HintPath>
     </Reference>
@@ -79,7 +85,7 @@
     </Reference>
     <Reference Include="OrangeJetpack.Base.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.4\lib\OrangeJetpack.Base.Core.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.5\lib\OrangeJetpack.Base.Core.dll</HintPath>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Web">
       <HintPath>..\..\packages\OrangeJetpack.Base.Web.0.0.6\lib\OrangeJetpack.Base.Web.dll</HintPath>
@@ -212,7 +218,11 @@
     <Compile Include="Areas\admin\Controllers\ReportsController.cs" />
     <Compile Include="Areas\admin\Controllers\SettingsController.cs" />
     <Compile Include="Areas\admin\Controllers\UsersController.cs" />
+    <Compile Include="Areas\admin\Models\Users\DetailsViewModel.cs" />
+    <Compile Include="Areas\admin\Models\Users\IndexViewModel.cs" />
+    <Compile Include="Core\ActionResults\ExcelResult.cs" />
     <Compile Include="Core\Configuration\AddressPartialResolver.cs" />
+    <Compile Include="Core\Attributes\RoleAuthorizeAttribute.cs" />
     <Compile Include="Core\Configuration\RouteInfo.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Areas\admin\Controllers\DocsController.cs" />
@@ -237,6 +247,7 @@
     <Compile Include="Core\Services\ICookieService.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
+    <Compile Include="Extensions\KendoExtensions.cs" />
     <Compile Include="Extensions\MvcHtmlStringExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -261,8 +272,12 @@
     <Content Include="Content\kendo\kendo.common.css" />
     <Content Include="Content\kendo\kendo.css" />
     <Content Include="Content\kendo\kendo.min.css" />
-    <Content Include="Content\site-admin.css" />
-    <Content Include="Content\site-admin.min.css" />
+    <Content Include="Content\site-admin.css">
+      <DependentUpon>site-admin.less</DependentUpon>
+    </Content>
+    <Content Include="Content\site-admin.min.css">
+      <DependentUpon>site-admin.css</DependentUpon>
+    </Content>
     <Content Include="Content\site-arabic.css">
       <DependentUpon>site-arabic.less</DependentUpon>
     </Content>
@@ -275,8 +290,9 @@
     <Content Include="Content\site-forms.min.css">
       <DependentUpon>site-forms.css</DependentUpon>
     </Content>
-    <Content Include="Content\site-kendo.css" />
-    <Content Include="Content\site-kendo.min.css" />
+    <Content Include="Content\site-kendo.css">
+      <DependentUpon>site-kendo.less</DependentUpon>
+    </Content>
     <Content Include="Content\site-layout.css">
       <DependentUpon>site-layout.less</DependentUpon>
     </Content>
@@ -374,18 +390,23 @@
     <Content Include="Content\kendo\kendo.common.less" />
     <Content Include="Content\kendo\kendo.css.map" />
     <Content Include="Content\kendo\kendo.less" />
-    <Content Include="Content\site-admin.css.map" />
     <Content Include="Content\site-admin.less" />
-    <Content Include="Content\site-kendo.css.map" />
     <Content Include="Content\site-kendo.less" />
     <Content Include="Areas\admin\Views\Products\Index.cshtml" />
     <Content Include="Areas\admin\Views\Auctions\Index.cshtml" />
-    <Content Include="Areas\admin\Views\Users\Index.cshtml" />
     <Content Include="Areas\admin\Views\Reports\Index.cshtml" />
     <Content Include="Areas\admin\Views\Settings\EmailTemplates.cshtml" />
     <Content Include="Areas\admin\Views\Settings\EditEmailTemplate.cshtml" />
     <Content Include="Areas\admin\Views\Docs\Index.cshtml" />
     <Content Include="Areas\admin\Views\Docs\Item.cshtml" />
+    <Content Include="Areas\admin\Views\Users\Details.cshtml" />
+    <Content Include="Areas\admin\Views\Users\Index.cshtml" />
+    <Content Include="Content\site-kendo.css.map">
+      <DependentUpon>site-kendo.css</DependentUpon>
+    </Content>
+    <Content Include="Content\site-admin.css.map">
+      <DependentUpon>site-admin.css</DependentUpon>
+    </Content>
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
@@ -460,7 +481,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\admin\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

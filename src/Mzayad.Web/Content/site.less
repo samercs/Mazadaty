@@ -3,7 +3,7 @@
 html { font-size: 62.5%; } 
 
 body {
-    padding-top: 65px;
+    padding-top: 75px;
     padding-bottom: 20px;  
 }
 
@@ -23,7 +23,11 @@ h1, h2, h3, h4 {
 }
 
 h1 {
-    font-size: 3rem;
+    font-size: @font-size + 0.9;
+}
+
+h2 {
+    font-size: @font-size + 0.7;
 }
 
 .lead {
@@ -202,4 +206,50 @@ h1 {
             border: 1px solid @base;
         }
     }
+}
+
+.bs-callout {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+    font-size: 85%;
+}
+.bs-callout h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+.bs-callout p:last-child {
+    margin-bottom: 0;
+}
+.bs-callout code {
+    border-radius: 3px;
+}
+.bs-callout+.bs-callout {
+    margin-top: -5px;
+}
+.bs-callout-success {
+    border-left-color: @success;
+}
+.bs-callout-success h4 {
+    color: @success;
+}
+.bs-callout-danger {
+    border-left-color: @danger;
+}
+.bs-callout-danger h4 {
+    color: @danger;
+}
+.bs-callout-warning {
+    border-left-color: @warning;
+}
+.bs-callout-warning h4 {
+    color:@warning;
+}
+.bs-callout-info {
+    border-left-color: @info;
+}
+.bs-callout-info h4 {
+    color: @info;
 }

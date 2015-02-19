@@ -4,6 +4,9 @@
 .k-grid table {
   border-collapse: collapse;
 }
+.k-grid table tbody {
+  font-size: 1.3rem;
+}
 .k-grid-header .k-header:first-child,
 .k-grid tbody td:first-child,
 .k-grid tfoot td:first-child {
@@ -13,7 +16,7 @@
   background-color: transparent;
 }
 .k-pager-wrap {
-  background-color: #191919;
+  background-color: #132e72;
 }
 .k-pager-wrap .k-link {
   border: none;
@@ -21,5 +24,21 @@
 }
 .k-pager-numbers .k-state-selected {
   border-radius: 0;
+}
+.k-state-selected,
+.k-state-selected:link,
+.k-state-selected:visited,
+.k-list > .k-state-selected,
+.k-list > .k-state-highlight,
+.k-panel > .k-state-selected,
+.k-ghost-splitbar-vertical,
+.k-ghost-splitbar-horizontal,
+.k-draghandle.k-state-selected:hover,
+.k-scheduler .k-scheduler-toolbar .k-state-selected,
+.k-scheduler .k-today.k-state-selected,
+.k-marquee-color {
+  color: #ffffff;
+  background-color: #96afee;
+  border-color: #96afee;
 }
 /*# sourceMappingURL=site-kendo.css.map */

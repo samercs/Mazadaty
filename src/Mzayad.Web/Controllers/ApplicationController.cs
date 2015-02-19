@@ -4,9 +4,12 @@ using Mzayad.Web.Core.Services;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Services.Client.Messaging;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Web.Mvc;
+using Mzayad.Web.Core.ActionResults;
+using OrangeJetpack.Base.Core.Extensions;
 
 namespace Mzayad.Web.Controllers
 {
@@ -121,10 +124,10 @@ namespace Mzayad.Web.Controllers
             return true; // Url != null && Url.IsLocalUrl(url);
         }
 
-        //protected ExcelResult Excel<T>(IEnumerable<T> items, string fileName)
-        //{
-        //    return new ExcelResult(items.ToDataTable(), fileName);
-        //}
+        protected ExcelResult Excel<T>(IEnumerable<T> items, string fileName)
+        {
+            return new ExcelResult(items.ToDataTable(), fileName);
+        }
 
         protected JsonResult JsonError(string error, HttpStatusCode statusCode = HttpStatusCode.InternalServerError)
         {
