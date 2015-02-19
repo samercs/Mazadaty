@@ -1,0 +1,116 @@
+﻿@using Humanizer
+@using Kendo.Mvc.UI
+@using OrangeJetpack.Base.Core
+@using OrangeJetpack.Storefront.Core.Formatting
+@model OrangeJetpack.Storefront.Web.Areas.Admin.Models.Users.DetailsViewModel
+
+@{
+    ViewBag.Title = "User Details - " + NameFormatter.GetFullName(Model.FirstName, Model.LastName);
+}
+
+<h2>Summary</h2>
+
+<section class="form-section">
+    
+    <div class="form-group">
+        @Html.Label("Name")
+        <p class="form-control-static">
+            @NameFormatter.GetFullName(Model.FirstName, Model.LastName)
+        </p>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("User ID")
+        <p class="form-control-static">
+            @Model.UserId
+        </p>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Signed Up")
+        <p class="form-control-static">
+            @Model.CreatedUtc.Humanize()
+            <span class="text-small">(<time datetime="@Model.CreatedUtc.ToString("s")">@DateTimeFormatter.ToLocalTime(Model.CreatedUtc, DateTimeFormatter.Format.Full)</time>)</span>
+        </p>
+    </div>
+    
+    <div class="form-group">
+        @Html.Label("Orders Placed")
+        <p class="form-control-static">
+            @("orders".ToQuantity(Model.Orders.Count()))
+        </p>
+    </div>
+
+</section>
+
+<h2>Edit User</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <section>
+
+        <div class="form-group">
+            @Html.LabelFor(i => i.FirstName, Global.FirstName).Required()
+            @Html.TextBoxFor(i => i.FirstName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(i => i.FirstName, "Please enter a first name.")
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(i => i.LastName, Global.LastName).Required()
+            @Html.TextBoxFor(i => i.LastName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(i => i.LastName, "Please enter a last name.")
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(i => i.Email, Global.Email).Required()
+            @Html.TextBoxFor(i => i.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(i => i.Email, "Please enter a valid email address.")
+            <div class="bs-callout bs-callout-warning text-small">
+                <h4>Warning</h4>
+                Changing a user's email address may disrupt his or her ability to sign into the site, please be very careful when changing.
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Roles")
+            @Html.CheckBoxList("SelectedRoles", Model.Roles)
+        </div>
+    </section>
+
+    <section class="form-buttons">
+        <button type="submit" class="btn btn-default">Save</button>
+    </section>
+}
+
+@if (Model.Orders.Any())
+{
+    <h2 id="orders">Orders</h2>
+
+    @(Html.Kendo().Grid(Model.Orders)
+          .Init(ajax => ajax.Action("GetOrders", "Users", new {userId = Model.UserId}))
+          .Columns(columns =>
+          {
+              columns.Bound(i => i.OrderId);
+              columns.Bound(i => i.FirstName);
+              columns.Bound(i => i.LastName);
+              columns.Bound(i => i.Address.CountryCode).Title("Country");
+              columns.Bound(i => i.Total).ClientTemplate("KD #=Total#");
+              columns.Bound(i => i.SubmittedLocalTime).Title("Submitted");
+              columns.Bound(i => i.ShippedLocalTime).Title("Shipped");
+              columns.LinkColumn("Details", "/admin/orders/details/#=OrderId#");
+          })
+          )
+}
+
+@using (Html.BeginForm("SignInAs", "Users"))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Email)
+    <button class="hidden" type="submit">Submit</button>
+}
+
+@section scripts {
+    @Scripts.Render("~/js/validate")
+}

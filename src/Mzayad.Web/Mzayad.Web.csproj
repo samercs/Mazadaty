@@ -212,6 +212,8 @@
     <Compile Include="Areas\admin\Controllers\ReportsController.cs" />
     <Compile Include="Areas\admin\Controllers\SettingsController.cs" />
     <Compile Include="Areas\admin\Controllers\UsersController.cs" />
+    <Compile Include="Areas\admin\Models\Users\DetailsViewModel.cs" />
+    <Compile Include="Areas\admin\Models\Users\IndexViewModel.cs" />
     <Compile Include="Core\Configuration\AddressPartialResolver.cs" />
     <Compile Include="Core\Configuration\RouteInfo.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -237,6 +239,7 @@
     <Compile Include="Core\Services\ICookieService.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
+    <Compile Include="Extensions\KendoExtensions.cs" />
     <Compile Include="Extensions\MvcHtmlStringExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -380,12 +383,13 @@
     <Content Include="Content\site-kendo.less" />
     <Content Include="Areas\admin\Views\Products\Index.cshtml" />
     <Content Include="Areas\admin\Views\Auctions\Index.cshtml" />
-    <Content Include="Areas\admin\Views\Users\Index.cshtml" />
     <Content Include="Areas\admin\Views\Reports\Index.cshtml" />
     <Content Include="Areas\admin\Views\Settings\EmailTemplates.cshtml" />
     <Content Include="Areas\admin\Views\Settings\EditEmailTemplate.cshtml" />
     <Content Include="Areas\admin\Views\Docs\Index.cshtml" />
     <Content Include="Areas\admin\Views\Docs\Item.cshtml" />
+    <Content Include="Areas\admin\Views\Users\Details.cshtml" />
+    <Content Include="Areas\admin\Views\Users\Index.cshtml" />
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
@@ -460,7 +464,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\admin\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

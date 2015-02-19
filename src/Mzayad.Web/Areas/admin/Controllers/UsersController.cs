@@ -1,24 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using System.Threading.Tasks;
 using Mzayad.Web.Controllers;
 using Mzayad.Web.Core.Services;
+using System.Web.Mvc;
+using Mzayad.Web.Areas.admin.Models.Users;
+using Mzayad.Web.Core.Identity;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
     public class UsersController : ApplicationController
     {
-        //
-        // GET: /admin/Users/
         public UsersController(IControllerServices controllerServices) : base(controllerServices)
         {
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index(string search = "", string role = "")
         {
-            return View();
+            var roles = from Role r in Enum.GetValues(typeof(Role))
+                        orderby r.ToString()
+                        select new { Id = r, Name = r.ToString() };
+
+            var viewModel = new IndexViewModel
+            {
+                Search = search,
+                Users = await AuthService.GetUsers(search, role),
+                Role = role,
+                Roles = new SelectList(roles, "Id", "Name")
+            };
+
+            return View(viewModel);
         }
 	}
 }

@@ -1,8 +1,37 @@
-﻿@model dynamic
-
+﻿@using Kendo.Mvc.UI
+@using Mzayad.Web.Extensions
+@model Mzayad.Web.Areas.admin.Models.Users.IndexViewModel
 @{
     ViewBag.Title = "Users";
-    
 }
 
-<h2>Users</h2>
+@using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "form-inline" }))
+{
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            @Html.TextBoxFor(m => m.Search, new { @class = "form-control", placeholder = "Search name or email..." })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.DropDownList("Role", Model.Roles,  "All Roles", new { @class = "form-control auto-submit" })
+    </div>
+}
+
+<p>&nbsp;</p>
+
+<ul class="link-list">
+    <li><a href="@Url.Action("UsersExcel", "Users", new { search = Model.Search, role = Model.Role })"><i class="fa fa-file-excel-o fa-pad-right"></i>Download Excel</a></li>
+</ul>
+
+@(Html.Kendo().Grid(Model.Users)
+    .Init(ajax => ajax.Action("GetUsers", "Users", new { search = Model.Search, role = Model.Role }))
+    .Columns(columns =>
+    {
+        columns.Bound(i => i.FirstName);
+        columns.Bound(i => i.LastName);
+        columns.Bound(i => i.Email);
+        //columns.Bound(i => i.CreatedLocalTime).Title("Created");
+        columns.LinkColumn("Details", "users/details/#=Id#");
+    })
+)
