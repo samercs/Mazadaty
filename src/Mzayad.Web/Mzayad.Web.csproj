@@ -222,6 +222,7 @@
     <Compile Include="Areas\admin\Models\Users\IndexViewModel.cs" />
     <Compile Include="Core\ActionResults\ExcelResult.cs" />
     <Compile Include="Core\Configuration\AddressPartialResolver.cs" />
+    <Compile Include="Core\Attributes\RoleAuthorizeAttribute.cs" />
     <Compile Include="Core\Configuration\RouteInfo.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Areas\admin\Controllers\DocsController.cs" />

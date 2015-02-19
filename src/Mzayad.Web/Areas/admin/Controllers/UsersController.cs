@@ -9,11 +9,13 @@ using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Mzayad.Web.Areas.admin.Models.Users;
 using Mzayad.Web.Core.ActionResults;
+using Mzayad.Web.Core.Attributes;
 using Mzayad.Web.Core.Identity;
 using OrangeJetpack.Base.Core.Formatting;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
+    //[RoleAuthorize(Role.Administrator)]
     public class UsersController : ApplicationController
     {
         public UsersController(IControllerServices controllerServices) : base(controllerServices)
