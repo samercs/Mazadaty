@@ -53,6 +53,18 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<Category> GetCategory(int categoryId)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.Categories
+                    
+                    .Include(i => i.Children)
+                    
+                    .SingleOrDefaultAsync(i => i.CategoryId == categoryId);
+            }
+        }
+
         private static Func<Category, Category> MapCategory()
         {
             return i => new Category
@@ -108,6 +120,14 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
+
+                category.Children.ToList().ForEach(i =>
+                {
+                    dc.Categories.Attach(i);
+                    dc.Categories.Remove(i);
+
+
+                });
                 dc.Categories.Attach(category);
                 dc.Categories.Remove(category);
                 dc.SaveChanges();
