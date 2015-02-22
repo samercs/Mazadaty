@@ -1,11 +1,8 @@
-﻿using System;
+﻿using OrangeJetpack.Localization;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OrangeJetpack.Localization;
 
 namespace Mzayad.Models
 {
@@ -16,6 +13,10 @@ namespace Mzayad.Models
 
         [Required, Localized]
         public string Name { get; set; }
+
+        [Required, StringLength(50)]
+        [Index("IX_Slug", 1, IsUnique = true)]
+        public string Slug { get; set; }
 
         public int? ParentId { get; set; }
 
