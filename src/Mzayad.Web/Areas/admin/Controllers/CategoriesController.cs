@@ -9,7 +9,7 @@ using Mzayad.Services;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
-    [RouteArea("Admin"), RoutePrefix("categories")]
+    [RouteArea("admin"), RoutePrefix("categories")]
     public class CategoriesController : ApplicationController
     {
         private readonly CategoryService _categoryService;

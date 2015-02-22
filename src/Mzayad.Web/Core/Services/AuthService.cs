@@ -149,7 +149,11 @@ namespace Mzayad.Web.Core.Services
                 users = users.Where(i => i.Roles.Select(r => r.RoleId).Contains(identityRole.Id));
             }
 
-            return await users.OrderBy(i => i.LastName).ThenBy(i => i.FirstName).ToListAsync();
+            return await users
+                .OrderBy(i => i.LastName)
+                .ThenBy(i => i.FirstName)
+                .ThenBy(i => i.UserName)
+                .ToListAsync();
         }
 
         public async Task<bool> UserExists(string userName)

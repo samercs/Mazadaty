@@ -2,10 +2,11 @@
 using Mzayad.Web.Core.Services;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Mzayad.Web.Core.Attributes;
 
 namespace Mzayad.Web.Controllers
 {
-    [RoutePrefix("{language}/categories")]
+    [LanguageRoutePrefix("categories")]
     public class CategoriesController : ApplicationController
     {
         private readonly CategoryService _categoryService;

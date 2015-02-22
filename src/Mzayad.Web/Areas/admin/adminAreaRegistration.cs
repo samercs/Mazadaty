@@ -17,7 +17,8 @@ namespace Mzayad.Web.Areas.admin
             context.MapRoute(
                 "admin_default",
                 "admin/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { action = "Index", id = UrlParameter.Optional },
+                new[] { "Mzayad.Web.Areas.admin.Controllers" }
             );
         }
     }

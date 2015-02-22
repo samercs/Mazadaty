@@ -222,6 +222,7 @@
     <Compile Include="Areas\admin\Models\Users\IndexViewModel.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Core\ActionResults\ExcelResult.cs" />
+    <Compile Include="Core\Attributes\LanguageRoutePrefix.cs" />
     <Compile Include="Core\Configuration\AddressPartialResolver.cs" />
     <Compile Include="Core\Attributes\RoleAuthorizeAttribute.cs" />
     <Compile Include="Areas\admin\Models\Categories\AddViewModel.cs" />
