@@ -64,7 +64,13 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 i.UserName,
                 i.Email,
                 i.CreatedUtc,
-                PhoneNumber = i.PhoneCountryCode + i.PhoneNumber
+                PhoneNumber = i.PhoneCountryCode + i.PhoneNumber,
+                Area = i.Address != null ? i.Address.CityArea : "",
+                Block = i.Address != null ? i.Address.AddressLine1 : "",
+                Street = i.Address != null ? i.Address.AddressLine2 : "",
+                Building = i.Address != null ? i.Address.AddressLine3 : "",
+                Jadda = i.Address != null ? i.Address.AddressLine4 : "",
+                Country = i.Address != null ? i.Address.CountryCode : ""
             });
 
             return Excel(results, "users");

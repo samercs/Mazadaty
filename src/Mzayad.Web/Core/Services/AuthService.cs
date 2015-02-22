@@ -127,7 +127,7 @@ namespace Mzayad.Web.Core.Services
 
         public async Task<IEnumerable<ApplicationUser>> GetUsers(string search = "", Role? role = null)
         {
-            var users = _userManager.Users;
+            var users = _userManager.Users.Include(i => i.Address);
 
             if (!string.IsNullOrWhiteSpace(search))
             {
