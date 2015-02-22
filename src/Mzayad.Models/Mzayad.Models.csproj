@@ -67,6 +67,8 @@
     <Compile Include="EmailTemplate.cs" />
     <Compile Include="Enum\EmailTemplateType.cs" />
     <Compile Include="ModelBase.cs" />
+    <Compile Include="Product.cs" />
+    <Compile Include="ProductImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

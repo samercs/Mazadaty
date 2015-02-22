@@ -11,7 +11,10 @@ namespace Mzayad.Data
     {
         public IDbSet<Address> Addresses { get; set; }
         public IDbSet<EmailTemplate> EmailTemplates { get; set; }
-        public IDbSet<Category> Categories { get; set; } 
+        public IDbSet<Category> Categories { get; set; }
+        public IDbSet<Product> Products { get; set; }
+        public IDbSet<ProductImage> ProductImages { get; set; } 
+
 
         public DataContext(): base("DefaultConnection")
         {
