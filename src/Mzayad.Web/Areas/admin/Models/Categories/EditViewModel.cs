@@ -19,7 +19,7 @@ namespace Mzayad.Web.Areas.admin.Models.Categories
         public async Task<EditViewModel> Hydrate(Category category, CategoryService categoryService)
         {
             Category = category;
-            ParentId = Category.ParentId.HasValue ? Category.ParentId.Value : (int?)null;
+            ParentId = Category.ParentId;
 
             var categories = (await categoryService.GetCategories("en")).ToList();
 

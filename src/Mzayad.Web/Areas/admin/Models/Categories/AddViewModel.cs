@@ -16,7 +16,7 @@ namespace Mzayad.Web.Areas.admin.Models.Categories
 
         public HttpPostedFileBase Photo { get; set; }
         public IEnumerable<SelectListItem> Categories { get; set; }
-        
+        //public IEnumerable<string> ExistingSlugs { get; set; } 
 
         public async Task<AddViewModel> Hydrate(CategoryService categoryService)
         {

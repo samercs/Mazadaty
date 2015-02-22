@@ -19,13 +19,21 @@
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(i => i.ParentId, "Parent")
-                    @Html.DropDownListFor(m => m.Category.ParentId, Model.PotentialParentCategories, "Parent Category", new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.Category.ParentId, Model.PotentialParentCategories, "Parent Category", new {@class = "form-control"})
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Category.Slug, "URL")
+                    <div class="input-group">
+                        <span class="input-group-addon">/categories/</span>
+                        @Html.TextBoxFor(i => i.Category.Slug, new {@class = "form-control"})
+                    </div>
+                    @Html.ValidationMessageFor(i => i.Category.Slug, "Please enter a valid, unique URL.")
                 </div>
             </section>
 
             <section class="form-buttons">
-                <button type="submit" class="btn btn-default">Update Category</button>
-                <button type="button" id="btnDelete" class="btn btn-danger">Delete Category</button>
+                <button type="submit" class="btn btn-default">Save</button>
+                <button type="button" id="btnDelete" class="btn btn-danger">Delete</button>
             </section>
         }
     </div>
@@ -38,12 +46,12 @@
 
 @section scripts {
     @Scripts.Render("~/js/validate")
-    
+    @Scripts.Render("~/js/slugify")
 
     <script>
         (function ($) {
 
-            
+            $("#Category_Slug").slugify("#Name_0_Value", false);
             $("#btnDelete").click(function () {
                 var categoryWarningText = "Are you sure you want to permanently delete this category?";
                 var submitForm = confirm(categoryWarningText);

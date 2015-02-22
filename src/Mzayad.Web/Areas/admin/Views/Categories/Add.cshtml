@@ -21,9 +21,14 @@
                     @Html.LabelFor(i => i.Category.ParentId, "Parent")
                     @Html.DropDownListFor(m => m.Category.ParentId, Model.Categories, "Parent Category", new { @class = "form-control" })
                 </div>
-                
-
-                
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Category.Slug, "URL")
+                    <div class="input-group">
+                        <span class="input-group-addon">/categories/</span>
+                        @Html.TextBoxFor(i => i.Category.Slug, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(i => i.Category.Slug, "Please enter a valid, unique URL.")
+                </div>
             </section>
 
             <section class="form-buttons">
@@ -35,12 +40,13 @@
 
 @section scripts {
     @Scripts.Render("~/js/validate")
-    
+    @Scripts.Render("~/js/slugify")
 
     <script>
         (function($) {
 
-            
+            $("#Category_Slug").slugify("#Name_0_Value", false);
+
         })(jQuery);
     </script>
 }

@@ -26,6 +26,7 @@ namespace Mzayad.Web
                 "~/scripts/site.js"));
 
             bundles.Add(new ScriptBundle("~/js/validate").Include("~/scripts/jquery.validate*"));
+            bundles.Add(new ScriptBundle("~/js/slugify").Include("~/scripts/jquery.slugify*"));
 
             bundles.Add(new StyleBundle("~/css").Include(
                 "~/content/bootstrap.css",
