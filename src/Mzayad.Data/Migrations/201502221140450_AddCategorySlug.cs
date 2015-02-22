@@ -8,6 +8,9 @@ namespace Mzayad.Data.Migrations
         public override void Up()
         {
             AddColumn("dbo.Categories", "Slug", c => c.String(nullable: false, maxLength: 50));
+
+            Sql("update dbo.Categories set Slug = cast(CategoryId as nvarchar(50));");
+
             CreateIndex("dbo.Categories", "Slug", unique: true);
         }
         

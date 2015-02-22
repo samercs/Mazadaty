@@ -1,22 +1,18 @@
-﻿using System;
+﻿using Mzayad.Models;
+using Mzayad.Services;
+using OrangeJetpack.Localization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using Mzayad.Models;
-using Mzayad.Services;
-using OrangeJetpack.Localization;
 
 namespace Mzayad.Web.Areas.admin.Models.Categories
 {
     public class AddViewModel
     {
         public Category Category { get; set; }
-
-        public HttpPostedFileBase Photo { get; set; }
         public IEnumerable<SelectListItem> Categories { get; set; }
-        //public IEnumerable<string> ExistingSlugs { get; set; } 
+        public IEnumerable<string> ExistingSlugs { get; set; } 
 
         public async Task<AddViewModel> Hydrate(CategoryService categoryService)
         {
@@ -28,7 +24,7 @@ namespace Mzayad.Web.Areas.admin.Models.Categories
                 };
             }
 
-            var categories = (await categoryService.GetCategories()).ToList();
+            var categories = await categoryService.GetCategories();
 
             Categories = categories.Select(i => new SelectListItem
             {
@@ -37,7 +33,7 @@ namespace Mzayad.Web.Areas.admin.Models.Categories
                 Selected = i.CategoryId.Equals(Category.ParentId)
             });
 
-            
+            ExistingSlugs = await categoryService.GetAllUrlSlugs();
 
             return this;
         }

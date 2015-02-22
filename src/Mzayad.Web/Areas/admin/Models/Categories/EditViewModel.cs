@@ -14,16 +14,17 @@ namespace Mzayad.Web.Areas.admin.Models.Categories
     {
         public Category Category { get; set; }
         public int? ParentId { get; set; }
-        public IEnumerable<SelectListItem> PotentialParentCategories { get; set; }
+        public IEnumerable<SelectListItem> Categories { get; set; }
+        public IEnumerable<string> ExistingSlugs { get; set; }
 
         public async Task<EditViewModel> Hydrate(Category category, CategoryService categoryService)
         {
             Category = category;
             ParentId = Category.ParentId;
 
-            var categories = (await categoryService.GetCategories("en")).ToList();
+            var categories = await categoryService.GetCategories("en");
 
-            PotentialParentCategories = categories
+            Categories = categories
                 .Where(i => i.CategoryId != Category.CategoryId)
                 .Select(i => new SelectListItem
                 {
@@ -32,7 +33,8 @@ namespace Mzayad.Web.Areas.admin.Models.Categories
                 })
                 .OrderBy(i => i.Text);
 
-           
+            ExistingSlugs = (await categoryService.GetAllUrlSlugs()).Where(i => !i.Equals(category.Slug));
+
             return this;
         }
     }

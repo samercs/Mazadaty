@@ -133,5 +133,13 @@ namespace Mzayad.Services
                 dc.SaveChanges();
             }
         }
+
+        public async Task<IReadOnlyCollection<string>> GetAllUrlSlugs()
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.Categories.Select(i => i.Slug).OrderBy(i => i).Distinct().ToListAsync();
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿@using Mzayad.Web.Extensions
+@using Newtonsoft.Json
 @model Mzayad.Web.Areas.admin.Models.Categories.AddViewModel
 @{
     ViewBag.Title = "Add Category";
@@ -27,7 +28,7 @@
                         <span class="input-group-addon">/categories/</span>
                         @Html.TextBoxFor(i => i.Category.Slug, new { @class = "form-control" })
                     </div>
-                    @Html.ValidationMessageFor(i => i.Category.Slug, "Please enter a valid, unique URL.")
+                    @Html.ValidationMessageFor(i => i.Category.Slug, "Please enter a valid and unique URL.")
                 </div>
             </section>
 
@@ -43,9 +44,12 @@
     @Scripts.Render("~/js/slugify")
 
     <script>
-        (function($) {
+        (function ($) {
 
-            $("#Category_Slug").slugify("#Name_0_Value", false);
+            var existingSlugs = @Html.Raw(JsonConvert.SerializeObject(Model.ExistingSlugs));
+
+            $("#Category_Slug").slugify("#Name_0_Value", false)
+                               .addSlugErrorValidation(existingSlugs);
 
         })(jQuery);
     </script>
