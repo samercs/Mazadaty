@@ -13,3 +13,5 @@
 /// <reference path="address.js" />
 /// <reference path="jquery-ui-1.11.3.min.js" />
 /// <reference path="jquery.slugify.js" />
+/// <reference path="image-uploader.js" />
+/// <reference path="dropzone.js" />

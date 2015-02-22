@@ -1,0 +1,61 @@
+﻿
+.multipleUploadContainer {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+        float: left;
+        margin-right: 10px;  
+    } 
+}
+
+.image-uploader {
+    width: 150px;
+    min-height: 200px;
+
+    .image-uploader-zone {
+        width: 100%;
+        height: 150px;
+        padding: 25px 5px;
+        border: 2px dashed #ccc;
+        background-size: contain;
+        background-position: center center;
+        background-repeat: no-repeat;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .image-progress-spinner {
+        display: none;
+    }
+
+    .image-progress-message {
+        font-size: 12px;
+        font-style: italic;
+    }
+
+    .image-uploader-footer {
+        padding: 6px 0;
+    
+        .image-delete-button {
+            display: none;
+            padding: 0;
+        }   
+    }
+
+    .image-error-message {
+        color: red;
+        display: none;
+    }
+
+    .dz-details, 
+    .dz-filename, 
+    .dz-size, 
+    .dz-progress, 
+    .dz-success-mark, 
+    .dz-error-mark, 
+    .dz-error-message {
+        display: none;
+    }
+}

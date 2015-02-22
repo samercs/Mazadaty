@@ -1,4 +1,6 @@
-﻿@using Mzayad.Web.Extensions
+﻿@using System.Globalization
+@using Kendo.Mvc.UI
+@using Mzayad.Web.Extensions
 @model Mzayad.Web.Areas.admin.Models.Products.EditViewModel
 
 @{
@@ -47,12 +49,12 @@
                     @Html.EditorFor(i => i.Product.Description, Model)
                     @Html.ValidationMessageFor(i => i.Product.Description, "Please enter a product description.")
                 </div>
-                
+
             </section>
             <section>
                 <div class="form-group">
                     @Html.LabelFor(i => i.Product.RetailPrice, "Retail Price")
-                    @Html.TextBoxFor(i=>i.Product.RetailPrice,new {@type="number"})
+                    @Html.TextBoxFor(i => i.Product.RetailPrice, new { @type = "number" })
                     @Html.ValidationMessageFor(i => i.Product.RetailPrice, "Please enter a product Retail Price.")
                 </div>
             </section>
@@ -63,15 +65,28 @@
                 </div>
             </section>
 
-            @*<section>
+            <section>
                 <div class="form-group">
-                    <label>List Image</label>
-                    @Html.Partial("ImageUploader")
-                    <div class="help-block">The image that appears on a product list page such as a category page or a search results page.</div>
+                    @Html.Label("Images")
+                    <ul id="sortable-list" class="multipleUploadContainer">
+                        <li id="image1">@Html.Partial("ImageUploader")</li>
+                        <li id="image2">@Html.Partial("ImageUploader")</li>
+                        <li id="image3">@Html.Partial("ImageUploader")</li>
+                        <li id="image4">@Html.Partial("ImageUploader")</li>
+                        <li id="image5">@Html.Partial("ImageUploader")</li>
+                        <li id="image6">@Html.Partial("ImageUploader")</li>
+                    </ul>
+                    <div class="clearfix"></div>
+                    @(Html.Kendo().Sortable()
+                        .For("#sortable-list")
+                        .Cursor("url('" + Url.Content("~/content/kendo/images/grabbing.cur") + "'), default")
+                        .Events(e => e.Change("onChange"))
+                        .Filter(".sortable")
+                        .Deferred()
+                    )
+                    <div class="help-block">Although all images are resized and optimized on upload we recommend using an image that is 1600 pixels wide and pre-optimized for display on the web.</div>
                 </div>
-
-                @Html.HiddenFor(i => i.Product.ListImageUrl)
-            </section>*@
+            </section>
 
             <section class="form-buttons">
                 <button type="submit" class="btn btn-default">Save</button>
@@ -85,74 +100,156 @@
     @Scripts.Render("~/js/image-uploader")
     <script src="//cdn.ckeditor.com/4.4.4/basic/ckeditor.js"></script>
     <script>
-    (function($) {
+
+        
+        (function ($) {
 
 
-        $(function() {
-            //bindEvents();
-            initCkEditor();
-        });
+            $(function () {
+                bindEvents();
+                initCkEditor();
+            });
 
-        var bindEvents = function() {
-                @*
-                $(".image-uploader").fileUpload({
-                    itemId: "@Model.Product.ProductId",
+            var bindEvents = function () {
+
+                var multiUploaders = $(".multipleUploadContainer .image-uploader");
+
+
+
+                @for (var i = 0; i < 6; i++)
+            {
+                    var productImage = Model.Product.ProductImages.ElementAtOrDefault(i);
+                    var productImageId = productImage != null ? productImage.ProductImageId.ToString(CultureInfo.InvariantCulture) : "";
+                    var productImageUrl = productImage != null ? productImage.ImageMdUrl : "";
+
+                    <text>
+                $(multiUploaders.get(@i)).fileUpload({
+                    itemId: "@productImageId",
                     parentId: "@Model.Product.ProductId",
-                    imageUrl: "@(Model.Product.ListImageUrl ?? "")",
-                    uploadUrl: "@Url.Action("UploadPhoto", "Products")",
-                    deleteUrl: "@Url.Action("DeletePhoto", "Products")"
-                });*@
+                    imageUrl: "@productImageUrl",
+                    uploadUrl: "/admin/products/UploadImage",
+                    deleteUrl: "/admin/products/DeleteImage",
+                    onUploadSuccessCallback: function (file, response) {
 
-        $("[name='SelectedCategories']").on("change", onCategoryChange);
+                        $("#image@(i + 1)").removeClass("disabled");
+                        $("#image@(i + 1)").addClass("sortable");
+                        $("#image@(i + 1)").attr("data-imgid", response.itemId);
+                        displayUploader();
+                        
+                    },
+                    onDeleteSuccessCallback: function () {
+                        $("#image@(i + 1)").removeClass("sortable");
+                        $("#image@(i + 1)").addClass("disabled");
+                        $("#image@(i + 1)").removeAttr("data-imgid");
+                        displayUploader();
+                        
+                    }
+                });
+                </text>
+                    if (productImage == null)
+                    {
+                    <text>
+                        $("#image@(i + 1)").addClass("disabled");
+                    </text>
+                    }
+                    else
+                    {
+                    <text>
+                        $("#image@(i + 1)").addClass("sortable");
+                        $("#image@(i + 1)").attr("data-imgid", "@productImageId");
+                        
+                    </text>
+                    }
+                }
+                displayUploader();
+
+                $("[name='SelectedCategories']").on("change", onCategoryChange);
 
 
-    };
+            };
 
-    var onCategoryChange = function() {
-        var checkbox = $(this);
-        var checked = checkbox.is(":checked");
-        var categoryId = checkbox.val();
-        var parentCategoryId = checkbox.attr('parentId');
+            var onCategoryChange = function () {
+                var checkbox = $(this);
+                var checked = checkbox.is(":checked");
+                var categoryId = checkbox.val();
+                var parentCategoryId = checkbox.attr('parentId');
 
-        if (checked) {
-            var parentCheckbox = $("#Category" + parentCategoryId);
-            visuallyDisable(parentCheckbox);
-            parentCheckbox.prop('checked', checked).each(onCategoryChange);
+                if (checked) {
+                    var parentCheckbox = $("#Category" + parentCategoryId);
+                    visuallyDisable(parentCheckbox);
+                    parentCheckbox.prop('checked', checked).each(onCategoryChange);
+                }
+
+                if (!checked) {
+                    visuallyEnable(checkbox);
+                    var childCheckbox = $("input[parentId='" + categoryId + "']");
+                    childCheckbox.prop('checked', checked).each(onCategoryChange);
+                }
+            };
+
+            var visuallyDisable = function (checkbox) {
+                if (!checkbox.is(":checked")) {
+                    checkbox.addClass("disabledCheckbox");
+                    checkbox.parent().addClass("disabledLabel");
+                }
+            };
+
+            var visuallyEnable = function (checkbox) {
+                checkbox.removeClass("disabledCheckbox");
+                checkbox.parent().removeClass("disabledLabel");
+            };
+
+            var initCkEditor = function () {
+                $("textarea.localized-input[data-language!='ar']").each(function () {
+                    CKEDITOR.replace(this.id, { height: 300 });
+                });
+
+                $("textarea.localized-input[data-language='ar']").each(function () {
+                    CKEDITOR.replace(this.id, { height: 300, contentsLangDirection: "rtl" });
+                });
+
+                // CK editor breaks localized content validation so disable with hack
+                var hiddenValidator = $("input[name='Product.Description']");
+                hiddenValidator.val(hiddenValidator.val() + "...");
+            };
+
+        })(jQuery);
+
+        function onChange(e) {
+            var id = e.item.attr("id"),
+                newIndex = e.newIndex,
+                oldIndex = e.oldIndex,
+                imageID = e.item.attr("data-imgid");
+            $.ajax({
+                url: "/admin/products/UpdateImageOrder/?imageId=" + imageID + "&newIndex=" + newIndex,
+                context: document.body
+            }).done(function () {
+
+            });
+
         }
 
-        if (!checked) {
-            visuallyEnable(checkbox);
-            var childCheckbox = $("input[parentId='" + categoryId + "']");
-            childCheckbox.prop('checked', checked).each(onCategoryChange);
-        }
-    };
+        var displayUploader = function () {
+            $(".multipleUploadContainer .image-uploader").hide();
+            var multiUploaders = $(".multipleUploadContainer .image-uploader");
 
-    var visuallyDisable = function (checkbox) {
-        if (!checkbox.is(":checked")) {
-            checkbox.addClass("disabledCheckbox");
-            checkbox.parent().addClass("disabledLabel");
-        }
-    };
+            var imgCount = 0;
 
-    var visuallyEnable = function (checkbox) {
-        checkbox.removeClass("disabledCheckbox");
-        checkbox.parent().removeClass("disabledLabel");
-    };
+            for (var i = 0; i < 6; i++) {
+                if ($("#image" + (i+1)).attr("data-imgid") != undefined) {
+                    $(multiUploaders.get(i)).show();
+                    ++imgCount;
+                }
+            }
 
-    var initCkEditor = function() {
-        $("textarea.localized-input[data-language!='ar']").each(function () {
-            CKEDITOR.replace(this.id, { height: 300 });
-        });
-
-        $("textarea.localized-input[data-language='ar']").each(function () {
-            CKEDITOR.replace(this.id, { height: 300, contentsLangDirection: "rtl" });
-        });
-
-        // CK editor breaks localized content validation so disable with hack
-        var hiddenValidator = $("input[name='Product.Description']");
-        hiddenValidator.val(hiddenValidator.val() + "...");
-    };
-
-    })(jQuery);
+            if (imgCount < 5) {
+                for (var j = 0; j < 6; j++) {
+                    if ($("#image" + (j + 1)).attr("data-imgid") == undefined) {
+                        $(multiUploaders.get(j)).show();
+                        break;
+                    }
+                }
+            }
+        };
     </script>
 }

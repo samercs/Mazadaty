@@ -67,5 +67,122 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<ProductImage> AddProductImage(Product product, string imageSmUrl, string imageMdUrl, string imageLgUrl)
+        {
+            using (var dc = DataContext())
+            {
+                if (ProductImageHaveDuplicate(product))
+                {
+                    await ProductImageFixDuplicate(product);
+                }
+
+
+                var productImage = new ProductImage()
+                {
+                    SortOrder = product.ProductImages.Count > 0 ? (product.ProductImages.Last().SortOrder + 1) : 1,
+                    ImageSmUrl = imageSmUrl,
+                    ImageMdUrl = imageMdUrl,
+                    ImageLgUrl = imageLgUrl,
+                    ProductId = product.ProductId
+                };
+
+                dc.ProductImages.Add(productImage);
+
+                await dc.SaveChangesAsync();
+
+                return productImage;
+            }
+        }
+
+        public void DeleteProductImage(ProductImage productImage)
+        {
+            using (var dc = DataContext())
+            {
+                dc.ProductImages.Attach(productImage);
+                dc.ProductImages.Remove(productImage);
+                dc.SaveChanges();
+            }
+        }
+
+        public bool ProductImageHaveDuplicate(Product product)
+        {
+            var d = new HashSet<double>();
+            foreach (var t in product.ProductImages)
+            {
+                if (!d.Add(t.SortOrder))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public async Task<bool> ProductImageFixDuplicate(Product product)
+        {
+            using (var dc = DataContext())
+            {
+                int count = 1;
+                foreach (var t in product.ProductImages.OrderBy(i => i.CreatedUtc))
+                {
+                    t.SortOrder = count;
+                    dc.SetModified(t);
+                    ++count;
+                }
+                await dc.SaveChangesAsync();
+
+                return true;
+            }
+
+
+
+        }
+
+
+        public async Task<ProductImage> GetProductImage(int id)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.ProductImages.SingleOrDefaultAsync(i => i.ProductImageId == id);
+            }
+        }
+
+        public async Task<bool> UpdateProductImageOrder(int imageId, int newIndex)
+        {
+            using (var dc = DataContext())
+            {
+                var image = await dc.ProductImages.SingleOrDefaultAsync(i => i.ProductImageId == imageId);
+                if (image != null)
+                {
+                    var sku =
+                        await dc.ProductImages.OrderBy(i => i.SortOrder).Where(i => i.ProductId == image.ProductId).ToListAsync();
+                    if (sku.Count > 1 && newIndex < sku.Count)
+                    {
+                        double index = 0;
+                        //move to first image
+                        if (newIndex == 0)
+                        {
+                            index = sku[0].SortOrder / 2;
+                        }
+                        //move to last image
+                        else if ((newIndex + 1) == sku.Count)
+                        {
+                            index = sku[sku.Count - 1].SortOrder + 1;
+                        }
+                        //move between two image
+                        else
+                        {
+                            index = (sku[newIndex].SortOrder + sku[newIndex - 1].SortOrder) / 2;
+                        }
+
+                        image.SortOrder = index;
+                        dc.SetModified(image);
+                        await dc.SaveChangesAsync();
+                    }
+
+                }
+                return true;
+            }
+        }
+
     }
 }
