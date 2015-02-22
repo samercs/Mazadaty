@@ -8,7 +8,8 @@ namespace Mzayad.Data
     public interface IDataContext : IDisposable
     {
         IDbSet<Address> Addresses { get; set; }
-        IDbSet<EmailTemplate> EmailTemplates { get; set; } 
+        IDbSet<EmailTemplate> EmailTemplates { get; set; }
+        IDbSet<Category> Categories { get; set; } 
 
         int SaveChanges();
         Task<int> SaveChangesAsync();

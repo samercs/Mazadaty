@@ -182,6 +182,7 @@ body .k-button-icon {
   padding-right: 8px;
   overflow: visible;
   /*IE9*/
+
 }
 .k-button-icontext .k-icon,
 .k-button-icontext .k-image {
@@ -200,6 +201,7 @@ body .k-button-icon {
 html body .k-button-bare {
   background: none !important;
   /*spares long selectors*/
+
   color: inherit;
   border-width: 0;
 }
@@ -1247,6 +1249,7 @@ html .k-error-colored {
   text-indent: -4000px;
   text-align: center;
   /*rtl*/
+
 }
 .k-loading-image,
 .k-loading-color {
@@ -1317,6 +1320,7 @@ html .k-error-colored {
   right: 0;
   width: 17px;
   /* scrollbar width */
+
   height: 100%;
   overflow-x: hidden;
 }
@@ -1339,6 +1343,7 @@ html .k-error-colored {
 .k-virtual-scrollable-wrap {
   overflow-x: auto;
   /*needed by IE8*/
+
 }
 /* override box sizing for grid layout framework integration (Bootstrap 3, Foundation 4) */
 .k-animation-container,
@@ -1459,6 +1464,7 @@ div.k-window {
   white-space: nowrap;
   min-height: 16px;
   /* icon size */
+
 }
 .k-block > .k-header {
   position: relative;
@@ -1958,6 +1964,7 @@ ul.k-menu-vertical .k-separator,
   width: 100%;
   margin: 0;
   /* override CSS libraries */
+
   border-collapse: separate;
   border-spacing: 0;
   empty-cells: show;
@@ -1979,12 +1986,14 @@ ul.k-menu-vertical .k-separator,
 .k-ie10 .k-grid-header a:active {
   background-color: transparent;
   /*remove gray background*/
+
 }
 .k-grid-header .k-header > .k-link {
   display: block;
   min-height: 18px;
   line-height: 18px;
   /* due to sorting icons*/
+
   margin: -0.5em -0.6em -0.4em -0.6em;
   padding: .5em .6em .4em .6em;
   overflow: hidden;
@@ -2021,6 +2030,7 @@ ul.k-menu-vertical .k-separator,
 .k-grid-edit-row .k-textbox,
 .k-grid-edit-row .text-box {
   /*reset default webkit styles*/
+
   margin-top: 0;
   margin-bottom: 0;
 }
@@ -2037,6 +2047,7 @@ div.k-grid-header,
 div.k-grid-footer {
   padding-right: 17px;
   /* scrollbar width; may vary; can be calculated */
+
   border-bottom-style: solid;
   border-bottom-width: 1px;
   zoom: 1;
@@ -2105,6 +2116,7 @@ div.k-grid-header .k-header {
   vertical-align: top;
   overflow: hidden;
   /* generally uneeded */
+
   position: relative;
   border-style: solid;
   border-width: 0 1px 0 0;
@@ -2197,6 +2209,7 @@ div.k-grid-header .k-header {
   margin: 0 0.08333em;
   height: 2em;
   /*IE7*/
+
   line-height: 2em;
   /*IE7*/
   border-radius: 1.0833em;
@@ -2271,6 +2284,7 @@ div.k-grid-header .k-header {
   position: relative;
   z-index: 1;
   /*mvc site.css*/
+
 }
 .k-grid .k-animation-container {
   position: absolute;
@@ -2430,10 +2444,12 @@ form.k-filter-menu .k-textbox {
 .k-grid tbody button.k-button {
   min-width: 78px;
   /* for all except IE8 */
+
 }
 .k-ie7 .k-grid tbody a.k-button {
   min-width: 62px;
   /* for IE7 link buttons */
+
 }
 html body .k-grid tbody .k-button-icon {
   width: auto;
@@ -2508,11 +2524,13 @@ html .k-grid-edit-row .k-tooltip {
 .k-ie9 .k-column-menu {
   width: 160px;
   /*fix flicker on item hover*/
+
 }
 .k-ie8 .k-grid-filter,
 .k-ie8 .k-header-column-menu {
   font-size: 100%;
   /* Fix small menus in IE8 */
+
 }
 .k-column-menu {
   min-width: 160px;
@@ -2631,6 +2649,7 @@ html .k-grid-edit-row .k-tooltip {
 /* TreeView */
 div.k-treeview {
   /* due to k-widget */
+
   border-width: 0;
   background: none;
   overflow: auto;
@@ -2894,6 +2913,7 @@ span.k-dropdown {
 .k-dropdown-wrap .k-select {
   position: absolute;
   /* icon positioning */
+
   top: 0;
   right: 0;
   display: inline-block;
@@ -2907,6 +2927,7 @@ span.k-dropdown {
   border-width: 0 0 0 1px;
   border-color: inherit;
   /* skin-related, inherit does not work in ie7- */
+
 }
 span.k-datetimepicker .k-select,
 span.k-datetimepicker .k-select + .k-select {
@@ -2918,6 +2939,7 @@ span.k-datetimepicker .k-select + .k-select {
 }
 .k-combobox .k-icon {
   /*margin-top: 1px;*/
+
 }
 .k-dropdown .k-select,
 .k-selectbox .k-select {
@@ -3313,16 +3335,22 @@ div.k-flatcolorpicker {
 .k-flatcolorpicker .k-hue-slider .k-slider-track {
   background: -moz-linear-gradient(left, #ff0000 0%, #ffff00 16%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 84%, #ff0004 100%);
   /* FF3.6+ */
+
   background: -webkit-gradient(linear, left top, right top, color-stop(0%, #ff0000), color-stop(16%, #ffff00), color-stop(33%, #00ff00), color-stop(50%, #00ffff), color-stop(67%, #0000ff), color-stop(84%, #ff00ff), color-stop(100%, #ff0004));
   /* Chrome,Safari4+ */
+
   background: -webkit-linear-gradient(left, #ff0000 0%, #ffff00 16%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 84%, #ff0004 100%);
   /* Chrome10+,Safari5.1+ */
+
   background: -o-linear-gradient(left, #ff0000 0%, #ffff00 16%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 84%, #ff0004 100%);
   /* Opera 11.10+ */
+
   background: -ms-linear-gradient(left, #ff0000 0%, #ffff00 16%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 84%, #ff0004 100%);
   /* IE10+ */
+
   background: linear-gradient(left, #ff0000 0%, #ffff00 16%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 84%, #ff0004 100%);
   /* W3C */
+
 }
 .k-flatcolorpicker .k-transparency-slider .k-slider-track {
   background-image: url("common/textures/transparency.png");
@@ -3340,18 +3368,30 @@ div.k-flatcolorpicker {
   width: 6em;
 }
 .k-flatcolorpicker .k-hsv-gradient {
-  background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, #000000 100%), /* FF3.6+ */ -moz-linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+  background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, #000000 100%), /* FF3.6+ */
+ -moz-linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
   /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(100%, #000000)), /* Chrome,Safari4+ */ -webkit-gradient(linear, left top, right top, color-stop(0%, #ffffff), color-stop(100%, rgba(255, 255, 255, 0)));
+
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(100%, #000000)), /* Chrome,Safari4+ */
+ -webkit-gradient(linear, left top, right top, color-stop(0%, #ffffff), color-stop(100%, rgba(255, 255, 255, 0)));
   /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, #000000 100%), /* Chrome10+,Safari5.1+ */ -webkit-linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+
+  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, #000000 100%), /* Chrome10+,Safari5.1+ */
+ -webkit-linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
   /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, rgba(0, 0, 0, 0) 0%, #000000 100%), /* Opera 11.10+ */ -o-linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+
+  background: -o-linear-gradient(top, rgba(0, 0, 0, 0) 0%, #000000 100%), /* Opera 11.10+ */
+ -o-linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
   /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, rgba(0, 0, 0, 0) 0%, #000000 100%), /* IE10+ */ -ms-linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+
+  background: -ms-linear-gradient(top, rgba(0, 0, 0, 0) 0%, #000000 100%), /* IE10+ */
+ -ms-linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
   /* IE10+ */
-  background: linear-gradient(top, rgba(0, 0, 0, 0) 0%, #000000 100%), /* W3C */ linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+
+  background: linear-gradient(top, rgba(0, 0, 0, 0) 0%, #000000 100%), /* W3C */
+ linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
   /* W3C */
+
   height: 180px;
   margin-bottom: 5px;
 }
@@ -3410,6 +3450,7 @@ table.k-editor {
 .k-editor-toolbar li {
   display: inline;
   /* mandatory for IE7. Floats and the inline-block hack break it */
+
   vertical-align: middle;
 }
 .k-webkit .k-editor-toolbar,
@@ -3761,6 +3802,7 @@ table.k-editor {
   display: inline;
   vertical-align: top;
   /*fixes missing top border caused by the inline display*/
+
 }
 .k-editor .k-raw-content {
   border: 0;
@@ -3825,7 +3867,7 @@ table.k-editor {
   text-decoration: underline;
 }
 .k-ct-popup {
-  width: 180.4px;
+  width: 180.39999999999998px;
   padding: .65em .5em .5em;
 }
 .k-ct-popup .k-status {
@@ -4074,11 +4116,13 @@ div.k-slider {
   width: 26px;
   height: 200px;
   /* default height */
+
 }
 .k-slider-horizontal {
   display: inline-block;
   width: 200px;
   /* default width */
+
   height: 26px;
 }
 .k-slider-wrap {
@@ -4364,6 +4408,7 @@ div.k-slider {
 .k-slider-tooltip {
   top: -4444px;
   /*prevent window resize in IE8 when appending*/
+
 }
 /* Scheduler */
 .k-scheduler-toolbar,
@@ -5017,8 +5062,10 @@ div[name="recurrenceRule"] > .k-dropdown {
   background-repeat: repeat-x;
   min-width: 20px;
   /*slider tooltip only*/
+
   text-align: center;
   /*slider tooltip only*/
+
 }
 .k-tooltip-button {
   text-align: right;
@@ -5262,6 +5309,7 @@ html .k-upload-empty {
   min-width: 7.167em;
   overflow: hidden !important;
   /* important required by IE7 */
+
   direction: ltr;
 }
 .k-upload-sync .k-upload-button,
@@ -5277,6 +5325,7 @@ html .k-upload-empty {
   z-index: 1;
   font: 200px monospace !important;
   /* critical for correct operation */
+
   filter: alpha(opacity=0);
   opacity: 0;
   margin: 0;
@@ -5506,6 +5555,7 @@ html .k-upload-empty {
   line-height: 23px;
   white-space: nowrap;
   /*required by WebKit*/
+
 }
 .k-imagebrowser .k-toolbar .k-button.k-state-disabled {
   display: none;
@@ -7143,8 +7193,11 @@ html .k-upload-empty {
 /* Slide */
 .k-fx-slide {
   /* left */
+
   /* left reverse */
+
   /* right */
+
 }
 .k-fx-slide.k-fx-end .k-fx-next .km-content,
 .k-fx-slide.k-fx-end .k-fx-next .km-header,
@@ -7218,6 +7271,7 @@ html .k-upload-empty {
 }
 .k-fx-slide.k-fx-right {
   /* right reverse */
+
 }
 .k-fx-slide.k-fx-right.k-fx-start .k-fx-next .km-content {
   -webkit-transform: translatex(-100%);
@@ -7264,8 +7318,11 @@ html .k-upload-empty {
 /* Tile */
 .k-fx-tile {
   /* left */
+
   /* left reverse */
+
   /* right */
+
 }
 .k-fx-tile.k-fx-start .k-fx-next {
   -webkit-transform: translatex(100%);
@@ -7311,6 +7368,7 @@ html .k-upload-empty {
 }
 .k-fx-tile.k-fx-right {
   /* right reverse */
+
 }
 .k-fx-tile.k-fx-right.k-fx-start .k-fx-next {
   -webkit-transform: translatex(-100%);
@@ -7357,8 +7415,11 @@ html .k-upload-empty {
 /* Tile */
 .k-fx-tile {
   /* left */
+
   /* left reverse */
+
   /* right */
+
 }
 .k-fx-tile.k-fx-start .k-fx-next {
   -webkit-transform: translatex(100%);
@@ -7404,6 +7465,7 @@ html .k-upload-empty {
 }
 .k-fx-tile.k-fx-right {
   /* right reverse */
+
 }
 .k-fx-tile.k-fx-right.k-fx-start .k-fx-next {
   -webkit-transform: translatex(-100%);
@@ -7520,4 +7582,3 @@ html .k-upload-empty {
   -o-transform: translatey(-100%);
   transform: translatey(-100%);
 }
-/*# sourceMappingURL=kendo.common.css.map */

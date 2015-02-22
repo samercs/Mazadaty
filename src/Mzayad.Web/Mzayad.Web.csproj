@@ -223,6 +223,9 @@
     <Compile Include="Core\ActionResults\ExcelResult.cs" />
     <Compile Include="Core\Configuration\AddressPartialResolver.cs" />
     <Compile Include="Core\Attributes\RoleAuthorizeAttribute.cs" />
+    <Compile Include="Areas\admin\Models\Categories\AddViewModel.cs" />
+    <Compile Include="Areas\admin\Models\Categories\EditViewModel.cs" />
+    <Compile Include="Core\Configuration\AddressPartialResolver.cs" />
     <Compile Include="Core\Configuration\RouteInfo.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Areas\admin\Controllers\DocsController.cs" />
@@ -270,6 +273,9 @@
     <Content Include="Content\kendo\images\grab.cur" />
     <Content Include="Content\kendo\images\grabbing.cur" />
     <Content Include="Content\kendo\kendo.common.css" />
+    <Content Include="Content\kendo\kendo.common.min.css">
+      <DependentUpon>kendo.common.less</DependentUpon>
+    </Content>
     <Content Include="Content\kendo\kendo.css" />
     <Content Include="Content\kendo\kendo.min.css" />
     <Content Include="Content\site-admin.css">
@@ -407,6 +413,8 @@
     <Content Include="Content\site-admin.css.map">
       <DependentUpon>site-admin.css</DependentUpon>
     </Content>
+    <Content Include="Areas\admin\Views\Categories\Add.cshtml" />
+    <Content Include="Areas\admin\Views\Categories\Edit.cshtml" />
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />

@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Address.cs" />
     <Compile Include="ApplicationUser.cs" />
+    <Compile Include="Category.cs" />
     <Compile Include="EmailTemplate.cs" />
     <Compile Include="Enum\EmailTemplateType.cs" />
     <Compile Include="ModelBase.cs" />
