@@ -1,29 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Mzayad.Models;
+﻿using Mzayad.Models;
 using Mzayad.Web.Areas.admin.Models.Categories;
 using Mzayad.Web.Controllers;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Localization;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using Mzayad.Services;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
     [RouteArea("Admin"), RoutePrefix("categories")]
     public class CategoriesController : ApplicationController
     {
-        //
-        // GET: /admin/Categories/
+        private readonly CategoryService _categoryService;
+        
         public CategoriesController(IControllerServices controllerServices) : base(controllerServices)
         {
+            _categoryService = new CategoryService(controllerServices.DataContextFactory);
         }
 
         public async Task<ActionResult> Index()
         {
-            var categories = await _CategoryService.GetCategoriesAsHierarchyAsync();
+            var categories = await _categoryService.GetCategoriesAsHierarchyAsync();
 
             return View(categories);
         }
@@ -31,7 +29,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         [Route("add")]
         public async Task<ActionResult> Add()
         {
-            var model = await new AddViewModel().Hydrate(_CategoryService);
+            var model = await new AddViewModel().Hydrate(_categoryService);
 
             return View(model);
         }
@@ -49,8 +47,8 @@ namespace Mzayad.Web.Areas.admin.Controllers
             }
 
             Category category = null;
-            
-            category = await _CategoryService.AddCategory(model.Category);
+
+            category = await _categoryService.AddCategory(model.Category);
              
             var categoryName = category.Localize("en", i => i.Name).Name;
 
@@ -63,13 +61,13 @@ namespace Mzayad.Web.Areas.admin.Controllers
         [Route("edit/{id:int}")]
         public async Task<ActionResult> Edit(int id)
         {
-            var category = await _CategoryService.GetCategory(id);
+            var category = await _categoryService.GetCategory(id);
             if (category == null)
             {
                 return HttpNotFound();
             }
 
-            var viewModel = await new EditViewModel().Hydrate(category, _CategoryService);
+            var viewModel = await new EditViewModel().Hydrate(category, _categoryService);
 
             return View(viewModel);
         }
@@ -78,7 +76,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, EditViewModel model, LocalizedContent[] name)
         {
-            var category = await _CategoryService.GetCategory(id);
+            var category = await _categoryService.GetCategory(id);
             if (category == null)
             {
                 return HttpNotFound();
@@ -86,14 +84,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             if (!TryUpdateModel(category, "Category"))
             {
-                var viewModel = await new EditViewModel().Hydrate(category, _CategoryService);
+                var viewModel = await new EditViewModel().Hydrate(category, _categoryService);
 
                 return View(viewModel);
             }
 
             category.Name = name.Serialize();
 
-            await _CategoryService.UpdateCategory(category);
+            await _categoryService.UpdateCategory(category);
             
             var categoryName = category.Localize("en", i => i.Name).Name;
 
@@ -107,13 +105,13 @@ namespace Mzayad.Web.Areas.admin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(int id)
         {
-            var category = await _CategoryService.GetCategory(id);
+            var category = await _categoryService.GetCategory(id);
             if (category == null)
             {
                 return HttpNotFound();
             }
 
-            _CategoryService.Delete(category);
+            _categoryService.Delete(category);
             category.Localize("en", i => i.Name);
             SetStatusMessage(string.Format("Category {0} successfully deleted.", category.Name));
 

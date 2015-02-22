@@ -71,6 +71,7 @@ namespace Mzayad.Services
             {
                 CategoryId = i.CategoryId,
                 Name = i.Name,
+                Slug = i.Slug,
                 Parent = i.Parent,
                 ParentId = i.ParentId,
                 CreatedUtc = i.CreatedUtc,
@@ -131,6 +132,14 @@ namespace Mzayad.Services
                 dc.Categories.Attach(category);
                 dc.Categories.Remove(category);
                 dc.SaveChanges();
+            }
+        }
+
+        public async Task<Category> GetCategoryBySlug(string slug)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.Categories.SingleOrDefaultAsync(i => i.Slug == slug);
             }
         }
 

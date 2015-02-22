@@ -1,6 +1,6 @@
 ﻿@using Mzayad.Models
 @using Mzayad.Web.Extensions
-@model IEnumerable<Mzayad.Models.Category>
+@model IEnumerable<Category>
 
 @{
     ViewBag.Title = "Categories";
@@ -8,14 +8,13 @@
 
 @helper RenderCategory(Category category, int depth)
 {
-    var url = Url.Action("Index", "Categories", new { area = "", slug = category.Slug }, "https");
-    var uri = new Uri(url);
+    var url = Url.Action("Index", "Categories", new { area = "", language = "en", slug = category.Slug }, "https");
     
     <tr>
         <td>
             <span style="padding-left: @(depth * 20)px;">@category.Name</span>
         </td>
-        <td><a href="@url">@uri.PathAndQuery</a></td>
+        <td><a href="@url">@url</a></td>
         <td class="link-cell">@Html.ActionLink("Edit", "Edit", "Categories", new { id = category.CategoryId }, null)</td>
     </tr>
 
