@@ -35,7 +35,7 @@
     {
         columns.Bound(i => i.FirstName);
         columns.Bound(i => i.LastName);
-        columns.Bound(i => i.UserName);
+        columns.Bound(i => i.UserName).Title("Username");
         columns.Bound(i => i.Email);
         //columns.Bound(i => i.CreatedUtc).Format("{0:dd MMM yyyy}").Title("Created");
         columns.LinkColumn("Details", "users/details/#=Id#");
