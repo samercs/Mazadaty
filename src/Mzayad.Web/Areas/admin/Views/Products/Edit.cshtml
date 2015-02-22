@@ -1,0 +1,158 @@
+﻿@using Mzayad.Web.Extensions
+@model Mzayad.Web.Areas.admin.Models.Products.EditViewModel
+
+@{
+    ViewBag.Title = "Edit Product";
+}
+
+@section styles {
+    @Styles.Render("~/css/image-uploader")
+    <style>
+        .disabledLabel {
+            color: grey;
+        }
+
+        .disabledCheckbox {
+            opacity: .5;
+        }
+
+        .categoriesList {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .childCategoriesList {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+    </style>
+}
+
+<div class="row">
+
+    <div class="@Html.Css().FormWide">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Product.Name, "Name")
+                    @Html.EditorFor(i => i.Product.Name, Model)
+                    @Html.ValidationMessageFor(i => i.Product.Name, "Please enter a product name.")
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Product.Description, "Description")
+                    @Html.EditorFor(i => i.Product.Description, Model)
+                    @Html.ValidationMessageFor(i => i.Product.Description, "Please enter a product description.")
+                </div>
+                
+            </section>
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Product.RetailPrice, "Retail Price")
+                    @Html.TextBoxFor(i=>i.Product.RetailPrice,new {@type="number"})
+                    @Html.ValidationMessageFor(i => i.Product.RetailPrice, "Please enter a product Retail Price.")
+                </div>
+            </section>
+            <section>
+                <div class="form-group">
+                    @Html.Label("Categories")
+                    @Html.Partial("ProductCategories", new { Model.Categories, Model.SelectedCategories })
+                </div>
+            </section>
+
+            @*<section>
+                <div class="form-group">
+                    <label>List Image</label>
+                    @Html.Partial("ImageUploader")
+                    <div class="help-block">The image that appears on a product list page such as a category page or a search results page.</div>
+                </div>
+
+                @Html.HiddenFor(i => i.Product.ListImageUrl)
+            </section>*@
+
+            <section class="form-buttons">
+                <button type="submit" class="btn btn-default">Save</button>
+            </section>
+        }
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/js/validate")
+    @Scripts.Render("~/js/image-uploader")
+    <script src="//cdn.ckeditor.com/4.4.4/basic/ckeditor.js"></script>
+    <script>
+    (function($) {
+
+
+        $(function() {
+            //bindEvents();
+            initCkEditor();
+        });
+
+        var bindEvents = function() {
+                @*
+                $(".image-uploader").fileUpload({
+                    itemId: "@Model.Product.ProductId",
+                    parentId: "@Model.Product.ProductId",
+                    imageUrl: "@(Model.Product.ListImageUrl ?? "")",
+                    uploadUrl: "@Url.Action("UploadPhoto", "Products")",
+                    deleteUrl: "@Url.Action("DeletePhoto", "Products")"
+                });*@
+
+        $("[name='SelectedCategories']").on("change", onCategoryChange);
+
+
+    };
+
+    var onCategoryChange = function() {
+        var checkbox = $(this);
+        var checked = checkbox.is(":checked");
+        var categoryId = checkbox.val();
+        var parentCategoryId = checkbox.attr('parentId');
+
+        if (checked) {
+            var parentCheckbox = $("#Category" + parentCategoryId);
+            visuallyDisable(parentCheckbox);
+            parentCheckbox.prop('checked', checked).each(onCategoryChange);
+        }
+
+        if (!checked) {
+            visuallyEnable(checkbox);
+            var childCheckbox = $("input[parentId='" + categoryId + "']");
+            childCheckbox.prop('checked', checked).each(onCategoryChange);
+        }
+    };
+
+    var visuallyDisable = function (checkbox) {
+        if (!checkbox.is(":checked")) {
+            checkbox.addClass("disabledCheckbox");
+            checkbox.parent().addClass("disabledLabel");
+        }
+    };
+
+    var visuallyEnable = function (checkbox) {
+        checkbox.removeClass("disabledCheckbox");
+        checkbox.parent().removeClass("disabledLabel");
+    };
+
+    var initCkEditor = function() {
+        $("textarea.localized-input[data-language!='ar']").each(function () {
+            CKEDITOR.replace(this.id, { height: 300 });
+        });
+
+        $("textarea.localized-input[data-language='ar']").each(function () {
+            CKEDITOR.replace(this.id, { height: 300, contentsLangDirection: "rtl" });
+        });
+
+        // CK editor breaks localized content validation so disable with hack
+        var hiddenValidator = $("input[name='Product.Description']");
+        hiddenValidator.val(hiddenValidator.val() + "...");
+    };
+
+    })(jQuery);
+    </script>
+}
