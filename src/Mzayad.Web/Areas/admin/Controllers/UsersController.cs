@@ -59,6 +59,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             var users = await AuthService.GetUsers(search, role);
             var results = users.Select(i => new
             {
+                i.Id,
                 i.FirstName,
                 i.LastName,
                 i.UserName,
