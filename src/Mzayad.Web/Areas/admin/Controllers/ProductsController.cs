@@ -119,8 +119,6 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             model.Product.Description = description.Serialize();
 
-            
-
             if (!TryUpdateModel(product, "Product"))
             {
                 return View(model);
@@ -129,6 +127,8 @@ namespace Mzayad.Web.Areas.admin.Controllers
             product.Name = model.Product.Name;
             product.Description = model.Product.Description;
             product.RetailPrice = model.Product.RetailPrice;
+            product.VideoUrl = model.Product.VideoUrl;
+            
             var x = 0;
             var categoryIds = model.SelectedCategories.Where(str => int.TryParse(str, out x)).Select(str => x).ToList();
 

@@ -81,18 +81,23 @@
                     </ul>
                     <div class="clearfix"></div>
                     @(Html.Kendo().Sortable()
-                        .For("#sortable-list")
-                        .Cursor("url('" + Url.Content("~/content/kendo/images/grabbing.cur") + "'), default")
-                        .Events(e => e.Change("onChange"))
-                        .Filter(".sortable")
-                        .Deferred()
-                    )
+                          .For("#sortable-list")
+                          .Cursor("url('" + Url.Content("~/content/kendo/images/grabbing.cur") + "'), default")
+                          .Events(e => e.Change("onChange"))
+                          .Filter(".sortable")
+                          .Deferred()
+                          )
                     <div class="help-block">
                         <ul class="fa-ul">
                             <li><i class="fa-li fa fa-asterisk"></i><strong>Size:</strong> We recommend uploading images that are at least <strong>1600px wide</strong>.</li>
                             <li><i class="fa-li fa fa-asterisk"></i><strong>Hint:</strong> You can re-order images by dragging them above.</li>
                         </ul>
                     </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Product.VideoUrl, "YouTube Embed URL") (optional)
+                    @Html.TextBoxFor(m => m.Product.VideoUrl, new { @class = "form-control", @type = "url" })
+                    <div class="help-block">Copy-and-paste the YouTube embed URL here, for example https://www.youtube.com/embed/cchSQ0R_Obw</div>
                 </div>
             </section>
 
