@@ -54,7 +54,10 @@
             <section>
                 <div class="form-group">
                     @Html.LabelFor(i => i.Product.RetailPrice, "Retail Price")
-                    @Html.TextBoxFor(i => i.Product.RetailPrice, new { @type = "number" })
+                    <div class="input-group">
+                        <span class="input-group-addon">KWD</span>
+                        @Html.TextBoxFor(i => i.Product.RetailPrice, new { @class = "form-control form-control-md", @type = "number" })
+                    </div>
                     @Html.ValidationMessageFor(i => i.Product.RetailPrice, "Please enter a product Retail Price.")
                 </div>
             </section>
