@@ -63,7 +63,19 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                return await dc.Products.Include(i => i.ProductImages).Include(i => i.Categories).SingleOrDefaultAsync(i => i.ProductId == productId);
+                var product = await dc.Products
+                    .Include(i => i.ProductImages)
+                    .Include(i => i.Categories)
+                    .SingleOrDefaultAsync(i => i.ProductId == productId);
+
+                if (product == null)
+                {
+                    return null;
+                }
+
+                product.ProductImages = product.ProductImages.OrderBy(i => i.SortOrder).ToList();
+
+                return product;
             }
         }
 
