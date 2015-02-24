@@ -1,8 +1,32 @@
-﻿@model dynamic
+﻿@using Humanizer
+@using Mzayad.Web.Extensions
+@model IEnumerable<Mzayad.Models.Product>
 
 @{
     ViewBag.Title = "Products";
-    
 }
 
-<h2>Products</h2>
+<ul class="link-list">
+    <li>@Html.ActionLink("Add Product", "Add", "Products")</li>
+    
+</ul>
+
+<table class="@Html.Css().GridTable">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Description</th>
+            
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+
+    @foreach (var product in Model)
+    {
+        <tr>
+            <td>@product.Name</td>
+            <td>@Html.Raw(product.Description.Truncate(50))</td>
+            <td class="link-cell">@Html.ActionLink("Edit", "Edit", "Products", new { id = product.ProductId }, null)</td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,268 @@
+﻿@using System.Globalization
+@using Kendo.Mvc.UI
+@using Mzayad.Web.Extensions
+@model Mzayad.Web.Areas.admin.Models.Products.EditViewModel
+
+@{
+    ViewBag.Title = "Edit Product";
+}
+
+@section styles {
+    @Styles.Render("~/css/image-uploader")
+    <style>
+        .disabledLabel {
+            color: grey;
+        }
+
+        .disabledCheckbox {
+            opacity: .5;
+        }
+
+        .categoriesList {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .childCategoriesList {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+    </style>
+}
+
+<div class="row">
+
+    <div class="@Html.Css().FormWide">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Product.Name, "Name")
+                    @Html.EditorFor(i => i.Product.Name, Model)
+                    @Html.ValidationMessageFor(i => i.Product.Name, "Please enter a product name.")
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Product.Description, "Description")
+                    @Html.EditorFor(i => i.Product.Description, Model)
+                    @Html.ValidationMessageFor(i => i.Product.Description, "Please enter a product description.")
+                </div>
+
+            </section>
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Product.RetailPrice, "Retail Price")
+                    <div class="input-group">
+                        <span class="input-group-addon">KWD</span>
+                        @Html.TextBoxFor(i => i.Product.RetailPrice, new { @class = "form-control form-control-md", @type = "number" })
+                    </div>
+                    @Html.ValidationMessageFor(i => i.Product.RetailPrice, "Please enter a product Retail Price.")
+                </div>
+            </section>
+            <section>
+                <div class="form-group">
+                    @Html.Label("Categories")
+                    @Html.Partial("ProductCategories", new { Model.Categories, Model.SelectedCategories })
+                </div>
+            </section>
+
+            <section>
+                <div class="form-group">
+                    @Html.Label("Images")
+                    <ul id="sortable-list" class="multipleUploadContainer">
+                        <li id="image1">@Html.Partial("ImageUploader")</li>
+                        <li id="image2">@Html.Partial("ImageUploader")</li>
+                        <li id="image3">@Html.Partial("ImageUploader")</li>
+                        <li id="image4">@Html.Partial("ImageUploader")</li>
+                        <li id="image5">@Html.Partial("ImageUploader")</li>
+                        <li id="image6">@Html.Partial("ImageUploader")</li>
+                    </ul>
+                    <div class="clearfix"></div>
+                    @(Html.Kendo().Sortable()
+                          .For("#sortable-list")
+                          .Cursor("url('" + Url.Content("~/content/kendo/images/grabbing.cur") + "'), default")
+                          .Events(e => e.Change("onChange"))
+                          .Filter(".sortable")
+                          .Deferred()
+                          )
+                    <div class="help-block">
+                        <ul class="fa-ul">
+                            <li><i class="fa-li fa fa-asterisk"></i><strong>Size:</strong> We recommend uploading images that are at least <strong>1600px wide</strong>.</li>
+                            <li><i class="fa-li fa fa-asterisk"></i><strong>Hint:</strong> You can re-order images by dragging them above.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Product.VideoUrl, "YouTube Embed URL") (optional)
+                    @Html.TextBoxFor(m => m.Product.VideoUrl, new { @class = "form-control", @type = "url" })
+                    <div class="help-block">Copy-and-paste the YouTube embed URL here, for example https://www.youtube.com/embed/cchSQ0R_Obw</div>
+                </div>
+            </section>
+
+            <section class="form-buttons">
+                <button type="submit" class="btn btn-default">Save</button>
+            </section>
+        }
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/js/validate")
+    @Scripts.Render("~/js/image-uploader")
+    <script src="//cdn.ckeditor.com/4.4.4/basic/ckeditor.js"></script>
+    <script>
+
+        
+        (function ($) {
+
+
+            $(function () {
+                bindEvents();
+                initCkEditor();
+            });
+
+            var bindEvents = function () {
+
+                var multiUploaders = $(".multipleUploadContainer .image-uploader");
+
+
+
+                @for (var i = 0; i < 6; i++)
+            {
+                    var productImage = Model.Product.ProductImages.ElementAtOrDefault(i);
+                    var productImageId = productImage != null ? productImage.ProductImageId.ToString(CultureInfo.InvariantCulture) : "";
+                    var productImageUrl = productImage != null ? productImage.ImageMdUrl : "";
+
+                    <text>
+                $(multiUploaders.get(@i)).fileUpload({
+                    itemId: "@productImageId",
+                    parentId: "@Model.Product.ProductId",
+                    imageUrl: "@productImageUrl",
+                    uploadUrl: "/admin/products/UploadImage",
+                    deleteUrl: "/admin/products/DeleteImage",
+                    onUploadSuccessCallback: function (file, response) {
+
+                        $("#image@(i + 1)").removeClass("disabled");
+                        $("#image@(i + 1)").addClass("sortable");
+                        $("#image@(i + 1)").attr("data-imgid", response.itemId);
+                        displayUploader();
+                        
+                    },
+                    onDeleteSuccessCallback: function () {
+                        $("#image@(i + 1)").removeClass("sortable");
+                        $("#image@(i + 1)").addClass("disabled");
+                        $("#image@(i + 1)").removeAttr("data-imgid");
+                        displayUploader();
+                        
+                    }
+                });
+                </text>
+                    if (productImage == null)
+                    {
+                    <text>
+                        $("#image@(i + 1)").addClass("disabled");
+                    </text>
+                    }
+                    else
+                    {
+                    <text>
+                        $("#image@(i + 1)").addClass("sortable");
+                        $("#image@(i + 1)").attr("data-imgid", "@productImageId");
+                        
+                    </text>
+                    }
+                }
+                displayUploader();
+
+                $("[name='SelectedCategories']").on("change", onCategoryChange);
+
+
+            };
+
+            var onCategoryChange = function () {
+                var checkbox = $(this);
+                var checked = checkbox.is(":checked");
+                var categoryId = checkbox.val();
+                var parentCategoryId = checkbox.attr('parentId');
+
+                if (checked) {
+                    var parentCheckbox = $("#Category" + parentCategoryId);
+                    visuallyDisable(parentCheckbox);
+                    parentCheckbox.prop('checked', checked).each(onCategoryChange);
+                }
+
+                if (!checked) {
+                    visuallyEnable(checkbox);
+                    var childCheckbox = $("input[parentId='" + categoryId + "']");
+                    childCheckbox.prop('checked', checked).each(onCategoryChange);
+                }
+            };
+
+            var visuallyDisable = function (checkbox) {
+                if (!checkbox.is(":checked")) {
+                    checkbox.addClass("disabledCheckbox");
+                    checkbox.parent().addClass("disabledLabel");
+                }
+            };
+
+            var visuallyEnable = function (checkbox) {
+                checkbox.removeClass("disabledCheckbox");
+                checkbox.parent().removeClass("disabledLabel");
+            };
+
+            var initCkEditor = function () {
+                $("textarea.localized-input[data-language!='ar']").each(function () {
+                    CKEDITOR.replace(this.id, { height: 300 });
+                });
+
+                $("textarea.localized-input[data-language='ar']").each(function () {
+                    CKEDITOR.replace(this.id, { height: 300, contentsLangDirection: "rtl" });
+                });
+
+                // CK editor breaks localized content validation so disable with hack
+                var hiddenValidator = $("input[name='Product.Description']");
+                hiddenValidator.val(hiddenValidator.val() + "...");
+            };
+
+        })(jQuery);
+
+        function onChange(e) {
+            var id = e.item.attr("id"),
+                newIndex = e.newIndex,
+                oldIndex = e.oldIndex,
+                imageID = e.item.attr("data-imgid");
+            $.ajax({
+                url: "/admin/products/UpdateImageOrder/?imageId=" + imageID + "&newIndex=" + newIndex,
+                context: document.body
+            }).done(function () {
+
+            });
+
+        }
+
+        var displayUploader = function () {
+            $(".multipleUploadContainer .image-uploader").hide();
+            var multiUploaders = $(".multipleUploadContainer .image-uploader");
+
+            var imgCount = 0;
+
+            for (var i = 0; i < 6; i++) {
+                if ($("#image" + (i+1)).attr("data-imgid") != undefined) {
+                    $(multiUploaders.get(i)).show();
+                    ++imgCount;
+                }
+            }
+
+            if (imgCount < 5) {
+                for (var j = 0; j < 6; j++) {
+                    if ($("#image" + (j + 1)).attr("data-imgid") == undefined) {
+                        $(multiUploaders.get(j)).show();
+                        break;
+                    }
+                }
+            }
+        };
+    </script>
+}

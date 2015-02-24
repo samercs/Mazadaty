@@ -43,6 +43,10 @@ namespace Mzayad.Web
                 "~/content/kendo/kendo.css",
                 "~/content/site-kendo.css",
                 "~/content/site-admin.css"));
+
+            bundles.Add(new ScriptBundle("~/js/image-uploader").Include("~/scripts/dropzone.js", "~/scripts/image-uploader.js"));
+            bundles.Add(new StyleBundle("~/css/image-uploader").Include(
+                "~/content/image-uploader.css"));
         }
     }
 }

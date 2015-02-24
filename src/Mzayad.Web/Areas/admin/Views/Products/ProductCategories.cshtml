@@ -1,0 +1,27 @@
+﻿@using Mzayad.Models
+@helper RenderCategory(Category category)
+{
+    <li class="checkbox">
+        <label>
+            <input type="checkbox" name="SelectedCategories" id="@string.Format("Category{0}", category.CategoryId)" value="@category.CategoryId" parentid="@category.ParentId" checked="@Model.SelectedCategories.Contains(category.CategoryId.ToString())" />
+            @category.Name
+        </label>
+
+        @if (category.Children.Any())
+        {
+            <ul class="childCategoriesList">
+                @foreach (var child in category.Children)
+                {
+                    @RenderCategory(child)
+                }
+            </ul>
+        }
+    </li>
+}
+
+<ul class="categoriesList">
+    @foreach (var category in Model.Categories)
+    {
+        @RenderCategory(category)
+    }
+</ul>
