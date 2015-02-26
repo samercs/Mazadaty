@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+
+    <ul></ul>
+
+
+    <script src="Scripts/jquery-2.1.3.js"></script>
+    <script src="Scripts/jquery.signalR-2.2.0.js"></script>
+    <script src="signalr/hubs"></script>
+    <script>
+        $(function () {
+
+            //var chat = $.connection.chatHub;
+            var ticker = $.connection.stockTickerHub;
+
+            function init() {
+                ticker.server.getAllStocks().done(function (stocks) {
+                    $("ul").append($("<li>").text("Init"));
+                });
+            }
+
+            ticker.client.updateStockPrice = function (stocks) {
+                $("ul").append($("<li>").text(stocks));
+
+                //console.log(stocks[0].Symbol + " " + stocks[0].Price);
+            };
+
+            $.connection.hub.start().done(init);
+
+            //chat.client.pong = function (message) {
+            //    console.log(message);
+            //};
+
+            //$.connection.hub.start().done(function() {
+            //    chat.server.ping();
+            //});
+
+        });
+    </script>
+</body>
+</html>
