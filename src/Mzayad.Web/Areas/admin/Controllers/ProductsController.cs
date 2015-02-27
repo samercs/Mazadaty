@@ -6,6 +6,8 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 using Mzayad.Models;
 using Mzayad.Services;
 using Mzayad.Web.Areas.admin.Models.Products;
@@ -33,17 +35,35 @@ namespace Mzayad.Web.Areas.admin.Controllers
             _storageService = storageService;
         }
 
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string search="")
         {
-            var products = await _productService.GetProducts("en");
+            var products = await _productService.GetProductsWithoutCategory("en",search);
             foreach (var product in products)
             {
                 product.Description = StringFormatter.StripHtmlTags(product.Description);
             }
 
-            return View(products);
+            var model = new IndexViewModel()
+            {
+                Search = "",
+                Products = products
+            };
+
+
+            return View(model);
         }
 
+
+        public async Task<JsonResult> GetProducts([DataSourceRequest] DataSourceRequest request,string search=null)
+        {
+            var products = await _productService.GetProductsWithoutCategory("en",search);
+            foreach (var product in products)
+            {
+                product.Description = StringFormatter.StripHtmlTags(product.Description);
+            }
+            return Json(products.ToDataSourceResult(request));
+        }
+            
         [Route("add")]
         public async Task<ActionResult> Add()
         {

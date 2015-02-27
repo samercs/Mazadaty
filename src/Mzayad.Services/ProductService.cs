@@ -35,6 +35,24 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<IEnumerable<Product>> GetProductsWithoutCategory(string languageCode,string search=null)
+        {
+            using (var dc = DataContext())
+            {
+                IEnumerable<Product> products;
+                if (!string.IsNullOrEmpty(search))
+                {
+                    products = await dc.Products.Where(i=>i.Name.Contains(search) || i.Description.Contains(search)).ToListAsync();    
+                }
+                else
+                {
+                    products = await dc.Products.ToListAsync();    
+                }
+                
+                return products.Localize(languageCode, i => i.Name, i => i.Description).OrderBy(i => i.Name);
+            }
+        }
+
         public async Task<Product> AddProduct(Product product)
         {
             using (var dc = DataContext())

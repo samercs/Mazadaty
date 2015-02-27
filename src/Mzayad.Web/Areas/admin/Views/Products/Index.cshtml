@@ -1,32 +1,44 @@
 ﻿@using Humanizer
+@using Kendo.Mvc.UI
 @using Mzayad.Web.Extensions
-@model IEnumerable<Mzayad.Models.Product>
+@model Mzayad.Web.Areas.admin.Models.Products.IndexViewModel
 
 @{
     ViewBag.Title = "Products";
 }
 
+
+
+@using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "form-inline form-search" }))
+{
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            @Html.TextBoxFor(m => m.Search, new { @class = "form-control", placeholder = "Search products by name or description" })
+        </div>
+    </div>
+    
+}
+
+@if (!Model.Products.Any())
+{
+    @Html.StatusMessage("No products match search criteria.")
+
+    return;
+}
+
 <ul class="link-list">
     <li>@Html.ActionLink("Add Product", "Add", "Products")</li>
-    
 </ul>
 
-<table class="@Html.Css().GridTable">
-    <thead>
-        <tr>
-            <th>Product</th>
-            <th>Description</th>
-            
-            <th>&nbsp;</th>
-        </tr>
-    </thead>
-
-    @foreach (var product in Model)
+@(Html.Kendo().Grid(Model.Products)
+            .Init(ajax => ajax.Action("GetProducts", "Products", new { search = Model.Search }))
+    .Columns(columns =>
     {
-        <tr>
-            <td>@product.Name</td>
-            <td>@Html.Raw(product.Description.Truncate(50))</td>
-            <td class="link-cell">@Html.ActionLink("Edit", "Edit", "Products", new { id = product.ProductId }, null)</td>
-        </tr>
-    }
-</table>
+        columns.Bound(i => i.Name);
+        columns.Bound(i => i.Description);
+        columns.Bound(i => i.RetailPrice).Title("Retail Price");
+        columns.Bound(i => i.CreatedUtc).Format("{0:dd MMM yyyy}").Title("Added");
+        columns.LinkColumn("Details", "products/edit/#=ProductId#");
+    })
+)
