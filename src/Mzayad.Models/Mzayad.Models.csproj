@@ -63,8 +63,10 @@
   <ItemGroup>
     <Compile Include="Address.cs" />
     <Compile Include="ApplicationUser.cs" />
+    <Compile Include="Auction.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="EmailTemplate.cs" />
+    <Compile Include="Enum\AuctionStatus.cs" />
     <Compile Include="Enum\EmailTemplateType.cs" />
     <Compile Include="ModelBase.cs" />
     <Compile Include="Product.cs" />
