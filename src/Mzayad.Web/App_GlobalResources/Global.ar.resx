@@ -144,11 +144,20 @@
   <data name="ChangeLanguage" xml:space="preserve">
     <value>تغيير اللغة</value>
   </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>تغيير كلمة المرور</value>
+  </data>
   <data name="City" xml:space="preserve">
     <value>المدينة</value>
   </data>
   <data name="CityRequiredErrorMessage" xml:space="preserve">
     <value>الرجاء إدخال مدينتك.</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>تأكيد كلمة المرور</value>
+  </data>
+  <data name="ConfirmPasswordMatchErrorMessage" xml:space="preserve">
+    <value>إنّ كلمة المرور الجديدة وتأكيد كلمة المرور غير متطابقين</value>
   </data>
   <data name="Continue" xml:space="preserve">
     <value>المتابعة</value>
@@ -158,6 +167,15 @@
   </data>
   <data name="CountryRequiredErrorMessage" xml:space="preserve">
     <value>الرجاء اختيار بلدك.</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>كلمة المرور الحالية</value>
+  </data>
+  <data name="CurrentPasswordValidationMessage" xml:space="preserve">
+    <value>الرجاء إدخال كلمة مرورك الحالية.</value>
+  </data>
+  <data name="EditAccount" xml:space="preserve">
+    <value>تعديل الحساب</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>عنوان البريد الإلكتروني</value>
@@ -207,11 +225,17 @@
   <data name="NewPassword" xml:space="preserve">
     <value>عملاء جدد</value>
   </data>
+  <data name="NewPasswordValidationMessage" xml:space="preserve">
+    <value>الرجاء إدخال كلمة المرور، يجب ألا تقل عن 6 أحرف.</value>
+  </data>
   <data name="OptionLabel" xml:space="preserve">
     <value>اختيار...</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>كلمة المرور</value>
+  </data>
+  <data name="PasswordChangeFailureMessage" xml:space="preserve">
+    <value>عذراً، لكننا لم نتمكن من تغيير كلمة مرورك. احرصي على إدخال كلمة مرورك الحالية بشكل صحيح ثم حاولي مجدداً.</value>
   </data>
   <data name="PasswordRequiredErrorMessage" xml:space="preserve">
     <value>الرجاء إدخال كلمة مرورك.</value>

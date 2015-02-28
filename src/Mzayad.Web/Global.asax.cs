@@ -1,5 +1,5 @@
-﻿using System;
-using System.Diagnostics;
+﻿using Mzayad.Web.Core.Configuration;
+using System;
 using System.Globalization;
 using System.Threading;
 using System.Web;
@@ -7,7 +7,6 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Mzayad.Web.Core.Configuration;
 
 namespace Mzayad.Web
 {
@@ -42,8 +41,6 @@ namespace Mzayad.Web
 
         private CultureInfo GetCultureFromRoute()
         {
-            Trace.TraceInformation("Trying GetCultureFromRoute()...");
-            
             var handler = Context.Handler as MvcHandler;
             var routeData = handler == null ? null : handler.RequestContext.RouteData;
             var languageRoute = routeData == null ? null : routeData.Values["language"];        
@@ -52,16 +49,12 @@ namespace Mzayad.Web
 
         private static CultureInfo GetCultureFromCookie()
         {
-            Trace.TraceInformation("Trying GetCultureFromCookie()...");
-            
             var languageCookie = HttpContext.Current.Request.Cookies.Get(CookieKeys.LanguageCode);
             return languageCookie == null ? null : CultureInfo.CreateSpecificCulture(languageCookie.Value);
         }
 
         private static CultureInfo GetCultureFromThread()
         {
-            Trace.TraceInformation("Trying GetCultureFromThread()... [{0}]", Thread.CurrentThread.CurrentCulture.Name);
-            
             if (Thread.CurrentThread.CurrentCulture.Name.StartsWith("ar", StringComparison.OrdinalIgnoreCase))
             {
                 return CultureInfo.CreateSpecificCulture("ar");
