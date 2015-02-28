@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.Owin.Security.OAuth;
+using Mzayad.Web.Core.Attributes;
 using System.Web.Http;
-using Microsoft.Owin.Security.OAuth;
 
 namespace Mzayad.Web
 {
@@ -22,6 +20,9 @@ namespace Mzayad.Web
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            // Enforce HTTPS
+            config.Filters.Add(new RequireHttpsAttribute());
         }
     }
 }
