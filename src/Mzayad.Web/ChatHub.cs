@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Mzayad.Web
 {
@@ -21,6 +25,8 @@ namespace Mzayad.Web
         private StockTicker(IHubConnectionContext<dynamic> clients)
         {
             Clients = clients;
+
+            //Trace.TraceInformation("xxx");
 
             new Timer(UpdateStockPrices, null, _updateInterval, _updateInterval);
         }
@@ -57,12 +63,20 @@ namespace Mzayad.Web
 
         private void BroadcastStockPrice(DateTime dateTime)
         {
+            //Trace.TraceInformation(dateTime.ToString(CultureInfo.InvariantCulture));
+            //Trace.WriteLine("asdf");
+            
             Clients.All.updateStockPrice(dateTime);
         }
 
+        
+
     }
 
-
+    public static class UserHandler
+    {
+        public static HashSet<string> ConnectedIds = new HashSet<string>();
+    }
 
 
 
@@ -82,6 +96,24 @@ namespace Mzayad.Web
         public DateTime GetAllStocks()
         {
             return _stockTicker.GetAllStocks();
+        }
+
+        public override Task OnConnected()
+        {
+            UserHandler.ConnectedIds.Add(Context.ConnectionId);
+
+            //Trace.TraceInformation(UserHandler.ConnectedIds.Count.ToString());
+
+            return base.OnConnected();
+        }
+
+        public override Task OnDisconnected(bool x)
+        {
+            UserHandler.ConnectedIds.Remove(Context.ConnectionId);
+
+            //Trace.TraceInformation(UserHandler.ConnectedIds.Count.ToString());
+
+            return base.OnDisconnected(false);
         }
     }
     

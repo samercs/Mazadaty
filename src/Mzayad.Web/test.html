@@ -14,21 +14,19 @@
     <script>
         $(function () {
 
-            //var chat = $.connection.chatHub;
             var ticker = $.connection.stockTickerHub;
 
             function init() {
                 ticker.server.getAllStocks().done(function (stocks) {
-                    $("ul").append($("<li>").text("Init"));
+                    $("ul").append($("<li>").text(stocks));
                 });
             }
 
             ticker.client.updateStockPrice = function (stocks) {
                 $("ul").append($("<li>").text(stocks));
-
-                //console.log(stocks[0].Symbol + " " + stocks[0].Price);
             };
 
+            $.connection.hub.logging = true;
             $.connection.hub.start().done(init);
 
             //chat.client.pong = function (message) {
