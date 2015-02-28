@@ -101,6 +101,10 @@
     <Compile Include="Migrations\201502271214244_AddAuction.Designer.cs">
       <DependentUpon>201502271214244_AddAuction.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502281032039_RenameProductCategories.cs" />
+    <Compile Include="Migrations\201502281032039_RenameProductCategories.Designer.cs">
+      <DependentUpon>201502281032039_RenameProductCategories.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -141,6 +145,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502271214244_AddAuction.resx">
       <DependentUpon>201502271214244_AddAuction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502281032039_RenameProductCategories.resx">
+      <DependentUpon>201502281032039_RenameProductCategories.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

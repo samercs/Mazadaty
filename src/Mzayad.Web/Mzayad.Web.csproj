@@ -218,6 +218,7 @@
     <Compile Include="Areas\admin\Controllers\ReportsController.cs" />
     <Compile Include="Areas\admin\Controllers\SettingsController.cs" />
     <Compile Include="Areas\admin\Controllers\UsersController.cs" />
+    <Compile Include="Areas\admin\Models\Auction\CreateModelView.cs" />
     <Compile Include="Areas\admin\Models\Products\AddViewModel.cs" />
     <Compile Include="Areas\admin\Models\Products\EditViewModel.cs" />
     <Compile Include="Areas\admin\Models\Products\IndexViewModel.cs" />
@@ -253,6 +254,7 @@
     <Compile Include="Core\Services\IAuthService.cs" />
     <Compile Include="Core\Services\IControllerServices.cs" />
     <Compile Include="Core\Services\ICookieService.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Extensions\KendoExtensions.cs" />
@@ -277,6 +279,7 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\image-uploader.css" />
     <Content Include="Content\image-uploader.min.css" />
+    <Content Include="Content\jquery.datetimepicker.css" />
     <Content Include="Content\kendo\images\grab.cur" />
     <Content Include="Content\kendo\images\grabbing.cur" />
     <Content Include="Content\kendo\kendo.common.css" />
@@ -427,6 +430,8 @@
     <Content Include="Areas\admin\Views\Products\ProductCategories.cshtml" />
     <Content Include="Content\image-uploader.css.map" />
     <Content Include="Content\image-uploader.less" />
+    <Content Include="Areas\admin\Views\Auctions\SelectProduct.cshtml" />
+    <Content Include="Areas\admin\Views\Auctions\Create.cshtml" />
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
@@ -451,6 +456,7 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.11.3.js" />
     <Content Include="Scripts\jquery-ui-1.11.3.min.js" />
+    <Content Include="Scripts\jquery.datetimepicker.js" />
     <Content Include="Scripts\jquery.slugify.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />

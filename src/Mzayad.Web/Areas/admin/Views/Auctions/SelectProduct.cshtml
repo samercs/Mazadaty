@@ -1,0 +1,45 @@
+﻿@using Kendo.Mvc.UI
+@using Mzayad.Web.Extensions
+@model Mzayad.Web.Areas.admin.Models.Products.IndexViewModel
+
+@{
+    ViewBag.Title = "Create Auction";
+    
+}
+
+<div class="text-center" style="padding-bottom: 20px;">
+    @Html.ActionLink("Create New Product", "Add", "Products", new { goToAuction =true},null) or Select Existing One.
+</div>
+
+
+@using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "form-inline form-search" }))
+{
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            @Html.TextBoxFor(m => m.Search, new { @class = "form-control", placeholder = "Search products by name or description" })
+        </div>
+    </div>
+
+}
+
+@if (!Model.Products.Any())
+{
+    @Html.StatusMessage("No products match search criteria.")
+
+    return;
+}
+
+
+
+@(Html.Kendo().Grid(Model.Products)
+            .Init(ajax => ajax.Action("GetProducts", "Products", new { search = Model.Search }))
+    .Columns(columns =>
+    {
+        columns.Bound(i => i.Name);
+        columns.Bound(i => i.Description);
+        columns.Bound(i => i.RetailPrice).Title("Retail Price");
+        columns.Bound(i => i.CreatedUtc).Format("{0:dd MMM yyyy}").Title("Added");
+        columns.LinkColumn("Select", "create?ProductId=#=ProductId#");
+    })
+)

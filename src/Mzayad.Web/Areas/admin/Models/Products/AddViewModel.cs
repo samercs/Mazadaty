@@ -12,7 +12,7 @@ namespace Mzayad.Web.Areas.admin.Models.Products
     public class AddViewModel
     {
         public Product Product { get; set; }
-
+        public bool GoToAuction { get; set; }
 
         public async Task<AddViewModel> Hydrate(ProductService productService)
         {
