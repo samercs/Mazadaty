@@ -1,8 +1,61 @@
-﻿@model dynamic
+﻿@using Kendo.Mvc.UI
+@using Mzayad.Web.Extensions
+@model Mzayad.Web.Areas.admin.Models.Auction.IndexViewModel
 
 @{
     ViewBag.Title = "Auctions";
     
 }
 
-<h2>Auctions</h2>
+@using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "form-inline form-search" }))
+{
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            @Html.TextBoxFor(m => m.Search, new { @class = "form-control", placeholder = "Search auction's by product name" })
+        </div>
+    </div>
+
+}
+
+@if (!Model.Auctions.Any())
+{
+    @Html.StatusMessage("No auction match search criteria.")
+
+    return;
+}
+
+<ul class="link-list">
+    <li>@Html.ActionLink("Add Auction", "SelectProduct", "Auctions")</li>
+    <li><a href="@Url.Action("DownloadExcel", "Auctions", new { search = Model.Search })"><i class="fa fa-file-excel-o fa-pad-right"></i>Download Excel</a></li>
+</ul>
+
+@(Html.Kendo().Grid(Model.Auctions)
+                    .Init(ajax => ajax.Action("GetAuctions", "Auctions", new { search = Model.Search }))
+    .Columns(columns =>
+    {
+        columns.Bound(i => i.Product.Name).Title("Product");
+        columns.Bound(i => i.Status).ClientTemplate("#= getLabel(data) #");
+        columns.Bound(i => i.StartUtc).Format("{0:yyyy/MM/dd HH:mm}").Title("Start");
+        columns.Bound(i => i.Duration).Title("Duration");
+        columns.Bound(i => i.BuyNowEnabled).Title("Buy Now Enabled");
+        //columns.LinkColumn("Details", "products/edit/#=ProductId#");
+    })
+)
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        function getLabel(auction) {
+            
+            if (auction.Status == 1) {
+                return "<span class='label label-danger'>Hiddin</span>";
+            } else {
+                return "<span class='label label-success'>Public</span>";
+            }
+
+        }
+
+    </script>
+}

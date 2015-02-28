@@ -219,6 +219,7 @@
     <Compile Include="Areas\admin\Controllers\SettingsController.cs" />
     <Compile Include="Areas\admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\admin\Models\Auction\CreateModelView.cs" />
+    <Compile Include="Areas\admin\Models\Auction\IndexViewModel.cs" />
     <Compile Include="Areas\admin\Models\Products\AddViewModel.cs" />
     <Compile Include="Areas\admin\Models\Products\EditViewModel.cs" />
     <Compile Include="Areas\admin\Models\Products\IndexViewModel.cs" />

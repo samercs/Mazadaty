@@ -4,14 +4,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 using Mzayad.Models;
 using Mzayad.Services;
 using Mzayad.Web.Areas.admin.Models.Auction;
 using Mzayad.Web.Areas.admin.Models.Products;
 using Mzayad.Web.Controllers;
+using Mzayad.Web.Core.ActionResults;
+using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
+using Mzayad.Web.Extensions;
 using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Base.Web;
+using OrangeJetpack.Localization;
+using IndexViewModel = Mzayad.Web.Areas.admin.Models.Auction.IndexViewModel;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
@@ -35,7 +42,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 product.Description = StringFormatter.StripHtmlTags(product.Description);
             }
 
-            var model = new IndexViewModel()
+            var model = new Mzayad.Web.Areas.admin.Models.Products.IndexViewModel()
             {
                 Search = "",
                 Products = products
@@ -70,20 +77,69 @@ namespace Mzayad.Web.Areas.admin.Controllers
             {
                 model.Auction.BuyNowPrice = null;
                 model.Auction.BuyNowQuantity = null;
+                
             }
             else if(!model.Auction.BuyNowEnabled.Value)
             {
                 model.Auction.BuyNowPrice = null;
                 model.Auction.BuyNowQuantity = null;
+                model.Auction.BuyNowEnabled = model.Auction.BuyNowEnabled.Value;
             }
             await _auctionServices.Add(model.Auction);
             SetStatusMessage("Auction has been added successfully.");
             return RedirectToAction("Index");
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index(string search="")
         {
-            return View();
+            var model = new IndexViewModel()
+            {
+                Auctions=await _auctionServices.GetAuctions(search),
+                Search = search
+            };
+            foreach (var auction in model.Auctions)
+            {
+                auction.Product.Localize("en", i => i.Name);
+            }
+
+            return View(model);
+        }
+
+        public async Task<JsonResult> GetAuctions([DataSourceRequest] DataSourceRequest request, string search=null)
+        {
+            var result = await _auctionServices.GetAuctions(search);
+            foreach (var auction in result)
+            {
+                auction.Product.Localize("en", i => i.Name);
+            }
+            return Json(result.ToDataSourceResult(request));
+        }
+
+        public async Task<ExcelResult> DownloadExcel(string search = "")
+        {
+            var auctions = await _auctionServices.GetAuctions(search);
+            foreach (var auction in auctions)
+            {
+                auction.Product.Localize("en", i => i.Name);
+            }
+            var results = auctions.Select(i => new
+            {
+                i.AuctionId,
+                i.Product.Name,
+                StartUtc=i.StartUtc.ToString("yyyy/MM/dd HH:mm"),
+                Status=i.Status.Description(),
+                i.RetailPrice,
+                i.BidIncrement,
+                i.Duration,
+                i.MaximumBid,
+                i.BuyNowEnabled,
+                i.BuyNowPrice,
+                i.BuyNowQuantity,
+                Added = i.CreatedUtc.ToString("yyyy/MM/dd HH:mm")
+                
+            });
+
+            return Excel(results, "auctions");
         }
 	}
 }
