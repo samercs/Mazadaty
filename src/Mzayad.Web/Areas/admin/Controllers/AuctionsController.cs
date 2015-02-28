@@ -12,12 +12,14 @@ using Mzayad.Web.Areas.admin.Models.Auction;
 using Mzayad.Web.Areas.admin.Models.Products;
 using Mzayad.Web.Controllers;
 using Mzayad.Web.Core.ActionResults;
+using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Extensions;
 using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Localization;
+using EditViewModel = Mzayad.Web.Areas.admin.Models.Auction.EditViewModel;
 using IndexViewModel = Mzayad.Web.Areas.admin.Models.Auction.IndexViewModel;
 
 namespace Mzayad.Web.Areas.admin.Controllers
@@ -138,5 +140,55 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             return Excel(results, "auctions");
         }
+
+        [Route("edit/{id:int}")]
+        public async Task<ActionResult> Edit(int id)
+        {
+            var auction = await _auctionServices.GetAuction(id);
+            if (auction == null)
+            {
+                SetStatusMessage("Sorry this auction not found",StatusMessageType.Warning);
+                return RedirectToAction("Index", "Auctions");
+            }
+
+            var model = await new Mzayad.Web.Areas.admin.Models.Auction.EditViewModel().Hydrate(_productService, auction);
+            return View(model);
+        }
+
+        [Route("edit/{id:int}")]
+        [HttpPost,ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(int id,EditViewModel model, bool cbBuyNowEnabled)
+        {
+            var auction = await _auctionServices.GetAuction(id);
+            if (auction == null)
+            {
+                SetStatusMessage("sorry this auction not found.",StatusMessageType.Warning);
+                return RedirectToAction("Index", "Auctions");
+            }
+
+            auction.BidIncrement = model.Auction.BidIncrement;
+            auction.Duration = model.Auction.Duration;
+            auction.MaximumBid = model.Auction.MaximumBid;
+            auction.ProductId = model.Auction.ProductId;
+            auction.RetailPrice = model.Auction.RetailPrice;
+            auction.StartUtc = model.Auction.StartUtc.AddHours(-3);
+            auction.Status = model.Auction.Status;
+            auction.BuyNowEnabled = cbBuyNowEnabled;
+            if (!cbBuyNowEnabled)
+            {
+                model.Auction.BuyNowPrice = null;
+                model.Auction.BuyNowQuantity = null;
+            }
+            else
+            {
+                auction.BuyNowPrice = model.Auction.BuyNowPrice;
+                auction.BuyNowQuantity = model.Auction.BuyNowQuantity;
+            }
+            await _auctionServices.Update(auction);
+            SetStatusMessage("Auction has been updated successfully.");
+            return RedirectToAction("Index", "Auctions");
+            
+        }
+
 	}
 }

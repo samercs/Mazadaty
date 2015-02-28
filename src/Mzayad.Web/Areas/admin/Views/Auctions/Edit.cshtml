@@ -1,0 +1,204 @@
+﻿@using Mzayad.Web.Extensions
+@model Mzayad.Web.Areas.admin.Models.Auction.EditViewModel
+
+@{
+    ViewBag.Title = "Edit Auction";
+    
+}
+
+@section styles
+{
+    @Styles.Render("~/css/calender")
+}
+
+
+<div class="row">
+    <div class="@Html.Css().FormWide">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Auction.ProductId, "Product")
+                    @Html.DropDownListFor(i => i.Auction.ProductId, Model.ProductList, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(i => i.Auction.ProductId, "Please select a product")
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Auction.StartUtc, "Date and Time")
+                    @Html.EditorFor(i => i.Auction.StartUtc)
+                    @Html.ValidationMessageFor(i => i.Auction.StartUtc, "Please enter date and time")
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Auction.Status, "Status")
+                    @foreach (var item in Model.StatusList)
+                    {
+                        <div class="checkbox">
+                            @if (item.Selected)
+                            {
+                                @Html.RadioButtonFor(i => i.Auction.Status, item.Value, new { @checked = "checked" })
+                                @item.Text
+                            }
+                            else
+                            {
+                                @Html.RadioButtonFor(i => i.Auction.Status, item.Value)
+                                @item.Text
+                            }
+
+                        </div>
+                    }
+                </div>
+            </section>
+            <section>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="form-group">
+                                @Html.LabelFor(i => i.Auction.RetailPrice, "Retail Price")
+                                <div class="input-group">
+                                    <span class="input-group-addon">KWD</span>
+                                    @Html.TextBoxFor(i => i.Auction.RetailPrice, new { @class = "form-control form-control-md", @type = "number" })
+                                </div>
+                                @Html.ValidationMessageFor(i => i.Auction.RetailPrice, "Please enter a auction Retail Price.")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="form-group">
+                                @Html.LabelFor(i => i.Auction.MaximumBid, "Maximum Bid")
+                                <div class="input-group">
+                                    <span class="input-group-addon">KWD</span>
+                                    @Html.TextBoxFor(i => i.Auction.MaximumBid, new { @class = "form-control form-control-md", @type = "number" })
+                                </div>
+                                @Html.ValidationMessageFor(i => i.Auction.MaximumBid, "Please enter a auction Maximum Bid.")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="form-group">
+                                @Html.LabelFor(i => i.Auction.BidIncrement, "Bid Increment")
+                                <div class="input-group">
+                                    <span class="input-group-addon">KWD</span>
+                                    @Html.TextBoxFor(i => i.Auction.BidIncrement, new { @class = "form-control form-control-md", @type = "number" })
+                                </div>
+                                @Html.ValidationMessageFor(i => i.Auction.BidIncrement, "Please enter a auction Bid Increment.")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="form-group">
+                                @Html.LabelFor(i => i.Auction.Duration, "Bid Duration")
+                                <div class="input-group">
+                                    <span class="input-group-addon">Minutes</span>
+                                    @Html.TextBoxFor(i => i.Auction.Duration, new { @class = "form-control form-control-md", @type = "number" })
+                                </div>
+                                @Html.ValidationMessageFor(i => i.Auction.Duration, "Please enter a auction Bid Duration.")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+    <section>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    @if (Model.Auction.BuyNowEnabled.HasValue)
+                    {
+                        if (Model.Auction.BuyNowEnabled.Value)
+                         {
+                             @Html.CheckBox("cbBuyNowEnabled", new { @id = "cbBuyNowEnabled", @checked = "checked" }) <text>Enable Buy Now</text>
+                         }
+                        else
+                        {
+                            @Html.CheckBox("cbBuyNowEnabled", new { @id = "cbBuyNowEnabled" }) <text>Enable Buy Now</text>
+                        }
+                    }
+                    else
+                    {
+                        @Html.CheckBox("cbBuyNowEnabled", new { @id = "cbBuyNowEnabled" }) <text>Enable Buy Now</text>
+                    }
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group" id="BuyNowPriceSection">
+                    <div class="form-group">
+                        @Html.LabelFor(i => i.Auction.BuyNowPrice, "Buy Now Price")
+                        <div class="input-group">
+                            <span class="input-group-addon">KWD</span>
+                            @Html.TextBoxFor(i => i.Auction.BuyNowPrice, new { @class = "form-control form-control-md", @type = "number", @id = "txtBuyNowPrice" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group" id="BuyNowQuantitySection">
+                    <div class="form-group">
+                        @Html.LabelFor(i => i.Auction.BuyNowQuantity, "Buy Now Quantity")
+                        <div class="input-group">
+                            <span class="input-group-addon">Items</span>
+                            @Html.TextBoxFor(i => i.Auction.BuyNowQuantity, new { @class = "form-control form-control-md", @type = "number", @id = "txtBuyNowQuantity" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+            <section class="form-buttons">
+                <button type="submit" class="btn btn-default">Save</button>
+            </section>
+
+        }
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/js/validate")
+    @Scripts.Render("~/js/calender")
+    <script type="text/javascript">
+        $('#dateTime').datetimepicker(
+            {
+                allowTimes: [
+                    '1:00', '1:30', '2:00', '2:30', '3:00', '3:30', '4:00', '4:30',
+                    '5:00', '5:30', '6:00', '6:30', '7:00', '7:30', '8:00', '8:30',
+                    '9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30',
+                    '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30',
+                    '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30',
+                    '21:00', '21:30', '22:00', '22:30', '23:00', '23:30'
+                ],
+                format: 'Y.m.d H:i',
+            }
+        );
+
+        $(function () {
+
+            var loadBuyNowEnable=function() {
+                if (!$("#cbBuyNowEnabled").prop("checked")) {
+
+                    $("#BuyNowPriceSection").fadeOut(100);
+                    $("#BuyNowQuantitySection").fadeOut(100);
+
+                } else {
+                    $("#BuyNowPriceSection").fadeIn(100);
+                    $("#BuyNowQuantitySection").fadeIn(100);
+                }
+            }
+
+            loadBuyNowEnable();
+
+            $("#cbBuyNowEnabled").click(function () {
+
+                loadBuyNowEnable();
+
+            });
+        });
+
+
+    </script>
+}

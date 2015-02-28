@@ -39,7 +39,7 @@
         columns.Bound(i => i.StartUtc).Format("{0:yyyy/MM/dd HH:mm}").Title("Start");
         columns.Bound(i => i.Duration).Title("Duration");
         columns.Bound(i => i.BuyNowEnabled).Title("Buy Now Enabled");
-        //columns.LinkColumn("Details", "products/edit/#=ProductId#");
+        columns.LinkColumn("Details", "auctions/edit/#=AuctionId#");
     })
 )
 

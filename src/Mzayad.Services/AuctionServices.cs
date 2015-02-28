@@ -44,5 +44,27 @@ namespace Mzayad.Services
                 }
             }
         }
+
+        public async Task<Auction> GetAuction(int id)
+        {
+            using (var dc=DataContext())
+            {
+                return await dc.Auctions.Include(i=>i.Product).SingleOrDefaultAsync(i => i.AuctionId == id);
+            }
+        }
+
+        public async Task<Auction> Update(Auction auction)
+        {
+            using (var dc=DataContext())
+            {
+                
+                var product =await dc.Products.SingleOrDefaultAsync(i => i.ProductId == auction.ProductId);
+                auction.Product = product;
+                dc.Auctions.Attach(auction);
+                dc.SetModified(auction);
+                await dc.SaveChangesAsync();
+                return auction;
+            }
+        }
     }
 }
