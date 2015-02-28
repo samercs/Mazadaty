@@ -66,25 +66,22 @@ namespace Mzayad.Web.Areas.admin.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(CreateModelView model)
+        public async Task<ActionResult> Create(CreateModelView model, bool cbBuyNowEnabled)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
             model.Auction.StartUtc= model.Auction.StartUtc.AddHours(-3);
-            if (!model.Auction.BuyNowEnabled.HasValue )
+            model.Auction.BuyNowEnabled = cbBuyNowEnabled;
+            if (!cbBuyNowEnabled)
             {
                 model.Auction.BuyNowPrice = null;
                 model.Auction.BuyNowQuantity = null;
                 
             }
-            else if(!model.Auction.BuyNowEnabled.Value)
-            {
-                model.Auction.BuyNowPrice = null;
-                model.Auction.BuyNowQuantity = null;
-                model.Auction.BuyNowEnabled = model.Auction.BuyNowEnabled.Value;
-            }
+           
+            
             await _auctionServices.Add(model.Auction);
             SetStatusMessage("Auction has been added successfully.");
             return RedirectToAction("Index");
