@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mzayad.Data", "src\Mzayad.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mzayad.Services", "src\Mzayad.Services\Mzayad.Services.csproj", "{402DADB1-1B34-4489-BD9E-F3E387A941C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mzayad.Api.Tests", "src\Mzayad.Api.Tests\Mzayad.Api.Tests.csproj", "{53CDD4AD-9EAC-4DE4-BD68-AE16CCB22DF4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{402DADB1-1B34-4489-BD9E-F3E387A941C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{402DADB1-1B34-4489-BD9E-F3E387A941C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{402DADB1-1B34-4489-BD9E-F3E387A941C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53CDD4AD-9EAC-4DE4-BD68-AE16CCB22DF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53CDD4AD-9EAC-4DE4-BD68-AE16CCB22DF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53CDD4AD-9EAC-4DE4-BD68-AE16CCB22DF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53CDD4AD-9EAC-4DE4-BD68-AE16CCB22DF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
