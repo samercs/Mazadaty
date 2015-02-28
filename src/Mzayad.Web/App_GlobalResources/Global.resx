@@ -354,4 +354,7 @@
   <data name="PasswordChangeFailureMessage" xml:space="preserve">
     <value>We're sorry, but we were unable to change your password. Please be sure you enter your current password correctly and try again.</value>
   </data>
+  <data name="EditAccount" xml:space="preserve">
+    <value>Edit Account</value>
+  </data>
 </root>
