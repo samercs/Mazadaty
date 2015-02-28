@@ -142,6 +142,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change Password.
+        /// </summary>
+        public static string ChangePassword {
+            get {
+                return ResourceManager.GetString("ChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to City.
         /// </summary>
         public static string City {
@@ -156,6 +165,24 @@ namespace Mzayad.Web.Resources {
         public static string CityRequiredErrorMessage {
             get {
                 return ResourceManager.GetString("CityRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Password.
+        /// </summary>
+        public static string ConfirmPassword {
+            get {
+                return ResourceManager.GetString("ConfirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your new password and confirmation password do not match..
+        /// </summary>
+        public static string ConfirmPasswordMatchErrorMessage {
+            get {
+                return ResourceManager.GetString("ConfirmPasswordMatchErrorMessage", resourceCulture);
             }
         }
         
@@ -183,6 +210,24 @@ namespace Mzayad.Web.Resources {
         public static string CountryRequiredErrorMessage {
             get {
                 return ResourceManager.GetString("CountryRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Password.
+        /// </summary>
+        public static string CurrentPassword {
+            get {
+                return ResourceManager.GetString("CurrentPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter your current password..
+        /// </summary>
+        public static string CurrentPasswordValidationMessage {
+            get {
+                return ResourceManager.GetString("CurrentPasswordValidationMessage", resourceCulture);
             }
         }
         
@@ -349,6 +394,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please enter your new password, it must be at least 6 characters..
+        /// </summary>
+        public static string NewPasswordValidationMessage {
+            get {
+                return ResourceManager.GetString("NewPasswordValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select....
         /// </summary>
         public static string OptionLabel {
@@ -363,6 +417,15 @@ namespace Mzayad.Web.Resources {
         public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We&apos;re sorry, but we were unable to change your password. Please be sure you enter your current password correctly and try again..
+        /// </summary>
+        public static string PasswordChangeFailureMessage {
+            get {
+                return ResourceManager.GetString("PasswordChangeFailureMessage", resourceCulture);
             }
         }
         

@@ -297,6 +297,7 @@
     </Compile>
     <Compile Include="Models\Account\AccountViewModels.cs" />
     <Compile Include="Models\Shared\AddressViewModel.cs" />
+    <Compile Include="Models\User\ChangePasswordViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -542,6 +543,7 @@
     <Content Include="Views\Shared\EditorTemplates\Address_KW.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Address_US.cshtml" />
     <Content Include="Views\Shared\ImageUploader.cshtml" />
+    <Content Include="Views\User\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

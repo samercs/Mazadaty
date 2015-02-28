@@ -333,4 +333,25 @@
   <data name="Welcome" xml:space="preserve">
     <value>Welcome!</value>
   </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
+  <data name="ConfirmPasswordMatchErrorMessage" xml:space="preserve">
+    <value>Your new password and confirmation password do not match.</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Current Password</value>
+  </data>
+  <data name="CurrentPasswordValidationMessage" xml:space="preserve">
+    <value>Please enter your current password.</value>
+  </data>
+  <data name="NewPasswordValidationMessage" xml:space="preserve">
+    <value>Please enter your new password, it must be at least 6 characters.</value>
+  </data>
+  <data name="PasswordChangeFailureMessage" xml:space="preserve">
+    <value>We're sorry, but we were unable to change your password. Please be sure you enter your current password correctly and try again.</value>
+  </data>
 </root>
