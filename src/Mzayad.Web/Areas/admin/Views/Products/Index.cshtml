@@ -1,13 +1,12 @@
 ﻿@using Humanizer
 @using Kendo.Mvc.UI
 @using Mzayad.Web.Extensions
+@using OrangeJetpack.Base.Web
 @model Mzayad.Web.Areas.admin.Models.Products.IndexViewModel
 
 @{
     ViewBag.Title = "Products";
 }
-
-
 
 @using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "form-inline form-search" }))
 {
@@ -16,20 +15,19 @@
             <span class="input-group-addon"><i class="fa fa-search"></i></span>
             @Html.TextBoxFor(m => m.Search, new { @class = "form-control", placeholder = "Search products by name or description" })
         </div>
-    </div>
-    
-}
-
-@if (!Model.Products.Any())
-{
-    @Html.StatusMessage("No products match search criteria.")
-
-    return;
+    </div> 
 }
 
 <ul class="link-list">
     <li>@Html.ActionLink("Add Product", "Add", "Products")</li>
 </ul>
+
+@if (!Model.Products.Any())
+{
+    @Html.StatusMessage("No products match search criteria.", StatusMessageType.Warning)
+
+    return;
+}
 
 @(Html.Kendo().Grid(Model.Products)
             .Init(ajax => ajax.Action("GetProducts", "Products", new { search = Model.Search }))

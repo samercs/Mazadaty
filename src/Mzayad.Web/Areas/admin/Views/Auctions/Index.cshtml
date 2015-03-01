@@ -1,5 +1,6 @@
 ﻿@using Kendo.Mvc.UI
 @using Mzayad.Web.Extensions
+@using OrangeJetpack.Base.Web
 @model Mzayad.Web.Areas.admin.Models.Auction.IndexViewModel
 
 @{
@@ -18,17 +19,17 @@
 
 }
 
-@if (!Model.Auctions.Any())
-{
-    @Html.StatusMessage("No auction match search criteria.")
-
-    return;
-}
-
 <ul class="link-list">
     <li>@Html.ActionLink("Add Auction", "SelectProduct", "Auctions")</li>
     <li><a href="@Url.Action("DownloadExcel", "Auctions", new { search = Model.Search })"><i class="fa fa-file-excel-o fa-pad-right"></i>Download Excel</a></li>
 </ul>
+
+@if (!Model.Auctions.Any())
+{
+    @Html.StatusMessage("No auction match search criteria.", StatusMessageType.Warning)
+
+    return;
+}
 
 @(Html.Kendo().Grid(Model.Auctions)
                     .Init(ajax => ajax.Action("GetAuctions", "Auctions", new { search = Model.Search }))
