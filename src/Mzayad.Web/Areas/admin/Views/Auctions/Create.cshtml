@@ -105,28 +105,28 @@
             </section>
             <section>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-lg-3 col-md-4">
                         <div class="form-group">
                             @Html.CheckBox("cbBuyNowEnabled", new { @id = "cbBuyNowEnabled", @checked = "checked" }) Enable Buy Now
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-lg-3 col-md-4">
                         <div class="form-group" id="BuyNowPriceSection">
                             <div class="form-group">
                                 @Html.LabelFor(i => i.Auction.BuyNowPrice, "Buy Now Price")
                                 <div class="input-group">
-                                    @Html.TextBoxFor(i => i.Auction.BuyNowPrice, new { @class = "form-control form-control-md", @type = "number", @id = "txtBuyNowPrice" })
+                                    @Html.TextBoxFor(i => i.Auction.BuyNowPrice, new { @class = "form-control", @type = "number" })
                                     <span class="input-group-addon">KD</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-lg-3 col-md-4">
                         <div class="form-group" id="BuyNowQuantitySection">
                             <div class="form-group">
                                 @Html.LabelFor(i => i.Auction.BuyNowQuantity, "Buy Now Quantity")
                                 <div class="input-group">
-                                    @Html.TextBoxFor(i => i.Auction.BuyNowQuantity, new { @class = "form-control form-control-md", @type = "number", @id = "txtBuyNowQuantity" })
+                                    @Html.TextBoxFor(i => i.Auction.BuyNowQuantity, new { @class = "form-control", @type = "number" })
                                     <span class="input-group-addon">items</span>
                                 </div>
                             </div>
