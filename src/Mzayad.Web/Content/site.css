@@ -212,3 +212,10 @@ h2 {
 .bs-callout-info h4 {
   color: #00468c;
 }
+.text-yes {
+  color: #008c00;
+}
+.text-no {
+  color: #b94a48;
+}
+/*# sourceMappingURL=site.css.map */
