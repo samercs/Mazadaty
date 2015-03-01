@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Mzayad.Models.Enum;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mzayad.Models.Enum;
-using OrangeJetpack.Localization;
 
 namespace Mzayad.Models
 {
@@ -28,7 +23,7 @@ namespace Mzayad.Models
         public int Duration { get; set; }
 
         public decimal? MaximumBid { get; set; }
-        public bool? BuyNowEnabled { get; set; }
+        public bool BuyNowEnabled { get; set; }
         public decimal? BuyNowPrice { get; set; }
         public int? BuyNowQuantity { get; set; }
 

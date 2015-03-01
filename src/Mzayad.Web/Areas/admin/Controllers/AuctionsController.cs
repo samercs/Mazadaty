@@ -1,24 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Kendo.Mvc.Extensions;
+﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
-using Mzayad.Models;
 using Mzayad.Services;
 using Mzayad.Web.Areas.admin.Models.Auction;
-using Mzayad.Web.Areas.admin.Models.Products;
 using Mzayad.Web.Controllers;
 using Mzayad.Web.Core.ActionResults;
-using Mzayad.Web.Core.Configuration;
-using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Extensions;
 using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Localization;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 using EditViewModel = Mzayad.Web.Areas.admin.Models.Auction.EditViewModel;
 using IndexViewModel = Mzayad.Web.Areas.admin.Models.Auction.IndexViewModel;
 

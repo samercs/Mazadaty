@@ -107,7 +107,7 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-4">
                         <div class="form-group">
-                            @Html.CheckBox("cbBuyNowEnabled", new { @id = "cbBuyNowEnabled", @checked = "checked" }) Enable Buy Now
+                            <label>@Html.CheckBoxFor(m => m.Auction.BuyNowEnabled) Enable Buy Now</label>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4">

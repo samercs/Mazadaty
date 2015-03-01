@@ -105,6 +105,10 @@
     <Compile Include="Migrations\201502281032039_RenameProductCategories.Designer.cs">
       <DependentUpon>201502281032039_RenameProductCategories.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503011024088_SetBuyNowEnabledToNotNullable.cs" />
+    <Compile Include="Migrations\201503011024088_SetBuyNowEnabledToNotNullable.Designer.cs">
+      <DependentUpon>201503011024088_SetBuyNowEnabledToNotNullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -148,6 +152,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502281032039_RenameProductCategories.resx">
       <DependentUpon>201502281032039_RenameProductCategories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503011024088_SetBuyNowEnabledToNotNullable.resx">
+      <DependentUpon>201503011024088_SetBuyNowEnabledToNotNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
