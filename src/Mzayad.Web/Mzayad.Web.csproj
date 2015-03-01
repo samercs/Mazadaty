@@ -486,6 +486,9 @@
     <Content Include="Fonts\FontAwesome.otf" />
     <None Include="Content\variables.less" />
     <None Include="Properties\PublishProfiles\Mzayad.pubxml" />
+    <Content Include="Scripts\address.min.js.map">
+      <DependentUpon>address.js</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\address.js" />
     <Content Include="Scripts\bootstrap.js" />
