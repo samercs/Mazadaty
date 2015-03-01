@@ -1,14 +1,13 @@
 ﻿@using Newtonsoft.Json
 @model Mzayad.Web.Models.Account.RegisterViewModel
-@{
-    ViewBag.Title = Global.Register;
-}
 
+@{
+    ViewBag.Title = Global.EditAccount;
+}
 @section styles {
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
     <link rel="stylesheet" href="/content/flags/flags.css" />
     <style>
-        
         #username-validate {
             display: none;
             margin: 8px 0;
@@ -18,12 +17,9 @@
         #username-checking {
             font-style: italic;
         }
-
     </style>
 }
-
 @Html.Partial("_Register")
-
 @section Scripts {
     @Scripts.Render("~/js/jquery-ui")
     @Scripts.Render("~/js/validate")

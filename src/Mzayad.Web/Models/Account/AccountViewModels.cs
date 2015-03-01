@@ -55,6 +55,8 @@ namespace Mzayad.Web.Models.Account
         public string PhoneNumber { get; set; }
 
         public AddressViewModel Address { get; set; }
+
+        public bool IsEdit { get; set; }
     }
 
     public class ResetPasswordViewModel

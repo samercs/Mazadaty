@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Threading.Tasks;
 using Mzayad.Data;
 using Mzayad.Models;
@@ -37,6 +38,24 @@ namespace Mzayad.Services
                 }
                 
                 throw new NotImplementedException();
+            }
+        }
+
+        public async Task<Address> GetAddress(int addressId)
+        {
+            using (var dc=DataContext())
+            {
+                return await dc.Addresses.SingleOrDefaultAsync(i => i.AddressId == addressId);
+            }
+        }
+
+        public async Task<Address> Update(Address address)
+        {
+            using (var dc=DataContext())
+            {
+                dc.SetModified(address);
+                await dc.SaveChangesAsync();
+                return address;
             }
         }
     }

@@ -177,6 +177,12 @@
   <data name="EditAccount" xml:space="preserve">
     <value>تعديل الحساب</value>
   </data>
+  <data name="EditAccountNameAndEmailSuccessMessage" xml:space="preserve">
+    <value>تم تخزين بياناتك بنجاح . عليك اعادة الدخول الى الموقع</value>
+  </data>
+  <data name="EditAccountNameSuccessMessage" xml:space="preserve">
+    <value>تم تعديل بيانات بنجاح .</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>عنوان البريد الإلكتروني</value>
   </data>
@@ -278,6 +284,9 @@
   </data>
   <data name="ResetPasswordMissingParametersException" xml:space="preserve">
     <value>عذراً، إنّ الرابط الذي تحاولين استخدامه ينقصه عنصراً واحد أو أكثر.</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>حفظ</value>
   </data>
   <data name="SendInstructions" xml:space="preserve">
     <value>إرسال التعليمات</value>

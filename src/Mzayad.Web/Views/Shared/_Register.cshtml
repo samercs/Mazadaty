@@ -1,0 +1,108 @@
+﻿@model Mzayad.Web.Models.Account.RegisterViewModel
+<div class="row">
+    <div class="@Html.Css().FormNarrow">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FirstName, Global.FirstName).Required("Required")
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", autocorrect = "off", spellcheck = "false", autofocus = "autofocus" })
+                    @Html.ValidationMessageFor(m => m.FirstName, Global.FirstNameRequiredErrorMessage)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.LastName, Global.LastName).Required()
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", autocorrect = "off", spellcheck = "false" })
+                    @Html.ValidationMessageFor(m => m.LastName, Global.LastNameRequiredErrorMessage)
+                </div>
+                @if (!Model.IsEdit)
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.UserName, Global.UserName).Required()
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-fw fa-user"></i></span>
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", autocorrect = "off", spellcheck = "false" })
+                        </div>
+                        @Html.ValidationMessageFor(m => m.UserName, Global.UserNameRequiredErrorMessage)
+                        <div id="username-validate" class="text-right">
+                            <div id="username-checking" class="text-warning">
+                                <i class="fa fa-spin fa-cog fa-lg"></i> @Global.UserNameValidateChecking
+                            </div>
+                            <div id="username-valid" class="text-success">
+                                <i class="fa fa-lg fa-check-square-o"></i> @Global.UserNameValidateIsValid
+                            </div>
+                            <div id="username-error" class="text-danger">
+                                <i class="fa fa-lg fa-frown-o"></i> @Global.UserNameValidateError
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.UserName, Global.UserName)
+                        <br />
+                        @Html.Label(Model.UserName)
+                    </div>
+                }
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, Global.Email).Required()
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-fw fa-at"></i></span>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Email, Global.EmailRequiredErrorMessage)
+                </div>
+                @if (!Model.IsEdit)
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, Global.Password).Required()
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        </div>
+                        @Html.ValidationMessageFor(m => m.Password, Global.PasswordInvalidErrorMessage)
+                    </div>
+                }
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PhoneNumber, "Phone Number").Required()
+                    <div class="form-inline">
+                        @Html.TextBoxFor(m => m.PhoneCountryCode, new { @class = "form-control form-control-sm", @type = "tel", maxlength = 4 })
+                        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @type = "tel" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.PhoneNumber, "Please enter a valid phone number.")
+                </div>
+            </section>
+
+            @Html.EditorFor(m => m.Address)
+
+            if (!Model.IsEdit)
+            {
+                <section>
+                    <div class="form-group">
+                        <i class="fa fa-lg fa-check-square-o"></i>
+                        @Html.Raw(string.Format(Global.RegistrationAgreementAcknowledgement, Url.Action("TermsAndConditions", "Home", new { Language = Html.Language() })))
+                    </div>
+                </section>
+            }
+
+            <section class="form-buttons">
+                <button type="submit" class="btn btn-default">
+                    @if (Model.IsEdit)
+                    {
+                        <text>
+                            @Global.Save
+                        </text>
+                    }
+                    else
+                    {
+                        <text>
+                            @Global.Register
+                        </text>
+                    }
+                    </button>
+            </section>
+        }
+    </div>
+</div>
