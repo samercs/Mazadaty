@@ -15,4 +15,4 @@
 /// <reference path="jquery.slugify.js" />
 /// <reference path="image-uploader.js" />
 /// <reference path="dropzone.js" />
-/// <reference path="jquery.signalr-2.2.0.min.js" />
+/// <reference path="jquery.datetimepicker.js" />

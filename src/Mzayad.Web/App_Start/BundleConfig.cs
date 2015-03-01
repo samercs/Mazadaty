@@ -47,6 +47,9 @@ namespace Mzayad.Web
             bundles.Add(new ScriptBundle("~/js/image-uploader").Include("~/scripts/dropzone.js", "~/scripts/image-uploader.js"));
             bundles.Add(new StyleBundle("~/css/image-uploader").Include(
                 "~/content/image-uploader.css"));
+
+            bundles.Add(new StyleBundle("~/css/calender").Include("~/Content/jquery.datetimepicker.css"));
+            bundles.Add(new ScriptBundle("~/js/calender").Include("~/Scripts/jquery.datetimepicker.js"));
         }
     }
 }

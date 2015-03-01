@@ -22,6 +22,9 @@ section.form-section:not(:last-child) {
 textarea {
   resize: vertical;
 }
+input[disabled] {
+  cursor: default !important;
+}
 input[type=number].no-spinner::-webkit-inner-spin-button,
 input[type=number].no-spinner::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -39,15 +42,15 @@ input[type=number].no-spinner::-webkit-outer-spin-button {
   border-radius: 0;
 }
 .form-control-sm {
-  width: 75px !important;
+  max-width: 75px !important;
 }
 @media (max-width: 320px) {
   .form-control-sm {
-    width: 60px !important;
+    max-width: 60px !important;
   }
 }
 .form-control-md {
-  width: 125px !important;
+  max-width: 125px !important;
 }
 .form-control-static:after {
   content: '\0000a0';
@@ -66,6 +69,9 @@ input[type=number].no-spinner::-webkit-outer-spin-button {
 }
 .form-group .form-control:last-child {
   margin-bottom: 0;
+}
+.form-group-disabled {
+  opacity: 0.7;
 }
 .form-inline .form-control:last-child {
   margin-bottom: 5px;

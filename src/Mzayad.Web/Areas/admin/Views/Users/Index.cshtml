@@ -1,5 +1,6 @@
 ﻿@using Kendo.Mvc.UI
 @using Mzayad.Web.Extensions
+@using OrangeJetpack.Base.Web
 @model Mzayad.Web.Areas.admin.Models.Users.IndexViewModel
 @{
     ViewBag.Title = "Users";
@@ -18,16 +19,16 @@
     </div>
 }
 
-@if (!Model.Users.Any())
-{
-    @Html.StatusMessage("No users match search criteria.")
-
-    return;
-}
-
 <ul class="link-list">
     <li><a href="@Url.Action("UsersExcel", "Users", new { search = Model.Search, role = Model.Role })"><i class="fa fa-file-excel-o fa-pad-right"></i>Download Excel</a></li>
 </ul>
+
+@if (!Model.Users.Any())
+{
+    @Html.StatusMessage("No users match search criteria.", StatusMessageType.Warning)
+
+    return;
+}
 
 @(Html.Kendo().Grid(Model.Users)
     .Init(ajax => ajax.Action("GetUsers", "Users", new { search = Model.Search, role = Model.Role }))

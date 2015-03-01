@@ -1,0 +1,32 @@
+﻿using Mzayad.Models.Enum;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Mzayad.Models
+{
+    public class Auction : ModelBase
+    {
+        [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int AuctionId { get; set; }
+        [Required]
+        public DateTime StartUtc { get; set; }
+        [Required]
+        public int ProductId { get; set; }
+        [Required]
+        public AuctionStatus Status { get; set; }
+        [Required]
+        public decimal RetailPrice { get; set; }
+        [Required]
+        public decimal BidIncrement { get; set; }
+        [Required]
+        public int Duration { get; set; }
+
+        public decimal? MaximumBid { get; set; }
+        public bool BuyNowEnabled { get; set; }
+        public decimal? BuyNowPrice { get; set; }
+        public int? BuyNowQuantity { get; set; }
+
+        public virtual Product Product { get; set; }
+    }
+}

@@ -11,7 +11,8 @@ namespace Mzayad.Data
         IDbSet<EmailTemplate> EmailTemplates { get; set; }
         IDbSet<Category> Categories { get; set; }
         IDbSet<Product> Products { get; set; }
-        IDbSet<ProductImage> ProductImages { get; set; } 
+        IDbSet<ProductImage> ProductImages { get; set; }
+        IDbSet<Auction> Auctions { get; set; } 
 
         int SaveChanges();
         Task<int> SaveChangesAsync();

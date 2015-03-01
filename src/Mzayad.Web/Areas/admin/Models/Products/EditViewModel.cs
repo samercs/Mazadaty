@@ -11,8 +11,8 @@ namespace Mzayad.Web.Areas.admin.Models.Products
     public class EditViewModel
     {
         public Product Product { get; set; }
-        
-        
+
+        public bool GoToAuction { get; set; }
 
         public IEnumerable<Category> Categories { get; set; }
         public IEnumerable<string> SelectedCategories { get; set; }

@@ -65,10 +65,10 @@ namespace Mzayad.Web.Areas.admin.Controllers
         }
             
         [Route("add")]
-        public async Task<ActionResult> Add()
+        public async Task<ActionResult> Add(bool goToAuction=false)
         {
             var model = await new AddViewModel().Hydrate(_productService);
-
+            model.GoToAuction = goToAuction;
             return View(model);
         }
 
@@ -77,6 +77,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         public async Task<ActionResult> Add(AddViewModel model, LocalizedContent[] name)
         {
             model.Product.Name = name.Serialize();
+
 
             if (!ModelState.IsValid)
             {
@@ -91,7 +92,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             SetStatusMessage(string.Format("Product {0} successfully added.", productName));
 
-            return RedirectToAction("Edit", new { id = product.ProductId });
+            return RedirectToAction("Edit", new { id = product.ProductId , goToAuction=model.GoToAuction  });
         }
 
         public async Task<ActionResult> AddErrorView(AddViewModel model, string modelStateKey = null, string errorMessage = null)
@@ -107,7 +108,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         }
 
         [Route("edit/{id:int}")]
-        public async Task<ActionResult> Edit(int id)
+        public async Task<ActionResult> Edit(int id,bool goToAuction=false)
         {
             var product = await _productService.GetProduct(id);
             if (product == null)
@@ -116,7 +117,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             }
 
             var model = await new EditViewModel().Hydrate(_productService, _categoryService, product, "en");
-
+            model.GoToAuction = goToAuction;
             return View(model);
         }
 
@@ -158,7 +159,11 @@ namespace Mzayad.Web.Areas.admin.Controllers
             var productName = product.Localize("en", i => i.Name).Name;
 
             SetStatusMessage(string.Format("Product {0} successfully updated.", productName));
-            
+
+            if (model.GoToAuction)
+            {
+                return RedirectToAction("Create", "Auctions", new { ProductId = product.ProductId });
+            }
             return RedirectToAction("Index");
         }
 
