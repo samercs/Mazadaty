@@ -111,24 +111,20 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        <div class="form-group" id="BuyNowPriceSection">
-                            <div class="form-group">
-                                @Html.LabelFor(i => i.Auction.BuyNowPrice, "Buy Now Price")
-                                <div class="input-group">
-                                    @Html.TextBoxFor(i => i.Auction.BuyNowPrice, new { @class = "form-control", @type = "number" })
-                                    <span class="input-group-addon">KD</span>
-                                </div>
+                        <div class="form-group form-group-disableable">
+                            @Html.LabelFor(i => i.Auction.BuyNowPrice, "Buy Now Price")
+                            <div class="input-group">
+                                @Html.TextBoxFor(i => i.Auction.BuyNowPrice, new { @class = "form-control", @type = "number" })
+                                <span class="input-group-addon">KD</span>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        <div class="form-group" id="BuyNowQuantitySection">
-                            <div class="form-group">
-                                @Html.LabelFor(i => i.Auction.BuyNowQuantity, "Buy Now Quantity")
-                                <div class="input-group">
-                                    @Html.TextBoxFor(i => i.Auction.BuyNowQuantity, new { @class = "form-control", @type = "number" })
-                                    <span class="input-group-addon">items</span>
-                                </div>
+                        <div class="form-group form-group-disableable">
+                            @Html.LabelFor(i => i.Auction.BuyNowQuantity, "Buy Now Quantity")
+                            <div class="input-group">
+                                @Html.TextBoxFor(i => i.Auction.BuyNowQuantity, new { @class = "form-control", @type = "number" })
+                                <span class="input-group-addon">items</span>
                             </div>
                         </div>
                     </div>
@@ -161,22 +157,25 @@
             }
         );
 
+        var toggleBuyNow = function() {
+            var checkbox = $("#Auction_BuyNowEnabled");
+            var section = checkbox.parents("section");
+            var formGroups = section.find(".form-group-disableable");
+            var formControls = formGroups.find(".form-control");
+            
+            if (checkbox.is(":checked")) {
+                formGroups.removeClass("form-group-disabled");
+                formControls.prop("disabled", false);
+            } else {
+                formGroups.addClass("form-group-disabled");
+                formControls.prop("disabled", true);
+            }
+        }
+
         $(function() {
-            $("#cbBuyNowEnabled").click(function() {
-
-                if (!$("#cbBuyNowEnabled").prop("checked")) {
-                    
-                    $("#BuyNowPriceSection").fadeOut(100);
-                    $("#BuyNowQuantitySection").fadeOut(100);
-                    
-                } else {
-                    $("#BuyNowPriceSection").fadeIn(100);
-                    $("#BuyNowQuantitySection").fadeIn(100);
-                }
-
-            });
+            $("#Auction_BuyNowEnabled").on("change", toggleBuyNow);
+            toggleBuyNow();
         });
-
 
     </script>
 }

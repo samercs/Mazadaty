@@ -22,6 +22,9 @@ section.form-section:not(:last-child) {
 textarea {
   resize: vertical;
 }
+input[disabled] {
+  cursor: default !important;
+}
 input[type=number].no-spinner::-webkit-inner-spin-button,
 input[type=number].no-spinner::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -66,6 +69,9 @@ input[type=number].no-spinner::-webkit-outer-spin-button {
 }
 .form-group .form-control:last-child {
   margin-bottom: 0;
+}
+.form-group-disabled {
+  opacity: 0.7;
 }
 .form-inline .form-control:last-child {
   margin-bottom: 5px;
