@@ -29,21 +29,22 @@
                     @Html.ValidationMessageFor(i => i.Auction.StartUtc, "Please enter date and time")
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(i => i.Auction.Status, "Status")
+                    <label>Status</label>
                     @foreach (var item in Model.StatusList)
                     {
-                        <div class="checkbox">
-                            @if (item.Selected)
-                            {
-                                @Html.RadioButtonFor(i => i.Auction.Status, item.Value, new { @checked = "checked" })
-                                @item.Text
-                            }
-                            else
-                            {
-                                @Html.RadioButtonFor(i => i.Auction.Status, item.Value)
-                                @item.Text
-                            }
-
+                        <div class="radio">
+                            <label>
+                                @if (item.Selected)
+                                {
+                                    @Html.RadioButtonFor(i => i.Auction.Status, item.Value, new { @checked = "checked" }) 
+                                    @Html.Raw(item.Text)
+                                }
+                                else
+                                {
+                                    @Html.RadioButtonFor(i => i.Auction.Status, item.Value) 
+                                    @Html.Raw(item.Text)
+                                }
+                            </label>
                         </div>
                     }
                 </div>

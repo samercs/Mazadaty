@@ -47,7 +47,7 @@ namespace Mzayad.Web.Areas.admin.Models.Auction
 
             StatusList= Enum.GetValues(typeof(AuctionStatus)).Cast<AuctionStatus>().Select(v => new SelectListItem
             {
-                Text = v.ToString() + " — " + v.Description(),
+                Text = string.Format("<strong>{0}</strong> &mdash; {1}", v, v.Description()),
                 Value = ((int)v).ToString(),
                 Selected = (v==AuctionStatus.Hidden)
                 
