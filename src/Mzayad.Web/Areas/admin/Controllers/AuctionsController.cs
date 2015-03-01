@@ -12,8 +12,7 @@ using OrangeJetpack.Localization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using EditViewModel = Mzayad.Web.Areas.admin.Models.Auction.EditViewModel;
-using IndexViewModel = Mzayad.Web.Areas.admin.Models.Auction.IndexViewModel;
+using Mzayad.Web.Areas.admin.Models.Auctions;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
@@ -28,7 +27,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             _auctionServices=new AuctionServices(DataContextFactory);
         }
 
-        [Route("selectproduct")]
+        [Route("select-product")]
         public async Task<ActionResult> SelectProduct(string search="")
         {
             var products = await _productService.GetProductsWithoutCategory("en", search);
@@ -37,7 +36,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 product.Description = StringFormatter.StripHtmlTags(product.Description);
             }
 
-            var model = new Mzayad.Web.Areas.admin.Models.Products.IndexViewModel()
+            var model = new Models.Products.IndexViewModel()
             {
                 Search = "",
                 Products = products
@@ -47,35 +46,28 @@ namespace Mzayad.Web.Areas.admin.Controllers
             return View(model);
         }
 
-        public async Task<ActionResult> Create(int ProductId)
+        public async Task<ActionResult> Create(int productId)
         {
-            var product =await _productService.GetProduct(ProductId);
+            var product =await _productService.GetProduct(productId);
             if (product == null)
             {
                 SetStatusMessage("Sorry this product not found.",StatusMessageType.Warning);
                 return RedirectToAction("SelectProduct");
             }
-            var model = await new CreateModelView().Hydrate(_productService, ProductId);
+            var model = await new AddEditViewModel().Hydrate(_productService, product);
             model.Auction.RetailPrice = product.RetailPrice;
             return View(model);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(CreateModelView model, bool cbBuyNowEnabled)
+        public async Task<ActionResult> Create(int productId, AddEditViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(await model.Hydrate(_productService, productId));
             }
-            model.Auction.StartUtc= model.Auction.StartUtc.AddHours(-3);
-            model.Auction.BuyNowEnabled = cbBuyNowEnabled;
-            if (!cbBuyNowEnabled)
-            {
-                model.Auction.BuyNowPrice = null;
-                model.Auction.BuyNowQuantity = null;
-                
-            }
-           
+            
+            model.Auction.StartUtc = model.Auction.StartUtc.AddHours(-3);       
             
             await _auctionServices.Add(model.Auction);
             SetStatusMessage("Auction has been added successfully.");
@@ -144,19 +136,18 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return RedirectToAction("Index", "Auctions");
             }
 
-            var model = await new Mzayad.Web.Areas.admin.Models.Auction.EditViewModel().Hydrate(_productService, auction);
+            var model = await new AddEditViewModel().Hydrate(_productService, auction);
             return View(model);
         }
 
         [Route("edit/{id:int}")]
         [HttpPost,ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id,EditViewModel model, bool cbBuyNowEnabled)
+        public async Task<ActionResult> Edit(int id, AddEditViewModel model)
         {
             var auction = await _auctionServices.GetAuction(id);
             if (auction == null)
             {
-                SetStatusMessage("sorry this auction not found.",StatusMessageType.Warning);
-                return RedirectToAction("Index", "Auctions");
+                return HttpNotFound();
             }
 
             auction.BidIncrement = model.Auction.BidIncrement;
@@ -166,21 +157,13 @@ namespace Mzayad.Web.Areas.admin.Controllers
             auction.RetailPrice = model.Auction.RetailPrice;
             auction.StartUtc = model.Auction.StartUtc.AddHours(-3);
             auction.Status = model.Auction.Status;
-            auction.BuyNowEnabled = cbBuyNowEnabled;
-            if (!cbBuyNowEnabled)
-            {
-                model.Auction.BuyNowPrice = null;
-                model.Auction.BuyNowQuantity = null;
-            }
-            else
-            {
-                auction.BuyNowPrice = model.Auction.BuyNowPrice;
-                auction.BuyNowQuantity = model.Auction.BuyNowQuantity;
-            }
+            auction.BuyNowEnabled = model.Auction.BuyNowEnabled;
+            auction.BuyNowPrice = model.Auction.BuyNowPrice;
+            auction.BuyNowQuantity = model.Auction.BuyNowQuantity;
+
             await _auctionServices.Update(auction);
             SetStatusMessage("Auction has been updated successfully.");
-            return RedirectToAction("Index", "Auctions");
-            
+            return RedirectToAction("Index", "Auctions");     
         }
 
 	}
