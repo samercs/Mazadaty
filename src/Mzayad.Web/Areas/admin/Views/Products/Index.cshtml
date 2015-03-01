@@ -13,7 +13,7 @@
     <div class="form-group">
         <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-search"></i></span>
-            @Html.TextBoxFor(m => m.Search, new { @class = "form-control", placeholder = "Search products by name or description" })
+            @Html.TextBoxFor(m => m.Search, new { @class = "form-control", placeholder = "Search products" })
         </div>
     </div> 
 }
@@ -34,9 +34,8 @@
     .Columns(columns =>
     {
         columns.Bound(i => i.Name);
-        columns.Bound(i => i.Description);
         columns.Bound(i => i.RetailPrice).Title("Retail Price");
-        columns.Bound(i => i.CreatedUtc).Format("{0:dd MMM yyyy}").Title("Added");
+        columns.Bound(i => i.CreatedUtc).Format("{0:dd/MM/yyyy}").Title("Added");
         columns.LinkColumn("Details", "products/edit/#=ProductId#");
     })
 )

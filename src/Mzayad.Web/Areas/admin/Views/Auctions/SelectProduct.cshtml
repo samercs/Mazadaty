@@ -37,9 +37,8 @@
     .Columns(columns =>
     {
         columns.Bound(i => i.Name);
-        columns.Bound(i => i.Description);
         columns.Bound(i => i.RetailPrice).Title("Retail Price");
-        columns.Bound(i => i.CreatedUtc).Format("{0:dd MMM yyyy}").Title("Added");
+        columns.Bound(i => i.CreatedUtc).Format("{0:dd/MM/yyyy}").Title("Added");
         columns.LinkColumn("Select", "create?ProductId=#=ProductId#");
     })
 )

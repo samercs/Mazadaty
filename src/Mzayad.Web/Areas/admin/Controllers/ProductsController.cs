@@ -65,9 +65,9 @@ namespace Mzayad.Web.Areas.admin.Controllers
         }
             
         [Route("add")]
-        public async Task<ActionResult> Add(bool goToAuction=false)
+        public ActionResult Add(bool goToAuction=false)
         {
-            var model = await new AddViewModel().Hydrate(_productService);
+            var model = new AddViewModel().Hydrate(_productService);
             model.GoToAuction = goToAuction;
             return View(model);
         }
@@ -78,10 +78,9 @@ namespace Mzayad.Web.Areas.admin.Controllers
         {
             model.Product.Name = name.Serialize();
 
-
             if (!ModelState.IsValid)
             {
-                return await AddErrorView(model);
+                return AddErrorView(model);
             }
 
             Product product = null;
@@ -95,14 +94,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
             return RedirectToAction("Edit", new { id = product.ProductId , goToAuction=model.GoToAuction  });
         }
 
-        public async Task<ActionResult> AddErrorView(AddViewModel model, string modelStateKey = null, string errorMessage = null)
+        public ActionResult AddErrorView(AddViewModel model, string modelStateKey = null, string errorMessage = null)
         {
             if (modelStateKey != null && errorMessage != null)
             {
                 ModelState.AddModelError(modelStateKey, errorMessage);
             }
 
-            model = await model.Hydrate(_productService);
+            model = model.Hydrate(_productService);
 
             return View("Add", model);
         }
