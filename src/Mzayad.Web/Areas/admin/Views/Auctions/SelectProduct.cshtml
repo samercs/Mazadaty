@@ -3,21 +3,17 @@
 @model Mzayad.Web.Areas.admin.Models.Products.IndexViewModel
 
 @{
-    ViewBag.Title = "Create Auction";
-    
+    ViewBag.Title = "Create Auction";  
 }
 
-<div class="text-center" style="padding-bottom: 20px;">
-    @Html.ActionLink("Create New Product", "Add", "Products", new { goToAuction =true},null) or Select Existing One.
-</div>
-
+<p class="instruction">To create a new auction please select an existing product below or @Html.ActionLink("create a new product", "Add", "Products", new { goToAuction = true }, null).</p>
 
 @using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "form-inline form-search" }))
 {
     <div class="form-group">
         <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-search"></i></span>
-            @Html.TextBoxFor(m => m.Search, new { @class = "form-control", placeholder = "Search products by name or description" })
+            @Html.TextBoxFor(m => m.Search, new { @class = "form-control", placeholder = "Search products" })
         </div>
     </div>
 

@@ -83,9 +83,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return AddErrorView(model);
             }
 
-            Product product = null;
-            
-            product = await _productService.AddProduct(model.Product);
+            var product = await _productService.AddProduct(model.Product);
             
             var productName = product.Localize("en", i => i.Name).Name;
 

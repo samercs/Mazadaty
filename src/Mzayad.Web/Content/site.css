@@ -35,6 +35,10 @@ h2 {
     font-size: 2rem;
   }
 }
+.instruction {
+  font-size: 1.6rem;
+  margin-bottom: 2em;
+}
 .text-larger {
   font-size: 120%;
 }
