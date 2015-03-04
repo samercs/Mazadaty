@@ -78,7 +78,7 @@ namespace Mzayad.Web.Controllers
             await MessageService.SendMessage(email.WithTemplate(this));
         }
 
-        [Route("editaccount")]
+        [Route("edit-account")]
         public async Task<ActionResult> EditAccount()
         {
             var user = await AuthService.CurrentUser();
@@ -102,19 +102,23 @@ namespace Mzayad.Web.Controllers
             return View(model);
         }
 
-        [Route("editaccount")]
+        [Route("edit-account")]
         [HttpPost,ValidateAntiForgeryToken]
         public async Task<ActionResult> EditAccount(RegisterViewModel model)
         {
-            
-            var user = await AuthService.CurrentUser();
-            var userNameChanged = user.Email != model.Email;
-            if (!TryUpdateModel(user))
+            if (!ModelState.IsValid)
             {
-                RedirectToAction("EditAccount");
+                var m = ModelState;
+                
+                model.Address.Hydrate();
+                
+                return View(model);
             }
-            
-            
+
+            var user = await AuthService.CurrentUser();
+            var originalEmail = user.Email;
+            var emailChanged = originalEmail != model.Email;
+
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
             user.Email = model.Email;
@@ -140,39 +144,27 @@ namespace Mzayad.Web.Controllers
             CookieService.Add(CookieKeys.DisplayName, user.FirstName, DateTime.MaxValue);
             CookieService.Add(CookieKeys.LastSignInEmail, user.Email, DateTime.MaxValue);
 
-
-            if (userNameChanged)
+            if (emailChanged)
             {
-                await SendEmailChangedEmail();
-
-                AuthService.SignOut();
-
-                SetStatusMessage(Global.EditAccountNameAndEmailSuccessMessage);
-
-                return RedirectToAction("SignIn", "Account");
+                await SendEmailChangedEmail(user, originalEmail);
             }
 
-
-            SetStatusMessage(Global.EditAccountNameSuccessMessage + " " +userNameChanged);
+            SetStatusMessage(Global.EditAccountNameSuccessMessage);
 
             return RedirectToAction("MyAccount");
         }
 
-
-        private async Task SendEmailChangedEmail()
+        private async Task SendEmailChangedEmail(ApplicationUser user, string originalEmail)
         {
-            var user = await AuthService.CurrentUser();
-            var emailTeamplet = await _EmailTemplateService.GetByTemplateType(EmailTemplateType.EmailChanged);
+            var emailTemplate = await _EmailTemplateService.GetByTemplateType(EmailTemplateType.EmailChanged);
             var email = new Email
             {
-                ToAddress = user.Email,
-                Subject = emailTeamplet.Localize(Language, i => i.Subject).Subject,
-                Message = string.Format(emailTeamplet.Localize(Language, i => i.Message).Message, user.FirstName,AppSettings.SiteName)
+                ToAddress = originalEmail,
+                Subject = emailTemplate.Localize(Language, i => i.Subject).Subject,
+                Message = string.Format(emailTemplate.Localize(Language, i => i.Message).Message, user.FirstName, AppSettings.SiteName)
             };
 
             await MessageService.SendMessage(email.WithTemplate(this));
         }
-
-
     }
 }

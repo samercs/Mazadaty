@@ -38,18 +38,10 @@
                         </div>
                     </div>
                 }
-                else
-                {
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.UserName, Global.UserName)
-                        <br />
-                        @Html.Label(Model.UserName)
-                    </div>
-                }
                 <div class="form-group">
                     @Html.LabelFor(m => m.Email, Global.Email).Required()
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-fw fa-at"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-fw fa-envelope"></i></span>
                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
                     </div>
                     @Html.ValidationMessageFor(m => m.Email, Global.EmailRequiredErrorMessage)

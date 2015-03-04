@@ -358,10 +358,7 @@
     <value>Edit Account</value>
   </data>
   <data name="EditAccountNameSuccessMessage" xml:space="preserve">
-    <value>your information has been saved successfully.</value>
-  </data>
-  <data name="EditAccountNameAndEmailSuccessMessage" xml:space="preserve">
-    <value>your information has been saved successfully .please login to load your profile</value>
+    <value>Account successfully updated.</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
