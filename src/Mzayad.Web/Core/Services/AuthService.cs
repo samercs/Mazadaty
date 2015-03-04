@@ -245,5 +245,7 @@ namespace Mzayad.Web.Core.Services
         {
             await _userManager.RemoveFromRoleAsync(userId, roleName);
         }
+
+       
     }
 }

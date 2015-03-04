@@ -1,4 +1,5 @@
 using System.Collections.Specialized;
+using System.Configuration;
 using OrangeJetpack.Services.Client.Messaging;
 
 namespace Mzayad.Web.Core.Services
@@ -17,5 +18,12 @@ namespace Mzayad.Web.Core.Services
                 SenderName = "Mzayad"
             };
         }
+
+        public string SiteName
+        {
+            get { return ConfigurationManager.AppSettings["SiteName"]; }
+        }
+
+       
     }
 }
