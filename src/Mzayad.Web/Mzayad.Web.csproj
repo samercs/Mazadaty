@@ -300,6 +300,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account\AccountViewModels.cs" />
+    <Compile Include="Models\Account\UserAccountViewModel.cs" />
     <Compile Include="Models\Shared\AddressViewModel.cs" />
     <Compile Include="Models\User\ChangePasswordViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -561,7 +562,6 @@
     <Content Include="Views\User\ChangePassword.cshtml" />
     <Content Include="Views\Shared\_Layout.User.cshtml" />
     <Content Include="Views\User\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\_Register.cshtml" />
     <Content Include="Views\User\EditAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>

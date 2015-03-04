@@ -87,29 +87,25 @@ namespace Mzayad.Web.Controllers
             {
                 address = await _addressService.GetAddress(user.AddressId.Value);    
             }
-            
-            var model = new RegisterViewModel()
+
+            var model = new UserAccountViewModel
             {
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Address = new AddressViewModel(address).Hydrate(),
                 PhoneCountryCode = user.PhoneCountryCode,
-                PhoneNumber = user.PhoneNumber,
-                UserName = user.UserName,
-                IsEdit = true
+                PhoneNumber = user.PhoneNumber
             };
             return View(model);
         }
 
         [Route("edit-account")]
         [HttpPost,ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditAccount(RegisterViewModel model)
+        public async Task<ActionResult> EditAccount(UserAccountViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                var m = ModelState;
-                
                 model.Address.Hydrate();
                 
                 return View(model);
