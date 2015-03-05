@@ -1,0 +1,36 @@
+﻿@using Mzayad.Web.Extensions
+@model Mzayad.Models.Specification
+
+@{
+    ViewBag.Title = "Add New Specification";
+    
+}
+
+<div class="row">
+    <div class="@Html.Css().FormNarrow">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Name, "Name")
+                    @Html.EditorFor(i => i.Name)
+                    @Html.ValidationMessageFor(m => m.Name, "Please enter a specification name.")
+                </div>
+                
+            </section>
+
+            <section class="form-buttons">
+                <button type="submit" class="btn btn-default">Save And Continue</button>
+            </section>
+        }
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/js/validate")
+}
+
+
