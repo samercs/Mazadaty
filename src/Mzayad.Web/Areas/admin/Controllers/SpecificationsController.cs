@@ -93,7 +93,40 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 SetStatusMessage("sory specification not found.", StatusMessageType.Error);
                 return RedirectToAction("Index");
             }
-            return View(specification);
+            var model = new AddViewModel()
+            {
+                Specification = specification
+            };
+
+
+            return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(int id, AddViewModel model,LocalizedContent[] name)
+        {
+
+            var specification = await _specificationService.GetById(id);
+            if (specification == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (!TryUpdateModel(specification, "Specification"))
+            {
+                return View(model);
+            }
+
+            specification.Name = name.Serialize();
+
+            await _specificationService.Update(specification);
+
+            var specificationName = specification.Localize("en", i => i.Name).Name;
+
+            SetStatusMessage(string.Format("Specification {0} successfully updated.", specificationName));
+
+            return RedirectToAction("Index");
+
         }
     }
 }

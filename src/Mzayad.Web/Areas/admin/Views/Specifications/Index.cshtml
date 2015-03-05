@@ -25,7 +25,8 @@
             <tr>
                 <td>@specification.Name</td>
                 <td>
-                    @Html.ActionLink("Delete","Delete","Specifications",new {id=@specification.SpecificationId},null)
+                    @Html.ActionLink("Edit","Edit","Specifications",new {id=@specification.SpecificationId},null) | 
+                    @Html.ActionLink("Delete", "Delete", "Specifications", new { id = @specification.SpecificationId }, null)
                 </td>
             </tr>
         }

@@ -61,5 +61,15 @@ namespace Mzayad.Services
                 return specification;
             }
         }
+
+        public async Task<Specification> Update(Specification specification)
+        {
+            using (var dc=DataContext())
+            {
+                dc.SetModified(specification);
+                await dc.SaveChangesAsync();
+                return specification;
+            }
+        }
     }
 }

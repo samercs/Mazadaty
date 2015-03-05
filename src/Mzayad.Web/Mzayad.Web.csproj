@@ -481,6 +481,7 @@
     <Content Include="Areas\admin\Views\Specifications\Add.cshtml" />
     <Content Include="Areas\admin\Views\Specifications\Delete.cshtml" />
     <Content Include="Areas\admin\Views\Specifications\Edit.cshtml" />
+    <Content Include="Areas\admin\Views\Specifications\_AddEdit.cshtml" />
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />

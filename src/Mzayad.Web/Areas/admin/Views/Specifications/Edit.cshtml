@@ -1,4 +1,5 @@
-﻿@model Mzayad.Models.Specification
+﻿@using Mzayad.Web.Extensions
+@model Mzayad.Web.Areas.admin.Models.Specification.AddViewModel
 
 @{
     ViewBag.Title = "Edit Specification";
@@ -6,3 +7,18 @@
 }
 
 
+<div class="row">
+    <div class="@Html.Css().FormNarrow">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.Partial("_AddEdit")
+        }
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/js/validate")
+}
