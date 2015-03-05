@@ -79,8 +79,9 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 SetStatusMessage("sory specification not found.", StatusMessageType.Error);
                 return RedirectToAction("Index");
             }
+            var name = specification.Localize("en", i => i.Name).Name;
             await _specificationService.Delete(specification);
-            SetStatusMessage(string.Format("Specification {0} has been deleted successfully.", specification.Name));
+            SetStatusMessage(string.Format("Specification {0} has been deleted successfully.", name));
             return RedirectToAction("Index");
         }
 
