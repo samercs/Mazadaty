@@ -6,8 +6,10 @@ using System.Web;
 using System.Web.Mvc;
 using Mzayad.Models;
 using Mzayad.Services;
+using Mzayad.Web.Areas.admin.Models.Specification;
 using Mzayad.Web.Controllers;
 using Mzayad.Web.Core.Services;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Information;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Localization;
 
@@ -25,32 +27,33 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
         public async Task<ActionResult> Index()
         {
-            var model = await _specificationService.GetAll();
+            var model = await _specificationService.GetAll("en");
+            
             return View(model);
         }
 
         public async Task<ActionResult> Add()
         {
-            var model = new Specification()
-            {
-                Name = LocalizedContent.Init()
-            };
+            var model =await new AddViewModel().Hydrate();
             return View(model);
         }
 
 
         [HttpPost,ValidateAntiForgeryToken]
-        public async Task<ActionResult> Add(Specification model)
+        public async Task<ActionResult> Add(AddViewModel model, LocalizedContent[] name)
         {
+            model.Specification.Name = name.Serialize();
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            var specification = await _specificationService.Add(model);
+            var specification = await _specificationService.Add(model.Specification);
             specification.Localize("en", i => i.Name);
             SetStatusMessage(string.Format("Specification {0} has been added successfully.",specification.Name));
             return RedirectToAction("Index");
+
+            
         }
 
 
@@ -62,6 +65,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 SetStatusMessage("sory specification not found.",StatusMessageType.Error);
                 return RedirectToAction("Index");
             }
+            specification = specification.Localize("en", i => i.Name);
             return View(specification);
         }
 
@@ -78,6 +82,18 @@ namespace Mzayad.Web.Areas.admin.Controllers
             await _specificationService.Delete(specification);
             SetStatusMessage(string.Format("Specification {0} has been deleted successfully.", specification.Name));
             return RedirectToAction("Index");
+        }
+
+
+        public async Task<ActionResult> Edit(int id)
+        {
+            var specification =await _specificationService.GetById(id);
+            if (specification == null)
+            {
+                SetStatusMessage("sory specification not found.", StatusMessageType.Error);
+                return RedirectToAction("Index");
+            }
+            return View(specification);
         }
     }
 }

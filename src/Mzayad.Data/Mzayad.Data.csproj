@@ -121,6 +121,10 @@
     <Compile Include="Migrations\201503051148052_addProductSpecification.Designer.cs">
       <DependentUpon>201503051148052_addProductSpecification.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503051308345_modifyNameLengthInSpecification.cs" />
+    <Compile Include="Migrations\201503051308345_modifyNameLengthInSpecification.Designer.cs">
+      <DependentUpon>201503051308345_modifyNameLengthInSpecification.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -176,6 +180,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503051148052_addProductSpecification.resx">
       <DependentUpon>201503051148052_addProductSpecification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503051308345_modifyNameLengthInSpecification.resx">
+      <DependentUpon>201503051308345_modifyNameLengthInSpecification.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

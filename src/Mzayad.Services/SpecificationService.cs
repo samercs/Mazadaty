@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Mzayad.Data;
 using Mzayad.Models;
+using OrangeJetpack.Localization;
 
 namespace Mzayad.Services
 {
@@ -20,6 +21,15 @@ namespace Mzayad.Services
             using (var dc=DataContext())
             {
                 return await dc.Specifications.ToArrayAsync();
+            }
+        }
+
+        public async Task<IEnumerable<Specification>> GetAll(string languageCode)
+        {
+            using (var dc = DataContext())
+            {
+                var result= await dc.Specifications.ToArrayAsync();
+                return result.Localize(languageCode, i => i.Name);
             }
         }
 

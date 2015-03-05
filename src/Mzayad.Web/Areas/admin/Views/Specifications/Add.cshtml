@@ -1,5 +1,5 @@
 ﻿@using Mzayad.Web.Extensions
-@model Mzayad.Models.Specification
+@model Mzayad.Web.Areas.admin.Models.Specification.AddViewModel
 
 @{
     ViewBag.Title = "Add New Specification";
@@ -15,9 +15,9 @@
 
             <section>
                 <div class="form-group">
-                    @Html.LabelFor(i => i.Name, "Name")
-                    @Html.EditorFor(i => i.Name)
-                    @Html.ValidationMessageFor(m => m.Name, "Please enter a specification name.")
+                    @Html.LabelFor(i => i.Specification.Name, "Name")
+                    @Html.EditorFor(i => i.Specification.Name,Model.Specification)
+                    @Html.ValidationMessageFor(m => m.Specification.Name, "Please enter a specification name.")
                 </div>
                 
             </section>

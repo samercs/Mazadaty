@@ -12,7 +12,7 @@ namespace Mzayad.Models
     {
         public int SpecificationId { get; set; }
 
-        [Required, StringLength(50), Localized]
+        [Required, Localized]
         public string Name { get; set; }
         public virtual ICollection<ProductSpecification> ProductSpecifications { get; set; }
         
