@@ -26,7 +26,12 @@ namespace Mzayad.Models
         public bool BuyNowEnabled { get; set; }
         public decimal? BuyNowPrice { get; set; }
         public int? BuyNowQuantity { get; set; }
+        [StringLength(128)]
+        public string CreatedByUserId { get; set; }
+
 
         public virtual Product Product { get; set; }
+        [ForeignKey("CreatedByUserId")]
+        public virtual ApplicationUser CreatedByUser { get; set; }
     }
 }

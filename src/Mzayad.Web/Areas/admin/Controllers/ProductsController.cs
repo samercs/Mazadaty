@@ -65,9 +65,10 @@ namespace Mzayad.Web.Areas.admin.Controllers
         }
             
         [Route("add")]
-        public ActionResult Add(bool goToAuction=false)
+        public async Task<ActionResult> Add(bool goToAuction=false)
         {
             var model = new AddViewModel().Hydrate(_productService);
+            model.Product.CreatedByUserId =  AuthService.CurrentUserId();
             model.GoToAuction = goToAuction;
             return View(model);
         }
