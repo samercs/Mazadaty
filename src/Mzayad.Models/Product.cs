@@ -32,6 +32,8 @@ namespace Mzayad.Models
         public virtual ICollection<ProductImage> ProductImages { get; set; }
         [ForeignKey("CreatedByUserId")]
         public virtual ApplicationUser CreatedByUser { get; set; }
+        public virtual ICollection<ProductSpecification> ProductSpecifications { get; set; }
+       
 
     }
 }

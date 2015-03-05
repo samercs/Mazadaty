@@ -113,6 +113,14 @@
     <Compile Include="Migrations\201503050717507_AddCreatedByUserId_Product_Auction.Designer.cs">
       <DependentUpon>201503050717507_AddCreatedByUserId_Product_Auction.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503051130240_addSpecification.cs" />
+    <Compile Include="Migrations\201503051130240_addSpecification.Designer.cs">
+      <DependentUpon>201503051130240_addSpecification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503051148052_addProductSpecification.cs" />
+    <Compile Include="Migrations\201503051148052_addProductSpecification.Designer.cs">
+      <DependentUpon>201503051148052_addProductSpecification.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -162,6 +170,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503050717507_AddCreatedByUserId_Product_Auction.resx">
       <DependentUpon>201503050717507_AddCreatedByUserId_Product_Auction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503051130240_addSpecification.resx">
+      <DependentUpon>201503051130240_addSpecification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503051148052_addProductSpecification.resx">
+      <DependentUpon>201503051148052_addProductSpecification.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
