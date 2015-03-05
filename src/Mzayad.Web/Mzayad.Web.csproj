@@ -478,6 +478,7 @@
     <Content Include="Areas\Api\Views\web.config" />
     <Content Include="Areas\admin\Views\Specifications\Index.cshtml" />
     <Content Include="Areas\admin\Views\Specifications\Add.cshtml" />
+    <Content Include="Areas\admin\Views\Specifications\Delete.cshtml" />
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />

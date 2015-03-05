@@ -32,5 +32,24 @@ namespace Mzayad.Services
                 return specification;
             }
         }
+
+        public async Task<Specification> GetById(int id)
+        {
+            using (var dc=DataContext())
+            {
+                return await dc.Specifications.SingleOrDefaultAsync(i => i.SpecificationId == id);
+            }
+        }
+
+        public async Task<Specification> Delete(Specification specification)
+        {
+            using (var dc=DataContext())
+            {
+                dc.Specifications.Attach(specification);
+                dc.Specifications.Remove(specification);
+                await dc.SaveChangesAsync();
+                return specification;
+            }
+        }
     }
 }

@@ -1,0 +1,35 @@
+﻿@using Mzayad.Web.Extensions
+@model Mzayad.Models.Specification
+
+@{
+    ViewBag.Title = "Delete Specification";
+    
+}
+
+@Html.StatusMessage(string.Format("Are you sure that you want to permanently delete the specification <strong>{0}</strong>",Model.Name))
+@using (Html.BeginForm())
+{
+
+    @Html.AntiForgeryToken()
+
+    <section class="form-buttons">
+        <button type="submit" class="btn btn-default">Yes</button>
+        <button id="btnCancel" class="btn btn-default">Cancel</button>
+        @Html.HiddenFor(i=>i.SpecificationId);
+    </section>
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(function() {
+
+            $("#btnCancel").click(function() {
+
+                history.back();
+
+            });
+
+        });
+    </script>
+
+}
