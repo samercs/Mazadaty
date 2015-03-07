@@ -13,7 +13,7 @@ namespace Mzayad.Data.Migrations
                     {
                         ProductId = c.Int(nullable: false),
                         SpecificationId = c.Int(nullable: false),
-                        Value = c.String(nullable: false, maxLength: 50),
+                        Value = c.String(nullable: false,maxLength:50),
                         CreatedUtc = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => new { t.ProductId, t.SpecificationId })

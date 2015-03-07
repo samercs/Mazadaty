@@ -16,7 +16,7 @@ namespace Mzayad.Models
         [Key, Column(Order = 1)]
         public int SpecificationId { get; set; }
         
-        [Required, StringLength(50), Localized]
+        [Required, Localized]
         public string Value { get; set; }
 
         [ForeignKey("ProductId")]

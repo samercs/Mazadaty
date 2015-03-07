@@ -1,5 +1,6 @@
 ﻿@using System.Globalization
 @using Kendo.Mvc.UI
+@using Mzayad.Web.Areas.admin.Models.Products
 @using Mzayad.Web.Extensions
 @model Mzayad.Web.Areas.admin.Models.Products.EditViewModel
 
@@ -30,6 +31,20 @@
     </style>
 }
 
+@helper RenderSpecification(EditViewProductSpecification model)
+{
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-6">
+                @Html.DropDownList("SelectedSpecification", model.SpecificationItems, new { @class = "form-control" })
+            </div>
+            <div class="col-md-6">
+                @Html.EditorFor(i=>model.ProductSpecification.Value)
+            </div>
+        </div>
+    </div>
+}
+
 <div class="row">
 
     <div class="@Html.Css().FormWide">
@@ -49,6 +64,13 @@
                     @Html.EditorFor(i => i.Product.Description, Model)
                     @Html.ValidationMessageFor(i => i.Product.Description, "Please enter a product description.")
                 </div>
+                <div class="form-group">
+                    @Html.Label("Specifications")
+                </div>
+                @foreach (var spcification in Model.EditViewProductSpecifications)
+                {
+                    @RenderSpecification(spcification)
+                }
 
             </section>
             <section>
@@ -86,7 +108,7 @@
                           .Events(e => e.Change("onChange"))
                           .Filter(".sortable")
                           .Deferred()
-                          )
+                    )
                     <div class="help-block">
                         <ul class="fa-ul">
                             <li><i class="fa-li fa fa-asterisk"></i><strong>Size:</strong> We recommend uploading images that are at least <strong>1600px wide</strong>.</li>
@@ -104,8 +126,8 @@
             <section class="form-buttons">
                 <button type="submit" class="btn btn-default">Save</button>
             </section>
-            @Html.HiddenFor(i=>i.GoToAuction)
-            
+            @Html.HiddenFor(i => i.GoToAuction)
+
         }
     </div>
 </div>
@@ -116,7 +138,7 @@
     <script src="//cdn.ckeditor.com/4.4.4/basic/ckeditor.js"></script>
     <script>
 
-        
+
         (function ($) {
 
 
@@ -150,30 +172,30 @@
                         $("#image@(i + 1)").addClass("sortable");
                         $("#image@(i + 1)").attr("data-imgid", response.itemId);
                         displayUploader();
-                        
+
                     },
                     onDeleteSuccessCallback: function () {
                         $("#image@(i + 1)").removeClass("sortable");
                         $("#image@(i + 1)").addClass("disabled");
                         $("#image@(i + 1)").removeAttr("data-imgid");
                         displayUploader();
-                        
+
                     }
                 });
                 </text>
                     if (productImage == null)
                     {
                     <text>
-                        $("#image@(i + 1)").addClass("disabled");
-                    </text>
+                $("#image@(i + 1)").addClass("disabled");
+                </text>
                     }
                     else
                     {
                     <text>
-                        $("#image@(i + 1)").addClass("sortable");
-                        $("#image@(i + 1)").attr("data-imgid", "@productImageId");
-                        
-                    </text>
+                $("#image@(i + 1)").addClass("sortable");
+                $("#image@(i + 1)").attr("data-imgid", "@productImageId");
+
+                </text>
                     }
                 }
                 displayUploader();
@@ -251,7 +273,7 @@
             var imgCount = 0;
 
             for (var i = 0; i < 6; i++) {
-                if ($("#image" + (i+1)).attr("data-imgid") != undefined) {
+                if ($("#image" + (i + 1)).attr("data-imgid") != undefined) {
                     $(multiUploaders.get(i)).show();
                     ++imgCount;
                 }
