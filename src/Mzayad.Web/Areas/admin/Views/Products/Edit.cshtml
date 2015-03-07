@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+@using Kendo.Mvc.Infrastructure
 @using Kendo.Mvc.UI
 @using Mzayad.Web.Areas.admin.Models.Products
 @using Mzayad.Web.Extensions
@@ -33,13 +34,15 @@
 
 @helper RenderSpecification(EditViewProductSpecification model)
 {
+
     <div class="form-group">
         <div class="row">
             <div class="col-md-6">
-                @Html.DropDownList("SelectedSpecification", model.SpecificationItems, new { @class = "form-control" })
+                @Html.DropDownList("SelectedSpecification", model.SpecificationItems, new { @class = "form-control PSDropDown checkMultiPS" })
+
             </div>
             <div class="col-md-6">
-                @Html.EditorFor(i=>model.ProductSpecification.Value)
+                @Html.EditorFor(i => model.ProductSpecification.Value)
             </div>
         </div>
     </div>
@@ -64,6 +67,13 @@
                     @Html.EditorFor(i => i.Product.Description, Model)
                     @Html.ValidationMessageFor(i => i.Product.Description, "Please enter a product description.")
                 </div>
+
+
+            </section>
+
+
+            <section id="ProductSpecification">
+
                 <div class="form-group">
                     @Html.Label("Specifications")
                 </div>
@@ -71,8 +81,11 @@
                 {
                     @RenderSpecification(spcification)
                 }
-
+                <div class="form-group">
+                    @Html.ValidationMessage("SelectedSpecification")
+                </div>
             </section>
+
             <section>
                 <div class="form-group">
                     @Html.LabelFor(i => i.Product.RetailPrice, "Retail Price")
@@ -154,7 +167,7 @@
 
 
                 @for (var i = 0; i < 6; i++)
-            {
+                {
                     var productImage = Model.Product.ProductImages.ElementAtOrDefault(i);
                     var productImageId = productImage != null ? productImage.ProductImageId.ToString(CultureInfo.InvariantCulture) : "";
                     var productImageUrl = productImage != null ? productImage.ImageMdUrl : "";
@@ -185,13 +198,13 @@
                 </text>
                     if (productImage == null)
                     {
-                    <text>
+                        <text>
                 $("#image@(i + 1)").addClass("disabled");
                 </text>
                     }
                     else
                     {
-                    <text>
+                        <text>
                 $("#image@(i + 1)").addClass("sortable");
                 $("#image@(i + 1)").attr("data-imgid", "@productImageId");
 
@@ -250,6 +263,62 @@
                 hiddenValidator.val(hiddenValidator.val() + "...");
             };
 
+            //event for ProductSpecification Section
+            //$(".dropdown").parent().next().children().children().css({ "border": "2px solid red" });
+            $(".PSDropDown").parent().parent().parent().hide();
+            $(".PSDropDown").parent().next().addClass("form-group-disabled");
+            $(".PSDropDown").parent().next().children().find("input").prop("disabled", true);
+            var count = 0;
+            $(".PSDropDown").each(function () {
+
+                if ($(this).val() != -1) {
+                    $(this).parent().parent().parent().show();
+                    $(this).parent().next().removeClass("form-group-disabled");
+                    $(this).parent().next().children().find("input").prop("disabled", false);
+                    $(this).parent().parent().parent().next().show();
+                    ++count;
+                }
+            });
+            if (count == 0) {
+                $(".PSDropDown").first().parent().parent().parent().show();
+
+            }
+
+            $(".PSDropDown").change(function () {
+
+                if ($(this).val() != -1) {
+                    $(this).parent().next().removeClass("form-group-disabled");
+                    $(this).parent().parent().parent().next().show();
+                    $(this).parent().next().children().find("input").prop("disabled", false);
+                }
+
+            });
+
+
+            $.validator.addMethod("checkMultiPS", function (value, element) {
+
+                return  CheckSelection(value);
+
+            }, "invalid product specification. you can't select same specification more than once.");
+
+            $.validator.classRuleSettings.checkMultiPS = { checkMultiPS: true };
+
+            
+            var CheckSelection = function (value) {
+                var isOk = 0;
+                $(".PSDropDown").each(function () {
+
+                    if ($(this).val() != -1 && $(this).val() == value) {
+                        ++isOk ;
+                    }
+
+                });
+
+                return isOk<=1;
+            }
+
+
+
         })(jQuery);
 
         function onChange(e) {
@@ -288,5 +357,8 @@
                 }
             }
         };
+
+
+
     </script>
 }
