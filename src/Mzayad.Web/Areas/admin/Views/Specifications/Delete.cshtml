@@ -14,22 +14,7 @@
 
     <section class="form-buttons">
         <button type="submit" class="btn btn-default">Yes</button>
-        <button id="btnCancel" class="btn btn-default">Cancel</button>
+        <button type="button" class="btn btn-default btn-cancel">Cancel</button>
         @Html.HiddenFor(i=>i.SpecificationId)
     </section>
-}
-@section scripts
-{
-    <script type="text/javascript">
-        $(function() {
-
-            $("#btnCancel").click(function() {
-
-                history.back();
-
-            });
-
-        });
-    </script>
-
 }
