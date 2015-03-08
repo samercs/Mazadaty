@@ -298,7 +298,7 @@
                     var valuesGroup = parentGroup.find(".specification-values");
                     var valueInputs = valuesGroup.find("input");
 
-                    if ($this.val() !== "") {
+                    if ($this.val() !== "-1") {
                         showSpecificationGroup($this);
                     } else {
                         valuesGroup.addClass("form-group-disabled");
@@ -314,7 +314,7 @@
                     .each(function () {
                         var $this = $(this);
                         var ddl = $this.find(".PSDropDown");
-                        if (ddl.val() !== "") {
+                        if (ddl.val() !== "-1") {
                             showSpecificationGroup(ddl);
                             $this.next().show();
                         }
@@ -336,7 +336,7 @@
                     var isOk = 0;
                     $(".PSDropDown").each(function () {
 
-                        if ($(this).val() !== "" && $(this).val() == value) {
+                        if ($(this).val() !== "-1" && $(this).val() == value) {
                             ++isOk;
                         }
 

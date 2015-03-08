@@ -69,8 +69,7 @@ namespace Mzayad.Web.Areas.admin.Models.Products
             SpecificationItems.Add(new SelectListItem()
             {
                 Text = "select ...",
-                Value = "",
-                Selected = ProductSpecification.SpecificationId==-1
+                Value = "-1"
             });
             foreach (var specification in await specificationService.GetAll("en"))
             {
