@@ -260,7 +260,10 @@
 
                 // CK editor breaks localized content validation so disable with hack
                 var hiddenValidator = $("input[name='Product.Description']");
-                hiddenValidator.val(hiddenValidator.val() + "...");
+                if (hiddenValidator.val().length === 0) {
+                    hiddenValidator.val("...");
+                    hiddenValidator.siblings(".localized-input").val("<p></p>");
+                }
             };
 
             //event for ProductSpecification Section
