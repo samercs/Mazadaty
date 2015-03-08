@@ -16,8 +16,6 @@ using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Services.Models;
 using OrangeJetpack.Base.Core.Security;
-using OrangeJetpack.Services.Client.Messaging;
-using OrangeJetpack.Localization;
 
 namespace Mzayad.Web.Controllers
 {
