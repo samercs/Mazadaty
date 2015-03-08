@@ -35,13 +35,13 @@
 @helper RenderSpecification(EditViewProductSpecification model)
 {
 
-    <div class="form-group">
+    <div class="form-group specification-group">
         <div class="row">
             <div class="col-md-6">
                 @Html.DropDownList("SelectedSpecification", model.SpecificationItems, new { @class = "form-control PSDropDown checkMultiPS" })
 
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 specification-values">
                 @Html.EditorFor(i => model.ProductSpecification.Value)
             </div>
         </div>
@@ -289,10 +289,15 @@
 
             $(".PSDropDown").change(function () {
 
-                if ($(this).val() != -1) {
-                    $(this).parent().next().removeClass("form-group-disabled");
-                    $(this).parent().parent().parent().next().show();
-                    $(this).parent().next().children().find("input").prop("disabled", false);
+                var $this = $(this);
+                var parentGroup = $(this).parents(".specification-group");
+                var valuesGroup = parentGroup.find(".specification-values");
+                var valueInputs = valuesGroup.find("input");
+
+                if ($this.val() != -1) {
+                    valuesGroup.removeClass("form-group-disabled");
+                    parentGroup.next().show();
+                    valueInputs.prop("disabled", false);
                 }
 
             });
@@ -302,7 +307,7 @@
 
                 return  CheckSelection(value);
 
-            }, "invalid product specification. you can't select same specification more than once.");
+            }, "Invalid product specification, you can't select same specification more than once.");
 
             $.validator.classRuleSettings.checkMultiPS = { checkMultiPS: true };
 
