@@ -158,6 +158,7 @@
             $(function () {
                 bindEvents();
                 initCkEditor();
+                initSpecifications();
             });
 
             var bindEvents = function () {
@@ -266,86 +267,84 @@
                 }
             };
 
-            // events for ProductSpecification Section
+            var initSpecifications = function () {
+                
+                var showSpecificationGroup = function (ddl) {
 
-            var showSpecificationGroup = function(ddl) {
+                    var parentGroup = ddl.parents(".specification-group");
+                    var valuesGroup = parentGroup.find(".specification-values");
+                    var valueInputs = valuesGroup.find("input");
 
-                var parentGroup = ddl.parents(".specification-group");
-                var valuesGroup = parentGroup.find(".specification-values");
-                var valueInputs = valuesGroup.find("input");
+                    valuesGroup.removeClass("form-group-disabled");
+                    valueInputs.prop("disabled", false);
+                    parentGroup.next().show();
+                    parentGroup.show();
+                };
 
-                valuesGroup.removeClass("form-group-disabled");
-                valueInputs.prop("disabled", false);
-                parentGroup.next().show();
-                parentGroup.show();
-            };
+                var hideSpecificationGroup = function (specificationGroup) {
 
-            var hideSpecificationGroup = function(ddl) {
+                    var valuesGroup = specificationGroup.find(".specification-values");
+                    var valueInputs = valuesGroup.find("input");
 
-                var parentGroup = ddl.parents(".specification-group");
-                var valuesGroup = parentGroup.find(".specification-values");
-                var valueInputs = valuesGroup.find("input");
-
-                valuesGroup.addClass("form-group-disabled");
-                valueInputs.prop("disabled", true);
-                parentGroup.hide();
-            };
-
-            var count = 0;
-
-            $(".PSDropDown").each(function () {
-
-                var $this = $(this);
-
-                hideSpecificationGroup($this);
-
-                if ($this.val() !== -1) {
-                    showSpecificationGroup($this);
-                    ++count;
-                }
-            });
-
-            if (count === 0) {
-                $(".PSDropDown").first().parent().parent().parent().show();
-            }
-
-            $(".PSDropDown").change(function () {
-
-                var $this = $(this);
-                var parentGroup = $(this).parents(".specification-group");
-                var valuesGroup = parentGroup.find(".specification-values");
-                var valueInputs = valuesGroup.find("input");
-
-                if ($this.val() !== -1) {
-                    showSpecificationGroup($this);
-                } else {
                     valuesGroup.addClass("form-group-disabled");
-                    valueInputs.val("").prop("disabled", true);
-                }
+                    valueInputs.prop("disabled", true);
+                    specificationGroup.hide();
+                };
 
-            });
+                var onPsDropDownChange = function () {
 
+                    var $this = $(this);
+                    var parentGroup = $(this).parents(".specification-group");
+                    var valuesGroup = parentGroup.find(".specification-values");
+                    var valueInputs = valuesGroup.find("input");
 
-            $.validator.addMethod("checkMultiPS", function (value, element) {
-
-                return  CheckSelection(value);
-
-            }, "Invalid product specification, you can't select same specification more than once.");
-
-            $.validator.classRuleSettings.checkMultiPS = { checkMultiPS: true };
-
-            
-            var CheckSelection = function (value) {
-                var isOk = 0;
-                $(".PSDropDown").each(function () {
-
-                    if ($(this).val() != -1 && $(this).val() == value) {
-                        ++isOk ;
+                    if ($this.val() !== "") {
+                        showSpecificationGroup($this);
+                    } else {
+                        valuesGroup.addClass("form-group-disabled");
+                        valueInputs.val("").prop("disabled", true);
                     }
 
-                });
+                };
 
-                return isOk<=1;
+                $(".specification-group")
+                    .each(function () {
+                        hideSpecificationGroup($(this));
+                    })
+                    .each(function () {
+                        var $this = $(this);
+                        var ddl = $this.find(".PSDropDown");
+                        if (ddl.val() !== "") {
+                            showSpecificationGroup(ddl);
+                            $this.next().show();
+                        }
+                    });
+
+
+                $("#ProductSpecification").on("change", ".PSDropDown", onPsDropDownChange);
+
+                $.validator.addMethod("checkMultiPS", function (value, element) {
+
+                    return checkSelection(value);
+
+                }, "Invalid product specification, you can't select same specification more than once.");
+
+                $.validator.classRuleSettings.checkMultiPS = { checkMultiPS: true };
+
+
+                var checkSelection = function (value) {
+                    var isOk = 0;
+                    $(".PSDropDown").each(function () {
+
+                        if ($(this).val() !== "" && $(this).val() == value) {
+                            ++isOk;
+                        }
+
+                    });
+
+                    return isOk <= 1;
+                }
+
             }
 
 
