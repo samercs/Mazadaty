@@ -266,25 +266,47 @@
                 }
             };
 
-            //event for ProductSpecification Section
-            //$(".dropdown").parent().next().children().children().css({ "border": "2px solid red" });
-            $(".PSDropDown").parent().parent().parent().hide();
-            $(".PSDropDown").parent().next().addClass("form-group-disabled");
-            $(".PSDropDown").parent().next().children().find("input").prop("disabled", true);
+            // events for ProductSpecification Section
+
+            var showSpecificationGroup = function(ddl) {
+
+                var parentGroup = ddl.parents(".specification-group");
+                var valuesGroup = parentGroup.find(".specification-values");
+                var valueInputs = valuesGroup.find("input");
+
+                valuesGroup.removeClass("form-group-disabled");
+                valueInputs.prop("disabled", false);
+                parentGroup.next().show();
+                parentGroup.show();
+            };
+
+            var hideSpecificationGroup = function(ddl) {
+
+                var parentGroup = ddl.parents(".specification-group");
+                var valuesGroup = parentGroup.find(".specification-values");
+                var valueInputs = valuesGroup.find("input");
+
+                valuesGroup.addClass("form-group-disabled");
+                valueInputs.prop("disabled", true);
+                parentGroup.hide();
+            };
+
             var count = 0;
+
             $(".PSDropDown").each(function () {
 
-                if ($(this).val() != -1) {
-                    $(this).parent().parent().parent().show();
-                    $(this).parent().next().removeClass("form-group-disabled");
-                    $(this).parent().next().children().find("input").prop("disabled", false);
-                    $(this).parent().parent().parent().next().show();
+                var $this = $(this);
+
+                hideSpecificationGroup($this);
+
+                if ($this.val() !== -1) {
+                    showSpecificationGroup($this);
                     ++count;
                 }
             });
-            if (count == 0) {
-                $(".PSDropDown").first().parent().parent().parent().show();
 
+            if (count === 0) {
+                $(".PSDropDown").first().parent().parent().parent().show();
             }
 
             $(".PSDropDown").change(function () {
@@ -294,10 +316,8 @@
                 var valuesGroup = parentGroup.find(".specification-values");
                 var valueInputs = valuesGroup.find("input");
 
-                if ($this.val() != -1) {
-                    valuesGroup.removeClass("form-group-disabled");
-                    parentGroup.next().show();
-                    valueInputs.prop("disabled", false);
+                if ($this.val() !== -1) {
+                    showSpecificationGroup($this);
                 } else {
                     valuesGroup.addClass("form-group-disabled");
                     valueInputs.val("").prop("disabled", true);
