@@ -3,7 +3,7 @@
 {
     <li class="checkbox">
         <label>
-            <input type="checkbox" name="SelectedCategories" id="@string.Format("Category{0}", category.CategoryId)" value="@category.CategoryId" parentid="@category.ParentId" checked="@Model.SelectedCategories.Contains(category.CategoryId.ToString())" />
+            <input type="checkbox" name="SelectedCategories" id="@string.Format("Category{0}", category.CategoryId)" value="@category.CategoryId" parentid="@category.ParentId" checked="@Model.SelectedCategories.Contains(category.CategoryId)" />
             @category.Name
         </label>
 

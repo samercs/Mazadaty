@@ -25,8 +25,15 @@ namespace Mzayad.Models
 
         public string VideoUrl { get; set; }
 
+        [StringLength(128)]
+        public string CreatedByUserId { get; set; }
+
         public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<ProductImage> ProductImages { get; set; }
+        [ForeignKey("CreatedByUserId")]
+        public virtual ApplicationUser CreatedByUser { get; set; }
+        public virtual ICollection<ProductSpecification> ProductSpecifications { get; set; }
+       
 
     }
 }

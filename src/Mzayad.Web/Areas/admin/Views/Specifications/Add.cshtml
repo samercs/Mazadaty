@@ -1,0 +1,25 @@
+﻿@using Mzayad.Web.Extensions
+@model Mzayad.Web.Areas.admin.Models.Specification.AddViewModel
+
+@{
+    ViewBag.Title = "Add New Specification";
+    
+}
+
+<div class="row">
+    <div class="@Html.Css().FormNarrow">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.Partial("_AddEdit")
+        }
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/js/validate")
+}
+
+

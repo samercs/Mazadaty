@@ -1,5 +1,7 @@
 ﻿@using System.Globalization
+@using Kendo.Mvc.Infrastructure
 @using Kendo.Mvc.UI
+@using Mzayad.Web.Areas.admin.Models.Products
 @using Mzayad.Web.Extensions
 @model Mzayad.Web.Areas.admin.Models.Products.EditViewModel
 
@@ -30,6 +32,22 @@
     </style>
 }
 
+@helper RenderSpecification(EditViewProductSpecification model)
+{
+
+    <div class="form-group specification-group">
+        <div class="row">
+            <div class="col-md-6">
+                @Html.DropDownList("SelectedSpecification", model.SpecificationItems, new { @class = "form-control PSDropDown checkMultiPS" })
+
+            </div>
+            <div class="col-md-6 specification-values">
+                @Html.EditorFor(i => model.ProductSpecification.Value)
+            </div>
+        </div>
+    </div>
+}
+
 <div class="row">
 
     <div class="@Html.Css().FormWide">
@@ -50,7 +68,24 @@
                     @Html.ValidationMessageFor(i => i.Product.Description, "Please enter a product description.")
                 </div>
 
+
             </section>
+
+
+            <section id="ProductSpecification">
+
+                <div class="form-group">
+                    @Html.Label("Specifications")
+                </div>
+                @foreach (var spcification in Model.EditViewProductSpecifications)
+                {
+                    @RenderSpecification(spcification)
+                }
+                <div class="form-group">
+                    @Html.ValidationMessage("SelectedSpecification")
+                </div>
+            </section>
+
             <section>
                 <div class="form-group">
                     @Html.LabelFor(i => i.Product.RetailPrice, "Retail Price")
@@ -86,7 +121,7 @@
                           .Events(e => e.Change("onChange"))
                           .Filter(".sortable")
                           .Deferred()
-                          )
+                    )
                     <div class="help-block">
                         <ul class="fa-ul">
                             <li><i class="fa-li fa fa-asterisk"></i><strong>Size:</strong> We recommend uploading images that are at least <strong>1600px wide</strong>.</li>
@@ -104,8 +139,8 @@
             <section class="form-buttons">
                 <button type="submit" class="btn btn-default">Save</button>
             </section>
-            @Html.HiddenFor(i=>i.GoToAuction)
-            
+            @Html.HiddenFor(i => i.GoToAuction)
+
         }
     </div>
 </div>
@@ -116,13 +151,14 @@
     <script src="//cdn.ckeditor.com/4.4.4/basic/ckeditor.js"></script>
     <script>
 
-        
+
         (function ($) {
 
 
             $(function () {
                 bindEvents();
                 initCkEditor();
+                initSpecifications();
             });
 
             var bindEvents = function () {
@@ -132,7 +168,7 @@
 
 
                 @for (var i = 0; i < 6; i++)
-            {
+                {
                     var productImage = Model.Product.ProductImages.ElementAtOrDefault(i);
                     var productImageId = productImage != null ? productImage.ProductImageId.ToString(CultureInfo.InvariantCulture) : "";
                     var productImageUrl = productImage != null ? productImage.ImageMdUrl : "";
@@ -150,30 +186,30 @@
                         $("#image@(i + 1)").addClass("sortable");
                         $("#image@(i + 1)").attr("data-imgid", response.itemId);
                         displayUploader();
-                        
+
                     },
                     onDeleteSuccessCallback: function () {
                         $("#image@(i + 1)").removeClass("sortable");
                         $("#image@(i + 1)").addClass("disabled");
                         $("#image@(i + 1)").removeAttr("data-imgid");
                         displayUploader();
-                        
+
                     }
                 });
                 </text>
                     if (productImage == null)
                     {
-                    <text>
-                        $("#image@(i + 1)").addClass("disabled");
-                    </text>
+                        <text>
+                $("#image@(i + 1)").addClass("disabled");
+                </text>
                     }
                     else
                     {
-                    <text>
-                        $("#image@(i + 1)").addClass("sortable");
-                        $("#image@(i + 1)").attr("data-imgid", "@productImageId");
-                        
-                    </text>
+                        <text>
+                $("#image@(i + 1)").addClass("sortable");
+                $("#image@(i + 1)").attr("data-imgid", "@productImageId");
+
+                </text>
                     }
                 }
                 displayUploader();
@@ -225,8 +261,93 @@
 
                 // CK editor breaks localized content validation so disable with hack
                 var hiddenValidator = $("input[name='Product.Description']");
-                hiddenValidator.val(hiddenValidator.val() + "...");
+                if (hiddenValidator.val().length === 0) {
+                    hiddenValidator.val("...");
+                    hiddenValidator.siblings(".localized-input").val("<p></p>");
+                }
             };
+
+            var initSpecifications = function () {
+                
+                var showSpecificationGroup = function (ddl) {
+
+                    var parentGroup = ddl.parents(".specification-group");
+                    var valuesGroup = parentGroup.find(".specification-values");
+                    var valueInputs = valuesGroup.find("input");
+
+                    valuesGroup.removeClass("form-group-disabled");
+                    valueInputs.prop("disabled", false);
+                    parentGroup.next().show();
+                    parentGroup.show();
+                };
+
+                var hideSpecificationGroup = function (specificationGroup) {
+
+                    var valuesGroup = specificationGroup.find(".specification-values");
+                    var valueInputs = valuesGroup.find("input");
+
+                    valuesGroup.addClass("form-group-disabled");
+                    valueInputs.prop("disabled", true);
+                    specificationGroup.hide();
+                };
+
+                var onPsDropDownChange = function () {
+
+                    var $this = $(this);
+                    var parentGroup = $(this).parents(".specification-group");
+                    var valuesGroup = parentGroup.find(".specification-values");
+                    var valueInputs = valuesGroup.find("input");
+
+                    if ($this.val() !== "-1") {
+                        showSpecificationGroup($this);
+                    } else {
+                        valuesGroup.addClass("form-group-disabled");
+                        valueInputs.val("").prop("disabled", true);
+                    }
+
+                };
+
+                $(".specification-group")
+                    .each(function () {
+                        hideSpecificationGroup($(this));
+                    })
+                    .each(function () {
+                        var $this = $(this);
+                        var ddl = $this.find(".PSDropDown");
+                        if (ddl.val() !== "-1") {
+                            showSpecificationGroup(ddl);
+                            $this.next().show();
+                        }
+                    });
+
+
+                $("#ProductSpecification").on("change", ".PSDropDown", onPsDropDownChange);
+
+                $.validator.addMethod("checkMultiPS", function (value, element) {
+
+                    return checkSelection(value);
+
+                }, "Invalid product specification, you can't select same specification more than once.");
+
+                $.validator.classRuleSettings.checkMultiPS = { checkMultiPS: true };
+
+
+                var checkSelection = function (value) {
+                    var isOk = 0;
+                    $(".PSDropDown").each(function () {
+
+                        if ($(this).val() !== "-1" && $(this).val() == value) {
+                            ++isOk;
+                        }
+
+                    });
+
+                    return isOk <= 1;
+                }
+
+            }
+
+
 
         })(jQuery);
 
@@ -251,7 +372,7 @@
             var imgCount = 0;
 
             for (var i = 0; i < 6; i++) {
-                if ($("#image" + (i+1)).attr("data-imgid") != undefined) {
+                if ($("#image" + (i + 1)).attr("data-imgid") != undefined) {
                     $(multiUploaders.get(i)).show();
                     ++imgCount;
                 }
@@ -266,5 +387,8 @@
                 }
             }
         };
+
+
+
     </script>
 }

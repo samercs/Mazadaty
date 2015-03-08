@@ -76,7 +76,12 @@ namespace Mzayad.Web.Core.Services
             {
                 user = await _userManager.FindByNameAsync(username);
             }
-            
+
+            if (user == null)
+            {
+                return null;
+            }
+
             var result = await _signInManager.PasswordSignInAsync(user.UserName, password, rememberMe, false);
             if (result != SignInStatus.Success)
             {

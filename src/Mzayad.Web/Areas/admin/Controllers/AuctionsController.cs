@@ -56,6 +56,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             }
             var model = await new AddEditViewModel().Hydrate(_productService, product);
             model.Auction.RetailPrice = product.RetailPrice;
+            model.Auction.CreatedByUserId = AuthService.CurrentUserId();
             return View(model);
         }
 

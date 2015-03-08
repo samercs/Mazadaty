@@ -9,6 +9,11 @@
         $(this).parents("form").submit();
     };
 
+    var goBack = function(e) {
+        e.preventDefault();
+        history.back();
+    }
+
     var showHiddenMenuList = function (e) {
         var li = $(this).parent();
         //li.hide();
@@ -19,6 +24,7 @@
 
     var bindEvents = function () {
         $("form").on("change", ".auto-submit", autoSubmitForm);
+        $(".btn-cancel").on("click", goBack);
         $(".localized-content").on("input", ".localized-input[data-primary='true']", setHiddenLocalizedContent);
         $(".menu-list").on("click", ".show-hidden", showHiddenMenuList);
     };
