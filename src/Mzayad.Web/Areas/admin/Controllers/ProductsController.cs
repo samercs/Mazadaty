@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Kendo.Mvc.Extensions;
+﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Mzayad.Models;
 using Mzayad.Services;
@@ -14,10 +6,17 @@ using Mzayad.Web.Areas.admin.Models.Products;
 using Mzayad.Web.Controllers;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
 using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Client.Storage;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
@@ -150,11 +149,9 @@ namespace Mzayad.Web.Areas.admin.Controllers
             product.Description = model.Product.Description;
             product.RetailPrice = model.Product.RetailPrice;
             product.VideoUrl = model.Product.VideoUrl;
-            
-            var x = 0;
-            var categoryIds = model.SelectedCategories.Where(str => int.TryParse(str, out x)).Select(str => x).ToList();
 
-            
+            var x = 0;
+
             //capture localizedContent For ProductSpecification Values
             List<string> enValue = new List<string>();
             List<string> arValue = new List<string>();
@@ -216,7 +213,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 }
             }
 
-            await _productService.UpdateProduct(product, categoryIds, ProductSpecifications);
+            await _productService.UpdateProduct(product, model.SelectedCategories, ProductSpecifications);
             
             
             

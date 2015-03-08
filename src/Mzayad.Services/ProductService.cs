@@ -64,7 +64,7 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<Product> UpdateProduct(Product product, List<int> categoryIds,List<ProductSpecification> productSpecifications )
+        public async Task<Product> UpdateProduct(Product product, IEnumerable<int> categoryIds,List<ProductSpecification> productSpecifications )
         {
             using (var dc = DataContext())
             {
@@ -72,7 +72,13 @@ namespace Mzayad.Services
                 
                 dc.Products.Attach(product);
                 dc.SetModified(product);
-                product.Categories = dc.Categories.Where(i => categoryIds.Contains(i.CategoryId)).ToList();
+
+                if (categoryIds != null && categoryIds.Any())
+                {
+                    product.Categories = dc.Categories.Where(i => categoryIds.Contains(i.CategoryId)).ToList();
+                }
+                
+                
                 
                 product.ProductSpecifications = productSpecifications;
                 

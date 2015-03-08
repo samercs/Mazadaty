@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Mzayad.Models;
+using Mzayad.Services;
+using OrangeJetpack.Localization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using Mzayad.Models;
-using Mzayad.Services;
-using OrangeJetpack.Localization;
 
 namespace Mzayad.Web.Areas.admin.Models.Products
 {
@@ -17,7 +15,7 @@ namespace Mzayad.Web.Areas.admin.Models.Products
         public bool GoToAuction { get; set; }
 
         public IEnumerable<Category> Categories { get; set; }
-        public IEnumerable<string> SelectedCategories { get; set; }
+        public IEnumerable<int> SelectedCategories { get; set; }
         public IList<EditViewProductSpecification> EditViewProductSpecifications { get; set; }
         public IEnumerable<string> SelectedSpecification { get; set; }
         
@@ -26,7 +24,7 @@ namespace Mzayad.Web.Areas.admin.Models.Products
         {
             Product = product;
             Categories = await categoryService.GetCategoriesAsHierarchyAsync(languageCode);
-            SelectedCategories = Product.Categories.Select(i => i.CategoryId.ToString()).ToList();
+            SelectedCategories = Product.Categories.Select(i => i.CategoryId).ToList();
             EditViewProductSpecifications = new List<EditViewProductSpecification>();
 
 
