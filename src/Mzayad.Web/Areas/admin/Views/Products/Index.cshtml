@@ -33,7 +33,9 @@
     .Columns(columns =>
     {
         columns.Bound(i => i.Name);
-        columns.Bound(i => i.RetailPrice).Title("Retail Price");
+        columns.Bound(i => i.RetailPrice).Format("KD {0}");
+        columns.Bound(i => i.PurchasePrice).Format("KD {0}");
+        columns.Bound(i => i.Quantity);
         columns.Bound(i => i.CreatedUtc).Format("{0:dd/MM/yyyy}").Title("Added");
         columns.LinkColumn("Details", "products/edit/#=ProductId#");
     })

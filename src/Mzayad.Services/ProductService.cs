@@ -57,10 +57,11 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
+                product.Quantity = 1;
+                
                 dc.Products.Add(product);
                 await dc.SaveChangesAsync();
                 return product;
-
             }
         }
 

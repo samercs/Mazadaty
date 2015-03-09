@@ -150,6 +150,9 @@ h2 {
 .fa-fw.fa-pad-right {
   margin-right: 6px;
 }
+.table {
+  font-size: 1.4rem;
+}
 .table > thead > tr > th {
   vertical-align: top;
   border-bottom: none;

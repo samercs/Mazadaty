@@ -1,11 +1,7 @@
-﻿using System;
+﻿using OrangeJetpack.Localization;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OrangeJetpack.Localization;
 
 namespace Mzayad.Models
 {
@@ -22,18 +18,19 @@ namespace Mzayad.Models
         public string Description { get; set; }
 
         public decimal RetailPrice { get; set; }
+        public decimal PurchasePrice { get; set; }
+        public int Quantity { get; set; }
 
         public string VideoUrl { get; set; }
 
         [StringLength(128)]
         public string CreatedByUserId { get; set; }
 
-        public virtual ICollection<Category> Categories { get; set; }
-        public virtual ICollection<ProductImage> ProductImages { get; set; }
         [ForeignKey("CreatedByUserId")]
         public virtual ApplicationUser CreatedByUser { get; set; }
-        public virtual ICollection<ProductSpecification> ProductSpecifications { get; set; }
-       
 
+        public virtual ICollection<Category> Categories { get; set; }
+        public virtual ICollection<ProductImage> ProductImages { get; set; }
+        public virtual ICollection<ProductSpecification> ProductSpecifications { get; set; }
     }
 }

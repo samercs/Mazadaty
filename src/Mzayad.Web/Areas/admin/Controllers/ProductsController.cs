@@ -27,8 +27,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         private readonly CategoryService _categoryService;
         private readonly IStorageService _storageService;
         private readonly SpecificationService _specificationService;
-        //
-        // GET: /admin/Products/
+
         public ProductsController(IControllerServices controllerServices,IStorageService storageService) : base(controllerServices)
         {
             _productService=new ProductService(controllerServices.DataContextFactory);
@@ -67,7 +66,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         }
             
         [Route("add")]
-        public async Task<ActionResult> Add(bool goToAuction=false)
+        public ActionResult Add(bool goToAuction=false)
         {
             var model = new AddViewModel().Hydrate(_productService);
             model.Product.CreatedByUserId =  AuthService.CurrentUserId();
@@ -80,6 +79,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         public async Task<ActionResult> Add(AddViewModel model, LocalizedContent[] name)
         {
             model.Product.Name = name.Serialize();
+            model.Product.CreatedByUserId = AuthService.CurrentUserId();
 
             if (!ModelState.IsValid)
             {
@@ -150,93 +150,79 @@ namespace Mzayad.Web.Areas.admin.Controllers
             product.RetailPrice = model.Product.RetailPrice;
             product.VideoUrl = model.Product.VideoUrl;
 
+            var specificationsContent = GetSpecificationsLocalizedContent(data);
+            var productSpecifications = GetProductSpecifications(model, product, specificationsContent);
+
+            await _productService.UpdateProduct(product, model.SelectedCategories, productSpecifications);
+
+            var productName = product.Localize("en", i => i.Name).Name;
+
+            SetStatusMessage(string.Format("Product {0} successfully updated.", productName));
+
+            return model.GoToAuction 
+                ? RedirectToAction("Create", "Auctions", new { product.ProductId }) 
+                : RedirectToAction("Index");
+        }
+
+        private static List<ProductSpecification> GetProductSpecifications(EditViewModel model, Product product, List<LocalizedContent[]> values)
+        {
             var x = 0;
+            var productSpecificationList = model.SelectedSpecification.Where(str => int.TryParse(str, out x)).Select(str => x).ToList();
+            var productSpecifications = new List<ProductSpecification>();
 
-            //capture localizedContent For ProductSpecification Values
-            List<string> enValue = new List<string>();
-            List<string> arValue = new List<string>();
+            for (int i = 0; i < productSpecificationList.Count; i++)
+            {
+                if (productSpecificationList[i] != -1)
+                {
+                    var productSpecification = new ProductSpecification()
+                    {
+                        ProductId = product.ProductId,
+                        SpecificationId = productSpecificationList[i],
+                        Value = values[i].Serialize()
+                    };
+                    productSpecifications.Add(productSpecification);
+                }
+            }
+            return productSpecifications;
+        }
 
-            string dataStr = "";
+        private static List<LocalizedContent[]> GetSpecificationsLocalizedContent(FormCollection data)
+        {
+            var enValue = new List<string>();
+            var arValue = new List<string>();
+
             foreach (var key in data.AllKeys)
             {
                 if (key.Equals("Value[0].Value"))
                 {
-                    string[] tmp = data[key].Split(new char[] { ',' }, StringSplitOptions.None);
-                    foreach (var str in tmp)
-                    {
-                        enValue.Add(str);
-                    }
+                    var tmp = data[key].Split(new char[] {','}, StringSplitOptions.None);
+                    enValue.AddRange(tmp);
                 }
                 else if (key.Equals("Value[1].Value"))
                 {
-                    string[] tmp = data[key].Split(new char[] { ',' }, StringSplitOptions.None);
-                    foreach (var str in tmp)
-                    {
-                        arValue.Add(str);
-                    }
+                    var tmp = data[key].Split(new char[] {','}, StringSplitOptions.None);
+                    arValue.AddRange(tmp);
                 }
             }
 
-            List<LocalizedContent[]> values = new List<LocalizedContent[]>();
+            var values = new List<LocalizedContent[]>();
             for (int i = 0; i < enValue.Count; i++)
             {
-                LocalizedContent en = new LocalizedContent()
+                var en = new LocalizedContent()
                 {
                     Key = "en",
                     Value = enValue[i]
                 };
-                LocalizedContent ar = new LocalizedContent()
+                var ar = new LocalizedContent()
                 {
                     Key = "ar",
                     Value = arValue[i]
                 };
 
-                values.Add(new LocalizedContent[] { en, ar });
+                values.Add(new[] {en, ar});
             }
-
-            //End Capture
-
-            var ProductSpecificationList =model.SelectedSpecification.Where(str => int.TryParse(str, out x)).Select(str => x).ToList();
-            List<ProductSpecification> ProductSpecifications=new List<ProductSpecification>();
-
-            for (int i = 0; i < ProductSpecificationList.Count; i++)
-            {
-                if (ProductSpecificationList[i] != -1)
-                {
-                    var productSpecification = new ProductSpecification()
-                    {
-                        ProductId = product.ProductId,
-                        SpecificationId = ProductSpecificationList[i],
-                        Value = values[i].Serialize()
-                    };
-                    ProductSpecifications.Add(productSpecification);
-                }
-            }
-
-            await _productService.UpdateProduct(product, model.SelectedCategories, ProductSpecifications);
-            
-            
-            
-            var productName = product.Localize("en", i => i.Name).Name;
-
-            SetStatusMessage(string.Format("Product {0} successfully updated.", productName));
-
-            
-            
-            
-            
-            if (model.GoToAuction)
-            {
-                return RedirectToAction("Create", "Auctions", new { ProductId = product.ProductId });
-            }
-            return RedirectToAction("Index");
-
-            
-
-            
-
+            return values;
         }
-
 
         private async Task<Uri[]> UploadImage(HttpPostedFileBase file, int[] widths)
         {
