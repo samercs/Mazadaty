@@ -1,9 +1,8 @@
 ﻿@using System.Globalization
-@using Kendo.Mvc.Infrastructure
 @using Kendo.Mvc.UI
 @using Mzayad.Web.Areas.admin.Models.Products
 @using Mzayad.Web.Extensions
-@model Mzayad.Web.Areas.admin.Models.Products.EditViewModel
+@model EditViewModel
 
 @{
     ViewBag.Title = "Edit Product";
@@ -87,13 +86,37 @@
             </section>
 
             <section>
-                <div class="form-group">
-                    @Html.LabelFor(i => i.Product.RetailPrice, "Retail Price")
-                    <div class="input-group">
-                        <span class="input-group-addon">KWD</span>
-                        @Html.TextBoxFor(i => i.Product.RetailPrice, new { @class = "form-control form-control-md", @type = "number" })
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(i => i.Product.RetailPrice, "Retail Price")
+                            <div class="input-group">
+                                @Html.TextBoxFor(i => i.Product.RetailPrice, new { @class = "form-control", @type = "number" })
+                                <span class="input-group-addon">KD</span>
+                            </div>
+                            @Html.ValidationMessageFor(i => i.Product.RetailPrice, "Please enter a price.")
+                        </div>
                     </div>
-                    @Html.ValidationMessageFor(i => i.Product.RetailPrice, "Please enter a product Retail Price.")
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(i => i.Product.PurchasePrice, "Purchase Price")
+                            <div class="input-group">
+                                @Html.TextBoxFor(i => i.Product.PurchasePrice, new { @class = "form-control", @type = "number" })
+                                <span class="input-group-addon">KD</span>
+                            </div>
+                            @Html.ValidationMessageFor(i => i.Product.PurchasePrice, "Please enter a price.")
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(i => i.Product.Quantity, "Quantity")
+                            <div class="input-group">
+                                @Html.TextBoxFor(i => i.Product.Quantity, new { @class = "form-control", @type = "number" })
+                                <span class="input-group-addon">item(s)</span>
+                            </div>
+                            @Html.ValidationMessageFor(i => i.Product.Quantity, "Please enter a quantity.")
+                        </div>
+                    </div>
                 </div>
             </section>
             <section>
