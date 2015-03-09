@@ -1,5 +1,6 @@
 ﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using Mzayad.Models.Enum;
 using Mzayad.Services;
 using Mzayad.Web.Areas.admin.Models.Auction;
 using Mzayad.Web.Controllers;
@@ -164,9 +165,32 @@ namespace Mzayad.Web.Areas.admin.Controllers
             auction.BuyNowQuantity = model.Auction.BuyNowQuantity;
 
             await _auctionServices.Update(auction);
-            SetStatusMessage("Auction has been updated successfully.");
+
+            var productName = auction.Product.Localize("en", i => i.Name).Name;
+
+            SetStatusMessage(string.Format("Auction for <strong>{0}</strong> has been updated successfully.", productName));
+            
             return RedirectToAction("Index", "Auctions");     
         }
 
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> Activate(int auctionId)
+        {
+            var auction = await _auctionServices.GetAuction(auctionId);
+            if (auction == null)
+            {
+                return HttpNotFound();
+            }
+
+            auction.Status = AuctionStatus.Public;
+
+            await _auctionServices.Update(auction);
+
+            var productName = auction.Product.Localize("en", i => i.Name).Name;
+
+            SetStatusMessage(string.Format("Auction for <strong>{0}</strong> successfully activated and now available to the public.", productName));
+
+            return RedirectToAction("Index");
+        }
 	}
 }

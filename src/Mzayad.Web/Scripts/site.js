@@ -14,19 +14,10 @@
         history.back();
     }
 
-    var showHiddenMenuList = function (e) {
-        var li = $(this).parent();
-        //li.hide();
-        li.siblings(".menu-list-hidden").fadeToggle();
-        e.preventDefault();
-        console.log("a");
-    };
-
     var bindEvents = function () {
         $("form").on("change", ".auto-submit", autoSubmitForm);
-        $(".btn-cancel").on("click", goBack);
+        $("form").on("click", ".btn-cancel", goBack);
         $(".localized-content").on("input", ".localized-input[data-primary='true']", setHiddenLocalizedContent);
-        $(".menu-list").on("click", ".show-hidden", showHiddenMenuList);
     };
 
     var initRequiredLabels = function() {
@@ -44,3 +35,13 @@
     });
 
 })(jQuery, new WOW());
+
+var kendoFormatter = {
+    getYesNo: function (value) {
+        if (value === true) {
+            return "<span class='text-yes'>Yes</span>";
+        } else {
+            return "<span class='text-no'>No</span>";
+        }
+    }
+}

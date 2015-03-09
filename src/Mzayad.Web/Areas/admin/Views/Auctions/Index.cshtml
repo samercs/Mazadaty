@@ -36,32 +36,46 @@
         columns.Bound(i => i.Product.Name).Title("Product");
         columns.Bound(i => i.Status).ClientTemplate("#= getLabel(data) #");
         columns.Bound(i => i.StartUtc).Format("{0:dd/MM/yyyy HH:mm}").Title("Start");
-        columns.Bound(i => i.Duration).Title("Duration");
-        columns.Bound(i => i.BuyNowEnabled).Title("Buy Now").ClientTemplate("#= getYesNo(data.BuyNowEnabled) #"); ;
+        columns.Bound(i => i.Duration).Format("{0} minutes");
+        columns.Bound(i => i.BuyNowEnabled).Title("Buy Now").ClientTemplate("#= kendoFormatter.getYesNo(data.BuyNowEnabled) #"); ;
         columns.LinkColumn("Details", "auctions/edit/#=AuctionId#");
     })
 )
 
-@section scripts
+@using (Html.BeginForm("Activate", "Auctions"))
 {
-    <script type="text/javascript">
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="AuctionId" name="AuctionId" />
+}
 
-        function getLabel(auction) {
-            
+@section scripts {
+    <script>
+
+        (function($) {
+
+            $(function () {
+                bindEvents();
+            });
+
+            var bindEvents = function() {
+                $(".activate-auction").on("click", activateAuction);
+            };
+
+            var activateAuction = function() {
+                var $this = $(this);
+                var auctionId = $this.data("auctionId");
+                $("#AuctionId").val(auctionId).parent().submit();
+            };
+
+        })(jQuery);
+
+        var getLabel = function (auction) {
             if (auction.Status === 1) {
-                return "<span class='label label-warning'>Hidden</span>";
+                return "<span class='label label-warning'>Hidden</span> <button class='activate-auction btn btn-link btn-xs' data-auction-id='" + auction.AuctionId + "'>Activate</button>";
             } else {
                 return "<span class='label label-success'>Public</span>";
             }
         }
-
-        function getYesNo(value) {
-            if (value === true) {
-                return "<span class='text-yes'>Yes</span>";
-            } else {
-                return "<span class='text-no'>No</span>";
-            }
-        }
-
+   
     </script>
 }
