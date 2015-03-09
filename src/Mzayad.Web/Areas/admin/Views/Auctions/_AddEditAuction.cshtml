@@ -20,6 +20,16 @@
                     @Html.ValidationMessageFor(i => i.Auction.StartUtc, "Please enter date and time")
                 </div>
                 <div class="form-group">
+                    <div class="form-group form-group-md">
+                        @Html.LabelFor(i => i.Auction.Duration, "Bid Duration")
+                        <div class="input-group">
+                            @Html.TextBoxFor(i => i.Auction.Duration, new { @class = "form-control", @type = "number" })
+                            <span class="input-group-addon">minutes</span>
+                        </div>
+                        @Html.ValidationMessageFor(i => i.Auction.Duration, "Please enter a auction bid duration.")
+                    </div>
+                </div>
+                <div class="form-group">
                     <label>Status</label>
                     @foreach (var item in Model.StatusList)
                     {
@@ -41,7 +51,6 @@
                 </div>
             </section>
             <section>
-
                 <div class="row">
                     <div class="col-lg-3 col-sm-6">
                         <div class="form-group">
@@ -51,7 +60,19 @@
                                     @Html.TextBoxFor(i => i.Auction.RetailPrice, new { @class = "form-control", @type = "number" })
                                     <span class="input-group-addon">KD</span>
                                 </div>
-                                @Html.ValidationMessageFor(i => i.Auction.RetailPrice, "Please enter a auction Retail Price.")
+                                @Html.ValidationMessageFor(i => i.Auction.RetailPrice, "Please enter a price.")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                @Html.LabelFor(i => i.Auction.ReservePrice, "Reserve Price")
+                                <div class="input-group">
+                                    @Html.TextBoxFor(i => i.Auction.ReservePrice, new { @class = "form-control", @type = "number" })
+                                    <span class="input-group-addon">KD</span>
+                                </div>
+                                @Html.ValidationMessageFor(i => i.Auction.ReservePrice, "Please enter a price.")
                             </div>
                         </div>
                     </div>
@@ -63,7 +84,7 @@
                                     @Html.TextBoxFor(i => i.Auction.MaximumBid, new { @class = "form-control", @type = "number" })
                                     <span class="input-group-addon">KD</span>
                                 </div>
-                                @Html.ValidationMessageFor(i => i.Auction.MaximumBid, "Please enter a auction Maximum Bid.")
+                                @Html.ValidationMessageFor(i => i.Auction.MaximumBid, "Please enter a maximum bid.")
                             </div>
                         </div>
                     </div>
@@ -75,19 +96,7 @@
                                     @Html.TextBoxFor(i => i.Auction.BidIncrement, new { @class = "form-control", @type = "number" })
                                     <span class="input-group-addon">KD</span>
                                 </div>
-                                @Html.ValidationMessageFor(i => i.Auction.BidIncrement, "Please enter a auction Bid Increment.")
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="form-group">
-                            <div class="form-group">
-                                @Html.LabelFor(i => i.Auction.Duration, "Bid Duration")
-                                <div class="input-group">
-                                    @Html.TextBoxFor(i => i.Auction.Duration, new { @class = "form-control", @type = "number" })
-                                    <span class="input-group-addon">minutes</span>
-                                </div>
-                                @Html.ValidationMessageFor(i => i.Auction.Duration, "Please enter a auction Bid Duration.")
+                                @Html.ValidationMessageFor(i => i.Auction.BidIncrement, "Please enter a bid increment.")
                             </div>
                         </div>
                     </div>

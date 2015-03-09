@@ -111,16 +111,17 @@ namespace Mzayad.Web.Areas.admin.Controllers
             {
                 i.AuctionId,
                 i.Product.Name,
-                StartUtc=i.StartUtc.ToString("yyyy/MM/dd HH:mm"),
-                Status=i.Status.Description(),
+                StartUtc = i.StartUtc.ToString("yyyy/MM/dd HH:mm"),
+                Status = i.Status.Description(),
                 i.RetailPrice,
+                i.ReservePrice,
                 i.BidIncrement,
                 i.Duration,
                 i.MaximumBid,
                 i.BuyNowEnabled,
                 i.BuyNowPrice,
                 i.BuyNowQuantity,
-                Added = i.CreatedUtc.ToString("yyyy/MM/dd HH:mm")
+                CreatedUtc = i.CreatedUtc.ToString("yyyy/MM/dd HH:mm")
                 
             });
 
