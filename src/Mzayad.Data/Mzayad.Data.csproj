@@ -129,6 +129,10 @@
     <Compile Include="Migrations\201503071211582_modifyValueLengthInProductSpecifications.Designer.cs">
       <DependentUpon>201503071211582_modifyValueLengthInProductSpecifications.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503091000271_AddProductPurchasePriceAndQuantity.cs" />
+    <Compile Include="Migrations\201503091000271_AddProductPurchasePriceAndQuantity.Designer.cs">
+      <DependentUpon>201503091000271_AddProductPurchasePriceAndQuantity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -190,6 +194,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503071211582_modifyValueLengthInProductSpecifications.resx">
       <DependentUpon>201503071211582_modifyValueLengthInProductSpecifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503091000271_AddProductPurchasePriceAndQuantity.resx">
+      <DependentUpon>201503091000271_AddProductPurchasePriceAndQuantity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
