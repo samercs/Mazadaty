@@ -82,30 +82,13 @@ namespace Mzayad.Web.Controllers
             var viewModel = new RegisterViewModel
             {
                 PhoneCountryCode = "+965",
-                Address = new AddressViewModel(TryGetGeolocatedAddress()).Hydrate()
+                Address = new AddressViewModel(new Address
+                {
+                    CountryCode = "KW"
+                }).Hydrate()
             };
 
             return View(viewModel);
-        }
-
-        private Address TryGetGeolocatedAddress()
-        {
-            var address = new Address { CountryCode = "KW" };
-            if (AuthService.IsLocal())
-            {
-                return address;
-            }
-
-            try
-            {
-                var country = GeolocationService.GetCountry(AuthService.UserHostAddress());
-                address.CountryCode = country.IsoCode;
-            }
-            catch (Exception ex)
-            {
-                //_errorLogger.Log(ex);
-            }
-            return address;
         }
 
         public PartialViewResult ChangeCountry(string countryCode)

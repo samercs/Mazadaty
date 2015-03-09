@@ -363,4 +363,7 @@
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="Kuwait" xml:space="preserve">
+    <value>Kuwait</value>
+  </data>
 </root>

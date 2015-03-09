@@ -331,6 +331,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kuwait.
+        /// </summary>
+        public static string Kuwait {
+            get {
+                return ResourceManager.GetString("Kuwait", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last Name.
         /// </summary>
         public static string LastName {

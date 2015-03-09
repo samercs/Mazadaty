@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using Mzayad.Models;
+using System.Collections.Generic;
 using System.Web.Mvc;
-using Mzayad.Models;
 
 namespace Mzayad.Web.Models.Shared
 {
@@ -29,14 +28,23 @@ namespace Mzayad.Web.Models.Shared
 
         public AddressViewModel Hydrate()
         {
-            CountriesList = OrangeJetpack.Regionalization.Countries.GetAllCountries()
-                .Select(i => new SelectListItem
+            //CountriesList = OrangeJetpack.Regionalization.Countries.GetAllCountries()
+            //    .Select(i => new SelectListItem
+            //    {
+            //        Text = i.Name,
+            //        Value = i.IsoCode,
+            //        Selected = i.IsoCode.Equals(CountryCode)
+            //    })
+            //    .ToList();
+
+            CountriesList = new[]
+            {
+                new SelectListItem
                 {
-                    Text = i.Name,
-                    Value = i.IsoCode,
-                    Selected = i.IsoCode.Equals(CountryCode)
-                })
-                .ToList();
+                    Text = Resources.Global.Kuwait,
+                    Value = "KW"
+                }
+            };
 
             return this;
         }
