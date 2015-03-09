@@ -95,6 +95,15 @@
       <HintPath>..\..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Mindscape.Raygun4Net">
+      <HintPath>..\..\packages\Mindscape.Raygun4Net.Core.5.0.0\lib\net40\Mindscape.Raygun4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Mindscape.Raygun4Net.Mvc">
+      <HintPath>..\..\packages\Mindscape.Raygun4Net.Mvc.5.0.0\lib\net40\Mindscape.Raygun4Net.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Mindscape.Raygun4Net4">
+      <HintPath>..\..\packages\Mindscape.Raygun4Net.Mvc.5.0.0\lib\net40\Mindscape.Raygun4Net4.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -341,6 +350,12 @@
     <Content Include="Content\site-arabic.min.css">
       <DependentUpon>site-arabic.css</DependentUpon>
     </Content>
+    <Content Include="Content\site-error.css">
+      <DependentUpon>site-error.less</DependentUpon>
+    </Content>
+    <Content Include="Content\site-error.min.css">
+      <DependentUpon>site-error.css</DependentUpon>
+    </Content>
     <Content Include="Content\site-forms.css">
       <DependentUpon>site-forms.less</DependentUpon>
     </Content>
@@ -482,6 +497,10 @@
     <Content Include="Areas\admin\Views\Specifications\Delete.cshtml" />
     <Content Include="Areas\admin\Views\Specifications\Edit.cshtml" />
     <Content Include="Areas\admin\Views\Specifications\_AddEdit.cshtml" />
+    <Content Include="Content\site-error.less" />
+    <Content Include="Content\site-error.css.map">
+      <DependentUpon>site-error.css</DependentUpon>
+    </Content>
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
@@ -529,8 +548,8 @@
     <Content Include="Scripts\wow.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="test.html" />
-    <Content Include="Views\Shared\404.html" />
-    <Content Include="Views\Shared\500.html" />
+    <Content Include="404.html" />
+    <Content Include="500.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
