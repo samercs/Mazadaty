@@ -1,15 +1,15 @@
 ﻿@using Mzayad.Models
 @helper RenderCategory(Category category)
 {
-    <li class="checkbox">
-        <label>
-            <input type="checkbox" name="SelectedCategories" id="@string.Format("Category{0}", category.CategoryId)" value="@category.CategoryId" parentid="@category.ParentId" checked="@Model.SelectedCategories.Contains(category.CategoryId)" />
+    <li>
+        <label class="checkbox-inline">
+            <input type="checkbox" name="SelectedCategories" value="@category.CategoryId" data-parent-id="@category.ParentId" checked="@Model.SelectedCategories.Contains(category.CategoryId)" />
             @category.Name
         </label>
 
         @if (category.Children.Any())
         {
-            <ul class="childCategoriesList">
+            <ul class="list-unstyled" style="padding-left: 20px;">
                 @foreach (var child in category.Children)
                 {
                     @RenderCategory(child)
@@ -19,7 +19,7 @@
     </li>
 }
 
-<ul class="categoriesList">
+<ul id="CategoryList" class="list-unstyled">
     @foreach (var category in Model.Categories)
     {
         @RenderCategory(category)

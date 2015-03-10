@@ -375,4 +375,13 @@
   <data name="CategoryNotificationSaveMessage" xml:space="preserve">
     <value>Thank you, your notifications have been saved.</value>
   </data>
+  <data name="NewAuctionsByCategory" xml:space="preserve">
+    <value>New Auctions by Category</value>
+  </data>
+  <data name="NewAuctionsByCategoryInstructions" xml:space="preserve">
+    <value>We can notify you when auctions are added with items in specific categories. To receive these notifications select your favorite categories:</value>
+  </data>
+  <data name="NotificationsInstructions" xml:space="preserve">
+    <value>You can opt into and subscribe to various notifications on the site, please use the options below to select which notifications you would like to receive.</value>
+  </data>
 </root>

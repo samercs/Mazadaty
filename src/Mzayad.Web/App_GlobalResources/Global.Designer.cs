@@ -430,6 +430,24 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Auctions by Category.
+        /// </summary>
+        public static string NewAuctionsByCategory {
+            get {
+                return ResourceManager.GetString("NewAuctionsByCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We can notify you when auctions are added with items in specific categories. To receive these notifications select your favorite categories:.
+        /// </summary>
+        public static string NewAuctionsByCategoryInstructions {
+            get {
+                return ResourceManager.GetString("NewAuctionsByCategoryInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Password.
         /// </summary>
         public static string NewPassword {
@@ -453,6 +471,15 @@ namespace Mzayad.Web.Resources {
         public static string Notifications {
             get {
                 return ResourceManager.GetString("Notifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can opt into and subscribe to various notifications on the site, please use the options below to select which notifications you would like to receive..
+        /// </summary>
+        public static string NotificationsInstructions {
+            get {
+                return ResourceManager.GetString("NotificationsInstructions", resourceCulture);
             }
         }
         
