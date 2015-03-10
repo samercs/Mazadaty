@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Mzayad.Models;
 using Mzayad.Services;
@@ -21,9 +22,14 @@ namespace Mzayad.Web.Controllers
     public class UserController : ApplicationController
     {
         private readonly AddressService _addressService;
-        public UserController(IControllerServices controllerServices) : base(controllerServices)
+        private readonly CategoryService _categoryService;
+        private readonly NotificationService _notificationService;
+        public UserController(IControllerServices controllerServices)
+            : base(controllerServices)
         {
-            _addressService=new AddressService(DataContextFactory);
+            _addressService = new AddressService(DataContextFactory);
+            _categoryService = new CategoryService(DataContextFactory);
+            _notificationService = new NotificationService(DataContextFactory);
         }
 
         [Route("my-account")]
@@ -82,10 +88,10 @@ namespace Mzayad.Web.Controllers
         public async Task<ActionResult> EditAccount()
         {
             var user = await AuthService.CurrentUser();
-            Address address=null;
+            Address address = null;
             if (user.AddressId.HasValue)
             {
-                address = await _addressService.GetAddress(user.AddressId.Value);    
+                address = await _addressService.GetAddress(user.AddressId.Value);
             }
 
             var model = new UserAccountViewModel
@@ -101,13 +107,13 @@ namespace Mzayad.Web.Controllers
         }
 
         [Route("edit-account")]
-        [HttpPost,ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> EditAccount(UserAccountViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 model.Address.Hydrate();
-                
+
                 return View(model);
             }
 
@@ -135,7 +141,7 @@ namespace Mzayad.Web.Controllers
                 address.StateProvince = model.Address.StateProvince;
                 await _addressService.Update(address);
             }
-            
+
 
             CookieService.Add(CookieKeys.DisplayName, user.FirstName, DateTime.MaxValue);
             CookieService.Add(CookieKeys.LastSignInEmail, user.Email, DateTime.MaxValue);
@@ -161,6 +167,40 @@ namespace Mzayad.Web.Controllers
             };
 
             await MessageService.SendMessage(email.WithTemplate(this));
+        }
+
+
+        [Route("notifications")]
+        public async Task<ActionResult> Notifications()
+        {
+            var model = await new NotificationModelView().Hydrate(AuthService, _categoryService, _notificationService, Language);
+            return View(model);
+        }
+
+        [Route("notifications")]
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> Notifications(NotificationModelView model)
+        {
+            var userId = AuthService.CurrentUserId();
+
+            // clear all existing notifications for user
+            var notifications = (await _notificationService.GetByUser(userId)).ToList();
+            await _notificationService.DeleteList(notifications);
+
+            // add back selected notifications
+            if (model.SelectedCategories != null)
+            {
+                var newNotifications = model.SelectedCategories.Select(i => new CategoryNotification
+                {
+                    UserId = userId,
+                    CategoryId = i
+                });
+                
+                await _notificationService.AddList(newNotifications);
+            }
+
+            SetStatusMessage(Global.CategoryNotificationSaveMessage);
+            return RedirectToAction("Notifications");
         }
     }
 }

@@ -21,10 +21,13 @@ h4 {
   margin-bottom: 1em;
 }
 h1 {
-  font-size: 2.4rem;
+  font-size: 2.3rem;
 }
 h2 {
-  font-size: 2.2rem;
+  font-size: 2rem;
+}
+p {
+  margin-bottom: 1em;
 }
 .lead {
   font-size: 1.6rem;

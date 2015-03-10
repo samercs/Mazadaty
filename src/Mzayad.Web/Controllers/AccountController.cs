@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Threading.Tasks;
+using Mindscape.Raygun4Net;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Services;
@@ -195,7 +196,7 @@ namespace Mzayad.Web.Controllers
             }
             catch (Exception ex)
             {
-                // TODO added exception logging, for example Raygun or ELMAH
+                new RaygunClient().Send(ex);
             }
         }
 
@@ -263,8 +264,7 @@ namespace Mzayad.Web.Controllers
             }
             catch (Exception ex)
             {
-                // TODO log exception
-                throw ex;
+                new RaygunClient().Send(ex);
             }
         }
 
@@ -308,11 +308,6 @@ namespace Mzayad.Web.Controllers
             SetStatusMessage(Global.PasswordSuccessfullyChanged);
 
             return RedirectToAction("MyAccount", "User", new { Language });
-        }
-
-        private string GetRegistrationUrl()
-        {
-            return GetBaseUrl("Register");
         }
 
         private string GetBaseUrl(string action)

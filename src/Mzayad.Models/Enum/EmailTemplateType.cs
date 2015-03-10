@@ -7,6 +7,7 @@ namespace Mzayad.Models.Enum
         PasswordReset = 2,
         PasswordChanged = 3,
         EmailChanged = 4,
-        NoAccount = 5
+        NoAccount = 5,
+        AuctionCreated = 6
     }
 }

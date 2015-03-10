@@ -65,6 +65,7 @@
     <Compile Include="ApplicationUser.cs" />
     <Compile Include="Auction.cs" />
     <Compile Include="Category.cs" />
+    <Compile Include="CategoryNotification.cs" />
     <Compile Include="EmailTemplate.cs" />
     <Compile Include="Enum\AuctionStatus.cs" />
     <Compile Include="Enum\EmailTemplateType.cs" />
