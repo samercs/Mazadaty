@@ -6,7 +6,7 @@
 <div class="row">
     <div class="@Html.Css().FormNarrow">
 
-        @using (Html.BeginForm("SignIn", "Account", new { Model.ReturnUrl }))
+        @using (Html.BeginForm("SignIn", "Account", new { Model.ReturnUrl }, FormMethod.Post, new { id = "sign-in" }))
         {
             @Html.AntiForgeryToken()
             <section>

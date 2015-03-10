@@ -16,7 +16,7 @@ section.form-section:not(:last-child) {
   margin-top: 15px;
   padding: 32px 0 0 0;
   background: none;
-  border-top: 1px solid #132e72;
+  border-top: 1px solid #eee;
   text-align: right;
 }
 textarea {
