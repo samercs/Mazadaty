@@ -15,7 +15,8 @@ namespace Mzayad.Data
         public IDbSet<Product> Products { get; set; }
         public IDbSet<ProductImage> ProductImages { get; set; }
         public IDbSet<Auction> Auctions { get; set; }
-        public IDbSet<Specification> Specifications { get; set; } 
+        public IDbSet<Specification> Specifications { get; set; }
+        public IDbSet<CategoryNotification> CategoryNotifications { get; set; } 
 
         public DataContext(): base("DefaultConnection")
         {

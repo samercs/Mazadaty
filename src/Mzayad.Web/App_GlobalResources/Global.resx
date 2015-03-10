@@ -366,4 +366,13 @@
   <data name="Kuwait" xml:space="preserve">
     <value>Kuwait</value>
   </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="CategoryNotification" xml:space="preserve">
+    <value>Category Notification</value>
+  </data>
+  <data name="CategoryNotificationSaveMessage" xml:space="preserve">
+    <value>Thank you, your notifications have been saved.</value>
+  </data>
 </root>

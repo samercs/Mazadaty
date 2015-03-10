@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
@@ -25,6 +26,8 @@ namespace Mzayad.Models
         public int? AddressId { get; set; }
 
         public virtual Address Address { get; set; }
+
+        public virtual IEnumerable<CategoryNotification> Notifications { get; set; } 
 
         //public string CreatedLocalTime
         //{
