@@ -1,5 +1,6 @@
 ﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Services;
 using Mzayad.Web.Areas.admin.Models.Auction;
@@ -71,7 +72,13 @@ namespace Mzayad.Web.Areas.admin.Controllers
             
             model.Auction.StartUtc = model.Auction.StartUtc.AddHours(-3);       
             
-            await _auctionServices.Add(model.Auction);
+            var auction = await _auctionServices.Add(model.Auction);
+            var categoryIds = auction.Product.Categories.Select(i => i.CategoryId);
+            
+            
+            
+            //var notifications = auction.Product.c
+            
             SetStatusMessage("Auction has been added successfully.");
             return RedirectToAction("Index");
         }
