@@ -5,48 +5,21 @@
     
 }
 
-@section styles
-{
-    
-<style>
-    .disabledLabel {
-        color: grey;
-    }
+<p class="instruction">@Global.NotificationsInstructions</p>
 
-    .disabledCheckbox {
-        opacity: .5;
-    }
+<h2>@Global.NewAuctionsByCategory</h2>
 
-    .categoriesList {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    .childCategoriesList {
-        list-style-type: none;
-        padding-left: 20px;
-    }
-</style>
-
-
-
-}
-
+<p>@Global.NewAuctionsByCategoryInstructions</p>
 
 <div class="row">
-
-    <div class="@Html.Css().FormNormal">
-
+    <div class="@Html.Css().FormWide">
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
 
             <section>
                 <div class="form-group">
-                    @Html.Label(Global.Categories)
-                </div>
-                <div class="form-group">
-                    @Html.Partial("ProductCategories",Model)
+                    @Html.Partial("ProductCategories", Model)
                 </div>
             </section>
 
@@ -57,63 +30,25 @@
     </div>
 </div>
 
-@section Scripts {
-    @Scripts.Render("/js/validate")
-    <script type="text/javascript">
-
+@section scripts {
+    <script>
 
         $(function() {
 
             var onCategoryChange = function() {
+
                 var checkbox = $(this);
                 var checked = checkbox.is(":checked");
-                var categoryId = checkbox.val();
-                var parentCategoryId = checkbox.attr('parentId');
-                var childCheckbox;
 
-                if (checked) {
-                    
-                    childCheckbox = $("input[parentId='" + categoryId + "']");
-                    childCheckbox.prop('checked', checked).each(onCategoryChange);
+                var parent = checkbox.closest("li");
+                var descendents = parent.find("input[type='checkbox']");
 
-                    var sameLevel = $("input[parentId='" + parentCategoryId + "']");
-                    var allChecked = true;
-                    sameLevel.each(function () {
-                        
-                        if (! $(this).is(":checked")) {
-                            allChecked = false;
-                        }
-                    });
+                descendents.prop('checked', checked);
 
-                    if (allChecked) {
-                        var parentCheckbox = $("#Category" + parentCategoryId);
-                        visuallyDisable(parentCheckbox);
-                        parentCheckbox.prop('checked', checked).each(onCategoryChange);
-                    }
-
-
-                }
-
-                if (!checked) {
-                    visuallyEnable(checkbox);
-                    childCheckbox = $("input[parentId='" + categoryId + "']");
-                    childCheckbox.prop('checked', checked).each(onCategoryChange);
-                }
+                return;
             };
 
-            var visuallyDisable = function(checkbox) {
-                if (!checkbox.is(":checked")) {
-                    checkbox.addClass("disabledCheckbox");
-                    checkbox.parent().addClass("disabledLabel");
-                }
-            };
-
-            var visuallyEnable = function(checkbox) {
-                checkbox.removeClass("disabledCheckbox");
-                checkbox.parent().removeClass("disabledLabel");
-            };
-
-            $("[name='SelectedCategories']").on("change", onCategoryChange);
+            $("#CategoryList").on("change", "input[type='checkbox']", onCategoryChange);
 
         });
 
