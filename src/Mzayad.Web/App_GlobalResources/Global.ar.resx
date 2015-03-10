@@ -141,6 +141,12 @@
   <data name="BuildingRequiredErrorMessage" xml:space="preserve">
     <value>الرجاء إدخال رقم المبنى.</value>
   </data>
+  <data name="CategoryNotification" xml:space="preserve">
+    <value>تنبيهات التصنيفات</value>
+  </data>
+  <data name="CategoryNotificationSaveMessage" xml:space="preserve">
+    <value>تم تعديل التنبيهات الخاص بك بنجاح . شكرا لك</value>
+  </data>
   <data name="ChangeLanguage" xml:space="preserve">
     <value>تغيير اللغة</value>
   </data>

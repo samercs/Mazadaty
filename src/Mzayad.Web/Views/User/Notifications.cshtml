@@ -5,6 +5,32 @@
     
 }
 
+@section styles
+{
+    
+<style>
+    .disabledLabel {
+        color: grey;
+    }
+
+    .disabledCheckbox {
+        opacity: .5;
+    }
+
+    .categoriesList {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .childCategoriesList {
+        list-style-type: none;
+        padding-left: 20px;
+    }
+</style>
+
+
+
+}
 
 
 <div class="row">
@@ -33,6 +59,65 @@
 
 @section Scripts {
     @Scripts.Render("/js/validate")
+    <script type="text/javascript">
+
+
+        $(function() {
+
+            var onCategoryChange = function() {
+                var checkbox = $(this);
+                var checked = checkbox.is(":checked");
+                var categoryId = checkbox.val();
+                var parentCategoryId = checkbox.attr('parentId');
+                var childCheckbox;
+
+                if (checked) {
+                    
+                    childCheckbox = $("input[parentId='" + categoryId + "']");
+                    childCheckbox.prop('checked', checked).each(onCategoryChange);
+
+                    var sameLevel = $("input[parentId='" + parentCategoryId + "']");
+                    var allChecked = true;
+                    sameLevel.each(function () {
+                        
+                        if (! $(this).is(":checked")) {
+                            allChecked = false;
+                        }
+                    });
+
+                    if (allChecked) {
+                        var parentCheckbox = $("#Category" + parentCategoryId);
+                        visuallyDisable(parentCheckbox);
+                        parentCheckbox.prop('checked', checked).each(onCategoryChange);
+                    }
+
+
+                }
+
+                if (!checked) {
+                    visuallyEnable(checkbox);
+                    childCheckbox = $("input[parentId='" + categoryId + "']");
+                    childCheckbox.prop('checked', checked).each(onCategoryChange);
+                }
+            };
+
+            var visuallyDisable = function(checkbox) {
+                if (!checkbox.is(":checked")) {
+                    checkbox.addClass("disabledCheckbox");
+                    checkbox.parent().addClass("disabledLabel");
+                }
+            };
+
+            var visuallyEnable = function(checkbox) {
+                checkbox.removeClass("disabledCheckbox");
+                checkbox.parent().removeClass("disabledLabel");
+            };
+
+            $("[name='SelectedCategories']").on("change", onCategoryChange);
+
+        });
+
+    </script>
 }
 
 
