@@ -4,7 +4,9 @@ using Mzayad.Models;
 using Mzayad.Services;
 using Mzayad.Web.Areas.admin.Models.Products;
 using Mzayad.Web.Controllers;
+using Mzayad.Web.Core.Attributes;
 using Mzayad.Web.Core.Configuration;
+using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Localization;
@@ -20,7 +22,7 @@ using System.Web.Mvc;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
-    [RouteArea("Admin"), RoutePrefix("products")]
+    [RouteArea("Admin"), RoutePrefix("products"), RoleAuthorize(Role.Administrator)]
     public class ProductsController : ApplicationController
     {
         private readonly ProductService _productService;

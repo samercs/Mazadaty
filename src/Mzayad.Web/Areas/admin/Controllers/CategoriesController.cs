@@ -1,6 +1,8 @@
 ﻿using Mzayad.Models;
 using Mzayad.Web.Areas.admin.Models.Categories;
 using Mzayad.Web.Controllers;
+using Mzayad.Web.Core.Attributes;
+using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Localization;
 using System.Threading.Tasks;
@@ -9,7 +11,7 @@ using Mzayad.Services;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
-    [RouteArea("admin"), RoutePrefix("categories")]
+    [RouteArea("admin"), RoutePrefix("categories"), RoleAuthorize(Role.Administrator)]
     public class CategoriesController : ApplicationController
     {
         private readonly CategoryService _categoryService;

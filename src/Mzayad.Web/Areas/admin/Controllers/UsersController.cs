@@ -15,7 +15,7 @@ using OrangeJetpack.Base.Core.Formatting;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
-    //[RoleAuthorize(Role.Administrator)]
+    [RoleAuthorize(Role.Administrator)]
     public class UsersController : ApplicationController
     {
         public UsersController(IControllerServices controllerServices) : base(controllerServices)

@@ -1,30 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Web.Routing;
-using Kendo.Mvc.Extensions;
+﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Mindscape.Raygun4Net;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Services;
 using Mzayad.Web.Areas.admin.Models.Auction;
+using Mzayad.Web.Areas.admin.Models.Auctions;
 using Mzayad.Web.Controllers;
 using Mzayad.Web.Core.ActionResults;
+using Mzayad.Web.Core.Attributes;
+using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Extensions;
 using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Localization;
+using OrangeJetpack.Services.Models;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Mzayad.Web.Areas.admin.Models.Auctions;
-using OrangeJetpack.Services.Models;
+using System.Web.Routing;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
-    [RouteArea("admin"), RoutePrefix("auctions")]
+    [RouteArea("admin"), RoutePrefix("auctions"), RoleAuthorize(Role.Administrator)]
     public class AuctionsController : ApplicationController
     {
         private readonly ProductService _productService;

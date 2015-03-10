@@ -142,42 +142,7 @@ namespace Mzayad.Web.Controllers
 
             SetStatusMessage(string.Format(Global.RegistrationWelcomeMessage, user.FirstName));
 
-            if (await TryAddUserAsAdmin(user.Email))
-            {
-                SetStatusMessage(string.Format("Welcome to Mzayad {0}! Your account has been set as a site administrator account, to access admin features you'll need to sign out and back in again.", user.FirstName));
-            }
-
             return RedirectToAction("MyAccount", "User", new { Language });
-        }
-
-        private async Task<bool> TryAddUserAsAdmin(string email)
-        {
-            var shouldBeAdmins = new[]
-            {
-                "andy.mehalick@orangejetpack.com", 
-                "samer_mail_2006@yahoo.com",
-                "badder.alghanim@alawama.com",
-                "alghanim.a@alghanimequipment.com"
-            };
-
-            email = email.ToLowerInvariant();
-
-            if (shouldBeAdmins.Contains(email) || email.EndsWith("@mzayad.com"))
-            {
-                var user = await AuthService.GetUserByEmail(email);          
-                await AuthService.AddUserToRole(user.Id, Role.Administrator.ToString());
-
-                return true;
-            }
-
-            return false;
-        }
-
-        public async Task<ActionResult> Test()
-        {
-            await SendNewUserWelcomeEmail(await AuthService.CurrentUser());
-
-            return Content("..");
         }
 
         private async Task SendNewUserWelcomeEmail(ApplicationUser user)

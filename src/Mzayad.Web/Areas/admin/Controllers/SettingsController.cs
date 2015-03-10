@@ -1,5 +1,7 @@
 ﻿using Mzayad.Models.Enum;
 using Mzayad.Web.Controllers;
+using Mzayad.Web.Core.Attributes;
+using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Localization;
 using System.Threading.Tasks;
@@ -8,7 +10,7 @@ using OrangeJetpack.Base.Core.Formatting;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
-    [RouteArea("admin"), RoutePrefix("settings")]
+    [RouteArea("admin"), RoutePrefix("settings"), RoleAuthorize(Role.Administrator)]
     public class SettingsController : ApplicationController
     {
         public SettingsController(IControllerServices controllerServices) : base(controllerServices)

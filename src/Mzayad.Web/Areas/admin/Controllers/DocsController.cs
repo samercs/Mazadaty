@@ -1,4 +1,6 @@
 ﻿using Mzayad.Web.Controllers;
+using Mzayad.Web.Core.Attributes;
+using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
 using System;
 using System.Collections.Generic;
@@ -8,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
+    [RoleAuthorize(Role.Administrator)]
     public class DocsController : ApplicationController
     {
         public DocsController(IControllerServices controllerServices) : base(controllerServices)

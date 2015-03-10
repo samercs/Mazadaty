@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Mzayad.Models;
+﻿using Mzayad.Models;
 using Mzayad.Services;
 using Mzayad.Web.Areas.admin.Models.Specification;
 using Mzayad.Web.Controllers;
+using Mzayad.Web.Core.Attributes;
+using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Information;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Localization;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
+    [RoleAuthorize(Role.Administrator)]
     public class SpecificationsController : ApplicationController
     {
-
         private readonly SpecificationService _specificationService;
 
         public SpecificationsController(IControllerServices controllerServices) : base(controllerServices)
@@ -51,11 +48,8 @@ namespace Mzayad.Web.Areas.admin.Controllers
             var specification = await _specificationService.Add(model.Specification);
             specification.Localize("en", i => i.Name);
             SetStatusMessage(string.Format("Specification {0} has been added successfully.",specification.Name));
-            return RedirectToAction("Index");
-
-            
+            return RedirectToAction("Index"); 
         }
-
 
         public async Task<ActionResult> Delete(int id)
         {
@@ -68,7 +62,6 @@ namespace Mzayad.Web.Areas.admin.Controllers
             specification = specification.Localize("en", i => i.Name);
             return View(specification);
         }
-
 
         [HttpPost,ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(Specification model)
@@ -84,7 +77,6 @@ namespace Mzayad.Web.Areas.admin.Controllers
             SetStatusMessage(string.Format("Specification {0} has been deleted successfully.", name));
             return RedirectToAction("Index");
         }
-
 
         public async Task<ActionResult> Edit(int id)
         {
@@ -106,7 +98,6 @@ namespace Mzayad.Web.Areas.admin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, AddViewModel model,LocalizedContent[] name)
         {
-
             var specification = await _specificationService.GetById(id);
             if (specification == null)
             {
@@ -127,7 +118,6 @@ namespace Mzayad.Web.Areas.admin.Controllers
             SetStatusMessage(string.Format("Specification {0} successfully updated.", specificationName));
 
             return RedirectToAction("Index");
-
         }
     }
 }
