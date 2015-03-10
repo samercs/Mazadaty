@@ -181,37 +181,26 @@ namespace Mzayad.Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Notifications(NotificationModelView model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
             var userId = AuthService.CurrentUserId();
 
-            var userNotification = await _notificationService.GetByUser(userId);
-            var userCategory = userNotification.Select(c => c.CategoryId).ToList();
+            // clear all existing notifications for user
+            var notifications = (await _notificationService.GetByUser(userId)).ToList();
+            await _notificationService.DeleteList(notifications);
 
-            var toAdd = model.SelectedCategories.Where(i=> !userCategory.Contains(i)).Select(i => new CategoryNotification()
+            // add back selected notifications
+            if (model.SelectedCategories != null)
             {
-                UserId = userId,
-                CategoryId = i
-            }).ToList();
-
-            var ToRemove =userNotification.Where(
-                    i => ! model.SelectedCategories.Contains(i.CategoryId)).ToList();
-
-
-            await _notificationService.AddList(toAdd);
-            await _notificationService.DeleteList(ToRemove);
+                var newNotifications = model.SelectedCategories.Select(i => new CategoryNotification
+                {
+                    UserId = userId,
+                    CategoryId = i
+                });
+                
+                await _notificationService.AddList(newNotifications);
+            }
 
             SetStatusMessage(Global.CategoryNotificationSaveMessage);
             return RedirectToAction("Notifications");
-
-           
-            
-
-           
-
         }
     }
 }

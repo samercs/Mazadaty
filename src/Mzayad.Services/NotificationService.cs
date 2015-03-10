@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Mzayad.Data;
+using Mzayad.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Mzayad.Data;
-using Mzayad.Models;
 
 namespace Mzayad.Services
 {
@@ -24,7 +22,7 @@ namespace Mzayad.Services
         }
 
 
-        public async Task<List<CategoryNotification>> AddList(List<CategoryNotification> toAdd)
+        public async Task AddList(IEnumerable<CategoryNotification> toAdd)
         {
             using (var dc=DataContext())
             {
@@ -35,11 +33,9 @@ namespace Mzayad.Services
 
                 await dc.SaveChangesAsync();
             }
-
-            return toAdd;
         }
 
-        public async Task<List<CategoryNotification>> DeleteList(List<CategoryNotification> toDelete)
+        public async Task DeleteList(IEnumerable<CategoryNotification> toDelete)
         {
             using (var dc = DataContext())
             {
@@ -51,8 +47,6 @@ namespace Mzayad.Services
 
                 await dc.SaveChangesAsync();
             }
-
-            return toDelete;
         }
     }
 }
