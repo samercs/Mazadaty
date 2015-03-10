@@ -587,7 +587,7 @@
     <Content Include="Views\Shared\EditorTemplates\Address_US.cshtml" />
     <Content Include="Views\Shared\ImageUploader.cshtml" />
     <Content Include="Views\User\ChangePassword.cshtml" />
-    <Content Include="Views\Shared\_Layout.User.cshtml" />
+    <Content Include="Views\User\_Layout.cshtml" />
     <Content Include="Views\User\_ViewStart.cshtml" />
     <Content Include="Views\User\EditAccount.cshtml" />
     <Content Include="Views\User\Notifications.cshtml" />
