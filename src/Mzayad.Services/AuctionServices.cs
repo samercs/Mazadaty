@@ -1,12 +1,9 @@
-﻿using System;
+﻿using Mzayad.Data;
+using Mzayad.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Mzayad.Data;
-using Mzayad.Models;
-using OrangeJetpack.Localization;
 
 namespace Mzayad.Services
 {
@@ -23,20 +20,19 @@ namespace Mzayad.Services
             {
                 dc.Auctions.Add(auction);
                 await dc.SaveChangesAsync();
-                return auction;
+
+                return await GetAuction(dc, auction.AuctionId);
             }
         }
 
-        public async Task<IEnumerable<Auction>> GetAuctions( string search = null)
+        public async Task<IEnumerable<Auction>> GetAuctions(string search = null)
         {
             using (var dc = DataContext())
             {
-
-
                 if (!string.IsNullOrEmpty(search))
                 {
-                    return await dc.Auctions.Include(i => i.Product).Where(i => i.Product.Name.Contains(search)).OrderByDescending(i=>i.StartUtc).ToListAsync();
-                    
+                    return await dc.Auctions.Include(i => i.Product).Where(i => i.Product.Name.Contains(search)).OrderByDescending(i => i.StartUtc).ToListAsync();
+
                 }
                 else
                 {
@@ -45,25 +41,33 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<Auction> GetAuction(int id)
+        public async Task<Auction> GetAuction(int auctionId)
         {
-            using (var dc=DataContext())
+            using (var dc = DataContext())
             {
-                return await dc.Auctions.Include(i=>i.Product).SingleOrDefaultAsync(i => i.AuctionId == id);
+                return await GetAuction(dc, auctionId);
             }
         }
 
+        private static async Task<Auction> GetAuction(IDataContext dc, int auctionId)
+        {
+            return await dc.Auctions
+                .Include(i => i.Product.Categories)
+                .SingleOrDefaultAsync(i => i.AuctionId == auctionId);
+        }
+
+
         public async Task<Auction> Update(Auction auction)
         {
-            using (var dc=DataContext())
+            using (var dc = DataContext())
             {
-                
-                var product =await dc.Products.SingleOrDefaultAsync(i => i.ProductId == auction.ProductId);
+                var product = await dc.Products.SingleOrDefaultAsync(i => i.ProductId == auction.ProductId);
                 auction.Product = product;
                 dc.Auctions.Attach(auction);
                 dc.SetModified(auction);
                 await dc.SaveChangesAsync();
-                return auction;
+
+                return await GetAuction(dc, auction.AuctionId);
             }
         }
     }

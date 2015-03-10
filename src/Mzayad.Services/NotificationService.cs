@@ -21,14 +21,32 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<IEnumerable<CategoryNotification>> GetByCategoryId(IEnumerable<int> categoryIds)
+        public async Task<IEnumerable<CategoryNotification>> GetByCategoryIds(IEnumerable<int> categoryIds)
         {
+            if (categoryIds == null)
+            {
+                return Enumerable.Empty<CategoryNotification>();
+            }
+            
             using (var dc = DataContext())
             {
-                return await dc.CategoryNotifications.Where(i => categoryIds.Contains(i.CategoryId)).ToListAsync();
+                return await dc.CategoryNotifications
+                    .Include(i => i.User)
+                    .Where(i => categoryIds.Contains(i.CategoryId))
+                    .ToListAsync();
             }
         }
 
+        public async Task<IEnumerable<CategoryNotification>> GetByCategories(IEnumerable<Category> categories)
+        {
+            if (categories == null)
+            {
+                return Enumerable.Empty<CategoryNotification>();
+            }
+
+            return await GetByCategoryIds(categories.Select(i => i.CategoryId));
+        }
+        
         public async Task AddList(IEnumerable<CategoryNotification> toAdd)
         {
             using (var dc=DataContext())

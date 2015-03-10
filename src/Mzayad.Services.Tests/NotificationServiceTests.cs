@@ -23,7 +23,7 @@ namespace Mzayad.Services.Tests
             dc.CategoryNotifications.Add(new CategoryNotification {CategoryId = 5});
 
             var service = new NotificationService(new InMemoryDataContextFactory(dc));
-            var notifications = (await service.GetByCategoryId(new[] {1, 2, 3, 111, 222, 333})).ToList();
+            var notifications = (await service.GetByCategoryIds(new[] {1, 2, 3, 111, 222, 333})).ToList();
 
             Assert.AreEqual(3, notifications.Count());
             CollectionAssert.Contains(notifications.Select(i => i.CategoryId), 1);

@@ -270,6 +270,7 @@
     <Compile Include="Areas\Api\Controllers\AccountController.cs" />
     <Compile Include="Areas\Api\Controllers\TestController.cs" />
     <Compile Include="ChatHub.cs" />
+    <Compile Include="Controllers\AuctionsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Core\ActionResults\ExcelResult.cs" />
     <Compile Include="Core\Attributes\LanguageRoutePrefix.cs" />
@@ -307,6 +308,7 @@
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Extensions\KendoExtensions.cs" />
     <Compile Include="Extensions\MvcHtmlStringExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -596,6 +598,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Api\Models\" />
     <Folder Include="Areas\Api\Views\Shared\" />
+    <Folder Include="Views\Auctions\" />
     <Folder Include="Views\Categories\" />
   </ItemGroup>
   <ItemGroup>

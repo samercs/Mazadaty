@@ -1,5 +1,10 @@
-﻿using Kendo.Mvc.Extensions;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Web.Routing;
+using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using Mindscape.Raygun4Net;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Services;
@@ -15,6 +20,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Mzayad.Web.Areas.admin.Models.Auctions;
+using OrangeJetpack.Services.Models;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
@@ -23,10 +29,13 @@ namespace Mzayad.Web.Areas.admin.Controllers
     {
         private readonly ProductService _productService;
         private readonly AuctionServices _auctionServices;
+        private readonly NotificationService _notificationService;
+        
         public AuctionsController(IControllerServices controllerServices) : base(controllerServices)
         {
-            _productService=new ProductService(DataContextFactory);
-            _auctionServices=new AuctionServices(DataContextFactory);
+            _productService = new ProductService(DataContextFactory);
+            _auctionServices = new AuctionServices(DataContextFactory);
+            _notificationService = new NotificationService(DataContextFactory);
         }
 
         [Route("select-product")]
@@ -73,14 +82,51 @@ namespace Mzayad.Web.Areas.admin.Controllers
             model.Auction.StartUtc = model.Auction.StartUtc.AddHours(-3);       
             
             var auction = await _auctionServices.Add(model.Auction);
-            var categoryIds = auction.Product.Categories.Select(i => i.CategoryId);
-            
-            
-            
-            //var notifications = auction.Product.c
-            
+
+            if (auction.Status == AuctionStatus.Public)
+            {
+                await SendAuctionNotifications(auction);
+            }
+
             SetStatusMessage("Auction has been added successfully.");
+            
             return RedirectToAction("Index");
+        }
+
+        private async Task SendAuctionNotifications(Auction auction)
+        {
+            var notifications = await _notificationService.GetByCategories(auction.Product.Categories);
+
+            var emailTemplate = await _EmailTemplateService.GetByTemplateType(EmailTemplateType.AuctionCreated, "en");
+            var urlHelper = new UrlHelper(ControllerContext.RequestContext);
+            var auctionUrl = urlHelper.Action("Details", "Auctions", new { area = "", id = auction.AuctionId}, "https");
+            var notificationsUrl = urlHelper.Action("Notifications", "User", new { area = "" }, "https");
+            var productName = auction.Product.Localize("en", i => i.Name).Name;
+
+            foreach (var user in notifications.Select(i => i.User).Distinct())
+            {
+                var email = new Email
+                {
+                    ToAddress = user.Email,
+                    Subject = emailTemplate.Subject,
+                    Message = emailTemplate.Message.Replace(new Dictionary<string, string>
+                    {
+                        {"{FirstName}", user.FirstName},
+                        {"{AuctionUrl}", auctionUrl},
+                        {"{ProductName}", productName},
+                        {"{NotificationsUrl}", notificationsUrl}
+                    })
+                };
+
+                try
+                {
+                    await MessageService.SendMessage(email.WithTemplate(this));
+                }
+                catch (Exception ex)
+                {
+                    new RaygunClient().Send(ex);
+                }
+            }
         }
 
         public async Task<ActionResult> Index(string search="")
@@ -160,6 +206,8 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return HttpNotFound();
             }
 
+            var isActivated = auction.Status != AuctionStatus.Public && model.Auction.Status == AuctionStatus.Public;
+
             auction.BidIncrement = model.Auction.BidIncrement;
             auction.Duration = model.Auction.Duration;
             auction.MaximumBid = model.Auction.MaximumBid;
@@ -172,6 +220,11 @@ namespace Mzayad.Web.Areas.admin.Controllers
             auction.BuyNowQuantity = model.Auction.BuyNowQuantity;
 
             await _auctionServices.Update(auction);
+
+            if (isActivated)
+            {
+                await SendAuctionNotifications(auction);
+            }
 
             var productName = auction.Product.Localize("en", i => i.Name).Name;
 
@@ -189,9 +242,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return HttpNotFound();
             }
 
-            auction.Status = AuctionStatus.Public;
+            if (auction.Status != AuctionStatus.Public)
+            {
+                auction.Status = AuctionStatus.Public;
 
-            await _auctionServices.Update(auction);
+                await _auctionServices.Update(auction);
+                
+                await SendAuctionNotifications(auction);
+            }
 
             var productName = auction.Product.Localize("en", i => i.Name).Name;
 
