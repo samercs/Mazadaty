@@ -1,6 +1,16 @@
 ﻿@using Mzayad.Web.Extensions
 @model Mzayad.Web.Areas.admin.Models.Auctions.AddEditViewModel
 
+
+<style>
+        
+    #Auction_StartUtc {
+        width: 100% !important;
+    }
+
+</style>
+
+
 <div class="row">
     <div class="@Html.Css().FormWide">
 
@@ -14,21 +24,27 @@
                     @Html.DropDownListFor(i => i.Auction.ProductId, Model.ProductList, new { @class = "form-control" })
                     @Html.ValidationMessageFor(i => i.Auction.ProductId, "Please select a product")
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(i => i.Auction.StartUtc, "Date and Time")
-                    @Html.EditorFor(i => i.Auction.StartUtc)
-                    @Html.ValidationMessageFor(i => i.Auction.StartUtc, "Please enter date and time")
-                </div>
-                <div class="form-group">
-                    <div class="form-group form-group-md">
-                        @Html.LabelFor(i => i.Auction.Duration, "Bid Duration")
-                        <div class="input-group">
-                            @Html.TextBoxFor(i => i.Auction.Duration, new { @class = "form-control", @type = "number" })
-                            <span class="input-group-addon">minutes</span>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(i => i.Auction.StartUtc, "Date and Time")
+                            @Html.EditorFor(i => i.Auction.StartUtc)
+                            @Html.ValidationMessageFor(i => i.Auction.StartUtc, "Please enter date and time")
                         </div>
-                        @Html.ValidationMessageFor(i => i.Auction.Duration, "Please enter a auction bid duration.")
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-group-md">
+                            @Html.LabelFor(i => i.Auction.Duration, "Duration")
+                            <div class="input-group">
+                                @Html.TextBoxFor(i => i.Auction.Duration, new { @class = "form-control", @type = "number" })
+                                <span class="input-group-addon" style="font-size: 80%;">minutes</span>
+                            </div>
+                            @Html.ValidationMessageFor(i => i.Auction.Duration, "Please enter a auction bid duration.")
+                        </div>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label>Status</label>
                     @foreach (var item in Model.StatusList)
@@ -37,12 +53,12 @@
                             <label>
                                 @if (item.Selected)
                                 {
-                                    @Html.RadioButtonFor(i => i.Auction.Status, item.Value, new { @checked = "checked" }) 
+                                    @Html.RadioButtonFor(i => i.Auction.Status, item.Value, new { @checked = "checked" })
                                     @Html.Raw(item.Text)
                                 }
                                 else
                                 {
-                                    @Html.RadioButtonFor(i => i.Auction.Status, item.Value) 
+                                    @Html.RadioButtonFor(i => i.Auction.Status, item.Value)
                                     @Html.Raw(item.Text)
                                 }
                             </label>

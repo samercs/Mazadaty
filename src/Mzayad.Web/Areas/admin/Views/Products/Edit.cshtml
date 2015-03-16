@@ -331,7 +331,10 @@
                 };
 
                 $(".specification-group")
-                    .each(function () {
+                    .each(function (index) {
+                        if (index === 0) {
+                            return;
+                        }
                         hideSpecificationGroup($(this));
                     })
                     .each(function () {

@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Mzayad.Data;
+using Mzayad.Models;
+using OrangeJetpack.Localization;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Mzayad.Data;
-using Mzayad.Models;
-using OrangeJetpack.Localization;
 
 namespace Mzayad.Services
 {
@@ -18,9 +16,9 @@ namespace Mzayad.Services
 
         public async Task<IEnumerable<Specification>> GetAll()
         {
-            using (var dc=DataContext())
+            using (var dc = DataContext())
             {
-                return await dc.Specifications.ToArrayAsync();
+                return await dc.Specifications.OrderBy(i => i.Name).ToArrayAsync();
             }
         }
 
@@ -28,7 +26,8 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                var result= await dc.Specifications.ToArrayAsync();
+                var result = await dc.Specifications.OrderBy(i => i.Name).ToListAsync();
+                
                 return result.Localize(languageCode, i => i.Name);
             }
         }

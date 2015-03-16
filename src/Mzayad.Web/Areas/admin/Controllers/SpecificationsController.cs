@@ -17,26 +17,27 @@ namespace Mzayad.Web.Areas.admin.Controllers
     {
         private readonly SpecificationService _specificationService;
 
-        public SpecificationsController(IControllerServices controllerServices) : base(controllerServices)
+        public SpecificationsController(IControllerServices controllerServices)
+            : base(controllerServices)
         {
-            _specificationService=new SpecificationService(DataContextFactory);
+            _specificationService = new SpecificationService(DataContextFactory);
         }
 
         public async Task<ActionResult> Index()
         {
             var model = await _specificationService.GetAll("en");
-            
+
             return View(model);
         }
 
         public async Task<ActionResult> Add()
         {
-            var model =await new AddViewModel().Hydrate();
+            var model = await new AddViewModel().Hydrate();
             return View(model);
         }
 
 
-        [HttpPost,ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Add(AddViewModel model, LocalizedContent[] name)
         {
             model.Specification.Name = name.Serialize();
@@ -47,8 +48,8 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             var specification = await _specificationService.Add(model.Specification);
             specification.Localize("en", i => i.Name);
-            SetStatusMessage(string.Format("Specification {0} has been added successfully.",specification.Name));
-            return RedirectToAction("Index"); 
+            SetStatusMessage(string.Format("Specification <strong>{0}</strong> successfully added.", specification.Name));
+            return RedirectToAction("Index");
         }
 
         public async Task<ActionResult> Delete(int id)
@@ -56,47 +57,46 @@ namespace Mzayad.Web.Areas.admin.Controllers
             var specification = await _specificationService.GetById(id);
             if (specification == null)
             {
-                SetStatusMessage("sory specification not found.",StatusMessageType.Error);
+                SetStatusMessage("sory specification not found.", StatusMessageType.Error);
                 return RedirectToAction("Index");
             }
             specification = specification.Localize("en", i => i.Name);
             return View(specification);
         }
 
-        [HttpPost,ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(Specification model)
         {
             var specification = await _specificationService.GetById(model.SpecificationId);
             if (specification == null)
             {
-                SetStatusMessage("sory specification not found.", StatusMessageType.Error);
-                return RedirectToAction("Index");
+                return HttpNotFound();
             }
+
             var name = specification.Localize("en", i => i.Name).Name;
             await _specificationService.Delete(specification);
-            SetStatusMessage(string.Format("Specification {0} has been deleted successfully.", name));
+            SetStatusMessage(string.Format("Specification <strong>{0}</strong> successfully deleted.", name));
             return RedirectToAction("Index");
         }
 
         public async Task<ActionResult> Edit(int id)
         {
-            var specification =await _specificationService.GetById(id);
+            var specification = await _specificationService.GetById(id);
             if (specification == null)
             {
-                SetStatusMessage("sory specification not found.", StatusMessageType.Error);
-                return RedirectToAction("Index");
+                return HttpNotFound();
             }
-            var model = new AddViewModel()
+
+            var model = new AddViewModel
             {
                 Specification = specification
             };
-
 
             return View(model);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, AddViewModel model,LocalizedContent[] name)
+        public async Task<ActionResult> Edit(int id, AddViewModel model, LocalizedContent[] name)
         {
             var specification = await _specificationService.GetById(id);
             if (specification == null)
@@ -115,7 +115,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             var specificationName = specification.Localize("en", i => i.Name).Name;
 
-            SetStatusMessage(string.Format("Specification {0} successfully updated.", specificationName));
+            SetStatusMessage(string.Format("Specification <strong>{0}</strong> successfully updated.", specificationName));
 
             return RedirectToAction("Index");
         }

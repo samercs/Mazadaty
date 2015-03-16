@@ -111,7 +111,7 @@ input[type=number].no-spinner::-webkit-outer-spin-button {
   .btn,
   .btn:hover,
   .btn:focus {
-    font-size: 14px;
+    font-size: 1.4rem;
   }
 }
 .btn:lang(ar),
