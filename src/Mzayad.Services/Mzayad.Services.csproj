@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddressService.cs" />
-    <Compile Include="AuctionServices.cs" />
+    <Compile Include="AuctionService.cs" />
     <Compile Include="CategoryService.cs" />
     <Compile Include="EmailTemplateService.cs" />
     <Compile Include="NotificationService.cs" />

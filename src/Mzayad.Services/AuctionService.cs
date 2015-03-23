@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Mzayad.Models.Enum;
 
 namespace Mzayad.Services
 {
-    public class AuctionServices : ServiceBase
+    public class AuctionService : ServiceBase
     {
-        public AuctionServices(IDataContextFactory dataContextFactory)
+        public AuctionService(IDataContextFactory dataContextFactory)
             : base(dataContextFactory)
         {
         }
@@ -22,6 +23,20 @@ namespace Mzayad.Services
                 await dc.SaveChangesAsync();
 
                 return await GetAuction(dc, auction.AuctionId);
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of recent and upcoming public auctions.
+        /// </summary>
+        public async Task<IEnumerable<Auction>> GetCurrentAuctions()
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.Auctions
+                    .Where(i => i.Status == AuctionStatus.Public)
+                    .OrderBy(i => i.StartUtc)
+                    .ToListAsync();
             }
         }
 

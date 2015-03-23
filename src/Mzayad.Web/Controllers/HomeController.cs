@@ -1,4 +1,5 @@
-﻿using Mzayad.Web.Core.Configuration;
+﻿using Mzayad.Services;
+using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
 using System;
 using System.Web.Mvc;
@@ -8,8 +9,11 @@ namespace Mzayad.Web.Controllers
     [RoutePrefix("{language}")]
     public class HomeController : ApplicationController
     {
+        private readonly AuctionService _auctionService;
+        
         public HomeController(IControllerServices controllerServices) : base(controllerServices)
         {
+            _auctionService = new AuctionService(controllerServices.DataContextFactory);
         }
 
         public ActionResult Index(string language)
@@ -18,6 +22,8 @@ namespace Mzayad.Web.Controllers
             {
                 return RedirectToAction("Index", new { Language });
             }
+
+            var auctions = _auctionService.GetCurrentAuctions();
 
             return View();
         }

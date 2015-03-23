@@ -18,6 +18,7 @@ namespace Mzayad.Services.Tests.Fakes
 
         public InMemoryDataContext()
         {
+            Auctions = new TestDbSet<Auction>();
             Categories = new TestDbSet<Category>();
             CategoryNotifications = new TestDbSet<CategoryNotification>();
         }
