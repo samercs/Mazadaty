@@ -1,4 +1,6 @@
-﻿using OrangeJetpack.Localization;
+﻿using System.Linq;
+using Newtonsoft.Json;
+using OrangeJetpack.Localization;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -32,5 +34,20 @@ namespace Mzayad.Models
         public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<ProductImage> ProductImages { get; set; }
         public virtual ICollection<ProductSpecification> ProductSpecifications { get; set; }
+
+        public ProductImage MainImage()
+        {
+            if (!ProductImages.Any())
+            {
+                return new ProductImage
+                {
+                    ImageSmUrl = ProductImage.NoImageUrl,
+                    ImageMdUrl = ProductImage.NoImageUrl,
+                    ImageLgUrl = ProductImage.NoImageUrl
+                };
+            }
+
+            return ProductImages.First();
+        }
     }
 }

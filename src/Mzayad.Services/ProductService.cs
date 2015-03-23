@@ -69,8 +69,6 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-
-                
                 dc.Products.Attach(product);
                 dc.SetModified(product);
 

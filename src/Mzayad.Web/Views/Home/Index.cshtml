@@ -74,9 +74,34 @@
     return;
 }
 
-<ul>
+<ul id="auction-list">
     @foreach (var auction in Model)
     {
-        <li>@auction.Title</li>
+        <li>
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>@auction.Title</h2>
+                    @*@if (auction.Product.ProductSpecifications.Any())
+                    {
+                        <ul class="product-specifications">
+                            @foreach (var specification in auction.Product.ProductSpecifications)
+                            {
+                                <li>@specification.Specification.Name: @specification.Value</li>
+                            }
+                        </ul>
+                    }*@
+
+                    
+                </div>
+                <div class="col-md-4">
+                    <img class="img-responsive" src="@auction.Product.MainImage().ImageMdUrl" alt="@auction.Title">
+                </div>
+            </div>
+
+            
+
+            
+
+        </li>
     }
 </ul>

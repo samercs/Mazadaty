@@ -122,11 +122,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\OrangeJetpack.Regionalization.0.0.6\lib\OrangeJetpack.Regionalization.dll</HintPath>
     </Reference>
-    <Reference Include="OrangeJetpack.Services.Client">
-      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.21\lib\OrangeJetpack.Services.Client.dll</HintPath>
+    <Reference Include="OrangeJetpack.Services.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.24\lib\OrangeJetpack.Services.Client.dll</HintPath>
     </Reference>
-    <Reference Include="OrangeJetpack.Services.Models">
-      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.21\lib\OrangeJetpack.Services.Models.dll</HintPath>
+    <Reference Include="OrangeJetpack.Services.Models, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.24\lib\OrangeJetpack.Services.Models.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp">
       <HintPath>..\..\packages\RestSharp.105.0.0\lib\net4\RestSharp.dll</HintPath>

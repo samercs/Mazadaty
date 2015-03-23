@@ -14,4 +14,23 @@
   padding-bottom: 0.5em;
   border-bottom: 1px solid #eee;
 }
+#auction-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#auction-list > li {
+  margin-bottom: 30px;
+  padding: 20px;
+  border: 1px solid #dbdbdb;
+  background-color: white;
+}
+#auction-list > li:last-child {
+  margin-bottom: 0;
+}
+#auction-list > li h2 {
+  color: #132e72;
+  font-size: 4.8rem;
+  margin-bottom: 20px;
+}
 /*# sourceMappingURL=site-layout.css.map */
