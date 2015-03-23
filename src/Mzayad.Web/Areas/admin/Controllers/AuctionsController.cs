@@ -63,12 +63,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
             var product =await _productService.GetProduct(productId);
             if (product == null)
             {
-                SetStatusMessage("Sorry this product not found.",StatusMessageType.Warning);
-                return RedirectToAction("SelectProduct");
+                return HttpNotFound();
             }
+            
             var model = await new AddEditViewModel().Hydrate(_productService, product);
+            model.Auction.Title = product.Name;
             model.Auction.RetailPrice = product.RetailPrice;
             model.Auction.CreatedByUserId = AuthService.CurrentUserId();
+            
             return View(model);
         }
 

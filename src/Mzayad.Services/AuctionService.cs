@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Mzayad.Models.Enum;
+using OrangeJetpack.Localization;
 
 namespace Mzayad.Services
 {
@@ -29,14 +30,17 @@ namespace Mzayad.Services
         /// <summary>
         /// Gets a list of recent and upcoming public auctions.
         /// </summary>
-        public async Task<IEnumerable<Auction>> GetCurrentAuctions()
+        public async Task<IEnumerable<Auction>> GetCurrentAuctions(string language = "en")
         {
             using (var dc = DataContext())
             {
-                return await dc.Auctions
+                var auctions = await dc.Auctions
                     .Where(i => i.Status == AuctionStatus.Public)
+                    .Include(i => i.Product)
                     .OrderBy(i => i.StartUtc)
                     .ToListAsync();
+
+                return auctions.Localize(language, i => i.Title);
             }
         }
 

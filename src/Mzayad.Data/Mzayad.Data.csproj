@@ -145,6 +145,10 @@
     <Compile Include="Migrations\201503101633490_AddAuctionCreatedEmailTemplate.Designer.cs">
       <DependentUpon>201503101633490_AddAuctionCreatedEmailTemplate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503231152273_AddAuctionTitle.cs" />
+    <Compile Include="Migrations\201503231152273_AddAuctionTitle.Designer.cs">
+      <DependentUpon>201503231152273_AddAuctionTitle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -218,6 +222,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503101633490_AddAuctionCreatedEmailTemplate.resx">
       <DependentUpon>201503101633490_AddAuctionCreatedEmailTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503231152273_AddAuctionTitle.resx">
+      <DependentUpon>201503231152273_AddAuctionTitle.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

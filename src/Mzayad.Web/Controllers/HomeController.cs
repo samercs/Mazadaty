@@ -1,4 +1,5 @@
-﻿using Mzayad.Services;
+﻿using System.Threading.Tasks;
+using Mzayad.Services;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
 using System;
@@ -16,16 +17,16 @@ namespace Mzayad.Web.Controllers
             _auctionService = new AuctionService(controllerServices.DataContextFactory);
         }
 
-        public ActionResult Index(string language)
+        public async Task<ActionResult> Index(string language)
         {
             if (language == null)
             {
                 return RedirectToAction("Index", new { Language });
             }
 
-            var auctions = _auctionService.GetCurrentAuctions();
+            var auctions = await _auctionService.GetCurrentAuctions();
 
-            return View();
+            return View(auctions);
         }
 
         [Route("terms-and-conditions")]

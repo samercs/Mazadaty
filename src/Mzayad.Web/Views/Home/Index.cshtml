@@ -1,9 +1,16 @@
-﻿@{
+﻿@using OrangeJetpack.Base.Web
+@model IEnumerable<Mzayad.Models.Auction>
+
+@{
     ViewBag.Title = Global.Home;
 }
 
 <style>
     
+    #page-title {
+        display: none;
+    }
+
     .mz-wrapper {
         width: 788px;
         margin: 0 auto;
@@ -47,7 +54,6 @@
 </style>
 
 <div class="jumbotron">
-    <h1>@Global.Welcome</h1>
     @*<div class="mz-wrapper hidden-sm">
         <div class="mz mz-m wow fadeInDown" data-wow-delay="1s"></div>
         <div class="mz mz-z wow fadeInUp" data-wow-delay="1.5s"></div>
@@ -59,4 +65,18 @@
     <div class="clearfix"></div>*@
 </div>
 
-<img src="//az712326.vo.msecnd.net/assets/mz-freehand-635610878999247526.png" style="display: none;" />
+<img src="//az712326.vo.msecnd.net/assets/mz-freehand-635610878999247526.png" style="display: none;" alt="" />
+
+@if (!Model.Any())
+{
+    @Html.StatusMessage("There are no auctions available at this time.", StatusMessageType.Warning)
+
+    return;
+}
+
+<ul>
+    @foreach (var auction in Model)
+    {
+        <li>@auction.Title</li>
+    }
+</ul>
