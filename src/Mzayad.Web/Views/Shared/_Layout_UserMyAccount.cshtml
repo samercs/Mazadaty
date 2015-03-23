@@ -5,7 +5,7 @@
     if (User.IsInRole(Role.Administrator.ToString()))
     {
         <li>
-            <a href="@(Url.Action("Index", "Users", new { area = "admin" }))"><i class="fa fa-cog fa-pad-right"></i>Admin</a>
+            <a href="@(Url.Action("Index", "Auctions", new { area = "admin" }))"><i class="fa fa-cog fa-pad-right"></i>Admin</a>
         </li>
     }
     <li class="dropdown">

@@ -37,12 +37,21 @@ namespace Mzayad.Services
                 var auctions = await dc.Auctions
                     .Where(i => i.Status == AuctionStatus.Public)
                     .Include(i => i.Product.ProductImages)
+                    .Include(i => i.Product.ProductSpecifications.Select(j => j.Specification))
                     .OrderBy(i => i.StartUtc)
                     .ToListAsync();
 
-                foreach (var auction in auctions)
+                foreach (var product in auctions.Select(i => i.Product).Distinct())
                 {
-                    auction.Product.ProductImages = auction.Product.ProductImages.OrderBy(i => i.SortOrder).ToList();
+                    // order product images
+                    product.ProductImages = product.ProductImages.OrderBy(i => i.SortOrder).ToList();
+
+                    // localize specifications
+                    foreach (var specification in product.ProductSpecifications)
+                    {
+                        specification.Localize(language, i => i.Value);
+                        specification.Specification.Localize(language, i => i.Name);
+                    }
                 }
 
                 return auctions.Localize(language, i => i.Title);

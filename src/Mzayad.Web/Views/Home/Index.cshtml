@@ -1,4 +1,5 @@
-﻿@using OrangeJetpack.Base.Web
+﻿@using Mzayad.Core.Formatting
+@using OrangeJetpack.Base.Web
 @model IEnumerable<Mzayad.Models.Auction>
 
 @{
@@ -74,33 +75,36 @@
     return;
 }
 
-<ul id="auction-list">
+<ul id="auction-list" class="list-unstyled">
     @foreach (var auction in Model)
     {
         <li>
             <div class="row">
                 <div class="col-md-8">
-                    <h2>@auction.Title</h2>
-                    @*@if (auction.Product.ProductSpecifications.Any())
+                    <div class="auction-details">
+                        <h2 class="auction-detail-item">@auction.Title</h2>
+                        @if (auction.Product.ProductSpecifications.Any())
+                        {
+                            <ul class="auction-detail-item list-unstyled">
+                                @foreach (var specification in auction.Product.ProductSpecifications)
+                                {
+                                    <li>@specification.Specification.Name: @specification.Value</li>
+                                }
+                            </ul>
+                        }
+                        <div class="auction-detail-item">Retail price: @CurrencyFormatter.Format(auction.RetailPrice)</div>
+                    </div>
+                    @if (auction.StartUtc > DateTime.UtcNow || true)
                     {
-                        <ul class="product-specifications">
-                            @foreach (var specification in auction.Product.ProductSpecifications)
-                            {
-                                <li>@specification.Specification.Name: @specification.Value</li>
-                            }
-                        </ul>
-                    }*@
-
-                    
+                        <div class="upcoming-date">
+                            @DateTimeFormatter.ToLocalTime(auction.StartUtc, DateTimeFormatter.Format.Full)
+                        </div>
+                    }
                 </div>
                 <div class="col-md-4">
                     <img class="img-responsive" src="@auction.Product.MainImage().ImageMdUrl" alt="@auction.Title">
                 </div>
             </div>
-
-            
-
-            
 
         </li>
     }

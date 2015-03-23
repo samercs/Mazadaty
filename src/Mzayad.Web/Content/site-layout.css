@@ -14,11 +14,6 @@
   padding-bottom: 0.5em;
   border-bottom: 1px solid #eee;
 }
-#auction-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
 #auction-list > li {
   margin-bottom: 30px;
   padding: 20px;
@@ -28,9 +23,29 @@
 #auction-list > li:last-child {
   margin-bottom: 0;
 }
-#auction-list > li h2 {
+#auction-list > li .auction-details {
+  border-bottom: 2px solid #dbdbdb;
+}
+#auction-list > li .auction-details .auction-detail-item {
+  margin-bottom: 20px;
+}
+#auction-list > li .auction-details h2 {
   color: #132e72;
   font-size: 4.8rem;
-  margin-bottom: 20px;
+}
+#auction-list > li .auction-details ul {
+  -moz-column-count: 2;
+  -webkit-column-count: 2;
+  column-count: 2;
+}
+#auction-list > li .upcoming-date {
+  margin: 25px auto !important;
+  padding: 25px;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 4.2rem;
+  font-weight: bold;
+  color: #fff;
+  background: #132e72;
 }
 /*# sourceMappingURL=site-layout.css.map */
