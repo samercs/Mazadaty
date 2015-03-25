@@ -39,6 +39,21 @@ namespace Mzayad.Models
         [ForeignKey("CreatedByUserId")]
         public virtual ApplicationUser CreatedByUser { get; set; }
 
+        [StringLength(128)]
+        public string WonByUserId { get; set; }
+
+        [ForeignKey("WonByUserId")]
+        public virtual ApplicationUser WonByUser { get; set; }
+
+        public DateTime? ClosingUtc { get; set; }
+        public decimal? ClosingPrice { get; set; }
+
         public virtual Product Product { get; set; }
+
+        public bool IsLive()
+        {
+            return Status != AuctionStatus.Closed && StartUtc > DateTime.UtcNow;
+        }
+
     }
 }

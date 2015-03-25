@@ -24,6 +24,7 @@
   margin-bottom: 0;
 }
 #auction-list > li .auction-details {
+  margin-bottom: 20px;
   border-bottom: 2px solid #dbdbdb;
 }
 #auction-list > li .auction-details .auction-detail-item {
@@ -38,8 +39,38 @@
   -webkit-column-count: 2;
   column-count: 2;
 }
+#auction-list > li .auction-status {
+  text-align: center;
+}
+#auction-list > li .auction-status .auction-status-label,
+#auction-list > li .auction-status .auction-status-details {
+  position: relative;
+  float: left;
+  padding: 12px;
+  font-size: 1.8rem;
+  border: 1px solid #dbdbdb;
+  border-left: none;
+}
+#auction-list > li .auction-status .auction-status-label {
+  min-width: 150px;
+  color: white;
+}
+#auction-list > li .auction-status .status-closed > .auction-status-label {
+  background-color: #d9a300;
+  border-color: #d9a300;
+}
+#auction-list > li .auction-status .status-live > .auction-status-label {
+  background-color: #d9a300;
+  border-color: #d9a300;
+}
+#auction-list > li .auction-status .status-upcoming > .auction-status-label {
+  background-color: #d9a300;
+  border-color: #d9a300;
+}
+#auction-list > li .auction-status .auction-status-details {
+  width: 100%;
+}
 #auction-list > li .upcoming-date {
-  margin: 25px auto !important;
   padding: 25px;
   text-align: center;
   text-transform: uppercase;
