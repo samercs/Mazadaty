@@ -286,7 +286,6 @@
     <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
     <Compile Include="Areas\Api\Controllers\AccountController.cs" />
     <Compile Include="Areas\Api\Controllers\TestController.cs" />
-    <Compile Include="ChatHub.cs" />
     <Compile Include="Controllers\AuctionsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Core\ActionResults\ExcelResult.cs" />
@@ -336,6 +335,10 @@
     <Compile Include="Models\User\ChangePasswordViewModel.cs" />
     <Compile Include="Models\User\NotificationModelView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SignalR\Auction.cs" />
+    <Compile Include="SignalR\AuctionHandler.cs" />
+    <Compile Include="SignalR\AuctionHub.cs" />
+    <Compile Include="SignalR\UserHandler.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -568,7 +571,7 @@
     <Content Include="Scripts\wow.js" />
     <Content Include="Scripts\wow.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="test.html" />
+    <None Include="Views\Home\Test.cshtml" />
     <Content Include="404.html" />
     <Content Include="500.html" />
     <Content Include="Web.config">

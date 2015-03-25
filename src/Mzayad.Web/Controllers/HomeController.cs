@@ -19,6 +19,9 @@ namespace Mzayad.Web.Controllers
 
         public async Task<ActionResult> Index(string language)
         {
+            return View("Test");
+            
+            
             if (language == null)
             {
                 return RedirectToAction("Index", new { Language });
@@ -46,11 +49,6 @@ namespace Mzayad.Web.Controllers
             routeInfo.RouteData.Values.Remove("MS_DirectRouteMatches");
             
             return RedirectToRoute(routeInfo.RouteData.Values);
-        }
-
-        public ActionResult Ouch()
-        {
-            throw new Exception("Ouch");
         }
     }
 }
