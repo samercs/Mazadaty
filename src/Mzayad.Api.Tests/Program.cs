@@ -18,9 +18,7 @@ namespace Mzayad.Api.Tests
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44300/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.BaseAddress = new Uri("https://localhost:44300/api/");
 
                 var requestContent = new FormUrlEncodedContent(new[] 
                 {
@@ -36,7 +34,7 @@ namespace Mzayad.Api.Tests
 
                 // add token to authorization header
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", accessToken);
-                var response = await client.GetStringAsync("api/test1");
+                var response = await client.GetStringAsync("test1");
 
                 Console.WriteLine(response);
                 

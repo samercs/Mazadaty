@@ -41,15 +41,14 @@ namespace Mzayad.Web
 
             //app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
-            //// Enable the application to use bearer tokens to authenticate users
-            //app.UseOAuthBearerTokens(new OAuthAuthorizationServerOptions
-            //{
-            //    TokenEndpointPath = new PathString("/token"),
-            //    Provider = new ApplicationOAuthProvider("self"),
-            //    AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
-            //    AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
-            //    //AllowInsecureHttp = true
-            //});
+            app.UseOAuthBearerTokens(new OAuthAuthorizationServerOptions
+            {
+                TokenEndpointPath = new PathString("/api/token"),
+                Provider = new ApplicationOAuthProvider("self"),
+                //AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
+                //AllowInsecureHttp = true
+            });
         }
     }
 }

@@ -41,6 +41,14 @@
                 $("ul").append($("<li>").text(results));
             };
 
+            auctionHub.client.onConnected = function(message) {
+                console.log(message);
+            }
+
+            auctionHub.client.onDisconnected = function(message) {
+                console.log(message);
+            }
+
             $.connection.hub.logging = true;
             $.connection.hub.start().done(onConnection);
 
