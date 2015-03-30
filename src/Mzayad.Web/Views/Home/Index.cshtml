@@ -95,31 +95,29 @@
                         }
                         <div class="auction-detail-item">Retail price: @CurrencyFormatter.Format(auction.RetailPrice)</div>
                     </div>
-                    <div class="auction-status">
-                        @if (auction.Status == AuctionStatus.Closed)
-                        {
-                            <div class="status-closed">
-                                <div class="auction-status-label">Closed</div>
-                                <div class="auction-status-details">...</div>
+                    @if (auction.Status == AuctionStatus.Closed)
+                    {
+                        <div class="auction-status status-closed">
+                            <div class="auction-status-label">Closed</div>
+                            <div class="auction-status-details">...</div>
+                        </div>
+                    }
+                    else if (auction.IsLive())
+                    {
+                        <div class="auction-status status-live">
+                            <div class="auction-status-label">Live</div>
+                            <div class="auction-status-details">...</div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="auction-status status-upcoming">
+                            <div class="auction-status-label">Upcoming</div>
+                            <div class="auction-status-details">
+                                @DateTimeFormatter.ToLocalTime(auction.StartUtc, DateTimeFormatter.Format.Full)
                             </div>
-                        }
-                        else if (auction.IsLive())
-                        {
-                            <div class="status-live">
-                                <div class="auction-status-label">Live</div>
-                                <div class="auction-status-details">...</div>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="status-upcoming">
-                                <div class="auction-status-label">Upcoming</div>
-                                <div class="auction-status-details">
-                                    @DateTimeFormatter.ToLocalTime(auction.StartUtc, DateTimeFormatter.Format.Full)
-                                </div>
-                            </div>
-                        }
-                    </div>
+                        </div>
+                    }
                 </div>
                 <div class="col-md-4 col-sm-6 text-center">
                     <img class="img-responsive" src="@auction.Product.MainImage().ImageMdUrl" alt="@auction.Title">

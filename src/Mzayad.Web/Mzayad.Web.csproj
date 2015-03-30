@@ -298,6 +298,7 @@
     <Compile Include="Core\Attributes\RoleAuthorizeAttribute.cs" />
     <Compile Include="Areas\admin\Models\Categories\AddViewModel.cs" />
     <Compile Include="Areas\admin\Models\Categories\EditViewModel.cs" />
+    <Compile Include="Core\Configuration\CacheKeys.cs" />
     <Compile Include="Core\Configuration\ImageWidthConstants.cs" />
     <Compile Include="Core\Configuration\RouteInfo.cs" />
     <Compile Include="Controllers\UserController.cs" />

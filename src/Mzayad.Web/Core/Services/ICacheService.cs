@@ -10,5 +10,6 @@ namespace Mzayad.Web.Core.Services
         Task<T> TryGet<T>(string key, Func<Task<T>> getValue, TimeSpan expiry) where T : class;
         void Set(string key, object value);
         void Set(string key, object value, TimeSpan expiry);
+        Task Delete(string key);
     }
 }

@@ -44,5 +44,10 @@ namespace Mzayad.Web.Core.Services
         {
             HttpContext.Current.Cache[key] = value;
         }
+
+        public async Task Delete(string key)
+        {
+            await Task.Run(() => HttpContext.Current.Cache.Remove(key));
+        }
     }
 }

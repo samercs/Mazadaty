@@ -27,9 +27,7 @@ namespace Mzayad.Web.Controllers
                 return RedirectToAction("Index", new { Language });
             }
 
-
-
-            var auctions = await CacheService.TryGet("auctions", () => _auctionService.GetCurrentAuctions(Language), TimeSpan.FromDays(1));
+            var auctions = await CacheService.TryGet(CacheKeys.CurrentAuctions, () => _auctionService.GetCurrentAuctions(Language), TimeSpan.FromDays(1));
 
             return View(auctions);
         }

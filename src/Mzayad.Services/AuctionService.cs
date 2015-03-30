@@ -1,4 +1,5 @@
-﻿using Mzayad.Data;
+﻿using System;
+using Mzayad.Data;
 using Mzayad.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -16,12 +17,14 @@ namespace Mzayad.Services
         {
         }
 
-        public async Task<Auction> Add(Auction auction)
+        public async Task<Auction> Add(Auction auction, Action onAdded)
         {
             using (var dc = DataContext())
             {
                 dc.Auctions.Add(auction);
                 await dc.SaveChangesAsync();
+
+                onAdded();
 
                 return await GetAuction(dc, auction.AuctionId);
             }
@@ -90,7 +93,7 @@ namespace Mzayad.Services
         }
 
 
-        public async Task<Auction> Update(Auction auction)
+        public async Task<Auction> Update(Auction auction, Action onUpdated)
         {
             using (var dc = DataContext())
             {
@@ -99,6 +102,8 @@ namespace Mzayad.Services
                 dc.Auctions.Attach(auction);
                 dc.SetModified(auction);
                 await dc.SaveChangesAsync();
+
+                onUpdated();
 
                 return await GetAuction(dc, auction.AuctionId);
             }

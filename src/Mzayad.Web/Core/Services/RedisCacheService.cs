@@ -102,6 +102,11 @@ namespace Mzayad.Web.Core.Services
             CacheDatabase.StringSet(key, Serialize(value), expiry);
         }
 
+        public async Task Delete(string key)
+        {
+            await CacheDatabase.KeyDeleteAsync(key);
+        }
+
         private string GetKey(string key)
         {
             return (_cacheKeyPrefix + ":" + key).ToLowerInvariant();

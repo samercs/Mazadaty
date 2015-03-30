@@ -52,7 +52,7 @@ namespace Mzayad.Models
 
         public bool IsLive()
         {
-            return Status != AuctionStatus.Closed && StartUtc > DateTime.UtcNow;
+            return Status != AuctionStatus.Closed && StartUtc <= DateTime.UtcNow;
         }
 
     }

@@ -52,43 +52,47 @@
         }
 
         .auction-status {
+            position: relative;
+            display: table;
+            border-collapse: separate;
             text-align: center;
 
             .auction-status-label,
             .auction-status-details {
-                position: relative;
-                float: left;
+                display: table-cell;   
                 padding: 12px;
                 font-size: 1.8rem;
                 border: 1px solid #dbdbdb;
                 border-left: none;
             }
 
-            .auction-status-label {
-                
-                min-width: 150px;
-                
-                color: white;
-                
-            }
-
-            .status-closed > .auction-status-label {
-                background-color: @warning;
-                border-color: @warning;
-            }
-
-            .status-live > .auction-status-label {
-                background-color: @warning;
-                border-color: @warning;
-            }
-
-            .status-upcoming > .auction-status-label {
-                background-color: @warning;
-                border-color: @warning;
+            .auction-status-label {     
+                width: 1%;
+                white-space: nowrap;
+                vertical-align: middle;    
+                color: white;         
             }
 
             .auction-status-details {
+                position: relative;
+                float: left;
+                z-index: 2;
                 width: 100%;
+            }
+
+            &.status-closed > .auction-status-label {
+                background-color: @warning;
+                border-color: @warning;
+            }
+
+            &.status-live > .auction-status-label {
+                background-color: @success;
+                border-color: @success;
+            }
+
+            &.status-upcoming > .auction-status-label {
+                background-color: @warning;
+                border-color: @warning;
             }
         }
 
