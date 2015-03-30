@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace Mzayad.Models.Enum
 {
@@ -11,7 +6,11 @@ namespace Mzayad.Models.Enum
     {
         [Description("Auction is not visible to users")]
         Hidden = 1,
+        
         [Description("Auction is visible to users")]
-        Public =2
+        Public,
+
+        [Description("Auction is visible but closed")]
+        Closed
     }
 }

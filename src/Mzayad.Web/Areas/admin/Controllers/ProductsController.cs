@@ -1,4 +1,5 @@
-﻿using Kendo.Mvc.Extensions;
+﻿using System.Drawing;
+using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Mzayad.Models;
 using Mzayad.Services;
@@ -40,26 +41,24 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
         public async Task<ActionResult> Index(string search="")
         {
-            var products = await _productService.GetProductsWithoutCategory("en",search);
+            var products = (await _productService.GetProductsWithoutCategory("en", search)).ToList();
             foreach (var product in products)
             {
                 product.Description = StringFormatter.StripHtmlTags(product.Description);
             }
 
-            var model = new IndexViewModel()
+            var model = new IndexViewModel
             {
                 Search = "",
                 Products = products
             };
 
-
             return View(model);
         }
 
-
         public async Task<JsonResult> GetProducts([DataSourceRequest] DataSourceRequest request,string search=null)
         {
-            var products = await _productService.GetProductsWithoutCategory("en",search);
+            var products = (await _productService.GetProductsWithoutCategory("en", search)).ToList();
             foreach (var product in products)
             {
                 product.Description = StringFormatter.StripHtmlTags(product.Description);
@@ -233,7 +232,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 throw new ArgumentException("Please only upload an image.");
             }
 
-            var uris = await _storageService.SaveImage("products", file, widths);
+            var imageSettings = new ImageSettings
+            {
+                BackgroundColor = Color.White,
+                ForceSquare = true,
+                Widths = widths
+            };
+
+            var uris = await _storageService.SaveImage("products", file, imageSettings);
             if (uris.Length != widths.Length)
             {
                 throw new Exception("Could not upload image, image service did not return expected results.");

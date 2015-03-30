@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Mzayad.Models.Enum;
+using OrangeJetpack.Localization;
 
 namespace Mzayad.Services
 {
-    public class AuctionServices : ServiceBase
+    public class AuctionService : ServiceBase
     {
-        public AuctionServices(IDataContextFactory dataContextFactory)
+        public AuctionService(IDataContextFactory dataContextFactory)
             : base(dataContextFactory)
         {
         }
@@ -22,6 +24,37 @@ namespace Mzayad.Services
                 await dc.SaveChangesAsync();
 
                 return await GetAuction(dc, auction.AuctionId);
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of recent and upcoming public auctions.
+        /// </summary>
+        public async Task<IEnumerable<Auction>> GetCurrentAuctions(string language = "en")
+        {
+            using (var dc = DataContext())
+            {
+                var auctions = await dc.Auctions
+                    .Where(i => i.Status == AuctionStatus.Public)
+                    .Include(i => i.Product.ProductImages)
+                    .Include(i => i.Product.ProductSpecifications.Select(j => j.Specification))
+                    .OrderBy(i => i.StartUtc)
+                    .ToListAsync();
+
+                foreach (var product in auctions.Select(i => i.Product).Distinct())
+                {
+                    // order product images
+                    product.ProductImages = product.ProductImages.OrderBy(i => i.SortOrder).ToList();
+
+                    // localize specifications
+                    foreach (var specification in product.ProductSpecifications)
+                    {
+                        specification.Localize(language, i => i.Value);
+                        specification.Specification.Localize(language, i => i.Name);
+                    }
+                }
+
+                return auctions.Localize(language, i => i.Title);
             }
         }
 

@@ -1,4 +1,6 @@
-﻿using Mzayad.Web.Core.Configuration;
+﻿using System.Threading.Tasks;
+using Mzayad.Services;
+using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
 using System;
 using System.Web.Mvc;
@@ -8,17 +10,27 @@ namespace Mzayad.Web.Controllers
     [RoutePrefix("{language}")]
     public class HomeController : ApplicationController
     {
+        private readonly AuctionService _auctionService;
+        
         public HomeController(IControllerServices controllerServices) : base(controllerServices)
         {
+            _auctionService = new AuctionService(controllerServices.DataContextFactory);
         }
 
-        public ActionResult Index(string language)
+        public async Task<ActionResult> Index(string language)
         {
             if (language == null)
             {
                 return RedirectToAction("Index", new { Language });
             }
 
+            var auctions = await _auctionService.GetCurrentAuctions();
+
+            return View(auctions);
+        }
+
+        public ActionResult SignalR()
+        {
             return View();
         }
 
@@ -39,11 +51,6 @@ namespace Mzayad.Web.Controllers
             routeInfo.RouteData.Values.Remove("MS_DirectRouteMatches");
             
             return RedirectToRoute(routeInfo.RouteData.Values);
-        }
-
-        public ActionResult Ouch()
-        {
-            throw new Exception("Ouch");
         }
     }
 }

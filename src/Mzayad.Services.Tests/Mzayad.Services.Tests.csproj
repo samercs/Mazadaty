@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuctionServiceTests.cs" />
     <Compile Include="Fakes\InMemoryDataContext.cs" />
     <Compile Include="Fakes\InMemoryDataContextFactory.cs" />
     <Compile Include="NotificationServiceTests.cs" />

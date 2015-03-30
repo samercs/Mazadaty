@@ -1,9 +1,18 @@
-﻿@{
+﻿@using Mzayad.Core.Formatting
+@using Mzayad.Models.Enum
+@using OrangeJetpack.Base.Web
+@model IEnumerable<Mzayad.Models.Auction>
+
+@{
     ViewBag.Title = Global.Home;
 }
 
 <style>
     
+    #page-title {
+        display: none;
+    }
+
     .mz-wrapper {
         width: 788px;
         margin: 0 auto;
@@ -47,7 +56,6 @@
 </style>
 
 <div class="jumbotron">
-    <h1>@Global.Welcome</h1>
     @*<div class="mz-wrapper hidden-sm">
         <div class="mz mz-m wow fadeInDown" data-wow-delay="1s"></div>
         <div class="mz mz-z wow fadeInUp" data-wow-delay="1.5s"></div>
@@ -59,4 +67,65 @@
     <div class="clearfix"></div>*@
 </div>
 
-<img src="//az712326.vo.msecnd.net/assets/mz-freehand-635610878999247526.png" style="display: none;" />
+<img src="//az712326.vo.msecnd.net/assets/mz-freehand-635610878999247526.png" style="display: none;" alt="" />
+
+@if (!Model.Any())
+{
+    @Html.StatusMessage("There are no auctions available at this time.", StatusMessageType.Warning)
+
+    return;
+}
+
+<ul id="auction-list" class="list-unstyled">
+    @foreach (var auction in Model)
+    {
+        <li>
+            <div class="row">
+                <div class="col-md-8 col-sm-6">
+                    <div class="auction-details">
+                        <h2 class="auction-detail-item">@auction.Title</h2>
+                        @if (auction.Product.ProductSpecifications.Any())
+                        {
+                            <ul class="auction-detail-item list-unstyled">
+                                @foreach (var specification in auction.Product.ProductSpecifications)
+                                {
+                                    <li>@specification.Specification.Name: @specification.Value</li>
+                                }
+                            </ul>
+                        }
+                        <div class="auction-detail-item">Retail price: @CurrencyFormatter.Format(auction.RetailPrice)</div>
+                    </div>
+                    <div class="auction-status">
+                        @if (auction.Status == AuctionStatus.Closed)
+                        {
+                            <div class="status-closed">
+                                <div class="auction-status-label">Closed</div>
+                                <div class="auction-status-details">...</div>
+                            </div>
+                        }
+                        else if (auction.IsLive())
+                        {
+                            <div class="status-live">
+                                <div class="auction-status-label">Live</div>
+                                <div class="auction-status-details">...</div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="status-upcoming">
+                                <div class="auction-status-label">Upcoming</div>
+                                <div class="auction-status-details">
+                                    @DateTimeFormatter.ToLocalTime(auction.StartUtc, DateTimeFormatter.Format.Full)
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 text-center">
+                    <img class="img-responsive" src="@auction.Product.MainImage().ImageMdUrl" alt="@auction.Title">
+                </div>
+            </div>
+
+        </li>
+    }
+</ul>

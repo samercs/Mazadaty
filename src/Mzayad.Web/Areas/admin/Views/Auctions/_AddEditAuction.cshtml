@@ -24,6 +24,11 @@
                     @Html.DropDownListFor(i => i.Auction.ProductId, Model.ProductList, new { @class = "form-control" })
                     @Html.ValidationMessageFor(i => i.Auction.ProductId, "Please select a product")
                 </div>
+                
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Auction.Title, "Title")
+                    @Html.EditorFor(i => i.Auction.Title)
+                </div>
 
                 <div class="row">
                     <div class="col-md-6">

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mzayad.Models
 {
@@ -23,7 +18,7 @@ namespace Mzayad.Models
         public string ImageLgUrl { get; set; }
 
         [NotMapped]
-        public const string NoImageUrl = "/content/images/no-image.png";
+        public const string NoImageUrl = "//az712326.vo.msecnd.net/assets/no-image-512x512-635627099896729695.png";
 
         [ForeignKey("ProductId")]
         public virtual Product Product { get; set; }

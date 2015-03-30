@@ -30,9 +30,9 @@ namespace Mzayad.Web.Areas.admin.Controllers
             return View(model);
         }
 
-        public async Task<ActionResult> Add()
+        public ActionResult Add()
         {
-            var model = await new AddViewModel().Hydrate();
+            var model = new AddViewModel().Hydrate();
             return View(model);
         }
 

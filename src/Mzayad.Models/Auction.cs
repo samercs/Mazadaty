@@ -2,13 +2,18 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using OrangeJetpack.Localization;
 
 namespace Mzayad.Models
 {
-    public class Auction : ModelBase
+    public class Auction : ModelBase, ILocalizable
     {
-        [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AuctionId { get; set; }
+
+        [Required, Localized]
+        public string Title { get; set; }
+        
         [Required]
         public DateTime StartUtc { get; set; }
         [Required]
@@ -34,6 +39,21 @@ namespace Mzayad.Models
         [ForeignKey("CreatedByUserId")]
         public virtual ApplicationUser CreatedByUser { get; set; }
 
+        [StringLength(128)]
+        public string WonByUserId { get; set; }
+
+        [ForeignKey("WonByUserId")]
+        public virtual ApplicationUser WonByUser { get; set; }
+
+        public DateTime? ClosingUtc { get; set; }
+        public decimal? ClosingPrice { get; set; }
+
         public virtual Product Product { get; set; }
+
+        public bool IsLive()
+        {
+            return Status != AuctionStatus.Closed && StartUtc > DateTime.UtcNow;
+        }
+
     }
 }
