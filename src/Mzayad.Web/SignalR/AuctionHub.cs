@@ -28,26 +28,26 @@ namespace Mzayad.Web.SignalR
             _auctionHandler.SubmitBid(auctionId, userId);
         }
 
-        public override Task OnConnected()
-        {
-            Trace.TraceInformation("Connecting: " + Context.ConnectionId);
+        //public override Task OnConnected()
+        //{
+        //    Trace.TraceInformation("Connecting: " + Context.ConnectionId);
 
-            UserHandler.ConnectedIds.Add(Context.ConnectionId);
+        //    UserHandler.ConnectedIds.Add(Context.ConnectionId);
 
-            Clients.Caller.onConnected("Welcome on " + DateTime.UtcNow);
+        //    Clients.Caller.onConnected("Welcome on " + DateTime.UtcNow);
 
-            return base.OnConnected();
-        }
+        //    return base.OnConnected();
+        //}
 
-        public override Task OnDisconnected(bool stopCalled)
-        {
-            Trace.TraceInformation("Disconnecting: " + Context.ConnectionId);
+        //public override Task OnDisconnected(bool stopCalled)
+        //{
+        //    Trace.TraceInformation("Disconnecting: " + Context.ConnectionId);
 
-            UserHandler.ConnectedIds.Remove(Context.ConnectionId);
+        //    UserHandler.ConnectedIds.Remove(Context.ConnectionId);
 
-            Clients.Caller.onDisconnected("Disconnected on " + DateTime.UtcNow);
+        //    Clients.Caller.onDisconnected("Disconnected on " + DateTime.UtcNow);
 
-            return base.OnDisconnected(false);
-        }
+        //    return base.OnDisconnected(false);
+        //}
     } 
 }

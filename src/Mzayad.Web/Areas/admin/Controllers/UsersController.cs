@@ -18,7 +18,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
     [RoleAuthorize(Role.Administrator)]
     public class UsersController : ApplicationController
     {
-        public UsersController(IControllerServices controllerServices) : base(controllerServices)
+        public UsersController(IAppServices appServices) : base(appServices)
         {
         }
 

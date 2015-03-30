@@ -15,7 +15,7 @@ namespace Mzayad.Web.SignalR
             new Lazy<AuctionHandler>(() => new AuctionHandler(GlobalHost.ConnectionManager.GetHubContext<AuctionHub>().Clients));
 
         private readonly object _updateLock = new object();
-        private readonly TimeSpan _updateInterval = TimeSpan.FromSeconds(2);
+        private readonly TimeSpan _updateInterval = TimeSpan.FromSeconds(1);
         private volatile bool _updatingAuctions;
         private readonly HashSet<Auction> _liveAuctions = new HashSet<Auction>();
 
@@ -24,8 +24,6 @@ namespace Mzayad.Web.SignalR
         private AuctionHandler(IHubConnectionContext<dynamic> clients)
         {
             Clients = clients;
-
-            //Trace.TraceInformation("xxx");
 
             new Timer(UpdateAuctions, null, _updateInterval, _updateInterval);
         }
@@ -106,13 +104,15 @@ namespace Mzayad.Web.SignalR
 
         private void BroadcastAuctionData()
         {
-            //Trace.TraceInformation(dateTime.ToString(CultureInfo.InvariantCulture));
-            //Trace.WriteLine("asdf");
+            Clients.All.updateAuctions(Serialize(_liveAuctions));
+        }
 
-            Clients.All.updateAuctions(JsonConvert.SerializeObject(_liveAuctions, new JsonSerializerSettings
+        private static string Serialize(object value)
+        {
+            return JsonConvert.SerializeObject(value, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
-            }));
+            });
         }
     }
 }

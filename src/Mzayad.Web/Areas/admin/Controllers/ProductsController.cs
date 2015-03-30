@@ -31,10 +31,10 @@ namespace Mzayad.Web.Areas.admin.Controllers
         private readonly IStorageService _storageService;
         private readonly SpecificationService _specificationService;
 
-        public ProductsController(IControllerServices controllerServices,IStorageService storageService) : base(controllerServices)
+        public ProductsController(IAppServices appServices,IStorageService storageService) : base(appServices)
         {
-            _productService=new ProductService(controllerServices.DataContextFactory);
-            _categoryService=new CategoryService(controllerServices.DataContextFactory);
+            _productService=new ProductService(appServices.DataContextFactory);
+            _categoryService=new CategoryService(appServices.DataContextFactory);
             _storageService = storageService;
             _specificationService=new SpecificationService(DataContextFactory);
         }

@@ -148,6 +148,9 @@
     <Reference Include="RestSharp">
       <HintPath>..\..\packages\RestSharp.105.0.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>
+    <Reference Include="StackExchange.Redis">
+      <HintPath>..\..\packages\StackExchange.Redis.1.0.414\lib\net45\StackExchange.Redis.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -301,7 +304,10 @@
     <Compile Include="Areas\admin\Controllers\DocsController.cs" />
     <Compile Include="Core\Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Core\Services\GeolocationService.cs" />
+    <Compile Include="Core\Services\HttpCacheService.cs" />
+    <Compile Include="Core\Services\ICacheService.cs" />
     <Compile Include="Core\Services\IGeolocationService.cs" />
+    <Compile Include="Core\Services\RedisCacheService.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
@@ -313,11 +319,11 @@
     <Compile Include="Core\Identity\Role.cs" />
     <Compile Include="Core\Services\AppSettings.cs" />
     <Compile Include="Core\Services\AuthService.cs" />
-    <Compile Include="Core\Services\ControllerServices.cs" />
+    <Compile Include="Core\Services\AppServices.cs" />
     <Compile Include="Core\Services\CookieService.cs" />
     <Compile Include="Core\Services\IAppSettings.cs" />
     <Compile Include="Core\Services\IAuthService.cs" />
-    <Compile Include="Core\Services\IControllerServices.cs" />
+    <Compile Include="Core\Services\IAppServices.cs" />
     <Compile Include="Core\Services\ICookieService.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />

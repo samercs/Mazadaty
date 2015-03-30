@@ -23,20 +23,20 @@ namespace Mzayad.Web.Controllers
         protected readonly ICookieService CookieService;
         protected readonly IMessageService MessageService;
         protected readonly IGeolocationService GeolocationService;
-        protected readonly EmailService EmailService;
-        protected readonly EmailTemplateService _EmailTemplateService;
+        protected readonly ICacheService CacheService;
+        protected readonly EmailTemplateService EmailTemplateService;
         
-        protected ApplicationController(IControllerServices controllerServices)
+        protected ApplicationController(IAppServices appServices)
         {
-            DataContextFactory = controllerServices.DataContextFactory;
-            AppSettings = controllerServices.AppSettings;
-            AuthService = controllerServices.AuthService;
-            CookieService = controllerServices.CookieService;
-            MessageService = controllerServices.MessageService;
-            GeolocationService = controllerServices.GeolocationService;
+            DataContextFactory = appServices.DataContextFactory;
+            AppSettings = appServices.AppSettings;
+            AuthService = appServices.AuthService;
+            CookieService = appServices.CookieService;
+            MessageService = appServices.MessageService;
+            GeolocationService = appServices.GeolocationService;
+            CacheService = appServices.CacheService;
             
-            EmailService = new EmailService(AppSettings.EmailSettings);
-            _EmailTemplateService=new EmailTemplateService(controllerServices.DataContextFactory);
+            EmailTemplateService=new EmailTemplateService(appServices.DataContextFactory);
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)

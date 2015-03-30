@@ -21,7 +21,7 @@ namespace Mzayad.Web
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
-            builder.RegisterType<ControllerServices>().As<IControllerServices>();
+            builder.RegisterType<AppServices>().As<IAppServices>();
             builder.RegisterType<DataContextFactory>().As<IDataContextFactory>();
             builder.RegisterType<AuthService>().As<IAuthService>();
             builder.RegisterType<CookieService>().As<ICookieService>();
@@ -30,6 +30,8 @@ namespace Mzayad.Web
             
             builder.Register<IAppSettings>(c => new AppSettings(ConfigurationManager.AppSettings));
             builder.Register<IMessageService>(c => new EmailService(c.Resolve<IAppSettings>().EmailSettings));
+
+            builder.Register(GetCacheService).SingleInstance();
 
             return Container(builder);
         }
@@ -41,6 +43,20 @@ namespace Mzayad.Web
             GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
             
             return container;
+        }
+
+        /// <remarks>
+        /// Use standard HttpContext caching when running locally/debug, use Redis in Azure.
+        /// </remarks>
+        private static ICacheService GetCacheService(IComponentContext c)
+        {
+#if DEBUG
+            return new HttpCacheService();
+#else           
+            var connectionString = c.Resolve<IAppSettings>().CacheConnection;
+            var cacheKeyPrefix = "mz";
+            return new RedisCacheService(connectionString, cacheKeyPrefix);
+#endif
         }
     }
 }

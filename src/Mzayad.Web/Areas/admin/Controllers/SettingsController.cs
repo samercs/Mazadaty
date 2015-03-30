@@ -13,7 +13,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
     [RouteArea("admin"), RoutePrefix("settings"), RoleAuthorize(Role.Administrator)]
     public class SettingsController : ApplicationController
     {
-        public SettingsController(IControllerServices controllerServices) : base(controllerServices)
+        public SettingsController(IAppServices appServices) : base(appServices)
         {
         }
 
@@ -25,14 +25,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
         [Route("email-templates")]
         public async Task<ActionResult> EmailTemplates()
         {
-            var model = await _EmailTemplateService.GetAll();
+            var model = await EmailTemplateService.GetAll();
             return View(model);
         }
 
         [Route("edit-email-template")]
         public async Task<ActionResult> EditEmailTemplate(EmailTemplateType id)
         {
-            var template = await _EmailTemplateService.GetByTemplateType(id);
+            var template = await EmailTemplateService.GetByTemplateType(id);
             if (template != null)
             {
                 return View(template);
@@ -45,7 +45,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         [HttpPost, ValidateAntiForgeryToken, ValidateInput(false)]
         public async Task<ActionResult> EditEmailTemplate(EmailTemplateType id, LocalizedContent[] Subject, LocalizedContent[] Message)
         {
-            var template = await _EmailTemplateService.GetByTemplateType(id);
+            var template = await EmailTemplateService.GetByTemplateType(id);
             if (template != null)
             {
                 template.Subject = Subject.Serialize();
@@ -56,7 +56,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
                 template.Message = Message.Serialize();
 
-                await _EmailTemplateService.Save(template);
+                await EmailTemplateService.Save(template);
                 SetStatusMessage("Email template has been edited successfully.");
                 return RedirectToAction("EmailTemplates");
 

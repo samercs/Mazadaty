@@ -13,7 +13,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
     [RoleAuthorize(Role.Administrator)]
     public class DocsController : ApplicationController
     {
-        public DocsController(IControllerServices controllerServices) : base(controllerServices)
+        public DocsController(IAppServices appServices) : base(appServices)
         {
         }
 

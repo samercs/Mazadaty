@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Mzayad.Models;
 using Mzayad.Services;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
@@ -12,9 +15,9 @@ namespace Mzayad.Web.Controllers
     {
         private readonly AuctionService _auctionService;
         
-        public HomeController(IControllerServices controllerServices) : base(controllerServices)
+        public HomeController(IAppServices appServices) : base(appServices)
         {
-            _auctionService = new AuctionService(controllerServices.DataContextFactory);
+            _auctionService = new AuctionService(appServices.DataContextFactory);
         }
 
         public async Task<ActionResult> Index(string language)
@@ -24,7 +27,9 @@ namespace Mzayad.Web.Controllers
                 return RedirectToAction("Index", new { Language });
             }
 
-            var auctions = await _auctionService.GetCurrentAuctions();
+
+
+            var auctions = await CacheService.TryGet("auctions", () => _auctionService.GetCurrentAuctions(Language), TimeSpan.FromDays(1));
 
             return View(auctions);
         }

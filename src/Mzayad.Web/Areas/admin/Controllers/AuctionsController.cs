@@ -32,7 +32,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         private readonly AuctionService _auctionService;
         private readonly NotificationService _notificationService;
         
-        public AuctionsController(IControllerServices controllerServices) : base(controllerServices)
+        public AuctionsController(IAppServices appServices) : base(appServices)
         {
             _productService = new ProductService(DataContextFactory);
             _auctionService = new AuctionService(DataContextFactory);
@@ -100,7 +100,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         {
             var notifications = await _notificationService.GetByCategories(auction.Product.Categories);
 
-            var emailTemplate = await _EmailTemplateService.GetByTemplateType(EmailTemplateType.AuctionCreated, "en");
+            var emailTemplate = await EmailTemplateService.GetByTemplateType(EmailTemplateType.AuctionCreated, "en");
             var urlHelper = new UrlHelper(ControllerContext.RequestContext);
             var auctionUrl = urlHelper.Action("Details", "Auctions", new { area = "", id = auction.AuctionId}, "https");
             var notificationsUrl = urlHelper.Action("Notifications", "User", new { area = "" }, "https");
