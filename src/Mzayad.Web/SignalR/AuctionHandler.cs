@@ -3,6 +3,7 @@ using Microsoft.AspNet.SignalR.Hubs;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
@@ -10,16 +11,16 @@ namespace Mzayad.Web.SignalR
 {
     public class AuctionHandler
     {
-        private readonly static Lazy<AuctionHandler> _instance = 
+        private readonly static Lazy<AuctionHandler> _instance =
             new Lazy<AuctionHandler>(() => new AuctionHandler(GlobalHost.ConnectionManager.GetHubContext<AuctionHub>().Clients));
 
         private readonly object _updateLock = new object();
-        private readonly TimeSpan _updateInterval = TimeSpan.FromSeconds(2);    
+        private readonly TimeSpan _updateInterval = TimeSpan.FromSeconds(2);
         private volatile bool _updatingAuctions;
         private readonly HashSet<Auction> _liveAuctions = new HashSet<Auction>();
-        
+
         private IHubConnectionContext<dynamic> Clients { get; set; }
-        
+
         private AuctionHandler(IHubConnectionContext<dynamic> clients)
         {
             Clients = clients;
@@ -55,23 +56,31 @@ namespace Mzayad.Web.SignalR
                     Duration = 15
                 };
 
-                auction.SecondsLeft = auction.StartUtc.AddMinutes(auction.Duration).Subtract(DateTime.UtcNow).TotalSeconds;
+                auction.SecondsLeft = (int)Math.Floor(auction.StartUtc.AddMinutes(auction.Duration).Subtract(DateTime.UtcNow).TotalSeconds);
 
                 _liveAuctions.Add(auction);
             }
 
-            return JsonConvert.SerializeObject(_liveAuctions);
+            return JsonConvert.SerializeObject(_liveAuctions, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
         }
 
-        //public void SubmitBid(int auctionId)
-        //{
-        //    var auction = _liveAuctions.SingleOrDefault(i => i.AuctionId == auctionId);
-        //    if (auction != null)
-        //    {
-        //        auction.LastBidAmount += 1;
-        //        auction.LastBidderName = DateTime.UtcNow.Ticks.ToString(CultureInfo.InvariantCulture);
-        //    }
-        //}
+        public void SubmitBid(int auctionId, string userId = "anonymous")
+        {
+            Trace.TraceInformation("SubmitBid");
+            Trace.TraceInformation(userId);
+
+            var auction = _liveAuctions.SingleOrDefault(i => i.AuctionId == auctionId);
+            if (auction == null)
+            {
+                return;
+            }
+
+            auction.LastBidAmount = (auction.LastBidAmount ?? 0) + 1;
+            auction.LastBidderName = userId;
+        }
 
         private void UpdateAuctions(object state)
         {
@@ -81,12 +90,12 @@ namespace Mzayad.Web.SignalR
                 {
                     return;
                 }
-                
+
                 _updatingAuctions = true;
 
                 foreach (var auction in _liveAuctions)
                 {
-                    auction.SecondsLeft = auction.StartUtc.AddMinutes(auction.Duration).Subtract(DateTime.UtcNow).TotalSeconds;
+                    auction.SecondsLeft = (int)Math.Floor(auction.StartUtc.AddMinutes(auction.Duration).Subtract(DateTime.UtcNow).TotalSeconds);
                 }
 
                 BroadcastAuctionData();
@@ -99,8 +108,11 @@ namespace Mzayad.Web.SignalR
         {
             //Trace.TraceInformation(dateTime.ToString(CultureInfo.InvariantCulture));
             //Trace.WriteLine("asdf");
-            
-            Clients.All.updateAuctions(JsonConvert.SerializeObject(_liveAuctions));
+
+            Clients.All.updateAuctions(JsonConvert.SerializeObject(_liveAuctions, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            }));
         }
     }
 }

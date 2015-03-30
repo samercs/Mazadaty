@@ -7,8 +7,14 @@ namespace Mzayad.Web.SignalR
     {
         [JsonProperty("id")]
         public int AuctionId { get; set; }
-        public double SecondsLeft { get; set; }
+
+        [JsonProperty("t")]
+        public int SecondsLeft { get; set; }
+
+        [JsonProperty("a")]
         public decimal? LastBidAmount { get; set; }
+        
+        [JsonProperty("u")]
         public string LastBidderName { get; set; }
 
         [JsonIgnore]

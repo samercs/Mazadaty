@@ -19,9 +19,6 @@ namespace Mzayad.Web.Controllers
 
         public async Task<ActionResult> Index(string language)
         {
-            return View("Test");
-            
-            
             if (language == null)
             {
                 return RedirectToAction("Index", new { Language });
@@ -30,6 +27,11 @@ namespace Mzayad.Web.Controllers
             var auctions = await _auctionService.GetCurrentAuctions();
 
             return View(auctions);
+        }
+
+        public ActionResult SignalR()
+        {
+            return View();
         }
 
         [Route("terms-and-conditions")]

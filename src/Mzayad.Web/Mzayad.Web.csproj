@@ -571,7 +571,7 @@
     <Content Include="Scripts\wow.js" />
     <Content Include="Scripts\wow.min.js" />
     <Content Include="Scripts\_references.js" />
-    <None Include="Views\Home\Test.cshtml" />
+    <None Include="Views\Home\SignalR.cshtml" />
     <Content Include="404.html" />
     <Content Include="500.html" />
     <Content Include="Web.config">

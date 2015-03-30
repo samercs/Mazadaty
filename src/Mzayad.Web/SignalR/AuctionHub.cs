@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.AspNet.SignalR;
 using System.Threading.Tasks;
 
@@ -19,27 +20,29 @@ namespace Mzayad.Web.SignalR
             return _auctionHandler.InitAuctions(auctionIds);
         }
 
-        //public void SubmitBid(int auctionId)
+        public void SubmitBid(int auctionId)
+        {
+            var userId = Context.User.Identity.Name;
+
+            _auctionHandler.SubmitBid(auctionId, userId);
+        }
+
+        //public override Task OnConnected()
         //{
-        //    _auctionHandler.SubmitBid(auctionId);
+        //    Trace.TraceInformation("Connecting: " + Context.ConnectionId);
+
+        //    UserHandler.ConnectedIds.Add(Context.ConnectionId);
+
+        //    return base.OnConnected();
         //}
 
-        public override Task OnConnected()
-        {
-            UserHandler.ConnectedIds.Add(Context.ConnectionId);
+        //public override Task OnDisconnected(bool stopCalled)
+        //{
+        //    Trace.TraceInformation("Disconnecting: " + Context.ConnectionId);
 
-            //Trace.TraceInformation(UserHandler.ConnectedIds.Count.ToString());
+        //    UserHandler.ConnectedIds.Remove(Context.ConnectionId);
 
-            return base.OnConnected();
-        }
-
-        public override Task OnDisconnected(bool stopCalled)
-        {
-            UserHandler.ConnectedIds.Remove(Context.ConnectionId);
-
-            //Trace.TraceInformation(UserHandler.ConnectedIds.Count.ToString());
-
-            return base.OnDisconnected(false);
-        }
+        //    return base.OnDisconnected(false);
+        //}
     } 
 }
