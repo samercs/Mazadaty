@@ -1,5 +1,7 @@
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using Mzayad.Web.Core.Configuration;
+using Mzayad.Web.Core.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,7 +19,6 @@ namespace Mzayad.Web.SignalR
         private readonly object _updateLock = new object();
         private readonly TimeSpan _updateInterval = TimeSpan.FromSeconds(1);
         private volatile bool _updatingAuctions;
-        private readonly HashSet<Auction> _liveAuctions = new HashSet<Auction>();
 
         private IHubConnectionContext<dynamic> Clients { get; set; }
 
@@ -36,11 +37,15 @@ namespace Mzayad.Web.SignalR
             }
         }
 
+        public ICacheService CacheService { get; set; }
+
         public string InitAuctions(int[] auctionIds)
         {
+            var liveAuctions = GetLiveAuctions();
+
             foreach (var auctionId in auctionIds)
             {
-                if (_liveAuctions.Any(i => i.AuctionId == auctionId)) // auction already exists in list
+                if (liveAuctions.Any(i => i.AuctionId == auctionId)) // auction already exists in list
                 {
                     continue;
                 }
@@ -54,15 +59,24 @@ namespace Mzayad.Web.SignalR
                     Duration = 15
                 };
 
-                auction.SecondsLeft = (int)Math.Floor(auction.StartUtc.AddMinutes(auction.Duration).Subtract(DateTime.UtcNow).TotalSeconds);
+                auction.UpdateSecondsLeft();
 
-                _liveAuctions.Add(auction);
+                liveAuctions.Add(auction);
             }
 
-            return JsonConvert.SerializeObject(_liveAuctions, new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore
-            });
+            SetLiveAuctions(liveAuctions);
+
+            return Serialize(liveAuctions);
+        }
+
+        private List<Auction> GetLiveAuctions()
+        {
+            return CacheService.TryGet(CacheKeys.LiveAuctions, Enumerable.Empty<Auction>, TimeSpan.FromDays(1)).ToList();
+        }
+
+        private void SetLiveAuctions(IEnumerable<Auction> auctions)
+        {
+            CacheService.Set(CacheKeys.LiveAuctions, auctions);
         }
 
         public void SubmitBid(int auctionId, string userId = "anonymous")
@@ -70,14 +84,20 @@ namespace Mzayad.Web.SignalR
             Trace.TraceInformation("SubmitBid");
             Trace.TraceInformation(userId);
 
-            var auction = _liveAuctions.SingleOrDefault(i => i.AuctionId == auctionId);
+            var liveAuctions = GetLiveAuctions();
+
+            var auction = liveAuctions.SingleOrDefault(i => i.AuctionId == auctionId);
             if (auction == null)
             {
                 return;
             }
 
+            // TODO: log bid
+
             auction.LastBidAmount = (auction.LastBidAmount ?? 0) + 1;
             auction.LastBidderName = userId;
+
+            SetLiveAuctions(liveAuctions);
         }
 
         private void UpdateAuctions(object state)
@@ -91,20 +111,26 @@ namespace Mzayad.Web.SignalR
 
                 _updatingAuctions = true;
 
-                foreach (var auction in _liveAuctions)
+                var liveAuctions = GetLiveAuctions();
+
+                foreach (var auction in liveAuctions)
                 {
-                    auction.SecondsLeft = (int)Math.Floor(auction.StartUtc.AddMinutes(auction.Duration).Subtract(DateTime.UtcNow).TotalSeconds);
+                    auction.UpdateSecondsLeft();
                 }
 
-                BroadcastAuctionData();
+                SetLiveAuctions(liveAuctions);
+
+                UpdateClients(liveAuctions);
 
                 _updatingAuctions = false;
             }
         }
 
-        private void BroadcastAuctionData()
+        private void UpdateClients(IEnumerable<Auction> auctions)
         {
-            Clients.All.updateAuctions(Serialize(_liveAuctions));
+            Trace.TraceInformation("UpdateClients " + DateTime.Now.Ticks);
+            
+            Clients.All.updateAuctions(Serialize(auctions));
         }
 
         private static string Serialize(object value)

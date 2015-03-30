@@ -33,7 +33,7 @@
             var auctionHub = $.connection.auctionHub;
             var onConnection = function() {
                 auctionHub.server.initAuctions(auctionIds).done(function (results) {
-                    $("ul").append($("<li>").text(results));
+                    console.log(results);
                 });
             };
 
@@ -41,15 +41,19 @@
                 $("ul").append($("<li>").text(results));
             };
 
-            auctionHub.client.onConnected = function(message) {
-                console.log(message);
+            auctionHub.client.test = function() {
+                console.log(".");
             }
 
-            auctionHub.client.onDisconnected = function(message) {
-                console.log(message);
-            }
+            //auctionHub.client.onConnected = function(message) {
+            //    console.log(message);
+            //}
 
-            $.connection.hub.logging = true;
+            //auctionHub.client.onDisconnected = function(message) {
+            //    console.log(message);
+            //}
+
+            //$.connection.hub.logging = true;
             $.connection.hub.start().done(onConnection);
 
             $("button").on("click", function() {

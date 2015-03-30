@@ -1,7 +1,8 @@
 ﻿@using Mzayad.Core.Formatting
 @using Mzayad.Models.Enum
+@using Newtonsoft.Json
 @using OrangeJetpack.Base.Web
-@model IEnumerable<Mzayad.Models.Auction>
+@model Mzayad.Web.Models.Home.IndexViewModel
 
 @{
     ViewBag.Title = Global.Home;
@@ -55,6 +56,8 @@
 
 </style>
 
+<a href="/home/signalr">SignalR</a>
+
 <div class="jumbotron">
     @*<div class="mz-wrapper hidden-sm">
         <div class="mz mz-m wow fadeInDown" data-wow-delay="1s"></div>
@@ -69,7 +72,7 @@
 
 <img src="//az712326.vo.msecnd.net/assets/mz-freehand-635610878999247526.png" style="display: none;" alt="" />
 
-@if (!Model.Any())
+@if (!Model.Auctions.Any())
 {
     @Html.StatusMessage("There are no auctions available at this time.", StatusMessageType.Warning)
 
@@ -77,7 +80,7 @@
 }
 
 <ul id="auction-list" class="list-unstyled">
-    @foreach (var auction in Model)
+    @foreach (var auction in Model.Auctions)
     {
         <li>
             <div class="row">
@@ -106,7 +109,11 @@
                     {
                         <div class="auction-status status-live">
                             <div class="auction-status-label">Live</div>
-                            <div class="auction-status-details">...</div>
+                            <div class="auction-status-details" data-auction-id="@auction.AuctionId">
+                                <button type="button" class="submit-bid" data-auction-id="@auction.AuctionId">Bid</button>
+                                Time left: <span class="time-left"></span> seconds
+                                Last bid: KD <span class="last-bid"></span>
+                            </div>
                         </div>
                     }
                     else
@@ -127,3 +134,45 @@
         </li>
     }
 </ul>
+
+@section scripts {
+    
+    <script src="//ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.0.min.js"></script>
+    <script src="/signalr/hubs"></script>
+    <script>
+            $(function () {
+
+                var auctionIds = @JsonConvert.SerializeObject(Model.Auctions.Select(i => i.AuctionId));
+                var auctionHub = $.connection.auctionHub;
+
+                var bidStatuses = $(".bid-status");
+
+                auctionHub.client.updateAuctions = function (results) {
+                    var auctions = $.parseJSON(results);
+                    for (var i = 0; i < auctions.length; ++i) {
+                        var auction = auctions[i];
+
+                        var statusDisplay = $(".auction-status-details[data-auction-id=" + auction.id + "]");
+                        statusDisplay.find(".time-left").text(auction.t);
+                        statusDisplay.find(".last-bid").text(auction.a + " " + (auction.u || ""));
+
+                    }
+                };
+
+                $.connection.hub.logging = true;
+                $.connection.hub.start().done(function() {
+                    auctionHub.server.initAuctions(auctionIds).done(function (results) {
+                        console.log(results);
+                    });
+                });
+
+                $(".submit-bid").on("click", function() {
+                    var $this = $(this);
+                    var auctionId = $this.data("auctionId");        
+                    auctionHub.server.submitBid(auctionId);
+                });
+
+            });
+    </script>
+
+}

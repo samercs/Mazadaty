@@ -1,7 +1,5 @@
-using System;
-using System.Diagnostics;
 using Microsoft.AspNet.SignalR;
-using System.Threading.Tasks;
+using Mzayad.Web.Core.Services;
 
 namespace Mzayad.Web.SignalR
 {
@@ -9,11 +7,12 @@ namespace Mzayad.Web.SignalR
     {
         private readonly AuctionHandler _auctionHandler;
 
-        public AuctionHub() : this(AuctionHandler.Instance) { }
+        public AuctionHub(ICacheService cacheService) : this(cacheService, AuctionHandler.Instance) { }
 
-        public AuctionHub(AuctionHandler auctionHandler)
+        public AuctionHub(ICacheService cacheService, AuctionHandler auctionHandler)
         {
             _auctionHandler = auctionHandler;
+            _auctionHandler.CacheService = cacheService;
         }
 
         public string InitAuctions(int[] auctionIds)

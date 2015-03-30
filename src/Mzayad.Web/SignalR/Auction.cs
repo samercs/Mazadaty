@@ -21,6 +21,11 @@ namespace Mzayad.Web.SignalR
         public DateTime StartUtc { get; set; }
 
         [JsonIgnore]
-        public int Duration { get; set; }    
+        public int Duration { get; set; }
+
+        public void UpdateSecondsLeft()
+        {
+            SecondsLeft = (int)Math.Floor(StartUtc.AddMinutes(Duration).Subtract(DateTime.UtcNow).TotalSeconds);
+        }
     }
 }

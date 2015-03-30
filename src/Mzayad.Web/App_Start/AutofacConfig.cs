@@ -5,6 +5,8 @@ using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
+using Autofac.Integration.SignalR;
+using Microsoft.AspNet.SignalR;
 using Mzayad.Data;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Services.Client.Messaging;
@@ -20,6 +22,7 @@ namespace Mzayad.Web
             builder.RegisterModule(new AutofacWebTypesModule());
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+            builder.RegisterHubs(Assembly.GetExecutingAssembly());
 
             builder.RegisterType<AppServices>().As<IAppServices>();
             builder.RegisterType<DataContextFactory>().As<IDataContextFactory>();
@@ -39,8 +42,9 @@ namespace Mzayad.Web
         private static IContainer Container(ContainerBuilder builder)
         {
             var container = builder.Build();
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+            DependencyResolver.SetResolver(new Autofac.Integration.Mvc.AutofacDependencyResolver(container));
             GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+            GlobalHost.DependencyResolver = new Autofac.Integration.SignalR.AutofacDependencyResolver(container);
             
             return container;
         }

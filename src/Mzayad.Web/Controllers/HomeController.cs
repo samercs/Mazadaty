@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Mzayad.Models;
-using Mzayad.Services;
+﻿using Mzayad.Services;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
 using System;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+using Mzayad.Web.Models.Home;
 
 namespace Mzayad.Web.Controllers
 {
@@ -29,7 +27,12 @@ namespace Mzayad.Web.Controllers
 
             var auctions = await CacheService.TryGet(CacheKeys.CurrentAuctions, () => _auctionService.GetCurrentAuctions(Language), TimeSpan.FromDays(1));
 
-            return View(auctions);
+            var viewModel = new IndexViewModel
+            {
+                Auctions = auctions
+            };
+
+            return View(viewModel);
         }
 
         public ActionResult SignalR()

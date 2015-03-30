@@ -7,8 +7,8 @@ namespace Mzayad.Web.Core.Services
     public class HttpCacheService : ICacheService
     {
         public T Get<T>(string key) where T : class
-        {
-            return HttpContext.Current.Cache[key] as T;
+        {         
+            return HttpRuntime.Cache[key] as T;
         }
 
         public T TryGet<T>(string key, Func<T> getValue, TimeSpan expiry) where T : class
@@ -37,17 +37,17 @@ namespace Mzayad.Web.Core.Services
 
         public void Set(string key, object value)
         {
-            HttpContext.Current.Cache[key] = value;
+            HttpRuntime.Cache[key] = value;
         }
 
         public void Set(string key, object value, TimeSpan expiry)
         {
-            HttpContext.Current.Cache[key] = value;
+            HttpRuntime.Cache[key] = value;
         }
 
         public async Task Delete(string key)
         {
-            await Task.Run(() => HttpContext.Current.Cache.Remove(key));
+            await Task.Run(() => HttpRuntime.Cache.Remove(key));
         }
     }
 }
