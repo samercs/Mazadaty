@@ -274,6 +274,7 @@
     <Compile Include="Areas\admin\Controllers\ReportsController.cs" />
     <Compile Include="Areas\admin\Controllers\SettingsController.cs" />
     <Compile Include="Areas\admin\Controllers\SpecificationsController.cs" />
+    <Compile Include="Areas\admin\Controllers\SponsorsController.cs" />
     <Compile Include="Areas\admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\admin\Models\Auctions\AddEditViewModel.cs" />
     <Compile Include="Areas\admin\Models\Auctions\IndexViewModel.cs" />
@@ -617,6 +618,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\admin\Views\Sponsors\" />
     <Folder Include="Areas\Api\Models\" />
     <Folder Include="Areas\Api\Views\Shared\" />
     <Folder Include="Views\Auctions\" />
