@@ -282,6 +282,7 @@
     <Compile Include="Areas\admin\Models\Products\EditViewModel.cs" />
     <Compile Include="Areas\admin\Models\Products\IndexViewModel.cs" />
     <Compile Include="Areas\admin\Models\Specification\AddViewModel.cs" />
+    <Compile Include="Areas\admin\Models\Sponsors\AddViewModel.cs" />
     <Compile Include="Areas\admin\Models\Users\DetailsViewModel.cs" />
     <Compile Include="Areas\admin\Models\Users\IndexViewModel.cs" />
     <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
@@ -526,6 +527,10 @@
     <Content Include="Content\site-error.css.map">
       <DependentUpon>site-error.css</DependentUpon>
     </Content>
+    <Content Include="Areas\admin\Views\Sponsors\Index.cshtml" />
+    <Content Include="Areas\admin\Views\Sponsors\Add.cshtml" />
+    <Content Include="Areas\admin\Views\Sponsors\_AddEdit.cshtml" />
+    <Content Include="Areas\admin\Views\Sponsors\Edit.cshtml" />
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
@@ -618,7 +623,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\admin\Views\Sponsors\" />
     <Folder Include="Areas\Api\Models\" />
     <Folder Include="Areas\Api\Views\Shared\" />
     <Folder Include="Views\Auctions\" />
