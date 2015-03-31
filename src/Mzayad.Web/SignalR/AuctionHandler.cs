@@ -1,5 +1,8 @@
+using Kendo.Mvc.Infrastructure;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using Mzayad.Data;
+using Mzayad.Services;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
 using Newtonsoft.Json;
@@ -13,12 +16,11 @@ namespace Mzayad.Web.SignalR
 {
     public class AuctionHandler
     {
-        private readonly static Lazy<AuctionHandler> _instance =
-            new Lazy<AuctionHandler>(() => new AuctionHandler(GlobalHost.ConnectionManager.GetHubContext<AuctionHub>().Clients));
-
+        private readonly static Lazy<AuctionHandler> _instance = new Lazy<AuctionHandler>(() => new AuctionHandler(GlobalHost.ConnectionManager.GetHubContext<AuctionHub>().Clients));
         private readonly object _updateLock = new object();
         private readonly TimeSpan _updateInterval = TimeSpan.FromSeconds(1);
         private volatile bool _updatingAuctions;
+        private Timer _timer;
 
         private IHubConnectionContext<dynamic> Clients { get; set; }
 
@@ -26,7 +28,7 @@ namespace Mzayad.Web.SignalR
         {
             Clients = clients;
 
-            new Timer(UpdateAuctions, null, _updateInterval, _updateInterval);
+            _timer = new Timer(UpdateAuctions, null, _updateInterval, _updateInterval);
         }
 
         public static AuctionHandler Instance
@@ -37,7 +39,23 @@ namespace Mzayad.Web.SignalR
             }
         }
 
-        public ICacheService CacheService { get; set; }
+        private AuctionService _auctionService;
+        private ICacheService _cacheService;
+
+        public AuctionHandler Setup(IDataContextFactory dataContextFactory, ICacheService cacheService)
+        {
+            if (_auctionService == null)
+            {
+                _auctionService = new AuctionService(dataContextFactory);
+            }
+            
+            if (_cacheService == null)
+            {
+                _cacheService = cacheService;
+            }
+
+            return this;
+        }
 
         public string InitAuctions(int[] auctionIds)
         {
@@ -71,12 +89,12 @@ namespace Mzayad.Web.SignalR
 
         private List<Auction> GetLiveAuctions()
         {
-            return CacheService.TryGet(CacheKeys.LiveAuctions, Enumerable.Empty<Auction>, TimeSpan.FromDays(1)).ToList();
+            return _cacheService.TryGet(CacheKeys.LiveAuctions, Enumerable.Empty<Auction>, TimeSpan.FromDays(1)).ToList();
         }
 
         private void SetLiveAuctions(IEnumerable<Auction> auctions)
         {
-            CacheService.Set(CacheKeys.LiveAuctions, auctions);
+            _cacheService.Set(CacheKeys.LiveAuctions, auctions);
         }
 
         public void SubmitBid(int auctionId, string userId = "anonymous")

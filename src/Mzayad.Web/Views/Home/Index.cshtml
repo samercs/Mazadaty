@@ -182,7 +182,7 @@
                     return null;
                 };
 
-                //$.connection.hub.logging = true;
+                $.connection.hub.logging = true;
                 $.connection.hub.start().done(function() {
                     auctionHub.server.initAuctions(auctionIds).done(function (results) {
                         console.log(results);
