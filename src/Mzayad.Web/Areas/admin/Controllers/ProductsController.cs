@@ -38,7 +38,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             _categoryService=new CategoryService(appServices.DataContextFactory);
             _storageService = storageService;
             _specificationService=new SpecificationService(DataContextFactory);
-            _sponsorService=new SponsorService(controllerServices.DataContextFactory);
+            _sponsorService = new SponsorService(appServices.DataContextFactory);
         }
 
         public async Task<ActionResult> Index(string search="")

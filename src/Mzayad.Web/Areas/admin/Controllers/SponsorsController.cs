@@ -1,26 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Mzayad.Models;
+﻿using Mzayad.Models;
 using Mzayad.Services;
 using Mzayad.Web.Areas.admin.Models.Sponsors;
 using Mzayad.Web.Controllers;
 using Mzayad.Web.Core.Services;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Information;
 using OrangeJetpack.Localization;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
     public class SponsorsController : ApplicationController
     {
         private readonly SponsorService _sponsorService;
-        // GET: admin/Sponsors
-        public SponsorsController(IControllerServices controllerServices) : base(controllerServices)
+
+        public SponsorsController(IAppServices appServices) : base(appServices)
         {
-            _sponsorService=new SponsorService(controllerServices.DataContextFactory);
+            _sponsorService=new SponsorService(appServices.DataContextFactory);
         }
 
         public async Task<ActionResult> Index()
