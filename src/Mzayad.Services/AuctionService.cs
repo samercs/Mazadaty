@@ -78,13 +78,16 @@ namespace Mzayad.Services
         }
 
         /// <summary>
-        /// Gets a collection of auctions having a collection of AuctionIds.
+        /// Gets a collection of public auctions having a collection of AuctionIds.
         /// </summary>
-        public async Task<IEnumerable<Auction>> GetAuctions(IEnumerable<int> auctionIds)
+        public async Task<IEnumerable<Auction>> GetPublicAuctions(IEnumerable<int> auctionIds)
         {
             using (var dc = DataContext())
             {
-                return await dc.Auctions.Where(i => auctionIds.Contains(i.AuctionId)).ToListAsync();
+                return await dc.Auctions
+                    .Where(i => auctionIds.Contains(i.AuctionId))
+                    .Where(i => i.Status == AuctionStatus.Public)
+                    .ToListAsync();
             }
         }
 

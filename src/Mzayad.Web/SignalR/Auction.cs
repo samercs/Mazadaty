@@ -23,22 +23,33 @@ namespace Mzayad.Web.SignalR
         [JsonIgnore]
         public int Duration { get; set; }
 
-        public Auction(Mzayad.Models.Auction auction) : this(auction.AuctionId, auction.StartUtc, auction.Duration)
-        {           
-        }
+        [JsonIgnore]
+        public decimal BidIncrement { get; set; }
 
-        public Auction(int auctionId, DateTime startUtc, int duration)
+        public Auction(Mzayad.Models.Auction auction)
         {
-            AuctionId = auctionId;
-            StartUtc = startUtc;
-            Duration = duration;
+            AuctionId = auction.AuctionId;
+            StartUtc = auction.StartUtc;
+            Duration = auction.Duration;
+            BidIncrement = auction.BidIncrement;
             
             UpdateSecondsLeft();
         }
 
-        public void UpdateSecondsLeft()
+        private void UpdateSecondsLeft()
         {
             SecondsLeft = (int)Math.Floor(StartUtc.AddMinutes(Duration).Subtract(DateTime.UtcNow).TotalSeconds);
+        }
+
+        public void AddBid(string userId)
+        {
+            LastBidAmount = (LastBidAmount ?? 0) + BidIncrement;
+            LastBidderName = userId;
+
+            if (SecondsLeft < 12)
+            {
+                SecondsLeft = 12;
+            }
         }
     }
 }

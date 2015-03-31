@@ -71,10 +71,10 @@ namespace Mzayad.Web.SignalR
             var missingIds = auctionIds.Except(liveAuctions.Select(i => i.AuctionId)).ToList();
             if (missingIds.Any())
             {
-                var missingAuctions = await _auctionService.GetAuctions(missingIds);
+                var missingAuctions = await _auctionService.GetPublicAuctions(missingIds);
                 liveAuctions.AddRange(missingAuctions.Select(auction => new Auction(auction)));
 
-                SetLiveAuctions(liveAuctions);
+                SetCacheAuctions(liveAuctions);
             }
         }
 
@@ -83,19 +83,20 @@ namespace Mzayad.Web.SignalR
             return _cacheService.TryGet(CacheKeys.LiveAuctions, Enumerable.Empty<Auction>, TimeSpan.FromDays(1)).ToList();
         }
 
-        private void SetLiveAuctions(IEnumerable<Auction> auctions)
+        private void SetCacheAuctions(IEnumerable<Auction> auctions)
         {
             _cacheService.Set(CacheKeys.LiveAuctions, auctions);
         }
 
-        public void SubmitBid(int auctionId, string userId = "anonymous")
+        public void SubmitBid(int auctionId, string userId)
         {
-            Trace.TraceInformation("SubmitBid");
-            Trace.TraceInformation(userId);
-
-            var liveAuctions = GetCachedAuctions();
-
-            var auction = liveAuctions.SingleOrDefault(i => i.AuctionId == auctionId);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return;
+            }
+            
+            var auctions = GetCachedAuctions();
+            var auction = auctions.SingleOrDefault(i => i.AuctionId == auctionId);
             if (auction == null)
             {
                 return;
@@ -103,10 +104,9 @@ namespace Mzayad.Web.SignalR
 
             // TODO: log bid
 
-            auction.LastBidAmount = (auction.LastBidAmount ?? 0) + 1;
-            auction.LastBidderName = userId;
+            auction.AddBid(userId);
 
-            SetLiveAuctions(liveAuctions);
+            SetCacheAuctions(auctions);
         }
 
         private void UpdateAuctions(object state)
@@ -124,10 +124,14 @@ namespace Mzayad.Web.SignalR
 
                 foreach (var auction in liveAuctions)
                 {
-                    auction.UpdateSecondsLeft();
+                    auction.SecondsLeft = Math.Max(auction.SecondsLeft - 1, 0);
+                    if (auction.SecondsLeft == 0)
+                    {
+                        Trace.TraceInformation("Auction {0} should be closed", auction.AuctionId);
+                    }
                 }
 
-                SetLiveAuctions(liveAuctions);
+                SetCacheAuctions(liveAuctions);
 
                 UpdateClients(liveAuctions);
 
