@@ -77,6 +77,17 @@ namespace Mzayad.Services
             }
         }
 
+        /// <summary>
+        /// Gets a collection of auctions having a collection of AuctionIds.
+        /// </summary>
+        public async Task<IEnumerable<Auction>> GetAuctions(IEnumerable<int> auctionIds)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.Auctions.Where(i => auctionIds.Contains(i.AuctionId)).ToListAsync();
+            }
+        }
+
         public async Task<Auction> GetAuction(int auctionId)
         {
             using (var dc = DataContext())

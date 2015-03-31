@@ -1,4 +1,4 @@
-using Kendo.Mvc.Infrastructure;
+using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using Mzayad.Data;
@@ -57,37 +57,28 @@ namespace Mzayad.Web.SignalR
             return this;
         }
 
-        public string InitAuctions(int[] auctionIds)
+        public async Task<string> InitAuctions(int[] auctionIds)
         {
-            var liveAuctions = GetLiveAuctions();
+            var liveAuctions = GetCachedAuctions();
 
-            foreach (var auctionId in auctionIds)
-            {
-                if (liveAuctions.Any(i => i.AuctionId == auctionId)) // auction already exists in list
-                {
-                    continue;
-                }
-
-                // TODO get real auction
-
-                var auction = new Auction
-                {
-                    AuctionId = auctionId,
-                    StartUtc = DateTime.UtcNow.AddMinutes(-1),
-                    Duration = 15
-                };
-
-                auction.UpdateSecondsLeft();
-
-                liveAuctions.Add(auction);
-            }
-
-            SetLiveAuctions(liveAuctions);
+            await TryAddMissingAuctions(auctionIds, liveAuctions);
 
             return Serialize(liveAuctions);
         }
 
-        private List<Auction> GetLiveAuctions()
+        private async Task TryAddMissingAuctions(IEnumerable<int> auctionIds, List<Auction> liveAuctions)
+        {
+            var missingIds = auctionIds.Except(liveAuctions.Select(i => i.AuctionId)).ToList();
+            if (missingIds.Any())
+            {
+                var missingAuctions = await _auctionService.GetAuctions(missingIds);
+                liveAuctions.AddRange(missingAuctions.Select(auction => new Auction(auction)));
+
+                SetLiveAuctions(liveAuctions);
+            }
+        }
+
+        private List<Auction> GetCachedAuctions()
         {
             return _cacheService.TryGet(CacheKeys.LiveAuctions, Enumerable.Empty<Auction>, TimeSpan.FromDays(1)).ToList();
         }
@@ -102,7 +93,7 @@ namespace Mzayad.Web.SignalR
             Trace.TraceInformation("SubmitBid");
             Trace.TraceInformation(userId);
 
-            var liveAuctions = GetLiveAuctions();
+            var liveAuctions = GetCachedAuctions();
 
             var auction = liveAuctions.SingleOrDefault(i => i.AuctionId == auctionId);
             if (auction == null)
@@ -129,7 +120,7 @@ namespace Mzayad.Web.SignalR
 
                 _updatingAuctions = true;
 
-                var liveAuctions = GetLiveAuctions();
+                var liveAuctions = GetCachedAuctions();
 
                 foreach (var auction in liveAuctions)
                 {

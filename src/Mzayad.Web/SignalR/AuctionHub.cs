@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 using Mzayad.Data;
 using Mzayad.Web.Core.Services;
@@ -18,9 +19,9 @@ namespace Mzayad.Web.SignalR
             _auctionHandler = auctionHandler.Setup(dataContextFactory, cacheService);
         }
 
-        public string InitAuctions(int[] auctionIds)
+        public async Task<string> InitAuctions(int[] auctionIds)
         {
-            return _auctionHandler.InitAuctions(auctionIds);
+            return await _auctionHandler.InitAuctions(auctionIds);
         }
 
         public void SubmitBid(int auctionId)

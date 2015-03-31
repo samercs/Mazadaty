@@ -23,6 +23,19 @@ namespace Mzayad.Web.SignalR
         [JsonIgnore]
         public int Duration { get; set; }
 
+        public Auction(Mzayad.Models.Auction auction) : this(auction.AuctionId, auction.StartUtc, auction.Duration)
+        {           
+        }
+
+        public Auction(int auctionId, DateTime startUtc, int duration)
+        {
+            AuctionId = auctionId;
+            StartUtc = startUtc;
+            Duration = duration;
+            
+            UpdateSecondsLeft();
+        }
+
         public void UpdateSecondsLeft()
         {
             SecondsLeft = (int)Math.Floor(StartUtc.AddMinutes(Duration).Subtract(DateTime.UtcNow).TotalSeconds);
