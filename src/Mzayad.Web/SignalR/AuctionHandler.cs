@@ -39,21 +39,27 @@ namespace Mzayad.Web.SignalR
             }
         }
 
-        private AuctionService _auctionService;
         private ICacheService _cacheService;
-
+        private AuctionService _auctionService;
+        private BidService _bidService;
+        
         public AuctionHandler Setup(IDataContextFactory dataContextFactory, ICacheService cacheService)
         {
-            if (_auctionService == null)
-            {
-                _auctionService = new AuctionService(dataContextFactory);
-            }
-            
             if (_cacheService == null)
             {
                 _cacheService = cacheService;
             }
 
+            if (_auctionService == null)
+            {
+                _auctionService = new AuctionService(dataContextFactory);
+            }
+
+            if (_bidService == null)
+            {
+                _bidService = new BidService(dataContextFactory);
+            }
+            
             return this;
         }
 
@@ -88,7 +94,7 @@ namespace Mzayad.Web.SignalR
             _cacheService.Set(CacheKeys.LiveAuctions, auctions);
         }
 
-        public void SubmitBid(int auctionId, string userId)
+        public async Task SubmitBid(int auctionId, string userId, string username)
         {
             if (string.IsNullOrEmpty(userId))
             {
@@ -102,9 +108,11 @@ namespace Mzayad.Web.SignalR
                 return;
             }
 
-            // TODO: log bid
+            var secondsLeft = auction.SecondsLeft;
 
-            auction.AddBid(userId);
+            auction.AddBid(username);
+
+            await _bidService.AddBid(auctionId, userId, auction.LastBidAmount.GetValueOrDefault(), secondsLeft);
 
             SetCacheAuctions(auctions);
         }
@@ -141,8 +149,6 @@ namespace Mzayad.Web.SignalR
 
         private void UpdateClients(IEnumerable<Auction> auctions)
         {
-            Trace.TraceInformation("UpdateClients " + DateTime.Now.Ticks);
-            
             Clients.All.updateAuctions(Serialize(auctions));
         }
 

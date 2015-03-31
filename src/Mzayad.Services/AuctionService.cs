@@ -12,9 +12,12 @@ namespace Mzayad.Services
 {
     public class AuctionService : ServiceBase
     {
+        private readonly BidService _bidService;
+        
         public AuctionService(IDataContextFactory dataContextFactory)
             : base(dataContextFactory)
         {
+            _bidService = new BidService(dataContextFactory);
         }
 
         public async Task<Auction> Add(Auction auction, Action onAdded)
@@ -120,6 +123,29 @@ namespace Mzayad.Services
                 onUpdated();
 
                 return await GetAuction(dc, auction.AuctionId);
+            }
+        }
+
+        /// <summary>
+        /// Closes an auction and records the highest bid.
+        /// </summary>
+        public async Task CloseAuction(int auctionId)
+        {
+            using (var dc = DataContext())
+            {
+                var auction = await dc.Auctions.SingleAsync(i => i.AuctionId == auctionId);
+                auction.ClosedUtc = DateTime.UtcNow;
+                auction.Status = AuctionStatus.Closed;
+
+                var highestBid = await _bidService.GetHighestBid(auctionId);
+                if (highestBid != null)
+                {
+                    auction.WonByUserId = highestBid.UserId;
+                    auction.WonAmount = highestBid.Amount;
+                    auction.WonByBidId = highestBid.BidId;
+                }
+
+                await dc.SaveChangesAsync();
             }
         }
     }

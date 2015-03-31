@@ -161,6 +161,22 @@
     <Compile Include="Migrations\201503311430571_AddBids.Designer.cs">
       <DependentUpon>201503311430571_AddBids.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503311444059_AddBidSecondsLeft.cs" />
+    <Compile Include="Migrations\201503311444059_AddBidSecondsLeft.Designer.cs">
+      <DependentUpon>201503311444059_AddBidSecondsLeft.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503311546325_RenameAuctionWinningFields.cs" />
+    <Compile Include="Migrations\201503311546325_RenameAuctionWinningFields.Designer.cs">
+      <DependentUpon>201503311546325_RenameAuctionWinningFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503311609194_AddAuctionWonByBid.cs" />
+    <Compile Include="Migrations\201503311609194_AddAuctionWonByBid.Designer.cs">
+      <DependentUpon>201503311609194_AddAuctionWonByBid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503311614108_RenameAuctionWonUtcToClosedUtc.cs" />
+    <Compile Include="Migrations\201503311614108_RenameAuctionWonUtcToClosedUtc.Designer.cs">
+      <DependentUpon>201503311614108_RenameAuctionWonUtcToClosedUtc.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -246,6 +262,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503311430571_AddBids.resx">
       <DependentUpon>201503311430571_AddBids.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503311444059_AddBidSecondsLeft.resx">
+      <DependentUpon>201503311444059_AddBidSecondsLeft.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503311546325_RenameAuctionWinningFields.resx">
+      <DependentUpon>201503311546325_RenameAuctionWinningFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503311609194_AddAuctionWonByBid.resx">
+      <DependentUpon>201503311609194_AddAuctionWonByBid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503311614108_RenameAuctionWonUtcToClosedUtc.resx">
+      <DependentUpon>201503311614108_RenameAuctionWonUtcToClosedUtc.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

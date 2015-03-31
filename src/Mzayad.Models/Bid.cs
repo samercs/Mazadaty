@@ -12,12 +12,13 @@ namespace Mzayad.Models
 
         [Required]
         public int AuctionId { get; set; }
-
-        [Required]
         public decimal Amount { get; set; }
+        public int SecondsLeft { get; set; }
 
-        [ForeignKey("UserId")]
+        [Required, ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
+        
+        [Required, ForeignKey("AuctionId")]
         public virtual Auction Auction { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.SignalR;
 using Mzayad.Data;
 using Mzayad.Web.Core.Services;
@@ -24,11 +25,13 @@ namespace Mzayad.Web.SignalR
             return await _auctionHandler.InitAuctions(auctionIds);
         }
 
-        public void SubmitBid(int auctionId)
+        public async Task SubmitBid(int auctionId)
         {
-            var userId = Context.User.Identity.Name;
-
-            _auctionHandler.SubmitBid(auctionId, userId);
+            var identity = Context.User.Identity;
+            var userId = identity.GetUserId();
+            var username = identity.GetUserName();
+            
+            await _auctionHandler.SubmitBid(auctionId, userId, username);
         }
 
         //public override Task OnConnected()

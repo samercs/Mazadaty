@@ -34,7 +34,7 @@ namespace Mzayad.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Properties<decimal>().Configure(prop => prop.HasPrecision(18, 3));
-            
+
             base.OnModelCreating(modelBuilder);
         }
 

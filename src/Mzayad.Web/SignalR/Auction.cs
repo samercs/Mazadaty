@@ -41,10 +41,10 @@ namespace Mzayad.Web.SignalR
             SecondsLeft = (int)Math.Floor(StartUtc.AddMinutes(Duration).Subtract(DateTime.UtcNow).TotalSeconds);
         }
 
-        public void AddBid(string userId)
+        public void AddBid(string username)
         {
             LastBidAmount = (LastBidAmount ?? 0) + BidIncrement;
-            LastBidderName = userId;
+            LastBidderName = username;
 
             if (SecondsLeft < 12)
             {
