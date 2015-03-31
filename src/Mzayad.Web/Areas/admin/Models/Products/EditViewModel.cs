@@ -18,9 +18,11 @@ namespace Mzayad.Web.Areas.admin.Models.Products
         public IEnumerable<int> SelectedCategories { get; set; }
         public IList<EditViewProductSpecification> EditViewProductSpecifications { get; set; }
         public IEnumerable<string> SelectedSpecification { get; set; }
+
+        public IEnumerable<SelectListItem> SponsorList { get; set; } 
         
 
-        public async Task<EditViewModel> Hydrate(ProductService productService, CategoryService categoryService,SpecificationService specificationService, Product product, string languageCode)
+        public async Task<EditViewModel> Hydrate(ProductService productService, CategoryService categoryService,SpecificationService specificationService,SponsorService sponsorService, Product product, string languageCode)
         {
             Product = product;
             Categories = await categoryService.GetCategoriesAsHierarchyAsync(languageCode);
@@ -40,8 +42,15 @@ namespace Mzayad.Web.Areas.admin.Models.Products
             {
                 EditViewProductSpecifications.Add(await new EditViewProductSpecification().Hydrate(product,null,specificationService));
             }
-            
-            
+
+
+            SponsorList = (await sponsorService.GetAll()).Localize("en",i=>i.Name).Select(i => new SelectListItem()
+            {
+                Text = i.Name,
+                Value = i.SponsorId.ToString(),
+                Selected = Product.SponsorId==i.SponsorId
+
+            });
 
             return this;
         }

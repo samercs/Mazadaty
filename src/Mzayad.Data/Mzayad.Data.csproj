@@ -153,6 +153,10 @@
     <Compile Include="Migrations\201503231711556_AddAuctionClosingProperties.Designer.cs">
       <DependentUpon>201503231711556_AddAuctionClosingProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503301122565_AddSponsor_EditProduct.cs" />
+    <Compile Include="Migrations\201503301122565_AddSponsor_EditProduct.Designer.cs">
+      <DependentUpon>201503301122565_AddSponsor_EditProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -232,6 +236,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503231711556_AddAuctionClosingProperties.resx">
       <DependentUpon>201503231711556_AddAuctionClosingProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503301122565_AddSponsor_EditProduct.resx">
+      <DependentUpon>201503301122565_AddSponsor_EditProduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

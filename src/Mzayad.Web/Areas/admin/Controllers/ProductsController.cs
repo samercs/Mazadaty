@@ -30,6 +30,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         private readonly CategoryService _categoryService;
         private readonly IStorageService _storageService;
         private readonly SpecificationService _specificationService;
+        private readonly SponsorService _sponsorService;
 
         public ProductsController(IAppServices appServices,IStorageService storageService) : base(appServices)
         {
@@ -37,6 +38,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             _categoryService=new CategoryService(appServices.DataContextFactory);
             _storageService = storageService;
             _specificationService=new SpecificationService(DataContextFactory);
+            _sponsorService=new SponsorService(controllerServices.DataContextFactory);
         }
 
         public async Task<ActionResult> Index(string search="")
@@ -117,7 +119,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return HttpNotFound();
             }
 
-            var model = await new EditViewModel().Hydrate(_productService, _categoryService,_specificationService, product, "en");
+            var model = await new EditViewModel().Hydrate(_productService, _categoryService,_specificationService,_sponsorService, product, "en");
             model.GoToAuction = goToAuction;
             return View(model);
         }
@@ -150,6 +152,8 @@ namespace Mzayad.Web.Areas.admin.Controllers
             product.Description = model.Product.Description;
             product.RetailPrice = model.Product.RetailPrice;
             product.VideoUrl = model.Product.VideoUrl;
+            product.Name = model.Product.Notes;
+            product.SponsorId = model.Product.SponsorId;
 
             var specificationsContent = GetSpecificationsLocalizedContent(data);
             var productSpecifications = GetProductSpecifications(model, product, specificationsContent);

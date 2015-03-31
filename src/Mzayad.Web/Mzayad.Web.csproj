@@ -281,6 +281,7 @@
     <Compile Include="Areas\admin\Controllers\ReportsController.cs" />
     <Compile Include="Areas\admin\Controllers\SettingsController.cs" />
     <Compile Include="Areas\admin\Controllers\SpecificationsController.cs" />
+    <Compile Include="Areas\admin\Controllers\SponsorsController.cs" />
     <Compile Include="Areas\admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\admin\Models\Auctions\AddEditViewModel.cs" />
     <Compile Include="Areas\admin\Models\Auctions\IndexViewModel.cs" />
@@ -288,6 +289,7 @@
     <Compile Include="Areas\admin\Models\Products\EditViewModel.cs" />
     <Compile Include="Areas\admin\Models\Products\IndexViewModel.cs" />
     <Compile Include="Areas\admin\Models\Specification\AddViewModel.cs" />
+    <Compile Include="Areas\admin\Models\Sponsors\AddViewModel.cs" />
     <Compile Include="Areas\admin\Models\Users\DetailsViewModel.cs" />
     <Compile Include="Areas\admin\Models\Users\IndexViewModel.cs" />
     <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
@@ -344,6 +346,7 @@
     <Compile Include="Models\Account\UserAccountViewModel.cs" />
     <Compile Include="Models\Home\IndexViewModel.cs" />
     <Compile Include="Models\Shared\AddressViewModel.cs" />
+    <Compile Include="Models\Shared\DeleteConfirmationViewModel.cs" />
     <Compile Include="Models\User\ChangePasswordViewModel.cs" />
     <Compile Include="Models\User\NotificationModelView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -537,6 +540,10 @@
     <Content Include="Content\site-error.css.map">
       <DependentUpon>site-error.css</DependentUpon>
     </Content>
+    <Content Include="Areas\admin\Views\Sponsors\Index.cshtml" />
+    <Content Include="Areas\admin\Views\Sponsors\Add.cshtml" />
+    <Content Include="Areas\admin\Views\Sponsors\_AddEdit.cshtml" />
+    <Content Include="Areas\admin\Views\Sponsors\Edit.cshtml" />
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
@@ -626,6 +633,7 @@
     <Content Include="Views\User\_ViewStart.cshtml" />
     <Content Include="Views\User\EditAccount.cshtml" />
     <Content Include="Views\User\Notifications.cshtml" />
+    <Content Include="Views\Shared\DeleteConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
