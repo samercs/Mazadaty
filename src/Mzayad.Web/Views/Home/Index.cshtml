@@ -107,6 +107,10 @@
                     {
                         <div class="auction-status status-live">
                             <div class="auction-status-label">Live</div>
+                            <div class="auction-status-loading">
+                                <i class="fa fa-spin fa-cog"></i>
+                                Loading...
+                            </div>
                             <div class="auction-status-details">
                                 @if (Request.IsAuthenticated)
                                 {
@@ -117,8 +121,8 @@
                                     <a class="btn btn-default" href="@Url.Action("SignIn", "Account")">Bid</a>
                                 }
 
-                                Time left: <span class="time-left"></span> seconds.
-                                <span class="last-bid"></span>
+                                Time left: <span class="auction-time-left"></span> seconds.
+                                <span class="auction-last-bid"></span>
                             </div>
                         </div>
                     }
@@ -157,8 +161,10 @@
                     var $this = $(this);
                     auctionDetails.push({
                         auctionId: $this.data("auctionId"),
-                        timeLeft: $this.find(".time-left"),
-                        lastBid: $this.find(".last-bid")
+                        timeLeft: $this.find(".auction-time-left"),
+                        lastBid: $this.find(".auction-last-bid"),
+                        loading: $this.find(".auction-status-loading"),
+                        details: $this.find(".auction-status-details"),
                     });
                 });
 
@@ -167,12 +173,21 @@
                     for (var i = 0, len = auctions.length; i < len; ++i) {
                         var auction = auctions[i];
                         var auctionDetail = getAuctionDetail(auction.id);
-                        auctionDetail.timeLeft.text(auction.t);
-                        if (auction.a) {
-                            auctionDetail.lastBid.text("KD " + auction.a + " by " + auction.u);
+                        if (auctionDetail) {
+                            auctionDetail.timeLeft.text(auction.t);
+                            if (auction.a) {
+                                auctionDetail.lastBid.text("KD " + auction.a + " by " + auction.u);
+                            }
+                            auctionDetail.loading.hide();
+                            auctionDetail.details.show();
                         }
                     }
                 };
+
+                auctionHub.client.closeAuction = function(auctionId) {
+                    // TODO: update UI on auction close
+                    console.log("Closed auction: " + auctionId);
+                }
 
                 var getAuctionDetail = function(auctionId) {
                     for (var i = 0, len = auctionDetails.length; i < len; i++) {
@@ -182,7 +197,7 @@
                     return null;
                 };
 
-                $.connection.hub.logging = true;
+                //$.connection.hub.logging = true;
                 $.connection.hub.start().done(function() {
                     auctionHub.server.initAuctions(auctionIds).done(function (results) {
                         console.log(results);
@@ -192,7 +207,14 @@
                 $(".submit-bid").on("click", function() {
                     var $this = $(this);
                     var parent = $this.closest(".auction");
-                    var auctionId = parent.data("auctionId");        
+                    var auctionId = parent.data("auctionId");
+
+                    var auctionDetail = getAuctionDetail(auctionId);
+                    if (auctionDetail) {
+                        auctionDetail.details.hide();
+                        auctionDetail.loading.show();
+                    }
+
                     auctionHub.server.submitBid(auctionId);
                 });
 

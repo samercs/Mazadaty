@@ -70,7 +70,7 @@
                 width: 1%;
                 white-space: nowrap;
                 vertical-align: middle;    
-                color: white;         
+                color: white;
             }
 
             .auction-status-details {
@@ -85,9 +85,17 @@
                 border-color: @warning;
             }
 
-            &.status-live > .auction-status-label {
-                background-color: @success;
-                border-color: @success;
+            &.status-live {
+                
+                > .auction-status-label {
+                    background-color: @success;
+                    border-color: @success;
+                }
+
+                > .auction-status-details {
+                    display: none;
+                }
+
             }
 
             &.status-upcoming > .auction-status-label {

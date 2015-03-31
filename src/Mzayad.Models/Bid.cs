@@ -15,10 +15,10 @@ namespace Mzayad.Models
         public decimal Amount { get; set; }
         public int SecondsLeft { get; set; }
 
-        [Required, ForeignKey("UserId")]
+        [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
         
-        [Required, ForeignKey("AuctionId")]
+        [ForeignKey("AuctionId")]
         public virtual Auction Auction { get; set; }
     }
 }

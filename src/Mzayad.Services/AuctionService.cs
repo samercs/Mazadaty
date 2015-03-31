@@ -41,10 +41,11 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 var auctions = await dc.Auctions
-                    .Where(i => i.Status == AuctionStatus.Public)
+                    .Where(i => i.Status != AuctionStatus.Hidden)
                     .Include(i => i.Product.ProductImages)
                     .Include(i => i.Product.ProductSpecifications.Select(j => j.Specification))
-                    .OrderBy(i => i.StartUtc)
+                    .OrderBy(i => i.Status)
+                    .ThenBy(i => i.StartUtc)
                     .ToListAsync();
 
                 foreach (var product in auctions.Select(i => i.Product).Distinct())
@@ -129,7 +130,7 @@ namespace Mzayad.Services
         /// <summary>
         /// Closes an auction and records the highest bid.
         /// </summary>
-        public async Task CloseAuction(int auctionId)
+        public async Task CloseAuction(int auctionId, Action onUpdated)
         {
             using (var dc = DataContext())
             {
@@ -146,6 +147,8 @@ namespace Mzayad.Services
                 }
 
                 await dc.SaveChangesAsync();
+
+                onUpdated();
             }
         }
     }

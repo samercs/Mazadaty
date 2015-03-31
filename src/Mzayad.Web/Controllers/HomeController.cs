@@ -25,11 +25,11 @@ namespace Mzayad.Web.Controllers
                 return RedirectToAction("Index", new { Language });
             }
 
-            var auctions = await CacheService.TryGet(CacheKeys.CurrentAuctions, () => _auctionService.GetCurrentAuctions(Language), TimeSpan.FromDays(1));
+            //var auctions = await CacheService.TryGet(CacheKeys.CurrentAuctions, () => _auctionService.GetCurrentAuctions(Language), TimeSpan.FromDays(1));
 
             var viewModel = new IndexViewModel
             {
-                Auctions = auctions
+                Auctions = await _auctionService.GetCurrentAuctions(Language)
             };
 
             return View(viewModel);

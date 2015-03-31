@@ -38,6 +38,7 @@ namespace Mzayad.Services
                 return await dc.Bids
                     .Where(i => i.AuctionId == auctionId)
                     .OrderByDescending(i => i.Amount)
+                    .ThenByDescending(i => i.CreatedUtc)
                     .FirstOrDefaultAsync();
             }
         }

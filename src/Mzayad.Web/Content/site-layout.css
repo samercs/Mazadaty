@@ -73,6 +73,9 @@
   background-color: #008c00;
   border-color: #008c00;
 }
+#auction-list > li .auction-status.status-live > .auction-status-details {
+  display: none;
+}
 #auction-list > li .auction-status.status-upcoming > .auction-status-label {
   background-color: #d9a300;
   border-color: #d9a300;

@@ -135,7 +135,8 @@ namespace Mzayad.Web.SignalR
                     auction.SecondsLeft = Math.Max(auction.SecondsLeft - 1, 0);
                     if (auction.SecondsLeft == 0)
                     {
-                        Trace.TraceInformation("Auction {0} should be closed", auction.AuctionId);
+                        _auctionService.CloseAuction(auction.AuctionId, () => _cacheService.Delete(CacheKeys.CurrentAuctions)).Wait();
+                        Clients.All.closeAuction(auction.AuctionId);
                     }
                 }
 
