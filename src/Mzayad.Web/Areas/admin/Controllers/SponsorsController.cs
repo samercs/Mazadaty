@@ -83,5 +83,26 @@ namespace Mzayad.Web.Areas.admin.Controllers
             return RedirectToAction("Index");
 
         }
+
+        public async Task<ActionResult> Delete(int id)
+        {
+            return DeleteConfirmation("Delete Confirmation", "Are you sure you want to permanently delete this sponsor?");
+        }
+
+        [HttpPost,ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(int id,Sponsor model)
+        {
+            model = await _sponsorService.GetById(id);
+            if (model == null)
+            {
+                return HttpNotFound();
+            }
+
+            await _sponsorService.Delete(model);
+            SetStatusMessage("Sponsor has been deleted successfully.");
+            return RedirectToAction("Index");
+
+
+        }
     }
 }

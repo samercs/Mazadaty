@@ -334,6 +334,7 @@
     <Compile Include="Models\Account\AccountViewModels.cs" />
     <Compile Include="Models\Account\UserAccountViewModel.cs" />
     <Compile Include="Models\Shared\AddressViewModel.cs" />
+    <Compile Include="Models\Shared\DeleteConfirmationViewModel.cs" />
     <Compile Include="Models\User\ChangePasswordViewModel.cs" />
     <Compile Include="Models\User\NotificationModelView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -620,6 +621,7 @@
     <Content Include="Views\User\_ViewStart.cshtml" />
     <Content Include="Views\User\EditAccount.cshtml" />
     <Content Include="Views\User\Notifications.cshtml" />
+    <Content Include="Views\Shared\DeleteConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

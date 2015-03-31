@@ -51,5 +51,16 @@ namespace Mzayad.Services
                 return sponsor;
             }
         }
+
+        public async Task Delete(Sponsor model)
+        {
+            using (var dc = DataContext())
+            {
+                dc.Sponsors.Attach(model);
+                dc.Sponsors.Remove(model);
+                await dc.SaveChangesAsync();
+                
+            }
+        }
     }
 }

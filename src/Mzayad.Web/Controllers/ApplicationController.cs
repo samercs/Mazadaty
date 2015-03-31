@@ -1,6 +1,7 @@
 ﻿using Mzayad.Data;
 using Mzayad.Services;
 using Mzayad.Web.Core.Services;
+using Mzayad.Web.Models.Shared;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Services.Client.Messaging;
 using System;
@@ -137,6 +138,16 @@ namespace Mzayad.Web.Controllers
             {
                 success = false,
                 error
+            });
+        }
+
+
+        public ActionResult DeleteConfirmation(string pageTitle, string confirmationMessage)
+        {
+            return View("DeleteConfirmation", new DeleteConfirmationViewModel
+            {
+                PageTitle = pageTitle,
+                ConfirmationMessage = confirmationMessage
             });
         }
     }
