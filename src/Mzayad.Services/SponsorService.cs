@@ -52,14 +52,20 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task Delete(Sponsor model)
+        public async Task Delete(Sponsor sponsor)
         {
             using (var dc = DataContext())
             {
-                dc.Sponsors.Attach(model);
-                dc.Sponsors.Remove(model);
-                await dc.SaveChangesAsync();
+                var sponsoredProducts = dc.Products.Where(i => i.SponsorId == sponsor.SponsorId);
+                foreach (var product in sponsoredProducts)
+                {
+                    product.Sponsor = null;
+                }
                 
+                dc.Sponsors.Attach(sponsor);
+                dc.Sponsors.Remove(sponsor);
+                
+                await dc.SaveChangesAsync();           
             }
         }
     }
