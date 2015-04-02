@@ -152,7 +152,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             product.Description = model.Product.Description;
             product.RetailPrice = model.Product.RetailPrice;
             product.VideoUrl = model.Product.VideoUrl;
-            product.Name = model.Product.Notes;
+            product.Notes = model.Product.Notes;
             product.SponsorId = model.Product.SponsorId;
 
             var specificationsContent = GetSpecificationsLocalizedContent(data);
