@@ -81,23 +81,31 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
         public async Task<ActionResult> Delete(int id)
         {
-            return DeleteConfirmation("Delete Confirmation", "Are you sure you want to permanently delete this sponsor?");
-        }
-
-        [HttpPost,ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id,Sponsor model)
-        {
-            model = await _sponsorService.GetById(id);
-            if (model == null)
+            var sponsor = await _sponsorService.GetById(id);
+            if (sponsor == null)
             {
                 return HttpNotFound();
             }
 
-            await _sponsorService.Delete(model);
+            var sponsorName = sponsor.Localize("en", i => i.Name).Name;
+            var confirmation = string.Format("Are you sure you want to permanently delete <strong>{0}</strong>?", sponsorName);
+
+            return DeleteConfirmation("Delete Confirmation", confirmation);
+        }
+
+        [HttpPost,ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(int id, FormCollection formCollection)
+        {
+            var sponsor = await _sponsorService.GetById(id);
+            if (sponsor == null)
+            {
+                return HttpNotFound();
+            }
+
+            await _sponsorService.Delete(sponsor);
+            
             SetStatusMessage("Sponsor has been deleted successfully.");
             return RedirectToAction("Index");
-
-
         }
     }
 }
