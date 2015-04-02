@@ -129,14 +129,14 @@
             
             <section>
                 <div class="form-group">
-                    @Html.LabelFor(i=>i.Product.SponsorId)
-                    @Html.DropDownListFor(i=>i.Product.SponsorId,Model.SponsorList,"No Sponsor",new {@class="form-control"})
+                    @Html.LabelFor(i=>i.Product.SponsorId, "Sponsor") (optional)
+                    @Html.DropDownListFor(i=>i.Product.SponsorId,Model.SponsorList,"No Sponsor", new {@class="form-control"})
                     @Html.ValidationMessageFor(i=>i.Product.SponsorId)
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(i => i.Product.Notes)
-                    @Html.TextAreaFor(i => i.Product.Notes, new { @class = "form-control",@style="height: 150px;" })
-                    <div class="help-block">Note are not visible to site users</div>
+                    @Html.TextAreaFor(i => i.Product.Notes, new { @class = "form-control", @style="height: 150px;" })
+                    <div class="help-block">Note are <strong>not</strong> visible to site users</div>
                     @Html.ValidationMessageFor(i => i.Product.Notes)
                 </div>
             </section>

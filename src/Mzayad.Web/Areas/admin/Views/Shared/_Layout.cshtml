@@ -12,6 +12,10 @@
         a[disabled] {
             opacity: 0.5;
         }
+        .sub-menu-item {
+            padding-left: 24px;
+            font-size: 85%;
+        }
     </style>
 }
 
@@ -21,9 +25,9 @@
             <li><a href="@Url.Action("Index", "Users")"><i class="fa fa-fw fa-pad-right fa-user"></i>Users</a></li>
             <li><a href="@Url.Action("Index", "Auctions")"><i class="fa fa-fw fa-pad-right fa-gavel"></i>Auctions</a></li>
             <li><a href="@Url.Action("Index", "Products")"><i class="fa fa-fw fa-pad-right fa-cube"></i>Products</a></li>
-            <li><a href="@Url.Action("Index", "Categories")"><i class="fa fa-fw fa-pad-right fa-sitemap"></i>Categories</a></li>
-            <li><a href="@Url.Action("Index", "Specifications")"><i class="fa fa-fw fa-pad-right fa-reorder"></i>Specifications</a></li>
-            <li><a href="@Url.Action("Index", "Sponsors")"><i class="fa fa-fw fa-pad-right fa-hand-o-right"></i>Sponsors</a></li>
+            <li class="sub-menu-item"><a href="@Url.Action("Index", "Categories")"><i class="fa fa-fw fa-pad-right fa-sitemap"></i>Categories</a></li>
+            <li class="sub-menu-item"><a href="@Url.Action("Index", "Specifications")"><i class="fa fa-fw fa-pad-right fa-reorder"></i>Specifications</a></li>
+            <li class="sub-menu-item"><a href="@Url.Action("Index", "Sponsors")"><i class="fa fa-fw fa-pad-right fa-money"></i>Sponsors</a></li>
             <li><a href="@Url.Action("EmailTemplates", "Settings")"><i class="fa fa-fw fa-pad-right fa-envelope"></i>Email Templates</a></li> 
             <li><a href="@Url.Action("Index", "Docs")"><i class="fa fa-fw fa-pad-right fa-file-text-o"></i>Development Docs</a></li> 
             <li><a disabled href="@Url.Action("Index", "Reports")"><i class="fa fa-fw fa-pad-right fa-bar-chart"></i>Reports</a></li>
