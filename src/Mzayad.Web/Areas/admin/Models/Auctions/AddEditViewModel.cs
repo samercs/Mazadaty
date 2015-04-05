@@ -73,7 +73,7 @@ namespace Mzayad.Web.Areas.admin.Models.Auctions
         public async Task<AddEditViewModel> Hydrate(ProductService productService, Mzayad.Models.Auction auction)
         {
             Auction = auction;
-            Auction.StartUtc = auction.StartUtc.AddHours(3);
+            Auction.StartUtc = auction.StartUtc.AddHours(3); // UTC > AST
             
             ProductList = await GetProductList(productService, auction.Product);
             StatusList = GetStatusList(Auction.Status);

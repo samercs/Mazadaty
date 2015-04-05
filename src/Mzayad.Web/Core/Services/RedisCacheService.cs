@@ -1,4 +1,6 @@
-﻿using StackExchange.Redis;
+﻿using System.Collections.Generic;
+using System.Linq;
+using StackExchange.Redis;
 using System;
 using System.Collections;
 using System.IO;
@@ -38,7 +40,33 @@ namespace Mzayad.Web.Core.Services
             _connectionString = connectionString;
             _cacheKeyPrefix = cacheKeyPrefix;
         }
-        
+
+        public bool Exists(string key)
+        {
+            key = GetKey(key);
+            return CacheDatabase.KeyExists(key);
+        }
+
+        public void AddToSet(string key, string value)
+        {
+            key = GetKey(key);
+            CacheDatabase.SetAdd(key, value);
+        }
+
+        public IEnumerable<string> GetSetMembers(string key)
+        {
+            key = GetKey(key);
+            
+            var redisValues = CacheDatabase.SetMembers(key);
+            return redisValues.Select(i => i.ToString());
+        }
+
+        public void RemoveFromSet(string key, string value)
+        {
+            key = GetKey(key);
+            CacheDatabase.SetRemove(key, value);
+        }
+
         public T Get<T>(string key) where T : class
         {
             key = GetKey(key);
@@ -104,6 +132,7 @@ namespace Mzayad.Web.Core.Services
 
         public async Task Delete(string key)
         {
+            key = GetKey(key);
             await CacheDatabase.KeyDeleteAsync(key);
         }
 

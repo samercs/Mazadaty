@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 
 namespace Mzayad.Web.SignalR
 {
+    [Serializable]
     internal class Auction
     {
         [JsonProperty("id")]

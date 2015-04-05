@@ -1,4 +1,5 @@
-﻿using Mzayad.Services;
+﻿using System.Diagnostics;
+using Mzayad.Services;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
 using System;
@@ -24,6 +25,8 @@ namespace Mzayad.Web.Controllers
             {
                 return RedirectToAction("Index", new { Language });
             }
+
+            Trace.TraceInformation("Loading Index()...");
 
             //var auctions = await CacheService.TryGet(CacheKeys.CurrentAuctions, () => _auctionService.GetCurrentAuctions(Language), TimeSpan.FromDays(1));
 

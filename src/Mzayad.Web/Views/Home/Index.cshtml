@@ -77,6 +77,8 @@
     return;
 }
 
+@*<button id="clear-cache" type="button">Clear Cache</button>*@
+
 <ul id="auction-list" class="list-unstyled">
     @foreach (var auction in Model.Auctions)
     {
@@ -152,7 +154,7 @@
     <script>
             $(function () {
 
-                var auctionIds = @JsonConvert.SerializeObject(Model.Auctions.Select(i => i.AuctionId));
+                var auctionIds = @JsonConvert.SerializeObject(Model.Auctions.Where(i => i.Status != AuctionStatus.Closed).Select(i => i.AuctionId));
                 var auctionHub = $.connection.auctionHub;
 
                 var auctionDetails = [];
@@ -169,6 +171,7 @@
                 });
 
                 auctionHub.client.updateAuctions = function (results) {
+                    console.log(results);
                     var auctions = $.parseJSON(results);
                     for (var i = 0, len = auctions.length; i < len; ++i) {
                         var auction = auctions[i];
@@ -180,6 +183,8 @@
                             }
                             auctionDetail.loading.hide();
                             auctionDetail.details.show();
+                        } else {
+                            console.log("Cannot find container for auction ID: " + auction.Id);
                         }
                     }
                 };
@@ -202,6 +207,10 @@
                     auctionHub.server.initAuctions(auctionIds).done(function (results) {
                         console.log(results);
                     });
+                });
+
+                $("#clear-cache").on("click", function() {
+                    auctionHub.server.clearAuctions();
                 });
 
                 $(".submit-bid").on("click", function() {

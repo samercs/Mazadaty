@@ -54,6 +54,11 @@ namespace Mzayad.Web
         /// </remarks>
         private static ICacheService GetCacheService(IComponentContext c)
         {
+            //var connectionString = c.Resolve<IAppSettings>().CacheConnection;
+            //var cacheKeyPrefix = "mz";
+            //return new RedisCacheService(connectionString, cacheKeyPrefix);
+
+
 #if DEBUG
             return new HttpCacheService();
 #else           

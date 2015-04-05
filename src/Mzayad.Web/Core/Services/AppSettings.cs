@@ -1,12 +1,13 @@
-using System.Collections.Specialized;
-using System.Configuration;
 using OrangeJetpack.Services.Client.Messaging;
+using System.Collections.Specialized;
 
 namespace Mzayad.Web.Core.Services
 {
     public class AppSettings : IAppSettings
-    {
+    {       
         public EmailSettings EmailSettings { get; private set; }
+        public string SiteName { get; private set; }
+        public string CacheConnection { get; private set; }
         
         public AppSettings(NameValueCollection appSettings)
         {
@@ -17,13 +18,9 @@ namespace Mzayad.Web.Core.Services
                 SenderAddress = "noreply@mzayad.com",
                 SenderName = "Mzayad"
             };
-        }
 
-        public string SiteName
-        {
-            get { return ConfigurationManager.AppSettings["SiteName"]; }
-        }
-
-       
+            SiteName = appSettings["SiteName"];
+            CacheConnection = appSettings["CacheConnection"];
+        }     
     }
 }

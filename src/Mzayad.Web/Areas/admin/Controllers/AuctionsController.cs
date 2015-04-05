@@ -22,7 +22,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using System.Web.Routing;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
@@ -221,7 +220,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             auction.MaximumBid = model.Auction.MaximumBid;
             auction.ProductId = model.Auction.ProductId;
             auction.RetailPrice = model.Auction.RetailPrice;
-            auction.StartUtc = model.Auction.StartUtc.AddHours(-3);
+            auction.StartUtc = model.Auction.StartUtc.AddHours(-3); // AST > UTC
             auction.Status = model.Auction.Status;
             auction.BuyNowEnabled = model.Auction.BuyNowEnabled;
             auction.BuyNowPrice = model.Auction.BuyNowPrice;
