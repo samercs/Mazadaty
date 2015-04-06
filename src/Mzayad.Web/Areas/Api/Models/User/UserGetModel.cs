@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mzayad.Web.Areas.Api.Models
+namespace Mzayad.Web.Areas.Api.Models.User
 {
     public class UserGetModel
     {

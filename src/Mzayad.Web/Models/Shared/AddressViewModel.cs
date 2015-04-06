@@ -24,6 +24,7 @@ namespace Mzayad.Web.Models.Shared
             StateProvince = address.StateProvince;
             PostalCode = address.PostalCode;
             CountryCode = address.CountryCode;
+            
         }
 
         public AddressViewModel Hydrate()

@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity;
 using Mzayad.Web.Core.Configuration;
 using OrangeJetpack.Base.Web.HttpServices;
 
+
 namespace Mzayad.Web.Extensions
 {
     public static class IdentityExtensions
@@ -13,7 +14,7 @@ namespace Mzayad.Web.Extensions
         /// </summary>
         public static string GetDisplayName(this IIdentity identity)
         {
-            var cookieService = new HttpCookieService(new HttpContextWrapper(HttpContext.Current));
+            var cookieService = new CookieService(new HttpContextWrapper(HttpContext.Current));
             var displayName = cookieService.Get(CookieKeys.DisplayName);
             if (string.IsNullOrWhiteSpace(displayName))
             {
