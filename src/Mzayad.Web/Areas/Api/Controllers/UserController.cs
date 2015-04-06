@@ -1,8 +1,13 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System.Net;
+using System.Net.Http;
+using System.Web.Http.Results;
+using Microsoft.AspNet.Identity;
+using Mzayad.Web.Areas.Api.Models;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Models.User;
 using System.Threading.Tasks;
 using System.Web.Http;
+using OrangeJetpack.Base.Core.Formatting;
 
 namespace Mzayad.Web.Areas.Api.Controllers
 {
@@ -16,9 +21,20 @@ namespace Mzayad.Web.Areas.Api.Controllers
             _authService = authService;
         }
 
-        public IHttpActionResult Get()
+        public async Task<IHttpActionResult> Get(string id)
         {
-            return Ok("sure");
+            var curentUser = await _authService.GetUserById(id);
+            var user = new UserGetModel()
+            {
+                Name = NameFormatter.GetFullName(curentUser.FirstName,curentUser.LastName),
+                Email = curentUser.Email,
+                CreatedDate=curentUser.CreatedUtc,
+                PhoneNumber = curentUser.PhoneCountryCode + " " + curentUser.PhoneNumber,
+                UserName=curentUser.UserName
+            };
+
+            return Ok<UserGetModel>(user);
+
         }
 
         [HttpGet, Authorize, Route("test")]
