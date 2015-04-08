@@ -25,6 +25,7 @@ using OrangeJetpack.Base.Core.Security;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Client.Messaging;
 using OrangeJetpack.Services.Models;
+using System.Web.Http;
 
 namespace Mzayad.Web.Areas.Api.Controllers
 {
@@ -183,7 +184,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 Message = string.Format(emailTemplate.Localize("en", i => i.Message).Message, user.FirstName, AppSettings.SiteName)
             };
 
-            await _messageService.SendMessage(email.WithTemplate(this));
+            await _messageService.SendMessage(email.WithTemplate());
         }
 
         private async Task SendNewUserWelcomeEmail(ApplicationUser user)
@@ -198,7 +199,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
 
             try
             {
-                await _messageService.SendMessage(email.WithTemplate(this));
+                await _messageService.SendMessage(email.WithTemplate());
             }
             catch (Exception ex)
             {
@@ -231,7 +232,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
 
             try
             {
-                await _messageService.SendMessage(email.WithTemplate(this));
+                await _messageService.SendMessage(email.WithTemplate());
             }
             catch (Exception ex)
             {
@@ -262,21 +263,31 @@ namespace Mzayad.Web.Areas.Api.Controllers
             return Ok("yup");
         }
 
-        [System.Web.Http.Route("change-password")]
-        public async Task<IHttpActionResult> ChangePassword(ChangePasswordViewModel model)
+        [System.Web.Http.Route("action/password/{id}"),System.Web.Http.HttpPut]
+        public async Task<IHttpActionResult> ChangePassword(string id,ChangePasswordViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                string messages = string.Join("; ", ModelState.Values
+                                        .SelectMany(x => x.Errors)
+                                        .Select(x => x.ErrorMessage));
+                return BadRequest(messages);
             }
 
-            var result = await _authService.ChangePassword(User.Identity, model.CurrentPassword, model.NewPassword);
+            var user = await _authService.GetUserById(id);
+            if (user == null)
+            {
+                return BadRequest("user not found");
+            }
+            var result = await _authService.ChangePassword(user.Id, model.CurrentPassword, model.NewPassword);
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
             }
 
-            return Ok();
+            return Ok("password has been changed");
+
+            
         }
 
         private IHttpActionResult GetErrorResult(IdentityResult result)
