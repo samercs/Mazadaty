@@ -86,57 +86,64 @@
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <div class="auction-details">
-                        <h2 class="auction-detail-item">@auction.Title</h2>
+
+                        <h2 class="auction-title">@auction.Title</h2>
+
+                        @if (auction.Status == AuctionStatus.Closed)
+                        {
+                            <div class="auction-status status-closed">
+                                <div class="auction-status-label">Closed</div>
+                                <div class="auction-status-details">...</div>
+                            </div>
+                        }
+                        else if (auction.IsLive())
+                        {
+                            <div class="auction-status status-live">
+                                <div class="auction-status-label">Live <i class="fa fa-bolt"></i></div>
+                                <div class="auction-status-loading">
+                                    <i class="fa fa-spin fa-cog"></i>
+                                    Loading...
+                                </div>
+                                <div class="auction-status-details">
+
+                                    <div class="auction-time-left"></div>
+                                    <div class="auction-last-bid"></div>
+                                    <div class="auction-bid-actions">
+                                        @if (Request.IsAuthenticated)
+                                        {
+                                            <button type="button" class="btn btn-default submit-bid">Bid</button>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new { ReturnUrl = "/"})">Bid</a>
+                                        }
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="auction-status status-upcoming">
+                                <div class="auction-status-label">Upcoming</div>
+                                <div class="auction-status-details">
+                                    @DateTimeFormatter.ToLocalTime(auction.StartUtc, DateTimeFormatter.Format.Full)
+                                </div>
+                            </div>
+                        }
+
                         @if (auction.Product.ProductSpecifications.Any())
                         {
-                            <ul class="auction-detail-item list-unstyled">
+                            <ul class="auction-specs list-unstyled">
                                 @foreach (var specification in auction.Product.ProductSpecifications)
                                 {
                                     <li>@specification.Specification.Name: @specification.Value</li>
                                 }
                             </ul>
                         }
-                        <div class="auction-detail-item">Retail price: @CurrencyFormatter.Format(auction.RetailPrice)</div>
+                        <div class="auction-price">Retail price: @CurrencyFormatter.Format(auction.RetailPrice)</div>
                     </div>
-                    @if (auction.Status == AuctionStatus.Closed)
-                    {
-                        <div class="auction-status status-closed">
-                            <div class="auction-status-label">Closed</div>
-                            <div class="auction-status-details">...</div>
-                        </div>
-                    }
-                    else if (auction.IsLive())
-                    {
-                        <div class="auction-status status-live">
-                            <div class="auction-status-label">Live</div>
-                            <div class="auction-status-loading">
-                                <i class="fa fa-spin fa-cog"></i>
-                                Loading...
-                            </div>
-                            <div class="auction-status-details">
-                                @if (Request.IsAuthenticated)
-                                {
-                                    <button type="button" class="btn btn-default submit-bid">Bid</button>
-                                }
-                                else
-                                {
-                                    <a class="btn btn-default" href="@Url.Action("SignIn", "Account")">Bid</a>
-                                }
 
-                                Time left: <span class="auction-time-left"></span> seconds.
-                                <span class="auction-last-bid"></span>
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="auction-status status-upcoming">
-                            <div class="auction-status-label">Upcoming</div>
-                            <div class="auction-status-details">
-                                @DateTimeFormatter.ToLocalTime(auction.StartUtc, DateTimeFormatter.Format.Full)
-                            </div>
-                        </div>
-                    }
                 </div>
                 <div class="col-md-4 col-sm-6 text-center">
                     <img class="img-responsive" src="@auction.Product.MainImage().ImageMdUrl" alt="@auction.Title">
@@ -152,7 +159,46 @@
     <script src="//ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.0.min.js"></script>
     <script src="/signalr/hubs"></script>
     <script>
-            $(function () {
+        
+        var TimeUtilities = {
+            getDays: function(days) {
+                return days === 1 ? "1 day " : days + " days ";
+            },
+            getHours: function(hours) {
+                return hours === 1 ? "1 hour " : hours + " hours ";
+            },
+            getMinutes: function(minutes) {
+                return minutes === 1 ? "1 minute " : minutes + " minutes ";
+            },
+            getSeconds: function(seconds) {
+                return seconds === 1 ? "1 second " : seconds + " seconds ";
+            },
+            getTimeLeft: function(seconds) {
+
+                var self = this;
+                var minutes = Math.floor(seconds/60);
+                var hours = Math.floor(minutes/60);
+                var days = Math.floor(hours/24);
+
+                hours = hours-(days*24);
+                minutes = minutes-(days*24*60)-(hours*60);
+                seconds = seconds-(days*24*60*60)-(hours*60*60)-(minutes*60);
+
+                var label = "Time Left: ";
+
+                if (days > 0) {
+                    return label + self.getDays(days) + self.getHours(hours) + self.getMinutes(minutes) + self.getSeconds(seconds);
+                } else if (hours > 0) {
+                    return label + self.getHours(hours) + self.getMinutes(minutes) + self.getSeconds(seconds);
+                } else if (minutes > 0) {
+                    return label + self.getMinutes(minutes) + self.getSeconds(seconds);
+                } else {
+                    return label + self.getSeconds(seconds);
+                }
+            }
+        }
+            
+        $(function () {
 
                 var auctionIds = @JsonConvert.SerializeObject(Model.Auctions.Where(i => i.Status != AuctionStatus.Closed).Select(i => i.AuctionId));
                 var auctionHub = $.connection.auctionHub;
@@ -177,14 +223,18 @@
                         var auction = auctions[i];
                         var auctionDetail = getAuctionDetail(auction.id);
                         if (auctionDetail) {
-                            auctionDetail.timeLeft.text(auction.t);
-                            if (auction.a) {
-                                auctionDetail.lastBid.text("KD " + auction.a + " by " + auction.u);
+
+                            var timeLeft = auction.t;
+                            var bidAmount = auction.a;
+                            var bidUser = auction.u;
+                            
+                            auctionDetail.timeLeft.text(TimeUtilities.getTimeLeft(timeLeft));
+                            if (bidAmount) {
+                                auctionDetail.lastBid.text("Last Bid: KD " + bidAmount + " by " + bidUser);
                             }
+                            
                             auctionDetail.loading.hide();
                             auctionDetail.details.show();
-                        } else {
-                            console.log("Cannot find container for auction ID: " + auction.Id);
                         }
                     }
                 };

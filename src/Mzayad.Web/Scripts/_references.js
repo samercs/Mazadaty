@@ -16,3 +16,4 @@
 /// <reference path="image-uploader.js" />
 /// <reference path="dropzone.js" />
 /// <reference path="jquery.datetimepicker.js" />
+/// <reference path="jquery.signalR-2.2.0.js" />
