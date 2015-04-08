@@ -1,15 +1,41 @@
-﻿using System.Security.Claims;
+﻿using Mzayad.Web.Core.Services;
+using Mzayad.Web.Extensions;
+using OrangeJetpack.Services.Client.Messaging;
+using OrangeJetpack.Services.Models;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Microsoft.AspNet.Identity;
-using Mzayad.Web.Core.Services;
 
 namespace Mzayad.Web.Areas.Api.Controllers
 {
+    public class TestController : ApiController
+    {
+        private readonly IMessageService _messageService;
+        
+        public TestController(IMessageService messageService)
+        {
+            _messageService = messageService;
+        }
+
+        [Route("~/api/test")]
+        public async Task<IHttpActionResult> Get()
+        {
+            var email = new Email
+            {
+                ToAddress = "andy.mehalick@orangejetpack.com",
+                Subject = "test",
+                Message = "test"
+            };
+
+            var result = await _messageService.SendMessage(email.WithTemplate());
+
+            return Ok(result);
+        }
+    }
+     
     [Authorize]
     public class Test1Controller : ApiController
     {
-        private IAuthService _authService { get; set; }
+        private readonly IAuthService _authService;
         
         public Test1Controller(IAuthService authService)
         {
@@ -26,7 +52,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
 
     public class Test2Controller : ApiController
     {
-        private IAuthService _authService { get; set; }
+        private readonly IAuthService _authService;
         
         public Test2Controller(IAuthService authService)
         {
