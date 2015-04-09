@@ -18,7 +18,8 @@ namespace Mzayad.Data
         public IDbSet<Specification> Specifications { get; set; }
         public IDbSet<CategoryNotification> CategoryNotifications { get; set; }
         public IDbSet<Sponsor> Sponsors { get; set; }
-        public IDbSet<Bid> Bids { get; set; } 
+        public IDbSet<Bid> Bids { get; set; }
+        public IDbSet<Avatar> Avatars { get; set; }
 
         public DataContext(): base("DefaultConnection")
         {

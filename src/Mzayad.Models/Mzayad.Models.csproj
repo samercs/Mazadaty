@@ -64,6 +64,7 @@
     <Compile Include="Address.cs" />
     <Compile Include="ApplicationUser.cs" />
     <Compile Include="Auction.cs" />
+    <Compile Include="Avatar.cs" />
     <Compile Include="Bid.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="CategoryNotification.cs" />
