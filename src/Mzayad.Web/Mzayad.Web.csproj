@@ -272,6 +272,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\admin\adminAreaRegistration.cs" />
     <Compile Include="Areas\admin\Controllers\AuctionsController.cs" />
+    <Compile Include="Areas\admin\Controllers\AvatarsController.cs" />
     <Compile Include="Areas\admin\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\admin\Controllers\ProductsController.cs" />
     <Compile Include="Areas\admin\Controllers\ReportsController.cs" />
@@ -634,6 +635,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\admin\Views\Avatar\" />
     <Folder Include="Areas\Api\Views\Shared\" />
     <Folder Include="Views\Auctions\" />
     <Folder Include="Views\Categories\" />

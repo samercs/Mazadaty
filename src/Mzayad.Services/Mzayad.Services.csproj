@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="AddressService.cs" />
     <Compile Include="AuctionService.cs" />
+    <Compile Include="AvatarService.cs" />
     <Compile Include="BidService.cs" />
     <Compile Include="CategoryService.cs" />
     <Compile Include="EmailTemplateService.cs" />
