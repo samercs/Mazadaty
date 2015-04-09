@@ -1,0 +1,37 @@
+﻿@using Kendo.Mvc.UI
+@using Mzayad.Web.Extensions
+@using OrangeJetpack.Base.Web
+@model IEnumerable<Mzayad.Models.Avatar>
+
+@{
+    ViewBag.Title = "Avatars";
+}
+<ul class="link-list">
+    <li>@Html.ActionLink("Upload Avatar", "Add", "Avatars")</li>
+</ul>
+
+@if (!Model.Any())
+{
+    @Html.StatusMessage("no avatar to display.", StatusMessageType.Warning)
+
+    return;
+}
+
+@(Html.Kendo().Grid(Model)
+                .Init(ajax => ajax.Action("GetAvatar", "Avatar"))
+    .Columns(columns =>
+    {
+        columns.Template(i => { }).ClientTemplate("").Title("Image");
+        columns.Bound(i => i.Url).Title("Url");
+        columns.LinkColumn("Details", "products/edit/#=ProductId#");
+    })
+        .ClientRowTemplate(
+            "<tr data-uid='#: uid #'>" +
+                "<td>" +
+                   "<img src='#:data.Url#'  />" +
+                "</td>" +
+                "<td> #: data.Url# </td>" +
+             "</tr>"
+        )
+)
+

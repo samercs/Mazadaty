@@ -172,6 +172,10 @@ namespace Mzayad.Web.Areas.admin.Controllers
         private static List<ProductSpecification> GetProductSpecifications(EditViewModel model, Product product, List<LocalizedContent[]> values)
         {
             var x = 0;
+            if (model.SelectedSpecification == null)
+            {
+                return null;
+            }
             var productSpecificationList = model.SelectedSpecification.Where(str => int.TryParse(str, out x)).Select(str => x).ToList();
             var productSpecifications = new List<ProductSpecification>();
 
