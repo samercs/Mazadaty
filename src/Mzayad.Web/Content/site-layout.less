@@ -32,10 +32,11 @@
         }
 
         .auction-details {
-            margin-bottom: 20px;
-            border-bottom: 2px solid #dbdbdb;
 
-            .auction-detail-item {
+            .auction-title,
+            .auction-status,
+            .auction-specs,
+            .auction-price {
                 margin-bottom: 20px;
             }
 
@@ -52,43 +53,76 @@
         }
 
         .auction-status {
+            position: relative;
+            display: table;
+            border-collapse: separate;
             text-align: center;
+            border: 2px solid;
+            width: 100%;
+
 
             .auction-status-label,
             .auction-status-details {
-                position: relative;
-                float: left;
+                display: table-cell;   
                 padding: 12px;
                 font-size: 1.8rem;
-                border: 1px solid #dbdbdb;
-                border-left: none;
             }
 
-            .auction-status-label {
-                
-                min-width: 150px;
-                
+            .auction-status-label {     
+                width: 150px;
+                white-space: nowrap;
+                vertical-align: middle;    
                 color: white;
-                
-            }
 
-            .status-closed > .auction-status-label {
-                background-color: @warning;
-                border-color: @warning;
-            }
-
-            .status-live > .auction-status-label {
-                background-color: @warning;
-                border-color: @warning;
-            }
-
-            .status-upcoming > .auction-status-label {
-                background-color: @warning;
-                border-color: @warning;
+                i.fa {
+                    font-weight: normal;
+                }
             }
 
             .auction-status-details {
+                position: relative;
+                float: left;
+                z-index: 2;
                 width: 100%;
+            }
+
+            &.status-closed {
+                
+                border-color: @warning;
+                background-color: fade(@warning, 5%);
+                
+                > .auction-status-label {
+                    background-color: @warning;
+                    
+                }
+            }
+
+            &.status-live {
+                
+                border-color: @success;
+                background-color: fade(@success, 5%);
+
+                > .auction-status-label {
+                    background-color: @success;
+                    
+                }
+
+                > .auction-status-details {
+                    display: none;
+                }
+
+            }
+
+            &.status-upcoming {
+                
+                border-color: @warning;
+                background-color: fade(@warning, 5%);
+                
+                > .auction-status-label {
+                    background-color: @warning;
+                    
+                }
+
             }
         }
 

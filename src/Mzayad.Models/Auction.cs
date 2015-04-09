@@ -1,4 +1,6 @@
-﻿using Mzayad.Models.Enum;
+﻿using System.Collections;
+using System.Collections.Generic;
+using Mzayad.Models.Enum;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -36,6 +38,8 @@ namespace Mzayad.Models
         [StringLength(128)]
         public string CreatedByUserId { get; set; }
 
+        public DateTime? ClosedUtc { get; set; }
+        
         [ForeignKey("CreatedByUserId")]
         public virtual ApplicationUser CreatedByUser { get; set; }
 
@@ -45,14 +49,16 @@ namespace Mzayad.Models
         [ForeignKey("WonByUserId")]
         public virtual ApplicationUser WonByUser { get; set; }
 
-        public DateTime? ClosingUtc { get; set; }
-        public decimal? ClosingPrice { get; set; }
-
+        public decimal? WonAmount { get; set; }
+        public int? WonByBidId { get; set; }
+        
         public virtual Product Product { get; set; }
+
+        public virtual ICollection<Bid> Bids { get; set; }
 
         public bool IsLive()
         {
-            return Status != AuctionStatus.Closed && StartUtc > DateTime.UtcNow;
+            return Status != AuctionStatus.Closed && StartUtc <= DateTime.UtcNow;
         }
 
     }

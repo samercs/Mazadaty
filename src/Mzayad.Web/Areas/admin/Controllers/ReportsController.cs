@@ -9,7 +9,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
     [RoleAuthorize(Role.Administrator)]
     public class ReportsController : ApplicationController
     {
-        public ReportsController(IControllerServices controllerServices) : base(controllerServices)
+        public ReportsController(IAppServices appServices) : base(appServices)
         {
         }
 

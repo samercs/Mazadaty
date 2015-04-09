@@ -1,7 +1,8 @@
 ﻿@using Mzayad.Core.Formatting
 @using Mzayad.Models.Enum
+@using Newtonsoft.Json
 @using OrangeJetpack.Base.Web
-@model IEnumerable<Mzayad.Models.Auction>
+@model Mzayad.Web.Models.Home.IndexViewModel
 
 @{
     ViewBag.Title = Global.Home;
@@ -69,57 +70,80 @@
 
 <img src="//az712326.vo.msecnd.net/assets/mz-freehand-635610878999247526.png" style="display: none;" alt="" />
 
-@if (!Model.Any())
+@if (!Model.Auctions.Any())
 {
     @Html.StatusMessage("There are no auctions available at this time.", StatusMessageType.Warning)
 
     return;
 }
 
+@*<button id="clear-cache" type="button">Clear Cache</button>*@
+
 <ul id="auction-list" class="list-unstyled">
-    @foreach (var auction in Model)
+    @foreach (var auction in Model.Auctions)
     {
-        <li>
+        <li class="auction" data-auction-id="@auction.AuctionId">
             <div class="row">
                 <div class="col-md-8 col-sm-6">
                     <div class="auction-details">
-                        <h2 class="auction-detail-item">@auction.Title</h2>
-                        @if (auction.Product.ProductSpecifications.Any())
-                        {
-                            <ul class="auction-detail-item list-unstyled">
-                                @foreach (var specification in auction.Product.ProductSpecifications)
-                                {
-                                    <li>@specification.Specification.Name: @specification.Value</li>
-                                }
-                            </ul>
-                        }
-                        <div class="auction-detail-item">Retail price: @CurrencyFormatter.Format(auction.RetailPrice)</div>
-                    </div>
-                    <div class="auction-status">
+
+                        <h2 class="auction-title">@auction.Title</h2>
+
                         @if (auction.Status == AuctionStatus.Closed)
                         {
-                            <div class="status-closed">
+                            <div class="auction-status status-closed">
                                 <div class="auction-status-label">Closed</div>
                                 <div class="auction-status-details">...</div>
                             </div>
                         }
                         else if (auction.IsLive())
                         {
-                            <div class="status-live">
-                                <div class="auction-status-label">Live</div>
-                                <div class="auction-status-details">...</div>
+                            <div class="auction-status status-live">
+                                <div class="auction-status-label">Live <i class="fa fa-bolt"></i></div>
+                                <div class="auction-status-loading">
+                                    <i class="fa fa-spin fa-cog"></i>
+                                    Loading...
+                                </div>
+                                <div class="auction-status-details">
+
+                                    <div class="auction-time-left"></div>
+                                    <div class="auction-last-bid"></div>
+                                    <div class="auction-bid-actions">
+                                        @if (Request.IsAuthenticated)
+                                        {
+                                            <button type="button" class="btn btn-default submit-bid">Bid</button>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new { ReturnUrl = "/"})">Bid</a>
+                                        }
+                                    </div>
+                                    
+                                </div>
                             </div>
                         }
                         else
                         {
-                            <div class="status-upcoming">
+                            <div class="auction-status status-upcoming">
                                 <div class="auction-status-label">Upcoming</div>
                                 <div class="auction-status-details">
                                     @DateTimeFormatter.ToLocalTime(auction.StartUtc, DateTimeFormatter.Format.Full)
                                 </div>
                             </div>
                         }
+
+                        @if (auction.Product.ProductSpecifications.Any())
+                        {
+                            <ul class="auction-specs list-unstyled">
+                                @foreach (var specification in auction.Product.ProductSpecifications)
+                                {
+                                    <li>@specification.Specification.Name: @specification.Value</li>
+                                }
+                            </ul>
+                        }
+                        <div class="auction-price">Retail price: @CurrencyFormatter.Format(auction.RetailPrice)</div>
                     </div>
+
                 </div>
                 <div class="col-md-4 col-sm-6 text-center">
                     <img class="img-responsive" src="@auction.Product.MainImage().ImageMdUrl" alt="@auction.Title">
@@ -129,3 +153,131 @@
         </li>
     }
 </ul>
+
+@section scripts {
+    
+    <script src="//ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.0.min.js"></script>
+    <script src="/signalr/hubs"></script>
+    <script>
+        
+        var TimeUtilities = {
+            getDays: function(days) {
+                return days === 1 ? "1 day " : days + " days ";
+            },
+            getHours: function(hours) {
+                return hours === 1 ? "1 hour " : hours + " hours ";
+            },
+            getMinutes: function(minutes) {
+                return minutes === 1 ? "1 minute " : minutes + " minutes ";
+            },
+            getSeconds: function(seconds) {
+                return seconds === 1 ? "1 second " : seconds + " seconds ";
+            },
+            getTimeLeft: function(seconds) {
+
+                var self = this;
+                var minutes = Math.floor(seconds/60);
+                var hours = Math.floor(minutes/60);
+                var days = Math.floor(hours/24);
+
+                hours = hours-(days*24);
+                minutes = minutes-(days*24*60)-(hours*60);
+                seconds = seconds-(days*24*60*60)-(hours*60*60)-(minutes*60);
+
+                var label = "Time Left: ";
+
+                if (days > 0) {
+                    return label + self.getDays(days) + self.getHours(hours) + self.getMinutes(minutes) + self.getSeconds(seconds);
+                } else if (hours > 0) {
+                    return label + self.getHours(hours) + self.getMinutes(minutes) + self.getSeconds(seconds);
+                } else if (minutes > 0) {
+                    return label + self.getMinutes(minutes) + self.getSeconds(seconds);
+                } else {
+                    return label + self.getSeconds(seconds);
+                }
+            }
+        }
+            
+        $(function () {
+
+                var auctionIds = @JsonConvert.SerializeObject(Model.Auctions.Where(i => i.Status != AuctionStatus.Closed).Select(i => i.AuctionId));
+                var auctionHub = $.connection.auctionHub;
+
+                var auctionDetails = [];
+                
+                $(".auction").each(function() {
+                    var $this = $(this);
+                    auctionDetails.push({
+                        auctionId: $this.data("auctionId"),
+                        timeLeft: $this.find(".auction-time-left"),
+                        lastBid: $this.find(".auction-last-bid"),
+                        loading: $this.find(".auction-status-loading"),
+                        details: $this.find(".auction-status-details"),
+                    });
+                });
+
+                auctionHub.client.updateAuctions = function (results) {
+                    console.log(results);
+                    var auctions = $.parseJSON(results);
+                    for (var i = 0, len = auctions.length; i < len; ++i) {
+                        var auction = auctions[i];
+                        var auctionDetail = getAuctionDetail(auction.id);
+                        if (auctionDetail) {
+
+                            var timeLeft = auction.t;
+                            var bidAmount = auction.a;
+                            var bidUser = auction.u;
+                            
+                            auctionDetail.timeLeft.text(TimeUtilities.getTimeLeft(timeLeft));
+                            if (bidAmount) {
+                                auctionDetail.lastBid.text("Last Bid: KD " + bidAmount + " by " + bidUser);
+                            }
+                            
+                            auctionDetail.loading.hide();
+                            auctionDetail.details.show();
+                        }
+                    }
+                };
+
+                auctionHub.client.closeAuction = function(auctionId) {
+                    // TODO: update UI on auction close
+                    console.log("Closed auction: " + auctionId);
+                }
+
+                var getAuctionDetail = function(auctionId) {
+                    for (var i = 0, len = auctionDetails.length; i < len; i++) {
+                        if (auctionDetails[i].auctionId === auctionId)
+                            return auctionDetails[i];
+                    }
+                    return null;
+                };
+
+                //$.connection.hub.logging = true;
+                $.connection.hub.start().done(function() {
+                    auctionHub.server.initAuctions(auctionIds).done(function (results) {
+                        console.log(results);
+                    });
+                });
+
+                $("#clear-cache").on("click", function() {
+                    auctionHub.server.clearAuctions();
+                });
+
+                $(".submit-bid").on("click", function() {
+                    var $this = $(this);
+                    var parent = $this.closest(".auction");
+                    var auctionId = parent.data("auctionId");
+
+                    var auctionDetail = getAuctionDetail(auctionId);
+                    if (auctionDetail) {
+                        auctionDetail.details.hide();
+                        auctionDetail.loading.show();
+                    }
+
+                    auctionHub.server.submitBid(auctionId);
+                });
+
+            });
+    </script>
+
+}

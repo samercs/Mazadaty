@@ -17,8 +17,8 @@ namespace Mzayad.Web.Areas.admin.Controllers
     {
         private readonly SpecificationService _specificationService;
 
-        public SpecificationsController(IControllerServices controllerServices)
-            : base(controllerServices)
+        public SpecificationsController(IAppServices appServices)
+            : base(appServices)
         {
             _specificationService = new SpecificationService(DataContextFactory);
         }

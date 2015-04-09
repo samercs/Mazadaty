@@ -1,4 +1,5 @@
-﻿using Mzayad.Data;
+﻿using System;
+using Mzayad.Data;
 using Mzayad.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,17 +12,22 @@ namespace Mzayad.Services
 {
     public class AuctionService : ServiceBase
     {
+        private readonly BidService _bidService;
+        
         public AuctionService(IDataContextFactory dataContextFactory)
             : base(dataContextFactory)
         {
+            _bidService = new BidService(dataContextFactory);
         }
 
-        public async Task<Auction> Add(Auction auction)
+        public async Task<Auction> Add(Auction auction, Action onAdded)
         {
             using (var dc = DataContext())
             {
                 dc.Auctions.Add(auction);
                 await dc.SaveChangesAsync();
+
+                onAdded();
 
                 return await GetAuction(dc, auction.AuctionId);
             }
@@ -35,10 +41,11 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 var auctions = await dc.Auctions
-                    .Where(i => i.Status == AuctionStatus.Public)
+                    .Where(i => i.Status != AuctionStatus.Hidden)
                     .Include(i => i.Product.ProductImages)
                     .Include(i => i.Product.ProductSpecifications.Select(j => j.Specification))
-                    .OrderBy(i => i.StartUtc)
+                    .OrderBy(i => i.Status)
+                    .ThenBy(i => i.StartUtc)
                     .ToListAsync();
 
                 foreach (var product in auctions.Select(i => i.Product).Distinct())
@@ -74,6 +81,20 @@ namespace Mzayad.Services
             }
         }
 
+        /// <summary>
+        /// Gets a collection of public auctions having a collection of AuctionIds.
+        /// </summary>
+        public async Task<IEnumerable<Auction>> GetPublicAuctions(IEnumerable<int> auctionIds)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.Auctions
+                    .Where(i => auctionIds.Contains(i.AuctionId))
+                    .Where(i => i.Status == AuctionStatus.Public)
+                    .ToListAsync();
+            }
+        }
+
         public async Task<Auction> GetAuction(int auctionId)
         {
             using (var dc = DataContext())
@@ -90,7 +111,7 @@ namespace Mzayad.Services
         }
 
 
-        public async Task<Auction> Update(Auction auction)
+        public async Task<Auction> Update(Auction auction, Action onUpdated)
         {
             using (var dc = DataContext())
             {
@@ -100,7 +121,34 @@ namespace Mzayad.Services
                 dc.SetModified(auction);
                 await dc.SaveChangesAsync();
 
+                onUpdated();
+
                 return await GetAuction(dc, auction.AuctionId);
+            }
+        }
+
+        /// <summary>
+        /// Closes an auction and records the highest bid.
+        /// </summary>
+        public async Task CloseAuction(int auctionId, Action onUpdated)
+        {
+            using (var dc = DataContext())
+            {
+                var auction = await dc.Auctions.SingleAsync(i => i.AuctionId == auctionId);
+                auction.ClosedUtc = DateTime.UtcNow;
+                auction.Status = AuctionStatus.Closed;
+
+                var highestBid = await _bidService.GetHighestBid(auctionId);
+                if (highestBid != null)
+                {
+                    auction.WonByUserId = highestBid.UserId;
+                    auction.WonAmount = highestBid.Amount;
+                    auction.WonByBidId = highestBid.BidId;
+                }
+
+                await dc.SaveChangesAsync();
+
+                onUpdated();
             }
         }
     }

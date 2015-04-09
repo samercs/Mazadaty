@@ -25,9 +25,9 @@ namespace Mzayad.Web.Controllers
     {
         private readonly AddressService _addressService;
         
-        public AccountController(IControllerServices controllerServices) : base(controllerServices)
+        public AccountController(IAppServices appServices) : base(appServices)
         {
-            _addressService = new AddressService(controllerServices.DataContextFactory);
+            _addressService = new AddressService(appServices.DataContextFactory);
         }
 
         [Route("sign-in")]
@@ -147,7 +147,7 @@ namespace Mzayad.Web.Controllers
 
         private async Task SendNewUserWelcomeEmail(ApplicationUser user)
         {
-            var template = await _EmailTemplateService.GetByTemplateType(EmailTemplateType.AccountRegistration, Language);
+            var template = await EmailTemplateService.GetByTemplateType(EmailTemplateType.AccountRegistration, Language);
             var email = new Email
             {
                 ToAddress = user.Email,
@@ -157,7 +157,7 @@ namespace Mzayad.Web.Controllers
 
             try
             {
-                await EmailService.SendMessage(email.WithTemplate(this));
+                await MessageService.SendMessage(email.WithTemplate(this));
             }
             catch (Exception ex)
             {
@@ -212,13 +212,13 @@ namespace Mzayad.Web.Controllers
             var user = await AuthService.GetUserByEmail(emailAddress);
             if (user == null)
             {
-                template = await _EmailTemplateService.GetByTemplateType(EmailTemplateType.NoAccount, Language);
+                template = await EmailTemplateService.GetByTemplateType(EmailTemplateType.NoAccount, Language);
                 email.Subject = template.Subject;
                 email.Message = string.Format(template.Message, emailAddress);
             }
             else
             {
-                template = await _EmailTemplateService.GetByTemplateType(EmailTemplateType.PasswordReset, Language);
+                template = await EmailTemplateService.GetByTemplateType(EmailTemplateType.PasswordReset, Language);
                 email.Subject = template.Subject;
                 email.Message = string.Format(template.Message, user.FirstName, GetPasswordResetUrl(user.Email));
             }

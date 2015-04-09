@@ -24,8 +24,8 @@ namespace Mzayad.Web.Controllers
         private readonly AddressService _addressService;
         private readonly CategoryService _categoryService;
         private readonly NotificationService _notificationService;
-        public UserController(IControllerServices controllerServices)
-            : base(controllerServices)
+        public UserController(IAppServices appServices)
+            : base(appServices)
         {
             _addressService = new AddressService(DataContextFactory);
             _categoryService = new CategoryService(DataContextFactory);
@@ -73,7 +73,7 @@ namespace Mzayad.Web.Controllers
         private async Task SendPasswordChangedEmail()
         {
             var user = await AuthService.CurrentUser();
-            var emailTeamplet = await _EmailTemplateService.GetByTemplateType(EmailTemplateType.PasswordChanged);
+            var emailTeamplet = await EmailTemplateService.GetByTemplateType(EmailTemplateType.PasswordChanged);
             var email = new Email
             {
                 ToAddress = user.Email,
@@ -158,7 +158,7 @@ namespace Mzayad.Web.Controllers
 
         private async Task SendEmailChangedEmail(ApplicationUser user, string originalEmail)
         {
-            var emailTemplate = await _EmailTemplateService.GetByTemplateType(EmailTemplateType.EmailChanged);
+            var emailTemplate = await EmailTemplateService.GetByTemplateType(EmailTemplateType.EmailChanged);
             var email = new Email
             {
                 ToAddress = originalEmail,

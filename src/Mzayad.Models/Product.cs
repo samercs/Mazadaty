@@ -28,12 +28,17 @@ namespace Mzayad.Models
         [StringLength(128)]
         public string CreatedByUserId { get; set; }
 
+        public int? SponsorId { get; set; }
+        public string Notes { get; set; }
+
         [ForeignKey("CreatedByUserId")]
         public virtual ApplicationUser CreatedByUser { get; set; }
 
         public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<ProductImage> ProductImages { get; set; }
         public virtual ICollection<ProductSpecification> ProductSpecifications { get; set; }
+        [ForeignKey("SponsorId")]
+        public virtual Sponsor Sponsor { get; set; } 
 
         public ProductImage MainImage()
         {

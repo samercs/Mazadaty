@@ -14,7 +14,9 @@ namespace Mzayad.Data
         IDbSet<ProductImage> ProductImages { get; set; }
         IDbSet<Auction> Auctions { get; set; }
         IDbSet<Specification> Specifications { get; set; }
-        IDbSet<CategoryNotification> CategoryNotifications { get; set; } 
+        IDbSet<CategoryNotification> CategoryNotifications { get; set; }
+        IDbSet<Sponsor> Sponsors { get; set; }
+        IDbSet<Bid> Bids { get; set; }
 
         int SaveChanges();
         Task<int> SaveChangesAsync();

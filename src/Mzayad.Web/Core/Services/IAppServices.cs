@@ -3,7 +3,7 @@ using OrangeJetpack.Services.Client.Messaging;
 
 namespace Mzayad.Web.Core.Services
 {
-    public interface IControllerServices
+    public interface IAppServices
     {
         IDataContextFactory DataContextFactory { get; }
         IAppSettings AppSettings { get; }
@@ -11,5 +11,6 @@ namespace Mzayad.Web.Core.Services
         ICookieService CookieService { get; }
         IMessageService MessageService { get; }
         IGeolocationService GeolocationService { get; }
+        ICacheService CacheService { get; }
     }
 }

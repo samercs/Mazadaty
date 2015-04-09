@@ -16,7 +16,9 @@ namespace Mzayad.Data
         public IDbSet<ProductImage> ProductImages { get; set; }
         public IDbSet<Auction> Auctions { get; set; }
         public IDbSet<Specification> Specifications { get; set; }
-        public IDbSet<CategoryNotification> CategoryNotifications { get; set; } 
+        public IDbSet<CategoryNotification> CategoryNotifications { get; set; }
+        public IDbSet<Sponsor> Sponsors { get; set; }
+        public IDbSet<Bid> Bids { get; set; } 
 
         public DataContext(): base("DefaultConnection")
         {
@@ -32,7 +34,7 @@ namespace Mzayad.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Properties<decimal>().Configure(prop => prop.HasPrecision(18, 3));
-            
+
             base.OnModelCreating(modelBuilder);
         }
 

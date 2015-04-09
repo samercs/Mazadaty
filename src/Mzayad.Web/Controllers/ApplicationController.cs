@@ -1,6 +1,7 @@
 ﻿using Mzayad.Data;
 using Mzayad.Services;
 using Mzayad.Web.Core.Services;
+using Mzayad.Web.Models.Shared;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Services.Client.Messaging;
 using System;
@@ -23,20 +24,20 @@ namespace Mzayad.Web.Controllers
         protected readonly ICookieService CookieService;
         protected readonly IMessageService MessageService;
         protected readonly IGeolocationService GeolocationService;
-        protected readonly EmailService EmailService;
-        protected readonly EmailTemplateService _EmailTemplateService;
+        protected readonly ICacheService CacheService;
+        protected readonly EmailTemplateService EmailTemplateService;
         
-        protected ApplicationController(IControllerServices controllerServices)
+        protected ApplicationController(IAppServices appServices)
         {
-            DataContextFactory = controllerServices.DataContextFactory;
-            AppSettings = controllerServices.AppSettings;
-            AuthService = controllerServices.AuthService;
-            CookieService = controllerServices.CookieService;
-            MessageService = controllerServices.MessageService;
-            GeolocationService = controllerServices.GeolocationService;
+            DataContextFactory = appServices.DataContextFactory;
+            AppSettings = appServices.AppSettings;
+            AuthService = appServices.AuthService;
+            CookieService = appServices.CookieService;
+            MessageService = appServices.MessageService;
+            GeolocationService = appServices.GeolocationService;
+            CacheService = appServices.CacheService;
             
-            EmailService = new EmailService(AppSettings.EmailSettings);
-            _EmailTemplateService=new EmailTemplateService(controllerServices.DataContextFactory);
+            EmailTemplateService=new EmailTemplateService(appServices.DataContextFactory);
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -137,6 +138,16 @@ namespace Mzayad.Web.Controllers
             {
                 success = false,
                 error
+            });
+        }
+
+
+        public ActionResult DeleteConfirmation(string pageTitle, string confirmationMessage)
+        {
+            return View("DeleteConfirmation", new DeleteConfirmationViewModel
+            {
+                PageTitle = pageTitle,
+                ConfirmationMessage = confirmationMessage
             });
         }
     }

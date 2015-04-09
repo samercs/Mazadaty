@@ -15,6 +15,8 @@ namespace Mzayad.Services.Tests.Fakes
         public IDbSet<Auction> Auctions { get; set; }
         public IDbSet<Specification> Specifications { get; set; }
         public IDbSet<CategoryNotification> CategoryNotifications { get; set; }
+        public IDbSet<Sponsor> Sponsors { get; set; }
+        public IDbSet<Bid> Bids { get; set; }
 
         public InMemoryDataContext()
         {

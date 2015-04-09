@@ -1,23 +1,25 @@
+using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using Mzayad.Data;
+using Mzayad.Services;
+using Mzayad.Web.Core.Configuration;
+using Mzayad.Web.Core.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 
 namespace Mzayad.Web.SignalR
 {
     public class AuctionHandler
     {
-        private readonly static Lazy<AuctionHandler> _instance =
-            new Lazy<AuctionHandler>(() => new AuctionHandler(GlobalHost.ConnectionManager.GetHubContext<AuctionHub>().Clients));
-
+        private readonly static Lazy<AuctionHandler> _instance = new Lazy<AuctionHandler>(() => new AuctionHandler(GlobalHost.ConnectionManager.GetHubContext<AuctionHub>().Clients));
         private readonly object _updateLock = new object();
-        private readonly TimeSpan _updateInterval = TimeSpan.FromSeconds(2);
+        private readonly TimeSpan _updateInterval = TimeSpan.FromSeconds(1);
         private volatile bool _updatingAuctions;
-        private readonly HashSet<Auction> _liveAuctions = new HashSet<Auction>();
+        private Timer _timer;
 
         private IHubConnectionContext<dynamic> Clients { get; set; }
 
@@ -25,9 +27,7 @@ namespace Mzayad.Web.SignalR
         {
             Clients = clients;
 
-            //Trace.TraceInformation("xxx");
-
-            new Timer(UpdateAuctions, null, _updateInterval, _updateInterval);
+            _timer = new Timer(UpdateAuctions, null, _updateInterval, _updateInterval);
         }
 
         public static AuctionHandler Instance
@@ -38,48 +38,83 @@ namespace Mzayad.Web.SignalR
             }
         }
 
-        public string InitAuctions(int[] auctionIds)
+        private ICacheService _cacheService;
+        private AuctionService _auctionService;
+        private BidService _bidService;
+        
+        public AuctionHandler Setup(IDataContextFactory dataContextFactory, ICacheService cacheService)
         {
-            foreach (var auctionId in auctionIds)
+            if (_cacheService == null)
             {
-                if (_liveAuctions.Any(i => i.AuctionId == auctionId)) // auction already exists in list
-                {
-                    continue;
-                }
-
-                // TODO get real auction
-
-                var auction = new Auction
-                {
-                    AuctionId = auctionId,
-                    StartUtc = DateTime.UtcNow.AddMinutes(-1),
-                    Duration = 15
-                };
-
-                auction.SecondsLeft = (int)Math.Floor(auction.StartUtc.AddMinutes(auction.Duration).Subtract(DateTime.UtcNow).TotalSeconds);
-
-                _liveAuctions.Add(auction);
+                _cacheService = cacheService;
             }
 
-            return JsonConvert.SerializeObject(_liveAuctions, new JsonSerializerSettings
+            if (_auctionService == null)
             {
-                NullValueHandling = NullValueHandling.Ignore
-            });
+                _auctionService = new AuctionService(dataContextFactory);
+            }
+
+            if (_bidService == null)
+            {
+                _bidService = new BidService(dataContextFactory);
+            }
+            
+            return this;
         }
 
-        public void SubmitBid(int auctionId, string userId = "anonymous")
+        public async Task ClearAuctions()
         {
-            Trace.TraceInformation("SubmitBid");
-            Trace.TraceInformation(userId);
-
-            var auction = _liveAuctions.SingleOrDefault(i => i.AuctionId == auctionId);
-            if (auction == null)
+            var cacheKeys = _cacheService.GetSetMembers("LiveAuctionKeys");
+            foreach (var cacheKey in cacheKeys)
             {
-                return;
+                await _cacheService.Delete(cacheKey);
             }
 
-            auction.LastBidAmount = (auction.LastBidAmount ?? 0) + 1;
-            auction.LastBidderName = userId;
+            await _cacheService.Delete("LiveAuctionKeys");
+        }
+
+        public async Task<string> InitAuctions(int[] auctionIds)
+        {
+            Trace.TraceInformation("InitAuctions(" + string.Join(",", auctionIds) + ")");
+            
+            var liveAuctions = new List<Auction>();
+            var publicAuctions = await _auctionService.GetPublicAuctions(auctionIds);
+            foreach (var auction in publicAuctions)
+            {
+                var cacheKey = string.Format(CacheKeys.LiveAuctionItem, auction.AuctionId);
+                Trace.TraceInformation("processing cache key: " + cacheKey);
+
+                if (!_cacheService.Exists(cacheKey))
+                {
+                    Trace.TraceInformation("cache key NOT exists");
+
+                    _cacheService.Set(cacheKey, new Auction(auction));
+
+                    _cacheService.AddToSet("LiveAuctionKeys", cacheKey);
+                }
+                else
+                {
+                    Trace.TraceInformation("cache key exists");
+                }
+            }
+
+            var cacheKeys = _cacheService.GetSetMembers("LiveAuctionKeys");
+            foreach (var cacheKey in cacheKeys)
+            {
+                Trace.TraceInformation("getting auction for cache key: " + cacheKey);
+                
+                var auction = _cacheService.Get<Auction>(cacheKey);
+                
+                Trace.TraceInformation(Serialize(auction));
+                
+                liveAuctions.Add(auction);
+            }
+
+            var serialize = Serialize(liveAuctions);
+
+            Trace.TraceInformation(serialize);
+
+            return serialize;
         }
 
         private void UpdateAuctions(object state)
@@ -93,26 +128,61 @@ namespace Mzayad.Web.SignalR
 
                 _updatingAuctions = true;
 
-                foreach (var auction in _liveAuctions)
+                var liveAuctions = new List<Auction>();
+
+                var cacheKeys = _cacheService.GetSetMembers("LiveAuctionKeys");
+                foreach (var cacheKey in cacheKeys)
                 {
-                    auction.SecondsLeft = (int)Math.Floor(auction.StartUtc.AddMinutes(auction.Duration).Subtract(DateTime.UtcNow).TotalSeconds);
+                    var auction = _cacheService.Get<Auction>(cacheKey);
+                    auction.SecondsLeft = Math.Max(auction.SecondsLeft - 1, 0);
+                    
+                    if (auction.SecondsLeft == 0)
+                    {
+                        _cacheService.RemoveFromSet("LiveAuctionKeys", cacheKey);
+                        _auctionService.CloseAuction(auction.AuctionId, () => _cacheService.Delete(CacheKeys.CurrentAuctions)).Wait();
+                        Clients.All.closeAuction(auction.AuctionId);
+                    }
+
+                    _cacheService.Set(cacheKey, auction);
+
+                    liveAuctions.Add(auction);
                 }
 
-                BroadcastAuctionData();
+                Clients.All.updateAuctions(Serialize(liveAuctions));
 
                 _updatingAuctions = false;
             }
         }
 
-        private void BroadcastAuctionData()
+        public async Task SubmitBid(int auctionId, string userId, string username)
         {
-            //Trace.TraceInformation(dateTime.ToString(CultureInfo.InvariantCulture));
-            //Trace.WriteLine("asdf");
+            if (string.IsNullOrEmpty(userId))
+            {
+                return;
+            }
 
-            Clients.All.updateAuctions(JsonConvert.SerializeObject(_liveAuctions, new JsonSerializerSettings
+            var cacheKey = string.Format(CacheKeys.LiveAuctionItem, auctionId);
+            var auction = _cacheService.Get<Auction>(cacheKey);
+            if (auction == null)
+            {
+                return;
+            }
+
+            var secondsLeft = auction.SecondsLeft;
+
+            auction.AddBid(username);
+
+            await _bidService.AddBid(auctionId, userId, auction.LastBidAmount.GetValueOrDefault(), secondsLeft);
+
+            _cacheService.Set(cacheKey, auction);
+        }
+
+        private static string Serialize(object value)
+        {
+            return JsonConvert.SerializeObject(value, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
-            }));
+            });
         }
     }
 }

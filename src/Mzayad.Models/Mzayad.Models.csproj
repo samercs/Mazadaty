@@ -64,6 +64,7 @@
     <Compile Include="Address.cs" />
     <Compile Include="ApplicationUser.cs" />
     <Compile Include="Auction.cs" />
+    <Compile Include="Bid.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="CategoryNotification.cs" />
     <Compile Include="EmailTemplate.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="ProductSpecification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Specification.cs" />
+    <Compile Include="Sponsor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

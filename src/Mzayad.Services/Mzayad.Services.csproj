@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="AddressService.cs" />
     <Compile Include="AuctionService.cs" />
+    <Compile Include="BidService.cs" />
     <Compile Include="CategoryService.cs" />
     <Compile Include="EmailTemplateService.cs" />
     <Compile Include="NotificationService.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBase.cs" />
     <Compile Include="SpecificationService.cs" />
+    <Compile Include="SponsorService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mzayad.Data\Mzayad.Data.csproj">

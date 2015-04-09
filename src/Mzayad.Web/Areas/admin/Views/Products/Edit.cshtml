@@ -125,6 +125,22 @@
                     @Html.Partial("ProductCategories",Model)
                 </div>
             </section>
+            
+            
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(i=>i.Product.SponsorId, "Sponsor") (optional)
+                    @Html.DropDownListFor(i=>i.Product.SponsorId,Model.SponsorList,"No Sponsor", new {@class="form-control"})
+                    @Html.ValidationMessageFor(i=>i.Product.SponsorId)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Product.Notes)
+                    @Html.TextAreaFor(i => i.Product.Notes, new { @class = "form-control", @style="height: 150px;" })
+                    <div class="help-block">Note are <strong>not</strong> visible to site users</div>
+                    @Html.ValidationMessageFor(i => i.Product.Notes)
+                </div>
+            </section>
+            
 
             <section>
                 <div class="form-group">
@@ -175,16 +191,16 @@
     <script>
 
 
-        (function ($) {
+        (function($) {
 
 
-            $(function () {
+            $(function() {
                 bindEvents();
                 initCkEditor();
                 initSpecifications();
             });
 
-            var bindEvents = function () {
+            var bindEvents = function() {
 
                 var multiUploaders = $(".multipleUploadContainer .image-uploader");
 
@@ -242,7 +258,7 @@
 
             };
 
-            var onCategoryChange = function () {
+            var onCategoryChange = function() {
                 var checkbox = $(this);
                 var checked = checkbox.is(":checked");
                 var categoryId = checkbox.val();
@@ -261,24 +277,24 @@
                 }
             };
 
-            var visuallyDisable = function (checkbox) {
+            var visuallyDisable = function(checkbox) {
                 if (!checkbox.is(":checked")) {
                     checkbox.addClass("disabledCheckbox");
                     checkbox.parent().addClass("disabledLabel");
                 }
             };
 
-            var visuallyEnable = function (checkbox) {
+            var visuallyEnable = function(checkbox) {
                 checkbox.removeClass("disabledCheckbox");
                 checkbox.parent().removeClass("disabledLabel");
             };
 
-            var initCkEditor = function () {
-                $("textarea.localized-input[data-language!='ar']").each(function () {
+            var initCkEditor = function() {
+                $("textarea.localized-input[data-language!='ar']").each(function() {
                     CKEDITOR.replace(this.id, { height: 300 });
                 });
 
-                $("textarea.localized-input[data-language='ar']").each(function () {
+                $("textarea.localized-input[data-language='ar']").each(function() {
                     CKEDITOR.replace(this.id, { height: 300, contentsLangDirection: "rtl" });
                 });
 
@@ -290,9 +306,9 @@
                 }
             };
 
-            var initSpecifications = function () {
-                
-                var showSpecificationGroup = function (ddl) {
+            var initSpecifications = function() {
+
+                var showSpecificationGroup = function(ddl) {
 
                     var parentGroup = ddl.parents(".specification-group");
                     var valuesGroup = parentGroup.find(".specification-values");
@@ -304,7 +320,7 @@
                     parentGroup.show();
                 };
 
-                var hideSpecificationGroup = function (specificationGroup) {
+                var hideSpecificationGroup = function(specificationGroup) {
 
                     var valuesGroup = specificationGroup.find(".specification-values");
                     var valueInputs = valuesGroup.find("input");
@@ -314,7 +330,7 @@
                     specificationGroup.hide();
                 };
 
-                var onPsDropDownChange = function () {
+                var onPsDropDownChange = function() {
 
                     var $this = $(this);
                     var parentGroup = $(this).parents(".specification-group");
@@ -330,26 +346,41 @@
 
                 };
 
+                var viewCount = 0;
+
                 $(".specification-group")
-                    .each(function (index) {
+                    .each(function(index) {
                         if (index === 0) {
-                            return;
+                            viewCount = 0;
                         }
                         hideSpecificationGroup($(this));
                     })
-                    .each(function () {
+                    .each(function() {
+
                         var $this = $(this);
                         var ddl = $this.find(".PSDropDown");
                         if (ddl.val() !== "-1") {
                             showSpecificationGroup(ddl);
                             $this.next().show();
+                            ++viewCount;
                         }
                     });
+
+                $(function() {
+                    if (viewCount == 0) {
+                        var firstGroup = $(".specification-group").first().find(".PSDropDown");
+                        var parentGroup = firstGroup.parents(".specification-group");
+                        var valuesGroup = parentGroup.find(".specification-values");
+                        var valueInputs = valuesGroup.find("input");
+                        parentGroup.show();
+                    }
+
+                });
 
 
                 $("#ProductSpecification").on("change", ".PSDropDown", onPsDropDownChange);
 
-                $.validator.addMethod("checkMultiPS", function (value, element) {
+                $.validator.addMethod("checkMultiPS", function(value, element) {
 
                     return checkSelection(value);
 
@@ -358,9 +389,9 @@
                 $.validator.classRuleSettings.checkMultiPS = { checkMultiPS: true };
 
 
-                var checkSelection = function (value) {
+                var checkSelection = function(value) {
                     var isOk = 0;
-                    $(".PSDropDown").each(function () {
+                    $(".PSDropDown").each(function() {
 
                         if ($(this).val() !== "-1" && $(this).val() == value) {
                             ++isOk;
@@ -374,7 +405,6 @@
             }
 
 
-
         })(jQuery);
 
         function onChange(e) {
@@ -385,13 +415,13 @@
             $.ajax({
                 url: "/admin/products/UpdateImageOrder/?imageId=" + imageID + "&newIndex=" + newIndex,
                 context: document.body
-            }).done(function () {
+            }).done(function() {
 
             });
 
         }
 
-        var displayUploader = function () {
+        var displayUploader = function() {
             $(".multipleUploadContainer .image-uploader").hide();
             var multiUploaders = $(".multipleUploadContainer .image-uploader");
 
@@ -413,7 +443,6 @@
                 }
             }
         };
-
 
 
     </script>

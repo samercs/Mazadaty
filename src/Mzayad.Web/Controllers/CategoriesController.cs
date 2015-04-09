@@ -11,9 +11,9 @@ namespace Mzayad.Web.Controllers
     {
         private readonly CategoryService _categoryService;
         
-        public CategoriesController(IControllerServices controllerServices) : base(controllerServices)
+        public CategoriesController(IAppServices appServices) : base(appServices)
         {
-            _categoryService = new CategoryService(controllerServices.DataContextFactory);
+            _categoryService = new CategoryService(appServices.DataContextFactory);
         }
 
         [Route("{slug}")]

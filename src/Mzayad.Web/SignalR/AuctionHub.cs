@@ -1,7 +1,8 @@
-using System;
-using System.Diagnostics;
-using Microsoft.AspNet.SignalR;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.SignalR;
+using Mzayad.Data;
+using Mzayad.Web.Core.Services;
 
 namespace Mzayad.Web.SignalR
 {
@@ -9,45 +10,55 @@ namespace Mzayad.Web.SignalR
     {
         private readonly AuctionHandler _auctionHandler;
 
-        public AuctionHub() : this(AuctionHandler.Instance) { }
-
-        public AuctionHub(AuctionHandler auctionHandler)
+        public AuctionHub(IDataContextFactory dataContextFactory, ICacheService cacheService) :
+            this(dataContextFactory, cacheService, AuctionHandler.Instance)
         {
-            _auctionHandler = auctionHandler;
         }
 
-        public string InitAuctions(int[] auctionIds)
+        public AuctionHub(IDataContextFactory dataContextFactory, ICacheService cacheService, AuctionHandler auctionHandler)
         {
-            return _auctionHandler.InitAuctions(auctionIds);
+            _auctionHandler = auctionHandler.Setup(dataContextFactory, cacheService);
         }
 
-        public void SubmitBid(int auctionId)
+        public async Task ClearAuctions()
         {
-            var userId = Context.User.Identity.Name;
-
-            _auctionHandler.SubmitBid(auctionId, userId);
+            await _auctionHandler.ClearAuctions();
         }
 
-        public override Task OnConnected()
+        public async Task<string> InitAuctions(int[] auctionIds)
         {
-            Trace.TraceInformation("Connecting: " + Context.ConnectionId);
-
-            UserHandler.ConnectedIds.Add(Context.ConnectionId);
-
-            Clients.Caller.onConnected("Welcome on " + DateTime.UtcNow);
-
-            return base.OnConnected();
+            return await _auctionHandler.InitAuctions(auctionIds);
         }
 
-        public override Task OnDisconnected(bool stopCalled)
+        public async Task SubmitBid(int auctionId)
         {
-            Trace.TraceInformation("Disconnecting: " + Context.ConnectionId);
-
-            UserHandler.ConnectedIds.Remove(Context.ConnectionId);
-
-            Clients.Caller.onDisconnected("Disconnected on " + DateTime.UtcNow);
-
-            return base.OnDisconnected(false);
+            var identity = Context.User.Identity;
+            var userId = identity.GetUserId();
+            var username = identity.GetUserName();
+            
+            await _auctionHandler.SubmitBid(auctionId, userId, username);
         }
+
+        //public override Task OnConnected()
+        //{
+        //    Trace.TraceInformation("Connecting: " + Context.ConnectionId);
+
+        //    UserHandler.ConnectedIds.Add(Context.ConnectionId);
+
+        //    Clients.Caller.onConnected("Welcome on " + DateTime.UtcNow);
+
+        //    return base.OnConnected();
+        //}
+
+        //public override Task OnDisconnected(bool stopCalled)
+        //{
+        //    Trace.TraceInformation("Disconnecting: " + Context.ConnectionId);
+
+        //    UserHandler.ConnectedIds.Remove(Context.ConnectionId);
+
+        //    Clients.Caller.onDisconnected("Disconnected on " + DateTime.UtcNow);
+
+        //    return base.OnDisconnected(false);
+        //}
     } 
 }

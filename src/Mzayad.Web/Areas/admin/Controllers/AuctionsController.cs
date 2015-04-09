@@ -9,6 +9,7 @@ using Mzayad.Web.Areas.admin.Models.Auctions;
 using Mzayad.Web.Controllers;
 using Mzayad.Web.Core.ActionResults;
 using Mzayad.Web.Core.Attributes;
+using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Extensions;
@@ -21,7 +22,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using System.Web.Routing;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
@@ -32,7 +32,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         private readonly AuctionService _auctionService;
         private readonly NotificationService _notificationService;
         
-        public AuctionsController(IControllerServices controllerServices) : base(controllerServices)
+        public AuctionsController(IAppServices appServices) : base(appServices)
         {
             _productService = new ProductService(DataContextFactory);
             _auctionService = new AuctionService(DataContextFactory);
@@ -84,7 +84,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             
             model.Auction.StartUtc = model.Auction.StartUtc.AddHours(-3);       
             
-            var auction = await _auctionService.Add(model.Auction);
+            var auction = await _auctionService.Add(model.Auction, () => CacheService.Delete(CacheKeys.CurrentAuctions));
 
             if (auction.Status == AuctionStatus.Public)
             {
@@ -100,7 +100,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         {
             var notifications = await _notificationService.GetByCategories(auction.Product.Categories);
 
-            var emailTemplate = await _EmailTemplateService.GetByTemplateType(EmailTemplateType.AuctionCreated, "en");
+            var emailTemplate = await EmailTemplateService.GetByTemplateType(EmailTemplateType.AuctionCreated, "en");
             var urlHelper = new UrlHelper(ControllerContext.RequestContext);
             var auctionUrl = urlHelper.Action("Details", "Auctions", new { area = "", id = auction.AuctionId}, "https");
             var notificationsUrl = urlHelper.Action("Notifications", "User", new { area = "" }, "https");
@@ -132,41 +132,45 @@ namespace Mzayad.Web.Areas.admin.Controllers
             }
         }
 
-        public async Task<ActionResult> Index(string search="")
+        public async Task<ActionResult> Index(string search = null)
         {
-            var model = new IndexViewModel()
+            var model = new IndexViewModel
             {
-                Auctions=await _auctionService.GetAuctions(search),
+                Auctions = await GetAuctions(search),
                 Search = search
             };
-            foreach (var auction in model.Auctions)
-            {
-                auction.Product.Localize("en", i => i.Name);
-            }
 
             return View(model);
         }
 
-        public async Task<JsonResult> GetAuctions([DataSourceRequest] DataSourceRequest request, string search=null)
+        private async Task<IEnumerable<Auction>> GetAuctions(string search = null)
         {
-            var result = await _auctionService.GetAuctions(search);
-            foreach (var auction in result)
+            var auctions = (await _auctionService.GetAuctions(search)).Localize("en", i => i.Title);
+            
+            foreach (var auction in auctions)
             {
+                auction.StartUtc = auction.StartUtc.AddHours(3);
                 auction.Product.Localize("en", i => i.Name);
             }
+
+            return auctions;
+        } 
+
+        public async Task<JsonResult> GetAuctions([DataSourceRequest] DataSourceRequest request, string search = null)
+        {
+            var result = await GetAuctions(search);
+
             return Json(result.ToDataSourceResult(request));
         }
 
-        public async Task<ExcelResult> DownloadExcel(string search = "")
+        public async Task<ExcelResult> DownloadExcel(string search = null)
         {
-            var auctions = await _auctionService.GetAuctions(search);
-            foreach (var auction in auctions)
-            {
-                auction.Product.Localize("en", i => i.Name);
-            }
+            var auctions = await GetAuctions(search);
+            
             var results = auctions.Select(i => new
             {
                 i.AuctionId,
+                i.Title,
                 i.Product.Name,
                 StartUtc = i.StartUtc.ToString("yyyy/MM/dd HH:mm"),
                 Status = i.Status.Description(),
@@ -179,7 +183,6 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 i.BuyNowPrice,
                 i.BuyNowQuantity,
                 CreatedUtc = i.CreatedUtc.ToString("yyyy/MM/dd HH:mm")
-                
             });
 
             return Excel(results, "auctions");
@@ -201,7 +204,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
         [Route("edit/{id:int}")]
         [HttpPost,ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, AddEditViewModel model)
+        public async Task<ActionResult> Edit(int id, AddEditViewModel model, LocalizedContent[] title)
         {
             var auction = await _auctionService.GetAuction(id);
             if (auction == null)
@@ -211,18 +214,19 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             var isActivated = auction.Status != AuctionStatus.Public && model.Auction.Status == AuctionStatus.Public;
 
+            auction.Title = title.Serialize();
             auction.BidIncrement = model.Auction.BidIncrement;
             auction.Duration = model.Auction.Duration;
             auction.MaximumBid = model.Auction.MaximumBid;
             auction.ProductId = model.Auction.ProductId;
             auction.RetailPrice = model.Auction.RetailPrice;
-            auction.StartUtc = model.Auction.StartUtc.AddHours(-3);
+            auction.StartUtc = model.Auction.StartUtc.AddHours(-3); // AST > UTC
             auction.Status = model.Auction.Status;
             auction.BuyNowEnabled = model.Auction.BuyNowEnabled;
             auction.BuyNowPrice = model.Auction.BuyNowPrice;
             auction.BuyNowQuantity = model.Auction.BuyNowQuantity;
 
-            await _auctionService.Update(auction);
+            await _auctionService.Update(auction, () => CacheService.Delete(CacheKeys.CurrentAuctions));
 
             if (isActivated)
             {
@@ -249,7 +253,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             {
                 auction.Status = AuctionStatus.Public;
 
-                await _auctionService.Update(auction);
+                await _auctionService.Update(auction, () => CacheService.Delete(CacheKeys.CurrentAuctions));
                 
                 await SendAuctionNotifications(auction);
             }

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 
 namespace Mzayad.Web.SignalR
 {
+    [Serializable]
     internal class Auction
     {
         [JsonProperty("id")]
@@ -21,6 +22,35 @@ namespace Mzayad.Web.SignalR
         public DateTime StartUtc { get; set; }
 
         [JsonIgnore]
-        public int Duration { get; set; }    
+        public int Duration { get; set; }
+
+        [JsonIgnore]
+        public decimal BidIncrement { get; set; }
+
+        public Auction(Mzayad.Models.Auction auction)
+        {
+            AuctionId = auction.AuctionId;
+            StartUtc = auction.StartUtc;
+            Duration = auction.Duration;
+            BidIncrement = auction.BidIncrement;
+            
+            UpdateSecondsLeft();
+        }
+
+        private void UpdateSecondsLeft()
+        {
+            SecondsLeft = (int)Math.Floor(StartUtc.AddMinutes(Duration).Subtract(DateTime.UtcNow).TotalSeconds);
+        }
+
+        public void AddBid(string username)
+        {
+            LastBidAmount = (LastBidAmount ?? 0) + BidIncrement;
+            LastBidderName = username;
+
+            if (SecondsLeft < 12)
+            {
+                SecondsLeft = 12;
+            }
+        }
     }
 }
