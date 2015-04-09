@@ -1,34 +1,28 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Web;
-using System.Web.Http.Results;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Mindscape.Raygun4Net;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Services;
-using Mzayad.Web.Areas.Api.Models;
 using Mzayad.Web.Areas.Api.Models.User;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Extensions;
 using Mzayad.Web.Models.Account;
 using Mzayad.Web.Models.User;
-using System.Threading.Tasks;
-using System.Web.Http;
 using Mzayad.Web.Resources;
 using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Base.Core.Security;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Client.Messaging;
 using OrangeJetpack.Services.Models;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
 
 namespace Mzayad.Web.Areas.Api.Controllers
 {
-    [System.Web.Http.RoutePrefix("api/user")]
+    [RoutePrefix("api/user")]
     public class UserController : ApiController
     {
         private readonly IAuthService _authService;
@@ -37,7 +31,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
         private readonly IMessageService _messageService;
         private readonly  IAppSettings AppSettings;
 
-        public UserController(IControllerServices controller)
+        public UserController(IAppServices controller)
         {
             _authService = controller.AuthService;
             _addressService=new AddressService(controller.DataContextFactory);
@@ -254,12 +248,6 @@ namespace Mzayad.Web.Areas.Api.Controllers
             var baseUrl = GetBaseUrl("resetpassword");
 
             return PasswordUtilities.GenerateResetPasswordUrl(baseUrl, email);
-        }
-
-        [System.Web.Http.HttpGet, System.Web.Http.Authorize, System.Web.Http.Route("test")]
-        public IHttpActionResult Test()
-        {
-            return Ok("yup");
         }
 
         [System.Web.Http.Route("change-password")]
