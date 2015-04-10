@@ -21,17 +21,67 @@
                 .Init(ajax => ajax.Action("GetAvatar", "Avatar"))
     .Columns(columns =>
     {
-        columns.Template(i => { }).ClientTemplate("").Title("Image");
+        columns.Bound(i => i.Url).Title("Photo");
         columns.Bound(i => i.Url).Title("Url");
-        columns.LinkColumn("Details", "products/edit/#=ProductId#");
+        columns.Bound(i=>i.AvatarId);
     })
         .ClientRowTemplate(
-            "<tr data-uid='#: uid #'>" +
+            "<tr>" +
                 "<td>" +
-                   "<img src='#:data.Url#'  />" +
+                           "<img  class='imgThum img-thumbnail img-responsive' src='#:data.Url#'  />" +
                 "</td>" +
-                "<td> #: data.Url# </td>" +
+                    "<td class='infoP'> #: data.Url# </td>" +
+                "<td><a href='" + Url.Action("Delete", "Avatars") + "/#: data.AvatarId#'>Delete</td>" +
              "</tr>"
         )
-)
+      )
+
+@(Html.Kendo().Sortable()
+        .For("div[id^='Grid_']")
+        .Filter("table > tbody > tr")
+        .Events(events => events.Change("onChange"))
+        .Deferred()
+      )
+
+@section scripts
+{
+    <script>
+        var noHint = $.noop;
+
+        function placeholder(element) {
+            return element.clone().addClass("k-state-hover").css("opacity", 0.65);
+        }
+
+        function onChange(e) {
+            var oldIndex = e.oldIndex;
+            var newIndex = e.newIndex;
+
+            $.ajax({
+                url: "/admin/avatars/UpdateOrder/?oldIndex=" + oldIndex + "&newIndex=" + newIndex,
+                context: document.body
+            }).done(function () {
+
+            });
+
+            //alert("old index : " + oldIndex + " " + " New Index : " + newIndex);
+        }
+</script>
+
+}
+
+@section styles
+{
+    <style>
+        
+        .imgThum {
+            width: 100px;
+        }
+
+        .infoP {
+            padding-top: 25px;
+        }
+
+    </style>
+
+}
 

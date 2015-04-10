@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Mzayad.Models;
 using Mzayad.Services;
 using Mzayad.Web.Areas.admin.Models.Avatar;
 using Mzayad.Web.Controllers;
@@ -33,31 +34,52 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
         public async Task<ActionResult> Add()
         {
-            var model = new AvatarAddViewModel().Init();
-            return View(model);
+            return View();
         }
 
 
         [HttpPost,ValidateAntiForgeryToken]
-        public async Task<ActionResult> Add(AvatarAddViewModel model, HttpPostedFileBase file)
+        public async Task<ActionResult> Add(HttpPostedFileBase upload)
         {
-            if (file == null)
+            if (upload == null)
             {
                 return Content("null1");
             }
-            if (file.ContentLength == 0)
+            if (upload.ContentLength == 0)
             {
                 return Content("null2");
             }
-
-            int[] avatarWidth = new[] {128};
-            var url = await UploadImage(file, avatarWidth);
-            model.Avatar.Url = url[0].AbsolutePath;
-            await _avatarService.Add(model.Avatar);
+            
+            
+            var url = await UploadImage(upload);
+            var avatar = new Avatar()
+            {
+                Url = url[0].ToString()
+            };
+            await _avatarService.Add(avatar);
+            SetStatusMessage("Avatar has been uploaded successfully");
             return RedirectToAction("Index");
         }
 
-        private async Task<Uri[]> UploadImage(HttpPostedFileBase file, int[] widths)
+        public async Task<ActionResult> Delete()
+        {
+            return DeleteConfirmation("Delete Avatar ?", "Are you sure you want delete this avatar ?");
+        }
+
+        [HttpPost,ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var avatar = await _avatarService.GetById(id);
+            if (avatar == null)
+            {
+                return HttpNotFound("Avatar Not Found");
+            }
+            await _avatarService.Delete(avatar);
+            SetStatusMessage("Avatar has been deleted successfully.");
+            return RedirectToAction("Index");
+        }
+
+        private async Task<Uri[]> UploadImage(HttpPostedFileBase file)
         {
             if (file == null || file.ContentLength == 0 || !file.ContentType.Contains("image"))
             {
@@ -66,18 +88,56 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             var imageSettings = new ImageSettings
             {
+                Widths = new[] { 512 },
                 BackgroundColor = Color.White,
                 ForceSquare = true,
-                Widths = widths
             };
 
             var uris = await _storageService.SaveImage("avatars", file, imageSettings);
-            if (uris.Length != widths.Length)
+            if (uris.Length<=0 )
             {
                 throw new Exception("Could not upload image, image service did not return expected results.");
             }
 
             return uris;
+        }
+
+        public async Task<ActionResult> UpdateOrder(int oldIndex, int newIndex)
+        {
+            var allAvatar = await _avatarService.GetAll();
+            var avatar = allAvatar.ElementAt(oldIndex);
+            if (allAvatar.Count() > 1 && newIndex < allAvatar.Count())
+            {
+                double index = 0;
+                //move to first image
+                if (newIndex == 0)
+                {
+                    index = allAvatar.ElementAt(0).SortOrder / 2;
+                }
+                //move to last image
+                else if ((newIndex + 1) == allAvatar.Count())
+                {
+                    index = allAvatar.Last().SortOrder + 1;
+                }
+                //move between two image
+                else
+                {
+                    if (oldIndex < newIndex)
+                    {
+                        index = (allAvatar.ElementAt(newIndex).SortOrder + allAvatar.ElementAt(newIndex + 1).SortOrder) / 2;    
+                    }
+                    else
+                    {
+                        index = (allAvatar.ElementAt(newIndex).SortOrder + allAvatar.ElementAt(newIndex - 1).SortOrder) / 2;    
+                    }
+                    
+                }
+
+                avatar.SortOrder = index;
+                await _avatarService.Update(avatar);
+            }
+
+            return Content("done");
         }
     }
 }

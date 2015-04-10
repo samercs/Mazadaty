@@ -8,14 +8,14 @@
 <div class="row">
     <div class="@Html.Css().FormNarrow">
 
-        @using (Html.BeginForm())
+        @using (Html.BeginForm("Add","Avatars",FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
 
             <section>
                 <div class="form-group">
                     @Html.Label("Avatar Image")
-                    <input type="file" id="file" name="file" class="form-control"/>
+                    <input type="file" id="file" name="upload" class="form-control"/>
                     
                 </div>
 
