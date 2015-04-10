@@ -6,11 +6,26 @@ namespace Mzayad.Web.Models.Home
 {
     public class IndexViewModel
     {
-        public IEnumerable<Auction> Auctions { get; set; }
+        public IEnumerable<AuctionViewModel> Auctions { get; set; }
 
-        public IEnumerable<Auction> LiveAuctions
+        //public IEnumerable<Auction> LiveAuctions
+        //{
+        //    get { return Auctions.Where(i => i.IsLive()); }
+        //} 
+    }
+
+    public class AuctionViewModel
+    {
+        public int AuctionId { get; set; }
+        public string Title { get; set; }
+
+        public static AuctionViewModel Create(Auction auction)
         {
-            get { return Auctions.Where(i => i.IsLive()); }
-        } 
+            return new AuctionViewModel
+            {
+                AuctionId = auction.AuctionId,
+                Title = auction.Title
+            };
+        }
     }
 }

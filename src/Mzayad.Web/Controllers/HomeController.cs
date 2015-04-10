@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Linq;
 using Mzayad.Services;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
@@ -32,7 +33,7 @@ namespace Mzayad.Web.Controllers
 
             var viewModel = new IndexViewModel
             {
-                Auctions = await _auctionService.GetCurrentAuctions(Language)
+                Auctions = (await _auctionService.GetCurrentAuctions(Language)).Select(AuctionViewModel.Create)
             };
 
             return View(viewModel);

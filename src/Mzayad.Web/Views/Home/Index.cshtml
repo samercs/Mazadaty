@@ -77,9 +77,7 @@
     return;
 }
 
-@*<button id="clear-cache" type="button">Clear Cache</button>*@
-
-<ul id="auction-list" class="list-unstyled">
+@*<ul id="auction-list" class="list-unstyled">
     @foreach (var auction in Model.Auctions)
     {
         <li class="auction" data-auction-id="@auction.AuctionId">
@@ -152,11 +150,12 @@
 
         </li>
     }
-</ul>
+</ul>*@
 
 @section scripts {
     
-    <script src="//ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.0.min.js"></script>
+    @Scripts.Render("~/js/knockout")
+    @Scripts.Render("~/js/signalR")
     <script src="/signalr/hubs"></script>
     <script>
         
@@ -200,7 +199,24 @@
             
         $(function () {
 
-                var auctionIds = @JsonConvert.SerializeObject(Model.Auctions.Where(i => i.Status != AuctionStatus.Closed).Select(i => i.AuctionId));
+            function Auction(auctionId, title) {
+                var self = this;
+                self.auctionId = ko.observable(auctionId);
+                self.title = ko.observable(title);
+            }
+
+            function AuctionsViewModel(auctions) {
+                var self = this;
+                self.updateAuctions = ko.observableArray(auctions);
+            }
+
+            var auctions = @Html.Raw(JsonConvert.SerializeObject(Model.Auctions, Formatting.Indented));
+
+
+            return;
+
+
+                @*var auctionIds = //@JsonConvert.SerializeObject(Model.Auctions.Where(i => i.Status != AuctionStatus.Closed).Select(i => i.AuctionId));
                 var auctionHub = $.connection.auctionHub;
 
                 var auctionDetails = [];
@@ -275,7 +291,7 @@
                     }
 
                     auctionHub.server.submitBid(auctionId);
-                });
+                });*@
 
             });
     </script>
