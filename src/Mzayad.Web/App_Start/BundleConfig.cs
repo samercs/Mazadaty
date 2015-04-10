@@ -20,6 +20,18 @@ namespace Mzayad.Web
             jquery.CdnFallbackExpression = "window.jQuery.ui";
             bundles.Add(jqueryui);
 
+            var knockout = new ScriptBundle("~/js/knockout",
+                "//ajax.aspnetcdn.com/ajax/knockout/knockout-3.3.0.js").Include(
+                "~/scripts/knockout-{version}.js");
+            knockout.CdnFallbackExpression = "window.ko";
+            bundles.Add(knockout);
+
+            var signalR = new ScriptBundle("~/js/signalr",
+                "//ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.0.min.js").Include(
+                "~/scripts/jquery.signalR-{version}.js");
+            knockout.CdnFallbackExpression = "window.signalR";
+            bundles.Add(signalR);
+
             bundles.Add(new ScriptBundle("~/js/site").Include(
                 "~/scripts/bootstrap.js",
                 "~/scripts/wow.js",
