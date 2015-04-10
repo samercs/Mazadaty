@@ -48,6 +48,7 @@ namespace Mzayad.Web
                 "~/content/site-forms.css",
                 "~/content/site-layout.css",
                 "~/content/site-arabic.css",
+                "~/content/site-home.css",
                 "~/content/site.css"));
 
             bundles.Add(new StyleBundle("~/css/admin").Include(
