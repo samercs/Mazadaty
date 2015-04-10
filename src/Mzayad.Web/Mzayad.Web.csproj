@@ -399,6 +399,12 @@
     <Content Include="Content\site-forms.min.css">
       <DependentUpon>site-forms.css</DependentUpon>
     </Content>
+    <Content Include="Content\site-home.css">
+      <DependentUpon>site-home.less</DependentUpon>
+    </Content>
+    <Content Include="Content\site-home.min.css">
+      <DependentUpon>site-home.css</DependentUpon>
+    </Content>
     <Content Include="Content\site-kendo.css">
       <DependentUpon>site-kendo.less</DependentUpon>
     </Content>
@@ -543,6 +549,10 @@
     <Content Include="Areas\admin\Views\Sponsors\Add.cshtml" />
     <Content Include="Areas\admin\Views\Sponsors\_AddEdit.cshtml" />
     <Content Include="Areas\admin\Views\Sponsors\Edit.cshtml" />
+    <Content Include="Content\site-home.less" />
+    <Content Include="Content\site-home.css.map">
+      <DependentUpon>site-home.css</DependentUpon>
+    </Content>
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />

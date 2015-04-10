@@ -1,6 +1,7 @@
 ﻿@using Mzayad.Core.Formatting
 @using Mzayad.Models.Enum
 @using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
 @using OrangeJetpack.Base.Web
 @model Mzayad.Web.Models.Home.IndexViewModel
 
@@ -77,180 +78,236 @@
     return;
 }
 
-@*<ul id="auction-list" class="list-unstyled">
-    @foreach (var auction in Model.Auctions)
-    {
-        <li class="auction" data-auction-id="@auction.AuctionId">
-            <div class="row">
-                <div class="col-md-8 col-sm-6">
-                    <div class="auction-details">
-
-                        <h2 class="auction-title">@auction.Title</h2>
-
-                        @if (auction.Status == AuctionStatus.Closed)
-                        {
-                            <div class="auction-status status-closed">
-                                <div class="auction-status-label">Closed</div>
-                                <div class="auction-status-details">...</div>
-                            </div>
-                        }
-                        else if (auction.IsLive())
-                        {
-                            <div class="auction-status status-live">
-                                <div class="auction-status-label">Live <i class="fa fa-bolt"></i></div>
-                                <div class="auction-status-loading">
-                                    <i class="fa fa-spin fa-cog"></i>
-                                    Loading...
-                                </div>
-                                <div class="auction-status-details">
-
-                                    <div class="auction-time-left"></div>
-                                    <div class="auction-last-bid"></div>
-                                    <div class="auction-bid-actions">
-                                        @if (Request.IsAuthenticated)
-                                        {
-                                            <button type="button" class="btn btn-default submit-bid">Bid</button>
-                                        }
-                                        else
-                                        {
-                                            <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new { ReturnUrl = "/"})">Bid</a>
-                                        }
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="auction-status status-upcoming">
-                                <div class="auction-status-label">Upcoming</div>
-                                <div class="auction-status-details">
-                                    @DateTimeFormatter.ToLocalTime(auction.StartUtc, DateTimeFormatter.Format.Full)
-                                </div>
-                            </div>
-                        }
-
-                        @if (auction.Product.ProductSpecifications.Any())
-                        {
-                            <ul class="auction-specs list-unstyled">
-                                @foreach (var specification in auction.Product.ProductSpecifications)
-                                {
-                                    <li>@specification.Specification.Name: @specification.Value</li>
-                                }
-                            </ul>
-                        }
-                        <div class="auction-price">Retail price: @CurrencyFormatter.Format(auction.RetailPrice)</div>
-                    </div>
-
-                </div>
-                <div class="col-md-4 col-sm-6 text-center">
-                    <img class="img-responsive" src="@auction.Product.MainImage().ImageMdUrl" alt="@auction.Title">
+<ul id="auction-list" class="list-unstyled" data-bind="foreach: auctions">
+    <li class="auction">
+        <div class="row">
+            <div class="col-md-8 col-sm-6">
+                <div class="auction-details">
+                    <h2 class="auction-title" data-bind="text: title"></h2>
+                    <div data-bind="template: { name: displayTemplate }"></div>
                 </div>
             </div>
+            <div class="col-md-4 col-sm-6 text-center">
+                <a class="product-image" href="#"><img data-bind="attr: { src: images[0].imageMdUrl, alt: $parent.title }" alt=""></a>
+                <ul class="product-images list-unstyled" data-bind="foreach: images">
+                    <li data-bind="visible: $index() !== 0">
+                        <a class="product-image" href="#"><img data-bind="attr: { src: imageSmUrl, alt: $parent.title }" alt=""></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </li>
+</ul>
 
-        </li>
-    }
-</ul>*@
+<script type="text/html" id="closed-template">
+    <div class="auction-status status-closed">
+        <div class="auction-status-label">Closed</div>
+        <div class="auction-status-details">...</div>
+    </div>
+</script>
 
-@section scripts {
-    
-    @Scripts.Render("~/js/knockout")
-    @Scripts.Render("~/js/signalR")
-    <script src="/signalr/hubs"></script>
-    <script>
-        
-        var TimeUtilities = {
-            getDays: function(days) {
-                return days === 1 ? "1 day " : days + " days ";
-            },
-            getHours: function(hours) {
-                return hours === 1 ? "1 hour " : hours + " hours ";
-            },
-            getMinutes: function(minutes) {
-                return minutes === 1 ? "1 minute " : minutes + " minutes ";
-            },
-            getSeconds: function(seconds) {
-                return seconds === 1 ? "1 second " : seconds + " seconds ";
-            },
-            getTimeLeft: function(seconds) {
-
-                var self = this;
-                var minutes = Math.floor(seconds/60);
-                var hours = Math.floor(minutes/60);
-                var days = Math.floor(hours/24);
-
-                hours = hours-(days*24);
-                minutes = minutes-(days*24*60)-(hours*60);
-                seconds = seconds-(days*24*60*60)-(hours*60*60)-(minutes*60);
-
-                var label = "Time Left: ";
-
-                if (days > 0) {
-                    return label + self.getDays(days) + self.getHours(hours) + self.getMinutes(minutes) + self.getSeconds(seconds);
-                } else if (hours > 0) {
-                    return label + self.getHours(hours) + self.getMinutes(minutes) + self.getSeconds(seconds);
-                } else if (minutes > 0) {
-                    return label + self.getMinutes(minutes) + self.getSeconds(seconds);
-                } else {
-                    return label + self.getSeconds(seconds);
+<script type="text/html" id="live-template">
+    <div class="auction-status status-live">
+        <div class="auction-status-label">Live <i class="fa fa-bolt"></i></div>
+        <div class="auction-status-loading" data-bind="visible: !isLoaded()">
+            <i class="fa fa-spin fa-cog"></i>
+            Loading...
+        </div>
+        <div class="auction-status-details" data-bind="visible: isLoaded()">
+            <div class="auction-time-left" data-bind="text: timeLeftFormatted"></div>
+            <div class="auction-last-bid" data-bind="text: lastBidFormatted"></div>
+            <div class="auction-bid-actions">
+                @if (Request.IsAuthenticated)
+                {
+                    <button type="button" class="btn btn-default" data-bind="click: submitBid">Bid</button>
                 }
+                else
+                {
+                    <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new { ReturnUrl = "/"})">Bid</a>
+                }
+            </div>
+
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="upcoming-template">
+    <div class="auction-status status-closed">
+        <div class="auction-status-label" data-bind="text: title">Closed</div>
+        <div class="auction-status-details">...</div>
+    </div>
+</script>
+
+@*<ul id="auction-list" class="list-unstyled">
+            @foreach (var auction in Model.Auctions)
+            {
+                <li class="auction" data-auction-id="@auction.AuctionId">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6">
+                            <div class="auction-details">
+
+                                <h2 class="auction-title">@auction.Title</h2>
+
+                                @if (auction.Status == AuctionStatus.Closed)
+                                {
+                                    <div class="auction-status status-closed">
+                                        <div class="auction-status-label">Closed</div>
+                                        <div class="auction-status-details">...</div>
+                                    </div>
+                                }
+                                else if (auction.IsLive())
+                                {
+                                    <div class="auction-status status-live">
+                                        <div class="auction-status-label">Live <i class="fa fa-bolt"></i></div>
+                                        <div class="auction-status-loading">
+                                            <i class="fa fa-spin fa-cog"></i>
+                                            Loading...
+                                        </div>
+                                        <div class="auction-status-details">
+
+                                            <div class="auction-time-left"></div>
+                                            <div class="auction-last-bid"></div>
+                                            <div class="auction-bid-actions">
+                                                @if (Request.IsAuthenticated)
+                                                {
+                                                    <button type="button" class="btn btn-default submit-bid">Bid</button>
+                                                }
+                                                else
+                                                {
+                                                    <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new { ReturnUrl = "/"})">Bid</a>
+                                                }
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="auction-status status-upcoming">
+                                        <div class="auction-status-label">Upcoming</div>
+                                        <div class="auction-status-details">
+                                            @DateTimeFormatter.ToLocalTime(auction.StartUtc, DateTimeFormatter.Format.Full)
+                                        </div>
+                                    </div>
+                                }
+
+                                @if (auction.Product.ProductSpecifications.Any())
+                                {
+                                    <ul class="auction-specs list-unstyled">
+                                        @foreach (var specification in auction.Product.ProductSpecifications)
+                                        {
+                                            <li>@specification.Specification.Name: @specification.Value</li>
+                                        }
+                                    </ul>
+                                }
+                                <div class="auction-price">Retail price: @CurrencyFormatter.Format(auction.RetailPrice)</div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-4 col-sm-6 text-center">
+                            <img class="img-responsive" src="@auction.Product.MainImage().ImageMdUrl" alt="@auction.Title">
+                        </div>
+                    </div>
+
+                </li>
             }
-        }
-            
-        $(function () {
+        </ul>*@
 
-            function Auction(auctionId, title) {
-                var self = this;
-                self.auctionId = ko.observable(auctionId);
-                self.title = ko.observable(title);
-            }
+    @section scripts {
 
-            function AuctionsViewModel(auctions) {
-                var self = this;
-                self.updateAuctions = ko.observableArray(auctions);
-            }
+        @Scripts.Render("~/js/knockout")
+        @Scripts.Render("~/js/signalR")
+        <script src="/signalr/hubs"></script>
+        <script>
 
-            var auctions = @Html.Raw(JsonConvert.SerializeObject(Model.Auctions, Formatting.Indented));
+            $(function () {
 
+                var Auction = function(data) {
+                    var self = this;
+                    self.auctionId = ko.observable(data.auctionId);
+                    self.title = ko.observable(data.title);
+                    self.status = ko.observable(data.status);
+                    self.images = data.images;
 
-            return;
+                    self.isLoaded = ko.observable(false);
+                    self.timeLeft = ko.observable();
+                    self.lastBidAmount = ko.observable();
+                    self.lastBidUser = ko.observable();
 
-
-                @*var auctionIds = //@JsonConvert.SerializeObject(Model.Auctions.Where(i => i.Status != AuctionStatus.Closed).Select(i => i.AuctionId));
-                var auctionHub = $.connection.auctionHub;
-
-                var auctionDetails = [];
-                
-                $(".auction").each(function() {
-                    var $this = $(this);
-                    auctionDetails.push({
-                        auctionId: $this.data("auctionId"),
-                        timeLeft: $this.find(".auction-time-left"),
-                        lastBid: $this.find(".auction-last-bid"),
-                        loading: $this.find(".auction-status-loading"),
-                        details: $this.find(".auction-status-details"),
+                    self.displayTemplate = function() {
+                        switch (self.status()) {
+                            case "Live":
+                                return "live-template";
+                            case "Upcoming":
+                                return "upcoming-template";
+                            case "Closed":
+                                return "closed-template";
+                            default:
+                                throw "Invalid auction status.";
+                        }
+                    }
+                    
+                    self.timeLeftFormatted = ko.computed(function() {
+                        return TimeUtilities.getTimeLeft(self.timeLeft());
                     });
-                });
+
+                    self.lastBidFormatted = ko.computed(function() {
+                        if (!self.lastBidUser()) {
+                            return "";
+                        }
+                          
+                        return "Last Bid: KD " + self.lastBidAmount() + " by " + self.lastBidUser();
+                    });
+
+                    self.submitBid = function() {
+                        auctionHub.server.submitBid(self.auctionId());
+                    };
+                };
+
+                var AuctionsViewModel = function(data) {
+                    var self = this;
+                    self.auctions = ko.observableArray([]);
+
+                    self.getAuction = function(auctionId) {
+                        for (var i = 0, len = self.auctions().length; i < len; i++) {
+                            if (self.auctions()[i].auctionId() === auctionId)
+                                return self.auctions()[i];
+                        }
+                        return null;
+                    };
+
+                    var mappedAuctions = $.map(data, function(auction) { return new Auction(auction); });
+                    self.auctions(mappedAuctions);
+                };
+
+                var auctions = @Html.Raw(JsonConvert.SerializeObject(Model.Auctions, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
+
+
+                var viewModel = new AuctionsViewModel(auctions);
+                
+                ko.applyBindings(viewModel);
+
+                
+
+
+                var auctionIds = @JsonConvert.SerializeObject(Model.LiveAuctionIds);
+                
+                
+                
+                
+                var auctionHub = $.connection.auctionHub;
 
                 auctionHub.client.updateAuctions = function (results) {
                     console.log(results);
-                    var auctions = $.parseJSON(results);
-                    for (var i = 0, len = auctions.length; i < len; ++i) {
-                        var auction = auctions[i];
-                        var auctionDetail = getAuctionDetail(auction.id);
+                    var auctionJson = $.parseJSON(results);
+                    for (var i = 0, len = auctionJson.length; i < len; ++i) {
+                        var auction = auctionJson[i];
+                        var auctionDetail = viewModel.getAuction(auction.id);
                         if (auctionDetail) {
-
-                            var timeLeft = auction.t;
-                            var bidAmount = auction.a;
-                            var bidUser = auction.u;
-                            
-                            auctionDetail.timeLeft.text(TimeUtilities.getTimeLeft(timeLeft));
-                            if (bidAmount) {
-                                auctionDetail.lastBid.text("Last Bid: KD " + bidAmount + " by " + bidUser);
-                            }
-                            
-                            auctionDetail.loading.hide();
-                            auctionDetail.details.show();
+                            auctionDetail.timeLeft(auction.t);
+                            auctionDetail.lastBidAmount(auction.a);
+                            auctionDetail.lastBidUser(auction.u);
+                            auctionDetail.isLoaded(true);
                         }
                     }
                 };
@@ -260,14 +317,6 @@
                     console.log("Closed auction: " + auctionId);
                 }
 
-                var getAuctionDetail = function(auctionId) {
-                    for (var i = 0, len = auctionDetails.length; i < len; i++) {
-                        if (auctionDetails[i].auctionId === auctionId)
-                            return auctionDetails[i];
-                    }
-                    return null;
-                };
-
                 //$.connection.hub.logging = true;
                 $.connection.hub.start().done(function() {
                     auctionHub.server.initAuctions(auctionIds).done(function (results) {
@@ -275,25 +324,12 @@
                     });
                 });
 
-                $("#clear-cache").on("click", function() {
-                    auctionHub.server.clearAuctions();
-                });
+                //$("#clear-cache").on("click", function() {
+                //    auctionHub.server.clearAuctions();
+                //});
 
-                $(".submit-bid").on("click", function() {
-                    var $this = $(this);
-                    var parent = $this.closest(".auction");
-                    var auctionId = parent.data("auctionId");
 
-                    var auctionDetail = getAuctionDetail(auctionId);
-                    if (auctionDetail) {
-                        auctionDetail.details.hide();
-                        auctionDetail.loading.show();
-                    }
-
-                    auctionHub.server.submitBid(auctionId);
-                });*@
 
             });
-    </script>
-
-}
+        </script>
+    }
