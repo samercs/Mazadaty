@@ -1,0 +1,31 @@
+﻿@using Mzayad.Web.Extensions
+@model Mzayad.Web.Areas.admin.Models.Avatar.AvatarAddViewModel
+
+@{
+    ViewBag.Title = "Upload Avatar";
+
+}
+<div class="row">
+    <div class="@Html.Css().FormNarrow">
+
+        @using (Html.BeginForm("Add","Avatars",FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+                <div class="form-group">
+                    @Html.Label("Avatar Image")
+                    <input type="file" id="file" name="upload" class="form-control"/>
+                    
+                </div>
+
+            </section>
+
+            <section class="form-buttons">
+                <button type="submit" class="btn btn-default">Upload</button>
+            </section>
+
+
+        }
+    </div>
+</div>

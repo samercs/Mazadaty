@@ -272,6 +272,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\admin\adminAreaRegistration.cs" />
     <Compile Include="Areas\admin\Controllers\AuctionsController.cs" />
+    <Compile Include="Areas\admin\Controllers\AvatarsController.cs" />
     <Compile Include="Areas\admin\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\admin\Controllers\ProductsController.cs" />
     <Compile Include="Areas\admin\Controllers\ReportsController.cs" />
@@ -281,6 +282,7 @@
     <Compile Include="Areas\admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\admin\Models\Auctions\AddEditViewModel.cs" />
     <Compile Include="Areas\admin\Models\Auctions\IndexViewModel.cs" />
+    <Compile Include="Areas\admin\Models\Avatar\AvatarAddViewModel.cs" />
     <Compile Include="Areas\admin\Models\Products\AddViewModel.cs" />
     <Compile Include="Areas\admin\Models\Products\EditViewModel.cs" />
     <Compile Include="Areas\admin\Models\Products\IndexViewModel.cs" />
@@ -553,6 +555,8 @@
     <Content Include="Content\site-home.css.map">
       <DependentUpon>site-home.css</DependentUpon>
     </Content>
+    <Content Include="Areas\admin\Views\Avatars\Index.cshtml" />
+    <Content Include="Areas\admin\Views\Avatars\Add.cshtml" />
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />

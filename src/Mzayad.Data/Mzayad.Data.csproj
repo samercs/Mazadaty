@@ -177,6 +177,10 @@
     <Compile Include="Migrations\201503311614108_RenameAuctionWonUtcToClosedUtc.Designer.cs">
       <DependentUpon>201503311614108_RenameAuctionWonUtcToClosedUtc.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504091125014_AddAvatar.cs" />
+    <Compile Include="Migrations\201504091125014_AddAvatar.Designer.cs">
+      <DependentUpon>201504091125014_AddAvatar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -274,6 +278,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503311614108_RenameAuctionWonUtcToClosedUtc.resx">
       <DependentUpon>201503311614108_RenameAuctionWonUtcToClosedUtc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504091125014_AddAvatar.resx">
+      <DependentUpon>201504091125014_AddAvatar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
