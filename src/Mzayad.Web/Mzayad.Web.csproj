@@ -638,7 +638,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\admin\Views\Avatar\" />
     <Folder Include="Areas\Api\Views\Shared\" />
     <Folder Include="Views\Auctions\" />
     <Folder Include="Views\Categories\" />

@@ -14,7 +14,6 @@ namespace Mzayad.Web.Areas.admin.Controllers
 {
     public class AvatarsController : ApplicationController
     {
-
         private readonly AvatarService _avatarService;
         private readonly IStorageService _storageService;
 
@@ -30,11 +29,10 @@ namespace Mzayad.Web.Areas.admin.Controllers
             return View(model);
         }
 
-        public async Task<ActionResult> Add()
+        public ActionResult Add()
         {
             return View();
         }
-
 
         [HttpPost,ValidateAntiForgeryToken]
         public async Task<ActionResult> Add(HttpPostedFileBase upload)
@@ -59,7 +57,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<ActionResult> Delete()
+        public ActionResult Delete()
         {
             return DeleteConfirmation("Delete Avatar", "Are you sure you want delete this avatar?");
         }
