@@ -280,9 +280,7 @@
                     self.auctions(mappedAuctions);
                 };
 
-                var auctions = @Html.Raw(JsonConvert.SerializeObject(Model.Auctions, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
-
-
+                var auctions = @Html.Raw(JsonConvert.SerializeObject(Model.Auctions, Formatting.None, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
                 var viewModel = new AuctionsViewModel(auctions);
                 
                 ko.applyBindings(viewModel);
