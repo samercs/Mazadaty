@@ -1,4 +1,5 @@
-﻿using Mzayad.Models;
+﻿using Mzayad.Core.Formatting;
+using Mzayad.Models;
 using Mzayad.Services;
 using Mzayad.Web.Controllers;
 using Mzayad.Web.Core.Services;
@@ -50,8 +51,9 @@ namespace Mzayad.Web.Areas.admin.Controllers
             var url = await UploadImage(upload);
             var avatar = new Avatar()
             {
-                Url = url[0].ToString()
+                Url = UrlFormatter.SetCdnHost(url.Single())
             };
+            
             await _avatarService.Add(avatar);
             SetStatusMessage("Avatar has been uploaded successfully");
             return RedirectToAction("Index");
