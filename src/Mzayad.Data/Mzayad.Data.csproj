@@ -181,6 +181,10 @@
     <Compile Include="Migrations\201504091125014_AddAvatar.Designer.cs">
       <DependentUpon>201504091125014_AddAvatar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504112203566_AddUserProfile.cs" />
+    <Compile Include="Migrations\201504112203566_AddUserProfile.Designer.cs">
+      <DependentUpon>201504112203566_AddUserProfile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -281,6 +285,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504091125014_AddAvatar.resx">
       <DependentUpon>201504091125014_AddAvatar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504112203566_AddUserProfile.resx">
+      <DependentUpon>201504112203566_AddUserProfile.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
