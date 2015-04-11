@@ -34,6 +34,7 @@ namespace Mzayad.Web
 
             bundles.Add(new ScriptBundle("~/js/site").Include(
                 "~/scripts/bootstrap.js",
+                "~/scripts/moment.js",
                 "~/scripts/wow.js",
                 "~/scripts/site.js"));
 

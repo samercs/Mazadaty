@@ -530,6 +530,10 @@
     <Content Include="Areas\admin\Views\Products\Edit.cshtml" />
     <Content Include="Scripts\knockout-3.3.0.debug.js" />
     <Content Include="Scripts\knockout-3.3.0.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Views\Shared\ProductCategories.cshtml" />
     <Content Include="Content\image-uploader.css.map" />
     <Content Include="Content\image-uploader.less" />

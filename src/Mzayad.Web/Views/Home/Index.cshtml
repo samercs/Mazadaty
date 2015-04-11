@@ -1,6 +1,4 @@
-﻿@using Mzayad.Core.Formatting
-@using Mzayad.Models.Enum
-@using Newtonsoft.Json
+﻿@using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
 @using OrangeJetpack.Base.Web
 @model Mzayad.Web.Models.Home.IndexViewModel
@@ -102,7 +100,9 @@
 <script type="text/html" id="closed-template">
     <div class="auction-status status-closed">
         <div class="auction-status-label">Closed</div>
-        <div class="auction-status-details">...</div>
+        <div class="auction-status-details">
+            <div class="auction-last-bid" data-bind="text: lastBidFormatted"></div>
+        </div>
     </div>
 </script>
 
@@ -133,8 +133,10 @@
 
 <script type="text/html" id="upcoming-template">
     <div class="auction-status status-closed">
-        <div class="auction-status-label" data-bind="text: title">Closed</div>
-        <div class="auction-status-details">...</div>
+        <div class="auction-status-label" data-bind="text: title">Upcoming</div>
+        <div class="auction-status-details">
+            <div class="auction-start-time" data-bind="text: startTimeFormatted"></div>
+        </div>
     </div>
 </script>
 
@@ -231,8 +233,9 @@
 
                     self.isLoaded = ko.observable(false);
                     self.timeLeft = ko.observable();
-                    self.lastBidAmount = ko.observable();
-                    self.lastBidUser = ko.observable();
+                    self.lastBidAmount = ko.observable(data.lastBidAmount);
+                    self.lastBidUser = ko.observable(data.lastBidUser);
+                    self.startUtc = ko.observable(data.startUtc);
 
                     self.displayTemplate = function() {
                         switch (self.status()) {
@@ -257,6 +260,10 @@
                         }
                           
                         return "Last Bid: KD " + self.lastBidAmount() + " by " + self.lastBidUser();
+                    });
+
+                    self.startTimeFormatted = ko.computed(function() {
+                        return moment(self.startUtc()).format('D MMM HH:mm');
                     });
 
                     self.submitBid = function() {

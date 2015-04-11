@@ -44,6 +44,7 @@ namespace Mzayad.Services
                     .Where(i => i.Status != AuctionStatus.Hidden)
                     .Include(i => i.Product.ProductImages)
                     .Include(i => i.Product.ProductSpecifications.Select(j => j.Specification))
+                    .Include(i => i.WonByUser)
                     .OrderBy(i => i.Status)
                     .ThenBy(i => i.StartUtc)
                     .ToListAsync();

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
@@ -22,6 +23,9 @@ namespace Mzayad.Web.Models.Home
         public int AuctionId { get; set; }
         public string Title { get; set; }
         public string Status { get; set; }
+        public decimal? LastBidAmount { get; set; }
+        public string LastBidUser { get; set; }
+        public DateTime StartUtc { get; set; }
         public IEnumerable<AuctionImageViewModel> Images { get; set; } 
 
         public static AuctionViewModel Create(Auction auction)
@@ -30,7 +34,10 @@ namespace Mzayad.Web.Models.Home
             {
                 AuctionId = auction.AuctionId,
                 Title = auction.Title, 
-                Status = GetStatus(auction), 
+                Status = GetStatus(auction),
+                LastBidAmount = auction.WonAmount,
+                LastBidUser = auction.WonByUser != null ? auction.WonByUser.UserName : "",
+                StartUtc = auction.StartUtc,
                 Images = GetImages(auction)
             };
 
@@ -43,14 +50,10 @@ namespace Mzayad.Web.Models.Home
             {
                 return RenderStatus.Closed.ToString();
             }
-            else if (auction.IsLive())
-            {
-                return RenderStatus.Live.ToString();
-            }
-            else
-            {
-                return RenderStatus.Upcoming.ToString();
-            }
+            
+            return auction.IsLive() 
+                ? RenderStatus.Live.ToString() 
+                : RenderStatus.Upcoming.ToString();
         }
 
         private static IEnumerable<AuctionImageViewModel> GetImages(Auction auction)
