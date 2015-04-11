@@ -17,6 +17,8 @@
     return;
 }
 
+<p>HINT: You can drag the avatar rows to re-order the order they appear in to users.</p>
+
 @(Html.Kendo().Grid(Model)
                 .Init(ajax => ajax.Action("GetAvatar", "Avatar"))
     .Columns(columns =>
