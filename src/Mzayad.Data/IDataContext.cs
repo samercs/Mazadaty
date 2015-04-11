@@ -17,6 +17,7 @@ namespace Mzayad.Data
         IDbSet<CategoryNotification> CategoryNotifications { get; set; }
         IDbSet<Sponsor> Sponsors { get; set; }
         IDbSet<Bid> Bids { get; set; }
+        IDbSet<Avatar> Avatars { get; set; }
 
         int SaveChanges();
         Task<int> SaveChangesAsync();
