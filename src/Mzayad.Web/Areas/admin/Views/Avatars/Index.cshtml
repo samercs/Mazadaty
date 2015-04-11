@@ -21,17 +21,15 @@
                 .Init(ajax => ajax.Action("GetAvatar", "Avatar"))
     .Columns(columns =>
     {
-        columns.Bound(i => i.Url).Title("Photo");
-        columns.Bound(i => i.Url).Title("Url");
-        columns.Bound(i=>i.AvatarId);
+        columns.Bound(i => i.Url).Title("Avatar");
+        columns.Bound(i => i.Url).Title("URL");
+        columns.Bound(i=>i.AvatarId).Title("");
     })
         .ClientRowTemplate(
             "<tr>" +
-                "<td>" +
-                           "<img  class='imgThum img-thumbnail img-responsive' src='#:data.Url#'  />" +
-                "</td>" +
-                    "<td class='infoP'> #: data.Url# </td>" +
-                "<td><a href='" + Url.Action("Delete", "Avatars") + "/#: data.AvatarId#'>Delete</td>" +
+                "<td><img class='imgThum img-thumbnail img-responsive' src='#:data.Url#'  /></td>" +
+                "<td class='infoP'> #: data.Url# </td>" +
+                "<td class='link-cell'><a href='" + Url.Action("Delete", "Avatars") + "/#: data.AvatarId#'>Delete</td>" +
              "</tr>"
         )
       )

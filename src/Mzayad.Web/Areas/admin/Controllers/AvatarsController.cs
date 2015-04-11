@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Mzayad.Models;
+using Mzayad.Services;
+using Mzayad.Web.Controllers;
+using Mzayad.Web.Core.Services;
+using OrangeJetpack.Services.Client.Storage;
+using System;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Mzayad.Models;
-using Mzayad.Services;
-using Mzayad.Web.Areas.admin.Models.Avatar;
-using Mzayad.Web.Controllers;
-using Mzayad.Web.Core.Services;
-using OrangeJetpack.Services.Client.Storage;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
@@ -63,7 +61,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
         public async Task<ActionResult> Delete()
         {
-            return DeleteConfirmation("Delete Avatar ?", "Are you sure you want delete this avatar ?");
+            return DeleteConfirmation("Delete Avatar", "Are you sure you want delete this avatar?");
         }
 
         [HttpPost,ValidateAntiForgeryToken]
