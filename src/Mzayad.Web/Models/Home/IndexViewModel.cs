@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
+﻿using Microsoft.AspNet.Identity;
+using Mzayad.Core.Formatting;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
-using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Mzayad.Web.Models.Home
 {
@@ -28,6 +28,7 @@ namespace Mzayad.Web.Models.Home
         public string Title { get; set; }
         public string Status { get; set; }
         public string Description { get; set; }
+        public string RetailPrice { get; set; }
         public decimal? LastBidAmount { get; set; }
         public string LastBidUser { get; set; }
         public DateTime StartUtc { get; set; }
@@ -42,14 +43,20 @@ namespace Mzayad.Web.Models.Home
                 Title = auction.Title, 
                 Status = GetStatus(auction),
                 Description = auction.Product.Description,
+                RetailPrice = CurrencyFormatter.Format(auction.Product.RetailPrice),
                 LastBidAmount = auction.WonAmount,
-                LastBidUser = auction.WonByUser != null ? auction.WonByUser.UserName : "",
+                LastBidUser = GetWonByUserName(auction.WonByUser),
                 StartUtc = auction.StartUtc,
                 Images = GetImages(auction),
                 Specifications = GetSpecifications(auction.Product.ProductSpecifications)
             };
 
             return viewModel;
+        }
+
+        private static string GetWonByUserName(IUser<string> user)
+        {
+            return user == null ? "" : user.UserName;
         }
 
         private static IEnumerable<ProductSpecificationViewModel> GetSpecifications(IEnumerable<ProductSpecification> specifications)

@@ -1,5 +1,4 @@
-﻿using Mzayad.Models;
-using Mzayad.Services;
+﻿using Mzayad.Services;
 using Mzayad.Web.Areas.admin.Models.Sponsors;
 using Mzayad.Web.Controllers;
 using Mzayad.Web.Core.Services;
@@ -25,7 +24,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             return View(model);
         }
 
-        public async Task<ActionResult> Add()
+        public ActionResult Add()
         {
             var model = new AddViewModel().Hydrate();
             return View(model);

@@ -17,7 +17,7 @@ namespace Mzayad.Web
             var jqueryui = new ScriptBundle("~/js/jquery-ui",
                 "//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js").Include(
                 "~/scripts/jquery-ui-{version}.js");
-            jquery.CdnFallbackExpression = "window.jQuery.ui";
+            jqueryui.CdnFallbackExpression = "window.jQuery.ui";
             bundles.Add(jqueryui);
 
             var knockout = new ScriptBundle("~/js/knockout",
@@ -29,7 +29,7 @@ namespace Mzayad.Web
             var signalR = new ScriptBundle("~/js/signalr",
                 "//ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.0.min.js").Include(
                 "~/scripts/jquery.signalR-{version}.js");
-            knockout.CdnFallbackExpression = "window.signalR";
+            signalR.CdnFallbackExpression = "window.signalR";
             bundles.Add(signalR);
 
             bundles.Add(new ScriptBundle("~/js/site").Include(

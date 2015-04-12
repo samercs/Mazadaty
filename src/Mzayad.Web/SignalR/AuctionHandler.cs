@@ -62,7 +62,7 @@ namespace Mzayad.Web.SignalR
             return this;
         }
 
-        public async Task ClearAuctions()
+        public async Task ClearAuctionCache()
         {
             var cacheKeys = _cacheService.GetSetMembers("LiveAuctionKeys");
             foreach (var cacheKey in cacheKeys)
@@ -74,7 +74,7 @@ namespace Mzayad.Web.SignalR
         }
 
         public async Task<string> InitAuctions(int[] auctionIds)
-        {
+        {      
             Trace.TraceInformation("InitAuctions(" + string.Join(",", auctionIds) + ")");
             
             var liveAuctions = new List<Auction>();
