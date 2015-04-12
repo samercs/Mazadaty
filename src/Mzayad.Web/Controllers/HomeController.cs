@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Linq;
 using Mzayad.Services;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
@@ -26,14 +27,10 @@ namespace Mzayad.Web.Controllers
                 return RedirectToAction("Index", new { Language });
             }
 
-            Trace.TraceInformation("Loading Index()...");
-
             //var auctions = await CacheService.TryGet(CacheKeys.CurrentAuctions, () => _auctionService.GetCurrentAuctions(Language), TimeSpan.FromDays(1));
+            var auctions = await _auctionService.GetCurrentAuctions(Language);
 
-            var viewModel = new IndexViewModel
-            {
-                Auctions = await _auctionService.GetCurrentAuctions(Language)
-            };
+            var viewModel = new IndexViewModel(auctions);
 
             return View(viewModel);
         }

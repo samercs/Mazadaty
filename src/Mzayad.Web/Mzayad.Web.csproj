@@ -368,6 +368,7 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\image-uploader.css" />
     <Content Include="Content\image-uploader.min.css" />
+    <Content Include="Content\images\transparent-gradient.png" />
     <Content Include="Content\jquery.datetimepicker.css" />
     <Content Include="Content\kendo\images\grab.cur" />
     <Content Include="Content\kendo\images\grabbing.cur" />
@@ -400,6 +401,12 @@
     </Content>
     <Content Include="Content\site-forms.min.css">
       <DependentUpon>site-forms.css</DependentUpon>
+    </Content>
+    <Content Include="Content\site-home.css">
+      <DependentUpon>site-home.less</DependentUpon>
+    </Content>
+    <Content Include="Content\site-home.min.css">
+      <DependentUpon>site-home.css</DependentUpon>
     </Content>
     <Content Include="Content\site-kendo.css">
       <DependentUpon>site-kendo.less</DependentUpon>
@@ -522,6 +529,26 @@
     <Content Include="Areas\admin\Views\Categories\Edit.cshtml" />
     <Content Include="Areas\admin\Views\Products\Add.cshtml" />
     <Content Include="Areas\admin\Views\Products\Edit.cshtml" />
+    <Content Include="Scripts\knockout-3.3.0.debug.js" />
+    <Content Include="Scripts\knockout-3.3.0.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\nivo\changelog.txt" />
+    <Content Include="Scripts\nivo\license.txt" />
+    <Content Include="Content\nivo\nivo-lightbox.css" />
+    <Content Include="Scripts\nivo\nivo-lightbox.js" />
+    <Content Include="Scripts\nivo\nivo-lightbox.min.js" />
+    <Content Include="Content\nivo\default\close%402x.png" />
+    <Content Include="Content\nivo\default\close.png" />
+    <Content Include="Content\nivo\default\default.css" />
+    <Content Include="Content\nivo\default\loading%402x.gif" />
+    <Content Include="Content\nivo\default\loading.gif" />
+    <Content Include="Content\nivo\default\next%402x.png" />
+    <Content Include="Content\nivo\default\next.png" />
+    <Content Include="Content\nivo\default\prev%402x.png" />
+    <Content Include="Content\nivo\default\prev.png" />
     <Content Include="Views\Shared\ProductCategories.cshtml" />
     <Content Include="Content\image-uploader.css.map" />
     <Content Include="Content\image-uploader.less" />
@@ -543,6 +570,10 @@
     <Content Include="Areas\admin\Views\Sponsors\Add.cshtml" />
     <Content Include="Areas\admin\Views\Sponsors\_AddEdit.cshtml" />
     <Content Include="Areas\admin\Views\Sponsors\Edit.cshtml" />
+    <Content Include="Content\site-home.less" />
+    <Content Include="Content\site-home.css.map">
+      <DependentUpon>site-home.css</DependentUpon>
+    </Content>
     <Content Include="Areas\admin\Views\Avatars\Index.cshtml" />
     <Content Include="Areas\admin\Views\Avatars\Add.cshtml" />
     <None Include="Content\site.less" />
@@ -591,6 +622,8 @@
     <Content Include="Scripts\wow.js" />
     <Content Include="Scripts\wow.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Scripts\nivo\bower.json" />
+    <Content Include="Scripts\nivo\README.md" />
     <None Include="Views\Home\SignalR.cshtml" />
     <Content Include="404.html" />
     <Content Include="500.html" />

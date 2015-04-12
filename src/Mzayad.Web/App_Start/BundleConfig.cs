@@ -17,11 +17,24 @@ namespace Mzayad.Web
             var jqueryui = new ScriptBundle("~/js/jquery-ui",
                 "//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js").Include(
                 "~/scripts/jquery-ui-{version}.js");
-            jquery.CdnFallbackExpression = "window.jQuery.ui";
+            jqueryui.CdnFallbackExpression = "window.jQuery.ui";
             bundles.Add(jqueryui);
+
+            var knockout = new ScriptBundle("~/js/knockout",
+                "//ajax.aspnetcdn.com/ajax/knockout/knockout-3.3.0.js").Include(
+                "~/scripts/knockout-{version}.js");
+            knockout.CdnFallbackExpression = "window.ko";
+            bundles.Add(knockout);
+
+            var signalR = new ScriptBundle("~/js/signalr",
+                "//ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.0.min.js").Include(
+                "~/scripts/jquery.signalR-{version}.js");
+            signalR.CdnFallbackExpression = "window.signalR";
+            bundles.Add(signalR);
 
             bundles.Add(new ScriptBundle("~/js/site").Include(
                 "~/scripts/bootstrap.js",
+                "~/scripts/moment.js",
                 "~/scripts/wow.js",
                 "~/scripts/site.js"));
 
@@ -36,6 +49,7 @@ namespace Mzayad.Web
                 "~/content/site-forms.css",
                 "~/content/site-layout.css",
                 "~/content/site-arabic.css",
+                "~/content/site-home.css",
                 "~/content/site.css"));
 
             bundles.Add(new StyleBundle("~/css/admin").Include(
