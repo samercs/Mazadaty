@@ -24,12 +24,16 @@ namespace Mzayad.Web.Controllers
         private readonly AddressService _addressService;
         private readonly CategoryService _categoryService;
         private readonly NotificationService _notificationService;
+        private readonly UserProfileService _userProfileService;
+        private readonly AvatarService _avatarService;
         public UserController(IAppServices appServices)
             : base(appServices)
         {
             _addressService = new AddressService(DataContextFactory);
             _categoryService = new CategoryService(DataContextFactory);
             _notificationService = new NotificationService(DataContextFactory);
+            _userProfileService=new UserProfileService(appServices.DataContextFactory);
+            _avatarService=new AvatarService(appServices.DataContextFactory);
         }
 
         [Route("my-account")]
@@ -202,5 +206,69 @@ namespace Mzayad.Web.Controllers
             SetStatusMessage(Global.CategoryNotificationSaveMessage);
             return RedirectToAction("Notifications");
         }
+        [Route("edit-profile")]
+        public async Task<ActionResult> EditProfile()
+        {
+            var user = await AuthService.CurrentUser();
+            var userProfile = await _userProfileService.GetByUser(user.Id);
+            var model = await new EditProfileModel().Init(_avatarService, userProfile);
+            return View(model);
+        }
+
+
+        [Route("edit-profile"),HttpPost,ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditProfile(EditProfileModel model, int? selectedAvatar)
+        {
+            if (!ModelState.IsValid)
+            {
+                string messages = string.Join("; ", ModelState.Values
+                                        .SelectMany(x => x.Errors)
+                                        .Select(x => x.ErrorMessage));
+
+                SetStatusMessage(messages,StatusMessageType.Error);
+                return View(model);
+            }
+            
+            var user = await AuthService.CurrentUser();
+            var userProfile = await _userProfileService.GetByUser(user.Id);
+            userProfile.Status = model.UserProfile.Status;
+            userProfile.Gamertag = model.UserProfile.Gamertag;
+            userProfile.ProfileUrl = model.UserProfile.ProfileUrl;
+            if (selectedAvatar.HasValue)
+            {
+                userProfile.AvatarId = selectedAvatar.Value;
+            }
+            await _userProfileService.Update(userProfile);
+            SetStatusMessage("Your profile has been saved successfully.");
+            return RedirectToAction("MyAccount");
+
+        }
+
+
+        public async Task<JsonResult> ValidateGamertag(string gamertag,string cureent)
+        {
+            if (!gamertag.Equals(cureent))
+            {
+                var exists = await _userProfileService.Exsist(gamertag);
+                var results = new
+                {
+                    IsValid = !exists
+                };
+
+                return Json(results, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                
+                var results = new
+                {
+                    IsValid = true
+                };
+
+                return Json(results, JsonRequestBehavior.AllowGet);
+            }
+            
+        }
+
     }
 }

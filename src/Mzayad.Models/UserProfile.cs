@@ -21,7 +21,7 @@ namespace Mzayad.Models
         public string Gamertag { get; set; }
         [Required, Index("IX_ProfileUrl", IsUnique = true),StringLength(255)]
         public string ProfileUrl { get; set; }
-        public int AvatarId { get; set; }
+        public int? AvatarId { get; set; }
         
         
         [ForeignKey("AvatarId")] 

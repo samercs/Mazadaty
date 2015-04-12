@@ -24,10 +24,12 @@ namespace Mzayad.Web.Controllers
     public class AccountController : ApplicationController
     {
         private readonly AddressService _addressService;
+        private readonly UserProfileService _userProfileService;
         
         public AccountController(IAppServices appServices) : base(appServices)
         {
             _addressService = new AddressService(appServices.DataContextFactory);
+            _userProfileService=new UserProfileService(appServices.DataContextFactory);
         }
 
         [Route("sign-in")]
@@ -136,6 +138,17 @@ namespace Mzayad.Web.Controllers
             var address = await _addressService.SaveAddress(model.Address);
             user.AddressId = address.AddressId;
             await AuthService.UpdateUser(user);
+
+            var userProfile = new UserProfile()
+            {
+                Status = UserProfileStatus.Private,
+                Gamertag = user.UserName,
+                ProfileUrl = string.Format("https://www.mzayad.com/profiles/{0}",user.UserName),
+                UserId = user.Id
+                
+            };
+            await _userProfileService.Add(userProfile);
+
 
             await SendNewUserWelcomeEmail(user);
             SetNameAndEmailCookies(user, "");

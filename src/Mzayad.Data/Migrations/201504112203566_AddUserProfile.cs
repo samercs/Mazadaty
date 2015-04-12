@@ -16,7 +16,7 @@ namespace Mzayad.Data.Migrations
                         Status = c.Int(nullable: false),
                         Gamertag = c.String(nullable: false, maxLength: 20),
                         ProfileUrl = c.String(nullable: false, maxLength: 255),
-                        AvatarId = c.Int(nullable: false),
+                        AvatarId = c.Int(nullable: true),
                         CreatedUtc = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.UserProfileId)

@@ -348,6 +348,7 @@
     <Compile Include="Models\Shared\AddressViewModel.cs" />
     <Compile Include="Models\Shared\DeleteConfirmationViewModel.cs" />
     <Compile Include="Models\User\ChangePasswordViewModel.cs" />
+    <Compile Include="Models\User\EditProfileModel.cs" />
     <Compile Include="Models\User\NotificationModelView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignalR\Auction.cs" />
@@ -635,6 +636,7 @@
     <Content Include="Views\User\EditAccount.cshtml" />
     <Content Include="Views\User\Notifications.cshtml" />
     <Content Include="Views\Shared\DeleteConfirmation.cshtml" />
+    <Content Include="Views\User\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

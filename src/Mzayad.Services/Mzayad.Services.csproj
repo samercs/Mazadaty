@@ -73,6 +73,7 @@
     <Compile Include="ServiceBase.cs" />
     <Compile Include="SpecificationService.cs" />
     <Compile Include="SponsorService.cs" />
+    <Compile Include="UserProfileService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mzayad.Data\Mzayad.Data.csproj">
