@@ -83,6 +83,23 @@
                 <div class="auction-details">
                     <h2 class="auction-title" data-bind="text: title"></h2>
                     <div data-bind="template: { name: displayTemplate }"></div>
+                    <div class="product-information">
+                        <div class="product-description">
+                            <h3>Description</h3>
+                            <div data-bind="html: description"></div>
+                        </div>
+                        <div class="product-specifications" data-bind="visible: specifications.length > 0">
+                            <h3>Specifications</h3>
+                            <ul class="list-unstyled" data-bind="foreach: specifications">
+                                <li><span data-bind="text: name"></span>: <span data-bind="text: value"></span></li>
+                            </ul>
+                        </div>
+                        <div class="more-overlay"></div>
+                    </div>
+                    <div class="information-toggles text-right">
+                        <button class="btn btn-link btn-sm btn-show-more">More<i class="fa fa-caret-down fa-pad-left"></i></button>
+                        <button class="btn btn-link btn-sm btn-show-less">Less<i class="fa fa-caret-up fa-pad-left"></i></button>
+                    </div>
                 </div>
             </div>
             <div class="col-md-4 col-sm-6 text-center">
@@ -123,10 +140,9 @@
                 }
                 else
                 {
-                    <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new { ReturnUrl = "/"})">Bid</a>
+                    <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new { ReturnUrl = "/" })">Bid</a>
                 }
             </div>
-
         </div>
     </div>
 </script>
@@ -229,6 +245,9 @@
                     self.auctionId = ko.observable(data.auctionId);
                     self.title = ko.observable(data.title);
                     self.status = ko.observable(data.status);
+                    
+                    self.description = data.description,
+                    self.specifications = data.specifications,
                     self.images = data.images;
 
                     self.isLoaded = ko.observable(false);
@@ -287,7 +306,7 @@
                     self.auctions(mappedAuctions);
                 };
 
-                var auctions = @Html.Raw(JsonConvert.SerializeObject(Model.Auctions, Formatting.None, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
+                var auctions = @Html.Raw(JsonConvert.SerializeObject(Model.Auctions, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
                 var viewModel = new AuctionsViewModel(auctions);
                 
                 ko.applyBindings(viewModel);
@@ -329,11 +348,59 @@
                     });
                 });
 
-                //$("#clear-cache").on("click", function() {
-                //    auctionHub.server.clearAuctions();
-                //});
 
+                var initDescription = function() {
+                    $(".product-information").each(function() {
+                        var $this = $(this);
 
+                        $this.data("scrollHeight", $this[0].scrollHeight);
+
+                        if ($this.height() === 100) {
+                            $this.find(".more-overlay").show();
+                            var toggles = $this.siblings(".information-toggles");
+                            toggles.find(".btn-show-more").show();
+                        }
+                    });
+                };
+
+                var bindEvents = function() {
+                    $(".btn-show-more").on("click", showMoreInformation);
+                    $(".btn-show-less").on("click", showLessInformation);
+                };
+
+                var showMoreInformation = function() {
+                    var $this = $(this);
+
+                    var auctionDetails = $this.parents(".auction-details");
+                    var productInformation = auctionDetails.find(".product-information");
+                    var scrollHeight = productInformation.data("scrollHeight");
+                    var moreOverlay = productInformation.find(".more-overlay");
+                    var showLess = $this.siblings(".btn-show-less");
+
+                    productInformation.animate({ maxHeight: scrollHeight }, 500);
+                    moreOverlay.hide();
+                    showLess.show();
+                    $this.hide();
+                };
+
+                var showLessInformation = function() {
+                    var $this = $(this);
+                    var auctionDetails = $this.parents(".auction-details");
+                    var productInformation = auctionDetails.find(".product-information");
+                    var moreOverlay = productInformation.find(".more-overlay");
+                    var showMore = $this.siblings(".btn-show-more");
+                    
+                    productInformation.animate({ maxHeight: 100 }, 500);
+                    moreOverlay.show();
+                    
+                    showMore.show();
+                    $this.hide();
+                };
+
+                $(function() {
+                    initDescription();
+                    bindEvents();
+                });
 
             });
         </script>

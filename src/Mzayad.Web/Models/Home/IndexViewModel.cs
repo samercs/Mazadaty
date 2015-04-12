@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
+using Newtonsoft.Json;
 
 namespace Mzayad.Web.Models.Home
 {
@@ -13,6 +15,8 @@ namespace Mzayad.Web.Models.Home
 
         public IndexViewModel(IEnumerable<Auction> auctions)
         {
+            auctions = auctions.ToList();
+            
             Auctions = auctions.Select(AuctionViewModel.Create);
             LiveAuctionIds = auctions.Where(i => i.IsLive()).Select(i => i.AuctionId);
         }
@@ -23,10 +27,12 @@ namespace Mzayad.Web.Models.Home
         public int AuctionId { get; set; }
         public string Title { get; set; }
         public string Status { get; set; }
+        public string Description { get; set; }
         public decimal? LastBidAmount { get; set; }
         public string LastBidUser { get; set; }
         public DateTime StartUtc { get; set; }
-        public IEnumerable<AuctionImageViewModel> Images { get; set; } 
+        public IEnumerable<AuctionImageViewModel> Images { get; set; }
+        public IEnumerable<ProductSpecificationViewModel> Specifications { get; set; }
 
         public static AuctionViewModel Create(Auction auction)
         {
@@ -35,13 +41,24 @@ namespace Mzayad.Web.Models.Home
                 AuctionId = auction.AuctionId,
                 Title = auction.Title, 
                 Status = GetStatus(auction),
+                Description = auction.Product.Description,
                 LastBidAmount = auction.WonAmount,
                 LastBidUser = auction.WonByUser != null ? auction.WonByUser.UserName : "",
                 StartUtc = auction.StartUtc,
-                Images = GetImages(auction)
+                Images = GetImages(auction),
+                Specifications = GetSpecifications(auction.Product.ProductSpecifications)
             };
 
             return viewModel;
+        }
+
+        private static IEnumerable<ProductSpecificationViewModel> GetSpecifications(IEnumerable<ProductSpecification> specifications)
+        {
+            return specifications.Select(specification => new ProductSpecificationViewModel
+            {
+                Name = specification.Specification.Name,
+                Value = specification.Value
+            });
         }
 
         private static string GetStatus(Auction auction)
@@ -87,5 +104,11 @@ namespace Mzayad.Web.Models.Home
         public string ImageSmUrl { get; set; }
         public string ImageMdUrl { get; set; }
         public string ImageLgUrl { get; set; }
+    }
+
+    public class ProductSpecificationViewModel
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 }

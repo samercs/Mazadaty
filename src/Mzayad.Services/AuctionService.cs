@@ -54,6 +54,8 @@ namespace Mzayad.Services
                     // order product images
                     product.ProductImages = product.ProductImages.OrderBy(i => i.SortOrder).ToList();
 
+                    product.Localize(language, i => i.Description);
+
                     // localize specifications
                     foreach (var specification in product.ProductSpecifications)
                     {

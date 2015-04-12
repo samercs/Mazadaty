@@ -368,6 +368,7 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\image-uploader.css" />
     <Content Include="Content\image-uploader.min.css" />
+    <Content Include="Content\images\transparent-gradient.png" />
     <Content Include="Content\jquery.datetimepicker.css" />
     <Content Include="Content\kendo\images\grab.cur" />
     <Content Include="Content\kendo\images\grabbing.cur" />
