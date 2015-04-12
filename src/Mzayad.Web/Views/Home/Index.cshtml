@@ -7,53 +7,10 @@
     ViewBag.Title = Global.Home;
 }
 
-<style>
-    
-    #page-title {
-        display: none;
-    }
-
-    .mz-wrapper {
-        width: 788px;
-        margin: 0 auto;
-    }
-    
-    .mz {
-        float: left;
-        height: 190px;
-        background: transparent url(//az712326.vo.msecnd.net/assets/mz-freehand-635610878999247526.png) 0 0 no-repeat;
-    }
-
-    .mz-m {
-        width: 173px;
-    }
-
-    .mz-z {
-        width: 130px;
-        background-position-x: -173px;
-    }
-
-    .mz-a1 {
-        width: 106px;
-        background-position-x: -303px;
-    }
-
-    .mz-y {
-        width: 134px;
-        background-position-x: -409px;
-    }
-
-    .mz-a2 {
-        width: 109px;
-        background-position-x: -543px;
-    }
-
-    .mz-d {
-        width: 136px;
-        background-position-x: -652px;
-    }
-
-</style>
+@section styles { 
+    <link href="~/Content/nivo/nivo-lightbox.css" rel="stylesheet" />
+    <link href="~/Content/nivo/default/default.css" rel="stylesheet" />
+}
 
 <div class="jumbotron">
     @*<div class="mz-wrapper hidden-sm">
@@ -103,10 +60,10 @@
                 </div>
             </div>
             <div class="col-md-4 col-sm-6 text-center">
-                <a class="product-image" href="#"><img data-bind="attr: { src: images[0].imageMdUrl, alt: $parent.title }" alt=""></a>
+                <a class="product-image" data-bind="attr: { href: images[0].imageLgUrl, 'data-lightbox-gallery': auctionId, title: title }"><img data-bind="attr: { src: images[0].imageMdUrl, alt: title }" alt=""></a>
                 <ul class="product-images list-unstyled" data-bind="foreach: images">
-                    <li data-bind="visible: $index() !== 0">
-                        <a class="product-image" href="#"><img data-bind="attr: { src: imageSmUrl, alt: $parent.title }" alt=""></a>
+                    <li data-bind="if: $index() !== 0">
+                        <a class="product-image" data-bind="attr: { href: imageLgUrl, 'data-lightbox-gallery': $parent.auctionId, title: $parent.title }"><img data-bind="attr: { src: imageSmUrl, alt: $parent.title }" alt=""></a>
                     </li>
                 </ul>
             </div>
@@ -234,7 +191,8 @@
     @section scripts {
 
         @Scripts.Render("~/js/knockout")
-        @Scripts.Render("~/js/signalR")
+        @Scripts.Render("~/js/signalR")       
+        <script src="~/scripts/nivo/nivo-lightbox.min.js"></script>
         <script src="/signalr/hubs"></script>
         <script>
 
@@ -397,9 +355,14 @@
                     $this.hide();
                 };
 
+                var initNivo = function() {
+                    $(".product-image").nivoLightbox();
+                }
+
                 $(function() {
                     initDescription();
                     bindEvents();
+                    initNivo();
                 });
 
             });

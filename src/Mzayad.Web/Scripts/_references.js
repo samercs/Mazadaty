@@ -20,3 +20,4 @@
 /// <reference path="knockout-3.3.0.js" />
 /// <reference path="moment-with-locales.min.js" />
 /// <reference path="moment.min.js" />
+/// <reference path="nivo/nivo-lightbox.js" />
