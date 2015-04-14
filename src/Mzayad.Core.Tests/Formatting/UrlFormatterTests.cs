@@ -14,7 +14,7 @@ namespace Mzayad.Core.Tests.Formatting
         public void SetCdnHost_WithUri_AddsCdnHost()
         {
             var uri = new Uri("https://mzayad.blob.core.windows.net/avatars/image.jpg");
-            var cdnUrl = UrlFormatter.SetCdnHost(uri);
+            var cdnUrl = UrlFormatter.GetCdnUrl(uri);
 
             Assert.AreEqual("https://az723232.vo.msecnd.net/avatars/image.jpg", cdnUrl);
         }
