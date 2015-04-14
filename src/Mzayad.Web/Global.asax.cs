@@ -1,4 +1,6 @@
-﻿using Mzayad.Web.Core.Configuration;
+﻿using System.Data.Entity;
+using Mzayad.Data;
+using Mzayad.Web.Core.Configuration;
 using System;
 using System.Globalization;
 using System.Threading;
@@ -19,6 +21,7 @@ namespace Mzayad.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutofacConfig.RegisterAll();
+            Database.SetInitializer<DataContext>(null);
         }
 
         protected void Application_PreSendRequestHeaders()

@@ -1,10 +1,12 @@
 ﻿@using Mzayad.Web.Extensions
+@using OrangeJetpack.Base.Web.Extensions
 <!DOCTYPE html>
 <html lang="@Html.Language()" dir="@(Html.IsArabic() ? "rtl" : "ltr")">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@Html.PageTitle()</title> 
+    <link href="http://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet" type="text/css">
     <link rel="apple-touch-icon" href="http://az723232.vo.msecnd.net/assets/mzayad-favicon-32x32-635593381391686784.png"> @* should be 152x152 *@
     <link rel="icon" href="http://az723232.vo.msecnd.net/assets/mzayad-favicon-32x32-635593381391686784.png">@* should be 96x96 *@
     <!--[if IE]><link rel="shortcut icon" href="/favicon.ico"><![endif]--> @* should be 16x16 and 32x32 *@
@@ -13,7 +15,7 @@
     @Styles.Render("~/css")
     @RenderSection("styles", false)
 </head>
-<body>
+<body id="@Html.Ojs().PageIdentifier()">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">

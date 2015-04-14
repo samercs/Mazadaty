@@ -24,10 +24,12 @@ namespace Mzayad.Web.Controllers
     public class AccountController : ApplicationController
     {
         private readonly AddressService _addressService;
+        private readonly UserProfileService _userProfileService;
         
         public AccountController(IAppServices appServices) : base(appServices)
         {
             _addressService = new AddressService(appServices.DataContextFactory);
+            _userProfileService=new UserProfileService(appServices.DataContextFactory);
         }
 
         [Route("sign-in")]
@@ -62,7 +64,7 @@ namespace Mzayad.Web.Controllers
 
             return !string.IsNullOrEmpty(returnUrl) 
                 ? RedirectToLocal(returnUrl) 
-                : RedirectToAction("MyAccount", "User", new { Language });
+                : RedirectToAction("Dashboard", "User", new { Language });
         }
 
         private void SetNameAndEmailCookies(ApplicationUser user, string usernameOrEmail)
@@ -137,12 +139,14 @@ namespace Mzayad.Web.Controllers
             user.AddressId = address.AddressId;
             await AuthService.UpdateUser(user);
 
+            await _userProfileService.CreateNewProfile(user);
+
             await SendNewUserWelcomeEmail(user);
             SetNameAndEmailCookies(user, "");
 
             SetStatusMessage(string.Format(Global.RegistrationWelcomeMessage, user.FirstName));
 
-            return RedirectToAction("MyAccount", "User", new { Language });
+            return RedirectToAction("Dashboard", "User", new { Language });
         }
 
         private async Task SendNewUserWelcomeEmail(ApplicationUser user)
@@ -272,7 +276,7 @@ namespace Mzayad.Web.Controllers
 
             SetStatusMessage(Global.PasswordSuccessfullyChanged);
 
-            return RedirectToAction("MyAccount", "User", new { Language });
+            return RedirectToAction("Dashboard", "User", new { Language });
         }
 
         private string GetBaseUrl(string action)

@@ -18,24 +18,36 @@ using OrangeJetpack.Services.Models;
 
 namespace Mzayad.Web.Controllers
 {
-    [RoutePrefix("{language}/user")]
+    [RoutePrefix("{language}/user"), Authorize]
     public class UserController : ApplicationController
     {
         private readonly AddressService _addressService;
         private readonly CategoryService _categoryService;
         private readonly NotificationService _notificationService;
+        private readonly UserProfileService _userProfileService;
+        private readonly AvatarService _avatarService;
         public UserController(IAppServices appServices)
             : base(appServices)
         {
             _addressService = new AddressService(DataContextFactory);
             _categoryService = new CategoryService(DataContextFactory);
             _notificationService = new NotificationService(DataContextFactory);
+            _userProfileService=new UserProfileService(appServices.DataContextFactory);
+            _avatarService=new AvatarService(appServices.DataContextFactory);
         }
 
-        [Route("my-account")]
-        public ActionResult MyAccount()
+        [Route("dashboard")]
+        public async Task<ActionResult> Dashboard()
         {
-            return View();
+            var user = await AuthService.CurrentUser();
+            
+            var viewModel = new DashboardViewModel
+            {
+                ApplicationUser = user,
+                UserProfile = await _userProfileService.GetByUser(user)
+            };
+
+            return View(viewModel);
         }
 
         [Route("change-password")]
@@ -67,7 +79,7 @@ namespace Mzayad.Web.Controllers
 
             SetStatusMessage(Global.PasswordSuccessfullyChanged);
 
-            return RedirectToAction("MyAccount");
+            return RedirectToAction("Dashboard");
         }
 
         private async Task SendPasswordChangedEmail()
@@ -153,7 +165,7 @@ namespace Mzayad.Web.Controllers
 
             SetStatusMessage(Global.EditAccountNameSuccessMessage);
 
-            return RedirectToAction("MyAccount");
+            return RedirectToAction("Dashboard");
         }
 
         private async Task SendEmailChangedEmail(ApplicationUser user, string originalEmail)
@@ -201,6 +213,38 @@ namespace Mzayad.Web.Controllers
 
             SetStatusMessage(Global.CategoryNotificationSaveMessage);
             return RedirectToAction("Notifications");
+        }
+        
+        [Route("edit-profile")]
+        public async Task<ActionResult> EditProfile()
+        {
+            var user = await AuthService.CurrentUser();
+            var userProfile = await _userProfileService.GetByUser(user);
+            var model = await new EditProfileModel().Hydrate(_avatarService, userProfile);
+            return View(model);
+        }
+
+        [Route("edit-profile"),HttpPost,ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditProfile(EditProfileModel model, int? selectedAvatar)
+        {
+            var user = await AuthService.CurrentUser();
+            var userProfile = await _userProfileService.GetByUser(user);
+                  
+            if (!ModelState.IsValid)
+            {
+                return View(await model.Hydrate(_avatarService, userProfile));
+            }
+            
+            userProfile.Status = model.UserProfile.Status;
+            userProfile.ProfileUrl = model.UserProfile.ProfileUrl;
+            if (selectedAvatar.HasValue)
+            {
+                userProfile.AvatarId = selectedAvatar.Value;
+            }
+            await _userProfileService.Update(userProfile);
+            SetStatusMessage("Your profile has been saved successfully.");
+            return RedirectToAction("Dashboard");
+
         }
     }
 }

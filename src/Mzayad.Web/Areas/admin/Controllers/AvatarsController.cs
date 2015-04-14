@@ -51,7 +51,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             var url = await UploadImage(upload);
             var avatar = new Avatar()
             {
-                Url = UrlFormatter.SetCdnHost(url.Single())
+                Url = UrlFormatter.GetCdnUrl(url.Single())
             };
             
             await _avatarService.Add(avatar);

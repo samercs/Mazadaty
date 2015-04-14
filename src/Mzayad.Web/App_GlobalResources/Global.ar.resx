@@ -123,11 +123,17 @@
   <data name="AddressRequiredErrorMessage" xml:space="preserve">
     <value>الرجاء إدخال عنوانك.</value>
   </data>
+  <data name="AliasOrUsername" xml:space="preserve">
+    <value>اسم المستخدم او الاسم المستعار</value>
+  </data>
   <data name="Area" xml:space="preserve">
     <value>المنطقة</value>
   </data>
   <data name="AreaRequiredErrorMessage" xml:space="preserve">
     <value>الرجاء إدخال المنطقة.</value>
+  </data>
+  <data name="Avatar" xml:space="preserve">
+    <value>الصورة (اختر واحد)</value>
   </data>
   <data name="Block" xml:space="preserve">
     <value>القطعة</value>
@@ -159,6 +165,9 @@
   <data name="CityRequiredErrorMessage" xml:space="preserve">
     <value>الرجاء إدخال مدينتك.</value>
   </data>
+  <data name="ClickToSelect" xml:space="preserve">
+    <value>انقر للاختيار</value>
+  </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>تأكيد كلمة المرور</value>
   </data>
@@ -188,6 +197,9 @@
   </data>
   <data name="EditAccountNameSuccessMessage" xml:space="preserve">
     <value>تم تعديل بيانات بنجاح .</value>
+  </data>
+  <data name="EditProfile" xml:space="preserve">
+    <value>تعديل الملف</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>عنوان البريد الإلكتروني</value>
@@ -257,6 +269,12 @@
   </data>
   <data name="PostalCode" xml:space="preserve">
     <value>الرمز البريدي</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>الخصوصية</value>
+  </data>
+  <data name="ProfileURL" xml:space="preserve">
+    <value>صفحة الملف</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>التسجيل</value>

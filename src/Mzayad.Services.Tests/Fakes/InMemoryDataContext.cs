@@ -18,7 +18,7 @@ namespace Mzayad.Services.Tests.Fakes
         public IDbSet<Sponsor> Sponsors { get; set; }
         public IDbSet<Bid> Bids { get; set; }
         public IDbSet<Avatar> Avatars { get; set; }
-
+        public IDbSet<UserProfile> UserProfiles { get; set; } 
         public InMemoryDataContext()
         {
             Auctions = new TestDbSet<Auction>();

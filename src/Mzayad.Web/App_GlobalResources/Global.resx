@@ -384,4 +384,25 @@
   <data name="NotificationsInstructions" xml:space="preserve">
     <value>You can opt into and subscribe to various notifications on the site, please use the options below to select which notifications you would like to receive.</value>
   </data>
+  <data name="AliasOrUsername" xml:space="preserve">
+    <value>Alias or Username</value>
+  </data>
+  <data name="Avatar" xml:space="preserve">
+    <value>Avatar (select one)</value>
+  </data>
+  <data name="ClickToSelect" xml:space="preserve">
+    <value>Click To Select</value>
+  </data>
+  <data name="EditProfile" xml:space="preserve">
+    <value>Edit Profile</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="ProfileURL" xml:space="preserve">
+    <value>Profile Page</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
 </root>

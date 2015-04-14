@@ -79,6 +79,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alias or Username.
+        /// </summary>
+        public static string AliasOrUsername {
+            get {
+                return ResourceManager.GetString("AliasOrUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Area.
         /// </summary>
         public static string Area {
@@ -93,6 +102,15 @@ namespace Mzayad.Web.Resources {
         public static string AreaRequiredErrorMessage {
             get {
                 return ResourceManager.GetString("AreaRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Avatar (select one).
+        /// </summary>
+        public static string Avatar {
+            get {
+                return ResourceManager.GetString("Avatar", resourceCulture);
             }
         }
         
@@ -187,6 +205,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click To Select.
+        /// </summary>
+        public static string ClickToSelect {
+            get {
+                return ResourceManager.GetString("ClickToSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm Password.
         /// </summary>
         public static string ConfirmPassword {
@@ -250,6 +277,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dashboard.
+        /// </summary>
+        public static string Dashboard {
+            get {
+                return ResourceManager.GetString("Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Don&apos;t have an account?.
         /// </summary>
         public static string DontHaveAccountQuestion {
@@ -273,6 +309,15 @@ namespace Mzayad.Web.Resources {
         public static string EditAccountNameSuccessMessage {
             get {
                 return ResourceManager.GetString("EditAccountNameSuccessMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Profile.
+        /// </summary>
+        public static string EditProfile {
+            get {
+                return ResourceManager.GetString("EditProfile", resourceCulture);
             }
         }
         
@@ -543,6 +588,24 @@ namespace Mzayad.Web.Resources {
         public static string PostalCode {
             get {
                 return ResourceManager.GetString("PostalCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy.
+        /// </summary>
+        public static string Privacy {
+            get {
+                return ResourceManager.GetString("Privacy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile Page.
+        /// </summary>
+        public static string ProfileURL {
+            get {
+                return ResourceManager.GetString("ProfileURL", resourceCulture);
             }
         }
         

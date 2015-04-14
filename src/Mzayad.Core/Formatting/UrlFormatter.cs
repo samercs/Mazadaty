@@ -9,7 +9,7 @@ namespace Mzayad.Core.Formatting
         /// <summary>
         /// Changes a URI's host to the Azure CDN host.
         /// </summary>
-        public static string SetCdnHost(Uri uri)
+        public static string GetCdnUrl(Uri uri)
         {
             var uriBuilder = new UriBuilder(uri)
             {

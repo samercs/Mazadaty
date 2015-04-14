@@ -1,0 +1,102 @@
+﻿@model Mzayad.Web.Models.User.EditProfileModel
+
+@{
+    ViewBag.Title = Global.EditProfile;
+}
+
+@section styles
+{
+    <style>
+        .selectedImg {
+            border: solid 2px #000000;
+            padding: 5px;
+        }
+
+        .normalImg {
+            cursor: pointer;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="@Html.Css().FormWide">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UserProfile.Status, Global.Privacy)
+                    
+                    @foreach (var item in Model.PrivacyList)
+                    {
+                        <div class="radio">
+                            <label>@Html.RadioButtonFor(i => i.UserProfile.Status, item.Value) @Html.Raw(item.Text)</label>
+                        </div>
+                    }
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UserProfile.ProfileUrl, Global.ProfileURL)
+                    @Html.TextBoxFor(i => i.UserProfile.ProfileUrl, new { @class = "form-control", @readonly = true })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UserProfile.AvatarId, Global.Avatar)
+                    <div class="row">
+                        @foreach (var item in Model.Avatars)
+                        {
+                            if (!Model.UserProfile.AvatarId.HasValue && Model.Avatars.First() == item)
+                            {
+                                <div class="col-md-3" style="margin-bottom: 30px;">
+                                    <img data-id="@item.AvatarId" src="@item.Url" alt="@item.Url" class="img-thumbnail img-responsive normalImg selectedImg" />
+                                </div>
+                            }
+                            else if (Model.UserProfile.AvatarId.HasValue && Model.UserProfile.AvatarId == item.AvatarId)
+                            {
+                                <div class="col-md-3" style="margin-bottom: 30px;">
+                                    <img data-id="@item.AvatarId" src="@item.Url" alt="@item.Url" class="img-thumbnail img-responsive normalImg selectedImg" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-3" style="margin-bottom: 30px;">
+                                    <img data-id="@item.AvatarId" src="@item.Url" title="@Global.ClickToSelect" alt="@item.Url" class="img-thumbnail img-responsive normalImg" />
+                                </div>
+                            }
+
+                        }
+                        <input type="hidden" name="selectedAvatar" id="selectedAvatar" />
+                        @Html.HiddenFor(i=>i.UserProfile.UserId)
+                        @Html.HiddenFor(i => i.UserProfile.UserProfileId)
+                    </div>
+                </div>
+
+            </section>
+
+            <section class="form-buttons">
+                <button id="btnSubmit" type="submit" class="btn btn-default">@Global.Save</button>
+            </section>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/js/validate")
+
+    <script>
+        (function($) {
+
+            $(".normalImg").click(function() {
+
+                var $this = $(this);
+                var id = $this.attr("data-id");
+                $("#selectedAvatar").val(id);
+                $(".normalImg").removeClass("selectedImg");
+                $this.addClass("selectedImg");
+
+            });
+
+        })(jQuery);
+
+    </script>
+}
