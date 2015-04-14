@@ -26,7 +26,13 @@ h1 {
 h2 {
   font-size: 2rem;
 }
-p {
+p,
+ul,
+ol,
+ul ul,
+ol ul,
+ul ol,
+ol ol {
   margin-bottom: 1em;
 }
 .lead {

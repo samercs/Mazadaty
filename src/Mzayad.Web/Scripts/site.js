@@ -45,3 +45,41 @@ var kendoFormatter = {
         }
     }
 }
+
+var TimeUtilities = {
+    getDays: function (days) {
+        return days === 1 ? "1 day " : days + " days ";
+    },
+    getHours: function (hours) {
+        return hours === 1 ? "1 hour " : hours + " hours ";
+    },
+    getMinutes: function (minutes) {
+        return minutes === 1 ? "1 minute " : minutes + " minutes ";
+    },
+    getSeconds: function (seconds) {
+        return seconds === 1 ? "1 second " : seconds + " seconds ";
+    },
+    getTimeLeft: function (seconds) {
+
+        var self = this;
+        var minutes = Math.floor(seconds / 60);
+        var hours = Math.floor(minutes / 60);
+        var days = Math.floor(hours / 24);
+
+        hours = hours - (days * 24);
+        minutes = minutes - (days * 24 * 60) - (hours * 60);
+        seconds = seconds - (days * 24 * 60 * 60) - (hours * 60 * 60) - (minutes * 60);
+
+        var label = "Time Left: ";
+
+        if (days > 0) {
+            return label + self.getDays(days) + self.getHours(hours) + self.getMinutes(minutes) + self.getSeconds(seconds);
+        } else if (hours > 0) {
+            return label + self.getHours(hours) + self.getMinutes(minutes) + self.getSeconds(seconds);
+        } else if (minutes > 0) {
+            return label + self.getMinutes(minutes) + self.getSeconds(seconds);
+        } else {
+            return label + self.getSeconds(seconds);
+        }
+    }
+}

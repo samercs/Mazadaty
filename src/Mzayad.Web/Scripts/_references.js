@@ -17,3 +17,7 @@
 /// <reference path="dropzone.js" />
 /// <reference path="jquery.datetimepicker.js" />
 /// <reference path="jquery.signalR-2.2.0.js" />
+/// <reference path="knockout-3.3.0.js" />
+/// <reference path="moment-with-locales.min.js" />
+/// <reference path="moment.min.js" />
+/// <reference path="nivo/nivo-lightbox.js" />
