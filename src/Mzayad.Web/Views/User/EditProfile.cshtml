@@ -27,12 +27,13 @@
             <section>
                 <div class="form-group">
                     @Html.LabelFor(m => m.UserProfile.Status, Global.Privacy)
-                    <br />
+                    
                     @foreach (var item in Model.PrivacyList)
                     {
-                        @Html.RadioButtonFor(i => i.UserProfile.Status, item.Value, new { }) @Html.Raw(item.Text) <br />
+                        <div class="radio">
+                            <label>@Html.RadioButtonFor(i => i.UserProfile.Status, item.Value) @Html.Raw(item.Text)</label>
+                        </div>
                     }
-                    @Html.ValidationMessageFor(m => m.UserProfile.Status, Global.FirstNameRequiredErrorMessage)
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.UserProfile.ProfileUrl, Global.ProfileURL)
