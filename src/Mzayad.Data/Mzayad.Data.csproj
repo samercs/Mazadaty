@@ -189,6 +189,10 @@
     <Compile Include="Migrations\201504140824435_UserProfileMigrationFix.Designer.cs">
       <DependentUpon>201504140824435_UserProfileMigrationFix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504140948265_RemoveUserProfileGamertag.cs" />
+    <Compile Include="Migrations\201504140948265_RemoveUserProfileGamertag.Designer.cs">
+      <DependentUpon>201504140948265_RemoveUserProfileGamertag.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -295,6 +299,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504140824435_UserProfileMigrationFix.resx">
       <DependentUpon>201504140824435_UserProfileMigrationFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504140948265_RemoveUserProfileGamertag.resx">
+      <DependentUpon>201504140948265_RemoveUserProfileGamertag.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
