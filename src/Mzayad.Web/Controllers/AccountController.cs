@@ -139,16 +139,7 @@ namespace Mzayad.Web.Controllers
             user.AddressId = address.AddressId;
             await AuthService.UpdateUser(user);
 
-            var userProfile = new UserProfile()
-            {
-                Status = UserProfileStatus.Private,
-                Gamertag = user.UserName,
-                ProfileUrl = string.Format("https://www.mzayad.com/profiles/{0}",user.UserName),
-                UserId = user.Id
-                
-            };
-            await _userProfileService.Add(userProfile);
-
+            await _userProfileService.CreateNewProfile(user);
 
             await SendNewUserWelcomeEmail(user);
             SetNameAndEmailCookies(user, "");

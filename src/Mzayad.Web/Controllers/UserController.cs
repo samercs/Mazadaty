@@ -228,7 +228,6 @@ namespace Mzayad.Web.Controllers
             }
             
             userProfile.Status = model.UserProfile.Status;
-            userProfile.Gamertag = model.UserProfile.Gamertag;
             userProfile.ProfileUrl = model.UserProfile.ProfileUrl;
             if (selectedAvatar.HasValue)
             {
@@ -239,32 +238,5 @@ namespace Mzayad.Web.Controllers
             return RedirectToAction("MyAccount");
 
         }
-
-
-        public async Task<JsonResult> ValidateGamertag(string gamertag,string cureent)
-        {
-            if (!gamertag.Equals(cureent))
-            {
-                var exists = await _userProfileService.Exsist(gamertag);
-                var results = new
-                {
-                    IsValid = !exists
-                };
-
-                return Json(results, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                
-                var results = new
-                {
-                    IsValid = true
-                };
-
-                return Json(results, JsonRequestBehavior.AllowGet);
-            }
-            
-        }
-
     }
 }

@@ -16,6 +16,24 @@ namespace Mzayad.Services
         {
         }
 
+        public async Task<UserProfile> CreateNewProfile(ApplicationUser user)
+        {
+            using (var dc = DataContext())
+            {
+                var userProfile = new UserProfile
+                {
+                    UserId = user.Id,
+                    Status = UserProfileStatus.Private,
+                    ProfileUrl = UserProfile.GenerateProfileUrl(user.UserName),
+                    Avatar = await dc.Avatars.FirstOrDefaultAsync()
+                };
+                
+                dc.UserProfiles.Add(userProfile);
+                await dc.SaveChangesAsync();
+                return userProfile;
+            }
+        }
+
         public async Task<UserProfile> Add(UserProfile userProfile)
         {
             using (var dc=DataContext())
@@ -33,25 +51,10 @@ namespace Mzayad.Services
                 var userProfile = await dc.UserProfiles.SingleOrDefaultAsync(i => i.UserId == user.Id);
                 if (userProfile == null)
                 {
-                    userProfile = new UserProfile // create default user profile
-                    {
-                        UserId = user.Id,
-                        Status = UserProfileStatus.Private,
-                        Gamertag = user.UserName,
-                        ProfileUrl = string.Format("https://www.mzayad.com/profiles/{0}", user.UserName.ToLowerInvariant()),
-                        Avatar = await dc.Avatars.FirstOrDefaultAsync()
-                    };
+                    userProfile = await CreateNewProfile(user);
                 }
 
                 return userProfile;
-            }
-        }
-
-        public async Task<bool> Exsist(string gamertag)
-        {
-            using (var dc=DataContext())
-            {
-                return (await dc.UserProfiles.Where(i => i.Gamertag == gamertag).ToArrayAsync()).Any();
             }
         }
 
