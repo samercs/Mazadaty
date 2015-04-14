@@ -57,7 +57,7 @@
 }
 #home-index #auction-list > li .auction-details .product-information {
   position: relative;
-  max-height: 100px;
+  max-height: 200px;
   overflow: hidden;
 }
 #home-index #auction-list > li .auction-details .product-information .more-overlay {
@@ -116,11 +116,11 @@
   width: 100%;
 }
 #home-index #auction-list > li .auction-status.status-closed {
-  border-color: #d9a300;
-  background-color: rgba(217, 163, 0, 0.05);
+  border-color: #b94a48;
+  background-color: rgba(185, 74, 72, 0.05);
 }
 #home-index #auction-list > li .auction-status.status-closed > .auction-status-label {
-  background-color: #d9a300;
+  background-color: #b94a48;
 }
 #home-index #auction-list > li .auction-status.status-live {
   border-color: #008c00;
