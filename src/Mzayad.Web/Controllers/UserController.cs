@@ -36,8 +36,8 @@ namespace Mzayad.Web.Controllers
             _avatarService=new AvatarService(appServices.DataContextFactory);
         }
 
-        [Route("my-account")]
-        public ActionResult MyAccount()
+        [Route("dashboard")]
+        public ActionResult Dashboard()
         {
             return View();
         }
@@ -71,7 +71,7 @@ namespace Mzayad.Web.Controllers
 
             SetStatusMessage(Global.PasswordSuccessfullyChanged);
 
-            return RedirectToAction("MyAccount");
+            return RedirectToAction("Dashboard");
         }
 
         private async Task SendPasswordChangedEmail()
@@ -157,7 +157,7 @@ namespace Mzayad.Web.Controllers
 
             SetStatusMessage(Global.EditAccountNameSuccessMessage);
 
-            return RedirectToAction("MyAccount");
+            return RedirectToAction("Dashboard");
         }
 
         private async Task SendEmailChangedEmail(ApplicationUser user, string originalEmail)
@@ -235,7 +235,7 @@ namespace Mzayad.Web.Controllers
             }
             await _userProfileService.Update(userProfile);
             SetStatusMessage("Your profile has been saved successfully.");
-            return RedirectToAction("MyAccount");
+            return RedirectToAction("Dashboard");
 
         }
     }

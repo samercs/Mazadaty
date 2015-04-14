@@ -64,7 +64,7 @@ namespace Mzayad.Web.Controllers
 
             return !string.IsNullOrEmpty(returnUrl) 
                 ? RedirectToLocal(returnUrl) 
-                : RedirectToAction("MyAccount", "User", new { Language });
+                : RedirectToAction("Dashboard", "User", new { Language });
         }
 
         private void SetNameAndEmailCookies(ApplicationUser user, string usernameOrEmail)
@@ -146,7 +146,7 @@ namespace Mzayad.Web.Controllers
 
             SetStatusMessage(string.Format(Global.RegistrationWelcomeMessage, user.FirstName));
 
-            return RedirectToAction("MyAccount", "User", new { Language });
+            return RedirectToAction("Dashboard", "User", new { Language });
         }
 
         private async Task SendNewUserWelcomeEmail(ApplicationUser user)
@@ -276,7 +276,7 @@ namespace Mzayad.Web.Controllers
 
             SetStatusMessage(Global.PasswordSuccessfullyChanged);
 
-            return RedirectToAction("MyAccount", "User", new { Language });
+            return RedirectToAction("Dashboard", "User", new { Language });
         }
 
         private string GetBaseUrl(string action)

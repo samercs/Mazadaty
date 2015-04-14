@@ -656,7 +656,7 @@
     <Content Include="Views\Shared\_Layout_StatusMessage.cshtml" />
     <Content Include="Views\Shared\Blank.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\User\MyAccount.cshtml" />
+    <Content Include="Views\User\Dashboard.cshtml" />
     <Content Include="Views\Home\TermsAndConditions.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Address.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Address_Default.cshtml" />
