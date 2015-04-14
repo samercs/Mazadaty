@@ -48,7 +48,7 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                var userProfile = await dc.UserProfiles.SingleOrDefaultAsync(i => i.UserId == user.Id);
+                var userProfile = await dc.UserProfiles.Include(i => i.Avatar).SingleOrDefaultAsync(i => i.UserId == user.Id);
                 if (userProfile == null)
                 {
                     userProfile = await CreateNewProfile(user);

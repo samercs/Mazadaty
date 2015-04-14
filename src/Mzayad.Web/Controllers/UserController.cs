@@ -18,7 +18,7 @@ using OrangeJetpack.Services.Models;
 
 namespace Mzayad.Web.Controllers
 {
-    [RoutePrefix("{language}/user")]
+    [RoutePrefix("{language}/user"), Authorize]
     public class UserController : ApplicationController
     {
         private readonly AddressService _addressService;
@@ -37,9 +37,17 @@ namespace Mzayad.Web.Controllers
         }
 
         [Route("dashboard")]
-        public ActionResult Dashboard()
+        public async Task<ActionResult> Dashboard()
         {
-            return View();
+            var user = await AuthService.CurrentUser();
+            
+            var viewModel = new DashboardViewModel
+            {
+                ApplicationUser = user,
+                UserProfile = await _userProfileService.GetByUser(user)
+            };
+
+            return View(viewModel);
         }
 
         [Route("change-password")]

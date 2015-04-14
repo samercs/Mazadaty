@@ -348,6 +348,7 @@
     <Compile Include="Models\Shared\AddressViewModel.cs" />
     <Compile Include="Models\Shared\DeleteConfirmationViewModel.cs" />
     <Compile Include="Models\User\ChangePasswordViewModel.cs" />
+    <Compile Include="Models\User\DashboardViewModel.cs" />
     <Compile Include="Models\User\EditProfileModel.cs" />
     <Compile Include="Models\User\NotificationModelView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -656,7 +657,6 @@
     <Content Include="Views\Shared\_Layout_StatusMessage.cshtml" />
     <Content Include="Views\Shared\Blank.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\User\Dashboard.cshtml" />
     <Content Include="Views\Home\TermsAndConditions.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Address.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Address_Default.cshtml" />
@@ -670,6 +670,7 @@
     <Content Include="Views\User\Notifications.cshtml" />
     <Content Include="Views\Shared\DeleteConfirmation.cshtml" />
     <Content Include="Views\User\EditProfile.cshtml" />
+    <Content Include="Views\User\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
