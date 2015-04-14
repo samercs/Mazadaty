@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Mzayad.Data;
 using Mzayad.Models;
+using Mzayad.Models.Enum;
 
 namespace Mzayad.Services
 {
@@ -35,7 +36,9 @@ namespace Mzayad.Services
                     userProfile = new UserProfile // create default user profile
                     {
                         UserId = user.Id,
+                        Status = UserProfileStatus.Private,
                         Gamertag = user.UserName,
+                        ProfileUrl = string.Format("https://www.mzayad.com/profiles/{0}", user.UserName.ToLowerInvariant()),
                         Avatar = await dc.Avatars.FirstOrDefaultAsync()
                     };
                 }

@@ -2,7 +2,20 @@
 
 @{
     ViewBag.Title = Global.EditProfile;
+}
 
+@section styles
+{
+    <style>
+        .selectedImg {
+            border: solid 2px #000000;
+            padding: 5px;
+        }
+
+        .normalImg {
+            cursor: pointer;
+        }
+    </style>
 }
 
 <div class="row">
@@ -22,25 +35,8 @@
                     @Html.ValidationMessageFor(m => m.UserProfile.Status, Global.FirstNameRequiredErrorMessage)
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.UserProfile.Gamertag, Global.AliasOrUsername).Required()
-                    @Html.TextBoxFor(i => i.UserProfile.Gamertag, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.UserProfile.Gamertag, Global.FirstNameRequiredErrorMessage)
-                    <div id="username-validate" class="text-right">
-                        <div id="username-checking" class="text-warning">
-                            <i class="fa fa-spin fa-cog fa-lg"></i> @Global.UserNameValidateChecking
-                        </div>
-                        <div id="username-valid" class="text-success">
-                            <i class="fa fa-lg fa-check-square-o"></i> @Global.UserNameValidateIsValid
-                        </div>
-                        <div id="username-error" class="text-danger">
-                            <i class="fa fa-lg fa-frown-o"></i> @Global.UserNameValidateError
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
                     @Html.LabelFor(m => m.UserProfile.ProfileUrl, Global.ProfileURL)
-                    @Html.TextBoxFor(i => i.UserProfile.ProfileUrl, new { @class = "form-control disabled", @readonly = true })
-                    @Html.ValidationMessageFor(m => m.UserProfile.ProfileUrl, Global.FirstNameRequiredErrorMessage)
+                    @Html.TextBoxFor(i => i.UserProfile.ProfileUrl, new { @class = "form-control", @readonly = true })
                 </div>
 
                 <div class="form-group">
@@ -76,8 +72,6 @@
 
             </section>
 
-
-
             <section class="form-buttons">
                 <button id="btnSubmit" type="submit" class="btn btn-default">@Global.Save</button>
             </section>
@@ -85,41 +79,9 @@
     </div>
 </div>
 
-@section styles
-{
-    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
-    
-    
-    <style>
-        .selectedImg {
-            border: solid 2px #000000;
-            padding: 5px;
-        }
-
-        .normalImg {
-            cursor: pointer;
-        }
-
-        #username-validate {
-            display: none;
-            margin: 8px 0;
-            line-height: normal;
-        }
-
-        #username-checking {
-            font-style: italic;
-        }
-    </style>
-
-
-
-}
-
 @section Scripts {
-    @Scripts.Render("~/js/jquery-ui")
     @Scripts.Render("~/js/validate")
-    @Scripts.Render("~/js/slugify")
-    <script src="~/scripts/address.js"></script>
+
     <script>
         (function($) {
 
@@ -133,51 +95,7 @@
 
             });
 
-
-            $("#UserProfile_Gamertag").on("blur", function() {
-
-                var gamertag = $(this).val();
-                if (gamertag.length === 0) {
-                    return;
-                }
-
-                $("#username-validate").show().children("div").hide();
-                $("#username-checking").show();
-
-                var url = "@Url.Action("ValidateGamertag")";
-                var data = { gamertag: gamertag, cureent: "@Model.UserProfile.Gamertag" };
-
-                $.getJSON(url, data, function(d) {
-                    $("#username-checking").hide();
-                    if (d.IsValid) {
-                        $("#username-valid").show();
-                        $("#btnSubmit").removeAttr("disabled");
-
-                    } else {
-                        $("#username-error").show();
-                        $("#btnSubmit").attr("disabled", "disabled");
-
-                    }
-                });
-
-            });
-
-
-            $("#UserProfile_ProfileUrl").slugify("#UserProfile_Gamertag");
-
-
-            var pigLatin = function (str) {
-                return "https://www.mzayad.com/profiles/" + str;
-            }
-
-            $("#UserProfile_ProfileUrl").slugify("#UserProfile_Gamertag",false, {
-                slugFunc: function (str, originalFunc) { return pigLatin(originalFunc(str)); }
-            }
-            );
-
-
         })(jQuery);
-
 
     </script>
 }
