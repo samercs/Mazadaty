@@ -4,6 +4,7 @@
 body {
   padding-top: 75px;
   padding-bottom: 20px;
+  font-family: ubuntu;
 }
 body > div {
   font-size: 1.5rem;
