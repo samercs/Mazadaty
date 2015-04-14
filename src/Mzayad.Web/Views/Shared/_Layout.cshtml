@@ -1,4 +1,5 @@
 ﻿@using Mzayad.Web.Extensions
+@using OrangeJetpack.Base.Web.Extensions
 <!DOCTYPE html>
 <html lang="@Html.Language()" dir="@(Html.IsArabic() ? "rtl" : "ltr")">
 <head>
@@ -13,7 +14,7 @@
     @Styles.Render("~/css")
     @RenderSection("styles", false)
 </head>
-<body>
+<body id="@Html.Ojs().PageIdentifier()">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">

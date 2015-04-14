@@ -234,4 +234,7 @@ ol ol {
 .text-no {
   color: #b94a48;
 }
+.panel {
+  border-radius: 0;
+}
 /*# sourceMappingURL=site.css.map */
