@@ -206,15 +206,15 @@ namespace Mzayad.Web.Controllers
             SetStatusMessage(Global.CategoryNotificationSaveMessage);
             return RedirectToAction("Notifications");
         }
+        
         [Route("edit-profile")]
         public async Task<ActionResult> EditProfile()
         {
             var user = await AuthService.CurrentUser();
-            var userProfile = await _userProfileService.GetByUser(user.Id);
+            var userProfile = await _userProfileService.GetByUser(user);
             var model = await new EditProfileModel().Init(_avatarService, userProfile);
             return View(model);
         }
-
 
         [Route("edit-profile"),HttpPost,ValidateAntiForgeryToken]
         public async Task<ActionResult> EditProfile(EditProfileModel model, int? selectedAvatar)
@@ -230,7 +230,7 @@ namespace Mzayad.Web.Controllers
             }
             
             var user = await AuthService.CurrentUser();
-            var userProfile = await _userProfileService.GetByUser(user.Id);
+            var userProfile = await _userProfileService.GetByUser(user);
             userProfile.Status = model.UserProfile.Status;
             userProfile.Gamertag = model.UserProfile.Gamertag;
             userProfile.ProfileUrl = model.UserProfile.ProfileUrl;

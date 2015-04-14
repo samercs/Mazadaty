@@ -25,11 +25,22 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<UserProfile> GetByUser(string id)
+        public async Task<UserProfile> GetByUser(ApplicationUser user)
         {
             using (var dc = DataContext())
             {
-                return await dc.UserProfiles.SingleOrDefaultAsync(i => i.UserId == id);
+                var userProfile = await dc.UserProfiles.SingleOrDefaultAsync(i => i.UserId == user.Id);
+                if (userProfile == null)
+                {
+                    userProfile = new UserProfile // create default user profile
+                    {
+                        UserId = user.Id,
+                        Gamertag = user.UserName,
+                        Avatar = await dc.Avatars.FirstOrDefaultAsync()
+                    };
+                }
+
+                return userProfile;
             }
         }
 
