@@ -13,17 +13,13 @@ namespace Mzayad.Web.Models.User
 {
     public class EditProfileModel
     {
-        
-
-        
-
         public UserProfile UserProfile { get; set; }
 
         public IEnumerable<SelectListItem> PrivacyList { get; set; }
 
         public IEnumerable<Avatar> Avatars { get; set; }
 
-        public async Task<EditProfileModel> Init(AvatarService avatarService,UserProfile userProfile)
+        public async Task<EditProfileModel> Hydrate(AvatarService avatarService,UserProfile userProfile)
         {
             UserProfile = userProfile;
             PrivacyList = Enum.GetValues(typeof(UserProfileStatus))

@@ -212,25 +212,21 @@ namespace Mzayad.Web.Controllers
         {
             var user = await AuthService.CurrentUser();
             var userProfile = await _userProfileService.GetByUser(user);
-            var model = await new EditProfileModel().Init(_avatarService, userProfile);
+            var model = await new EditProfileModel().Hydrate(_avatarService, userProfile);
             return View(model);
         }
 
         [Route("edit-profile"),HttpPost,ValidateAntiForgeryToken]
         public async Task<ActionResult> EditProfile(EditProfileModel model, int? selectedAvatar)
         {
-            if (!ModelState.IsValid)
-            {
-                string messages = string.Join("; ", ModelState.Values
-                                        .SelectMany(x => x.Errors)
-                                        .Select(x => x.ErrorMessage));
-
-                SetStatusMessage(messages,StatusMessageType.Error);
-                return View(model);
-            }
-            
             var user = await AuthService.CurrentUser();
             var userProfile = await _userProfileService.GetByUser(user);
+                  
+            if (!ModelState.IsValid)
+            {
+                return View(await model.Hydrate(_avatarService, userProfile));
+            }
+            
             userProfile.Status = model.UserProfile.Status;
             userProfile.Gamertag = model.UserProfile.Gamertag;
             userProfile.ProfileUrl = model.UserProfile.ProfileUrl;
