@@ -185,6 +185,10 @@
     <Compile Include="Migrations\201504112203566_AddUserProfile.Designer.cs">
       <DependentUpon>201504112203566_AddUserProfile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504140824435_UserProfileMigrationFix.cs" />
+    <Compile Include="Migrations\201504140824435_UserProfileMigrationFix.Designer.cs">
+      <DependentUpon>201504140824435_UserProfileMigrationFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -288,6 +292,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504112203566_AddUserProfile.resx">
       <DependentUpon>201504112203566_AddUserProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504140824435_UserProfileMigrationFix.resx">
+      <DependentUpon>201504140824435_UserProfileMigrationFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
