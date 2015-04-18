@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mzayad.Models
 {
     public class Address : ModelBase
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AddressId { get; set; }
         
         [Required]
