@@ -12,7 +12,7 @@ namespace Mzayad.Services
         {
         }
 
-        public async Task AddBid(int auctionId, string userId, decimal amount, int secondsLeft)
+        public async Task AddBid(int auctionId, string userId, decimal amount, int secondsLeft,string ip)
         {
             using (var dc = DataContext())
             {
@@ -21,7 +21,8 @@ namespace Mzayad.Services
                     AuctionId = auctionId,
                     UserId = userId,
                     Amount = amount,
-                    SecondsLeft = secondsLeft
+                    SecondsLeft = secondsLeft,
+                    UserHostAddress = string.IsNullOrEmpty(ip) ? "--NoData--" : ip
                 });
 
                 await dc.SaveChangesAsync();

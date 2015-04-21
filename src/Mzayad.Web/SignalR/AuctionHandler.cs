@@ -154,7 +154,7 @@ namespace Mzayad.Web.SignalR
             }
         }
 
-        public async Task SubmitBid(int auctionId, string userId, string username)
+        public async Task SubmitBid(int auctionId, string userId, string username,string hostAddress)
         {
             if (string.IsNullOrEmpty(userId))
             {
@@ -172,7 +172,7 @@ namespace Mzayad.Web.SignalR
 
             auction.AddBid(username);
 
-            await _bidService.AddBid(auctionId, userId, auction.LastBidAmount.GetValueOrDefault(), secondsLeft);
+            await _bidService.AddBid(auctionId, userId, auction.LastBidAmount.GetValueOrDefault(), secondsLeft,hostAddress);
 
             _cacheService.Set(cacheKey, auction);
         }
