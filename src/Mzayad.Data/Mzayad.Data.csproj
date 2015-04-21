@@ -197,6 +197,10 @@
     <Compile Include="Migrations\201504211146030_AddShippingAddress.Designer.cs">
       <DependentUpon>201504211146030_AddShippingAddress.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504211200018_AddOrder_OrderItem_OrderLog.cs" />
+    <Compile Include="Migrations\201504211200018_AddOrder_OrderItem_OrderLog.Designer.cs">
+      <DependentUpon>201504211200018_AddOrder_OrderItem_OrderLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -309,6 +313,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504211146030_AddShippingAddress.resx">
       <DependentUpon>201504211146030_AddShippingAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504211200018_AddOrder_OrderItem_OrderLog.resx">
+      <DependentUpon>201504211200018_AddOrder_OrderItem_OrderLog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

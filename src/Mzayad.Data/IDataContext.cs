@@ -19,7 +19,10 @@ namespace Mzayad.Data
         IDbSet<Bid> Bids { get; set; }
         IDbSet<Avatar> Avatars { get; set; }
         IDbSet<UserProfile> UserProfiles { get; set; }
-        IDbSet<ShippingAddress> ShippingAddresses { get; set; } 
+        IDbSet<ShippingAddress> ShippingAddresses { get; set; }
+        IDbSet<Order> Orders { get; set; }
+        IDbSet<OrderItem> OrderItems { get; set; }
+        IDbSet<OrderLog> OrderLogs { get; set; } 
         int SaveChanges();
         Task<int> SaveChangesAsync();
         void SetModified(object entity);
