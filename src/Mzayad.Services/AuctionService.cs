@@ -13,11 +13,13 @@ namespace Mzayad.Services
     public class AuctionService : ServiceBase
     {
         private readonly BidService _bidService;
+        private readonly OrderService _orderService;
         
         public AuctionService(IDataContextFactory dataContextFactory)
             : base(dataContextFactory)
         {
             _bidService = new BidService(dataContextFactory);
+            _orderService=new OrderService(dataContextFactory);
         }
 
         public async Task<Auction> Add(Auction auction, Action onAdded)
@@ -133,7 +135,7 @@ namespace Mzayad.Services
         /// <summary>
         /// Closes an auction and records the highest bid.
         /// </summary>
-        public async Task CloseAuction(int auctionId, Action onUpdated)
+        public async Task<Order> CloseAuction(int auctionId, Action onUpdated)
         {
             using (var dc = DataContext())
             {
@@ -147,11 +149,17 @@ namespace Mzayad.Services
                     auction.WonByUserId = highestBid.UserId;
                     auction.WonAmount = highestBid.Amount;
                     auction.WonByBidId = highestBid.BidId;
+                    
                 }
 
                 await dc.SaveChangesAsync();
-
                 onUpdated();
+                if (highestBid != null)
+                {
+                    var order = await _orderService.CreateOrder(auctionId, highestBid.BidId);
+                    return order;
+                }
+                return null;
             }
         }
     }

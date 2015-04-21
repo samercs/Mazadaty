@@ -221,11 +221,17 @@
                     }
                 };
 
-                auctionHub.client.closeAuction = function(auctionId) {
+                auctionHub.client.closeAuction = function(auctionId,userId) {
                     console.log("Closed auction: " + auctionId);
                     var auction = viewModel.getAuction(auctionId);
                     if (auction) {
-                        auction.status("Closed");
+                        
+                        
+                        if (self.lastBidUser == userId) {
+
+                        } else {
+                            auction.status("Closed");
+                        }
                     }
                 }
 

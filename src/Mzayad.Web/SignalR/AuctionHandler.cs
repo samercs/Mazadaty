@@ -117,7 +117,7 @@ namespace Mzayad.Web.SignalR
             return serialize;
         }
 
-        private void UpdateAuctions(object state)
+        private void  UpdateAuctions(object state)
         {
             lock (_updateLock)
             {
@@ -139,8 +139,10 @@ namespace Mzayad.Web.SignalR
                     if (auction.SecondsLeft == 0)
                     {
                         _cacheService.RemoveFromSet("LiveAuctionKeys", cacheKey);
-                        _auctionService.CloseAuction(auction.AuctionId, () => _cacheService.Delete(CacheKeys.CurrentAuctions)).Wait();
-                        Clients.All.closeAuction(auction.AuctionId);
+                        var order =
+                            _auctionService.CloseAuction(auction.AuctionId,
+                                () => _cacheService.Delete(CacheKeys.CurrentAuctions)).Result;
+                        Clients.All.closeAuction(auction.AuctionId,order.UserId);
                     }
 
                     _cacheService.Set(cacheKey, auction);
