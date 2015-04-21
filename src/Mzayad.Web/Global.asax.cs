@@ -21,7 +21,7 @@ namespace Mzayad.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutofacConfig.RegisterAll();
-            //Database.SetInitializer<DataContext>(null);
+            Database.SetInitializer<DataContext>(null);
         }
 
         protected void Application_PreSendRequestHeaders()

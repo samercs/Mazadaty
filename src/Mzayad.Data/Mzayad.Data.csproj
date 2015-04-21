@@ -193,6 +193,10 @@
     <Compile Include="Migrations\201504140948265_RemoveUserProfileGamertag.Designer.cs">
       <DependentUpon>201504140948265_RemoveUserProfileGamertag.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504211146030_AddShippingAddress.cs" />
+    <Compile Include="Migrations\201504211146030_AddShippingAddress.Designer.cs">
+      <DependentUpon>201504211146030_AddShippingAddress.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -302,6 +306,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504140948265_RemoveUserProfileGamertag.resx">
       <DependentUpon>201504140948265_RemoveUserProfileGamertag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504211146030_AddShippingAddress.resx">
+      <DependentUpon>201504211146030_AddShippingAddress.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
