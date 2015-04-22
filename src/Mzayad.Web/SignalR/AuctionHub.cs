@@ -42,6 +42,11 @@ namespace Mzayad.Web.SignalR
             await _auctionHandler.SubmitBid(auctionId, userId, username,hostAddress);
         }
 
+        public string GetUsername()
+        {
+            return Context.User.Identity.GetUserName();
+        }
+
         protected string GetIpAddress()
         {
             string ipAddress;

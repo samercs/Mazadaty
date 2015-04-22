@@ -46,6 +46,7 @@ namespace Mzayad.Web.SignalR
         {
             LastBidAmount = (LastBidAmount ?? 0) + BidIncrement;
             LastBidderName = username;
+            
 
             if (SecondsLeft < 12)
             {

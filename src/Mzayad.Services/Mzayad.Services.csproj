@@ -77,6 +77,10 @@
     <Compile Include="UserProfileService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Mzayad.Core\Mzayad.Core.csproj">
+      <Project>{806EA484-DEBE-4C9D-8B1D-4D0655AAAB49}</Project>
+      <Name>Mzayad.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Mzayad.Data\Mzayad.Data.csproj">
       <Project>{e723590f-d2bf-411c-a710-9677e2629ffd}</Project>
       <Name>Mzayad.Data</Name>

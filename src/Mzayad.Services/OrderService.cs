@@ -5,6 +5,7 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mzayad.Core.Formatting;
 using Mzayad.Data;
 using Mzayad.Data.Migrations;
 using Mzayad.Models;
@@ -23,7 +24,8 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
 
-                var bid = await dc.Bids.Include(i => i.User.Address).SingleOrDefaultAsync(i => i.BidId == bidId);
+                var bid = await dc.Bids.Include(i => i.User.Address ).SingleOrDefaultAsync(i => i.BidId == bidId);
+                
                 var auction =
                     await dc.Auctions.Include(i => i.Product).SingleOrDefaultAsync(i => i.AuctionId == auctionId);
                 if (bid != null && auction!=null)
@@ -41,12 +43,14 @@ namespace Mzayad.Services
                             AddressLine4 = bid.User.Address.AddressLine4,
                             CityArea = bid.User.Address.CityArea,
                             CountryCode = bid.User.Address.CountryCode,
+                            PostalCode = bid.User.Address.PostalCode,
+                            StateProvince = bid.User.Address.StateProvince,
+                            
                             Email = bid.User.Email,
                             FirstName = bid.User.FirstName,
                             LastName = bid.User.LastName,
-                            PhoneNumber = bid.User.PhoneNumber,
-                            PostalCode = bid.User.Address.PostalCode,
-                            StateProvince = bid.User.Address.StateProvince
+                            PhoneNumber = PhoneNumberFormatter.Format(bid.User.PhoneCountryCode,bid.User.PhoneNumber)
+                            
                         },
                         Type = OrderType.Auction,
                         SubmittedUtc = DateTime.UtcNow,
@@ -82,5 +86,16 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<Order> GetById(int id)
+        {
+            using (var dc=DataContext())
+            {
+                return await 
+                    dc.Orders.Include(i => i.Address)
+                        .Include(i => i.Items)
+                        .Include(i => i.Logs)
+                        .SingleOrDefaultAsync(i => i.OrderId == id);
+            }
+        }
     }
 }

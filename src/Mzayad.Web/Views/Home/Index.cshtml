@@ -97,6 +97,7 @@
                 @if (Request.IsAuthenticated)
                 {
                     <button type="button" class="btn btn-default" data-bind="click: submitBid">Bid</button>
+                    
                 }
                 else
                 {
@@ -177,10 +178,13 @@
                     });
 
                     self.submitBid = function() {
-                        
+
                         auctionHub.server.submitBid(self.auctionId);
                     };
+
+
                 };
+
 
                 var AuctionsViewModel = function(data) {
                     var self = this;
@@ -221,17 +225,26 @@
                     }
                 };
 
-                auctionHub.client.closeAuction = function(auctionId,userId) {
+                
+                auctionHub.client.closeAuction = function(auctionId, orderId) {
                     console.log("Closed auction: " + auctionId);
                     var auction = viewModel.getAuction(auctionId);
                     if (auction) {
                         
-                        
-                        if (self.lastBidUser == userId) {
+                        if (auction.lastBidUser()) {
+                            auctionHub.server.getUsername().done(function(results) {
+                                if (results == auction.lastBidUser()) {
+                                    location.href = "/Order/Index/" + orderId;
+                                } else {
+                                    auction.status("Closed");
+                                }
+                            });
 
                         } else {
                             auction.status("Closed");
                         }
+                        
+                       
                     }
                 }
 
@@ -304,5 +317,7 @@
                 });
 
             });
+
+
         </script>
     }

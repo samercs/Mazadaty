@@ -1,0 +1,90 @@
+﻿@using OrangeJetpack.Base.Core.Formatting
+@using OrangeJetpack.Localization
+@model Mzayad.Models.Order
+
+@{
+    ViewBag.Title = "Order Detail";
+    
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title" style="display: inline-block">@Global.OrderItems</h3>
+    </div>
+    <div class="panel-body form-horizontal">
+        
+        @foreach (var item in Model.Items)
+        {
+            <div class="form-group">
+                <label class="col-sm-2 control-label">@Global.ItemName : </label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">@item.Localize("en",i=>i.Name).Name</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">@Global.ItemPrices : </label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">@item.ItemPrice</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">@Global.Quantity : </label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">@item.Quantity</p>
+                </div>
+            </div>
+            Model.Total += item.Quantity*item.ItemPrice;
+            
+        }
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Global.Total : </label>
+            <div class="col-sm-10">
+                <p class="form-control-static">@Model.Total</p>
+            </div>
+        </div>
+       
+        
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title" style="display: inline-block">@Global.ShippingAddress</h3>
+    </div>
+    <div class="panel-body form-horizontal">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Global.Name : </label>
+            <div class="col-sm-10">
+                <p class="form-control-static">@NameFormatter.GetFullName(Model.Address.FirstName,Model.Address.LastName)</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Global.Email : </label>
+            <div class="col-sm-10">
+                <p class="form-control-static">@Model.Address.Email</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Global.PhoneNumber : </label>
+            <div class="col-sm-10">
+                <p class="form-control-static">@Model.Address.PhoneNumber</p>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Global.Address</label>
+            <div class="col-sm-10">
+                <ul class="form-control-static list-unstyled">
+                    <li>@Model.Address.AddressLine1 , @Model.Address.AddressLine2 , @Model.Address.AddressLine3 , @Model.Address.AddressLine4</li>
+                    <li>@Model.Address.CountryCode , @Model.Address.CityArea</li>
+                    
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
