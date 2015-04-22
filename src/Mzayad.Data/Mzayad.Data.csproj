@@ -193,17 +193,9 @@
     <Compile Include="Migrations\201504140948265_RemoveUserProfileGamertag.Designer.cs">
       <DependentUpon>201504140948265_RemoveUserProfileGamertag.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201504211146030_AddShippingAddress.cs" />
-    <Compile Include="Migrations\201504211146030_AddShippingAddress.Designer.cs">
-      <DependentUpon>201504211146030_AddShippingAddress.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201504211200018_AddOrder_OrderItem_OrderLog.cs" />
-    <Compile Include="Migrations\201504211200018_AddOrder_OrderItem_OrderLog.Designer.cs">
-      <DependentUpon>201504211200018_AddOrder_OrderItem_OrderLog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201504211225148_AddUserHostAddress_Bid.cs" />
-    <Compile Include="Migrations\201504211225148_AddUserHostAddress_Bid.Designer.cs">
-      <DependentUpon>201504211225148_AddUserHostAddress_Bid.cs</DependentUpon>
+    <Compile Include="Migrations\201504221213230_AddShippingAddress_Order_OrderItem_OrderLog.cs" />
+    <Compile Include="Migrations\201504221213230_AddShippingAddress_Order_OrderItem_OrderLog.Designer.cs">
+      <DependentUpon>201504221213230_AddShippingAddress_Order_OrderItem_OrderLog.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -315,14 +307,8 @@
     <EmbeddedResource Include="Migrations\201504140948265_RemoveUserProfileGamertag.resx">
       <DependentUpon>201504140948265_RemoveUserProfileGamertag.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504211146030_AddShippingAddress.resx">
-      <DependentUpon>201504211146030_AddShippingAddress.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504211200018_AddOrder_OrderItem_OrderLog.resx">
-      <DependentUpon>201504211200018_AddOrder_OrderItem_OrderLog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504211225148_AddUserHostAddress_Bid.resx">
-      <DependentUpon>201504211225148_AddUserHostAddress_Bid.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201504221213230_AddShippingAddress_Order_OrderItem_OrderLog.resx">
+      <DependentUpon>201504221213230_AddShippingAddress_Order_OrderItem_OrderLog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

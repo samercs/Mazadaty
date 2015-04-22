@@ -7,13 +7,13 @@ namespace Mzayad.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
-    public sealed partial class AddOrder_OrderItem_OrderLog : IMigrationMetadata
+    public sealed partial class AddShippingAddress_Order_OrderItem_OrderLog : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddOrder_OrderItem_OrderLog));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddShippingAddress_Order_OrderItem_OrderLog));
         
         string IMigrationMetadata.Id
         {
-            get { return "201504211200018_AddOrder_OrderItem_OrderLog"; }
+            get { return "201504221213230_AddShippingAddress_Order_OrderItem_OrderLog"; }
         }
         
         string IMigrationMetadata.Source
