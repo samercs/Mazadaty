@@ -429,4 +429,13 @@
   <data name="Total" xml:space="preserve">
     <value>Total</value>
   </data>
+  <data name="PhoneNumberRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your phone number.</value>
+  </data>
+  <data name="SaveAndContinue" xml:space="preserve">
+    <value>Save And Continue</value>
+  </data>
+  <data name="AllowPhoneSmsLabel" xml:space="preserve">
+    <value>Allow Phone Sms </value>
+  </data>
 </root>

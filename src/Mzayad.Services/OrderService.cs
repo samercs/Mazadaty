@@ -35,6 +35,7 @@ namespace Mzayad.Services
                         PaymentMethod = PaymentMethod.Knet,
                         Status = OrderStatus.InProgress,
                         UserId = bid.UserId,
+                        AllowPhoneSms = false,
                         Address = new ShippingAddress()
                         {
                             AddressLine1 = bid.User.Address.AddressLine1,
@@ -95,6 +96,19 @@ namespace Mzayad.Services
                         .Include(i => i.Items)
                         .Include(i => i.Logs)
                         .SingleOrDefaultAsync(i => i.OrderId == id);
+            }
+        }
+
+        public async Task<Order> Update(Order order)
+        {
+            using (var dc=DataContext())
+            {
+                dc.Orders.Attach(order);
+                dc.ShippingAddresses.Attach(order.Address);
+                dc.SetModified(order);
+                dc.SetModified(order.Address);
+                await dc.SaveChangesAsync();
+                return order;
             }
         }
     }

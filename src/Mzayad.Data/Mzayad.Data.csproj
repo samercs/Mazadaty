@@ -197,6 +197,10 @@
     <Compile Include="Migrations\201504221213230_AddShippingAddress_Order_OrderItem_OrderLog.Designer.cs">
       <DependentUpon>201504221213230_AddShippingAddress_Order_OrderItem_OrderLog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504260649262_AddAllowPhoneSmsToOrder.cs" />
+    <Compile Include="Migrations\201504260649262_AddAllowPhoneSmsToOrder.Designer.cs">
+      <DependentUpon>201504260649262_AddAllowPhoneSmsToOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -309,6 +313,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504221213230_AddShippingAddress_Order_OrderItem_OrderLog.resx">
       <DependentUpon>201504221213230_AddShippingAddress_Order_OrderItem_OrderLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504260649262_AddAllowPhoneSmsToOrder.resx">
+      <DependentUpon>201504260649262_AddAllowPhoneSmsToOrder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

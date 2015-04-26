@@ -88,6 +88,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Allow Phone Sms .
+        /// </summary>
+        public static string AllowPhoneSmsLabel {
+            get {
+                return ResourceManager.GetString("AllowPhoneSmsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Area.
         /// </summary>
         public static string Area {
@@ -628,6 +637,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please enter your phone number..
+        /// </summary>
+        public static string PhoneNumberRequiredErrorMessage {
+            get {
+                return ResourceManager.GetString("PhoneNumberRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Postal Code.
         /// </summary>
         public static string PostalCode {
@@ -813,6 +831,15 @@ namespace Mzayad.Web.Resources {
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save And Continue.
+        /// </summary>
+        public static string SaveAndContinue {
+            get {
+                return ResourceManager.GetString("SaveAndContinue", resourceCulture);
             }
         }
         
