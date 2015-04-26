@@ -346,6 +346,7 @@
     <Compile Include="Models\Account\AccountViewModels.cs" />
     <Compile Include="Models\Account\UserAccountViewModel.cs" />
     <Compile Include="Models\Home\IndexViewModel.cs" />
+    <Compile Include="Models\Order\OrderSummaryViewModel.cs" />
     <Compile Include="Models\Order\ShippingAddressViewModel.cs" />
     <Compile Include="Models\Shared\AddressViewModel.cs" />
     <Compile Include="Models\Shared\DeleteConfirmationViewModel.cs" />
@@ -675,6 +676,7 @@
     <Content Include="Views\User\Dashboard.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Order\Shipping.cshtml" />
+    <Content Include="Views\Order\Summary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

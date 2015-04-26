@@ -43,5 +43,11 @@ namespace Mzayad.Models
 
         public virtual ICollection<OrderItem> Items { get; set; }
         public virtual ICollection<OrderLog> Logs { get; set; }
+
+        public void RecalculateTotal()
+        {
+            Subtotal = Items.Sum(i => i.ItemPrice * i.Quantity);
+            Total = Subtotal;
+        }
     }
 }

@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Mzayad.Core.Formatting;
 using Mzayad.Services;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Models.Order;
 using Mzayad.Web.Models.Shared;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
 
 namespace Mzayad.Web.Controllers
 {
@@ -78,6 +80,45 @@ namespace Mzayad.Web.Controllers
             await _orderService.Update(order);
 
             return RedirectToAction("Summary", new {id = id});
+        }
+
+        public async Task<ActionResult> Summary(int id)
+        {
+            var order = await _orderService.GetById(id);
+            if (order == null)
+            {
+                return HttpNotFound("Order not found");
+            }
+
+            var model = new OrderSummaryViewModel()
+            {
+                Order = order,
+                Language = Language
+            };
+
+            return View(model);
+
+            
+
+        }
+
+        [HttpPost,ValidateAntiForgeryToken]
+        public async Task<ActionResult> Summary(int id,OrderSummaryViewModel model)
+        {
+            var order = await _orderService.GetById(id);
+            if (order == null)
+            {
+                return HttpNotFound("Order not found");
+            }
+
+            order.PaymentMethod = model.Order.PaymentMethod;
+            await _orderService.Update(order);
+
+
+            return RedirectToAction("Submit", new {id=id});
+
+
+
         }
     }
 }
