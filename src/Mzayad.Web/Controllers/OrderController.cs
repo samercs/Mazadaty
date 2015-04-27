@@ -120,5 +120,10 @@ namespace Mzayad.Web.Controllers
 
 
         }
+
+        public ActionResult Submit(int id)
+        {
+            return View();
+        }
     }
 }
