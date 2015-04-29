@@ -1,9 +1,8 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.SignalR;
 using Mzayad.Data;
 using Mzayad.Web.Core.Services;
+using System.Threading.Tasks;
 
 namespace Mzayad.Web.SignalR
 {

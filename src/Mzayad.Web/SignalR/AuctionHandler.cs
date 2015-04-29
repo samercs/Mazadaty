@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using Mzayad.Data;
@@ -10,8 +8,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
-using StackExchange.Redis;
+using System.Threading.Tasks;
 
 namespace Mzayad.Web.SignalR
 {
@@ -132,25 +131,21 @@ namespace Mzayad.Web.SignalR
 
                 var liveAuctions = new List<Auction>();
 
-                var cacheKeys = _cacheService.GetSetMembers("LiveAuctionKeys");
-                for (int i=0;i<cacheKeys.Count();i++)
+                var cacheKeys = _cacheService.GetSetMembers("LiveAuctionKeys").ToList();
+                foreach (var cacheKey in cacheKeys)
                 {
-                    var cacheKey = cacheKeys.ElementAt(i);
                     var auction = _cacheService.Get<Auction>(cacheKey);
                     auction.SecondsLeft = Math.Max(auction.SecondsLeft - 1, 0);
-                    
-                    if (auction.SecondsLeft == 0)
+
+                    if (auction.SecondsLeft <= 0)
                     {
                         _cacheService.RemoveFromSet("LiveAuctionKeys", cacheKey);
                         var task = _auctionService.CloseAuction(auction.AuctionId,
                             () => _cacheService.Delete(CacheKeys.CurrentAuctions));
 
-
                         var order = task.Result;
-                           
 
-
-                        Clients.All.closeAuction(auction.AuctionId,order.OrderId);
+                        Clients.All.closeAuction(auction.AuctionId, order.UserId, order.OrderId);
                     }
 
                     _cacheService.Set(cacheKey, auction);
