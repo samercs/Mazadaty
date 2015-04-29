@@ -1,39 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
-using Mzayad.Core.Formatting;
+﻿using Mzayad.Core.Formatting;
 using Mzayad.Services;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Models.Order;
 using Mzayad.Web.Models.Shared;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Mzayad.Web.Controllers
 {
-    
-    public class OrderController : ApplicationController
+    [RoutePrefix("orders")]
+    public class OrdersController : ApplicationController
     {
         private readonly OrderService _orderService;
 
-        // GET: Order
-        public OrderController(IAppServices appServices) : base(appServices)
+        public OrdersController(IAppServices appServices) : base(appServices)
         {
-
-            _orderService=new OrderService(DataContextFactory);
+            _orderService = new OrderService(DataContextFactory);
         }
 
-        public  ActionResult Index(int id)
+        [Route("{orderId:int}/shipping")]
+        public async Task<ActionResult> Shipping(int orderId)
         {
-            return RedirectToAction("Shipping", new {id = id});
-        }
-
-        public async Task<ActionResult> Shipping(int id)
-        {
-            var order = await _orderService.GetById(id);
+            var order = await _orderService.GetById(orderId);
             if (order == null)
             {
                 return HttpNotFound("order not found");
@@ -46,8 +34,7 @@ namespace Mzayad.Web.Controllers
                 AddressViewModel = new AddressViewModel(order.Address).Hydrate(),
                 ShippingAddress = order.Address,
                 PhoneNumberCountryCode = phoneNumber[0],
-                PhoneNumberNumber = phoneNumber[1]
-                
+                PhoneNumberNumber = phoneNumber[1]               
             };
 
             return View(model);

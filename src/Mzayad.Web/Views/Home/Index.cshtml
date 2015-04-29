@@ -187,7 +187,7 @@
                     };
 
                     self.redirectOrder = function(orderId) {
-                        location.href = "/order/index/" + orderId;
+                        location.href = "/orders/" + orderId + "/shipping";
                     };
                 };
 
@@ -231,19 +231,10 @@
                     }
                 };
 
-
                 auctionHub.client.closeAuction = function(auctionId, userId, orderId) {
-                    console.log("Closed Auction: " + {
-                        "AuctionId" : auctionId,
-                        "UserId" : userId,
-                        "OrderId" : orderId
-                    });
-
                     var auction = viewModel.getAuction(auctionId);
                     if (auction) {
-
-                        auction.closeAuction();
-                        
+                        auction.closeAuction();                
                         if (userId === "@User.Identity.GetUserId()") {
                             auction.redirectOrder(orderId);
                         }

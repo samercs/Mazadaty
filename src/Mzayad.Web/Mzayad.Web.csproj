@@ -297,7 +297,7 @@
     <Compile Include="Areas\Api\Models\User\UserPostModel.cs" />
     <Compile Include="Controllers\AuctionsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
-    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Core\ActionResults\ExcelResult.cs" />
     <Compile Include="Core\Attributes\LanguageRoutePrefix.cs" />
     <Compile Include="Core\Attributes\RequireHttpsAttribute.cs" />
@@ -674,10 +674,10 @@
     <Content Include="Views\Shared\DeleteConfirmation.cshtml" />
     <Content Include="Views\User\EditProfile.cshtml" />
     <Content Include="Views\User\Dashboard.cshtml" />
-    <Content Include="Views\Order\Index.cshtml" />
-    <Content Include="Views\Order\Shipping.cshtml" />
-    <Content Include="Views\Order\Summary.cshtml" />
-    <Content Include="Views\Order\Submit.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Orders\Shipping.cshtml" />
+    <Content Include="Views\Orders\Summary.cshtml" />
+    <Content Include="Views\Orders\Submit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
