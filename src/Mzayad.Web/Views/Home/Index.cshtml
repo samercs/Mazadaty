@@ -1,4 +1,5 @@
-﻿@using Newtonsoft.Json
+﻿@using Microsoft.AspNet.Identity
+@using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
 @using OrangeJetpack.Base.Web
 @model Mzayad.Web.Models.Home.IndexViewModel
@@ -178,11 +179,16 @@
                     });
 
                     self.submitBid = function() {
-
                         auctionHub.server.submitBid(self.auctionId);
                     };
 
+                    self.closeAuction = function() {
+                        self.status("Closed");
+                    };
 
+                    self.redirectOrder = function(orderId) {
+                        location.href = "/order/index/" + orderId;
+                    };
                 };
 
 
@@ -225,26 +231,22 @@
                     }
                 };
 
-                
-                auctionHub.client.closeAuction = function(auctionId, orderId) {
-                    console.log("Closed auction: " + auctionId);
+
+                auctionHub.client.closeAuction = function(auctionId, userId, orderId) {
+                    console.log("Closed Auction: " + {
+                        "AuctionId" : auctionId,
+                        "UserId" : userId,
+                        "OrderId" : orderId
+                    });
+
                     var auction = viewModel.getAuction(auctionId);
                     if (auction) {
-                        
-                        if (auction.lastBidUser()) {
-                            auctionHub.server.getUsername().done(function(results) {
-                                if (results == auction.lastBidUser()) {
-                                    location.href = "/Order/Index/" + orderId;
-                                } else {
-                                    auction.status("Closed");
-                                }
-                            });
 
-                        } else {
-                            auction.status("Closed");
-                        }
+                        auction.closeAuction();
                         
-                       
+                        if (userId === "@User.Identity.GetUserId()") {
+                            auction.redirectOrder(orderId);
+                        }
                     }
                 }
 
@@ -254,7 +256,6 @@
                         console.log(results);
                     });
                 });
-
 
                 var initDescription = function() {
                     $(".product-information").each(function() {
