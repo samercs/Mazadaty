@@ -201,6 +201,10 @@
     <Compile Include="Migrations\201504260649262_AddAllowPhoneSmsToOrder.Designer.cs">
       <DependentUpon>201504260649262_AddAllowPhoneSmsToOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504291525120_RenameShippingAddressProperties.cs" />
+    <Compile Include="Migrations\201504291525120_RenameShippingAddressProperties.Designer.cs">
+      <DependentUpon>201504291525120_RenameShippingAddressProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -316,6 +320,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504260649262_AddAllowPhoneSmsToOrder.resx">
       <DependentUpon>201504260649262_AddAllowPhoneSmsToOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504291525120_RenameShippingAddressProperties.resx">
+      <DependentUpon>201504291525120_RenameShippingAddressProperties.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

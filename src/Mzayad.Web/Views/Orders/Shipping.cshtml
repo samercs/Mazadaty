@@ -6,7 +6,6 @@
 }
 
 @section styles {
-    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
     <link rel="stylesheet" href="/content/flags/flags.css" />
 }
 <div class="row">
@@ -17,41 +16,21 @@
             @Html.AntiForgeryToken()
 
             <section>
-
-
                 <div class="form-group">
-                    @Html.LabelFor(m => m.ShippingAddress.FirstName, Global.FirstName).Required()
-                    @Html.TextBoxFor(m => m.ShippingAddress.FirstName, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.ShippingAddress.FirstName, Global.FirstNameRequiredErrorMessage)
+                    @Html.LabelFor(m => m.ShippingAddress.Name, Global.Name).Required()
+                    @Html.TextBoxFor(m => m.ShippingAddress.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ShippingAddress.Name, Global.FirstNameRequiredErrorMessage)
                 </div>
 
-
                 <div class="form-group">
-                    @Html.LabelFor(m => m.ShippingAddress.LastName, Global.LastName).Required()
-                    @Html.TextBoxFor(m => m.ShippingAddress.LastName, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.ShippingAddress.LastName, Global.LastNameRequiredErrorMessage)
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.ShippingAddress.Email, Global.Email).Required()
-                    @Html.TextBoxFor(m => m.ShippingAddress.Email, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.ShippingAddress.Email, Global.EmailRequiredErrorMessage)
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.ShippingAddress.PhoneNumber, Global.PhoneNumber).Required()
+                    @Html.Label(Global.PhoneNumber).Required()
                     <div class="form-inline">
-                        @Html.TextBoxFor(m => m.PhoneNumberCountryCode, new { @class = "form-control form-control-sm", @type = "tel", maxlength = 4 })
-                        @Html.TextBoxFor(m => m.PhoneNumberNumber, new { @class = "form-control", @type = "tel" })
+                        @Html.TextBoxFor(m => m.PhoneCountryCode, new { @class = "form-control form-control-sm", @type = "tel", maxlength = 4 })
+                        @Html.TextBoxFor(m => m.PhoneLocalNumber, new { @class = "form-control", @type = "tel" })
                     </div>
-                    @Html.ValidationMessageFor(m => m.ShippingAddress.PhoneNumber, Global.PhoneNumberRequiredErrorMessage)
-                    <div class="checkbox">
-                        <label>
-                            @Html.CheckBoxFor(m => m.Order.AllowPhoneSms)
-                            <small>@Global.AllowPhoneSmsLabel</small>
-                        </label>
-                    </div>
+                    @Html.ValidationMessageFor(m => m.ShippingAddress.PhoneCountryCode, Global.PhoneNumberRequiredErrorMessage)
+                    @Html.ValidationMessageFor(m => m.ShippingAddress.PhoneLocalNumber, Global.PhoneNumberRequiredErrorMessage)
                 </div>
-
-
             </section>
 
             @Html.EditorFor(m => m.AddressViewModel)
@@ -64,19 +43,15 @@
     </div>
 </div>
 @section scripts {
-    @Scripts.Render("~/js/jquery-ui")
     @Scripts.Render("~/js/validate")
     <script src="~/scripts/address.js"></script>
-    <script type="text/javascript">
+    <script>
 
         $(function() {
-
             var areas =  @Html.Raw(JsonConvert.SerializeObject(Model.AddressViewModel.KuwaitAreas));
             $(".kuwait-area").autocomplete({
                 source: areas
             });
-
-
         });
 
     </script>

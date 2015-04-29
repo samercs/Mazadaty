@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace Mzayad.Web.Controllers
 {
-    [RoutePrefix("orders")]
+    [RoutePrefix("{language}/orders")]
     public class OrdersController : ApplicationController
     {
         private readonly OrderService _orderService;
@@ -24,37 +24,36 @@ namespace Mzayad.Web.Controllers
             var order = await _orderService.GetById(orderId);
             if (order == null)
             {
-                return HttpNotFound("order not found");
+                return HttpNotFound();
             }
 
-            var phoneNumber = order.Address.PhoneNumber.Split(' ');
             var model = new ShippingAddressViewModel()
             {
                 Order = order,
                 AddressViewModel = new AddressViewModel(order.Address).Hydrate(),
                 ShippingAddress = order.Address,
-                PhoneNumberCountryCode = phoneNumber[0],
-                PhoneNumberNumber = phoneNumber[1]               
+                PhoneCountryCode = order.Address.PhoneCountryCode,
+                PhoneLocalNumber = order.Address.PhoneLocalNumber               
             };
 
             return View(model);
         }
 
-        [HttpPost,ValidateAntiForgeryToken]
-        public async Task<ActionResult> Shipping(int id,ShippingAddressViewModel model)
+        [Route("{orderId:int}/shipping")]
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> Shipping(int id, ShippingAddressViewModel model)
         {
             var order = await _orderService.GetById(id);
             if (order == null)
             {
-                return HttpNotFound("order not found");
+                return HttpNotFound();
             }
 
             order.AllowPhoneSms = model.Order.AllowPhoneSms;
 
-            order.Address.FirstName = model.ShippingAddress.FirstName;
-            order.Address.LastName = model.ShippingAddress.LastName;
-            order.Address.PhoneNumber = PhoneNumberFormatter.Format(model.PhoneNumberCountryCode,
-                model.PhoneNumberNumber);
+            order.Address.Name = model.ShippingAddress.Name;
+            order.Address.PhoneCountryCode = model.ShippingAddress.PhoneCountryCode;
+            order.Address.PhoneLocalNumber = model.ShippingAddress.PhoneLocalNumber;
             order.Address.CountryCode = model.AddressViewModel.CountryCode;
             order.Address.CityArea = model.AddressViewModel.CityArea;
             order.Address.AddressLine1 = model.AddressViewModel.AddressLine1;
@@ -69,12 +68,13 @@ namespace Mzayad.Web.Controllers
             return RedirectToAction("Summary", new {id = id});
         }
 
-        public async Task<ActionResult> Summary(int id)
+        [Route("{orderId:int}/summary")]
+        public async Task<ActionResult> Summary(int orderId)
         {
-            var order = await _orderService.GetById(id);
+            var order = await _orderService.GetById(orderId);
             if (order == null)
             {
-                return HttpNotFound("Order not found");
+                return HttpNotFound();
             }
 
             var model = new OrderSummaryViewModel()
@@ -84,18 +84,16 @@ namespace Mzayad.Web.Controllers
             };
 
             return View(model);
-
-            
-
         }
 
-        [HttpPost,ValidateAntiForgeryToken]
-        public async Task<ActionResult> Summary(int id,OrderSummaryViewModel model)
+        [Route("{orderId:int}/summary")]
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> Summary(int id, OrderSummaryViewModel model)
         {
             var order = await _orderService.GetById(id);
             if (order == null)
             {
-                return HttpNotFound("Order not found");
+                return HttpNotFound();
             }
 
             order.PaymentMethod = model.Order.PaymentMethod;
@@ -103,9 +101,6 @@ namespace Mzayad.Web.Controllers
 
 
             return RedirectToAction("Submit", new {id=id});
-
-
-
         }
 
         public ActionResult Submit(int id)

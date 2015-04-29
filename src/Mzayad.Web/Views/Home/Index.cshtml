@@ -187,10 +187,9 @@
                     };
 
                     self.redirectOrder = function(orderId) {
-                        location.href = "/orders/" + orderId + "/shipping";
+                        location.href = "@Html.Language()/orders/" + orderId + "/shipping";
                     };
                 };
-
 
                 var AuctionsViewModel = function(data) {
                     var self = this;

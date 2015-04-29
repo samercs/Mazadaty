@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mzayad.Core.Formatting;
-using Mzayad.Data;
-using Mzayad.Data.Migrations;
+﻿using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
+using OrangeJetpack.Base.Core.Formatting;
+using System;
+using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace Mzayad.Services
 {
@@ -47,11 +42,9 @@ namespace Mzayad.Services
                             PostalCode = bid.User.Address.PostalCode,
                             StateProvince = bid.User.Address.StateProvince,
                             
-                            Email = bid.User.Email,
-                            FirstName = bid.User.FirstName,
-                            LastName = bid.User.LastName,
-                            PhoneNumber = PhoneNumberFormatter.Format(bid.User.PhoneCountryCode,bid.User.PhoneNumber)
-                            
+                            Name = NameFormatter.GetFullName(bid.User.FirstName, bid.User.LastName),
+                            PhoneCountryCode = bid.User.PhoneCountryCode,
+                            PhoneLocalNumber = bid.User.PhoneNumber               
                         },
                         Type = OrderType.Auction,
                         SubmittedUtc = DateTime.UtcNow,

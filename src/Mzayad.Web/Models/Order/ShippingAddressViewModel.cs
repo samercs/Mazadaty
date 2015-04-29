@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mzayad.Models;
+﻿using Mzayad.Models;
 using Mzayad.Web.Models.Shared;
 
 namespace Mzayad.Web.Models.Order
@@ -14,8 +9,7 @@ namespace Mzayad.Web.Models.Order
         public AddressViewModel AddressViewModel { get; set; }
         public ShippingAddress ShippingAddress { get; set; }
 
-        public string PhoneNumberCountryCode { get; set; }
-        public string PhoneNumberNumber { get; set; }
-
+        public string PhoneCountryCode { get; set; }
+        public string PhoneLocalNumber { get; set; }
     }
 }

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mzayad.Models
 {
@@ -12,12 +7,12 @@ namespace Mzayad.Models
     public class ShippingAddress : Address
     {
         [Required]
-        public string FirstName { get; set; }
+        public string Name { get; set; }
+
         [Required]
-        public string LastName { get; set; }
+        public string PhoneCountryCode { get; set; }
+
         [Required]
-        public string Email { get; set; }
-        [Required]
-        public string PhoneNumber { get; set; }
+        public string PhoneLocalNumber { get; set; }
     }
 }
