@@ -14,6 +14,8 @@ namespace Mzayad.Models
         public int AuctionId { get; set; }
         public decimal Amount { get; set; }
         public int SecondsLeft { get; set; }
+        [Required, StringLength(15)]
+        public string UserHostAddress { get; set; }
 
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }

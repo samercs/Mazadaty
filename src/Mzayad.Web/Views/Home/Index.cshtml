@@ -1,4 +1,5 @@
-﻿@using Newtonsoft.Json
+﻿@using Microsoft.AspNet.Identity
+@using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
 @using OrangeJetpack.Base.Web
 @model Mzayad.Web.Models.Home.IndexViewModel
@@ -97,6 +98,7 @@
                 @if (Request.IsAuthenticated)
                 {
                     <button type="button" class="btn btn-default" data-bind="click: submitBid">Bid</button>
+                    
                 }
                 else
                 {
@@ -179,6 +181,14 @@
                     self.submitBid = function() {
                         auctionHub.server.submitBid(self.auctionId);
                     };
+
+                    self.closeAuction = function() {
+                        self.status("Closed");
+                    };
+
+                    self.redirectOrder = function(orderId) {
+                        location.href = "@Html.Language()/orders/shipping/" + orderId;
+                    };
                 };
 
                 var AuctionsViewModel = function(data) {
@@ -220,11 +230,13 @@
                     }
                 };
 
-                auctionHub.client.closeAuction = function(auctionId) {
-                    console.log("Closed auction: " + auctionId);
+                auctionHub.client.closeAuction = function(auctionId, userId, orderId) {
                     var auction = viewModel.getAuction(auctionId);
                     if (auction) {
-                        auction.status("Closed");
+                        auction.closeAuction();                
+                        if (userId === "@User.Identity.GetUserId()") {
+                            auction.redirectOrder(orderId);
+                        }
                     }
                 }
 
@@ -234,7 +246,6 @@
                         console.log(results);
                     });
                 });
-
 
                 var initDescription = function() {
                     $(".product-information").each(function() {
@@ -297,5 +308,7 @@
                 });
 
             });
+
+
         </script>
     }

@@ -264,5 +264,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             return RedirectToAction("Index");
         }
+
+
 	}
 }

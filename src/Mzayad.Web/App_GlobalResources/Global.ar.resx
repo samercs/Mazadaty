@@ -222,6 +222,12 @@
   <data name="InvalidUserNameOrPassword" xml:space="preserve">
     <value>عذراً، لكنّ كلمة المرور أو عنوان البريد الإلكتروني غير صحيح.</value>
   </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>اسم المنتج</value>
+  </data>
+  <data name="ItemPrices" xml:space="preserve">
+    <value>السعر</value>
+  </data>
   <data name="Jadda" xml:space="preserve">
     <value>الجادة</value>
   </data>
@@ -236,6 +242,9 @@
   </data>
   <data name="MyAccount" xml:space="preserve">
     <value>حسابي</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>الاسم</value>
   </data>
   <data name="NeedPassword" xml:space="preserve">
     <value>كلمة مرور جديدة</value>
@@ -255,6 +264,9 @@
   <data name="OptionLabel" xml:space="preserve">
     <value>اختيار...</value>
   </data>
+  <data name="OrderItems" xml:space="preserve">
+    <value>محتويات الطلب</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>كلمة المرور</value>
   </data>
@@ -267,6 +279,9 @@
   <data name="PasswordSuccessfullyChanged" xml:space="preserve">
     <value>تم تغيير كلمة المرور بنجاح.</value>
   </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>رقم الهاتف</value>
+  </data>
   <data name="PostalCode" xml:space="preserve">
     <value>الرمز البريدي</value>
   </data>
@@ -275,6 +290,9 @@
   </data>
   <data name="ProfileURL" xml:space="preserve">
     <value>صفحة الملف</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>الكمية</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>التسجيل</value>
@@ -315,6 +333,9 @@
   <data name="SendInstructions" xml:space="preserve">
     <value>إرسال التعليمات</value>
   </data>
+  <data name="ShippingAddress" xml:space="preserve">
+    <value>عنوان الشحن</value>
+  </data>
   <data name="SignIn" xml:space="preserve">
     <value>تسجيل الدخول</value>
   </data>
@@ -335,6 +356,9 @@
   </data>
   <data name="StreetRequiredErrorMessage" xml:space="preserve">
     <value>الرجاء إدخال رقم الشارع.</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>المجموع</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>مرحبا!</value>

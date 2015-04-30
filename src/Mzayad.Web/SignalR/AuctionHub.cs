@@ -1,8 +1,8 @@
-using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.SignalR;
 using Mzayad.Data;
 using Mzayad.Web.Core.Services;
+using System.Threading.Tasks;
 
 namespace Mzayad.Web.SignalR
 {
@@ -35,9 +35,36 @@ namespace Mzayad.Web.SignalR
             var identity = Context.User.Identity;
             var userId = identity.GetUserId();
             var username = identity.GetUserName();
-            
-            await _auctionHandler.SubmitBid(auctionId, userId, username);
+            var hostAddress = GetIpAddress();
+                 
+            await _auctionHandler.SubmitBid(auctionId, userId, username,hostAddress);
         }
+
+        public string GetUsername()
+        {
+            return Context.User.Identity.GetUserName();
+        }
+
+        protected string GetIpAddress()
+        {
+            string ipAddress;
+            object tempObject;
+
+            Context.Request.Environment.TryGetValue("server.RemoteIpAddress", out tempObject);
+
+            if (tempObject != null)
+            {
+                ipAddress = (string)tempObject;
+            }
+            else
+            {
+                ipAddress = "";
+            }
+
+            return ipAddress;
+        }
+
+        
 
         //public override Task OnConnected()
         //{

@@ -1,0 +1,60 @@
+﻿@using Newtonsoft.Json
+@model Mzayad.Web.Models.Order.ShippingAddressViewModel
+
+@{
+    ViewBag.Title = Global.ShippingAddress;
+}
+
+@section styles {
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" href="/content/flags/flags.css" />
+}
+<div class="row">
+    <div class="@Html.Css().FormNormal">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ShippingAddress.Name, Global.Name).Required()
+                    @Html.TextBoxFor(m => m.ShippingAddress.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ShippingAddress.Name, Global.FirstNameRequiredErrorMessage)
+                </div>
+
+                <div class="form-group">
+                    @Html.Label(Global.PhoneNumber).Required()
+                    <div class="form-inline">
+                        @Html.TextBoxFor(m => m.ShippingAddress.PhoneCountryCode, new { @class = "form-control form-control-sm", @type = "tel", maxlength = 4 })
+                        @Html.TextBoxFor(m => m.ShippingAddress.PhoneLocalNumber, new { @class = "form-control", @type = "tel" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.ShippingAddress.PhoneCountryCode, Global.PhoneNumberRequiredErrorMessage)
+                    @Html.ValidationMessageFor(m => m.ShippingAddress.PhoneLocalNumber, Global.PhoneNumberRequiredErrorMessage)
+                </div>
+            </section>
+
+            @Html.EditorFor(m => m.AddressViewModel)
+
+            <section class="form-buttons">
+                <button type="submit" class="btn btn-default">@Global.SaveAndContinue</button>
+            </section>
+        }
+
+    </div>
+</div>
+@section scripts {
+    @Scripts.Render("~/js/jquery-ui")
+    @Scripts.Render("~/js/validate")
+    <script src="~/scripts/address.js"></script>
+    <script>
+
+        $(function() {
+            var areas =  @Html.Raw(JsonConvert.SerializeObject(Model.AddressViewModel.KuwaitAreas));
+            $(".kuwait-area").autocomplete({
+                source: areas
+            });
+        });
+
+    </script>
+}
