@@ -64,42 +64,9 @@
         </div>
         <div class="panel-body form-horizontal">
             <div class="form-group">
-                <label class="col-sm-2 control-label">@Global.FirstName</label>
+                <label class="col-sm-2 control-label">@Global.Name</label>
                 <div class="col-sm-10">
                     <p class="form-control-static">@Model.Order.Address.Name</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">@Global.LastName</label>
-                <div class="col-sm-10">
-                    <p class="form-control-static">@Model.Order.Address.LastName</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">@Global.Email</label>
-                <div class="col-sm-10">
-                    <p class="form-control-static">@Model.Order.Address.Email</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">@Global.PhoneNumber</label>
-                <div class="col-sm-10">
-                    <p class="form-control-static">@Model.Order.Address.PhoneNumber</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">@Global.AllowPhoneSmsLabel</label>
-                <div class="col-sm-10">
-                    <p class="form-control-static">
-                        @if (Model.Order.AllowPhoneSms)
-                        {
-                            <span>@Global.Yes</span>
-                        }
-                        else
-                        {
-                            <span>@Global.No</span>
-                        }
-                    </p>
                 </div>
             </div>
         </div>
@@ -122,6 +89,5 @@
     </div>
     <section class="form-buttons">
         <button type="submit" class="btn btn-default">@Global.SaveAndContinue</button>
-        <a onclick="history.go(-1);" class="btn btn-primary">@Global.Back</a>
     </section>
 }

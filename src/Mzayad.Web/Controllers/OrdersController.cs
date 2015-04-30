@@ -1,5 +1,4 @@
-﻿using Mzayad.Core.Formatting;
-using Mzayad.Services;
+﻿using Mzayad.Services;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Models.Order;
 using Mzayad.Web.Models.Shared;
@@ -18,7 +17,7 @@ namespace Mzayad.Web.Controllers
             _orderService = new OrderService(DataContextFactory);
         }
 
-        [Route("{orderId:int}/shipping")]
+        [Route("shipping/{orderId:int}")]
         public async Task<ActionResult> Shipping(int orderId)
         {
             var order = await _orderService.GetById(orderId);
@@ -27,19 +26,17 @@ namespace Mzayad.Web.Controllers
                 return HttpNotFound();
             }
 
-            var model = new ShippingAddressViewModel()
+            var model = new ShippingAddressViewModel
             {
                 Order = order,
                 AddressViewModel = new AddressViewModel(order.Address).Hydrate(),
-                ShippingAddress = order.Address,
-                PhoneCountryCode = order.Address.PhoneCountryCode,
-                PhoneLocalNumber = order.Address.PhoneLocalNumber               
+                ShippingAddress = order.Address,              
             };
 
             return View(model);
         }
 
-        [Route("{orderId:int}/shipping")]
+        [Route("shipping/{orderId:int}")]
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Shipping(int orderId, ShippingAddressViewModel model)
         {
@@ -48,8 +45,6 @@ namespace Mzayad.Web.Controllers
             {
                 return HttpNotFound();
             }
-
-            order.AllowPhoneSms = model.Order.AllowPhoneSms;
 
             order.Address.Name = model.ShippingAddress.Name;
             order.Address.PhoneCountryCode = model.ShippingAddress.PhoneCountryCode;
@@ -68,7 +63,7 @@ namespace Mzayad.Web.Controllers
             return RedirectToAction("Summary", new { orderId });
         }
 
-        [Route("{orderId:int}/summary")]
+        [Route("summary/{orderId:int}")]
         public async Task<ActionResult> Summary(int orderId)
         {
             var order = await _orderService.GetById(orderId);
@@ -86,7 +81,7 @@ namespace Mzayad.Web.Controllers
             return View(model);
         }
 
-        [Route("{orderId:int}/summary")]
+        [Route("summary/{orderId:int}")]
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Summary(int orderId, OrderSummaryViewModel model)
         {
@@ -103,7 +98,8 @@ namespace Mzayad.Web.Controllers
             return RedirectToAction("Submit", new { orderId });
         }
 
-        public ActionResult Submit(int id)
+        [Route("submit/{orderId:int}")]
+        public ActionResult Submit(int orderId)
         {
             return View();
         }
