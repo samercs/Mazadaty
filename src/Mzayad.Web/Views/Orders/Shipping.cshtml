@@ -6,6 +6,7 @@
 }
 
 @section styles {
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
     <link rel="stylesheet" href="/content/flags/flags.css" />
 }
 <div class="row">
@@ -43,6 +44,7 @@
     </div>
 </div>
 @section scripts {
+    @Scripts.Render("~/js/jquery-ui")
     @Scripts.Render("~/js/validate")
     <script src="~/scripts/address.js"></script>
     <script>

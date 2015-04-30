@@ -41,9 +41,9 @@ namespace Mzayad.Web.Controllers
 
         [Route("{orderId:int}/shipping")]
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> Shipping(int id, ShippingAddressViewModel model)
+        public async Task<ActionResult> Shipping(int orderId, ShippingAddressViewModel model)
         {
-            var order = await _orderService.GetById(id);
+            var order = await _orderService.GetById(orderId);
             if (order == null)
             {
                 return HttpNotFound();
@@ -65,7 +65,7 @@ namespace Mzayad.Web.Controllers
 
             await _orderService.Update(order);
 
-            return RedirectToAction("Summary", new {id = id});
+            return RedirectToAction("Summary", new { orderId });
         }
 
         [Route("{orderId:int}/summary")]
@@ -88,9 +88,9 @@ namespace Mzayad.Web.Controllers
 
         [Route("{orderId:int}/summary")]
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> Summary(int id, OrderSummaryViewModel model)
+        public async Task<ActionResult> Summary(int orderId, OrderSummaryViewModel model)
         {
-            var order = await _orderService.GetById(id);
+            var order = await _orderService.GetById(orderId);
             if (order == null)
             {
                 return HttpNotFound();
@@ -100,7 +100,7 @@ namespace Mzayad.Web.Controllers
             await _orderService.Update(order);
 
 
-            return RedirectToAction("Submit", new {id=id});
+            return RedirectToAction("Submit", new { orderId });
         }
 
         public ActionResult Submit(int id)
