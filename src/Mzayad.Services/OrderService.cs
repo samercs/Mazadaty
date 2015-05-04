@@ -1,4 +1,6 @@
-﻿using Mzayad.Data;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
 using OrangeJetpack.Base.Core.Formatting;
@@ -106,5 +108,30 @@ namespace Mzayad.Services
         }
 
 
+        public async  Task<IEnumerable<Order>> GetOrders(OrderStatus status, string search="")
+        {
+            using (var dc = DataContext())
+            {
+                var query = dc.Orders.Where(i => i.Status == status);
+                if (!string.IsNullOrEmpty(search))
+                {
+                    query =
+                        query.Where(i => i.Address.Name.Contains(search) || i.Address.PhoneLocalNumber.Contains(search));
+
+                }
+
+
+                return
+                    await query.Include(i => i.Address).Include(i => i.Items).OrderBy(i => i.SubmittedUtc).ToListAsync();
+            }
+        }
+
+        public async Task<Order> GetOrder(int id)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.Orders.Include(i => i.Items).Include(i => i.Address).FirstOrDefaultAsync(i => i.OrderId == id);
+            }
+        }
     }
 }

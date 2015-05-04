@@ -1,0 +1,50 @@
+﻿@using Kendo.Mvc.UI
+@using Mzayad.Web.Extensions
+@using OrangeJetpack.Base.Core.Formatting
+@model Mzayad.Web.Areas.admin.Models.Orders.IndexViewModel
+@{
+    ViewBag.Title = "Orders";
+}
+
+@section styles {
+    <style>
+        #orders-index .link-cell a:visited {
+            color: #ccc;
+        }
+    </style>
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "form-inline" }))
+{
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            @Html.TextBoxFor(m => m.Search, new { @class = "form-control", placeholder = "Search name or phone number..." })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.DropDownListFor(m => m.Status, Model.OrderStatusList, new { @class = "form-control auto-submit" })
+    </div>
+}
+
+<p>&nbsp;</p>
+
+@if (!Model.Orders.Any())
+{
+    <div class="alert alert-warning">There are currently no orders with status <strong>@EnumFormatter.Description(Model.Status)</strong>.</div>
+}
+else
+{
+    @(Html.Kendo().Grid(Model.Orders)
+      .Init(ajax => ajax.Action("GetOrders", "Orders", new { orderStatus = Model.Status, search = Model.Search }))
+      .Columns(columns =>
+      {
+          columns.Bound(i => i.OrderId);
+          columns.Bound(i => i.Address.Name);
+          columns.Bound(i => i.Address.CountryCode).Title("Country");
+          columns.Bound(i => i.Total).ClientTemplate("KD #=Total#");
+          columns.Bound(i => i.SubmittedUtc).Title("Submitted").Format("{0:dd/MM/yyyy}");
+          columns.Bound(i => i.ShippedUtc).Title("Shipped").Format("{0:dd/MM/yyyy}");
+          columns.LinkColumn("Details", "orders/details/#=OrderId#");
+      }))
+}
