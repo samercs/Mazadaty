@@ -48,7 +48,7 @@ namespace Mzayad.Models
         public void RecalculateTotal()
         {
             Subtotal = Items.Sum(i => i.ItemPrice * i.Quantity);
-            Total = Subtotal;
+            Total = Subtotal + Shipping;
         }
 
         

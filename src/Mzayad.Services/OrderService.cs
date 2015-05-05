@@ -133,5 +133,29 @@ namespace Mzayad.Services
                 return await dc.Orders.Include(i => i.Items).Include(i => i.Address).FirstOrDefaultAsync(i => i.OrderId == id);
             }
         }
+
+        private static void SetStatus(Order order, OrderStatus status, string userId, string userHostAddress)
+        {
+            order.Status = status;
+            order.Logs = order.Logs ?? new HashSet<OrderLog>();
+            order.Logs.Add(new OrderLog
+            {
+                UserId = userId,
+                UserHostAddress = userHostAddress,
+                Status = status
+            });
+        }
+
+        public async Task SetStatusAsShipped(Order order,  string userId, string userHostAddress)
+        {
+            using (var dc = DataContext())
+            {
+                dc.Orders.Attach(order);
+                SetStatus(order, OrderStatus.Shipped, userId, userHostAddress);
+                order.ShippedUtc = DateTime.UtcNow;
+                await dc.SaveChangesAsync();
+            }
+        }
+
     }
 }

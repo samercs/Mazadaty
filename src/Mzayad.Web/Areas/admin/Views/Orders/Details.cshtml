@@ -6,10 +6,9 @@
 @using DateTimeFormatter = OrangeJetpack.Base.Core.Formatting.DateTimeFormatter
 @model Mzayad.Models.Order
 
-
-
 @{
     ViewBag.Title = "Order ID " + Model.OrderId;
+    Model.RecalculateTotal();
 }
 
 @section styles {
@@ -140,8 +139,8 @@
             <th id="order-shipping-value">@CurrencyFormatter.Format(Model.Shipping, Currency.Kwd)</th>
         </tr>
         <tr>
-            <th class="hidden-xs"></th>
-            <th colspan="4" class="text-right">Total</th>
+            
+            <th colspan="3" class="text-right">Total</th>
             <th id="order-total-value">@CurrencyFormatter.Format(Model.Total, Currency.Kwd)</th>
         </tr>
     </tfoot>
