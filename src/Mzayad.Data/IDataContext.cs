@@ -22,7 +22,8 @@ namespace Mzayad.Data
         IDbSet<ShippingAddress> ShippingAddresses { get; set; }
         IDbSet<Order> Orders { get; set; }
         IDbSet<OrderItem> OrderItems { get; set; }
-        IDbSet<OrderLog> OrderLogs { get; set; } 
+        IDbSet<OrderLog> OrderLogs { get; set; }
+        IDbSet<Subscription> Subscriptions { get; set; } 
         int SaveChanges();
         Task<int> SaveChangesAsync();
         void SetModified(object entity);

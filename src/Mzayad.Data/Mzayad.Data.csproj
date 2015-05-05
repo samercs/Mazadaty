@@ -205,6 +205,10 @@
     <Compile Include="Migrations\201504291525120_RenameShippingAddressProperties.Designer.cs">
       <DependentUpon>201504291525120_RenameShippingAddressProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505050731291_AddSubscription.cs" />
+    <Compile Include="Migrations\201505050731291_AddSubscription.Designer.cs">
+      <DependentUpon>201505050731291_AddSubscription.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -323,6 +327,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504291525120_RenameShippingAddressProperties.resx">
       <DependentUpon>201504291525120_RenameShippingAddressProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505050731291_AddSubscription.resx">
+      <DependentUpon>201505050731291_AddSubscription.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
