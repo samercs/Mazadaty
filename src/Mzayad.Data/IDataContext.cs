@@ -23,7 +23,8 @@ namespace Mzayad.Data
         IDbSet<Order> Orders { get; set; }
         IDbSet<OrderItem> OrderItems { get; set; }
         IDbSet<OrderLog> OrderLogs { get; set; }
-        IDbSet<Subscription> Subscriptions { get; set; } 
+        IDbSet<Subscription> Subscriptions { get; set; }
+        IDbSet<WishList> WishLists { get; set; } 
         int SaveChanges();
         Task<int> SaveChangesAsync();
         void SetModified(object entity);

@@ -209,6 +209,10 @@
     <Compile Include="Migrations\201505050731291_AddSubscription.Designer.cs">
       <DependentUpon>201505050731291_AddSubscription.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505051159251_AddWishList.cs" />
+    <Compile Include="Migrations\201505051159251_AddWishList.Designer.cs">
+      <DependentUpon>201505051159251_AddWishList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -330,6 +334,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505050731291_AddSubscription.resx">
       <DependentUpon>201505050731291_AddSubscription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505051159251_AddWishList.resx">
+      <DependentUpon>201505051159251_AddWishList.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
