@@ -1,0 +1,46 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using Humanizer;
+using Mzayad.Models.Enum;
+using OrangeJetpack.Localization;
+
+namespace Mzayad.Web.Areas.admin.Models.Subscription
+{
+    public class AddViewModel
+    {
+        public Mzayad.Models.Subscription Subscription { get; set; }
+
+        public IEnumerable<SelectListItem> StatusList
+        {
+            get
+            {
+                return
+                    Enum.GetValues(typeof (SubscriptionStatus))
+                        .Cast<SubscriptionStatus>()
+                        .Select(i => new SelectListItem()
+                        {
+                            Text = i.Humanize(),
+                            Value = i.ToString(),
+                            Selected = i==Subscription.Status
+                        }
+                        );
+            }
+        } 
+        public AddViewModel Hydrate()
+        {
+            if (Subscription == null)
+            {
+                Subscription = new Mzayad.Models.Subscription()
+                {
+                    Name = LocalizedContent.Init(),
+                    ExpirationUtc = DateTime.UtcNow.AddMonths(6)
+                };
+            }
+
+            return this;
+        }
+    }
+}

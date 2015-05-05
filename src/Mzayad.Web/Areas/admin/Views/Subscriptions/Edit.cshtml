@@ -1,0 +1,26 @@
+﻿@model Mzayad.Web.Areas.admin.Models.Subscription.AddViewModel
+
+@{
+    ViewBag.Title = "Edit Subscription";
+    
+}
+
+@Html.Partial("_AddEdit")
+
+
+@section scripts {
+    @Scripts.Render("~/js/validate")
+    <script>
+
+        $('.date-picker').datetimepicker(
+            {
+                format: 'd/m/Y H:i'
+            }
+        );
+
+
+
+    </script>
+
+
+}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace Mzayad.Models
     public class Subscription : ModelBase , ILocalizable
     {
         public int SubscriptionId { get; set; }
+        [Required, Localized]
         public string Name { get; set; }
         public SubscriptionStatus Status { get; set; }
         public DateTime ExpirationUtc { get; set; }
