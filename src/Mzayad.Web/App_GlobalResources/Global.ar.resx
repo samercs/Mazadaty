@@ -243,6 +243,9 @@
   <data name="MyAccount" xml:space="preserve">
     <value>حسابي</value>
   </data>
+  <data name="MyWishList" xml:space="preserve">
+    <value>القائمة المفضلة</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>الاسم</value>
   </data>

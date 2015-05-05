@@ -1,0 +1,24 @@
+﻿@model Mzayad.Web.Models.WishList.IndexViewModel
+
+@{
+    ViewBag.Title = Global.MyWishList;
+}
+
+<table class="@Html.Css().GridTable">
+    <thead>
+        <tr>
+            <th>Product Or Item Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.WishList)
+        {
+            <tr>
+                <th>@item.NameEntered</th>
+                <th></th>
+            </tr>
+        }
+    </tbody>
+</table>
+

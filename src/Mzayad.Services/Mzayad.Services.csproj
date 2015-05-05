@@ -80,6 +80,7 @@
     <Compile Include="SponsorService.cs" />
     <Compile Include="SubscriptionService.cs" />
     <Compile Include="UserProfileService.cs" />
+    <Compile Include="WishListService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mzayad.Core\Mzayad.Core.csproj">

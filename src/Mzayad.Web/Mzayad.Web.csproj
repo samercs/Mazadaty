@@ -302,6 +302,7 @@
     <Compile Include="Controllers\AuctionsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\WishListController.cs" />
     <Compile Include="Core\ActionResults\ExcelResult.cs" />
     <Compile Include="Core\Attributes\LanguageRoutePrefix.cs" />
     <Compile Include="Core\Attributes\RequireHttpsAttribute.cs" />
@@ -358,6 +359,7 @@
     <Compile Include="Models\User\DashboardViewModel.cs" />
     <Compile Include="Models\User\EditProfileModel.cs" />
     <Compile Include="Models\User\NotificationModelView.cs" />
+    <Compile Include="Models\WishList\IndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignalR\Auction.cs" />
     <Compile Include="SignalR\AuctionHandler.cs" />
@@ -690,6 +692,8 @@
     <Content Include="Views\Orders\Summary.cshtml" />
     <Content Include="Views\Orders\Submit.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Address.cshtml" />
+    <Content Include="Views\WishList\Index.cshtml" />
+    <Content Include="Views\WishList\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

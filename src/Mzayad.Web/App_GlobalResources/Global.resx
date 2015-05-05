@@ -456,4 +456,7 @@
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="MyWishList" xml:space="preserve">
+    <value>My Wish List</value>
+  </data>
 </root>

@@ -475,6 +475,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to My Wish List.
+        /// </summary>
+        public static string MyWishList {
+            get {
+                return ResourceManager.GetString("MyWishList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Name {
