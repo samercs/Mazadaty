@@ -282,6 +282,7 @@
     <Compile Include="Areas\admin\Controllers\SponsorsController.cs" />
     <Compile Include="Areas\admin\Controllers\SubscriptionsController.cs" />
     <Compile Include="Areas\admin\Controllers\UsersController.cs" />
+    <Compile Include="Areas\admin\Controllers\WishListsController.cs" />
     <Compile Include="Areas\admin\Models\Auctions\AddEditViewModel.cs" />
     <Compile Include="Areas\admin\Models\Auctions\IndexViewModel.cs" />
     <Compile Include="Areas\admin\Models\Avatar\AvatarAddViewModel.cs" />
@@ -294,6 +295,8 @@
     <Compile Include="Areas\admin\Models\Subscription\AddViewModel.cs" />
     <Compile Include="Areas\admin\Models\Users\DetailsViewModel.cs" />
     <Compile Include="Areas\admin\Models\Users\IndexViewModel.cs" />
+    <Compile Include="Areas\admin\Models\WishList\EditViewModel.cs" />
+    <Compile Include="Areas\admin\Models\WishList\IndexViewModel.cs" />
     <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
     <Compile Include="Areas\Api\Controllers\TestController.cs" />
     <Compile Include="Areas\Api\Controllers\UserController.cs" />
@@ -595,6 +598,8 @@
     <Content Include="Areas\admin\Views\Subscriptions\Add.cshtml" />
     <Content Include="Areas\admin\Views\Subscriptions\Edit.cshtml" />
     <Content Include="Areas\admin\Views\Subscriptions\_AddEdit.cshtml" />
+    <Content Include="Areas\admin\Views\WishLists\Index.cshtml" />
+    <Content Include="Areas\admin\Views\WishLists\Edit.cshtml" />
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
@@ -699,6 +704,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\admin\Views\WishList\" />
     <Folder Include="Areas\Api\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>

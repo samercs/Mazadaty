@@ -22,4 +22,11 @@ namespace Mzayad.Models
         public virtual ApplicationUser User { get; set; }
 
     }
+
+    [NotMapped]
+    public class WishListAdminModel
+    {
+        public string Name { get; set; }
+        public int Count { get; set; }
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -50,6 +51,52 @@ namespace Mzayad.Services
                 dc.WishLists.Remove(wishlist);
                 await dc.SaveChangesAsync();
 
+            }
+        }
+
+        public async Task<IEnumerable<WishListAdminModel>> GetGroupBy(DateTime? startDate,DateTime? endDate)
+        {
+            using (var dc = DataContext())
+            {
+                var query = dc.WishLists.AsQueryable();
+                if (startDate.HasValue)
+                {
+                    query = query.Where(i => i.CreatedUtc >= startDate.Value);
+                }
+                if (endDate.HasValue)
+                {
+                    query = query.Where(i => i.CreatedUtc <= endDate.Value);
+                }
+
+                return await query.GroupBy(i => i.NameNormalized).Select(group => new WishListAdminModel()
+                {
+                    Name = group.Key,
+                    Count = group.Count()
+                })
+                .OrderByDescending(j=>j.Count)
+                .ToListAsync();
+
+            }
+        }
+
+        public async Task<IEnumerable<WishList>> GetByNameNormalized(string name)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.WishLists.Where(i => i.NameNormalized.Equals(name)).ToListAsync();
+            }
+        }
+
+        public async Task<IEnumerable<WishList>>  EditRange(IEnumerable<WishList> wishlist)
+        {
+            using (var dc = DataContext())
+            {
+                foreach (var item in wishlist)
+                {
+                    dc.SetModified(item);
+                }
+                await dc.SaveChangesAsync();
+                return wishlist;
             }
         }
     }
