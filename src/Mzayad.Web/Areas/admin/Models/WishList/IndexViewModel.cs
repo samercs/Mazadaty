@@ -18,8 +18,8 @@ namespace Mzayad.Web.Areas.admin.Models.WishList
 
         public async Task<IndexViewModel> Hydrate(WishListService wishListService,DateTime? startDate,DateTime? endDate)
         {
-            StartDate = StartDate ?? DateTime.Today.AddYears(-1);
-            EndDate = EndDate ?? DateTime.Today;
+            StartDate = startDate ?? DateTime.Today.AddYears(-1);
+            EndDate = endDate ?? DateTime.Today;
             WishLists =(await wishListService.GetGroupBy(startDate,endDate));
 
             return this;
