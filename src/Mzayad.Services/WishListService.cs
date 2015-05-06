@@ -23,5 +23,34 @@ namespace Mzayad.Services
                 return await dc.WishLists.Include(i => i.User).Where(i => i.UserId == userId).ToListAsync();
             }
         }
+
+        public async Task<WishList> Add(WishList wishList)
+        {
+            using (var dc = DataContext())
+            {
+                dc.WishLists.Add(wishList);
+                await dc.SaveChangesAsync();
+                return wishList;
+            }
+        }
+
+        public async Task<WishList> GetById(int id)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.WishLists.SingleOrDefaultAsync(i => i.WishListId == id);
+            }
+        }
+
+        public async Task Delete(WishList wishlist)
+        {
+            using (var dc = DataContext())
+            {
+                dc.WishLists.Attach(wishlist);
+                dc.WishLists.Remove(wishlist);
+                await dc.SaveChangesAsync();
+
+            }
+        }
     }
 }

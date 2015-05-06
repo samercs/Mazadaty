@@ -4,10 +4,16 @@
     ViewBag.Title = Global.MyWishList;
 }
 
+<ul class="link-list">
+    <li>
+        @Html.ActionLink(Global.AddNewItem, "Add", "WishList", null, new { @class = "fa fa-plus" })
+    </li>
+</ul>
+
 <table class="@Html.Css().GridTable">
     <thead>
         <tr>
-            <th>Product Or Item Name</th>
+            <th>@Global.ProductOrItemName</th>
             <th></th>
         </tr>
     </thead>
@@ -16,7 +22,9 @@
         {
             <tr>
                 <th>@item.NameEntered</th>
-                <th></th>
+                <th>
+                    @Html.ActionLink(Global.Remove,"Delete","WishList",new {id=item.WishListId},new {@class="link-cell"})
+                </th>
             </tr>
         }
     </tbody>
