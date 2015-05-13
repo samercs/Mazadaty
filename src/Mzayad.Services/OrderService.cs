@@ -181,5 +181,24 @@ namespace Mzayad.Services
                 await dc.SaveChangesAsync();
             }
         }
+
+        public async Task SubmitOrder(Order order, string userHostAddress)
+        {
+            //using (var dc = DataContext())
+            //{
+            //    foreach (var item in order.Items)
+            //    {
+            //        var skuId = item.SkuId;
+            //        var sku = await dc.Skus.SingleOrDefaultAsync(i => i.SkuId == skuId);
+            //        if (sku != null)
+            //        {
+            //            sku.Quantity--;
+            //        }
+            //    }
+            //    await dc.SaveChangesAsync();
+            //}
+
+            await UpdateStatus(order, OrderStatus.Processing, userHostAddress);
+        }
     }
 }

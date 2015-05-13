@@ -324,7 +324,9 @@
     <Compile Include="Core\Services\HttpCacheService.cs" />
     <Compile Include="Core\Services\ICacheService.cs" />
     <Compile Include="Core\Services\IGeolocationService.cs" />
+    <Compile Include="Core\Services\IRequestService.cs" />
     <Compile Include="Core\Services\RedisCacheService.cs" />
+    <Compile Include="Core\Services\RequestService.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />

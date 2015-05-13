@@ -109,5 +109,15 @@ namespace Mzayad.Services.Payment
                 return knetTransaction;
             }
         }
+
+        public async Task<KnetTransaction> SaveTransaction(KnetTransaction transaction)
+        {
+            using (var dc = DataContext())
+            {
+                dc.SetModified(transaction);
+                await dc.SaveChangesAsync();
+                return transaction;
+            }
+        }
     }
 }

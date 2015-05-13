@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Mzayad.Core.Formatting;
 using Mzayad.Models.Enum;
+using Mzayad.Services;
 using Mzayad.Services.Payment;
 using Mzayad.Web.Core.Services;
 
@@ -10,10 +11,12 @@ namespace Mzayad.Web.Controllers
 {
     public class KnetController : ApplicationController
     {
+        private readonly OrderService _orderService;
         private readonly KnetService _knetService;
         
         public KnetController(IAppServices appServices) : base(appServices)
         {
+            _orderService = new OrderService(appServices.DataContextFactory);
             _knetService = new KnetService(appServices.DataContextFactory);
         }
 
@@ -28,7 +31,7 @@ namespace Mzayad.Web.Controllers
 
             if (transaction.Order.Status == OrderStatus.Processing || transaction.Order.Status == OrderStatus.Shipped)
             {
-                throw new Exception("Cannot POST transaction for order already processing or shipped. Order ID: " + transaction.OrderId + ", Request Params: " + HttpContextService.GetRequestParams());
+                throw new Exception("Cannot POST transaction for order already processing or shipped. Order ID: " + transaction.OrderId + ", Request Params: " + RequestService.GetRequestParams());
             }
 
             var paymentStatus = result.Equals("CAPTURED", StringComparison.OrdinalIgnoreCase)
@@ -42,7 +45,7 @@ namespace Mzayad.Web.Controllers
             transaction.TransactionId = tranId;
             transaction.PostDate = postDate;
             transaction.TrackId = trackId;
-            transaction.RequestParams = HttpContextService.GetRequestParams();
+            transaction.RequestParams = RequestService.GetRequestParams();
 
             await _knetService.SaveTransaction(transaction);
             if (paymentStatus != PaymentStatus.Success)
@@ -50,7 +53,7 @@ namespace Mzayad.Web.Controllers
                 return RedirectToAction("Error", new { paymentId });
             }
 
-            await SubmitOrder(transaction);
+            await _orderService.SubmitOrder(transaction.Order, AuthService.UserHostAddress());
 
             var transactionNotes = string.Format("<p>&nbsp;</p>" +
                                                  "<table width='100%' cellpadding='8' cellspacing='0'>" +
@@ -68,10 +71,9 @@ namespace Mzayad.Web.Controllers
                                                  transaction.TrackId, transaction.ReferenceNumber,
                                                  DateTime.UtcNow, CurrencyFormatter.Format(transaction.Order.Total, Currency.Kwd));
 
-            await SendNotifications(transaction, transactionNotes);
-            await PostProcessOrder(transaction, "KNET");
-
-            var redirectUrl = Url.Action("Success", "Checkout", new { transaction.OrderId, transaction.PaymentId }, HttpContextService.GetUrlScheme());
+            //await SendNotifications(transaction, transactionNotes);
+            
+            var redirectUrl = Url.Action("Success", "Order", new { transaction.OrderId, transaction.PaymentId }, RequestService.GetUrlScheme());
 
             return Content(string.Format("REDIRECT={0}", redirectUrl));
         }

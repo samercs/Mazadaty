@@ -12,6 +12,7 @@ namespace Mzayad.Web.Core.Services
         public IMessageService MessageService { get; private set; }
         public IGeolocationService GeolocationService { get; private set; }
         public ICacheService CacheService { get; private set; }
+        public IRequestService RequestService { get; private set; }
 
         public AppServices(
             IDataContextFactory dataContextFactory,
@@ -20,7 +21,8 @@ namespace Mzayad.Web.Core.Services
             ICookieService cookieService,
             IMessageService messageService,
             IGeolocationService geolocationService,
-            ICacheService caceService)
+            ICacheService caceService,
+            IRequestService requestService)
         {
             DataContextFactory = dataContextFactory;
             AppSettings = appSettings;
@@ -29,6 +31,7 @@ namespace Mzayad.Web.Core.Services
             MessageService = messageService;
             GeolocationService = geolocationService;
             CacheService = caceService;
+            RequestService = requestService;
         }
     }
 }

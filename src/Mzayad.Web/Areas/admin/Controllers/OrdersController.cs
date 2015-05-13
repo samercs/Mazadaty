@@ -66,7 +66,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
         public async Task<ActionResult> Details(int id)
         {
-            var order = await _orderService.GetOrder(id);
+            var order = await _orderService.GetById(id);
             if (order == null)
             {
                 return HttpNotFound();
@@ -78,7 +78,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
         public async Task<ActionResult> Ship(int id)
         {
-            var order = await _orderService.GetOrder(id);
+            var order = await _orderService.GetById(id);
             if (order == null)
             {
                 return HttpNotFound();
@@ -90,7 +90,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Ship(int id, bool sendNotification = false)
         {
-            var order = await _orderService.GetOrder(id);
+            var order = await _orderService.GetById(id);
             if (order == null)
             {
                 return HttpNotFound();
@@ -112,7 +112,6 @@ namespace Mzayad.Web.Areas.admin.Controllers
         {
             //Send Notification Here
         }
-
 
         public async Task<ExcelResult> OrdersExcel( OrderStatus status,string search = "")
         {
