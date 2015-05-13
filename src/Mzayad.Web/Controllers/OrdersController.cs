@@ -4,7 +4,10 @@ using Mzayad.Web.Models.Order;
 using Mzayad.Web.Models.Shared;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Mzayad.Models.Payment;
 using Mzayad.Services.Payment;
+using Mzayad.Web.Areas.admin.Models.Users;
+using DetailsViewModel = Mzayad.Web.Models.Order.DetailsViewModel;
 
 namespace Mzayad.Web.Controllers
 {
@@ -12,10 +15,12 @@ namespace Mzayad.Web.Controllers
     public class OrdersController : ApplicationController
     {
         private readonly OrderService _orderService;
+        private readonly KnetService _knetService;
 
         public OrdersController(IAppServices appServices) : base(appServices)
         {
             _orderService = new OrderService(DataContextFactory);
+            _knetService = new KnetService(DataContextFactory);
         }
 
         [Route("shipping/{orderId:int}")]
@@ -109,11 +114,44 @@ namespace Mzayad.Web.Controllers
         }
 
         [Route("submit/{orderId:int}")]
-        public ActionResult Submit(int orderId)
+        public async Task<ActionResult> Submit(int orderId)
         {
-            
-            
-            return Content("submit");
+            var order = await _orderService.GetById(orderId);
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+
+            var knetService = new KnetService(DataContextFactory);
+
+            var result = await knetService.InitTransaction(order, AuthService.CurrentUserId(), AuthService.UserHostAddress());
+
+            return Redirect(result.RedirectUrl);
+        }
+
+        [Route("success/{orderId:int}")]
+        public async Task<ActionResult> Success(int orderId, string paymentId = null)
+        {
+            var order = await _orderService.GetById(orderId);
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+
+            KnetTransaction knetTransaction = null;
+
+            if (!string.IsNullOrEmpty(paymentId))
+            {
+                knetTransaction = await _knetService.GetTransaction(paymentId);
+            }
+
+            var viewModel = new DetailsViewModel
+            {
+                Order = OrderViewModel.Create(order),
+                KnetTransaction = knetTransaction
+            };
+
+            return View(viewModel);
         }
     }
 }

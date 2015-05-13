@@ -357,7 +357,9 @@
     <Compile Include="Models\Account\AccountViewModels.cs" />
     <Compile Include="Models\Account\UserAccountViewModel.cs" />
     <Compile Include="Models\Home\IndexViewModel.cs" />
+    <Compile Include="Models\Order\DetailsViewModel.cs" />
     <Compile Include="Models\Order\OrderSummaryViewModel.cs" />
+    <Compile Include="Models\Order\OrderViewModel.cs" />
     <Compile Include="Models\Order\ShippingAddressViewModel.cs" />
     <Compile Include="Models\Shared\AddressViewModel.cs" />
     <Compile Include="Models\Shared\DeleteConfirmationViewModel.cs" />
@@ -704,12 +706,16 @@
     <Content Include="Views\WishList\Index.cshtml" />
     <Content Include="Views\WishList\_ViewStart.cshtml" />
     <Content Include="Views\WishList\Add.cshtml" />
+    <Content Include="Views\Knet\Error.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\KnetTransaction.cshtml" />
+    <Content Include="Views\Orders\Success.cshtml" />
+    <Content Include="Views\Shared\OrderDetailsSummary.cshtml" />
+    <Content Include="Views\Shared\OrderItemsTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\WishList\" />
     <Folder Include="Areas\Api\Views\Shared\" />
-    <Folder Include="Views\Knet\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

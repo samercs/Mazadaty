@@ -73,7 +73,7 @@ namespace Mzayad.Web.Controllers
 
             //await SendNotifications(transaction, transactionNotes);
             
-            var redirectUrl = Url.Action("Success", "Order", new { transaction.OrderId, transaction.PaymentId }, RequestService.GetUrlScheme());
+            var redirectUrl = Url.Action("Success", "Orders", new { transaction.OrderId, transaction.PaymentId }, RequestService.GetUrlScheme());
 
             return Content(string.Format("REDIRECT={0}", redirectUrl));
         }

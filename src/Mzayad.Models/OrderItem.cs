@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using OrangeJetpack.Localization;
 
 namespace Mzayad.Models
@@ -16,5 +12,14 @@ namespace Mzayad.Models
         public decimal ItemPrice { get; set; }
         public int Quantity { get; set; }
         public virtual Product Product { get; set; }
+
+        [NotMapped]
+        public decimal TotalPrice
+        {
+            get
+            {
+                return Quantity * ItemPrice;
+            }
+        }
     }
 }
