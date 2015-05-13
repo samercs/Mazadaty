@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Threading.Tasks;
 using Mzayad.Models;
+using Mzayad.Models.Payment;
 
 namespace Mzayad.Data
 {
@@ -24,10 +25,11 @@ namespace Mzayad.Data
         IDbSet<OrderItem> OrderItems { get; set; }
         IDbSet<OrderLog> OrderLogs { get; set; }
         IDbSet<Subscription> Subscriptions { get; set; }
-        IDbSet<WishList> WishLists { get; set; } 
+        IDbSet<WishList> WishLists { get; set; }
+        IDbSet<KnetTransaction> KnetTransactions { get; set; } 
+        
         int SaveChanges();
         Task<int> SaveChangesAsync();
         void SetModified(object entity);
-
     }
 }

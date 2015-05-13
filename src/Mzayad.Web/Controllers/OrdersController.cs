@@ -4,6 +4,7 @@ using Mzayad.Web.Models.Order;
 using Mzayad.Web.Models.Shared;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Mzayad.Services.Payment;
 
 namespace Mzayad.Web.Controllers
 {
@@ -97,8 +98,10 @@ namespace Mzayad.Web.Controllers
                 return HttpNotFound();
             }
 
-            order.PaymentMethod = model.Order.PaymentMethod;
-            await _orderService.Update(order);
+            //order.PaymentMethod = model.Order.PaymentMethod;
+            //await _orderService.Update(order);
+
+            var knetService = new KnetService(DataContextFactory);
 
             // TODO: KNET
 

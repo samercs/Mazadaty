@@ -74,12 +74,17 @@
     <Compile Include="Enum\PaymentMethod.cs" />
     <Compile Include="Enum\EmailTemplateType.cs" />
     <Compile Include="Enum\OrderType.cs" />
+    <Compile Include="Enum\PaymentStatus.cs" />
     <Compile Include="Enum\SubscriptionStatus.cs" />
     <Compile Include="Enum\UserProfileStatus.cs" />
     <Compile Include="ModelBase.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderItem.cs" />
     <Compile Include="OrderLog.cs" />
+    <Compile Include="Payment\InitTransactionResult.cs" />
+    <Compile Include="Payment\KnetResponse.cs" />
+    <Compile Include="Payment\KnetTransaction.cs" />
+    <Compile Include="Payment\PaymentTransaction.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="ProductImage.cs" />
     <Compile Include="ProductSpecification.cs" />

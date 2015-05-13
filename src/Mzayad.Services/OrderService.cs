@@ -16,6 +16,36 @@ namespace Mzayad.Services
         {
         }
 
+        public async Task<Order> GetById(int id)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.Orders
+                    .Include(i => i.Address)
+                    .Include(i => i.Items)
+                    .Include(i => i.Logs)
+                    .SingleOrDefaultAsync(i => i.OrderId == id);
+            }
+        }
+
+        public async Task<IEnumerable<Order>> GetOrders(OrderStatus status, string search = "")
+        {
+            using (var dc = DataContext())
+            {
+                var query = dc.Orders.Where(i => i.Status == status);
+                if (!string.IsNullOrEmpty(search))
+                {
+                    query =
+                        query.Where(i => i.Address.Name.Contains(search) || i.Address.PhoneLocalNumber.Contains(search));
+
+                }
+
+
+                return
+                    await query.Include(i => i.Address).Include(i => i.Items).OrderBy(i => i.SubmittedUtc).ToListAsync();
+            }
+        }
+
         public async Task<Order> CreateOrder(int auctionId, int bidId)
         {
             using (var dc = DataContext())
@@ -99,18 +129,6 @@ namespace Mzayad.Services
             };
         }
 
-        public async Task<Order> GetById(int id)
-        {
-            using (var dc = DataContext())
-            {
-                return await 
-                    dc.Orders.Include(i => i.Address)
-                        .Include(i => i.Items)
-                        .Include(i => i.Logs)
-                        .SingleOrDefaultAsync(i => i.OrderId == id);
-            }
-        }
-
         public async Task<Order> Update(Order order)
         {
             using (var dc=DataContext())
@@ -124,30 +142,20 @@ namespace Mzayad.Services
             }
         }
 
-
-        public async  Task<IEnumerable<Order>> GetOrders(OrderStatus status, string search="")
+        /// <summary>
+        /// Updates an order status and addes a log of the status change.
+        /// </summary>
+        public async Task<Order> UpdateStatus(Order order, OrderStatus status, string userHostAddress, string userId = null)
         {
             using (var dc = DataContext())
             {
-                var query = dc.Orders.Where(i => i.Status == status);
-                if (!string.IsNullOrEmpty(search))
-                {
-                    query =
-                        query.Where(i => i.Address.Name.Contains(search) || i.Address.PhoneLocalNumber.Contains(search));
+                dc.Orders.Attach(order);
 
-                }
+                SetStatus(order, status, userId, userHostAddress);
 
+                await dc.SaveChangesAsync();
 
-                return
-                    await query.Include(i => i.Address).Include(i => i.Items).OrderBy(i => i.SubmittedUtc).ToListAsync();
-            }
-        }
-
-        public async Task<Order> GetOrder(int id)
-        {
-            using (var dc = DataContext())
-            {
-                return await dc.Orders.Include(i => i.Items).Include(i => i.Address).FirstOrDefaultAsync(i => i.OrderId == id);
+                return order;
             }
         }
 
@@ -173,6 +181,5 @@ namespace Mzayad.Services
                 await dc.SaveChangesAsync();
             }
         }
-
     }
 }

@@ -304,6 +304,7 @@
     <Compile Include="Areas\Api\Models\User\UserPostModel.cs" />
     <Compile Include="Controllers\AuctionsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\KnetController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\WishListController.cs" />
     <Compile Include="Core\ActionResults\ExcelResult.cs" />
@@ -706,6 +707,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\WishList\" />
     <Folder Include="Areas\Api\Views\Shared\" />
+    <Folder Include="Views\Knet\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
