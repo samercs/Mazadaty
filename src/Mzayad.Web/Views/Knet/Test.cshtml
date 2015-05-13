@@ -1,0 +1,39 @@
+﻿@model Mzayad.Models.Payment.KnetTransaction
+@{
+    ViewBag.Title = "KNET Test Page";
+}
+
+@using (Html.BeginForm("Transaction", "Knet"))
+{
+    <section>
+        <div class="form-group">
+            <label>Payment ID</label>
+            <input type="text" name="paymentId" value="@Model.PaymentId" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Authorization Number</label>
+            <input type="text" name="auth" value="0123456789" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label>Reference Number</label>
+            <input type="text" name="ref" value="0123456789" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label>Transaction ID</label>
+            <input type="text" name="tranId" value="0123456789" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label>Post Date</label>
+            <input type="text" name="postDate" value="@string.Format("{0:MMyy}", DateTime.Today)" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label>Tracking ID</label>
+            <input type="text" name="trackId" value="0123456789" class="form-control"/>
+        </div>
+    </section>
+    <section class="form-buttons">
+        <strong>Submit KNET:</strong>
+        <button name="result" value="CAPTURED" type="submit" class="btn btn-success">Success</button>
+        <button name="result" value="NOT CAPTURED" type="submit" class="btn btn-warning">Failure</button>
+    </section>
+}

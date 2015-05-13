@@ -8,6 +8,8 @@ namespace Mzayad.Models
         public int OrderItemId { get; set; }
         public int OrderId { get; set; }
         public int ProductId { get; set; }
+        
+        [Localized]
         public string Name { get; set; }
         public decimal ItemPrice { get; set; }
         public int Quantity { get; set; }

@@ -4,9 +4,9 @@ using Mzayad.Web.Models.Order;
 using Mzayad.Web.Models.Shared;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Mzayad.Models.Enum;
 using Mzayad.Models.Payment;
 using Mzayad.Services.Payment;
-using Mzayad.Web.Areas.admin.Models.Users;
 using DetailsViewModel = Mzayad.Web.Models.Order.DetailsViewModel;
 
 namespace Mzayad.Web.Controllers
@@ -93,27 +93,8 @@ namespace Mzayad.Web.Controllers
             return View(model);
         }
 
-        [Route("summary/{orderId:int}")]
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> Summary(int orderId, OrderSummaryViewModel model)
-        {
-            var order = await _orderService.GetById(orderId);
-            if (order == null)
-            {
-                return HttpNotFound();
-            }
-
-            //order.PaymentMethod = model.Order.PaymentMethod;
-            //await _orderService.Update(order);
-
-            var knetService = new KnetService(DataContextFactory);
-
-            // TODO: KNET
-
-            return RedirectToAction("Submit", new { orderId });
-        }
-
         [Route("submit/{orderId:int}")]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Submit(int orderId)
         {
             var order = await _orderService.GetById(orderId);
@@ -121,6 +102,8 @@ namespace Mzayad.Web.Controllers
             {
                 return HttpNotFound();
             }
+
+            order = await _orderService.SaveShippingAndPayment(order, PaymentMethod.Knet);
 
             var knetService = new KnetService(DataContextFactory);
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net.Http;
@@ -55,8 +56,25 @@ namespace Mzayad.Services.Payment
             }
         }
 
+        private async Task<InitTransactionResult> GetFakeTransaction(Order order, string userId, string userHostAddress)
+        {
+            var paymentId = DateTime.UtcNow.Ticks.ToString();
+
+            await CreateTransaction(
+                    order, paymentId,
+                    userId,
+                    userHostAddress);
+
+            return new InitTransactionResult
+            {
+                RedirectUrl = string.Format("/knet/test?PaymentId={0}", paymentId)
+            };
+        }
+
         public async Task<InitTransactionResult> InitTransaction(Order order, string userId, string userHostAddress)
         {
+            return await GetFakeTransaction(order, userId, userHostAddress);
+                  
             var result = new InitTransactionResult();
 
             using (var client = new HttpClient())

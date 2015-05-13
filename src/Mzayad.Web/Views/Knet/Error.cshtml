@@ -5,7 +5,7 @@
     ViewBag.Title = Global.Error;
 }
 
-@Html.StatusMessage(string.Format(Global.PaymentTransactionErrorMessage, Url.Action("Summary", "Orders", new { Model.OrderId })), StatusMessageType.Error)
+@Html.StatusMessage(string.Format(Global.PaymentTransactionErrorMessage, Url.Action("Summary", "Orders", new { Model.OrderId, ViewBag.Language })), StatusMessageType.Error)
 
 <section class="form-section form-horizontal">
     <div class="row">

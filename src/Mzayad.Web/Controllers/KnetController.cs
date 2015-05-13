@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Mzayad.Core.Formatting;
 using Mzayad.Models.Enum;
+using Mzayad.Models.Payment;
 using Mzayad.Services;
 using Mzayad.Services.Payment;
 using Mzayad.Web.Core.Services;
@@ -18,6 +19,16 @@ namespace Mzayad.Web.Controllers
         {
             _orderService = new OrderService(appServices.DataContextFactory);
             _knetService = new KnetService(appServices.DataContextFactory);
+        }
+
+        public ActionResult Test(string paymentId)
+        {
+            var knetTransaction = new KnetTransaction
+            {
+                PaymentId = paymentId
+            };
+
+            return View(knetTransaction);
         }
 
         [HttpPost]
@@ -69,16 +80,16 @@ namespace Mzayad.Web.Controllers
                                                  "</table>", transaction.PaymentId, transaction.Result,
                                                  transaction.TransactionId, transaction.AuthorizationNumber,
                                                  transaction.TrackId, transaction.ReferenceNumber,
-                                                 DateTime.UtcNow, CurrencyFormatter.Format(transaction.Order.Total, Currency.Kwd));
+                                                 DateTime.UtcNow, CurrencyFormatter.Format(transaction.Order.Total));
 
             //await SendNotifications(transaction, transactionNotes);
             
-            var redirectUrl = Url.Action("Success", "Orders", new { transaction.OrderId, transaction.PaymentId }, RequestService.GetUrlScheme());
+            var redirectUrl = Url.Action("Success", "Orders", new { transaction.OrderId, transaction.PaymentId, Language }, RequestService.GetUrlScheme());
 
             return Content(string.Format("REDIRECT={0}", redirectUrl));
         }
 
-        public async Task<ActionResult> Error(string paymentId)
+        public new async Task<ActionResult> Error(string paymentId)
         {
             var transaction = await _knetService.GetTransaction(paymentId);
             if (transaction == null)

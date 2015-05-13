@@ -7,6 +7,7 @@ using OrangeJetpack.Base.Core.Formatting;
 using System;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using OrangeJetpack.Localization;
 
 namespace Mzayad.Services
 {
@@ -16,15 +17,27 @@ namespace Mzayad.Services
         {
         }
 
-        public async Task<Order> GetById(int id)
+        public async Task<Order> GetById(int id, string languageCode = "en")
         {
             using (var dc = DataContext())
             {
-                return await dc.Orders
+                var order = await dc.Orders
                     .Include(i => i.Address)
                     .Include(i => i.Items)
                     .Include(i => i.Logs)
                     .SingleOrDefaultAsync(i => i.OrderId == id);
+
+                if (order == null)
+                {
+                    return null;
+                }
+
+                foreach (var item in order.Items)
+                {
+                    item.Localize(languageCode, i => i.Name);
+                }
+
+                return order;
             }
         }
 
@@ -179,6 +192,24 @@ namespace Mzayad.Services
                 SetStatus(order, OrderStatus.Shipped, userId, userHostAddress);
                 order.ShippedUtc = DateTime.UtcNow;
                 await dc.SaveChangesAsync();
+            }
+        }
+
+        public async Task<Order> SaveShippingAndPayment(Order order, PaymentMethod? paymentMethod)
+        {
+            using (var dc = DataContext())
+            {
+                dc.Orders.Attach(order);
+
+                //order.Shipping = shippingOption.TotalRate;
+                order.RecalculateTotal();
+
+                order.PaymentMethod = paymentMethod;
+                order.SubmittedUtc = DateTime.UtcNow;
+
+                await dc.SaveChangesAsync();
+
+                return order;
             }
         }
 
