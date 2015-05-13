@@ -153,12 +153,18 @@ namespace Mzayad.Services
                 }
 
                 await dc.SaveChangesAsync();
-                onUpdated();
+
+                if (onUpdated != null)
+                {
+                    onUpdated();
+                }
+
                 if (highestBid != null)
                 {
                     var order = await _orderService.CreateOrder(auctionId, highestBid.BidId);
                     return order;
                 }
+                
                 return null;
             }
         }

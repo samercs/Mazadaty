@@ -1,38 +1,6 @@
 ﻿#home-index #page-title {
   display: none;
 }
-#home-index .mz-wrapper {
-  width: 788px;
-  margin: 0 auto;
-}
-#home-index .mz {
-  float: left;
-  height: 190px;
-  background: transparent url(//az712326.vo.msecnd.net/assets/mz-freehand-635610878999247526.png) 0 0 no-repeat;
-}
-#home-index .mz-m {
-  width: 173px;
-}
-#home-index .mz-z {
-  width: 130px;
-  background-position-x: -173px;
-}
-#home-index .mz-a1 {
-  width: 106px;
-  background-position-x: -303px;
-}
-#home-index .mz-y {
-  width: 134px;
-  background-position-x: -409px;
-}
-#home-index .mz-a2 {
-  width: 109px;
-  background-position-x: -543px;
-}
-#home-index .mz-d {
-  width: 136px;
-  background-position-x: -652px;
-}
 #home-index #auction-list > li {
   margin-bottom: 30px;
   padding: 20px;

@@ -135,17 +135,11 @@ namespace Mzayad.Web.SignalR
                 foreach (var cacheKey in cacheKeys)
                 {
                     var auction = _cacheService.Get<Auction>(cacheKey);
+                    
                     auction.SecondsLeft = Math.Max(auction.SecondsLeft - 1, 0);
-
                     if (auction.SecondsLeft <= 0)
                     {
-                        _cacheService.RemoveFromSet("LiveAuctionKeys", cacheKey);
-                        var task = _auctionService.CloseAuction(auction.AuctionId,
-                            () => _cacheService.Delete(CacheKeys.CurrentAuctions));
-
-                        var order = task.Result;
-
-                        Clients.All.closeAuction(auction.AuctionId, order.UserId, order.OrderId);
+                        CloseAuction(cacheKey, auction);
                     }
 
                     _cacheService.Set(cacheKey, auction);
@@ -157,6 +151,17 @@ namespace Mzayad.Web.SignalR
 
                 _updatingAuctions = false;
             }
+        }
+
+        private void CloseAuction(string cacheKey, Auction auction)
+        {
+            _cacheService.RemoveFromSet("LiveAuctionKeys", cacheKey);
+            var task = _auctionService.CloseAuction(auction.AuctionId,
+                () => _cacheService.Delete(CacheKeys.CurrentAuctions));
+
+            var order = task.Result;
+
+            Clients.All.closeAuction(auction.AuctionId, order.UserId, order.OrderId);
         }
 
         public async Task SubmitBid(int auctionId, string userId, string username,string hostAddress)
