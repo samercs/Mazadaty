@@ -33,6 +33,10 @@ namespace Mzayad.Web.Controllers
                 ShippingAddress = order.Address,              
             };
 
+            var user = await AuthService.CurrentUser();
+
+            SetStatusMessage("Congratulations {0} you've won! First things first, please enter your shipping address below.", user.FirstName);
+
             return View(model);
         }
 
@@ -94,6 +98,7 @@ namespace Mzayad.Web.Controllers
             order.PaymentMethod = model.Order.PaymentMethod;
             await _orderService.Update(order);
 
+            // TODO: KNET
 
             return RedirectToAction("Submit", new { orderId });
         }
@@ -101,7 +106,9 @@ namespace Mzayad.Web.Controllers
         [Route("submit/{orderId:int}")]
         public ActionResult Submit(int orderId)
         {
-            return View();
+            
+            
+            return Content("submit");
         }
     }
 }

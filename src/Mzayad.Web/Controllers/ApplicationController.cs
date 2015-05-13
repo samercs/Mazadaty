@@ -75,6 +75,18 @@ namespace Mzayad.Web.Controllers
         }
 
         /// <summary>
+        /// Sets a success view status message for display.
+        /// </summary>
+        /// <param name="message">A composite format message string to display.</param>
+        /// <param name="args">An object array that contains zero or more objects to format.</param>
+        public void SetStatusMessage(string message, params object[] args)
+        {
+            message = string.Format(message, args);
+
+            SetStatusMessage(message);
+        }
+
+        /// <summary>
         /// Gets a status message if one is set.
         /// </summary>
         public StatusMessage GetStatusMessage()

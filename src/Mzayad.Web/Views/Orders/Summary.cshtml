@@ -3,10 +3,9 @@
 
 @{
     ViewBag.Title = Global.OrderSummary;
-
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Submit", "Orders", new { orderId = Model.Order.OrderId }))
 {
     @Html.AntiForgeryToken()
     <div class="panel panel-default">
