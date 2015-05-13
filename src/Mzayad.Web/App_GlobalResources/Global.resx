@@ -489,4 +489,7 @@
   <data name="Shipping" xml:space="preserve">
     <value>Shipping</value>
   </data>
+  <data name="SubmittingPleaseWait" xml:space="preserve">
+    <value>Submitting, please wait...</value>
+  </data>
 </root>

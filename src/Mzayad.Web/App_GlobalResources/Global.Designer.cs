@@ -1042,6 +1042,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Submitting, please wait....
+        /// </summary>
+        public static string SubmittingPleaseWait {
+            get {
+                return ResourceManager.GetString("SubmittingPleaseWait", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Terms and Conditions.
         /// </summary>
         public static string TermsAndConditions {

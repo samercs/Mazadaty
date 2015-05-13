@@ -7,7 +7,7 @@
     ViewBag.Title = Global.OrderSummary;
 }
 
-@using (Html.BeginForm("Submit", "Orders", new { orderId = Model.Order.OrderId }))
+@using (Html.BeginForm("Submit", "Orders", new { orderId = Model.Order.OrderId }, FormMethod.Post, new { @class = "submit-once" }))
 {
     @Html.AntiForgeryToken()
     
@@ -100,6 +100,6 @@
         </div>
     </div>
     <section class="form-buttons">
-        <button type="submit" class="btn btn-default">@Global.SaveAndContinue</button>
+        <button type="submit" class="btn btn-default" data-submitting-text="@Global.SubmittingPleaseWait">@Global.SaveAndContinue</button>
     </section>
 }

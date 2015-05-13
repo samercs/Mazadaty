@@ -12,11 +12,34 @@
     var goBack = function(e) {
         e.preventDefault();
         history.back();
-    }
+    };
+
+    var submitOnce = function(e) {
+
+        var $this = $(this);
+        if (typeof($this.valid) === typeof(Function) && !$this.valid()) {
+            return;
+        }
+
+        if ($this.data("submitting") === true) {
+            e.preventDefault();
+        } else {
+
+            $this.data("submitting", true);
+
+            var button = $this.find("button[type='submit']");
+            var submittingText = button.data("submittingText") || "Submitting, please wait...";
+
+            button.addClass("submitting")
+                  .html("<i class='fa fa-cog fa-spin fa-lg'></i> " + submittingText)
+                  .blur();
+        }
+    };
 
     var bindEvents = function () {
         $("form").on("change", ".auto-submit", autoSubmitForm);
         $("form").on("click", ".btn-cancel", goBack);
+        $("form.submit-once").on("submit", submitOnce);
         $(".localized-content").on("input", ".localized-input[data-primary='true']", setHiddenLocalizedContent);
     };
 
