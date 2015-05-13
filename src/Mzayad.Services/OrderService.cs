@@ -16,75 +16,92 @@ namespace Mzayad.Services
         {
         }
 
-        public async Task<Order> CreateOrder(int auctionId,int bidId)
+        public async Task<Order> CreateOrder(int auctionId, int bidId)
         {
             using (var dc = DataContext())
             {
-
-                var bid = await dc.Bids.Include(i => i.User.Address ).SingleOrDefaultAsync(i => i.BidId == bidId);
+                var bid = await dc.Bids.Include(i => i.User.Address).SingleOrDefaultAsync(i => i.BidId == bidId);
                 
                 var auction =
                     await dc.Auctions.Include(i => i.Product).SingleOrDefaultAsync(i => i.AuctionId == auctionId);
-                if (bid != null && auction!=null)
+
+                if (bid == null || auction == null)
                 {
-                    var order = new Order()
-                    {
-                        PaymentMethod = PaymentMethod.Knet,
-                        Status = OrderStatus.InProgress,
-                        UserId = bid.UserId,
-                        AllowPhoneSms = false,
-                        Address = new ShippingAddress()
-                        {
-                            AddressLine1 = bid.User.Address.AddressLine1,
-                            AddressLine2 = bid.User.Address.AddressLine2,
-                            AddressLine3 = bid.User.Address.AddressLine3,
-                            AddressLine4 = bid.User.Address.AddressLine4,
-                            CityArea = bid.User.Address.CityArea,
-                            CountryCode = bid.User.Address.CountryCode,
-                            PostalCode = bid.User.Address.PostalCode,
-                            StateProvince = bid.User.Address.StateProvince,
-                            
-                            Name = NameFormatter.GetFullName(bid.User.FirstName, bid.User.LastName),
-                            PhoneCountryCode = bid.User.PhoneCountryCode,
-                            PhoneLocalNumber = bid.User.PhoneNumber               
-                        },
-                        Type = OrderType.Auction,
-                        SubmittedUtc = DateTime.UtcNow,
-                        Items = new[]
-                        {
-                            new OrderItem()
-                            {
-                                ItemPrice = bid.Amount,
-                                Name = auction.Product.Name,
-                                Quantity = auction.Product.Quantity,
-                                ProductId = auction.ProductId
-                            }
-                        },
-                        Logs = new[]
-                        {
-                            new OrderLog()
-                            {
-                                Status = OrderStatus.InProgress,
-                                UserId = bid.UserId,
-                                UserHostAddress = bid.UserHostAddress
-
-                            }
-                        }
-
-
-                    };
-
-                    dc.Orders.Add(order);
-                    await dc.SaveChangesAsync();
-                    return order;
+                    return null;
                 }
-                return null;
+                
+                var order = CreateOrder(auction, bid);
+
+                dc.Orders.Add(order);
+                await dc.SaveChangesAsync();
+                return order;
             }
+        }
+
+        private static Order CreateOrder(Auction auction, Bid bid)
+        {
+            return new Order
+            {
+                Type = OrderType.Auction,
+                UserId = bid.UserId,
+                Status = OrderStatus.InProgress,
+                PaymentMethod = PaymentMethod.Knet,
+                AllowPhoneSms = false,
+                Address = CreateShippingAddress(bid),
+                Items = CreateOrderItems(bid, auction),
+                Logs = CreateOrderLogs(bid)
+            };
+        }
+
+        private static ShippingAddress CreateShippingAddress(Bid bid)
+        {
+            return new ShippingAddress
+            {
+                AddressLine1 = bid.User.Address.AddressLine1,
+                AddressLine2 = bid.User.Address.AddressLine2,
+                AddressLine3 = bid.User.Address.AddressLine3,
+                AddressLine4 = bid.User.Address.AddressLine4,
+                CityArea = bid.User.Address.CityArea,
+                CountryCode = bid.User.Address.CountryCode,
+                PostalCode = bid.User.Address.PostalCode,
+                StateProvince = bid.User.Address.StateProvince,
+                            
+                Name = NameFormatter.GetFullName(bid.User.FirstName, bid.User.LastName),
+                PhoneCountryCode = bid.User.PhoneCountryCode,
+                PhoneLocalNumber = bid.User.PhoneNumber               
+            };
+        }
+
+        private static OrderItem[] CreateOrderItems(Bid bid, Auction auction)
+        {
+            return new[]
+            {
+                new OrderItem
+                {
+                    ItemPrice = bid.Amount,
+                    Name = auction.Product.Name,
+                    Quantity = 1,
+                    ProductId = auction.ProductId
+                }
+            };
+        }
+
+        private static OrderLog[] CreateOrderLogs(Bid bid)
+        {
+            return new[]
+            {
+                new OrderLog
+                {
+                    Status = OrderStatus.InProgress,
+                    UserId = bid.UserId,
+                    UserHostAddress = bid.UserHostAddress
+                }
+            };
         }
 
         public async Task<Order> GetById(int id)
         {
-            using (var dc=DataContext())
+            using (var dc = DataContext())
             {
                 return await 
                     dc.Orders.Include(i => i.Address)
