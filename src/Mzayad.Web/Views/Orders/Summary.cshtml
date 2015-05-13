@@ -1,4 +1,6 @@
-﻿@using OrangeJetpack.Localization
+﻿@using Mzayad.Core.Formatting
+@using Mzayad.Models.Enum
+@using OrangeJetpack.Localization
 @model Mzayad.Web.Models.Order.OrderSummaryViewModel
 
 @{
@@ -8,9 +10,10 @@
 @using (Html.BeginForm("Submit", "Orders", new { orderId = Model.Order.OrderId }))
 {
     @Html.AntiForgeryToken()
+    
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title" style="display: inline-block">@Global.OrderItems</h3>
+            <h3 class="panel-title">@Global.OrderDetails</h3>
         </div>
         <div class="panel-body form-horizontal">
             @foreach (var item in Model.Order.Items)
@@ -27,7 +30,7 @@
                     <label class="col-sm-2 control-label">@Global.ItemPrices</label>
                     <div class="col-sm-10">
                         <p class="form-control-static">
-                            @item.ItemPrice
+                            @CurrencyFormatter.Format(item.ItemPrice)
                         </p>
                     </div>
                 </div>
@@ -41,25 +44,28 @@
                 </div>
                 <hr />
             }
-
+            <div class="form-group">
+                <label class="col-sm-2 control-label">@Global.Shipping</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">
+                        @CurrencyFormatter.Format(Model.Order.Shipping)
+                    </p>
+                </div>
+            </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">@Global.Total</label>
                 <div class="col-sm-10">
                     <p class="form-control-static">
-                        @{
-                            Model.Order.RecalculateTotal();
-                        }
-                        @Model.Order.Total
+                        @CurrencyFormatter.Format(Model.Order.Total)
                     </p>
                 </div>
             </div>
-
         </div>
     </div>
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title" style="display: inline-block">@Global.ShippingAddress</h3>
+            <h3 class="panel-title">@Global.ShippingAddress</h3>
         </div>
         <div class="panel-body form-horizontal">
             <div class="form-group">
@@ -67,20 +73,27 @@
                 <div class="col-sm-10">
                     <p class="form-control-static">@Model.Order.Address.Name</p>
                 </div>
+                <label class="col-sm-2 control-label">@Global.Address</label>
+                <div class="col-sm-10">
+                    @Html.DisplayFor(m => Model.Order.Address)
+                </div>
             </div>
         </div>
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title" style="display: inline-block">@Global.OrderDetail</h3>
+            <h3 class="panel-title">@Global.PaymentMethod</h3>
         </div>
         <div class="panel-body form-horizontal">
             <div class="form-group">
                 <label class="col-sm-2 control-label">@Global.PaymentMethod</label>
                 <div class="col-sm-10">
-                    <p class="form-control-static">
-                        @Html.DropDownListFor(m => m.Order.PaymentMethod, Model.PaymentMethod, new {@class = "form-control"})
-                    </p>
+                    <div class="radio">
+                        <label>
+                            @Html.RadioButtonFor(m => m.Order.PaymentMethod, PaymentMethod.Knet)
+                            <img src="//az712326.vo.msecnd.net/assets/payment-cards-knet-635584921087649461.png" alt="KNET"/>
+                        </label>
+                    </div>
                 </div>
             </div>
 

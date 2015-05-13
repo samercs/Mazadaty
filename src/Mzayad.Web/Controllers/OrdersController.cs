@@ -76,7 +76,9 @@ namespace Mzayad.Web.Controllers
                 return HttpNotFound();
             }
 
-            var model = new OrderSummaryViewModel()
+            order.RecalculateTotal();
+
+            var model = new OrderSummaryViewModel
             {
                 Order = order,
                 Language = Language

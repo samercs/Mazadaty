@@ -441,8 +441,8 @@
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
-  <data name="OrderDetail" xml:space="preserve">
-    <value>Order Detail</value>
+  <data name="OrderDetails" xml:space="preserve">
+    <value>Order Details</value>
   </data>
   <data name="OrderSummary" xml:space="preserve">
     <value>Order Summary</value>
@@ -485,5 +485,8 @@
   </data>
   <data name="WishListItemRemoveMessage" xml:space="preserve">
     <value>item has been removed from your wishlist successfully.</value>
+  </data>
+  <data name="Shipping" xml:space="preserve">
+    <value>Shipping</value>
   </data>
 </root>
