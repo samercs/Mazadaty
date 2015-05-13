@@ -68,6 +68,10 @@ namespace Mzayad.Web.Controllers
             order.Address.PostalCode =model.AddressViewModel.PostalCode;
             order.Address.StateProvince = model.AddressViewModel.StateProvince;
 
+            // add local shipping charges
+            order.Shipping = AppSettings.LocalShipping;
+            order.RecalculateTotal();
+
             await _orderService.Update(order);
 
             return RedirectToAction("Summary", new { orderId });

@@ -8,7 +8,8 @@ namespace Mzayad.Web.Core.Services
         public EmailSettings EmailSettings { get; private set; }
         public string SiteName { get; private set; }
         public string CacheConnection { get; private set; }
-        
+        public decimal LocalShipping { get; private set; }
+
         public AppSettings(NameValueCollection appSettings)
         {
             EmailSettings = new EmailSettings
@@ -21,6 +22,8 @@ namespace Mzayad.Web.Core.Services
 
             SiteName = appSettings["SiteName"];
             CacheConnection = appSettings["CacheConnection"];
+
+            LocalShipping = decimal.Parse(appSettings["LocalShipping"]);
         }     
     }
 }

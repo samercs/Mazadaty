@@ -201,9 +201,7 @@ namespace Mzayad.Services
             {
                 dc.Orders.Attach(order);
 
-                //order.Shipping = shippingOption.TotalRate;
                 order.RecalculateTotal();
-
                 order.PaymentMethod = paymentMethod;
                 order.SubmittedUtc = DateTime.UtcNow;
 
