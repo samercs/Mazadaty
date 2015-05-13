@@ -1,10 +1,12 @@
 ﻿using Mzayad.Models.Enum;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mzayad.Models.Payment
 {
     public abstract class PaymentTransaction : ModelBase
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PaymentTransactionId { get; set; }
         
         [Required]
