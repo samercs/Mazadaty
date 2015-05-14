@@ -1,0 +1,43 @@
+﻿@using Mzayad.Web.Extensions
+@model Mzayad.Web.Areas.admin.Models.Subscription.AddViewModel
+<div class="row">
+    <div class="@Html.Css().FormWide">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Subscription.Name, "Name")
+                    @Html.EditorFor(i => i.Subscription.Name, Model)
+                    @Html.ValidationMessageFor(i => i.Subscription.Name, "Please enter a product name.")
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Subscription.Status, "Status")
+                    @Html.DropDownListFor(i => i.Subscription.Status, Model.StatusList, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(i => i.Subscription.Status, "Please select a Status.")
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Subscription.ExpirationUtc, "Expiration")
+                    @Html.EditorFor(i => i.Subscription.ExpirationUtc)
+                    @Html.ValidationMessageFor(i => i.Subscription.ExpirationUtc, "Please enter a Expiration date.")
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Subscription.Quantity, "Quantity")
+                    @Html.TextBoxFor(i => i.Subscription.Quantity, new { @class = "form-control", @type = "number" })
+                    @Html.ValidationMessageFor(i => i.Subscription.Quantity, "Please enter a Quantity.")
+                </div>
+            </section>
+
+
+
+            <section class="form-buttons">
+                <button type="submit" class="btn btn-default">Save</button>
+            </section>
+
+        }
+    </div>
+</div>
+
+

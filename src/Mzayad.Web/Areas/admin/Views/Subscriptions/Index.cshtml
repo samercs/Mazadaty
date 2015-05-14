@@ -1,0 +1,38 @@
+﻿@using Humanizer
+@using Mzayad.Web.Extensions
+@using OrangeJetpack.Localization
+@model IEnumerable<Mzayad.Models.Subscription>
+
+@{
+    ViewBag.Title = "Subscriptions List";
+    
+}
+
+<ul class="link-list">
+    <li>@Html.ActionLink("Add Subscription", "Add", "Subscriptions",null,new {@class="fa fa-plus"})</li>
+</ul>
+
+<table class="@Html.Css().GridTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Expiration</th>
+            <th>Quantity</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            item.Localize("en", i => i.Name);
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Status.Humanize()</td>
+                <td>@item.ExpirationUtc</td>
+                <td>@item.Quantity</td>
+                <td class="link-cell">@Html.ActionLink("Edit", "Edit", "Subscriptions", new { id = item.SubscriptionId }, null)</td>
+            </tr>
+        }
+    </tbody>
+</table>
