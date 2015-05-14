@@ -25,6 +25,7 @@ namespace Mzayad.Web.Controllers
         protected readonly IMessageService MessageService;
         protected readonly IGeolocationService GeolocationService;
         protected readonly ICacheService CacheService;
+        protected readonly IRequestService RequestService;
         protected readonly EmailTemplateService EmailTemplateService;
         
         protected ApplicationController(IAppServices appServices)
@@ -36,6 +37,7 @@ namespace Mzayad.Web.Controllers
             MessageService = appServices.MessageService;
             GeolocationService = appServices.GeolocationService;
             CacheService = appServices.CacheService;
+            RequestService = appServices.RequestService;
             
             EmailTemplateService=new EmailTemplateService(appServices.DataContextFactory);
         }
@@ -72,6 +74,18 @@ namespace Mzayad.Web.Controllers
             }
 
             TempData["StatusMessage"] = new StatusMessage(message, statusMessageType, statusMessageFormat, false);
+        }
+
+        /// <summary>
+        /// Sets a success view status message for display.
+        /// </summary>
+        /// <param name="message">A composite format message string to display.</param>
+        /// <param name="args">An object array that contains zero or more objects to format.</param>
+        public void SetStatusMessage(string message, params object[] args)
+        {
+            message = string.Format(message, args);
+
+            SetStatusMessage(message);
         }
 
         /// <summary>

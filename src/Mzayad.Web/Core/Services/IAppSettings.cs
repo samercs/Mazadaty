@@ -7,5 +7,6 @@ namespace Mzayad.Web.Core.Services
         EmailSettings EmailSettings { get; }
         string SiteName { get; }
         string CacheConnection { get; }
+        decimal LocalShipping { get; }
     }
 }

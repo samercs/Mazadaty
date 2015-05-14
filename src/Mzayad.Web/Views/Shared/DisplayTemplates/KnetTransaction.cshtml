@@ -1,0 +1,44 @@
+﻿@using Mzayad.Core.Formatting
+@model Mzayad.Models.Payment.KnetTransaction
+
+<h3>@Global.KnetDetails</h3>
+
+<label class="col-sm-4 control-label">@Global.Amount</label>
+<div class="col-sm-8">
+    <p class="form-control-static">@CurrencyFormatter.Format(Model.Order.Total)</p>
+</div>
+
+<label class="col-sm-4 control-label">@Global.KnetPaymentIdLabel</label>
+<div class="col-sm-8">
+    <p class="form-control-static">@Model.PaymentId</p>
+</div>
+
+<label class="col-sm-4 control-label">@Global.KnetResultCodeLabel</label>
+<div class="col-sm-8">
+    <p class="form-control-static">@Model.Result</p>
+</div>
+
+<label class="col-sm-4 control-label">@Global.KnetTransactionIdLabel</label>
+<div class="col-sm-8">
+    <p class="form-control-static">@Model.TransactionId</p>
+</div>
+
+<label class="col-sm-4 control-label">@Global.KnetAuthLabel</label>
+<div class="col-sm-8">
+    <p class="form-control-static">@(!string.IsNullOrWhiteSpace(Model.AuthorizationNumber) ? Model.AuthorizationNumber : "--")</p>
+</div>
+
+<label class="col-sm-4 control-label">@Global.KnetTrackIdLabel</label>
+<div class="col-sm-8">
+    <p class="form-control-static">@Model.TrackId</p>
+</div>
+
+<label class="col-sm-4 control-label">@Global.KnetRefNoLabel</label>
+<div class="col-sm-8">
+    <p class="form-control-static">@Model.ReferenceNumber</p>
+</div>
+
+<label class="col-sm-4 control-label">@Global.DateSlashTime</label>
+<div class="col-sm-8">
+    <p class="form-control-static">@Model.CreatedUtc.ToString("dd MMM yyyy HH:mm:ss") GMT</p>
+</div>

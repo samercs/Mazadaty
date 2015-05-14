@@ -441,8 +441,8 @@
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
-  <data name="OrderDetail" xml:space="preserve">
-    <value>Order Detail</value>
+  <data name="OrderDetails" xml:space="preserve">
+    <value>Order Details</value>
   </data>
   <data name="OrderSummary" xml:space="preserve">
     <value>Order Summary</value>
@@ -485,5 +485,74 @@
   </data>
   <data name="WishListItemRemoveMessage" xml:space="preserve">
     <value>item has been removed from your wishlist successfully.</value>
+  </data>
+  <data name="Shipping" xml:space="preserve">
+    <value>Shipping</value>
+  </data>
+  <data name="SubmittingPleaseWait" xml:space="preserve">
+    <value>Submitting, please wait...</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="PaymentTransactionErrorMessage" xml:space="preserve">
+    <value>We're sorry, an error occurred trying to process credit or debit card transaction. Please &lt;a href="{0}" class="alert-link"&gt;change your payment method or try again&lt;/a&gt;.</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="ContinueToCheckout" xml:space="preserve">
+    <value>Continue to Checkout</value>
+  </data>
+  <data name="DateSlashTime" xml:space="preserve">
+    <value>Date/Time</value>
+  </data>
+  <data name="KnetAuthLabel" xml:space="preserve">
+    <value>Auth</value>
+  </data>
+  <data name="KnetDetails" xml:space="preserve">
+    <value>KNET Details</value>
+  </data>
+  <data name="KnetPaymentIdLabel" xml:space="preserve">
+    <value>Payment ID</value>
+  </data>
+  <data name="KnetRefNoLabel" xml:space="preserve">
+    <value>Ref No</value>
+  </data>
+  <data name="KnetResultCodeLabel" xml:space="preserve">
+    <value>Result Code</value>
+  </data>
+  <data name="KnetTrackIdLabel" xml:space="preserve">
+    <value>Track ID</value>
+  </data>
+  <data name="KnetTransactionIdLabel" xml:space="preserve">
+    <value>Transaction ID</value>
+  </data>
+  <data name="OrderId" xml:space="preserve">
+    <value>Order ID</value>
+  </data>
+  <data name="OrderReceived" xml:space="preserve">
+    <value>Order Received</value>
+  </data>
+  <data name="OrderSuccessMessage" xml:space="preserve">
+    <value>Thank you for your purchase! You will receive an order confirmation email with details of your order and a link to track its progress.</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="Placed" xml:space="preserve">
+    <value>Placed</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Subtotal" xml:space="preserve">
+    <value>Subtotal</value>
   </data>
 </root>

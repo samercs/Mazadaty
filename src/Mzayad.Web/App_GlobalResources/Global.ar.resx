@@ -399,4 +399,61 @@
   <data name="ZipCodeRequiredErrorMessage" xml:space="preserve">
     <value>الرجاء إدخال رقم المنطقة البريدية.</value>
   </data>
+  <data name="Amount" xml:space="preserve">
+    <value>المبلغ</value>
+  </data>
+  <data name="ContinueToCheckout" xml:space="preserve">
+    <value>إتمام عملية الدفع</value>
+  </data>
+  <data name="DateSlashTime" xml:space="preserve">
+    <value>التاريخ/الساعة</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>خطأ</value>
+  </data>
+  <data name="KnetAuthLabel" xml:space="preserve">
+    <value>المصادقة</value>
+  </data>
+  <data name="KnetDetails" xml:space="preserve">
+    <value>تفاصيل "كي نيت" KNET</value>
+  </data>
+  <data name="KnetPaymentIdLabel" xml:space="preserve">
+    <value>هوية الدفع</value>
+  </data>
+  <data name="KnetRefNoLabel" xml:space="preserve">
+    <value>الرقم المرجعي</value>
+  </data>
+  <data name="KnetResultCodeLabel" xml:space="preserve">
+    <value>رمز النتيجة</value>
+  </data>
+  <data name="KnetTrackIdLabel" xml:space="preserve">
+    <value>رقم تتبع الطلبية</value>
+  </data>
+  <data name="KnetTransactionIdLabel" xml:space="preserve">
+    <value>رقم الصفقة</value>
+  </data>
+  <data name="OrderId" xml:space="preserve">
+    <value>رقم الطلبية</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>الدفع</value>
+  </data>
+  <data name="PaymentTransactionErrorMessage" xml:space="preserve">
+    <value>عذراً، لقد حصل خطأ أثناء محاولة معالجة صفقة تمت باستعمال بطاقة ائتمان أو بطاقة خصم. &lt;a href="{0}" class="alert-link"&gt;الرجاء تغيير طريقة الدفع أو المحاولة مجدداً&lt;/a&gt;.</value>
+  </data>
+  <data name="Placed" xml:space="preserve">
+    <value>تم وضع الطلبية</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>الثمن</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>المنتج</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>الوضع</value>
+  </data>
+  <data name="Subtotal" xml:space="preserve">
+    <value>المجموع الفرعي</value>
+  </data>
 </root>

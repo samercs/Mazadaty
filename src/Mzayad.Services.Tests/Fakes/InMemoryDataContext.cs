@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Mzayad.Data;
 using Mzayad.Models;
+using Mzayad.Models.Payment;
 
 namespace Mzayad.Services.Tests.Fakes
 {
@@ -24,7 +25,9 @@ namespace Mzayad.Services.Tests.Fakes
         public IDbSet<OrderItem> OrderItems { get; set; }
         public IDbSet<OrderLog> OrderLogs { get; set; }
         public IDbSet<Subscription> Subscriptions { get; set; }
-        public IDbSet<WishList> WishLists { get; set; } 
+        public IDbSet<WishList> WishLists { get; set; }
+        public IDbSet<KnetTransaction> KnetTransactions { get; set; }
+
         public InMemoryDataContext()
         {
             Auctions = new TestDbSet<Auction>();

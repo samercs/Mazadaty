@@ -7,6 +7,7 @@ using OrangeJetpack.Base.Core.Formatting;
 using System;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using OrangeJetpack.Localization;
 
 namespace Mzayad.Services
 {
@@ -16,99 +17,31 @@ namespace Mzayad.Services
         {
         }
 
-        public async Task<Order> CreateOrder(int auctionId,int bidId)
+        public async Task<Order> GetById(int id, string languageCode = "en")
         {
             using (var dc = DataContext())
             {
+                var order = await dc.Orders
+                    .Include(i => i.Address)
+                    .Include(i => i.Items)
+                    .Include(i => i.Logs)
+                    .SingleOrDefaultAsync(i => i.OrderId == id);
 
-                var bid = await dc.Bids.Include(i => i.User.Address ).SingleOrDefaultAsync(i => i.BidId == bidId);
-                
-                var auction =
-                    await dc.Auctions.Include(i => i.Product).SingleOrDefaultAsync(i => i.AuctionId == auctionId);
-                if (bid != null && auction!=null)
+                if (order == null)
                 {
-                    var order = new Order()
-                    {
-                        PaymentMethod = PaymentMethod.Knet,
-                        Status = OrderStatus.InProgress,
-                        UserId = bid.UserId,
-                        AllowPhoneSms = false,
-                        Address = new ShippingAddress()
-                        {
-                            AddressLine1 = bid.User.Address.AddressLine1,
-                            AddressLine2 = bid.User.Address.AddressLine2,
-                            AddressLine3 = bid.User.Address.AddressLine3,
-                            AddressLine4 = bid.User.Address.AddressLine4,
-                            CityArea = bid.User.Address.CityArea,
-                            CountryCode = bid.User.Address.CountryCode,
-                            PostalCode = bid.User.Address.PostalCode,
-                            StateProvince = bid.User.Address.StateProvince,
-                            
-                            Name = NameFormatter.GetFullName(bid.User.FirstName, bid.User.LastName),
-                            PhoneCountryCode = bid.User.PhoneCountryCode,
-                            PhoneLocalNumber = bid.User.PhoneNumber               
-                        },
-                        Type = OrderType.Auction,
-                        SubmittedUtc = DateTime.UtcNow,
-                        Items = new[]
-                        {
-                            new OrderItem()
-                            {
-                                ItemPrice = bid.Amount,
-                                Name = auction.Product.Name,
-                                Quantity = auction.Product.Quantity,
-                                ProductId = auction.ProductId
-                            }
-                        },
-                        Logs = new[]
-                        {
-                            new OrderLog()
-                            {
-                                Status = OrderStatus.InProgress,
-                                UserId = bid.UserId,
-                                UserHostAddress = bid.UserHostAddress
-
-                            }
-                        }
-
-
-                    };
-
-                    dc.Orders.Add(order);
-                    await dc.SaveChangesAsync();
-                    return order;
+                    return null;
                 }
-                return null;
-            }
-        }
 
-        public async Task<Order> GetById(int id)
-        {
-            using (var dc=DataContext())
-            {
-                return await 
-                    dc.Orders.Include(i => i.Address)
-                        .Include(i => i.Items)
-                        .Include(i => i.Logs)
-                        .SingleOrDefaultAsync(i => i.OrderId == id);
-            }
-        }
+                foreach (var item in order.Items)
+                {
+                    item.Localize(languageCode, i => i.Name);
+                }
 
-        public async Task<Order> Update(Order order)
-        {
-            using (var dc=DataContext())
-            {
-                dc.Orders.Attach(order);
-                dc.ShippingAddresses.Attach(order.Address);
-                dc.SetModified(order);
-                dc.SetModified(order.Address);
-                await dc.SaveChangesAsync();
                 return order;
             }
         }
 
-
-        public async  Task<IEnumerable<Order>> GetOrders(OrderStatus status, string search="")
+        public async Task<IEnumerable<Order>> GetOrders(OrderStatus status, string search = "")
         {
             using (var dc = DataContext())
             {
@@ -126,11 +59,116 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<Order> GetOrder(int id)
+        public async Task<Order> CreateOrder(int auctionId, int bidId)
         {
             using (var dc = DataContext())
             {
-                return await dc.Orders.Include(i => i.Items).Include(i => i.Address).FirstOrDefaultAsync(i => i.OrderId == id);
+                var bid = await dc.Bids.Include(i => i.User.Address).SingleOrDefaultAsync(i => i.BidId == bidId);
+                
+                var auction =
+                    await dc.Auctions.Include(i => i.Product).SingleOrDefaultAsync(i => i.AuctionId == auctionId);
+
+                if (bid == null || auction == null)
+                {
+                    return null;
+                }
+                
+                var order = CreateOrder(auction, bid);
+
+                dc.Orders.Add(order);
+                await dc.SaveChangesAsync();
+                return order;
+            }
+        }
+
+        private static Order CreateOrder(Auction auction, Bid bid)
+        {
+            return new Order
+            {
+                Type = OrderType.Auction,
+                UserId = bid.UserId,
+                Status = OrderStatus.InProgress,
+                PaymentMethod = PaymentMethod.Knet,
+                AllowPhoneSms = false,
+                Address = CreateShippingAddress(bid),
+                Items = CreateOrderItems(bid, auction),
+                Logs = CreateOrderLogs(bid)
+            };
+        }
+
+        private static ShippingAddress CreateShippingAddress(Bid bid)
+        {
+            return new ShippingAddress
+            {
+                AddressLine1 = bid.User.Address.AddressLine1,
+                AddressLine2 = bid.User.Address.AddressLine2,
+                AddressLine3 = bid.User.Address.AddressLine3,
+                AddressLine4 = bid.User.Address.AddressLine4,
+                CityArea = bid.User.Address.CityArea,
+                CountryCode = bid.User.Address.CountryCode,
+                PostalCode = bid.User.Address.PostalCode,
+                StateProvince = bid.User.Address.StateProvince,
+                            
+                Name = NameFormatter.GetFullName(bid.User.FirstName, bid.User.LastName),
+                PhoneCountryCode = bid.User.PhoneCountryCode,
+                PhoneLocalNumber = bid.User.PhoneNumber               
+            };
+        }
+
+        private static OrderItem[] CreateOrderItems(Bid bid, Auction auction)
+        {
+            return new[]
+            {
+                new OrderItem
+                {
+                    ItemPrice = bid.Amount,
+                    Name = auction.Product.Name,
+                    Quantity = 1,
+                    ProductId = auction.ProductId
+                }
+            };
+        }
+
+        private static OrderLog[] CreateOrderLogs(Bid bid)
+        {
+            return new[]
+            {
+                new OrderLog
+                {
+                    Status = OrderStatus.InProgress,
+                    UserId = bid.UserId,
+                    UserHostAddress = bid.UserHostAddress
+                }
+            };
+        }
+
+        public async Task<Order> Update(Order order)
+        {
+            using (var dc=DataContext())
+            {
+                dc.Orders.Attach(order);
+                dc.ShippingAddresses.Attach(order.Address);
+                dc.SetModified(order);
+                dc.SetModified(order.Address);
+                await dc.SaveChangesAsync();
+                return order;
+            }
+        }
+
+        /// <summary>
+        /// Updates an order status and addes a log of the status change.
+        /// </summary>
+        public async Task<Order> UpdateStatus(Order order, OrderStatus status, string userHostAddress, string userId = null)
+        {
+            using (var dc = DataContext())
+            {
+                dc.Orders.Attach(order);
+
+                SetStatus(order, status, userId, userHostAddress);
+
+                await dc.SaveChangesAsync();
+
+                return order;
             }
         }
 
@@ -157,5 +195,39 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<Order> SaveShippingAndPayment(Order order, PaymentMethod? paymentMethod)
+        {
+            using (var dc = DataContext())
+            {
+                dc.Orders.Attach(order);
+
+                order.RecalculateTotal();
+                order.PaymentMethod = paymentMethod;
+                order.SubmittedUtc = DateTime.UtcNow;
+
+                await dc.SaveChangesAsync();
+
+                return order;
+            }
+        }
+
+        public async Task SubmitOrder(Order order, string userHostAddress)
+        {
+            //using (var dc = DataContext())
+            //{
+            //    foreach (var item in order.Items)
+            //    {
+            //        var skuId = item.SkuId;
+            //        var sku = await dc.Skus.SingleOrDefaultAsync(i => i.SkuId == skuId);
+            //        if (sku != null)
+            //        {
+            //            sku.Quantity--;
+            //        }
+            //    }
+            //    await dc.SaveChangesAsync();
+            //}
+
+            await UpdateStatus(order, OrderStatus.Processing, userHostAddress);
+        }
     }
 }

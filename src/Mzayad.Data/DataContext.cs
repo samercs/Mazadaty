@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Mzayad.Models;
+using Mzayad.Models.Payment;
 
 namespace Mzayad.Data
 {
@@ -26,7 +27,9 @@ namespace Mzayad.Data
         public IDbSet<OrderItem> OrderItems { get; set; }
         public IDbSet<OrderLog> OrderLogs { get; set; }
         public IDbSet<Subscription> Subscriptions { get; set; }
-        public IDbSet<WishList> WishLists { get; set; } 
+        public IDbSet<WishList> WishLists { get; set; }
+        public IDbSet<KnetTransaction> KnetTransactions { get; set; }
+
         public DataContext(): base("DefaultConnection")
         {
             Configuration.ProxyCreationEnabled = false;

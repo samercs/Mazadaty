@@ -213,6 +213,10 @@
     <Compile Include="Migrations\201505051159251_AddWishList.Designer.cs">
       <DependentUpon>201505051159251_AddWishList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505131328419_AddKnetTransaction.cs" />
+    <Compile Include="Migrations\201505131328419_AddKnetTransaction.Designer.cs">
+      <DependentUpon>201505131328419_AddKnetTransaction.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -337,6 +341,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505051159251_AddWishList.resx">
       <DependentUpon>201505051159251_AddWishList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505131328419_AddKnetTransaction.resx">
+      <DependentUpon>201505131328419_AddKnetTransaction.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

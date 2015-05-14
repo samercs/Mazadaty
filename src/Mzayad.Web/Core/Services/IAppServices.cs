@@ -12,5 +12,6 @@ namespace Mzayad.Web.Core.Services
         IMessageService MessageService { get; }
         IGeolocationService GeolocationService { get; }
         ICacheService CacheService { get; }
+        IRequestService RequestService { get; }
     }
 }
