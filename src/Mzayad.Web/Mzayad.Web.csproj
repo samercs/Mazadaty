@@ -274,6 +274,7 @@
     <Compile Include="Areas\admin\Controllers\AuctionsController.cs" />
     <Compile Include="Areas\admin\Controllers\AvatarsController.cs" />
     <Compile Include="Areas\admin\Controllers\CategoriesController.cs" />
+    <Compile Include="Areas\admin\Controllers\OrdersController.cs" />
     <Compile Include="Areas\admin\Controllers\ProductsController.cs" />
     <Compile Include="Areas\admin\Controllers\ReportsController.cs" />
     <Compile Include="Areas\admin\Controllers\SettingsController.cs" />
@@ -283,6 +284,7 @@
     <Compile Include="Areas\admin\Models\Auctions\AddEditViewModel.cs" />
     <Compile Include="Areas\admin\Models\Auctions\IndexViewModel.cs" />
     <Compile Include="Areas\admin\Models\Avatar\AvatarAddViewModel.cs" />
+    <Compile Include="Areas\admin\Models\Orders\IndexViewModel.cs" />
     <Compile Include="Areas\admin\Models\Products\AddViewModel.cs" />
     <Compile Include="Areas\admin\Models\Products\EditViewModel.cs" />
     <Compile Include="Areas\admin\Models\Products\IndexViewModel.cs" />
@@ -581,6 +583,9 @@
     </Content>
     <Content Include="Areas\admin\Views\Avatars\Index.cshtml" />
     <Content Include="Areas\admin\Views\Avatars\Add.cshtml" />
+    <Content Include="Areas\admin\Views\Orders\Index.cshtml" />
+    <Content Include="Areas\admin\Views\Orders\Details.cshtml" />
+    <Content Include="Areas\admin\Views\Orders\Ship.cshtml" />
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
@@ -678,6 +683,7 @@
     <Content Include="Views\Orders\Shipping.cshtml" />
     <Content Include="Views\Orders\Summary.cshtml" />
     <Content Include="Views\Orders\Submit.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Address.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

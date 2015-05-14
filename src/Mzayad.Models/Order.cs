@@ -29,6 +29,7 @@ namespace Mzayad.Models
         public decimal Subtotal { get; set; }
         public decimal Shipping { get; set; }
         public decimal Total { get; set; }
+        
 
         public PaymentMethod? PaymentMethod { get; set; }
 
@@ -47,7 +48,9 @@ namespace Mzayad.Models
         public void RecalculateTotal()
         {
             Subtotal = Items.Sum(i => i.ItemPrice * i.Quantity);
-            Total = Subtotal;
+            Total = Subtotal + Shipping;
         }
+
+        
     }
 }
