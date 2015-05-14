@@ -27,7 +27,8 @@ namespace Mzayad.Models
 
         public virtual Address Address { get; set; }
 
-        public virtual IEnumerable<CategoryNotification> Notifications { get; set; } 
+        public virtual IEnumerable<CategoryNotification> Notifications { get; set; }
+        public virtual IEnumerable<WishList> WishLists { get; set; } 
 
         //public string CreatedLocalTime
         //{

@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddNewItem" xml:space="preserve">
+    <value>اضافة عنصر جديد</value>
+  </data>
   <data name="Address" xml:space="preserve">
     <value>العنوان</value>
   </data>
   <data name="AddressRequiredErrorMessage" xml:space="preserve">
     <value>الرجاء إدخال عنوانك.</value>
+  </data>
+  <data name="AddToWishList" xml:space="preserve">
+    <value>اضافة منتج الى القائمة المفضلة</value>
   </data>
   <data name="AliasOrUsername" xml:space="preserve">
     <value>اسم المستخدم او الاسم المستعار</value>
@@ -189,6 +195,9 @@
   <data name="CurrentPasswordValidationMessage" xml:space="preserve">
     <value>الرجاء إدخال كلمة مرورك الحالية.</value>
   </data>
+  <data name="DeleteWishList" xml:space="preserve">
+    <value>حذف منتج من القائمة المفضلة؟</value>
+  </data>
   <data name="EditAccount" xml:space="preserve">
     <value>تعديل الحساب</value>
   </data>
@@ -243,8 +252,14 @@
   <data name="MyAccount" xml:space="preserve">
     <value>حسابي</value>
   </data>
+  <data name="MyWishList" xml:space="preserve">
+    <value>القائمة المفضلة</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>الاسم</value>
+  </data>
+  <data name="NameEnteredValidationMessage" xml:space="preserve">
+    <value>الرجاء ادخال  اسم المنتج او العنصر</value>
   </data>
   <data name="NeedPassword" xml:space="preserve">
     <value>كلمة مرور جديدة</value>
@@ -288,6 +303,9 @@
   <data name="Privacy" xml:space="preserve">
     <value>الخصوصية</value>
   </data>
+  <data name="ProductOrItemName" xml:space="preserve">
+    <value>اسم المنتج او العنصر</value>
+  </data>
   <data name="ProfileURL" xml:space="preserve">
     <value>صفحة الملف</value>
   </data>
@@ -302,6 +320,9 @@
   </data>
   <data name="RememberMe" xml:space="preserve">
     <value>تذكرني</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>حذف</value>
   </data>
   <data name="Required" xml:space="preserve">
     <value>مطلوب</value>
@@ -362,6 +383,15 @@
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>مرحبا!</value>
+  </data>
+  <data name="WishListItemAddedMessage" xml:space="preserve">
+    <value>تم اضافة المنتج بنجاح .</value>
+  </data>
+  <data name="WishListItemDeleteConfirmation" xml:space="preserve">
+    <value>هل انت منأكد من حذف المنتج من القائمة المفضلة الخاص بك ؟</value>
+  </data>
+  <data name="WishListItemRemoveMessage" xml:space="preserve">
+    <value>تم حذف المنتج من القائمةالمفضلة .</value>
   </data>
   <data name="ZipCode" xml:space="preserve">
     <value>رقم المنطقة البريدية</value>

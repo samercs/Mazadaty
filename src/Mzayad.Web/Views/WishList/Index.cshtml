@@ -1,0 +1,32 @@
+﻿@model Mzayad.Web.Models.WishList.IndexViewModel
+
+@{
+    ViewBag.Title = Global.MyWishList;
+}
+
+<ul class="link-list">
+    <li>
+        @Html.ActionLink(Global.AddNewItem, "Add", "WishList", null, new { @class = "fa fa-plus" })
+    </li>
+</ul>
+
+<table class="@Html.Css().GridTable">
+    <thead>
+        <tr>
+            <th>@Global.ProductOrItemName</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.WishList)
+        {
+            <tr>
+                <th>@item.NameEntered</th>
+                <th>
+                    @Html.ActionLink(Global.Remove,"Delete","WishList",new {id=item.WishListId},new {@class="link-cell"})
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>
+

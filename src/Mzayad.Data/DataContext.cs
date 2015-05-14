@@ -25,7 +25,8 @@ namespace Mzayad.Data
         public IDbSet<Order> Orders { get; set; }
         public IDbSet<OrderItem> OrderItems { get; set; }
         public IDbSet<OrderLog> OrderLogs { get; set; }
-        public IDbSet<Subscription> Subscriptions { get; set; } 
+        public IDbSet<Subscription> Subscriptions { get; set; }
+        public IDbSet<WishList> WishLists { get; set; } 
         public DataContext(): base("DefaultConnection")
         {
             Configuration.ProxyCreationEnabled = false;

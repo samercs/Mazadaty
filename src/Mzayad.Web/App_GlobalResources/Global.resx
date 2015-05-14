@@ -456,4 +456,34 @@
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="MyWishList" xml:space="preserve">
+    <value>My Wish List</value>
+  </data>
+  <data name="AddNewItem" xml:space="preserve">
+    <value>Add new item</value>
+  </data>
+  <data name="AddToWishList" xml:space="preserve">
+    <value>Add to my wishlist</value>
+  </data>
+  <data name="DeleteWishList" xml:space="preserve">
+    <value>Delete wishlist item ?</value>
+  </data>
+  <data name="NameEnteredValidationMessage" xml:space="preserve">
+    <value>please enter product or item name</value>
+  </data>
+  <data name="ProductOrItemName" xml:space="preserve">
+    <value>Product or item name</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="WishListItemAddedMessage" xml:space="preserve">
+    <value>Wishlist item added successfully.</value>
+  </data>
+  <data name="WishListItemDeleteConfirmation" xml:space="preserve">
+    <value>are you sure you want to delete this item from your wishlist?</value>
+  </data>
+  <data name="WishListItemRemoveMessage" xml:space="preserve">
+    <value>item has been removed from your wishlist successfully.</value>
+  </data>
 </root>

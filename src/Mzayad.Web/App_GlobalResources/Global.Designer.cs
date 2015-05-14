@@ -61,6 +61,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add new item.
+        /// </summary>
+        public static string AddNewItem {
+            get {
+                return ResourceManager.GetString("AddNewItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Address.
         /// </summary>
         public static string Address {
@@ -75,6 +84,15 @@ namespace Mzayad.Web.Resources {
         public static string AddressRequiredErrorMessage {
             get {
                 return ResourceManager.GetString("AddressRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add to my wishlist.
+        /// </summary>
+        public static string AddToWishList {
+            get {
+                return ResourceManager.GetString("AddToWishList", resourceCulture);
             }
         }
         
@@ -304,6 +322,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete wishlist item ?.
+        /// </summary>
+        public static string DeleteWishList {
+            get {
+                return ResourceManager.GetString("DeleteWishList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Don&apos;t have an account?.
         /// </summary>
         public static string DontHaveAccountQuestion {
@@ -475,11 +502,29 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to My Wish List.
+        /// </summary>
+        public static string MyWishList {
+            get {
+                return ResourceManager.GetString("MyWishList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to please enter product or item name.
+        /// </summary>
+        public static string NameEnteredValidationMessage {
+            get {
+                return ResourceManager.GetString("NameEnteredValidationMessage", resourceCulture);
             }
         }
         
@@ -709,6 +754,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Product or item name.
+        /// </summary>
+        public static string ProductOrItemName {
+            get {
+                return ResourceManager.GetString("ProductOrItemName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile Page.
         /// </summary>
         public static string ProfileURL {
@@ -795,6 +849,15 @@ namespace Mzayad.Web.Resources {
         public static string RememberMe {
             get {
                 return ResourceManager.GetString("RememberMe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string Remove {
+            get {
+                return ResourceManager.GetString("Remove", resourceCulture);
             }
         }
         
@@ -1047,6 +1110,33 @@ namespace Mzayad.Web.Resources {
         public static string Welcome {
             get {
                 return ResourceManager.GetString("Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wishlist item added successfully..
+        /// </summary>
+        public static string WishListItemAddedMessage {
+            get {
+                return ResourceManager.GetString("WishListItemAddedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to are you sure you want to delete this item from your wishlist?.
+        /// </summary>
+        public static string WishListItemDeleteConfirmation {
+            get {
+                return ResourceManager.GetString("WishListItemDeleteConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to item has been removed from your wishlist successfully..
+        /// </summary>
+        public static string WishListItemRemoveMessage {
+            get {
+                return ResourceManager.GetString("WishListItemRemoveMessage", resourceCulture);
             }
         }
         
