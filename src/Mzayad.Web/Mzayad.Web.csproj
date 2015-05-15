@@ -129,20 +129,21 @@
     <Reference Include="OrangeJetpack.Base.Web">
       <HintPath>..\..\packages\OrangeJetpack.Base.Web.0.0.8\lib\OrangeJetpack.Base.Web.dll</HintPath>
     </Reference>
-    <Reference Include="OrangeJetpack.Localization">
-      <HintPath>..\..\packages\OrangeJetpack.Localization.1.5.6\lib\OrangeJetpack.Localization.dll</HintPath>
+    <Reference Include="OrangeJetpack.Localization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OrangeJetpack.Localization.1.5.7\lib\OrangeJetpack.Localization.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Regionalization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\OrangeJetpack.Regionalization.0.0.6\lib\OrangeJetpack.Regionalization.dll</HintPath>
     </Reference>
     <Reference Include="OrangeJetpack.Services.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.24\lib\OrangeJetpack.Services.Client.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.27\lib\OrangeJetpack.Services.Client.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Services.Models, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.24\lib\OrangeJetpack.Services.Models.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.27\lib\OrangeJetpack.Services.Models.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="RestSharp">
       <HintPath>..\..\packages\RestSharp.105.0.0\lib\net4\RestSharp.dll</HintPath>

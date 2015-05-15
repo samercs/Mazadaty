@@ -177,7 +177,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 Message = string.Format(emailTemplate.Localize("en", i => i.Message).Message, user.FirstName, AppSettings.SiteName)
             };
 
-            await _messageService.SendMessage(email.WithTemplate(this));
+            await _messageService.Send(email.WithTemplate());
         }
 
         private async Task SendNewUserWelcomeEmail(ApplicationUser user)
@@ -192,7 +192,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
 
             try
             {
-                await _messageService.SendMessage(email.WithTemplate(this));
+                await _messageService.Send(email.WithTemplate());
             }
             catch (Exception ex)
             {
@@ -225,7 +225,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
 
             try
             {
-                await _messageService.SendMessage(email.WithTemplate(this));
+                await _messageService.Send(email.WithTemplate());
             }
             catch (Exception ex)
             {

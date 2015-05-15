@@ -26,7 +26,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 Message = "test"
             };
 
-            var result = await _messageService.SendMessage(email.WithTemplate());
+            var result = await _messageService.Send(email.WithTemplate());
 
             return Ok(result);
         }

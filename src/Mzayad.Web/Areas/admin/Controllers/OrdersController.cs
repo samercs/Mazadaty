@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Kendo.Mvc.Extensions;
+﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Mzayad.Core.Formatting;
 using Mzayad.Models;
@@ -16,8 +10,12 @@ using Mzayad.Web.Core.ActionResults;
 using Mzayad.Web.Core.Attributes;
 using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
 using OrangeJetpack.Services.Client.Messaging;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using Mzayad.Web.Extensions;
+using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Models;
 using WebGrease.Css.Extensions;
 
@@ -30,8 +28,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         private readonly IAuthService _authService;
         private readonly IMessageService _messageService;
         private readonly EmailTemplateService _emailTemplateService;
-        
-        // GET: admin/Orders
+
         public OrdersController(IAppServices appServices) : base(appServices)
         {
             _orderService=new OrderService(DataContextFactory);
@@ -110,7 +107,15 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
         private async Task SendOrderShipmentNotification(Order order)
         {
-            //Send Notification Here
+            var emailTemplate = await _emailTemplateService.GetByTemplateType(EmailTemplateType.OrderShipped);
+            var email = new Email
+            {
+                ToAddress = order.User.Email,
+                Subject = emailTemplate.Localize("en", i => i.Subject).Subject,
+                Message = string.Format(emailTemplate.Localize("en", i => i.Message).Message, order.User.FirstName)
+            };
+
+            await _messageService.Send(email.WithTemplate());
         }
 
         public async Task<ExcelResult> OrdersExcel( OrderStatus status,string search = "")

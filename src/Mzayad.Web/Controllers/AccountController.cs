@@ -161,7 +161,7 @@ namespace Mzayad.Web.Controllers
 
             try
             {
-                await MessageService.SendMessage(email.WithTemplate(this));
+                await MessageService.Send(email.WithTemplate());
             }
             catch (Exception ex)
             {
@@ -229,7 +229,7 @@ namespace Mzayad.Web.Controllers
 
             try
             {
-                await MessageService.SendMessage(email.WithTemplate(this));
+                await MessageService.Send(email.WithTemplate());
             }
             catch (Exception ex)
             {

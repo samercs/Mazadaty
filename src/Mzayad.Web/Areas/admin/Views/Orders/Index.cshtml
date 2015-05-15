@@ -6,15 +6,7 @@
     ViewBag.Title = "Orders";
 }
 
-@section styles {
-    <style>
-        #orders-index .link-cell a:visited {
-            color: #ccc;
-        }
-    </style>
-}
-
-@using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "form-inline" }))
+@using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "form-inline form-search" }))
 {
     <div class="form-group">
         <div class="input-group">
@@ -30,8 +22,6 @@
 <ul class="link-list">
     <li><a href="@Url.Action("OrdersExcel", "Orders", new { search = Model.Search, status = Model.Status })"><i class="fa fa-file-excel-o fa-pad-right"></i>Download Excel</a></li>
 </ul>
-
-<p>&nbsp;</p>
 
 @if (!Model.Orders.Any())
 {

@@ -33,7 +33,7 @@ namespace Mzayad.Web
             builder.RegisterType<AzureBlobService>().As<IStorageService>();
             
             builder.Register<IAppSettings>(c => new AppSettings(ConfigurationManager.AppSettings));
-            builder.Register<IMessageService>(c => new EmailService(c.Resolve<IAppSettings>().EmailSettings));
+            builder.Register<IMessageService>(c => new MessageService(c.Resolve<IAppSettings>().EmailSettings));
 
             builder.Register(GetCacheService).SingleInstance();
 

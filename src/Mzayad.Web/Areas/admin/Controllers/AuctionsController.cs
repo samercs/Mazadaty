@@ -123,7 +123,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
                 try
                 {
-                    await MessageService.SendMessage(email.WithTemplate(this));
+                    await MessageService.Send(email.WithTemplate());
                 }
                 catch (Exception ex)
                 {
