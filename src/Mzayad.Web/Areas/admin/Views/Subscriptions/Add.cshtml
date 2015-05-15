@@ -1,27 +1,7 @@
-﻿@using Mzayad.Web.Extensions
-@model Mzayad.Web.Areas.admin.Models.Subscription.AddViewModel
+﻿@model Mzayad.Web.Areas.admin.Models.Subscription.AddViewModel
 
 @{
-    ViewBag.Title = "Add new subcription";
-    
+    ViewBag.Title = "Add Subcription";  
 }
 
 @Html.Partial("_AddEdit")
-
-
-@section scripts {
-    @Scripts.Render("~/js/validate")
-    <script>
-
-        $('.date-picker').datetimepicker(
-            {
-                format: 'd/m/Y H:i'
-            }
-        );
-
-
-
-    </script>
-
-
-}
