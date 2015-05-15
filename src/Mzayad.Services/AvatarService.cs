@@ -1,51 +1,51 @@
-﻿using System;
+﻿using Mzayad.Data;
+using Mzayad.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Mzayad.Data;
-using Mzayad.Models;
 
 namespace Mzayad.Services
 {
     public class AvatarService : ServiceBase
     {
-        public AvatarService(IDataContextFactory dataContextFactory) : base(dataContextFactory)
+        public AvatarService(IDataContextFactory dataContextFactory)
+            : base(dataContextFactory)
         {
         }
 
         public async Task<IEnumerable<Avatar>> GetAll()
         {
-            using (var dc=DataContext())
+            using (var dc = DataContext())
             {
-                return await dc.Avatars.OrderBy(i=>i.SortOrder).ToArrayAsync();
+                return await dc.Avatars.OrderBy(i => i.SortOrder).ToListAsync();
             }
         }
 
         public async Task<Avatar> Add(Avatar avatar)
         {
-            using (var dc=DataContext())
+            using (var dc = DataContext())
             {
-                double sortOrder = 0.0;
-                var allAvatar = await dc.Avatars.OrderBy(i=>i.SortOrder).ToArrayAsync();
-                if (allAvatar.Any())
+                var sortOrder = 0.0;
+                var allAvatars = await dc.Avatars.OrderBy(i => i.SortOrder).ToListAsync();
+                if (allAvatars.Any())
                 {
-                    sortOrder = allAvatar.Last().SortOrder + 1;    
+                    sortOrder = allAvatars.Last().SortOrder + 1;
                 }
                 avatar.SortOrder = sortOrder;
+                
                 dc.Avatars.Add(avatar);
                 await dc.SaveChangesAsync();
+                
                 return avatar;
-
             }
         }
 
-        public async Task<Avatar> GetById(int id)
+        public async Task<Avatar> GetById(int avatarId)
         {
-            using (var dc=DataContext())
+            using (var dc = DataContext())
             {
-                return await dc.Avatars.SingleOrDefaultAsync(i => i.AvatarId == id);
+                return await dc.Avatars.SingleOrDefaultAsync(i => i.AvatarId == avatarId);
             }
         }
 
@@ -62,7 +62,7 @@ namespace Mzayad.Services
 
         public async Task<Avatar> Update(Avatar avatar)
         {
-            using (var dc=DataContext())
+            using (var dc = DataContext())
             {
                 dc.SetModified(avatar);
                 await dc.SaveChangesAsync();
