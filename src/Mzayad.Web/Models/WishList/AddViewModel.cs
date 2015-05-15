@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mzayad.Services;
+﻿using Mzayad.Services;
 using Mzayad.Web.Core.Services;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Mzayad.Web.Models.WishList
 {
@@ -24,11 +21,7 @@ namespace Mzayad.Web.Models.WishList
                 };
             }
 
-            var allEnProduct = await productService.GetProducts("en");
-
-            var allArProduct = await productService.GetProducts("ar");
-
-            ProductList = allEnProduct.Concat(allArProduct).Select(i => i.Name);
+            ProductList = await productService.GetProductNames();
 
             return this;
         }

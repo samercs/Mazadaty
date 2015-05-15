@@ -35,6 +35,23 @@ namespace Mzayad.Services
             }
         }
 
+        /// <summary>
+        /// Gets a unique list of all product names in both English and Arabic.
+        /// </summary>
+        public async Task<IEnumerable<string>> GetProductNames()
+        {
+            using (var dc = DataContext())
+            {
+                var names = await dc.Products.Select(i => i.Name).ToListAsync();
+                var products = names.Select(i => new Product {Name = i}).ToList();
+
+                var en = products.Localize("en", i => i.Name).Select(i => i.Name);
+                var ar = products.Localize("ar", i => i.Name).Select(i => i.Name);
+
+                return Enumerable.Concat(en, ar).Distinct().OrderBy(i => i);
+            }
+        }
+
         public async Task<IEnumerable<Product>> GetProductsWithoutCategory(string languageCode,string search=null)
         {
             using (var dc = DataContext())
