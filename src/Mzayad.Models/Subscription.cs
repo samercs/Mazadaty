@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mzayad.Models.Enum;
+﻿using Mzayad.Models.Enum;
 using OrangeJetpack.Localization;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mzayad.Models
 {
@@ -16,8 +12,7 @@ namespace Mzayad.Models
         [Required, Localized]
         public string Name { get; set; }
         public SubscriptionStatus Status { get; set; }
-        public DateTime ExpirationUtc { get; set; }
-        public int? Quantity { get; set; }
-        
+        public DateTime? ExpirationUtc { get; set; }
+        public int? Quantity { get; set; }     
     }
 }

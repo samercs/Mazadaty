@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Mzayad.Data;
+using Mzayad.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Mzayad.Data;
-using Mzayad.Models;
+using OrangeJetpack.Localization;
 
 namespace Mzayad.Services
 {
@@ -15,11 +14,18 @@ namespace Mzayad.Services
         {
         }
 
-        public async Task<IEnumerable<Subscription>> GetAll()
+        public async Task<IEnumerable<Subscription>> GetAll(string languageCode = null)
         {
             using (var dc=DataContext())
             {
-                return await dc.Subscriptions.OrderBy(i => i.ExpirationUtc).ToListAsync();
+                var subscriptions = await dc.Subscriptions.OrderBy(i => i.ExpirationUtc).ToListAsync();
+
+                if (!string.IsNullOrWhiteSpace(languageCode))
+                {
+                    subscriptions = subscriptions.Localize(languageCode, i => i.Name).ToList();
+                }
+
+                return subscriptions;
             }
         }
 

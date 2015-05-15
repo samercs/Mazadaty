@@ -1,16 +1,20 @@
 ﻿@using Humanizer
 @using Mzayad.Web.Extensions
-@using OrangeJetpack.Localization
 @model IEnumerable<Mzayad.Models.Subscription>
 
 @{
     ViewBag.Title = "Subscriptions List";
-    
 }
 
 <ul class="link-list">
-    <li>@Html.ActionLink("Add Subscription", "Add", "Subscriptions",null,new {@class="fa fa-plus"})</li>
+    <li>@Html.ActionLink("Add Subscription", "Add", "Subscriptions")</li>
 </ul>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning">There are currently no subscriptions.</div>
+    return;
+}
 
 <table class="@Html.Css().GridTable">
     <thead>
@@ -25,11 +29,10 @@
     <tbody>
         @foreach (var item in Model)
         {
-            item.Localize("en", i => i.Name);
             <tr>
                 <td>@item.Name</td>
                 <td>@item.Status.Humanize()</td>
-                <td>@item.ExpirationUtc</td>
+                <td>@(item.ExpirationUtc.HasValue ? item.ExpirationUtc.Value.ToShortDateString() : "")</td>
                 <td>@item.Quantity</td>
                 <td class="link-cell">@Html.ActionLink("Edit", "Edit", "Subscriptions", new { id = item.SubscriptionId }, null)</td>
             </tr>
