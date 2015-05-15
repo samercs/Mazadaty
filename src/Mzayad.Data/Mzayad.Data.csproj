@@ -221,6 +221,10 @@
     <Compile Include="Migrations\201505151256170_AddOrderShippedEmailTemplate.Designer.cs">
       <DependentUpon>201505151256170_AddOrderShippedEmailTemplate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505151644158_SetSubscriptionExpirationUtcNullable.cs" />
+    <Compile Include="Migrations\201505151644158_SetSubscriptionExpirationUtcNullable.Designer.cs">
+      <DependentUpon>201505151644158_SetSubscriptionExpirationUtcNullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -351,6 +355,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505151256170_AddOrderShippedEmailTemplate.resx">
       <DependentUpon>201505151256170_AddOrderShippedEmailTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505151644158_SetSubscriptionExpirationUtcNullable.resx">
+      <DependentUpon>201505151644158_SetSubscriptionExpirationUtcNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
