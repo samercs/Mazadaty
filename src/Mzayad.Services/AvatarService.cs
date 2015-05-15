@@ -22,6 +22,14 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<Avatar> GetById(int id)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.Avatars.SingleOrDefaultAsync(i => i.AvatarId == id);
+            }
+        }
+
         public async Task<Avatar> Add(Avatar avatar)
         {
             using (var dc = DataContext())
@@ -41,25 +49,6 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<Avatar> GetById(int avatarId)
-        {
-            using (var dc = DataContext())
-            {
-                return await dc.Avatars.SingleOrDefaultAsync(i => i.AvatarId == avatarId);
-            }
-        }
-
-        public async Task<Avatar> Delete(Avatar avatar)
-        {
-            using (var dc = DataContext())
-            {
-                dc.Avatars.Attach(avatar);
-                dc.Avatars.Remove(avatar);
-                await dc.SaveChangesAsync();
-                return avatar;
-            }
-        }
-
         public async Task<Avatar> Update(Avatar avatar)
         {
             using (var dc = DataContext())
@@ -67,6 +56,16 @@ namespace Mzayad.Services
                 dc.SetModified(avatar);
                 await dc.SaveChangesAsync();
                 return avatar;
+            }
+        }
+
+        public async Task Delete(Avatar avatar)
+        {
+            using (var dc = DataContext())
+            {
+                dc.Avatars.Attach(avatar);
+                dc.Avatars.Remove(avatar);
+                await dc.SaveChangesAsync();
             }
         }
     }
