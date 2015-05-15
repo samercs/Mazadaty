@@ -61,7 +61,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add new item.
+        ///   Looks up a localized string similar to Add Item.
         /// </summary>
         public static string AddNewItem {
             get {
@@ -601,7 +601,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to My Wish List.
+        ///   Looks up a localized string similar to My Wishlist.
         /// </summary>
         public static string MyWishList {
             get {
@@ -723,6 +723,15 @@ namespace Mzayad.Web.Resources {
         public static string NotificationsInstructions {
             get {
                 return ResourceManager.GetString("NotificationsInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have no wishlist items yet, click the Add Item link to start your wishlist..
+        /// </summary>
+        public static string NoWishlistMessage {
+            get {
+                return ResourceManager.GetString("NoWishlistMessage", resourceCulture);
             }
         }
         
@@ -925,7 +934,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product or item name.
+        ///   Looks up a localized string similar to Product or Item Name.
         /// </summary>
         public static string ProductOrItemName {
             get {

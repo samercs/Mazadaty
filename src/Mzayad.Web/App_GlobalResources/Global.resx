@@ -457,10 +457,10 @@
     <value>Back</value>
   </data>
   <data name="MyWishList" xml:space="preserve">
-    <value>My Wish List</value>
+    <value>My Wishlist</value>
   </data>
   <data name="AddNewItem" xml:space="preserve">
-    <value>Add new item</value>
+    <value>Add Item</value>
   </data>
   <data name="AddToWishList" xml:space="preserve">
     <value>Add to my wishlist</value>
@@ -472,7 +472,7 @@
     <value>please enter product or item name</value>
   </data>
   <data name="ProductOrItemName" xml:space="preserve">
-    <value>Product or item name</value>
+    <value>Product or Item Name</value>
   </data>
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
@@ -554,5 +554,8 @@
   </data>
   <data name="Subtotal" xml:space="preserve">
     <value>Subtotal</value>
+  </data>
+  <data name="NoWishlistMessage" xml:space="preserve">
+    <value>You have no wishlist items yet, click the Add Item link to start your wishlist.</value>
   </data>
 </root>
