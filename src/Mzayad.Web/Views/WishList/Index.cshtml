@@ -6,9 +6,16 @@
 
 <ul class="link-list">
     <li>
-        @Html.ActionLink(Global.AddNewItem, "Add", "WishList", null, new { @class = "fa fa-plus" })
+        @Html.ActionLink(Global.AddNewItem, "Add", "WishList")
     </li>
 </ul>
+
+@if (!Model.WishList.Any())
+{ 
+    <div class="alert alert-warning">@Global.NoWishlistMessage</div>
+    
+    return;
+}
 
 <table class="@Html.Css().GridTable">
     <thead>
@@ -21,10 +28,10 @@
         @foreach (var item in Model.WishList)
         {
             <tr>
-                <th>@item.NameEntered</th>
-                <th>
-                    @Html.ActionLink(Global.Remove,"Delete","WishList",new {id=item.WishListId},new {@class="link-cell"})
-                </th>
+                <td>@item.NameEntered</td>
+                <td class="link-cell">
+                    @Html.ActionLink(Global.Remove,"Delete","WishList",new { id = item.WishListId })
+                </td>
             </tr>
         }
     </tbody>
