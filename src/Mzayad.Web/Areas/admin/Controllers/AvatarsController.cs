@@ -10,9 +10,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Mzayad.Web.Core.Attributes;
+using Mzayad.Web.Core.Identity;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
+    [RoleAuthorize(Role.Administrator)]
     public class AvatarsController : ApplicationController
     {
         private readonly AvatarService _avatarService;
