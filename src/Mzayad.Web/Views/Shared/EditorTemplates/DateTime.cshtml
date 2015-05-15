@@ -4,5 +4,5 @@
     <span class="input-group-addon">
         <i class="fa fa-calendar"></i>
     </span>
-    @Html.TextBox("", (Model.HasValue ? Model.Value.ToString("dd/MM/yyyy HH:mm") : ""), new { @class = "form-control date-picker" })
+    @Html.TextBox("", (Model.HasValue ? Model.Value.ToString("dd/MM/yyyy") : ""), new { @class = "form-control date-picker" })
 </div>

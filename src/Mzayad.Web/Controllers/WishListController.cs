@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Mzayad.Models;
-using Mzayad.Services;
+﻿using Mzayad.Services;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Models.WishList;
 using Mzayad.Web.Resources;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Mzayad.Web.Controllers
 {
@@ -16,19 +11,17 @@ namespace Mzayad.Web.Controllers
     public class WishListController : ApplicationController
     {
         private readonly WishListService _wishListService;
-        private readonly IAuthService _authService;
         private readonly ProductService _productService;
-        // GET: WishList
+
         public WishListController(IAppServices appServices) : base(appServices)
         {
             _wishListService=new WishListService(DataContextFactory);
-            _authService = appServices.AuthService;
             _productService=new ProductService(DataContextFactory);
         }
 
         public async Task<ActionResult> Index()
         {
-            var userId = _authService.CurrentUserId();
+            var userId = AuthService.CurrentUserId();
             var userWishList =await _wishListService.GetByUser(userId);
             var model = new IndexViewModel()
             {
@@ -39,7 +32,7 @@ namespace Mzayad.Web.Controllers
 
         public async Task<ActionResult> Add()
         {
-            var model = await (new AddViewModel()).Hydrate(_authService, _productService);
+            var model = await (new AddViewModel()).Hydrate(AuthService, _productService);
 
             return View(model);
         }
@@ -54,22 +47,20 @@ namespace Mzayad.Web.Controllers
 
         }
 
-
-        public ActionResult Delete()
+        public ActionResult Remove(int id)
         {
             return DeleteConfirmation(Global.DeleteWishList, Global.WishListItemDeleteConfirmation);
         }
 
-
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Remove(int id, FormCollection formCollection)
         {
             var wishlist = await _wishListService.GetById(id);
             if (wishlist == null)
             {
                 return HttpNotFound();
             }
-            if (wishlist.UserId != _authService.CurrentUserId())
+            if (wishlist.UserId != AuthService.CurrentUserId())
             {
                 return HttpNotFound();
             }

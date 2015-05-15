@@ -320,6 +320,7 @@
     <Compile Include="Core\Configuration\RouteInfo.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Controllers\DocsController.cs" />
+    <Compile Include="Core\ModelBinder\DateTimeModelBinder.cs" />
     <Compile Include="Core\Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Core\Services\GeolocationService.cs" />
     <Compile Include="Core\Services\HttpCacheService.cs" />
@@ -570,6 +571,9 @@
     <Content Include="Content\nivo\default\next.png" />
     <Content Include="Content\nivo\default\prev%402x.png" />
     <Content Include="Content\nivo\default\prev.png" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Views\Shared\ProductCategories.cshtml" />
     <Content Include="Content\image-uploader.css.map" />
     <Content Include="Content\image-uploader.less" />
@@ -672,7 +676,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\EmailTemplate.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\LocalizedContent.cshtml" />
     <Content Include="Views\Shared\_Layout_LanguageSelector.cshtml" />
     <Content Include="Views\Shared\_Layout_UserMyAccount.cshtml" />
@@ -713,10 +716,10 @@
     <Content Include="Views\Shared\OrderDetailsSummary.cshtml" />
     <Content Include="Views\Shared\OrderItemsTable.cshtml" />
     <Content Include="Views\Knet\Test.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTimePicker.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Views\WishList\" />
     <Folder Include="Areas\Api\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>

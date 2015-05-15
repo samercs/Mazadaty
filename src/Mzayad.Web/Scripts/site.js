@@ -36,11 +36,25 @@
         }
     };
 
+    var setDateTimePicker = function() {
+        var parent = $(this).parents(".datetime-picker");
+        var hidden = parent.find(".datetime-value");
+        var date = parent.find(".date-picker").datepicker("getDate");
+        var hour = parent.find(".hour-picker").val();
+        var minute = parent.find(".minute-picker").val();
+
+        date.setHours(hour);
+        date.setMinutes(minute);
+
+        hidden.val(date.toISOString());
+    };
+
     var bindEvents = function () {
         $("form").on("change", ".auto-submit", autoSubmitForm);
         $("form").on("click", ".btn-cancel", goBack);
         $("form.submit-once").on("submit", submitOnce);
         $(".localized-content").on("input", ".localized-input[data-primary='true']", setHiddenLocalizedContent);
+        $(".datetime-picker").on("change", "input, select", setDateTimePicker);
     };
 
     var initRequiredLabels = function() {
@@ -51,10 +65,27 @@
         wow.init();
     };
 
+    var fixDateValidation = function() {
+        $.validator.addMethod('date',
+            function(value, element) {
+                if (this.optional(element)) {
+                    return true;
+                }
+                var ok = true;
+                try {
+                    $.datepicker.parseDate('dd/mm/yy', value);
+                } catch (err) {
+                    ok = false;
+                }
+                return ok;
+            });
+    };
+
     $(function () {
         bindEvents();
         initRequiredLabels();
-        initWowAnimations();  
+        initWowAnimations();
+        //fixDateValidation();
     });
 
 })(jQuery, new WOW());
