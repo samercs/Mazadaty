@@ -139,6 +139,11 @@ input[type=number].no-spinner::-webkit-outer-spin-button {
   background: #132e72;
   color: #ffffff;
 }
+.btn-sm,
+.btn:hover {
+  padding: 5px 10px;
+  font-size: 1.4rem;
+}
 .btn-link {
   opacity: 1 !important;
 }

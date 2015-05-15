@@ -2,15 +2,6 @@
 @model Mzayad.Web.Areas.admin.Models.Auctions.AddEditViewModel
 
 
-<style>
-        
-    #Auction_StartUtc {
-        width: 100% !important;
-    }
-
-</style>
-
-
 <div class="row">
     <div class="@Html.Css().FormWide">
 
@@ -34,7 +25,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             @Html.LabelFor(i => i.Auction.StartUtc, "Date and Time")
-                            @Html.EditorFor(i => i.Auction.StartUtc)
+                            @Html.EditorFor(i => i.Auction.StartUtc, "DateTimePicker")
                             @Html.ValidationMessageFor(i => i.Auction.StartUtc, "Please enter date and time")
                         </div>
                     </div>
@@ -152,10 +143,10 @@
                 </div>
             </section>
 
-    <section class="form-buttons">
-        @Html.HiddenFor(i=>i.Auction.CreatedByUserId)
-        <button type="submit" class="btn btn-default">Save</button>
-    </section>
+            <section class="form-buttons">
+                @Html.HiddenFor(i=>i.Auction.CreatedByUserId)
+                <button type="submit" class="btn btn-default">Save</button>
+            </section>
 
         }
     </div>

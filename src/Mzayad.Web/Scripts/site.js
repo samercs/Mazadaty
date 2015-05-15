@@ -36,11 +36,28 @@
         }
     };
 
+    var setDateTimePicker = function() {
+        var parent = $(this).parents(".datetime-picker");
+        var hidden = parent.find(".datetime-value");
+        var date = parent.find(".date-picker").datepicker("getDate");
+        var hour = parent.find(".hour-picker").val();
+        var minute = parent.find(".minute-picker").val();
+
+        date.setHours(hour);
+        date.setMinutes(minute);
+
+        hidden.val(date.toISOString());
+    };
+
     var bindEvents = function () {
         $("form").on("change", ".auto-submit", autoSubmitForm);
         $("form").on("click", ".btn-cancel", goBack);
         $("form.submit-once").on("submit", submitOnce);
         $(".localized-content").on("input", ".localized-input[data-primary='true']", setHiddenLocalizedContent);
+
+        //$(".datetime-picker").on("change", "select", setDateTimePicker);
+
+        $(".datetime-picker").on("change", "input, select", setDateTimePicker);
     };
 
     var initRequiredLabels = function() {

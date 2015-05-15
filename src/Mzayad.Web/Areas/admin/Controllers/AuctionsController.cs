@@ -42,18 +42,17 @@ namespace Mzayad.Web.Areas.admin.Controllers
         [Route("select-product")]
         public async Task<ActionResult> SelectProduct(string search="")
         {
-            var products = await _productService.GetProductsWithoutCategory("en", search);
+            var products = (await _productService.GetProductsWithoutCategory("en", search)).ToList();
             foreach (var product in products)
             {
                 product.Description = StringFormatter.StripHtmlTags(product.Description);
             }
 
-            var model = new Models.Products.IndexViewModel()
+            var model = new Models.Products.IndexViewModel
             {
                 Search = "",
                 Products = products
             };
-
 
             return View(model);
         }
