@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Kendo.Mvc.Extensions;
-using Mzayad.Models;
+﻿using Mzayad.Models;
 using Mzayad.Services;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace Mzayad.Web.Areas.admin.Models.WishList
 {
     public class IndexViewModel
     {
         public IEnumerable<WishListAdminModel> WishLists { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)] 
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 

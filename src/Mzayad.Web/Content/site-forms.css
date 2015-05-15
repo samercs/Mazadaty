@@ -140,7 +140,8 @@ input[type=number].no-spinner::-webkit-outer-spin-button {
   color: #ffffff;
 }
 .btn-sm,
-.btn:hover {
+.btn-sm:hover,
+.btn-sm:focus {
   padding: 5px 10px;
   font-size: 1.4rem;
 }

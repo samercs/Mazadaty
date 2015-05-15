@@ -54,9 +54,6 @@
         $("form").on("click", ".btn-cancel", goBack);
         $("form.submit-once").on("submit", submitOnce);
         $(".localized-content").on("input", ".localized-input[data-primary='true']", setHiddenLocalizedContent);
-
-        //$(".datetime-picker").on("change", "select", setDateTimePicker);
-
         $(".datetime-picker").on("change", "input, select", setDateTimePicker);
     };
 
@@ -68,10 +65,27 @@
         wow.init();
     };
 
+    var fixDateValidation = function() {
+        $.validator.addMethod('date',
+            function(value, element) {
+                if (this.optional(element)) {
+                    return true;
+                }
+                var ok = true;
+                try {
+                    $.datepicker.parseDate('dd/mm/yy', value);
+                } catch (err) {
+                    ok = false;
+                }
+                return ok;
+            });
+    };
+
     $(function () {
         bindEvents();
         initRequiredLabels();
-        initWowAnimations();  
+        initWowAnimations();
+        //fixDateValidation();
     });
 
 })(jQuery, new WOW());

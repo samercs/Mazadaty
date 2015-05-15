@@ -320,6 +320,7 @@
     <Compile Include="Core\Configuration\RouteInfo.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Controllers\DocsController.cs" />
+    <Compile Include="Core\ModelBinder\DateTimeModelBinder.cs" />
     <Compile Include="Core\Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Core\Services\GeolocationService.cs" />
     <Compile Include="Core\Services\HttpCacheService.cs" />
@@ -715,7 +716,6 @@
     <Content Include="Views\Shared\OrderDetailsSummary.cshtml" />
     <Content Include="Views\Shared\OrderItemsTable.cshtml" />
     <Content Include="Views\Knet\Test.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\DateOnly.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTimePicker.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -9,6 +9,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Mzayad.Web.Core.ModelBinder;
 
 namespace Mzayad.Web
 {
@@ -22,6 +23,9 @@ namespace Mzayad.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutofacConfig.RegisterAll();
             Database.SetInitializer<DataContext>(null);
+
+            ModelBinders.Binders.Add(typeof(DateTime), new DateTimeBinder());
+            ModelBinders.Binders.Add(typeof(DateTime?), new NullableDateTimeBinder());
         }
 
         protected void Application_PreSendRequestHeaders()

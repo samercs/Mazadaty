@@ -27,6 +27,8 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
         public async Task<ActionResult> Index(DateTime? startDate, DateTime? endDate)
         {
+            var m = ModelState;
+            
             var model = await (new IndexViewModel()).Hydrate(_wishListService, startDate, endDate);
             return View(model);
         }
