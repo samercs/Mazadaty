@@ -11,9 +11,9 @@
 </ul>
 
 @if (!Model.WishList.Any())
-{ 
+{
     <div class="alert alert-warning">@Global.NoWishlistMessage</div>
-    
+
     return;
 }
 
@@ -30,10 +30,9 @@
             <tr>
                 <td>@item.NameEntered</td>
                 <td class="link-cell">
-                    @Html.ActionLink(Global.Remove,"Delete","WishList",new { id = item.WishListId })
+                    @Html.ActionLink(Global.Remove, "Remove", "WishList", new { id = item.WishListId }, null)
                 </td>
             </tr>
         }
     </tbody>
 </table>
-

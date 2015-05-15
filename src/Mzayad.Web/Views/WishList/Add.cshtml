@@ -3,12 +3,10 @@
 
 @{
     ViewBag.Title = Global.AddToWishList;
-
 }
 
 @section styles {
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
-
 }
 
 <div class="row">
@@ -22,7 +20,7 @@
             <section>
                 <div class="form-group">
                     @Html.LabelFor(m => m.WishList.NameEntered, Global.ProductOrItemName).Required()
-                    @Html.TextBoxFor(i => i.WishList.NameEntered, new { @class = "form-control auto-complete" })
+                    @Html.TextBoxFor(i => i.WishList.NameEntered, new { @class = "form-control auto-complete", autofocus = "autofocus" })
                     @Html.ValidationMessageFor(i => i.WishList.NameEntered, Global.NameEnteredValidationMessage)
                 </div>
                 @Html.HiddenFor(i => i.WishList.UserId)
@@ -42,8 +40,7 @@
     <script type="text/javascript">
         (function($) {
 
-            $(function() {
-                
+            $(function() {             
                 initAutocomplete();
             });
 

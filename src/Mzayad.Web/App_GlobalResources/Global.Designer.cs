@@ -1339,7 +1339,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to are you sure you want to delete this item from your wishlist?.
+        ///   Looks up a localized string similar to Are you sure you want to permanently remove this item from your wishlist?.
         /// </summary>
         public static string WishListItemDeleteConfirmation {
             get {
@@ -1348,7 +1348,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to item has been removed from your wishlist successfully..
+        ///   Looks up a localized string similar to Item successfully removed..
         /// </summary>
         public static string WishListItemRemoveMessage {
             get {
