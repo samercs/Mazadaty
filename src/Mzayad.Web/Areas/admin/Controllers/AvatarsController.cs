@@ -18,9 +18,10 @@ namespace Mzayad.Web.Areas.admin.Controllers
         private readonly AvatarService _avatarService;
         private readonly IStorageService _storageService;
 
-        public AvatarsController(IAppServices appServices,IStorageService storageService) : base(appServices)
+        public AvatarsController(IAppServices appServices, IStorageService storageService)
+            : base(appServices)
         {
-            _avatarService=new AvatarService(appServices.DataContextFactory);
+            _avatarService = new AvatarService(appServices.DataContextFactory);
             _storageService = storageService;
         }
 
@@ -35,45 +36,38 @@ namespace Mzayad.Web.Areas.admin.Controllers
             return View();
         }
 
-        [HttpPost,ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Add(HttpPostedFileBase upload)
         {
-            if (upload == null)
-            {
-                return Content("null1");
-            }
-            if (upload.ContentLength == 0)
-            {
-                return Content("null2");
-            }
-            
-            
             var url = await UploadImage(upload);
-            var avatar = new Avatar()
+            var avatar = new Avatar
             {
                 Url = UrlFormatter.GetCdnUrl(url.Single())
             };
-            
+
             await _avatarService.Add(avatar);
-            SetStatusMessage("Avatar has been uploaded successfully");
+
+            SetStatusMessage("Avatar successfully uploaded.");
             return RedirectToAction("Index");
         }
 
         public ActionResult Delete()
         {
-            return DeleteConfirmation("Delete Avatar", "Are you sure you want delete this avatar?");
+            return DeleteConfirmation("Delete Avatar", "Are you sure you want permanently delete this avatar?");
         }
 
-        [HttpPost,ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(int id)
         {
             var avatar = await _avatarService.GetById(id);
             if (avatar == null)
             {
-                return HttpNotFound("Avatar Not Found");
+                return HttpNotFound();
             }
+
             await _avatarService.Delete(avatar);
-            SetStatusMessage("Avatar has been deleted successfully.");
+
+            SetStatusMessage("Avatar successfully deleted.");
             return RedirectToAction("Index");
         }
 
@@ -92,7 +86,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             };
 
             var uris = await _storageService.SaveImage("avatars", file, imageSettings);
-            if (uris.Length<=0 )
+            if (!uris.Any())
             {
                 throw new Exception("Could not upload image, image service did not return expected results.");
             }
@@ -122,13 +116,13 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 {
                     if (oldIndex < newIndex)
                     {
-                        index = (allAvatar.ElementAt(newIndex).SortOrder + allAvatar.ElementAt(newIndex + 1).SortOrder) / 2;    
+                        index = (allAvatar.ElementAt(newIndex).SortOrder + allAvatar.ElementAt(newIndex + 1).SortOrder) / 2;
                     }
                     else
                     {
-                        index = (allAvatar.ElementAt(newIndex).SortOrder + allAvatar.ElementAt(newIndex - 1).SortOrder) / 2;    
+                        index = (allAvatar.ElementAt(newIndex).SortOrder + allAvatar.ElementAt(newIndex - 1).SortOrder) / 2;
                     }
-                    
+
                 }
 
                 avatar.SortOrder = index;
