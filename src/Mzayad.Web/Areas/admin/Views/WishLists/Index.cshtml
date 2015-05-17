@@ -31,6 +31,6 @@
     {
         columns.Bound(i => i.Name);
         columns.Bound(i => i.Count);
-        columns.LinkColumn("Edit", "WishLists/edit?name=#=Name#");
+        columns.LinkColumn("Edit", "wishlists/edit?name=#=NameUrlEscaped#");
     })
 )

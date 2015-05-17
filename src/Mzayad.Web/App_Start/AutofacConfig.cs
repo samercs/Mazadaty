@@ -24,15 +24,21 @@ namespace Mzayad.Web
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             builder.RegisterHubs(Assembly.GetExecutingAssembly());
 
+            builder.Register<IAppSettings>(c => new AppSettings(ConfigurationManager.AppSettings));
+            
             builder.RegisterType<AppServices>().As<IAppServices>();
             builder.RegisterType<DataContextFactory>().As<IDataContextFactory>();
             builder.RegisterType<AuthService>().As<IAuthService>();
             builder.RegisterType<CookieService>().As<ICookieService>();
             builder.RegisterType<RequestService>().As<IRequestService>();
             builder.RegisterType<GeolocationService>().As<IGeolocationService>();
-            builder.RegisterType<AzureBlobService>().As<IStorageService>();
+
+            builder.Register<IStorageService>(c =>
+            {
+                var appSettings = c.Resolve<IAppSettings>();
+                return new AzureBlobService(appSettings.ProjectKey, appSettings.ProjectToken);
+            });
             
-            builder.Register<IAppSettings>(c => new AppSettings(ConfigurationManager.AppSettings));
             builder.Register<IMessageService>(c => new MessageService(c.Resolve<IAppSettings>().EmailSettings));
 
             builder.Register(GetCacheService).SingleInstance();
@@ -56,7 +62,6 @@ namespace Mzayad.Web
         private static ICacheService GetCacheService(IComponentContext c)
         {
             return new HttpCacheService();
-
 
 #if DEBUG
             return new HttpCacheService();

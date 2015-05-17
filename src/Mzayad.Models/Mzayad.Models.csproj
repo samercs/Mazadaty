@@ -95,6 +95,7 @@
     <Compile Include="Subscription.cs" />
     <Compile Include="UserProfile.cs" />
     <Compile Include="WishList.cs" />
+    <Compile Include="WishListAdminModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

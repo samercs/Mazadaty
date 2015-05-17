@@ -8,5 +8,8 @@ namespace Mzayad.Web.Core.Services
         string SiteName { get; }
         string CacheConnection { get; }
         decimal LocalShipping { get; }
+
+        string ProjectKey { get; }
+        string ProjectToken { get; }
     }
 }

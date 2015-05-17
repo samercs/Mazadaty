@@ -9,19 +9,24 @@ namespace Mzayad.Web.Core.Services
         public string SiteName { get; private set; }
         public string CacheConnection { get; private set; }
         public decimal LocalShipping { get; private set; }
+        public string ProjectKey { get; private set; }
+        public string ProjectToken { get; private set; }
 
         public AppSettings(NameValueCollection appSettings)
         {
+            SiteName = appSettings["SiteName"];
+            CacheConnection = appSettings["CacheConnection"];
+
+            ProjectKey = appSettings["OrangeJetpack.Services:Project.Key"];
+            ProjectToken = appSettings["OrangeJetpack.Services:Project.Token"];
+            
             EmailSettings = new EmailSettings
             {
-                ProjectKey = appSettings["OrangeJetpack.Services:Project.Key"],
-                ProjectToken = appSettings["OrangeJetpack.Services:Project.Token"],
+                ProjectKey = ProjectKey,
+                ProjectToken = ProjectToken,
                 SenderAddress = "noreply@mzayad.com",
                 SenderName = "Mzayad"
             };
-
-            SiteName = appSettings["SiteName"];
-            CacheConnection = appSettings["CacheConnection"];
 
             LocalShipping = decimal.Parse(appSettings["LocalShipping"]);
         }     
