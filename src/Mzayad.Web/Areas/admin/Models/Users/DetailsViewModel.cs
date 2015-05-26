@@ -30,6 +30,8 @@ namespace Mzayad.Web.Areas.admin.Models.Users
 
         public DateTime CreatedUtc { get; set; }
 
+        public DateTime? SubscriptionUtc { get; set; }
+
         public List<SelectListItem> Roles { get; set; }
 
         public async Task<DetailsViewModel> Hydrate(ApplicationUser user, IAuthService authService)
@@ -40,6 +42,7 @@ namespace Mzayad.Web.Areas.admin.Models.Users
             UserName = user.UserName;
             Email = user.Email;
             CreatedUtc = user.CreatedUtc;
+            SubscriptionUtc = user.SubscriptionUtc;
             
             var roles = (await authService.GetRolesForUser(user.Id));
 
