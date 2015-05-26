@@ -60,7 +60,7 @@
     </div>
     
     <div class="form-group">
-        @Html.Label("Subscription")
+        @Html.Label("Subscription") &nbsp;&nbsp;&nbsp;&nbsp; <small>@Html.ActionLink("Edit Subscription", "EditSubscription", "Users", new { id = Model.UserId }, null)</small>
         <p class="form-control-static">
             @GetSubscription()
         </p>

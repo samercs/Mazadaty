@@ -1,0 +1,72 @@
+﻿@using Mzayad.Web.Extensions
+@model Mzayad.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Edit Subscription";
+}
+
+@helper  GetSubscription()
+{
+    if (!Model.SubscriptionUtc.HasValue)
+    {
+        <div class="text-warning">Never Subscribed</div>
+    }
+    else
+    {
+        if (Model.SubscriptionUtc.Value > DateTime.Now)
+        {
+            <div>
+                <span class="text-success">ACTIVE </span> until @Model.SubscriptionUtc.Value.ToString("dd MMM yyyy HH:mm")
+            </div>
+        }
+        else
+        {
+            <div>
+                <span class="text-danger">EXPIRED </span> on @Model.SubscriptionUtc.Value.ToString("dd MMM yyyy HH:mm")
+            </div>
+        }
+    }
+
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <section>
+
+        <div class="form-group">
+            @Html.Label("Current Subscription")
+            <p class="form-control-static">
+                @GetSubscription()
+            </p>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(i => i.SubscriptionUtc, "New Subscription")
+            <div class="row">
+                <div class="col-md-3">
+                    @Html.EditorFor(i => i.SubscriptionUtc)
+                </div>
+                <div class="col-md-2">
+                    <a href="#"> < Add Days</a>
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBox("AddDay", "30", new { @class = "form-control", @type = "number", @style = "width: 150px;" })
+                </div>
+            </div>
+            @Html.ValidationMessageFor(i => i.SubscriptionUtc, "Please enter a subscription date.")
+        </div>
+
+    </section>
+
+    <section class="form-buttons">
+        <button type="submit" class="btn btn-default">Save</button>
+    </section>
+}
+
+@section scripts {
+    @Scripts.Render("~/js/validate")
+}
+
+

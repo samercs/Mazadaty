@@ -15,7 +15,7 @@ using OrangeJetpack.Base.Core.Formatting;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
-    [RoleAuthorize(Role.Administrator)]
+    [RouteArea("admin"), RoutePrefix("users"), RoleAuthorize(Role.Administrator)]
     public class UsersController : ApplicationController
     {
         public UsersController(IAppServices appServices) : base(appServices)
@@ -144,6 +144,13 @@ namespace Mzayad.Web.Areas.admin.Controllers
             {
                 await AuthService.AddUserToRole(userId, role);
             }
+        }
+
+        [Route("edit-subscription/{id}")]
+        public async Task<ActionResult> EditSubscription(string id)
+        {
+            var user = await AuthService.GetUserById(id);
+            return View(user);
         }
 	}
 }

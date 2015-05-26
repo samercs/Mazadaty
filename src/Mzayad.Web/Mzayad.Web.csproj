@@ -610,6 +610,7 @@
     <Content Include="Areas\Admin\Views\Subscriptions\_AddEdit.cshtml" />
     <Content Include="Areas\Admin\Views\WishLists\Index.cshtml" />
     <Content Include="Areas\Admin\Views\WishLists\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\EditSubscription.cshtml" />
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
