@@ -26,7 +26,8 @@ namespace Mzayad.Data
         IDbSet<OrderLog> OrderLogs { get; set; }
         IDbSet<Subscription> Subscriptions { get; set; }
         IDbSet<WishList> WishLists { get; set; }
-        IDbSet<KnetTransaction> KnetTransactions { get; set; } 
+        IDbSet<KnetTransaction> KnetTransactions { get; set; }
+        IDbSet<SubscriptionLog> SubscriptionLogs { get; set; } 
         
         int SaveChanges();
         Task<int> SaveChangesAsync();

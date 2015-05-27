@@ -1,4 +1,5 @@
 ﻿@using Humanizer
+@using Kendo.Mvc.UI
 @using Mzayad.Web.Extensions
 @using Mzayad.Web.Resources
 @using OrangeJetpack.Base.Core.Formatting
@@ -36,7 +37,7 @@
 <h2>Summary</h2>
 
 <section class="form-section">
-    
+
     <div class="form-group">
         @Html.Label("Name")
         <p class="form-control-static">
@@ -58,14 +59,14 @@
             <small>(<time datetime="@Model.CreatedUtc.ToString("s")">@DateTimeFormatter.ToLocalTime(Model.CreatedUtc, DateTimeFormatter.Format.Full)</time>)</small>
         </p>
     </div>
-    
+
     <div class="form-group">
         @Html.Label("Subscription") &nbsp;&nbsp;&nbsp;&nbsp; <small>@Html.ActionLink("Edit Subscription", "EditSubscription", "Users", new { id = Model.UserId }, null)</small>
         <p class="form-control-static">
             @GetSubscription()
         </p>
     </div>
-    
+
 </section>
 
 <h2>Edit User</h2>
@@ -114,6 +115,24 @@
         <button type="submit" class="btn btn-default">Save</button>
     </section>
 }
+
+
+<h2>Subscription Log</h2>
+
+@(Html.Kendo().Grid(Model.SubscriptionLogs)
+                    .Init(ajax => ajax.Action("GetSubscriptionLog", "Users", new { id = Model.UserId }))
+    .Columns(columns =>
+    {
+        columns.Bound(i => i.CreatedUtc).Format("{0:dd/MM/yyyy HH:mm}").Title("Date/Time");
+        columns.Bound(i => i.OriginalSubscriptionUtc).Format("{0:dd/MM/yyyy HH:mm}").Title("Original Subscription");
+        columns.Bound(i => i.ModifiedSubscriptionUtc).Format("{0:dd/MM/yyyy HH:mm}").Title("New Subscription");
+        columns.Bound(i => i.DaysAdded).ClientTemplate("<span class='fa fa-plus'></span> #= DaysAdded # days").Title("Change");
+        columns.Bound(i => i.ModifiedByUser).ClientTemplate(" #= ModifiedByUser.FirstName #  #= ModifiedByUser.LastName # ").Title("Changed By");
+
+    })
+        
+)
+
 
 @section scripts {
     @Scripts.Render("~/js/validate")

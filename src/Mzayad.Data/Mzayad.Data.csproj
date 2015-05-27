@@ -229,6 +229,10 @@
     <Compile Include="Migrations\201505262107430_AddUsersSubscriptionUtc.Designer.cs">
       <DependentUpon>201505262107430_AddUsersSubscriptionUtc.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505270838519_AddSubscriptionLog.cs" />
+    <Compile Include="Migrations\201505270838519_AddSubscriptionLog.Designer.cs">
+      <DependentUpon>201505270838519_AddSubscriptionLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -365,6 +369,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505262107430_AddUsersSubscriptionUtc.resx">
       <DependentUpon>201505262107430_AddUsersSubscriptionUtc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505270838519_AddSubscriptionLog.resx">
+      <DependentUpon>201505270838519_AddSubscriptionLog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -7,6 +7,8 @@ using Mzayad.Web.Core.Services;
 using System.Web.Mvc;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using Mzayad.Models;
+using Mzayad.Services;
 using Mzayad.Web.Areas.admin.Models.Users;
 using Mzayad.Web.Areas.Admin.Models.Users;
 using Mzayad.Web.Core.ActionResults;
@@ -19,8 +21,11 @@ namespace Mzayad.Web.Areas.admin.Controllers
     [RouteArea("admin"), RoutePrefix("users"), RoleAuthorize(Role.Administrator)]
     public class UsersController : ApplicationController
     {
+        private readonly SubscriptionLogService _subscriptionLogService;
+
         public UsersController(IAppServices appServices) : base(appServices)
         {
+            _subscriptionLogService=new SubscriptionLogService(DataContextFactory);
         }
 
         public async Task<ActionResult> Index(string search = "", Role? role = null)
@@ -86,7 +91,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return HttpNotFound();
             }
 
-            var model = await new DetailsViewModel().Hydrate(user, AuthService);
+            var model = await new DetailsViewModel().Hydrate(user, AuthService,_subscriptionLogService);
 
             return View(model);
         }
@@ -102,7 +107,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             if (!ModelState.IsValid)
             {
-                await model.Hydrate(user, AuthService);
+                await model.Hydrate(user, AuthService,_subscriptionLogService);
 
                 return View("Details", model);
             }
@@ -169,11 +174,36 @@ namespace Mzayad.Web.Areas.admin.Controllers
             {
                 return HttpNotFound();
             }
+
+            var oldSubscriptionValue = user.SubscriptionUtc;
+
             user.SubscriptionUtc = model.CurrentSubscription;
             await AuthService.UpdateUser(user);
+
+
+            var subscriptionLog = new SubscriptionLog()
+            {
+                UserId = user.Id,
+                ModifiedByUserId = AuthService.CurrentUserId(),
+                OriginalSubscriptionUtc = oldSubscriptionValue,
+                ModifiedSubscriptionUtc = model.CurrentSubscription,
+                UserHostAddress = AuthService.UserHostAddress()
+            };
+
+            await _subscriptionLogService.Save(subscriptionLog);
 
             SetStatusMessage("The user subscription has been updated successfully.");
             return RedirectToAction("Details", "Users",new {id=user.Id});
         }
+
+        [HttpPost]
+        public async Task<JsonResult> GetSubscriptionLog([DataSourceRequest] DataSourceRequest request,  string id)
+         {
+             var logs =await _subscriptionLogService.GetByUserId(id);
+             return Json(logs.ToDataSourceResult(request));
+         }
+
+       
+       
 	}
 }

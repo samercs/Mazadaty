@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Mzayad.Models;
+using Mzayad.Services;
 using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Base.Core.Formatting;
@@ -34,7 +35,9 @@ namespace Mzayad.Web.Areas.admin.Models.Users
 
         public List<SelectListItem> Roles { get; set; }
 
-        public async Task<DetailsViewModel> Hydrate(ApplicationUser user, IAuthService authService)
+        public IEnumerable<SubscriptionLog> SubscriptionLogs { get; set; } 
+
+        public async Task<DetailsViewModel> Hydrate(ApplicationUser user, IAuthService authService,SubscriptionLogService logService)
         {
             UserId = user.Id;
             FirstName = user.FirstName;
@@ -53,7 +56,9 @@ namespace Mzayad.Web.Areas.admin.Models.Users
                          Value = EnumFormatter.Description(role), 
                          Selected = roles.Contains(role.ToString())
                      }).ToList();
-            
+
+
+            SubscriptionLogs = await logService.GetByUserId(UserId);
             return this;
         }
     }
