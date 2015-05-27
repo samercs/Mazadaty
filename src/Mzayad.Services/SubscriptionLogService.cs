@@ -38,5 +38,17 @@ namespace Mzayad.Services
                         .ToListAsync();
             }
         }
+
+        public async Task<IEnumerable<SubscriptionLog>> GetAll()
+        {
+            using (var dc = DataContext())
+            {
+                return await
+                    dc.SubscriptionLogs.Include(i => i.User)
+                        .Include(i => i.ModifiedByUser)
+                        .OrderBy(i => i.CreatedUtc)
+                        .ToListAsync();
+            }
+        }
     }
 }
