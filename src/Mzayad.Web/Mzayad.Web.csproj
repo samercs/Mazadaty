@@ -295,6 +295,7 @@
     <Compile Include="Areas\Admin\Models\Sponsors\AddViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Subscription\AddViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Users\DetailsViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Users\EditSubscriptionViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Users\IndexViewModel.cs" />
     <Compile Include="Areas\Admin\Models\WishList\EditViewModel.cs" />
     <Compile Include="Areas\Admin\Models\WishList\IndexViewModel.cs" />

@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Mzayad.Web.Areas.admin.Models.Users;
+using Mzayad.Web.Areas.Admin.Models.Users;
 using Mzayad.Web.Core.ActionResults;
 using Mzayad.Web.Core.Attributes;
 using Mzayad.Web.Core.Identity;
@@ -150,7 +151,29 @@ namespace Mzayad.Web.Areas.admin.Controllers
         public async Task<ActionResult> EditSubscription(string id)
         {
             var user = await AuthService.GetUserById(id);
-            return View(user);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            var model=new EditSubscriptionViewModel().Hydrate(user);
+            return View(model);
+        }
+
+        [Route("edit-subscription/{id}")]
+        [HttpPost,ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditSubscription(EditSubscriptionViewModel model)
+        {
+
+            var user = await AuthService.GetUserById(model.User.Id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            user.SubscriptionUtc = model.CurrentSubscription;
+            await AuthService.UpdateUser(user);
+
+            SetStatusMessage("The user subscription has been updated successfully.");
+            return RedirectToAction("Details", "Users",new {id=user.Id});
         }
 	}
 }
