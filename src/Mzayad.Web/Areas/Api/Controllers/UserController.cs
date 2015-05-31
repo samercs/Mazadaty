@@ -250,21 +250,31 @@ namespace Mzayad.Web.Areas.Api.Controllers
             return PasswordUtilities.GenerateResetPasswordUrl(baseUrl, email);
         }
 
-        [System.Web.Http.Route("change-password")]
-        public async Task<IHttpActionResult> ChangePassword(ChangePasswordViewModel model)
+        [System.Web.Http.Route("action/password/{id}"),System.Web.Http.HttpPut]
+        public async Task<IHttpActionResult> ChangePassword(string id,ChangePasswordViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                string messages = string.Join("; ", ModelState.Values
+                                        .SelectMany(x => x.Errors)
+                                        .Select(x => x.ErrorMessage));
+                return BadRequest(messages);
             }
 
-            var result = await _authService.ChangePassword(User.Identity, model.CurrentPassword, model.NewPassword);
+            var user = await _authService.GetUserById(id);
+            if (user == null)
+            {
+                return BadRequest("user not found");
+            }
+            var result = await _authService.ChangePassword(user.Id, model.CurrentPassword, model.NewPassword);
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
             }
 
-            return Ok();
+            return Ok("password has been changed");
+
+            
         }
 
         private IHttpActionResult GetErrorResult(IdentityResult result)

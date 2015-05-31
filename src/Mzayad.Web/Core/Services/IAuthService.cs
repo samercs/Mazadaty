@@ -32,6 +32,7 @@ namespace Mzayad.Web.Core.Services
         Task<IdentityResult> UpdateUser(ApplicationUser user);
         
         Task<IdentityResult> ChangePassword(IIdentity identity, string oldPassword, string newPassword);
+        Task<IdentityResult> ChangePassword(string userId, string oldPassword, string newPassword);
         string HashPassword(string password);
 
         Task<IEnumerable<IdentityRole>> GetAllRoles();
