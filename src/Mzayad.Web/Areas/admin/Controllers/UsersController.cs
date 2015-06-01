@@ -7,7 +7,10 @@ using Mzayad.Web.Core.Services;
 using System.Web.Mvc;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using Mzayad.Models;
+using Mzayad.Services;
 using Mzayad.Web.Areas.admin.Models.Users;
+using Mzayad.Web.Areas.Admin.Models.Users;
 using Mzayad.Web.Core.ActionResults;
 using Mzayad.Web.Core.Attributes;
 using Mzayad.Web.Core.Identity;
@@ -15,11 +18,14 @@ using OrangeJetpack.Base.Core.Formatting;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
-    [RoleAuthorize(Role.Administrator)]
+    [RouteArea("admin"), RoutePrefix("users"), RoleAuthorize(Role.Administrator)]
     public class UsersController : ApplicationController
     {
+        private readonly SubscriptionLogService _subscriptionLogService;
+
         public UsersController(IAppServices appServices) : base(appServices)
         {
+            _subscriptionLogService=new SubscriptionLogService(DataContextFactory);
         }
 
         public async Task<ActionResult> Index(string search = "", Role? role = null)
@@ -85,7 +91,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return HttpNotFound();
             }
 
-            var model = await new DetailsViewModel().Hydrate(user, AuthService);
+            var model = await new DetailsViewModel().Hydrate(user, AuthService,_subscriptionLogService);
 
             return View(model);
         }
@@ -101,7 +107,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             if (!ModelState.IsValid)
             {
-                await model.Hydrate(user, AuthService);
+                await model.Hydrate(user, AuthService,_subscriptionLogService);
 
                 return View("Details", model);
             }
@@ -145,5 +151,56 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 await AuthService.AddUserToRole(userId, role);
             }
         }
+
+        [Route("edit-subscription/{id}")]
+        public async Task<ActionResult> EditSubscription(string id)
+        {
+            var user = await AuthService.GetUserById(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            var model=new EditSubscriptionViewModel().Hydrate(user);
+            return View(model);
+        }
+
+        [Route("edit-subscription/{id}")]
+        [HttpPost,ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditSubscription(EditSubscriptionViewModel model)
+        {
+            var user = await AuthService.GetUserById(model.User.Id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            var oldSubscriptionValue = user.SubscriptionUtc;
+            user.SubscriptionUtc = model.CurrentSubscription.AddHours(-3); // AST -> UTC
+            await AuthService.UpdateUser(user);
+
+            var subscriptionLog = new SubscriptionLog
+            {
+                UserId = user.Id,
+                ModifiedByUserId = AuthService.CurrentUserId(),
+                OriginalSubscriptionUtc = oldSubscriptionValue,
+                ModifiedSubscriptionUtc = model.CurrentSubscription,
+                UserHostAddress = AuthService.UserHostAddress()
+            };
+
+            await _subscriptionLogService.Save(subscriptionLog);
+
+            SetStatusMessage("The user subscription has been updated successfully.");
+            return RedirectToAction("Details", "Users",new {id=user.Id});
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> GetSubscriptionLog([DataSourceRequest] DataSourceRequest request,  string id)
+         {
+             var logs =await _subscriptionLogService.GetByUserId(id);
+             return Json(logs.ToDataSourceResult(request));
+         }
+
+       
+       
 	}
 }

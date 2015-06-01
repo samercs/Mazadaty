@@ -2,6 +2,7 @@
 @using Mzayad.Web.Extensions
 @using Mzayad.Web.Resources
 @using OrangeJetpack.Base.Core.Formatting
+@using DateTimeFormatter = Mzayad.Core.Formatting.DateTimeFormatter
 @model Mzayad.Web.Areas.admin.Models.Users.DetailsViewModel
 
 @{
@@ -11,7 +12,7 @@
 <h2>Summary</h2>
 
 <section class="form-section">
-    
+
     <div class="form-group">
         @Html.Label("Name")
         <p class="form-control-static">
@@ -33,7 +34,14 @@
             <small>(<time datetime="@Model.CreatedUtc.ToString("s")">@DateTimeFormatter.ToLocalTime(Model.CreatedUtc, DateTimeFormatter.Format.Full)</time>)</small>
         </p>
     </div>
-    
+
+    <div class="form-group">
+        @Html.Label("Subscription") <small>@Html.ActionLink("Edit Subscription", "EditSubscription", "Users", new { id = Model.UserId }, null)</small>
+        <p class="form-control-static">
+            @Html.DisplayFor(m => m.SubscriptionUtc, "SubscriptionUtc")
+        </p>
+    </div>
+
 </section>
 
 <h2>Edit User</h2>
@@ -83,6 +91,56 @@
     </section>
 }
 
-@section scripts {
-    @Scripts.Render("~/js/validate")
+
+@if (Model.SubscriptionLogs.Any())
+{
+    <h2>Subscription Log</h2>
+
+    <table class="@Html.Css().GridTable">
+        <thead>
+        <tr>
+            <th>Date/Time</th>
+            <th>Original Subscription</th>
+            <th>New Subscription</th>
+            <th>Change</th>
+            <th>Changed By</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var log in Model.SubscriptionLogs)
+        {
+            <tr>
+                <td>
+                    @DateTimeFormatter.ToLocalTime(log.CreatedUtc, DateTimeFormatter.Format.Full)
+                </td>
+                <td>
+                    @if (log.OriginalSubscriptionUtc.HasValue)
+                    {
+                        @DateTimeFormatter.ToLocalTime(log.OriginalSubscriptionUtc, DateTimeFormatter.Format.Full)
+                    }
+                </td>
+                <td>
+                    @DateTimeFormatter.ToLocalTime(log.ModifiedSubscriptionUtc, DateTimeFormatter.Format.Full)
+                </td>
+                <td>
+                    @if (log.DaysAdded > 0)
+                    {
+                        <span class="text-success">+ @("day".ToQuantity(log.DaysAdded))</span>
+                    }
+                    else if (log.DaysAdded < 0)
+                    {
+                        <span class="text-warning">- @("day".ToQuantity(log.DaysAdded))</span>
+                    }
+                    else
+                    {
+                        <span>0 days</span>
+                    }
+                </td>
+                <td>@NameFormatter.GetFullName(log.ModifiedByUser.FirstName, log.ModifiedByUser.LastName)</td>
+            </tr>
+        }
+        </tbody>
+    </table>
 }
+
+

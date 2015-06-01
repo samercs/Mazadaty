@@ -1,0 +1,22 @@
+﻿@using Mzayad.Core.Formatting
+@model DateTime?
+
+@if (!Model.HasValue)
+{
+    <span class="text-warning">Never Subscribed</span>
+}
+else
+{
+    if (Model.Value > DateTime.UtcNow)
+    {
+        <span>
+            <span class="text-success">ACTIVE </span> until @DateTimeFormatter.ToLocalTime(Model.Value, DateTimeFormatter.Format.Full)
+        </span>
+    }
+    else
+    {
+        <span>
+            <span class="text-danger">EXPIRED </span> on @DateTimeFormatter.ToLocalTime(Model, DateTimeFormatter.Format.Full)
+        </span>
+    }
+}

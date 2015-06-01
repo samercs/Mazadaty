@@ -1,0 +1,32 @@
+﻿@using Kendo.Mvc.UI
+@using Mzayad.Web.Extensions
+@model System.Collections.Generic.IEnumerable<Mzayad.Models.SubscriptionLog>
+
+@{
+    ViewBag.Title = "Subscription Logs";
+    
+}
+
+<h2>Subscription Log</h2>
+
+<ul class="link-list">
+    <li>
+        <a href="@Url.Action("ToExcel","Subscriptions",new {Area="Reports"})"><span class="fa fa-file-excel-o fa-pad-right"></span> Download Excel</a>
+    </li>
+</ul>
+
+@(Html.Kendo().Grid(Model)
+                        .Init(ajax => ajax.Action("GetSubscriptionLog", "Subscriptions"))
+    .Columns(columns =>
+    {
+        
+        columns.Bound(i => i.CreatedUtc).Format("{0:dd/MM/yyyy HH:mm}").Title("Date/Time");
+        columns.Bound(i => i.User).ClientTemplate(" <a href='/admin/users/details/#= User.Id #'> #= User.FirstName #  #= User.LastName # </a>").Title("User");
+        columns.Bound(i => i.OriginalSubscriptionUtc).Format("{0:dd/MM/yyyy HH:mm}").Title("Original Subscription");
+        columns.Bound(i => i.ModifiedSubscriptionUtc).Format("{0:dd/MM/yyyy HH:mm}").Title("New Subscription");
+        columns.Bound(i => i.DaysAdded).ClientTemplate("<span class='fa fa-plus'></span> #= DaysAdded # days").Title("Change");
+        columns.Bound(i => i.ModifiedByUser).ClientTemplate(" #= ModifiedByUser.FirstName #  #= ModifiedByUser.LastName # ").Title("Changed By");
+
+    })
+
+)

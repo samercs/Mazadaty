@@ -25,6 +25,8 @@ namespace Mzayad.Models
 
         public int? AddressId { get; set; }
 
+        public DateTime? SubscriptionUtc { get; set; }
+
         public virtual Address Address { get; set; }
 
         public virtual IEnumerable<CategoryNotification> Notifications { get; set; }

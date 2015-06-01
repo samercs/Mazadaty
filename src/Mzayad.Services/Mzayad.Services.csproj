@@ -82,6 +82,7 @@
     <Compile Include="SpecificationService.cs" />
     <Compile Include="SplashAdService.cs" />
     <Compile Include="SponsorService.cs" />
+    <Compile Include="SubscriptionLogService.cs" />
     <Compile Include="SubscriptionService.cs" />
     <Compile Include="UserProfileService.cs" />
     <Compile Include="WishListService.cs" />

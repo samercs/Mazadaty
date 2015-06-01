@@ -93,7 +93,7 @@ namespace Mzayad.Web.Controllers
                 Message = string.Format(emailTeamplet.Localize(Language, i => i.Message).Message, user.FirstName)
             };
 
-            await MessageService.Send(email.WithTemplate(this));
+            await MessageService.Send(email.WithTemplate());
         }
 
         [Route("edit-account")]
