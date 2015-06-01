@@ -36,7 +36,7 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                var sortOrder = 0.0;
+                var sortOrder = 0d;
                 var allSplashAds = await dc.SplashAds.OrderBy(i => i.SortOrder).ToListAsync();
 
                 if (allSplashAds.Any())
@@ -45,6 +45,7 @@ namespace Mzayad.Services
                 }
 
                 splashAd.SortOrder = sortOrder;
+                splashAd.Weight = 1;
 
                 dc.SplashAds.Add(splashAd);
                 await dc.SaveChangesAsync();
