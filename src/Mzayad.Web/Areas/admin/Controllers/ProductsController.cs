@@ -287,9 +287,8 @@ namespace Mzayad.Web.Areas.admin.Controllers
                     url = imageMdUrl.AbsoluteUri
                 });
             }
-            catch (Exception ex)
-            {
-                
+            catch (Exception)
+            {    
                 return JsonError("Could not upload image.");
             }
         }
@@ -315,7 +314,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
                 return Json(HttpStatusCode.OK);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return JsonError("Could not delete image.");
             }
@@ -326,6 +325,5 @@ namespace Mzayad.Web.Areas.admin.Controllers
             await _productService.UpdateProductImageOrder(imageId, newIndex);
             return Content("Done");
         }
-
 	}
 }
