@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using Mzayad.Services;
 using Mzayad.Web.Areas.Admin.Models.SplashAds;
@@ -71,6 +72,17 @@ namespace Mzayad.Web.Areas.admin.Controllers
             });
 
             SetStatusMessage("Splash ad successfully uploaded.");
+
+            return RedirectToAction("Index");
+        }
+
+        [Route("save")]
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> Save(IEnumerable<SplashAd> splashAds)
+        {
+            await _splashAdService.UpdateWeights(splashAds);
+            
+            SetStatusMessage("Splash ads successfully saved.");
 
             return RedirectToAction("Index");
         }

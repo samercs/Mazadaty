@@ -8,14 +8,29 @@
     <li>@Html.ActionLink("Upload Splash Ad", "Upload")</li>
 </ul>
 
-@for (var i = 0; i < Model.SplashAds.Count(); i = i + 4)
+@using (Html.BeginForm("Save", "SplashAds", FormMethod.Post, new { @class = "form-inline" }))
 {
-    <div class="row">
-        @foreach (var item in Model.SplashAds.Skip(i).Take(4))
-        {
-            <div class="col-sm-3">
+    @Html.AntiForgeryToken()
 
-            </div>
-        }
-    </div>
+    for (var i = 0; i < Model.SplashAds.Count(); i = i + 3)
+    {
+        <div class="row">
+            @foreach (var item in Model.SplashAds.Skip(i).Take(3))
+            {
+                <div class="col-sm-4">
+                    <img class="img-responsive" src="@item.Url" alt="" style="margin-bottom: 8px;" />
+                    <div class="form-group">
+                        <label>Weight</label>
+                        <input type="hidden" name="splashAds.Index" value="@item.SplashAdId" />
+                        <input type="hidden" name="splashAds[@item.SplashAdId].SplashAdId" value="@item.SplashAdId" />
+                        <input type="number" name="splashAds[@item.SplashAdId].Weight" value="@item.Weight" class="form-control form-control-sm" min="1" />
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    <section class="form-buttons">
+        <button type="submit" class="btn btn-default">Save</button>
+    </section>
 }

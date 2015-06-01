@@ -73,5 +73,23 @@ namespace Mzayad.Services
                 await dc.SaveChangesAsync();
             }
         }
+
+        public async Task UpdateWeights(IEnumerable<SplashAd> splashAds)
+        {
+            using (var dc = DataContext())
+            {
+                foreach (var splashAd in splashAds)
+                {
+                    var tmp = await dc.SplashAds.SingleOrDefaultAsync(i => i.SplashAdId == splashAd.SplashAdId);
+                    if (tmp != null)
+                    {
+                        tmp.Weight = splashAd.Weight;
+                    }
+                }
+
+                await dc.SaveChangesAsync();
+            }
+        }
+
     }
 }
