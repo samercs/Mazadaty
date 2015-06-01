@@ -15,6 +15,7 @@ using System.Web.Mvc;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Services.Client.Storage;
 using Mzayad.Core.Extensions;
+using Mzayad.Core.Formatting;
 using Mzayad.Models;
 
 namespace Mzayad.Web.Areas.admin.Controllers
@@ -65,11 +66,9 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return RedirectToAction("Index");
             }
 
-            var url = urls.Single().WithHost(AppSettings.AzureCdnUrlHost);
-
             await _splashAdService.Add(new SplashAd
             {
-                Url = url.ToString()
+                Url = UrlFormatter.GetCdnUrl(urls.Single())
             });
 
             SetStatusMessage("Splash ad successfully uploaded.");
