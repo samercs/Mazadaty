@@ -271,7 +271,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Areas\Admin\adminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AuctionsController.cs" />
     <Compile Include="Areas\Admin\Controllers\AvatarsController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
@@ -280,6 +280,7 @@
     <Compile Include="Areas\Admin\Controllers\ReportsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SpecificationsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SplashAdsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SponsorsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubscriptionsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
@@ -292,6 +293,7 @@
     <Compile Include="Areas\Admin\Models\Products\EditViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Products\IndexViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Specification\AddViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\SplashAds\IndexViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Sponsors\AddViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Subscription\AddViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Users\DetailsViewModel.cs" />
@@ -610,6 +612,8 @@
     <Content Include="Areas\Admin\Views\Subscriptions\_AddEdit.cshtml" />
     <Content Include="Areas\Admin\Views\WishLists\Index.cshtml" />
     <Content Include="Areas\Admin\Views\WishLists\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\SplashAds\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SplashAds\Upload.cshtml" />
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />

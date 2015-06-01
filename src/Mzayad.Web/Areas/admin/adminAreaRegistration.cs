@@ -8,7 +8,7 @@ namespace Mzayad.Web.Areas.admin
         {
             get 
             {
-                return "Admin";
+                return "admin";
             }
         }
 

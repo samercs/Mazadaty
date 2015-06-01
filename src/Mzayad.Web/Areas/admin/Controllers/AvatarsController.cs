@@ -6,6 +6,7 @@ using Mzayad.Web.Core.Services;
 using OrangeJetpack.Services.Client.Storage;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -68,6 +69,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return HttpNotFound();
             }
 
+            await StorageService.DeleteFile("avatars", Path.GetFileName(avatar.Url));
             await _avatarService.Delete(avatar);
 
             SetStatusMessage("Avatar successfully deleted.");

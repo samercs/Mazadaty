@@ -225,6 +225,10 @@
     <Compile Include="Migrations\201505151644158_SetSubscriptionExpirationUtcNullable.Designer.cs">
       <DependentUpon>201505151644158_SetSubscriptionExpirationUtcNullable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505152020432_AddSplashAds.cs" />
+    <Compile Include="Migrations\201505152020432_AddSplashAds.Designer.cs">
+      <DependentUpon>201505152020432_AddSplashAds.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -358,6 +362,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505151644158_SetSubscriptionExpirationUtcNullable.resx">
       <DependentUpon>201505151644158_SetSubscriptionExpirationUtcNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505152020432_AddSplashAds.resx">
+      <DependentUpon>201505152020432_AddSplashAds.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

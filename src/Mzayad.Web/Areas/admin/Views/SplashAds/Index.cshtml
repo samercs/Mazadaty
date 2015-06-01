@@ -1,0 +1,41 @@
+﻿@model Mzayad.Web.Areas.Admin.Models.SplashAds.IndexViewModel
+
+@{
+    ViewBag.Title = "Splash Ads";
+}
+
+<p>Splash ads appear when users launch the native mobile Mzayad apps. The frequency that each ad appears is based on its weight relative to the sum of all ad weights. To increase the frequency that an ad appears you would increase its weight.</p>
+
+<ul class="link-list">
+    <li>@Html.ActionLink("Upload Splash Ad", "Upload")</li>
+</ul>
+
+@using (Html.BeginForm("Save", "SplashAds", FormMethod.Post, new { @class = "form-inline" }))
+{
+    @Html.AntiForgeryToken()
+
+    for (var i = 0; i < Model.SplashAds.Count(); i = i + 3)
+    {
+        <div class="row">
+            @foreach (var item in Model.SplashAds.Skip(i).Take(3))
+            {
+                <div class="col-sm-4">
+                    <img class="img-responsive" src="@item.Url" alt="" style="margin-bottom: 8px;"/>
+                    <div class="pull-right">
+                        <a href="@Url.Action("Delete", new { splashAdId = item.SplashAdId })"><small>Delete</small></a>
+                    </div>
+                    <div class="form-group">
+                        <label>Weight</label>
+                        <input type="hidden" name="splashAds.Index" value="@item.SplashAdId" />
+                        <input type="hidden" name="splashAds[@item.SplashAdId].SplashAdId" value="@item.SplashAdId" />
+                        <input type="number" name="splashAds[@item.SplashAdId].Weight" value="@item.Weight" class="form-control form-control-sm" min="0" />
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    <section class="form-buttons">
+        <button type="submit" class="btn btn-default">Save</button>
+    </section>
+}
