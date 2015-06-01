@@ -18,12 +18,15 @@
             @foreach (var item in Model.SplashAds.Skip(i).Take(3))
             {
                 <div class="col-sm-4">
-                    <img class="img-responsive" src="@item.Url" alt="" style="margin-bottom: 8px;" />
+                    <img class="img-responsive" src="@item.Url" alt="" style="margin-bottom: 8px;"/>
+                    <div class="pull-right">
+                        <a href="@Url.Action("Delete", new { splashAdId = item.SplashAdId })"><small>Delete</small></a>
+                    </div>
                     <div class="form-group">
                         <label>Weight</label>
                         <input type="hidden" name="splashAds.Index" value="@item.SplashAdId" />
                         <input type="hidden" name="splashAds[@item.SplashAdId].SplashAdId" value="@item.SplashAdId" />
-                        <input type="number" name="splashAds[@item.SplashAdId].Weight" value="@item.Weight" class="form-control form-control-sm" min="1" />
+                        <input type="number" name="splashAds[@item.SplashAdId].Weight" value="@item.Weight" class="form-control form-control-sm" min="0" />
                     </div>
                 </div>
             }

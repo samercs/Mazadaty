@@ -24,11 +24,11 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<SplashAd> GetById(int id)
+        public async Task<SplashAd> GetById(int splashAdId)
         {
             using (var dc = DataContext())
             {
-                return await dc.SplashAds.SingleOrDefaultAsync(i => i.SplashAdId == id);
+                return await dc.SplashAds.SingleOrDefaultAsync(i => i.SplashAdId == splashAdId);
             }
         }
 

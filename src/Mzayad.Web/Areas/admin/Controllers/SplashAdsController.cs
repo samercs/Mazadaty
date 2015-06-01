@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using Mzayad.Services;
 using Mzayad.Web.Areas.Admin.Models.SplashAds;
 using Mzayad.Web.Controllers;
@@ -83,6 +84,30 @@ namespace Mzayad.Web.Areas.admin.Controllers
             await _splashAdService.UpdateWeights(splashAds);
             
             SetStatusMessage("Splash ads successfully saved.");
+
+            return RedirectToAction("Index");
+        }
+
+        [Route("delete/{splashAdId:int}")]
+        public ActionResult Delete()
+        {
+            return DeleteConfirmation("Delete Splash Ad", "Are you sure you want to permanently delete this splash ad?");
+        }
+
+        [Route("delete/{splashAdId:int}")]
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(int splashAdId)
+        {
+            var splashAd = await _splashAdService.GetById(splashAdId);
+            if (splashAd == null)
+            {
+                return HttpNotFound();
+            }
+
+            await StorageService.DeleteFile("splash-ads", Path.GetFileName(splashAd.Url));
+            await _splashAdService.Delete(splashAd);
+
+            SetStatusMessage("Splash ads successfully deleted.");
 
             return RedirectToAction("Index");
         }
