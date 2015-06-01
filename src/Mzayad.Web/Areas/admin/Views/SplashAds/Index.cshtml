@@ -4,13 +4,17 @@
     ViewBag.Title = "Splash Ads";
 }
 
+<ul class="link-list">
+    <li>@Html.ActionLink("Upload Splash Ad", "Upload")</li>
+</ul>
+
 @for (var i = 0; i < Model.SplashAds.Count(); i = i + 4)
 {
     <div class="row">
         @foreach (var item in Model.SplashAds.Skip(i).Take(4))
         {
             <div class="col-sm-3">
-                
+
             </div>
         }
     </div>

@@ -613,6 +613,7 @@
     <Content Include="Areas\Admin\Views\WishLists\Index.cshtml" />
     <Content Include="Areas\Admin\Views\WishLists\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\SplashAds\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SplashAds\Upload.cshtml" />
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
@@ -723,7 +724,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Views\AdminBase\" />
     <Folder Include="Areas\Api\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>

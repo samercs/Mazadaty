@@ -6,6 +6,7 @@ using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Mzayad.Web.Areas.admin.Controllers
@@ -30,6 +31,21 @@ namespace Mzayad.Web.Areas.admin.Controllers
             };
 
             return View(viewModel);
+        }
+
+        [Route("upload")]
+        public ActionResult Upload()
+        {
+            return View();
+        }
+
+        [Route("upload")]
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Upload(HttpPostedFileBase file)
+        {
+            SetStatusMessage("Splash ad successfully uploaded.");
+
+            return RedirectToAction("Index");
         }
     }
 }
