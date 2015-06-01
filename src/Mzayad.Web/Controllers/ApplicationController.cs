@@ -11,6 +11,7 @@ using System.Threading;
 using System.Web.Mvc;
 using Mzayad.Web.Core.ActionResults;
 using OrangeJetpack.Base.Core.Extensions;
+using OrangeJetpack.Services.Client.Storage;
 
 namespace Mzayad.Web.Controllers
 {
@@ -26,6 +27,7 @@ namespace Mzayad.Web.Controllers
         protected readonly IGeolocationService GeolocationService;
         protected readonly ICacheService CacheService;
         protected readonly IRequestService RequestService;
+        protected readonly IStorageService StorageService;
         protected readonly EmailTemplateService EmailTemplateService;
         
         protected ApplicationController(IAppServices appServices)
@@ -38,6 +40,7 @@ namespace Mzayad.Web.Controllers
             GeolocationService = appServices.GeolocationService;
             CacheService = appServices.CacheService;
             RequestService = appServices.RequestService;
+            StorageService = appServices.StorageService;
             
             EmailTemplateService=new EmailTemplateService(appServices.DataContextFactory);
         }

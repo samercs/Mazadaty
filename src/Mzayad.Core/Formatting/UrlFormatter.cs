@@ -14,10 +14,11 @@ namespace Mzayad.Core.Formatting
             var uriBuilder = new UriBuilder(uri)
             {
                 Host = CdnHost, 
-                Scheme = "https"
+                Scheme = "https",
+                Port = -1
             };
 
-            return uriBuilder.ToString().Replace(":443", "");
+            return uriBuilder.ToString();
         }
     }
 }

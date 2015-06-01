@@ -1,5 +1,6 @@
 ﻿using Mzayad.Data;
 using OrangeJetpack.Services.Client.Messaging;
+using OrangeJetpack.Services.Client.Storage;
 
 namespace Mzayad.Web.Core.Services
 {
@@ -13,5 +14,6 @@ namespace Mzayad.Web.Core.Services
         IGeolocationService GeolocationService { get; }
         ICacheService CacheService { get; }
         IRequestService RequestService { get; }
+        IStorageService StorageService { get; }
     }
 }

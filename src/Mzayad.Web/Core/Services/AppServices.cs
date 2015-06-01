@@ -1,5 +1,6 @@
 ﻿using Mzayad.Data;
 using OrangeJetpack.Services.Client.Messaging;
+using OrangeJetpack.Services.Client.Storage;
 
 namespace Mzayad.Web.Core.Services
 {
@@ -13,6 +14,7 @@ namespace Mzayad.Web.Core.Services
         public IGeolocationService GeolocationService { get; private set; }
         public ICacheService CacheService { get; private set; }
         public IRequestService RequestService { get; private set; }
+        public IStorageService StorageService { get; private set; }
 
         public AppServices(
             IDataContextFactory dataContextFactory,
@@ -22,7 +24,8 @@ namespace Mzayad.Web.Core.Services
             IMessageService messageService,
             IGeolocationService geolocationService,
             ICacheService caceService,
-            IRequestService requestService)
+            IRequestService requestService,
+            IStorageService storageService)
         {
             DataContextFactory = dataContextFactory;
             AppSettings = appSettings;
@@ -32,6 +35,7 @@ namespace Mzayad.Web.Core.Services
             GeolocationService = geolocationService;
             CacheService = caceService;
             RequestService = requestService;
+            StorageService = storageService;
         }
     }
 }

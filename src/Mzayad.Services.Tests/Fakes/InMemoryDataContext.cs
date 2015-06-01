@@ -28,6 +28,7 @@ namespace Mzayad.Services.Tests.Fakes
         public IDbSet<WishList> WishLists { get; set; }
         public IDbSet<KnetTransaction> KnetTransactions { get; set; }
         public IDbSet<SubscriptionLog> SubscriptionLogs { get; set; } 
+        public IDbSet<SplashAd> SplashAds { get; set; } 
 
         public InMemoryDataContext()
         {

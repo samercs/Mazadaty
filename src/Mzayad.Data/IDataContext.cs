@@ -28,6 +28,7 @@ namespace Mzayad.Data
         IDbSet<WishList> WishLists { get; set; }
         IDbSet<KnetTransaction> KnetTransactions { get; set; }
         IDbSet<SubscriptionLog> SubscriptionLogs { get; set; } 
+        IDbSet<SplashAd> SplashAds { get; set; } 
         
         int SaveChanges();
         Task<int> SaveChangesAsync();

@@ -8,7 +8,7 @@ namespace Mzayad.Web.Core.Services
         string SiteName { get; }
         string CacheConnection { get; }
         decimal LocalShipping { get; }
-
+        string AzureCdnUrlHost { get; }
         string ProjectKey { get; }
         string ProjectToken { get; }
     }
