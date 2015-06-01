@@ -1,32 +1,7 @@
-﻿@using Mzayad.Web.Extensions
-@model Mzayad.Web.Areas.Admin.Models.Users.EditSubscriptionViewModel
+﻿@model Mzayad.Web.Areas.Admin.Models.Users.EditSubscriptionViewModel
 
 @{
     ViewBag.Title = "Edit Subscription";
-}
-
-@helper  GetSubscription()
-{
-    if (!Model.User.SubscriptionUtc.HasValue)
-    {
-        <div class="text-warning">Never Subscribed</div>
-    }
-    else
-    {
-        if (Model.User.SubscriptionUtc.Value > DateTime.Now)
-        {
-            <div>
-                <span class="text-success">ACTIVE </span> until @Model.User.SubscriptionUtc.Value.ToString("dd MMM yyyy HH:mm")
-            </div>
-        }
-        else
-        {
-            <div>
-                <span class="text-danger">EXPIRED </span> on @Model.User.SubscriptionUtc.Value.ToString("dd MMM yyyy HH:mm")
-            </div>
-        }
-    }
-
 }
 
 @using (Html.BeginForm())
@@ -38,21 +13,23 @@
         <div class="form-group">
             @Html.Label("Current Subscription")
             <p class="form-control-static">
-                @GetSubscription()
+                @Html.DisplayFor(m => m.User.SubscriptionUtc, "SubscriptionUtc")
             </p>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(i => i.CurrentSubscription, "New Subscription")
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     @Html.EditorFor(i => i.CurrentSubscription)
                 </div>
-                <div class="col-md-2 text-right" style="padding-top: 5px;">
-                    <a href="#" id="btnAddDays"> <span class="fa fa-chevron-left"></span>&nbsp;&nbsp; Add Days</a>
-                </div>
-                <div class="col-md-2">
-                    @Html.TextBoxFor(i=>i.AddDays,new {@class="form-control" , @type="number"})
+                <div class="col-md-8 form-inline">
+
+                    <button type="button" id="btnAddDays" class="btn btn-link"><i class="fa fa-chevron-left fa-pad-right"></i>Add</button>
+                    <div class="input-group">
+                        @Html.TextBoxFor(i => i.AddDays, new { @class = "form-control form-control-sm", @type = "number" })
+                        <div class="input-group-addon">days</div>
+                    </div>
                 </div>
             </div>
             @Html.ValidationMessageFor(i => i.CurrentSubscription, "Please enter a subscription date.")

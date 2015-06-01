@@ -729,6 +729,7 @@
     <Content Include="Views\Shared\OrderItemsTable.cshtml" />
     <Content Include="Views\Knet\Test.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTimePicker.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SubscriptionUtc.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
