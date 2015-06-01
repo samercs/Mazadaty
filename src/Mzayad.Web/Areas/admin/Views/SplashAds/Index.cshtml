@@ -1,0 +1,17 @@
+﻿@model Mzayad.Web.Areas.Admin.Models.SplashAds.IndexViewModel
+
+@{
+    ViewBag.Title = "Splash Ads";
+}
+
+@for (var i = 0; i < Model.SplashAds.Count(); i = i + 4)
+{
+    <div class="row">
+        @foreach (var item in Model.SplashAds.Skip(i).Take(4))
+        {
+            <div class="col-sm-3">
+                
+            </div>
+        }
+    </div>
+}
