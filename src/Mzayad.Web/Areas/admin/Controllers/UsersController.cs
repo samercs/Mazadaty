@@ -168,7 +168,6 @@ namespace Mzayad.Web.Areas.admin.Controllers
         [HttpPost,ValidateAntiForgeryToken]
         public async Task<ActionResult> EditSubscription(EditSubscriptionViewModel model)
         {
-
             var user = await AuthService.GetUserById(model.User.Id);
             if (user == null)
             {
@@ -176,12 +175,10 @@ namespace Mzayad.Web.Areas.admin.Controllers
             }
 
             var oldSubscriptionValue = user.SubscriptionUtc;
-
-            user.SubscriptionUtc = model.CurrentSubscription;
+            user.SubscriptionUtc = model.CurrentSubscription.AddHours(-3); // AST -> UTC
             await AuthService.UpdateUser(user);
 
-
-            var subscriptionLog = new SubscriptionLog()
+            var subscriptionLog = new SubscriptionLog
             {
                 UserId = user.Id,
                 ModifiedByUserId = AuthService.CurrentUserId(),

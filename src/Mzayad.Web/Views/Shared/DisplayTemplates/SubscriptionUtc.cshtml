@@ -10,13 +10,13 @@ else
     if (Model.Value > DateTime.UtcNow)
     {
         <span>
-            <span class="text-success">ACTIVE </span> until @DateTimeFormatter.ToLocalTime(Model.Value)
+            <span class="text-success">ACTIVE </span> until @DateTimeFormatter.ToLocalTime(Model.Value, DateTimeFormatter.Format.Full)
         </span>
     }
     else
     {
         <span>
-            <span class="text-danger">EXPIRED </span> on @DateTimeFormatter.ToLocalTime(Model)
+            <span class="text-danger">EXPIRED </span> on @DateTimeFormatter.ToLocalTime(Model, DateTimeFormatter.Format.Full)
         </span>
     }
 }

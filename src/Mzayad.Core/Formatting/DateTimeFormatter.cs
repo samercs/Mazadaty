@@ -27,7 +27,7 @@ namespace Mzayad.Core.Formatting
                 case Format.Sortable:
                     return string.Format("{0:yyyy-MM-dd HH:mm} {1}", localTime, "AST");
                 case Format.Full:
-                    return string.Format("{0:dd MMM yyyy hh:mm tt}", localTime);
+                    return string.Format("{0:dd MMM yyyy HH:mm}", localTime);
                 default:
                     throw new NotImplementedException();
             }

@@ -2,6 +2,7 @@
 @using Mzayad.Web.Extensions
 @using Mzayad.Web.Resources
 @using OrangeJetpack.Base.Core.Formatting
+@using DateTimeFormatter = Mzayad.Core.Formatting.DateTimeFormatter
 @model Mzayad.Web.Areas.admin.Models.Users.DetailsViewModel
 
 @{
@@ -121,7 +122,20 @@
                 <td>
                     @DateTimeFormatter.ToLocalTime(log.ModifiedSubscriptionUtc, DateTimeFormatter.Format.Full)
                 </td>
-                <td><span class='fa fa-plus'></span> @log.DaysAdded days</td>
+                <td>
+                    @if (log.DaysAdded > 0)
+                    {
+                        <span class="text-success">+ @("day".ToQuantity(log.DaysAdded))</span>
+                    }
+                    else if (log.DaysAdded < 0)
+                    {
+                        <span class="text-warning">- @("day".ToQuantity(log.DaysAdded))</span>
+                    }
+                    else
+                    {
+                        <span>0 days</span>
+                    }
+                </td>
                 <td>@NameFormatter.GetFullName(log.ModifiedByUser.FirstName, log.ModifiedByUser.LastName)</td>
             </tr>
         }
