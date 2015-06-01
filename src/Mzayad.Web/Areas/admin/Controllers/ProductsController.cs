@@ -23,7 +23,7 @@ using System.Web.Mvc;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
-    [RouteArea("Admin"), RoutePrefix("products"), RoleAuthorize(Role.Administrator)]
+    [RouteArea("admin"), RoutePrefix("products"), RoleAuthorize(Role.Administrator)]
     public class ProductsController : ApplicationController
     {
         private readonly ProductService _productService;
@@ -32,7 +32,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         private readonly SpecificationService _specificationService;
         private readonly SponsorService _sponsorService;
 
-        public ProductsController(IAppServices appServices,IStorageService storageService) : base(appServices)
+        public ProductsController(IAppServices appServices, IStorageService storageService) : base(appServices)
         {
             _productService=new ProductService(appServices.DataContextFactory);
             _categoryService=new CategoryService(appServices.DataContextFactory);

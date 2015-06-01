@@ -1,9 +1,10 @@
-﻿using Mzayad.Models;
-using Mzayad.Services;
+﻿using Mzayad.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using System.Web;
+using Mzayad.Models;
 
 namespace Mzayad.Web.Areas.admin.Models.WishList
 {
@@ -21,9 +22,12 @@ namespace Mzayad.Web.Areas.admin.Models.WishList
             EndDate = endDate ?? DateTime.Today;
             WishLists =(await wishListService.GetGroupBy(startDate,endDate));
 
+            foreach (var wishlist in WishLists)
+            {
+                wishlist.NameUrlEscaped = HttpUtility.UrlEncode(wishlist.Name);
+            }
+
             return this;
         }
     }
-
-    
 }

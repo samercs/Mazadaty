@@ -201,6 +201,11 @@ namespace Mzayad.Web.Core.Services
             return await _userManager.ChangePasswordAsync(identity.GetUserId(), oldPassword, newPassword);
         }
 
+        public async Task<IdentityResult> ChangePassword(string userId, string oldPassword, string newPassword)
+        {
+            return await _userManager.ChangePasswordAsync(userId, oldPassword, newPassword);
+        }
+
         public string HashPassword(string password)
         {
             return _userManager.PasswordHasher.HashPassword(password);
