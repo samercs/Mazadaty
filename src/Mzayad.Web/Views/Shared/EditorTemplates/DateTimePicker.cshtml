@@ -16,25 +16,25 @@
 }
 
 <div class="datetime-picker">
-    <input type="hidden" class="datetime-value" name="@Html.NameForModel()" value="@dateTime" />
+    <input id="@Html.IdForModel()" name="@Html.NameForModel()" type="hidden" class="datetime-value" value="@dateTime" />
     <div class="input-group">
         <span class="input-group-addon">
             <i class="fa fa-fw fa-calendar"></i>
         </span>
-        <input type="text" class="form-control date-picker" value="@date" />
+        <input id="@Html.IdForModel()_Date" type="text" class="form-control date-picker" value="@date" />
     </div>
     <div class="input-group">
         <span class="input-group-addon">
             <i class="fa fa-fw fa-clock-o"></i>
         </span>
-        <select class="hour-picker form-control" style="width: auto;">
+        <select id="@Html.IdForModel()_Hour" class="hour-picker form-control" style="width: auto;">
             <option value=""></option>
             @for (var i = 0; i < 24; i++)
             {
-                <option value="@i" selected="@(i == hour)">@i</option>
+                <option value="@i" selected="@(i == hour)">@i.ToString("00")</option>
             }
         </select>
-        <select class="minute-picker form-control" style="width: auto;">
+        <select id="@Html.IdForModel()_Minute" class="minute-picker form-control" style="width: auto;">
             <option value=""></option>
             @for (var i = 0; i < 60; i += 15)
             {

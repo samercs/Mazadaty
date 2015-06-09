@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Mzayad.Models;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mzayad.Models;
 
 namespace Mzayad.Web.Areas.Admin.Models.Users
 {
@@ -18,7 +14,6 @@ namespace Mzayad.Web.Areas.Admin.Models.Users
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime CurrentSubscription { get; set; }
 
-
         public EditSubscriptionViewModel Hydrate(ApplicationUser user)
         {
             User = user;
@@ -30,15 +25,15 @@ namespace Mzayad.Web.Areas.Admin.Models.Users
                 }
                 else
                 {
-                    CurrentSubscription = user.SubscriptionUtc.Value;
+                    CurrentSubscription = user.SubscriptionUtc.Value.AddHours(3); // UTC -> AST
                 }
             }
             else
             {
-                CurrentSubscription=DateTime.Today;
+                CurrentSubscription = DateTime.Today;
             }
             AddDays = 30;
-            
+
             return this;
         }
     }

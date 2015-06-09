@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mzayad.Models
 {
     public class SubscriptionLog : ModelBase
     {
-        [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SubscriptionLogId { get; set; }
-        [Required,StringLength(128)]
+        
+        [Required, StringLength(128)]
         public string UserId { get; set; }
         [Required, StringLength(128)]
         public string ModifiedByUserId { get; set; }
@@ -35,7 +31,7 @@ namespace Mzayad.Models
             {
                 if (!OriginalSubscriptionUtc.HasValue)
                 {
-                    OriginalSubscriptionUtc=DateTime.Today;
+                    OriginalSubscriptionUtc = DateTime.Today;
                 }
 
                 return ModifiedSubscriptionUtc.Subtract(OriginalSubscriptionUtc.Value).Days;

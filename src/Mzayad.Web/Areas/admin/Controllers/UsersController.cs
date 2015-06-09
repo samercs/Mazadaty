@@ -23,9 +23,10 @@ namespace Mzayad.Web.Areas.admin.Controllers
     {
         private readonly SubscriptionLogService _subscriptionLogService;
 
-        public UsersController(IAppServices appServices) : base(appServices)
+        public UsersController(IAppServices appServices)
+            : base(appServices)
         {
-            _subscriptionLogService=new SubscriptionLogService(DataContextFactory);
+            _subscriptionLogService = new SubscriptionLogService(DataContextFactory);
         }
 
         public async Task<ActionResult> Index(string search = "", Role? role = null)
@@ -43,13 +44,13 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
         private static SelectList GetRoleList()
         {
-            var roles = from Role r in Enum.GetValues(typeof (Role))
-                select new
-                {
-                    Id = r, 
-                    Name = EnumFormatter.Description(r)
-                };
-            
+            var roles = from Role r in Enum.GetValues(typeof(Role))
+                        select new
+                        {
+                            Id = r,
+                            Name = EnumFormatter.Description(r)
+                        };
+
             return new SelectList(roles, "Id", "Name");
         }
 
@@ -91,7 +92,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return HttpNotFound();
             }
 
-            var model = await new DetailsViewModel().Hydrate(user, AuthService,_subscriptionLogService);
+            var model = await new DetailsViewModel().Hydrate(user, AuthService, _subscriptionLogService);
 
             return View(model);
         }
@@ -107,7 +108,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             if (!ModelState.IsValid)
             {
-                await model.Hydrate(user, AuthService,_subscriptionLogService);
+                await model.Hydrate(user, AuthService, _subscriptionLogService);
 
                 return View("Details", model);
             }
@@ -116,7 +117,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             user.LastName = model.LastName;
             user.UserName = model.UserName;
             user.Email = model.Email;
-            
+
             await UpdateRoles(id, selectedRoles);
             await AuthService.UpdateUser(user);
 
@@ -160,12 +161,12 @@ namespace Mzayad.Web.Areas.admin.Controllers
             {
                 return HttpNotFound();
             }
-            var model=new EditSubscriptionViewModel().Hydrate(user);
+            var model = new EditSubscriptionViewModel().Hydrate(user);
             return View(model);
         }
 
         [Route("edit-subscription/{id}")]
-        [HttpPost,ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> EditSubscription(EditSubscriptionViewModel model)
         {
             var user = await AuthService.GetUserById(model.User.Id);
@@ -190,17 +191,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
             await _subscriptionLogService.Save(subscriptionLog);
 
             SetStatusMessage("The user subscription has been updated successfully.");
-            return RedirectToAction("Details", "Users",new {id=user.Id});
+            return RedirectToAction("Details", "Users", new { id = user.Id });
         }
 
         [HttpPost]
-        public async Task<JsonResult> GetSubscriptionLog([DataSourceRequest] DataSourceRequest request,  string id)
-         {
-             var logs =await _subscriptionLogService.GetByUserId(id);
-             return Json(logs.ToDataSourceResult(request));
-         }
-
-       
-       
-	}
+        public async Task<JsonResult> GetSubscriptionLog([DataSourceRequest] DataSourceRequest request, string id)
+        {
+            var logs = await _subscriptionLogService.GetByUserId(id);
+            return Json(logs.ToDataSourceResult(request));
+        }
+    }
 }
