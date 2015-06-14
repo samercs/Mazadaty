@@ -1,0 +1,27 @@
+﻿@model List<Mzayad.Models.Level>
+@using Mzayad.Web.Extensions
+@{
+    ViewBag.Title = "Levels";
+}
+
+<h2>Levels</h2>
+<table class="@Html.Css().GridTable">
+    <thead>
+        <tr>
+            <th>Level</th>
+            <th>XP Required ( 5 * Level<sup>2</sup> )</th>
+            <th>Tokens Awarded ( 5 * Level )</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var level in Model)
+        {
+            <tr>
+                <td>@level.Name</td>
+                <td>@level.XpRequired</td>
+                <td>@level.TokensAwarded</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

@@ -73,6 +73,7 @@
     <Compile Include="BidService.cs" />
     <Compile Include="CategoryService.cs" />
     <Compile Include="EmailTemplateService.cs" />
+    <Compile Include="LevelService.cs" />
     <Compile Include="NotificationService.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="Payment\KnetService.cs" />
