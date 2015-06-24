@@ -46,7 +46,7 @@ namespace Mzayad.Web
                 TokenEndpointPath = new PathString("/api/token"),
                 Provider = new ApplicationOAuthProvider("self"),
                 //AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(365),
                 //AllowInsecureHttp = true
             });
         }

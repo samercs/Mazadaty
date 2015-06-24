@@ -19,6 +19,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace Mzayad.Web.Areas.Api.Controllers
 {
@@ -29,15 +30,15 @@ namespace Mzayad.Web.Areas.Api.Controllers
         private readonly AddressService _addressService;
         private readonly EmailTemplateService _emailTemplateService;
         private readonly IMessageService _messageService;
-        private readonly  IAppSettings AppSettings;
+        private readonly IAppSettings _appSettings;
 
         public UserController(IAppServices controller)
         {
             _authService = controller.AuthService;
-            _addressService=new AddressService(controller.DataContextFactory);
-            _emailTemplateService=new EmailTemplateService(controller.DataContextFactory);
+            _addressService = new AddressService(controller.DataContextFactory);
+            _emailTemplateService = new EmailTemplateService(controller.DataContextFactory);
             _messageService = controller.MessageService;
-            AppSettings = controller.AppSettings;
+            _appSettings = controller.AppSettings;
         }
 
         public async Task<IHttpActionResult> Get(string id)
@@ -45,18 +46,17 @@ namespace Mzayad.Web.Areas.Api.Controllers
             var curentUser = await _authService.GetUserById(id);
             var user = new UserGetModel()
             {
-                Name = NameFormatter.GetFullName(curentUser.FirstName,curentUser.LastName),
+                Name = NameFormatter.GetFullName(curentUser.FirstName, curentUser.LastName),
                 Email = curentUser.Email,
-                CreatedDate=curentUser.CreatedUtc,
+                CreatedDate = curentUser.CreatedUtc,
                 PhoneNumber = curentUser.PhoneCountryCode + " " + curentUser.PhoneNumber,
-                UserName=curentUser.UserName
+                UserName = curentUser.UserName
             };
 
-            return Ok<UserGetModel>(user);
-
+            return Ok(user);
         }
 
-        
+
         public async Task<IHttpActionResult> Post(RegisterViewModel model)
         {
             ModelState.Remove("model.Address.CreatedUtc");
@@ -94,14 +94,13 @@ namespace Mzayad.Web.Areas.Api.Controllers
             await SendNewUserWelcomeEmail(user);
             return Ok(string.Format("user created sucessfully"));
 
-            
+
 
 
         }
 
 
-        [System.Web.Http.HttpPost, System.Web.Http.Route("action/password-reset")]
-
+        [HttpPost, Route("action/password-reset")]
         public async Task<IHttpActionResult> PasswordReset(NeedPasswordViewModel model)
         {
             if (!ModelState.IsValid)
@@ -109,14 +108,13 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 string messages = string.Join("; ", ModelState.Values
                                         .SelectMany(x => x.Errors)
                                         .Select(x => x.ErrorMessage));
-                
+
                 return BadRequest(messages);
             }
 
             await SendPasswordResetNotification(model.Email);
             return Ok("Password has been send");
         }
-
 
         public async Task<IHttpActionResult> Put(string id, UserAccountViewModel model)
         {
@@ -144,11 +142,11 @@ namespace Mzayad.Web.Areas.Api.Controllers
             user.PhoneNumber = string.IsNullOrEmpty(model.PhoneNumber) ? user.PhoneNumber : model.PhoneNumber;
             await _authService.UpdateUser(user);
 
-            if (user.AddressId.HasValue && model.Address!=null)
+            if (user.AddressId.HasValue && model.Address != null)
             {
                 var address = await _addressService.GetAddress(user.AddressId.Value);
                 address.AddressLine1 = string.IsNullOrEmpty(model.Address.AddressLine1) ? address.AddressLine1 : model.Address.AddressLine1;
-                address.AddressLine2 = string.IsNullOrEmpty(model.Address.AddressLine2) ? address.AddressLine2 :  model.Address.AddressLine2;
+                address.AddressLine2 = string.IsNullOrEmpty(model.Address.AddressLine2) ? address.AddressLine2 : model.Address.AddressLine2;
                 address.AddressLine3 = string.IsNullOrEmpty(model.Address.AddressLine3) ? address.AddressLine3 : model.Address.AddressLine3;
                 address.AddressLine4 = string.IsNullOrEmpty(model.Address.AddressLine4) ? address.AddressLine4 : model.Address.AddressLine4;
                 address.CityArea = string.IsNullOrEmpty(model.Address.CityArea) ? address.CityArea : model.Address.CityArea;
@@ -163,8 +161,6 @@ namespace Mzayad.Web.Areas.Api.Controllers
             }
 
             return Ok("User updated successfully.");
-
-            
         }
 
         private async Task SendEmailChangedEmail(ApplicationUser user, string originalEmail)
@@ -174,7 +170,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
             {
                 ToAddress = originalEmail,
                 Subject = emailTemplate.Localize("en", i => i.Subject).Subject,
-                Message = string.Format(emailTemplate.Localize("en", i => i.Message).Message, user.FirstName, AppSettings.SiteName)
+                Message = string.Format(emailTemplate.Localize("en", i => i.Message).Message, user.FirstName, _appSettings.SiteName)
             };
 
             await _messageService.Send(email.WithTemplate());
@@ -182,7 +178,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
 
         private async Task SendNewUserWelcomeEmail(ApplicationUser user)
         {
-            var template = await _emailTemplateService.GetByTemplateType(EmailTemplateType.AccountRegistration,"en");
+            var template = await _emailTemplateService.GetByTemplateType(EmailTemplateType.AccountRegistration, "en");
             var email = new Email
             {
                 ToAddress = user.Email,
@@ -250,8 +246,8 @@ namespace Mzayad.Web.Areas.Api.Controllers
             return PasswordUtilities.GenerateResetPasswordUrl(baseUrl, email);
         }
 
-        [System.Web.Http.Route("action/password/{id}"),System.Web.Http.HttpPut]
-        public async Task<IHttpActionResult> ChangePassword(string id,ChangePasswordViewModel model)
+        [Route("action/password/{id}"), HttpPut]
+        public async Task<IHttpActionResult> ChangePassword(string id, ChangePasswordViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -274,7 +270,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
 
             return Ok("password has been changed");
 
-            
+
         }
 
         private IHttpActionResult GetErrorResult(IdentityResult result)
@@ -288,7 +284,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
             {
                 return null;
             }
-            
+
             if (result.Errors != null)
             {
                 foreach (var error in result.Errors)
