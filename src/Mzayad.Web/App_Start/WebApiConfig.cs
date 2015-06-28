@@ -1,7 +1,9 @@
-﻿using Microsoft.Owin.Security.OAuth;
+﻿using System.Net.Http.Formatting;
+using Microsoft.Owin.Security.OAuth;
 using Mzayad.Web.Core.Attributes;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Newtonsoft.Json.Serialization;
 
 namespace Mzayad.Web
 {
@@ -29,10 +31,12 @@ namespace Mzayad.Web
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            
-
-            // Enforce HTTPS
+            // enforce HTTPS
             config.Filters.Add(new RequireHttpsAttribute());
+
+            // set JSON serialization settings
+            var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 }

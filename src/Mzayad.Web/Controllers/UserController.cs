@@ -32,15 +32,15 @@ namespace Mzayad.Web.Controllers
             _addressService = new AddressService(DataContextFactory);
             _categoryService = new CategoryService(DataContextFactory);
             _notificationService = new NotificationService(DataContextFactory);
-            _userProfileService=new UserProfileService(appServices.DataContextFactory);
-            _avatarService=new AvatarService(appServices.DataContextFactory);
+            _userProfileService = new UserProfileService(appServices.DataContextFactory);
+            _avatarService = new AvatarService(appServices.DataContextFactory);
         }
 
         [Route("dashboard")]
         public async Task<ActionResult> Dashboard()
         {
             var user = await AuthService.CurrentUser();
-            
+
             var viewModel = new DashboardViewModel
             {
                 ApplicationUser = user,
@@ -207,14 +207,14 @@ namespace Mzayad.Web.Controllers
                     UserId = userId,
                     CategoryId = i
                 });
-                
+
                 await _notificationService.AddList(newNotifications);
             }
 
             SetStatusMessage(Global.CategoryNotificationSaveMessage);
             return RedirectToAction("Notifications");
         }
-        
+
         [Route("edit-profile")]
         public async Task<ActionResult> EditProfile()
         {
@@ -224,24 +224,27 @@ namespace Mzayad.Web.Controllers
             return View(model);
         }
 
-        [Route("edit-profile"),HttpPost,ValidateAntiForgeryToken]
+        [Route("edit-profile"), HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> EditProfile(EditProfileModel model, int? selectedAvatar)
         {
             var user = await AuthService.CurrentUser();
             var userProfile = await _userProfileService.GetByUser(user);
-                  
+
             if (!ModelState.IsValid)
             {
                 return View(await model.Hydrate(_avatarService, userProfile));
             }
-            
+
             userProfile.Status = model.UserProfile.Status;
-            userProfile.ProfileUrl = model.UserProfile.ProfileUrl;
+            //userProfile.ProfileUrl = model.UserProfile.ProfileUrl;
             if (selectedAvatar.HasValue)
             {
+                userProfile.Avatar = null;
                 userProfile.AvatarId = selectedAvatar.Value;
             }
+            
             await _userProfileService.Update(userProfile);
+            
             SetStatusMessage("Your profile has been saved successfully.");
             return RedirectToAction("Dashboard");
 

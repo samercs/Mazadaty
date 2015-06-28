@@ -20,6 +20,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Mzayad.Core.Formatting;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
@@ -275,16 +276,16 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 var widths = new[] { ImageWidthConstants.ProductImageSm, ImageWidthConstants.ProductImageMd, ImageWidthConstants.ProductImageLg };
                 var uris = await UploadImage(file, widths);
 
-                var imageSmUrl = uris[0];
-                var imageMdUrl = uris[1];
-                var imageLgUrl = uris[2];
+                var imageSmUrl = UrlFormatter.GetCdnUrl(uris[0]);
+                var imageMdUrl = UrlFormatter.GetCdnUrl(uris[1]);
+                var imageLgUrl = UrlFormatter.GetCdnUrl(uris[2]);
 
-                var productImage = await _productService.AddProductImage(product, imageSmUrl.AbsoluteUri, imageMdUrl.AbsoluteUri, imageLgUrl.AbsoluteUri);
+                var productImage = await _productService.AddProductImage(product, imageSmUrl, imageMdUrl, imageLgUrl);
 
                 return Json(new
                 {
                     itemId = productImage.ProductImageId,
-                    url = imageMdUrl.AbsoluteUri
+                    url = imageMdUrl
                 });
             }
             catch (Exception)
