@@ -1,9 +1,7 @@
-﻿using System.Net.Http.Formatting;
-using Microsoft.Owin.Security.OAuth;
+﻿using Microsoft.Owin.Security.OAuth;
 using Mzayad.Web.Core.Attributes;
-using System.Web.Http;
-using System.Web.Http.Cors;
 using Newtonsoft.Json.Serialization;
+using System.Web.Http;
 
 namespace Mzayad.Web
 {

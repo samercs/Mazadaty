@@ -27,8 +27,6 @@ namespace Mzayad.Services
         private static int GetXp(int lvl)
         {
             return Level.XpBase/2*((int)Math.Pow(lvl, 2) - lvl);
-
-            //return Level.XpBase * Convert.ToInt32(Math.Pow(lvl, 2));
         }
     }
 }
