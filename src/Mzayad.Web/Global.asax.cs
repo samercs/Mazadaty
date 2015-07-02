@@ -3,6 +3,7 @@ using Mzayad.Data;
 using Mzayad.Web.Core.Configuration;
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Http;
@@ -33,6 +34,14 @@ namespace Mzayad.Web
             Response.Headers.Remove("Server");
             Response.Headers.Remove("X-AspNet-Version");
             Response.Headers.Remove("X-AspNetMvc-Version");
+        }
+
+        protected void Application_BeginRequest()
+        {
+            if (Request.Headers.AllKeys.Contains("Origin") && Request.HttpMethod == "OPTIONS")
+            {
+                Response.Flush();
+            }
         }
 
         protected void Application_AcquireRequestState(object sender, EventArgs e)

@@ -135,8 +135,7 @@ namespace Mzayad.Services
                     await ProductImageFixDuplicate(product);
                 }
 
-
-                var productImage = new ProductImage()
+                var productImage = new ProductImage
                 {
                     SortOrder = product.ProductImages.Count > 0 ? (product.ProductImages.Last().SortOrder + 1) : 1,
                     ImageSmUrl = imageSmUrl,

@@ -62,7 +62,6 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                dc.UserProfiles.Attach(userProfile);
                 dc.SetModified(userProfile);
                 await dc.SaveChangesAsync();
                 return userProfile;

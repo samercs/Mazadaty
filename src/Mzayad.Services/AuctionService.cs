@@ -53,20 +53,26 @@ namespace Mzayad.Services
 
                 foreach (var product in auctions.Select(i => i.Product).Distinct())
                 {
-                    // order product images
-                    product.ProductImages = product.ProductImages.OrderBy(i => i.SortOrder).ToList();
-
-                    product.Localize(language, i => i.Description);
-
-                    // localize specifications
-                    foreach (var specification in product.ProductSpecifications)
-                    {
-                        specification.Localize(language, i => i.Value);
-                        specification.Specification.Localize(language, i => i.Name);
-                    }
+                    LocalizeProduct(product, language);
                 }
 
                 return auctions.Localize(language, i => i.Title);
+            }
+        }
+
+        private static void LocalizeProduct(Product product, string language)
+        {
+            // order product images
+            product.ProductImages = product.ProductImages.OrderBy(i => i.SortOrder).ToList();
+
+            // localize products
+            product.Localize(language, i => i.Name, i => i.Description);
+
+            // localize specifications
+            foreach (var specification in product.ProductSpecifications)
+            {
+                specification.Localize(language, i => i.Value);
+                specification.Specification.Localize(language, i => i.Name);
             }
         }
 
@@ -79,10 +85,8 @@ namespace Mzayad.Services
                     return await dc.Auctions.Include(i => i.Product).Where(i => i.Product.Name.Contains(search)).OrderByDescending(i => i.StartUtc).ToListAsync();
 
                 }
-                else
-                {
-                    return await dc.Auctions.Include(i => i.Product).OrderByDescending(i => i.StartUtc).ToListAsync();
-                }
+                
+                return await dc.Auctions.Include(i => i.Product).OrderByDescending(i => i.StartUtc).ToListAsync();
             }
         }
 
@@ -100,11 +104,19 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<Auction> GetAuction(int auctionId)
+        public async Task<Auction> GetAuction(int auctionId, string language = null)
         {
             using (var dc = DataContext())
             {
-                return await GetAuction(dc, auctionId);
+                var auction = await GetAuction(dc, auctionId);
+
+                if (language != null)
+                {
+                    LocalizeProduct(auction.Product, language);
+                    auction.Localize(language, i => i.Title);
+                }
+
+                return auction;
             }
         }
 
@@ -112,6 +124,8 @@ namespace Mzayad.Services
         {
             return await dc.Auctions
                 .Include(i => i.Product.Categories)
+                .Include(i => i.Product.ProductImages)
+                .Include(i => i.Product.ProductSpecifications.Select(j => j.Specification))
                 .SingleOrDefaultAsync(i => i.AuctionId == auctionId);
         }
 

@@ -37,6 +37,9 @@
     };
 
     var setDateTimePicker = function() {
+
+        console.log("H");
+
         var parent = $(this).parents(".datetime-picker");
         var hidden = parent.find(".datetime-value");
         var date = parent.find(".date-picker").datepicker("getDate");

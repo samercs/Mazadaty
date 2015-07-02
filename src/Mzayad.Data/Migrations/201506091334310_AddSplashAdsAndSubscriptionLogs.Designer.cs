@@ -7,13 +7,13 @@ namespace Mzayad.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
-    public sealed partial class AddSubscriptionLog : IMigrationMetadata
+    public sealed partial class AddSplashAdsAndSubscriptionLogs : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddSubscriptionLog));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddSplashAdsAndSubscriptionLogs));
         
         string IMigrationMetadata.Id
         {
-            get { return "201505270838519_AddSubscriptionLog"; }
+            get { return "201506091334310_AddSplashAdsAndSubscriptionLogs"; }
         }
         
         string IMigrationMetadata.Source
