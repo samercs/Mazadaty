@@ -20,7 +20,7 @@ namespace Mzayad.Services
                     {
                         Name = lvl.ToString(),
                         TokensAwarded = 5 * lvl,
-                        XpRequired = 5 * Convert.ToInt32(Math.Pow(lvl, 2))
+                        XpRequired = Level.XpBase * Convert.ToInt32(Math.Pow(lvl, 2))
                     };
         }
     }

@@ -1,15 +1,15 @@
-﻿@model List<Mzayad.Models.Level>
+﻿@model List<Level>
+@using Mzayad.Models
 @using Mzayad.Web.Extensions
 @{
-    ViewBag.Title = "Levels";
+    ViewBag.Title = "Levels (0 - 100)";
 }
 
-<h2>Levels</h2>
 <table class="@Html.Css().GridTable">
     <thead>
         <tr>
             <th>Level</th>
-            <th>XP Required ( 5 * Level<sup>2</sup> )</th>
+            <th>XP Required ( @Level.XpBase * Level<sup>2</sup> )</th>
             <th>Tokens Awarded ( 5 * Level )</th>
         </tr>
     </thead>
