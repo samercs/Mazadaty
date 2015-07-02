@@ -1,6 +1,4 @@
-﻿using System;
-using NUnit.Framework;
-using Mzayad.Models;
+﻿using NUnit.Framework;
 
 namespace Mzayad.Services.Tests
 {
@@ -15,28 +13,28 @@ namespace Mzayad.Services.Tests
         }
 
         [Test]
-        public void GetLevel_Level_5_XP_125()
+        public void GetLevel_Level_5_XP()
         {
             var results = new LevelService().GetLevel(5);
-            Assert.AreEqual(125, results.XpRequired);
+            Assert.AreEqual(1000, results.XpRequired);
         }
         
         [Test]
-        public void GetLevel_Level_5_Tokens_25()
+        public void GetLevel_Level_5_Tokens()
         {
             var results = new LevelService().GetLevel(5);
             Assert.AreEqual(25, results.TokensAwarded);
         }
 
         [Test]
-        public void GetLevel_Level_10_XP_500()
+        public void GetLevel_Level_10_XP()
         {
             var results = new LevelService().GetLevel(10);
-            Assert.AreEqual(500, results.XpRequired);
+            Assert.AreEqual(4500, results.XpRequired);
         }
 
         [Test]
-        public void GetLevel_Level_10_Tokens_50()
+        public void GetLevel_Level_10_Tokens()
         {
             var results = new LevelService().GetLevel(10);
             Assert.AreEqual(50, results.TokensAwarded);
