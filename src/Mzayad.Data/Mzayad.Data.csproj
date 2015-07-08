@@ -229,6 +229,10 @@
     <Compile Include="Migrations\201506091334310_AddSplashAdsAndSubscriptionLogs.Designer.cs">
       <DependentUpon>201506091334310_AddSplashAdsAndSubscriptionLogs.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507081545424_AddSubscriptionPriceAndSortOrder.cs" />
+    <Compile Include="Migrations\201507081545424_AddSubscriptionPriceAndSortOrder.Designer.cs">
+      <DependentUpon>201507081545424_AddSubscriptionPriceAndSortOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -365,6 +369,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506091334310_AddSplashAdsAndSubscriptionLogs.resx">
       <DependentUpon>201506091334310_AddSplashAdsAndSubscriptionLogs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507081545424_AddSubscriptionPriceAndSortOrder.resx">
+      <DependentUpon>201507081545424_AddSubscriptionPriceAndSortOrder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
