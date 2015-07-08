@@ -17,7 +17,8 @@ namespace Mzayad.Data.Migrations
                         CreatedUtc = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.AvatarId);
-            
+
+            Sql("insert into Avatars (Url, SortOrder) values ('//az712326.vo.msecnd.net/assets/no-image-512x512-635627099896729695.png', 0)");
         }
         
         public override void Down()
