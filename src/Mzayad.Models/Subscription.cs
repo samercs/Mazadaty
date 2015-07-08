@@ -25,7 +25,7 @@ namespace Mzayad.Models
         {
             if (PurchasePrice.GetValueOrDefault(0) <= 0 && PurchaseTokens.GetValueOrDefault(0) <= 0)
             {
-                yield return new ValidationResult("", new[] { "PurchasePrice", "PurchaseTokens" });
+                yield return new ValidationResult("Purchase price cannot be null or zero.", new[] { "PurchasePrice", "PurchaseTokens" });
             }
         }
     }

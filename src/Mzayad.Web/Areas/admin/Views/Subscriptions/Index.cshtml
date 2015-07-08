@@ -1,4 +1,5 @@
 ﻿@using Humanizer
+@using Mzayad.Core.Formatting
 @using Mzayad.Web.Extensions
 @model IEnumerable<Mzayad.Models.Subscription>
 
@@ -21,6 +22,8 @@
         <tr>
             <th>Name</th>
             <th>Status</th>
+            <th>Price (KD)</th>
+            <th>Price (tokens)</th>
             <th>Expiration</th>
             <th>Quantity</th>
             <th></th>
@@ -32,6 +35,8 @@
             <tr>
                 <td>@item.Name</td>
                 <td>@item.Status.Humanize()</td>
+                <td>@CurrencyFormatter.Format(item.PurchasePrice)</td>
+                <td>@item.PurchaseTokens</td>
                 <td>@(item.ExpirationUtc.HasValue ? item.ExpirationUtc.Value.ToShortDateString() : "")</td>
                 <td>@item.Quantity</td>
                 <td class="link-cell">@Html.ActionLink("Edit", "Edit", "Subscriptions", new { id = item.SubscriptionId }, null)</td>

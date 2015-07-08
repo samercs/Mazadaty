@@ -10,13 +10,14 @@ namespace Mzayad.Services
 {
     public class SubscriptionService : ServiceBase
     {
-        public SubscriptionService(IDataContextFactory dataContextFactory) : base(dataContextFactory)
+        public SubscriptionService(IDataContextFactory dataContextFactory)
+            : base(dataContextFactory)
         {
         }
 
         public async Task<IEnumerable<Subscription>> GetAll(string languageCode = null)
         {
-            using (var dc=DataContext())
+            using (var dc = DataContext())
             {
                 var subscriptions = await dc.Subscriptions.OrderBy(i => i.ExpirationUtc).ToListAsync();
 
@@ -31,7 +32,7 @@ namespace Mzayad.Services
 
         public async Task<Subscription> Add(Subscription subscription)
         {
-            using (var dc=DataContext())
+            using (var dc = DataContext())
             {
                 dc.Subscriptions.Add(subscription);
                 await dc.SaveChangesAsync();
@@ -41,7 +42,7 @@ namespace Mzayad.Services
 
         public async Task<Subscription> GetById(int id)
         {
-            using (var dc=DataContext())
+            using (var dc = DataContext())
             {
                 return await dc.Subscriptions.SingleOrDefaultAsync(i => i.SubscriptionId == id);
             }

@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
@@ -64,8 +66,10 @@ namespace Mzayad.Data
             }
             catch (DbEntityValidationException ex)
             {
-                TraceValidationErrors(ex);
-                throw;
+                var errors = TraceValidationErrors(ex);
+                var message = string.Format("EntityValidationErrors - {0}", string.Join(",", errors));
+
+                throw new Exception(message);
             }
         }
 
@@ -77,18 +81,24 @@ namespace Mzayad.Data
             }
             catch (DbEntityValidationException ex)
             {
-                TraceValidationErrors(ex);
-                throw;
+                var errors = TraceValidationErrors(ex);
+                var message = string.Format("EntityValidationErrors - {0}", string.Join(",", errors));
+
+                throw new Exception(message);
             }
         }
 
-        private static void TraceValidationErrors(DbEntityValidationException ex)
+        private static IEnumerable<string> TraceValidationErrors(DbEntityValidationException ex)
         {
             foreach (var validationErrors in ex.EntityValidationErrors)
             {
                 foreach (var validationError in validationErrors.ValidationErrors)
                 {
-                    Trace.TraceError("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                    var errorMessage = string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+
+                    Trace.TraceError(errorMessage);
+
+                    yield return errorMessage;
                 }
             }
         }

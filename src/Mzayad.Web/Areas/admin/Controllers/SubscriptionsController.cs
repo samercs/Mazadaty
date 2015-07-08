@@ -71,11 +71,18 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return HttpNotFound();
             }
 
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             subscription.Name = name.Serialize();
             subscription.Status = model.Subscription.Status;
-            subscription.Quantity = model.Subscription.Quantity;
+            subscription.PurchasePrice = model.Subscription.PurchasePrice;
+            subscription.PurchaseTokens = model.Subscription.PurchaseTokens;
             subscription.ExpirationUtc = model.Subscription.ExpirationUtc;
-
+            subscription.Quantity = model.Subscription.Quantity;
+            
             await _subscriptionService.Edit(subscription);
             SetStatusMessage("Subscription has been updated successfully.");
             return RedirectToAction("Index");
