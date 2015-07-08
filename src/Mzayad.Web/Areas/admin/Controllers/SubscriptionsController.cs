@@ -34,9 +34,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Add(AddViewModel model, LocalizedContent[] name)
         {
-
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            
             model.Subscription.Name = name.Serialize();
             await _subscriptionService.Add(model.Subscription);
+            
             SetStatusMessage("Subscription has been added successfully.");
             return RedirectToAction("Index");
         }

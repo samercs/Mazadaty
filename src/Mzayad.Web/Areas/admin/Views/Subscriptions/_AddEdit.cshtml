@@ -18,13 +18,29 @@
                     @Html.DropDownListFor(i => i.Subscription.Status, Model.StatusList, new {@class = "form-control"})
                     @Html.ValidationMessageFor(i => i.Subscription.Status, "Please select a status.")
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(i => i.Subscription.PurchasePrice, "Price (KD)")
-                    <div class="input-group">
-                        @Html.TextBoxFor(i => i.Subscription.PurchasePrice, new { @class = "form-control", @type = "number" })
-                        <span class="input-group-addon">KD</span>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(i => i.Subscription.PurchasePrice, "Price (KD)")
+                            <div class="input-group">
+                                @Html.TextBoxFor(i => i.Subscription.PurchasePrice, new {@class = "form-control", @type = "number"})
+                                <span class="input-group-addon">KD</span> 
+                            </div>
+                            @Html.ValidationMessageFor(i => i.Subscription.PurchasePrice, "Please enter a price (KD or tokens).")
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(i => i.Subscription.PurchaseTokens, "Price (tokens)")
+                            <div class="input-group">
+                                @Html.TextBoxFor(i => i.Subscription.PurchaseTokens, new { @class = "form-control", @type = "number" })
+                                <span class="input-group-addon">tokens</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <div class="form-group">
                     @Html.LabelFor(i => i.Subscription.ExpirationUtc, "Expiration") <small>[optional]</small>
                     @Html.EditorFor(i => i.Subscription.ExpirationUtc)
