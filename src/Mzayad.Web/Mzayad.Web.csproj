@@ -421,12 +421,6 @@
     <Content Include="Content\site-arabic.min.css">
       <DependentUpon>site-arabic.css</DependentUpon>
     </Content>
-    <Content Include="Content\site-error.css">
-      <DependentUpon>site-error.less</DependentUpon>
-    </Content>
-    <Content Include="Content\site-error.min.css">
-      <DependentUpon>site-error.css</DependentUpon>
-    </Content>
     <Content Include="Content\site-forms.css">
       <DependentUpon>site-forms.less</DependentUpon>
     </Content>
@@ -596,10 +590,6 @@
     <Content Include="Areas\Admin\Views\Specifications\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Specifications\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Specifications\_AddEdit.cshtml" />
-    <Content Include="Content\site-error.less" />
-    <Content Include="Content\site-error.css.map">
-      <DependentUpon>site-error.css</DependentUpon>
-    </Content>
     <Content Include="Areas\Admin\Views\Sponsors\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Sponsors\Add.cshtml" />
     <Content Include="Areas\Admin\Views\Sponsors\_AddEdit.cshtml" />
