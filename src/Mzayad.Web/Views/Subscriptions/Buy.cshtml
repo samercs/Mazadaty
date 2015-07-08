@@ -1,0 +1,79 @@
+﻿@using Mzayad.Core.Formatting
+@model IEnumerable<Mzayad.Models.Subscription>
+
+@{
+    ViewBag.Title = Global.BuySubscription;
+}
+
+@section styles {
+    <style>
+        
+        .row-item {
+            margin: 15px;
+        }
+
+        .row-label {
+            text-align: right;
+            font-weight: bold;
+        }
+
+    </style>
+}
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">@item.Name</div>
+                <div class="panel-body">
+
+                    <div class="row row-item">
+                        <div class="col-xs-4 row-label">Duration</div>
+                        <div class="col-xs-8 row-value">@item.Duration days</div>
+                    </div>
+                    <div class="row row-item">
+                        <div class="col-xs-4 row-label">Price</div>
+                        <div class="col-xs-8 row-value">
+
+                            @if (item.PurchasePrice.GetValueOrDefault(0) > 0)
+                            {
+                                @CurrencyFormatter.Format(item.PurchasePrice)
+                            }
+
+                            @if (item.PurchasePrice.GetValueOrDefault(0) > 0 && item.PurchaseTokens.GetValueOrDefault(0) > 0)
+                            {
+                                <span>or</span>
+                            }
+
+                            @if (item.PurchaseTokens.GetValueOrDefault(0) > 0)
+                            {
+                                @item.PurchaseTokens
+                                <span>tokens</span>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="row row-item">
+                        <div class="col-xs-4 row-label">Quantity</div>
+                        <div class="col-xs-8 row-value">
+                            @if (item.Quantity.HasValue)
+                            {
+                                <span>Only @item.Quantity left!</span>
+                            }
+                            else
+                            {
+                                <span>no limit</span>
+                            }
+                        </div>
+                    </div>
+
+                    <a class="btn btn-default btn-block" href="@Url.Action("Buy", new { id = item.SubscriptionId })">Buy Now</a>
+
+                </div>
+            </div>
+
+        </div>
+    }
+</div>

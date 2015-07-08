@@ -233,6 +233,10 @@
     <Compile Include="Migrations\201507081545424_AddSubscriptionPriceAndSortOrder.Designer.cs">
       <DependentUpon>201507081545424_AddSubscriptionPriceAndSortOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507081651230_AddSubscriptionDuration.cs" />
+    <Compile Include="Migrations\201507081651230_AddSubscriptionDuration.Designer.cs">
+      <DependentUpon>201507081651230_AddSubscriptionDuration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -372,6 +376,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507081545424_AddSubscriptionPriceAndSortOrder.resx">
       <DependentUpon>201507081545424_AddSubscriptionPriceAndSortOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507081651230_AddSubscriptionDuration.resx">
+      <DependentUpon>201507081651230_AddSubscriptionDuration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,5 +1,6 @@
 ﻿@using Humanizer
 @using Mzayad.Core.Formatting
+@using Mzayad.Models.Enum
 @using Mzayad.Web.Extensions
 @model IEnumerable<Mzayad.Models.Subscription>
 
@@ -34,7 +35,16 @@
         {
             <tr>
                 <td>@item.Name</td>
-                <td>@item.Status.Humanize()</td>
+                <td>
+                    @if (item.Status == SubscriptionStatus.Active)
+                    {
+                        <span class="label label-success">Active</span>
+                    }
+                    else
+                    {
+                        <span class="label label-danger">@item.Status.Humanize()</span>
+                    }
+                </td>
                 <td>@CurrencyFormatter.Format(item.PurchasePrice)</td>
                 <td>@item.PurchaseTokens</td>
                 <td>@(item.ExpirationUtc.HasValue ? item.ExpirationUtc.Value.ToShortDateString() : "")</td>

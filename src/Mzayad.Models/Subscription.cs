@@ -13,6 +13,7 @@ namespace Mzayad.Models
         [Required, Localized]
         public string Name { get; set; }
         public SubscriptionStatus Status { get; set; }
+        public int Duration { get; set; }
         public DateTime? ExpirationUtc { get; set; }
         public int? Quantity { get; set; }
 

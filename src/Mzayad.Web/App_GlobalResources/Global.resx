@@ -558,4 +558,7 @@
   <data name="NoWishlistMessage" xml:space="preserve">
     <value>You have no wishlist items yet, click the Add Item link to start your wishlist.</value>
   </data>
+  <data name="BuySubscription" xml:space="preserve">
+    <value>Buy Subscription</value>
+  </data>
 </root>

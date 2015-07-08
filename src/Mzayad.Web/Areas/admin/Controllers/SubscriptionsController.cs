@@ -54,7 +54,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return HttpNotFound();
             }
 
-            var model = new AddViewModel()
+            var model = new AddViewModel
             {
                 Subscription = subscription
             };
@@ -78,12 +78,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             subscription.Name = name.Serialize();
             subscription.Status = model.Subscription.Status;
+            subscription.Duration = model.Subscription.Duration;
             subscription.PurchasePrice = model.Subscription.PurchasePrice;
             subscription.PurchaseTokens = model.Subscription.PurchaseTokens;
             subscription.ExpirationUtc = model.Subscription.ExpirationUtc;
             subscription.Quantity = model.Subscription.Quantity;
             
-            await _subscriptionService.Edit(subscription);
+            await _subscriptionService.UpdateSubscription(subscription);
+            
             SetStatusMessage("Subscription has been updated successfully.");
             return RedirectToAction("Index");
         }

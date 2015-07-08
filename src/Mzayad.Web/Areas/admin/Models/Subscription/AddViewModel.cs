@@ -34,7 +34,8 @@ namespace Mzayad.Web.Areas.admin.Models.Subscription
                 Subscription = new Mzayad.Models.Subscription
                 {
                     Name = LocalizedContent.Init(),
-                    ExpirationUtc = DateTime.UtcNow.AddMonths(6)
+                    Status = SubscriptionStatus.Active,
+                    Duration = 30
                 };
             }
 
