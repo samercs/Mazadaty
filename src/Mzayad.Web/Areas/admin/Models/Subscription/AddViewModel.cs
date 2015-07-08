@@ -17,22 +17,21 @@ namespace Mzayad.Web.Areas.admin.Models.Subscription
             get
             {
                 return
-                    Enum.GetValues(typeof (SubscriptionStatus))
+                    Enum.GetValues(typeof(SubscriptionStatus))
                         .Cast<SubscriptionStatus>()
-                        .Select(i => new SelectListItem()
+                        .Select(i => new SelectListItem
                         {
                             Text = i.Humanize(),
                             Value = i.ToString(),
-                            Selected = i==Subscription.Status
-                        }
-                        );
+                            Selected = i == Subscription.Status
+                        });
             }
-        } 
+        }
         public AddViewModel Hydrate()
         {
             if (Subscription == null)
             {
-                Subscription = new Mzayad.Models.Subscription()
+                Subscription = new Mzayad.Models.Subscription
                 {
                     Name = LocalizedContent.Init(),
                     ExpirationUtc = DateTime.UtcNow.AddMonths(6)
