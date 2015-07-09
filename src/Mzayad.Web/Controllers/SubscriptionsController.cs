@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using Mzayad.Services;
 using Mzayad.Web.Core.Services;
+using Mzayad.Web.Models.Subscriptions;
 
 namespace Mzayad.Web.Controllers
 {
@@ -21,6 +22,23 @@ namespace Mzayad.Web.Controllers
             var subscriptions = await _subscriptionService.GetActiveSubscriptions(Language);
 
             return View(subscriptions);
+        }
+
+        [Route("buy-now/{subscriptionId:int}")]
+        public async Task<ActionResult> BuyNow(int subscriptionId)
+        {
+            var subscription = await _subscriptionService.GetActiveSubscription(subscriptionId, Language);
+            if (subscription == null)
+            {
+                return HttpNotFound();
+            }
+
+            var viewModel = new BuyNowViewModel
+            {
+                Subscription = subscription
+            };
+
+            return View(viewModel);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Mzayad.Services
             {
                 var subscriptions = await dc.Subscriptions
                     .Where(i => i.Status == SubscriptionStatus.Active)
-                    .Where(i => i.ExpirationUtc > DateTime.UtcNow)
+                    .Where(i => !i.ExpirationUtc.HasValue || i.ExpirationUtc > DateTime.UtcNow)
                     .OrderBy(i => i.SortOrder)
                     .ThenBy(i => i.ExpirationUtc)
                     .ToListAsync();
@@ -55,6 +55,25 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 return await dc.Subscriptions.SingleOrDefaultAsync(i => i.SubscriptionId == subscriptionId);
+            }
+        }
+
+        public async Task<Subscription> GetActiveSubscription(int subscriptionId, string languageCode = null)
+        {
+            using (var dc = DataContext())
+            {
+                var subscription = await dc.Subscriptions
+                    .Where(i => i.Status == SubscriptionStatus.Active)
+                    .Where(i => !i.ExpirationUtc.HasValue || i.ExpirationUtc > DateTime.UtcNow)
+                    .Where(i => !i.Quantity.HasValue || i.Quantity > 0)
+                    .SingleOrDefaultAsync(i => i.SubscriptionId == subscriptionId);
+
+                if (subscription != null && languageCode != null)
+                {
+                    subscription = subscription.Localize(languageCode, i => i.Name);
+                }
+
+                return subscription;
             }
         }
 

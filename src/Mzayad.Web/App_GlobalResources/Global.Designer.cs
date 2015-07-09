@@ -205,6 +205,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Buy Subscription - {Subscription.Name}.
+        /// </summary>
+        public static string BuySubscriptionWithName {
+            get {
+                return ResourceManager.GetString("BuySubscriptionWithName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Categories.
         /// </summary>
         public static string Categories {

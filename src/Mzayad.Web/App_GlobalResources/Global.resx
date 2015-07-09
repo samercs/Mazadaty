@@ -561,4 +561,7 @@
   <data name="BuySubscription" xml:space="preserve">
     <value>Buy Subscription</value>
   </data>
+  <data name="BuySubscriptionWithName" xml:space="preserve">
+    <value>Buy Subscription - {Subscription.Name}</value>
+  </data>
 </root>
