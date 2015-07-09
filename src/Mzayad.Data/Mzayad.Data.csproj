@@ -241,6 +241,10 @@
     <Compile Include="Migrations\201507091056012_AddUserLevelXpTokens.Designer.cs">
       <DependentUpon>201507091056012_AddUserLevelXpTokens.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507091144131_RenameSubscriptionPriceFields.cs" />
+    <Compile Include="Migrations\201507091144131_RenameSubscriptionPriceFields.Designer.cs">
+      <DependentUpon>201507091144131_RenameSubscriptionPriceFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -386,6 +390,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507091056012_AddUserLevelXpTokens.resx">
       <DependentUpon>201507091056012_AddUserLevelXpTokens.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507091144131_RenameSubscriptionPriceFields.resx">
+      <DependentUpon>201507091144131_RenameSubscriptionPriceFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
