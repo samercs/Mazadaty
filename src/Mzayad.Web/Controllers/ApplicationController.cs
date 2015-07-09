@@ -158,7 +158,6 @@ namespace Mzayad.Web.Controllers
             });
         }
 
-
         public ActionResult DeleteConfirmation(string pageTitle, string confirmationMessage)
         {
             return View("DeleteConfirmation", new DeleteConfirmationViewModel

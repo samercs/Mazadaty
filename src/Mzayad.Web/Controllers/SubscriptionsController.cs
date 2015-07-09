@@ -6,7 +6,7 @@ using Mzayad.Web.Models.Subscriptions;
 
 namespace Mzayad.Web.Controllers
 {
-    [RoutePrefix("{language}/subscriptions"), Authorize]
+    [RoutePrefix("{language:regex(^en|ar$)}/subscriptions"), Authorize]
     public class SubscriptionsController : ApplicationController
     {
         private readonly SubscriptionService _subscriptionService;
@@ -16,16 +16,16 @@ namespace Mzayad.Web.Controllers
             _subscriptionService = new SubscriptionService(DataContextFactory);
         }
 
-        [Route("buy")]
-        public async Task<ActionResult> Buy()
+        [Route("")]
+        public async Task<ActionResult> Index()
         {
             var subscriptions = await _subscriptionService.GetActiveSubscriptions(Language);
 
             return View(subscriptions);
         }
 
-        [Route("buy-now/{subscriptionId:int}")]
-        public async Task<ActionResult> BuyNow(int subscriptionId)
+        [Route("buy/{subscriptionId:int}")]
+        public async Task<ActionResult> Buy(int subscriptionId)
         {
             var subscription = await _subscriptionService.GetValidSubscription(subscriptionId, Language);
             if (subscription == null)
@@ -33,12 +33,38 @@ namespace Mzayad.Web.Controllers
                 return HttpNotFound();
             }
 
+            var user = await AuthService.CurrentUser();
+
             var viewModel = new BuyNowViewModel
             {
-                Subscription = subscription
+                Subscription = subscription,
+                AvailableTokens = user.Tokens
             };
 
             return View(viewModel);
         }
+
+        [Route("buy/{subscriptionId:int}")]
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> Buy(int subscriptionId, PriceType priceType)
+        {
+            var subscription = await _subscriptionService.GetValidSubscription(subscriptionId, Language);
+            if (subscription == null)
+            {
+                return HttpNotFound();
+            }
+
+            var user = await AuthService.CurrentUser();
+
+            var viewModel = new BuyNowViewModel
+            {
+                Subscription = subscription,
+                AvailableTokens = user.Tokens
+            };
+
+            return Content(priceType.ToString());
+        }
+
+
     }
 }

@@ -2,6 +2,7 @@
 @using Mzayad.Core.Formatting
 @using Mzayad.Models.Enum
 @using Mzayad.Web.Extensions
+@using Mzayad.Web.Models.Subscriptions
 @model IEnumerable<Mzayad.Models.Subscription>
 
 @{
@@ -23,8 +24,7 @@
         <tr>
             <th>Name</th>
             <th>Status</th>
-            <th>Price (KD)</th>
-            <th>Price (tokens)</th>
+            <th>Price</th>
             <th>Expiration</th>
             <th>Quantity</th>
             <th></th>
@@ -45,8 +45,7 @@
                         <span class="label label-danger">@item.Status.Humanize()</span>
                     }
                 </td>
-                <td>@CurrencyFormatter.Format(item.PurchasePrice)</td>
-                <td>@item.PurchaseTokens</td>
+                <td>@item.FormattedPrice()</td>
                 <td>@(item.ExpirationUtc.HasValue ? item.ExpirationUtc.Value.ToShortDateString() : "")</td>
                 <td>@item.Quantity</td>
                 <td class="link-cell">@Html.ActionLink("Edit", "Edit", "Subscriptions", new { id = item.SubscriptionId }, null)</td>

@@ -564,4 +564,16 @@
   <data name="BuySubscriptionWithName" xml:space="preserve">
     <value>Buy Subscription - {Subscription.Name}</value>
   </data>
+  <data name="BuyForPriceKd" xml:space="preserve">
+    <value>Buy for {FormattedPrice}</value>
+  </data>
+  <data name="BuyForPriceTokens" xml:space="preserve">
+    <value>Buy for {TokenAmount} tokens</value>
+  </data>
+  <data name="SubscriptionPriceKdAndTokens" xml:space="preserve">
+    <value>{PriceCurrency} or {PriceTokens} tokens</value>
+  </data>
+  <data name="SubscriptionPriceTokens" xml:space="preserve">
+    <value>{PurchaseTokens} tokens</value>
+  </data>
 </root>
