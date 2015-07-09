@@ -1,4 +1,4 @@
-﻿@using Mzayad.Core.Formatting
+﻿@using Mzayad.Web.Models.Subscriptions
 @model IEnumerable<Mzayad.Models.Subscription>
 
 @{
@@ -35,25 +35,7 @@
                     </div>
                     <div class="row row-item">
                         <div class="col-xs-4 row-label">Price</div>
-                        <div class="col-xs-8 row-value">
-
-                            @if (item.PurchasePrice.GetValueOrDefault(0) > 0)
-                            {
-                                @CurrencyFormatter.Format(item.PurchasePrice)
-                            }
-
-                            @if (item.PurchasePrice.GetValueOrDefault(0) > 0 && item.PurchaseTokens.GetValueOrDefault(0) > 0)
-                            {
-                                <span>or</span>
-                            }
-
-                            @if (item.PurchaseTokens.GetValueOrDefault(0) > 0)
-                            {
-                                @item.PurchaseTokens
-                                <span>tokens</span>
-                            }
-
-                        </div>
+                        <div class="col-xs-8 row-value">@item.FormattedPrice()</div>
                     </div>
                     <div class="row row-item">
                         <div class="col-xs-4 row-label">Quantity</div>

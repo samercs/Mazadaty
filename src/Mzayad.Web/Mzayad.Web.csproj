@@ -362,6 +362,7 @@
     <Compile Include="Extensions\KendoExtensions.cs" />
     <Compile Include="Extensions\MvcHtmlStringExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\SubscriptionExtensions.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

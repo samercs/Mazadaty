@@ -1,6 +1,44 @@
-﻿@using OrangeJetpack.Base.Core.Formatting
+﻿@using Mzayad.Core.Formatting
+@using OrangeJetpack.Base.Core.Formatting
+@using DateTimeFormatter = OrangeJetpack.Base.Core.Formatting.DateTimeFormatter
 @model Mzayad.Web.Models.Subscriptions.BuyNowViewModel
 
 @{
     ViewBag.Title = StringFormatter.ObjectFormat(Global.BuySubscriptionWithName, Model);
 }
+
+<p class="instruction">
+    You can buy <strong>@Model.Subscription.Name</strong> for <strong>@Model.Subscription.FormattedPrice()</strong>, this will give you a valid subscription until <strong>@DateTimeFormatter.ToLocalTime(Model.NewExpirationUtc, DateTimeFormatter.Format.Full)</strong>.
+</p>
+
+<div class="row">
+
+    <div class="@Html.Css().FormNarrow">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+                <div class="form-group">
+                    <i class="fa fa-lg fa-check-square-o"></i>
+                    @Html.Raw(string.Format(Global.RegistrationAgreementAcknowledgement, Url.Action("TermsAndConditions", "Home", new { Language = Html.Language() })))
+                </div>
+            </section>
+
+            <section class="form-buttons">
+
+                <button class="btn btn-default">@StringFormatter.ObjectFormat(Global.BuyForPriceKd, new { FormattedPrice = CurrencyFormatter.Format(Model.Subscription.PriceCurrency) })</button>
+
+
+
+                <button class="btn btn-default">@StringFormatter.ObjectFormat(Global.BuyForPriceTokens, new { TokenAmount = Model.Subscription.PriceTokens })</button>
+
+            </section>
+        }
+
+
+
+    </div>
+
+</div>

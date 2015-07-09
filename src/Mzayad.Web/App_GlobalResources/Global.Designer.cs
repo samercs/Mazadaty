@@ -196,6 +196,24 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Buy for {FormattedPrice}.
+        /// </summary>
+        public static string BuyForPriceKd {
+            get {
+                return ResourceManager.GetString("BuyForPriceKd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buy for {TokenAmount} tokens.
+        /// </summary>
+        public static string BuyForPriceTokens {
+            get {
+                return ResourceManager.GetString("BuyForPriceTokens", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Buy Subscription.
         /// </summary>
         public static string BuySubscription {
@@ -1254,6 +1272,24 @@ namespace Mzayad.Web.Resources {
         public static string SubmittingPleaseWait {
             get {
                 return ResourceManager.GetString("SubmittingPleaseWait", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {PriceCurrency} or {PriceTokens} tokens.
+        /// </summary>
+        public static string SubscriptionPriceKdAndTokens {
+            get {
+                return ResourceManager.GetString("SubscriptionPriceKdAndTokens", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {PurchaseTokens} tokens.
+        /// </summary>
+        public static string SubscriptionPriceTokens {
+            get {
+                return ResourceManager.GetString("SubscriptionPriceTokens", resourceCulture);
             }
         }
         

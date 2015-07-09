@@ -22,19 +22,19 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(i => i.Subscription.PurchasePrice, "Price (KD)")
+                            @Html.LabelFor(i => i.Subscription.PriceCurrency, "Price (KD)")
                             <div class="input-group">
-                                @Html.TextBoxFor(i => i.Subscription.PurchasePrice, new {@class = "form-control", @type = "number"})
+                                @Html.TextBoxFor(i => i.Subscription.PriceCurrency, new {@class = "form-control", @type = "number"})
                                 <span class="input-group-addon">KD</span> 
                             </div>
-                            @Html.ValidationMessageFor(i => i.Subscription.PurchasePrice, "Please enter a price (KD or tokens).")
+                            @Html.ValidationMessageFor(i => i.Subscription.PriceCurrency, "Please enter a price (KD or tokens).")
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(i => i.Subscription.PurchaseTokens, "Price (tokens)")
+                            @Html.LabelFor(i => i.Subscription.PriceTokens, "Price (tokens)")
                             <div class="input-group">
-                                @Html.TextBoxFor(i => i.Subscription.PurchaseTokens, new {@class = "form-control", @type = "number"})
+                                @Html.TextBoxFor(i => i.Subscription.PriceTokens, new {@class = "form-control", @type = "number"})
                                 <span class="input-group-addon">tokens</span>
                             </div>
                         </div>

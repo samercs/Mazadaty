@@ -6,7 +6,7 @@ using Mzayad.Web.Models.Subscriptions;
 
 namespace Mzayad.Web.Controllers
 {
-    [RoutePrefix("{language}/subscriptions"), Authorize]
+    [RoutePrefix("{language:regex(^en|ar$)}/subscriptions"), Authorize]
     public class SubscriptionsController : ApplicationController
     {
         private readonly SubscriptionService _subscriptionService;

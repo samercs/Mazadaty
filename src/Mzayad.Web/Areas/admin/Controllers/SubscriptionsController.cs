@@ -79,8 +79,8 @@ namespace Mzayad.Web.Areas.admin.Controllers
             subscription.Name = name.Serialize();
             subscription.Status = model.Subscription.Status;
             subscription.Duration = model.Subscription.Duration;
-            subscription.PurchasePrice = model.Subscription.PurchasePrice;
-            subscription.PurchaseTokens = model.Subscription.PurchaseTokens;
+            subscription.PriceCurrency = model.Subscription.PriceCurrency;
+            subscription.PriceTokens = model.Subscription.PriceTokens;
             subscription.ExpirationUtc = model.Subscription.ExpirationUtc;
             subscription.Quantity = model.Subscription.Quantity;
             
