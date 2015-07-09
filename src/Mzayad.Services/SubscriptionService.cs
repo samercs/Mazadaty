@@ -58,7 +58,10 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<Subscription> GetActiveSubscription(int subscriptionId, string languageCode = null)
+        /// <summary>
+        /// Gets an active, non-expired, quantity available subscription.
+        /// </summary>
+        public async Task<Subscription> GetValidSubscription(int subscriptionId, string languageCode = null)
         {
             using (var dc = DataContext())
             {

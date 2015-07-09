@@ -27,7 +27,7 @@ namespace Mzayad.Web.Controllers
         [Route("buy-now/{subscriptionId:int}")]
         public async Task<ActionResult> BuyNow(int subscriptionId)
         {
-            var subscription = await _subscriptionService.GetActiveSubscription(subscriptionId, Language);
+            var subscription = await _subscriptionService.GetValidSubscription(subscriptionId, Language);
             if (subscription == null)
             {
                 return HttpNotFound();

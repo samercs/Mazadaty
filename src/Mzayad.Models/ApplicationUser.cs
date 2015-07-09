@@ -37,6 +37,10 @@ namespace Mzayad.Models
         //    get { return DateTimeFormatter.ToLocalTime(CreatedUtc); }
         //}
 
+        public int Level { get; set; }
+        public int Xp { get; set; }
+        public int Tokens { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             return await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
