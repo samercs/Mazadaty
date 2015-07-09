@@ -35,6 +35,7 @@ namespace Mzayad.Services.Tests.Fakes
             Auctions = new TestDbSet<Auction>();
             Categories = new TestDbSet<Category>();
             CategoryNotifications = new TestDbSet<CategoryNotification>();
+            Orders = new TestDbSet<Order>();
         }
 
         public int SaveChangesCount { get; private set; }

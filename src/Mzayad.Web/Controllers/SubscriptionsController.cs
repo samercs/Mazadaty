@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Mvc;
+using Mzayad.Models.Enum;
 using Mzayad.Services;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Models.Subscriptions;
@@ -10,10 +11,14 @@ namespace Mzayad.Web.Controllers
     public class SubscriptionsController : ApplicationController
     {
         private readonly SubscriptionService _subscriptionService;
+        private readonly OrderService _orderService;
+        private readonly AddressService _addressService;
         
         public SubscriptionsController(IAppServices appServices) : base(appServices)
         {
             _subscriptionService = new SubscriptionService(DataContextFactory);
+            _orderService = new OrderService(DataContextFactory);
+            _addressService = new AddressService(DataContextFactory);
         }
 
         [Route("")]
@@ -46,7 +51,7 @@ namespace Mzayad.Web.Controllers
 
         [Route("buy/{subscriptionId:int}")]
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> Buy(int subscriptionId, PriceType priceType)
+        public async Task<ActionResult> Buy(int subscriptionId, PaymentMethod paymentMethod)
         {
             var subscription = await _subscriptionService.GetValidSubscription(subscriptionId, Language);
             if (subscription == null)
@@ -55,14 +60,11 @@ namespace Mzayad.Web.Controllers
             }
 
             var user = await AuthService.CurrentUser();
+            user.Address = await _addressService.GetAddress(user.AddressId);
 
-            var viewModel = new BuyNowViewModel
-            {
-                Subscription = subscription,
-                AvailableTokens = user.Tokens
-            };
+            var order = await _orderService.CreateOrderForSubscription(subscription, user, paymentMethod, AuthService.UserHostAddress());
 
-            return Content(priceType.ToString());
+            return Content(paymentMethod.ToString());
         }
 
 

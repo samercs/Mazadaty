@@ -32,11 +32,12 @@ namespace Mzayad.Services
         /// <summary>
         /// Gets an auction's bid with the highest amount.
         /// </summary>
-        public async Task<Bid> GetHighestBid(int auctionId)
+        public async Task<Bid> GetWinningBid(int auctionId)
         {
             using (var dc = DataContext())
             {
                 return await dc.Bids
+                    .Include(i => i.User.Address)
                     .Where(i => i.AuctionId == auctionId)
                     .OrderByDescending(i => i.Amount)
                     .ThenByDescending(i => i.CreatedUtc)

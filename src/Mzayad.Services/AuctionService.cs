@@ -160,12 +160,12 @@ namespace Mzayad.Services
                 auction.ClosedUtc = DateTime.UtcNow;
                 auction.Status = AuctionStatus.Closed;
 
-                var highestBid = await _bidService.GetHighestBid(auctionId);
-                if (highestBid != null)
+                var winningBid = await _bidService.GetWinningBid(auctionId);
+                if (winningBid != null)
                 {
-                    auction.WonByUserId = highestBid.UserId;
-                    auction.WonAmount = highestBid.Amount;
-                    auction.WonByBidId = highestBid.BidId;           
+                    auction.WonByUserId = winningBid.UserId;
+                    auction.WonAmount = winningBid.Amount;
+                    auction.WonByBidId = winningBid.BidId;           
                 }
 
                 await dc.SaveChangesAsync();
@@ -175,9 +175,9 @@ namespace Mzayad.Services
                     onUpdated();
                 }
 
-                if (highestBid != null)
+                if (winningBid != null)
                 {
-                    var order = await _orderService.CreateOrderForAuction(auction, highestBid.BidId);
+                    var order = await _orderService.CreateOrderForAuction(auction, winningBid);
                     return order;
                 }
                 
