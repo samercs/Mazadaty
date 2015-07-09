@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Mzayad.Models;
+using Mzayad.Models.Payment;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Mzayad.Models;
-using Mzayad.Models.Payment;
 
 namespace Mzayad.Data
 {

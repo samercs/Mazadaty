@@ -137,6 +137,11 @@ namespace Mzayad.Services
 
             // purchases with tokens are automaticallyed "shipped"
             SetStatus(order, OrderStatus.Shipped, order.UserId, userHostAddress);
+
+            var utcNow = DateTime.UtcNow;
+
+            order.SubmittedUtc = utcNow;
+            order.ShippedUtc = utcNow;
         }
 
         private static OrderItem[] CreateOrderItems(Bid bid, Auction auction)

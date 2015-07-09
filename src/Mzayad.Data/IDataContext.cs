@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using Mzayad.Models;
@@ -28,8 +30,8 @@ namespace Mzayad.Data
         IDbSet<WishList> WishLists { get; set; }
         IDbSet<KnetTransaction> KnetTransactions { get; set; }
         IDbSet<SubscriptionLog> SubscriptionLogs { get; set; } 
-        IDbSet<SplashAd> SplashAds { get; set; } 
-        
+        IDbSet<SplashAd> SplashAds { get; set; }
+
         int SaveChanges();
         Task<int> SaveChangesAsync();
         void SetModified(object entity);

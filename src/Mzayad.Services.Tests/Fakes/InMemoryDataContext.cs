@@ -39,6 +39,7 @@ namespace Mzayad.Services.Tests.Fakes
         }
 
         public int SaveChangesCount { get; private set; }
+        
         public int SaveChanges()
         {
             SaveChangesCount++;
