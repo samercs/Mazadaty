@@ -16,16 +16,16 @@ namespace Mzayad.Web.Controllers
             _subscriptionService = new SubscriptionService(DataContextFactory);
         }
 
-        [Route("buy")]
-        public async Task<ActionResult> Buy()
+        [Route("")]
+        public async Task<ActionResult> Index()
         {
             var subscriptions = await _subscriptionService.GetActiveSubscriptions(Language);
 
             return View(subscriptions);
         }
 
-        [Route("buy-now/{subscriptionId:int}")]
-        public async Task<ActionResult> BuyNow(int subscriptionId)
+        [Route("buy/{subscriptionId:int}")]
+        public async Task<ActionResult> Buy(int subscriptionId)
         {
             var subscription = await _subscriptionService.GetValidSubscription(subscriptionId, Language);
             if (subscription == null)
@@ -33,9 +33,12 @@ namespace Mzayad.Web.Controllers
                 return HttpNotFound();
             }
 
+            var user = await AuthService.CurrentUser();
+
             var viewModel = new BuyNowViewModel
             {
-                Subscription = subscription
+                Subscription = subscription,
+                AvailableTokens = user.Tokens
             };
 
             return View(viewModel);
