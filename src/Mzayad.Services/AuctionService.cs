@@ -153,7 +153,10 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                var auction = await dc.Auctions.SingleAsync(i => i.AuctionId == auctionId);
+                var auction = await dc.Auctions
+                    .Include(i => i.Product)
+                    .SingleAsync(i => i.AuctionId == auctionId);
+                    
                 auction.ClosedUtc = DateTime.UtcNow;
                 auction.Status = AuctionStatus.Closed;
 
@@ -162,8 +165,7 @@ namespace Mzayad.Services
                 {
                     auction.WonByUserId = highestBid.UserId;
                     auction.WonAmount = highestBid.Amount;
-                    auction.WonByBidId = highestBid.BidId;
-                    
+                    auction.WonByBidId = highestBid.BidId;           
                 }
 
                 await dc.SaveChangesAsync();
@@ -175,7 +177,7 @@ namespace Mzayad.Services
 
                 if (highestBid != null)
                 {
-                    var order = await _orderService.CreateOrder(auctionId, highestBid.BidId);
+                    var order = await _orderService.CreateOrderForAuction(auction, highestBid.BidId);
                     return order;
                 }
                 

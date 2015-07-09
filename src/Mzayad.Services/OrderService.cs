@@ -6,6 +6,7 @@ using Mzayad.Models.Enum;
 using OrangeJetpack.Base.Core.Formatting;
 using System;
 using System.Data.Entity;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using OrangeJetpack.Localization;
 
@@ -13,8 +14,11 @@ namespace Mzayad.Services
 {
     public class OrderService : ServiceBase
     {
+        private readonly SubscriptionService _subscriptionService;
+        
         public OrderService(IDataContextFactory dataContextFactory) : base(dataContextFactory)
         {
+            _subscriptionService = new SubscriptionService(dataContextFactory);
         }
 
         public async Task<Order> GetById(int id, string languageCode = "en")
@@ -59,21 +63,17 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<Order> CreateOrder(int auctionId, int bidId)
+        public async Task<Order> CreateOrderForAuction(Auction auction, int bidId)
         {
             using (var dc = DataContext())
             {
                 var bid = await dc.Bids.Include(i => i.User.Address).SingleOrDefaultAsync(i => i.BidId == bidId);
-                
-                var auction =
-                    await dc.Auctions.Include(i => i.Product).SingleOrDefaultAsync(i => i.AuctionId == auctionId);
-
-                if (bid == null || auction == null)
+                if (bid == null)
                 {
                     return null;
                 }
                 
-                var order = CreateOrder(auction, bid);
+                var order = CreateOrderForAuction(auction, bid);
 
                 dc.Orders.Add(order);
                 await dc.SaveChangesAsync();
@@ -81,7 +81,7 @@ namespace Mzayad.Services
             }
         }
 
-        private static Order CreateOrder(Auction auction, Bid bid)
+        private static Order CreateOrderForAuction(Auction auction, Bid bid)
         {
             return new Order
             {
@@ -96,22 +96,72 @@ namespace Mzayad.Services
             };
         }
 
+        public async Task<Order> CreateOrderForSubscription(Subscription subscription, ApplicationUser user, PaymentMethod paymentMethod)
+        {
+            if (!_subscriptionService.ValidateSubscription(subscription))
+            {
+                throw new Exception("Subscription is no longer valid.");
+            }
+            
+            var order = new Order
+            {
+                Type = OrderType.Subscription,
+                UserId = user.Id,
+                AllowPhoneSms = false,
+                Address = CreateShippingAddress(user)
+            };
+
+            switch (paymentMethod)
+            {
+                case PaymentMethod.Knet:
+                    throw new NotImplementedException();
+                case PaymentMethod.Tokens:
+                    UpdateOrderForTokenPayment(order, subscription);
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
+            return order;
+        }
+
+        private static void UpdateOrderForTokenPayment(Order order, Subscription subscription)
+        {
+            order.PaymentMethod = PaymentMethod.Tokens;
+            order.Status = OrderStatus.Shipped;
+            order.Items = new[]
+            {
+                new OrderItem
+                {
+                    ItemPrice = 0,
+                    Name = subscription.Name,
+                    Quantity = 1,
+                    //
+                }
+            };
+        }
+
         private static ShippingAddress CreateShippingAddress(Bid bid)
+        {
+            return CreateShippingAddress(bid.User);
+        }
+
+        private static ShippingAddress CreateShippingAddress(ApplicationUser user)
         {
             return new ShippingAddress
             {
-                AddressLine1 = bid.User.Address.AddressLine1,
-                AddressLine2 = bid.User.Address.AddressLine2,
-                AddressLine3 = bid.User.Address.AddressLine3,
-                AddressLine4 = bid.User.Address.AddressLine4,
-                CityArea = bid.User.Address.CityArea,
-                CountryCode = bid.User.Address.CountryCode,
-                PostalCode = bid.User.Address.PostalCode,
-                StateProvince = bid.User.Address.StateProvince,
-                            
-                Name = NameFormatter.GetFullName(bid.User.FirstName, bid.User.LastName),
-                PhoneCountryCode = bid.User.PhoneCountryCode,
-                PhoneLocalNumber = bid.User.PhoneNumber               
+                AddressLine1 = user.Address.AddressLine1,
+                AddressLine2 = user.Address.AddressLine2,
+                AddressLine3 = user.Address.AddressLine3,
+                AddressLine4 = user.Address.AddressLine4,
+                CityArea = user.Address.CityArea,
+                CountryCode = user.Address.CountryCode,
+                PostalCode = user.Address.PostalCode,
+                StateProvince = user.Address.StateProvince,
+
+                Name = NameFormatter.GetFullName(user.FirstName, user.LastName),
+                PhoneCountryCode = user.PhoneCountryCode,
+                PhoneLocalNumber = user.PhoneNumber
             };
         }
 
@@ -144,7 +194,7 @@ namespace Mzayad.Services
 
         public async Task<Order> Update(Order order)
         {
-            using (var dc=DataContext())
+            using (var dc = DataContext())
             {
                 dc.Orders.Attach(order);
                 dc.ShippingAddresses.Attach(order.Address);

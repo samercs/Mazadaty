@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Mzayad.Models.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mzayad.Models.Enum;
 
 namespace Mzayad.Models
 {
@@ -30,7 +28,6 @@ namespace Mzayad.Models
         public decimal Shipping { get; set; }
         public decimal Total { get; set; }
         
-
         public PaymentMethod? PaymentMethod { get; set; }
 
         public DateTime? SubmittedUtc { get; set; }

@@ -80,6 +80,31 @@ namespace Mzayad.Services
             }
         }
 
+        public bool ValidateSubscription(Subscription subscription)
+        {
+            if (subscription == null)
+            {
+                return false;
+            }
+            
+            if (subscription.Status != SubscriptionStatus.Active)
+            {
+                return false;
+            }
+
+            if (subscription.ExpirationUtc.HasValue && subscription.ExpirationUtc.Value < DateTime.UtcNow)
+            {
+                return false;
+            }
+
+            if (subscription.Quantity.HasValue && subscription.Quantity.Value <= 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public async Task<Subscription> Add(Subscription subscription)
         {
             using (var dc = DataContext())
