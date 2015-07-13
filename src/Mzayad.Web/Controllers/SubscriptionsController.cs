@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Mzayad.Models.Enum;
 using Mzayad.Services;
@@ -49,9 +50,29 @@ namespace Mzayad.Web.Controllers
             return View(viewModel);
         }
 
-        [Route("buy/{subscriptionId:int}")]
+        [Route("buy/{subscriptionId:int}/tokens")]
+        public async Task<ActionResult> BuyWithTokens(int subscriptionId)
+        {
+            var subscription = await _subscriptionService.GetValidSubscription(subscriptionId, Language);
+            if (subscription == null)
+            {
+                return HttpNotFound();
+            }
+
+            var user = await AuthService.CurrentUser();
+
+            var viewModel = new BuyNowViewModel
+            {
+                Subscription = subscription,
+                AvailableTokens = user.Tokens
+            };
+
+            return View(viewModel);
+        }
+
+        [Route("buy/{subscriptionId:int}/tokens")]
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> Buy(int subscriptionId, PaymentMethod paymentMethod)
+        public async Task<ActionResult> BuyWithTokens(int subscriptionId, FormCollection formCollection)
         {
             var subscription = await _subscriptionService.GetValidSubscription(subscriptionId, Language);
             if (subscription == null)
@@ -62,11 +83,16 @@ namespace Mzayad.Web.Controllers
             var user = await AuthService.CurrentUser();
             user.Address = await _addressService.GetAddress(user.AddressId);
 
-            var order = await _orderService.CreateOrderForSubscription(subscription, user, paymentMethod, AuthService.UserHostAddress());
+            var order = await _orderService.CreateOrderForSubscription(subscription, user, PaymentMethod.Tokens, AuthService.UserHostAddress());
 
-            return Content(paymentMethod.ToString());
+            // create order
+            // decrement user tokens
+            // log decrement user tokens
+            // increase user subscription
+            // log increase user subscription
+
+            return Content("");
         }
-
 
     }
 }

@@ -730,6 +730,7 @@
     <Content Include="Views\Shared\DisplayTemplates\SubscriptionUtc.cshtml" />
     <Content Include="Views\Subscriptions\Index.cshtml" />
     <Content Include="Views\Subscriptions\Buy.cshtml" />
+    <Content Include="Views\Subscriptions\BuyWithTokens.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -568,12 +568,15 @@
     <value>Buy for {FormattedPrice}</value>
   </data>
   <data name="BuyForPriceTokens" xml:space="preserve">
-    <value>Buy for {TokenAmount} tokens</value>
+    <value>Buy with {PriceTokens} tokens</value>
   </data>
   <data name="SubscriptionPriceKdAndTokens" xml:space="preserve">
     <value>{PriceCurrency} or {PriceTokens} tokens</value>
   </data>
   <data name="SubscriptionPriceTokens" xml:space="preserve">
     <value>{PriceTokens} tokens</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
   </data>
 </root>

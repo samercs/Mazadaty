@@ -1,5 +1,4 @@
 ﻿@using Mzayad.Core.Formatting
-@using Mzayad.Models.Enum
 @using Mzayad.Web.Models.Subscriptions
 @using OrangeJetpack.Base.Core.Formatting
 @using DateTimeFormatter = OrangeJetpack.Base.Core.Formatting.DateTimeFormatter
@@ -13,39 +12,16 @@
     You are buying <strong>@Model.Subscription.Name</strong> for <strong>@Model.Subscription.FormattedPrice()</strong>, this will give you a valid subscription until <strong>@DateTimeFormatter.ToLocalTime(Model.NewExpirationUtc, DateTimeFormatter.Format.Full)</strong>.
 </p>
 
-<div class="row">
+<p class="text-center">
 
-    <div class="@Html.Css().FormNarrow">
+    @if (Model.Subscription.PriceCurrencyIsValid)
+    {
+        <a href="#" class="btn btn-default">@StringFormatter.ObjectFormat(Global.BuyForPriceKd, new { FormattedPrice = CurrencyFormatter.Format(Model.Subscription.PriceCurrency) })</a>
+    }
 
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
+    @if (Model.Subscription.PriceTokensIsValid)
+    {
+        <a href="@Url.Action("BuyWithTokens", new { Model.Subscription.SubscriptionId })" class="btn btn-default">@StringFormatter.ObjectFormat(Global.BuyForPriceTokens, new { Model.Subscription.PriceTokens })</a>
+    }
 
-            <section>
-                
-                <div class="form-group">
-                    <i class="fa fa-lg fa-check-square-o"></i>
-                    @Html.Raw(string.Format(Global.RegistrationAgreementAcknowledgement, Url.Action("TermsAndConditions", "Home", new { Language = Html.Language() })))
-                </div>
-            </section>
-
-            <section class="form-buttons">
-
-                @if (Model.Subscription.PriceCurrencyIsValid)
-                {
-                    <button name="PaymentMethod" value="@PaymentMethod.Knet" type="submit" class="btn btn-default">@StringFormatter.ObjectFormat(Global.BuyForPriceKd, new { FormattedPrice = CurrencyFormatter.Format(Model.Subscription.PriceCurrency) })</button>
-                }
-
-                @if (Model.Subscription.PriceTokensIsValid)
-                {
-                    <button name="PaymentMethod" value="@PaymentMethod.Tokens" type="submit" class="btn btn-default">@StringFormatter.ObjectFormat(Global.BuyForPriceTokens, new { TokenAmount = Model.Subscription.PriceTokens })</button>
-                }
-
-            </section>
-        }
-
-
-
-    </div>
-
-</div>
+</p>

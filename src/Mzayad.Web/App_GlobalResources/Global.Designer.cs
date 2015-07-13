@@ -205,7 +205,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Buy for {TokenAmount} tokens.
+        ///   Looks up a localized string similar to Buy with {PriceTokens} tokens.
         /// </summary>
         public static string BuyForPriceTokens {
             get {
@@ -1263,6 +1263,15 @@ namespace Mzayad.Web.Resources {
         public static string StreetRequiredErrorMessage {
             get {
                 return ResourceManager.GetString("StreetRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string Submit {
+            get {
+                return ResourceManager.GetString("Submit", resourceCulture);
             }
         }
         
