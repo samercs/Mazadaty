@@ -6,18 +6,21 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Mzayad.Models.Enum;
+using Mzayad.Services.Identity;
 using OrangeJetpack.Localization;
 
 namespace Mzayad.Services
 {
     public class SubscriptionService : ServiceBase
     {
+        private readonly UserManager  _userManager; 
         private readonly TokenService _tokenService;
         private readonly OrderService _orderService;
         
         public SubscriptionService(IDataContextFactory dataContextFactory)
             : base(dataContextFactory)
         {
+            _userManager = new UserManager(dataContextFactory);
             _tokenService = new TokenService(dataContextFactory);
             _orderService = new OrderService(dataContextFactory);
         }
@@ -107,6 +110,31 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task AddUserSubscription(ApplicationUser user, Subscription subscription,
+            ApplicationUser modifiedByUser, string userHostAddress)
+        {
+            using (var dc = DataContext())
+            {
+                user = await _userManager.FindByIdAsync(user.Id);
+
+                var originalSubscriptionUtc = user.SubscriptionUtc;
+                var modifiedSubscriptionUtc = user.SubscriptionUtc.GetValueOrDefault(DateTime.Today).AddDays(subscription.Duration);
+
+                user.SubscriptionUtc = modifiedSubscriptionUtc;
+
+                dc.SubscriptionLogs.Add(new SubscriptionLog
+                {
+                    UserId = user.Id,
+                    ModifiedByUserId = modifiedByUser.Id,
+                    OriginalSubscriptionUtc = originalSubscriptionUtc,
+                    ModifiedSubscriptionUtc = modifiedSubscriptionUtc,
+                    UserHostAddress = userHostAddress
+                });
+
+                await dc.SaveChangesAsync();
+            }
+        }
+
         /// <summary>
         /// Gets an indicator as to whether or not a subscription is valid for purchase.
         /// </summary>
@@ -175,11 +203,9 @@ namespace Mzayad.Services
             var order = await _orderService.CreateOrderForSubscription(subscription, user, PaymentMethod.Tokens, userHostAddress);
 
             await _tokenService.AddUserTokens(user, -(subscription.PriceTokens), user, userHostAddress);
+            await AddUserSubscription(user, subscription, user, userHostAddress);
 
-            
-            // increase user subscription
-            // log increase user subscription
-            // send email notification
+            // TODO: send email notification
         }
     }
 
