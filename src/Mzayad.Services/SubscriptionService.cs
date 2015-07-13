@@ -12,11 +12,13 @@ namespace Mzayad.Services
 {
     public class SubscriptionService : ServiceBase
     {
+        private readonly TokenService _tokenService;
         private readonly OrderService _orderService;
         
         public SubscriptionService(IDataContextFactory dataContextFactory)
             : base(dataContextFactory)
         {
+            _tokenService = new TokenService(dataContextFactory);
             _orderService = new OrderService(dataContextFactory);
         }
 
@@ -172,10 +174,9 @@ namespace Mzayad.Services
 
             var order = await _orderService.CreateOrderForSubscription(subscription, user, PaymentMethod.Tokens, userHostAddress);
 
+            await _tokenService.AddUserTokens(user, -(subscription.PriceTokens), user, userHostAddress);
 
-
-            // decrement user tokens
-            // log decrement user tokens
+            
             // increase user subscription
             // log increase user subscription
             // send email notification

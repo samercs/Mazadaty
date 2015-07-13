@@ -1,24 +1,23 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mzayad.Models
 {
-    public class SubscriptionLog : ModelBase
+    public class TokenLog : ModelBase
     {
-        public int SubscriptionLogId { get; set; }
-        
+        public int TokenLogId { get; set; }
+
         [Required, StringLength(128)]
         public string UserId { get; set; }
         
         [Required, StringLength(128)]
         public string ModifiedByUserId { get; set; }
-        
-        public DateTime? OriginalSubscriptionUtc { get; set; }
-        
+
+        public int? OriginalTokenAmount { get; set; }
+
         [Required]
-        public DateTime ModifiedSubscriptionUtc { get; set; }
-        
+        public int ModifiedTokenAmount { get; set; }
+
         [Required, StringLength(15)]
         public string UserHostAddress { get; set; }
 
@@ -29,17 +28,11 @@ namespace Mzayad.Models
         public virtual ApplicationUser ModifiedByUser { get; set; }
 
         [NotMapped]
-        public int DaysAdded
+        public int TokensAdded
         {
             get
             {
-                if (!OriginalSubscriptionUtc.HasValue)
-                {
-                    OriginalSubscriptionUtc = DateTime.Today;
-                }
-
-                return ModifiedSubscriptionUtc.Subtract(OriginalSubscriptionUtc.Value).Days;
-
+                return ModifiedTokenAmount - OriginalTokenAmount.GetValueOrDefault(0);
             }
         }
     }

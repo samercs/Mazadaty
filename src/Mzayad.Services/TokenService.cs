@@ -1,24 +1,46 @@
-﻿using System.Data.Entity;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Mzayad.Data;
+﻿using Mzayad.Data;
 using Mzayad.Models;
+using Mzayad.Services.Identity;
+using System.Threading.Tasks;
 
 namespace Mzayad.Services
 {
     public class TokenService : ServiceBase
     {
+        private readonly UserManager _userManager;
+        
         public TokenService(IDataContextFactory dataContextFactory) : base(dataContextFactory)
         {
+            _userManager = new UserManager(dataContextFactory);
         }
 
-        public async Task UpdateUserTokens(ApplicationUser user, int tokens)
-        {        
-            var userStore = new UserStore<ApplicationUser>((DbContext)DataContext());
-            var userManager = new UserManager<ApplicationUser>(userStore);
+        public async Task AddUserTokens(ApplicationUser user, int? tokens, ApplicationUser modifiedByUser, string userHostAddress)
+        {
+            if (!tokens.HasValue)
+            {
+                return;
+            }
+ 
+            user = await _userManager.FindByIdAsync(user.Id);
 
-            //var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<DataContext>()));
+            var originalTokenAmount = user.Tokens;   
+            user.Tokens += tokens.Value;
+
+            await _userManager.UpdateAsync(user);
+
+            using (var dc = DataContext())
+            {
+                dc.TokenLogs.Add(new TokenLog
+                {
+                    UserId = user.Id,
+                    ModifiedByUserId = modifiedByUser.Id,
+                    OriginalTokenAmount = originalTokenAmount,
+                    ModifiedTokenAmount = user.Tokens,
+                    UserHostAddress = userHostAddress
+                });
+
+                await dc.SaveChangesAsync();
+            }
         }
     }
 }
