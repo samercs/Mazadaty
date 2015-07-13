@@ -74,6 +74,7 @@
     <Compile Include="BidService.cs" />
     <Compile Include="CategoryService.cs" />
     <Compile Include="EmailTemplateService.cs" />
+    <Compile Include="Identity\RoleManager.cs" />
     <Compile Include="LevelService.cs" />
     <Compile Include="NotificationService.cs" />
     <Compile Include="OrderService.cs" />
@@ -86,6 +87,8 @@
     <Compile Include="SponsorService.cs" />
     <Compile Include="SubscriptionLogService.cs" />
     <Compile Include="SubscriptionService.cs" />
+    <Compile Include="TokenService.cs" />
+    <Compile Include="Identity\UserManager.cs" />
     <Compile Include="UserProfileService.cs" />
     <Compile Include="WishListService.cs" />
   </ItemGroup>

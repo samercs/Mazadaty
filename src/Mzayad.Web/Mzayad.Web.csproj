@@ -344,9 +344,9 @@
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Core\Configuration\CookieKeys.cs" />
-    <Compile Include="Core\Identity\ApplicationRoleManager.cs" />
-    <Compile Include="Core\Identity\ApplicationSignInManager.cs" />
-    <Compile Include="Core\Identity\ApplicationUserManager.cs" />
+    <None Include="Core\Identity\ApplicationRoleManager.cs.bak" />
+    <Compile Include="Core\Identity\SignInManager.cs" />
+    <None Include="Core\Identity\ApplicationUserManager.cs.bak" />
     <Compile Include="Core\Identity\Role.cs" />
     <Compile Include="Core\Services\AppSettings.cs" />
     <Compile Include="Core\Services\AuthService.cs" />
