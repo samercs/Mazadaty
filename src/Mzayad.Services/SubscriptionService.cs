@@ -112,27 +112,39 @@ namespace Mzayad.Services
 
         public async Task AddUserSubscription(ApplicationUser user, Subscription subscription,
             ApplicationUser modifiedByUser, string userHostAddress)
+        {        
+            user = await _userManager.FindByIdAsync(user.Id);
+            var modifiedSubscriptionUtc = user.SubscriptionUtc.GetValueOrDefault(DateTime.Today).AddDays(subscription.Duration);
+
+            await AddAndLogUserSubscription(user, modifiedSubscriptionUtc, modifiedByUser, userHostAddress);
+        }
+
+        private async Task AddAndLogUserSubscription(ApplicationUser user, DateTime subscriptionUtc, ApplicationUser modifiedByUser, string userHostAddress)
         {
+            var originalSubscriptionUtc = user.SubscriptionUtc;
+            user.SubscriptionUtc = subscriptionUtc;
+            await _userManager.UpdateAsync(user);
+
             using (var dc = DataContext())
             {
-                user = await _userManager.FindByIdAsync(user.Id);
-
-                var originalSubscriptionUtc = user.SubscriptionUtc;
-                var modifiedSubscriptionUtc = user.SubscriptionUtc.GetValueOrDefault(DateTime.Today).AddDays(subscription.Duration);
-
-                user.SubscriptionUtc = modifiedSubscriptionUtc;
-
                 dc.SubscriptionLogs.Add(new SubscriptionLog
                 {
                     UserId = user.Id,
                     ModifiedByUserId = modifiedByUser.Id,
                     OriginalSubscriptionUtc = originalSubscriptionUtc,
-                    ModifiedSubscriptionUtc = modifiedSubscriptionUtc,
+                    ModifiedSubscriptionUtc = subscriptionUtc,
                     UserHostAddress = userHostAddress
                 });
 
                 await dc.SaveChangesAsync();
             }
+        }
+
+        public async Task AddUserSubscription(ApplicationUser user, DateTime subscriptionUtc, ApplicationUser modifiedByUser, string userHostAddress)
+        {
+            user = await _userManager.FindByIdAsync(user.Id);
+
+            await AddAndLogUserSubscription(user, subscriptionUtc, modifiedByUser, userHostAddress);
         }
 
         /// <summary>

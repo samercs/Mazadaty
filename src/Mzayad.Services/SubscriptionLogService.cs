@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Mzayad.Data;
+using Mzayad.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Mzayad.Data;
-using Mzayad.Models;
 
 namespace Mzayad.Services
 {
@@ -13,17 +11,6 @@ namespace Mzayad.Services
     {
         public SubscriptionLogService(IDataContextFactory dataContextFactory) : base(dataContextFactory)
         {
-        }
-
-
-        public async Task<SubscriptionLog> Save(SubscriptionLog subscriptionLog)
-        {
-            using (var dc=DataContext())
-            {
-                dc.SubscriptionLogs.Add(subscriptionLog);
-                await dc.SaveChangesAsync();
-                return subscriptionLog;
-            }
         }
 
         public async Task<IEnumerable<SubscriptionLog>> GetByUserId(string userId)

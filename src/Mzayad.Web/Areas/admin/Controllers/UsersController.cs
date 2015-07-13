@@ -21,11 +21,13 @@ namespace Mzayad.Web.Areas.admin.Controllers
     [RouteArea("admin"), RoutePrefix("users"), RoleAuthorize(Role.Administrator)]
     public class UsersController : ApplicationController
     {
+        private readonly SubscriptionService _subscriptionService;
         private readonly SubscriptionLogService _subscriptionLogService;
 
         public UsersController(IAppServices appServices)
             : base(appServices)
         {
+            _subscriptionService = new SubscriptionService(DataContextFactory);
             _subscriptionLogService = new SubscriptionLogService(DataContextFactory);
         }
 
@@ -175,20 +177,11 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return HttpNotFound();
             }
 
-            var oldSubscriptionValue = user.SubscriptionUtc;
-            user.SubscriptionUtc = model.CurrentSubscription.AddHours(-3); // AST -> UTC
-            await AuthService.UpdateUser(user);
+            var modifiedSubscriptionUtc = model.CurrentSubscription.AddHours(-3); // AST -> UTC
+            var currentUser = await AuthService.CurrentUser();
+            var hostAddress = AuthService.UserHostAddress();
 
-            var subscriptionLog = new SubscriptionLog
-            {
-                UserId = user.Id,
-                ModifiedByUserId = AuthService.CurrentUserId(),
-                OriginalSubscriptionUtc = oldSubscriptionValue,
-                ModifiedSubscriptionUtc = model.CurrentSubscription,
-                UserHostAddress = AuthService.UserHostAddress()
-            };
-
-            await _subscriptionLogService.Save(subscriptionLog);
+            await _subscriptionService.AddUserSubscription(user, modifiedSubscriptionUtc, currentUser, hostAddress);
 
             SetStatusMessage("The user subscription has been updated successfully.");
             return RedirectToAction("Details", "Users", new { id = user.Id });
