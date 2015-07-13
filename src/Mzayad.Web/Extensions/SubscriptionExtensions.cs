@@ -24,7 +24,7 @@ namespace Mzayad.Web.Extensions
 
             if (!subscription.PriceCurrencyIsValid && subscription.PriceTokensIsValid)
             {
-                return StringFormatter.ObjectFormat(Global.SubscriptionPriceTokens, new { subscription });
+                return StringFormatter.ObjectFormat(Global.SubscriptionPriceTokens, new { subscription.PriceTokens });
             }
 
             return StringFormatter.ObjectFormat(Global.SubscriptionPriceKdAndTokens, new
