@@ -1,4 +1,7 @@
-﻿using Mzayad.Data;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Services.Identity;
 using System.Threading.Tasks;
@@ -40,6 +43,39 @@ namespace Mzayad.Services
                 });
 
                 await dc.SaveChangesAsync();
+            }
+        }
+
+        /// <summary>
+        /// Gets a collection of token logs.
+        /// </summary>
+        public async Task<IReadOnlyCollection<TokenLog>> GetTokenLogs()
+        {
+            using (var dc = DataContext())
+            {
+                return await dc
+                    .TokenLogs
+                    .Include(i => i.User)
+                    .Include(i => i.ModifiedByUser)
+                    .OrderBy(i => i.CreatedUtc)
+                    .ToListAsync();
+            }
+        }
+
+        /// <summary>
+        /// Gets a collection of token logs by user ID.
+        /// </summary>
+        public async Task<IReadOnlyCollection<TokenLog>> GetTokenLogsByUserId(string userId)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc
+                    .TokenLogs
+                    .Include(i => i.User)
+                    .Include(i => i.ModifiedByUser)
+                    .Where(i => i.UserId == userId)
+                    .OrderBy(i => i.CreatedUtc)
+                    .ToListAsync();
             }
         }
     }

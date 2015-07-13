@@ -13,7 +13,7 @@ namespace Mzayad.Services
         {
         }
 
-        public async Task<IEnumerable<SubscriptionLog>> GetByUserId(string userId)
+        public async Task<IReadOnlyCollection<SubscriptionLog>> GetByUserId(string userId)
         {
             using (var dc = DataContext())
             {
@@ -26,7 +26,7 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<IEnumerable<SubscriptionLog>> GetAll()
+        public async Task<IReadOnlyCollection<SubscriptionLog>> GetAll()
         {
             using (var dc = DataContext())
             {

@@ -22,7 +22,7 @@ namespace Mzayad.Web.Areas.admin.Models.Users
         [Required]
         [StringLength(256)]
         public string UserName { get; set; }
-        
+
         [Required]
         [EmailAddress]
         [DataType(DataType.EmailAddress)]
@@ -35,9 +35,10 @@ namespace Mzayad.Web.Areas.admin.Models.Users
 
         public List<SelectListItem> Roles { get; set; }
 
-        public IEnumerable<SubscriptionLog> SubscriptionLogs { get; set; } 
+        public IReadOnlyCollection<SubscriptionLog> SubscriptionLogs { get; set; }
+        public IReadOnlyCollection<TokenLog> TokenLogs { get; set; }
 
-        public async Task<DetailsViewModel> Hydrate(ApplicationUser user, IAuthService authService,SubscriptionLogService logService)
+        public async Task<DetailsViewModel> Hydrate(ApplicationUser user, IAuthService authService, SubscriptionLogService logService, TokenService tokenService)
         {
             UserId = user.Id;
             FirstName = user.FirstName;
@@ -46,19 +47,21 @@ namespace Mzayad.Web.Areas.admin.Models.Users
             Email = user.Email;
             CreatedUtc = user.CreatedUtc;
             SubscriptionUtc = user.SubscriptionUtc;
-            
+
             var roles = (await authService.GetRolesForUser(user.Id));
 
             Roles = (from Role role in Enum.GetValues(typeof(Role))
                      select new SelectListItem
                      {
-                         Text = role.ToString(), 
-                         Value = EnumFormatter.Description(role), 
+                         Text = role.ToString(),
+                         Value = EnumFormatter.Description(role),
                          Selected = roles.Contains(role.ToString())
                      }).ToList();
 
 
             SubscriptionLogs = await logService.GetByUserId(UserId);
+            TokenLogs = await tokenService.GetTokenLogsByUserId(UserId);
+            
             return this;
         }
     }

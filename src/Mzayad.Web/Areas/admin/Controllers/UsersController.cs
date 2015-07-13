@@ -23,12 +23,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
     {
         private readonly SubscriptionService _subscriptionService;
         private readonly SubscriptionLogService _subscriptionLogService;
+        private readonly TokenService _tokenService;
 
         public UsersController(IAppServices appServices)
             : base(appServices)
         {
             _subscriptionService = new SubscriptionService(DataContextFactory);
             _subscriptionLogService = new SubscriptionLogService(DataContextFactory);
+            _tokenService = new TokenService(DataContextFactory);
         }
 
         public async Task<ActionResult> Index(string search = "", Role? role = null)
@@ -94,7 +96,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return HttpNotFound();
             }
 
-            var model = await new DetailsViewModel().Hydrate(user, AuthService, _subscriptionLogService);
+            var model = await new DetailsViewModel().Hydrate(user, AuthService, _subscriptionLogService, _tokenService);
 
             return View(model);
         }
@@ -110,7 +112,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             if (!ModelState.IsValid)
             {
-                await model.Hydrate(user, AuthService, _subscriptionLogService);
+                await model.Hydrate(user, AuthService, _subscriptionLogService, _tokenService);
 
                 return View("Details", model);
             }
