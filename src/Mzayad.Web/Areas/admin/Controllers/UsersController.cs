@@ -22,14 +22,12 @@ namespace Mzayad.Web.Areas.admin.Controllers
     public class UsersController : ApplicationController
     {
         private readonly SubscriptionService _subscriptionService;
-        private readonly SubscriptionLogService _subscriptionLogService;
         private readonly TokenService _tokenService;
 
         public UsersController(IAppServices appServices)
             : base(appServices)
         {
             _subscriptionService = new SubscriptionService(DataContextFactory);
-            _subscriptionLogService = new SubscriptionLogService(DataContextFactory);
             _tokenService = new TokenService(DataContextFactory);
         }
 
@@ -96,7 +94,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return HttpNotFound();
             }
 
-            var model = await new DetailsViewModel().Hydrate(user, AuthService, _subscriptionLogService, _tokenService);
+            var model = await new DetailsViewModel().Hydrate(user, AuthService, _subscriptionService, _tokenService);
 
             return View(model);
         }
@@ -112,7 +110,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             if (!ModelState.IsValid)
             {
-                await model.Hydrate(user, AuthService, _subscriptionLogService, _tokenService);
+                await model.Hydrate(user, AuthService, _subscriptionService, _tokenService);
 
                 return View("Details", model);
             }
@@ -192,7 +190,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         [HttpPost]
         public async Task<JsonResult> GetSubscriptionLog([DataSourceRequest] DataSourceRequest request, string id)
         {
-            var logs = await _subscriptionLogService.GetByUserId(id);
+            var logs = await _subscriptionService.GetSubscriptionLogsByUserId(id);
             return Json(logs.ToDataSourceResult(request));
         }
     }

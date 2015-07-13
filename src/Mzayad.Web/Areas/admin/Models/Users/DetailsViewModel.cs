@@ -38,7 +38,7 @@ namespace Mzayad.Web.Areas.admin.Models.Users
         public IReadOnlyCollection<SubscriptionLog> SubscriptionLogs { get; set; }
         public IReadOnlyCollection<TokenLog> TokenLogs { get; set; }
 
-        public async Task<DetailsViewModel> Hydrate(ApplicationUser user, IAuthService authService, SubscriptionLogService logService, TokenService tokenService)
+        public async Task<DetailsViewModel> Hydrate(ApplicationUser user, IAuthService authService, SubscriptionService subscriptionService, TokenService tokenService)
         {
             UserId = user.Id;
             FirstName = user.FirstName;
@@ -59,7 +59,7 @@ namespace Mzayad.Web.Areas.admin.Models.Users
                      }).ToList();
 
 
-            SubscriptionLogs = await logService.GetByUserId(UserId);
+            SubscriptionLogs = await subscriptionService.GetSubscriptionLogsByUserId(UserId);
             TokenLogs = await tokenService.GetTokenLogsByUserId(UserId);
             
             return this;

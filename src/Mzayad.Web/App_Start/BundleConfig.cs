@@ -36,7 +36,8 @@ namespace Mzayad.Web
                 "~/scripts/bootstrap.js",
                 "~/scripts/moment.js",
                 "~/scripts/wow.js",
-                "~/scripts/site.js"));
+                "~/scripts/site.js",
+                "~/scripts/site-kendo.js"));
 
             bundles.Add(new ScriptBundle("~/js/validate").Include("~/scripts/jquery.validate*"));
             bundles.Add(new ScriptBundle("~/js/slugify").Include("~/scripts/jquery.slugify*"));

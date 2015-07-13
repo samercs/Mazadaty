@@ -236,6 +236,32 @@ namespace Mzayad.Services
                 await dc.SaveChangesAsync();
             }
         }
+
+        public async Task<IReadOnlyCollection<SubscriptionLog>> GetSubscriptionLogs()
+        {
+            using (var dc = DataContext())
+            {
+                return await dc
+                    .SubscriptionLogs
+                    .Include(i => i.User)
+                    .Include(i => i.ModifiedByUser)
+                    .OrderBy(i => i.CreatedUtc)
+                    .ToListAsync();
+            }
+        }
+
+        public async Task<IReadOnlyCollection<SubscriptionLog>> GetSubscriptionLogsByUserId(string userId)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.SubscriptionLogs
+                    .Include(i => i.User)
+                    .Include(i => i.ModifiedByUser)
+                    .Where(i => i.UserId == userId)
+                    .OrderBy(i => i.CreatedUtc)
+                    .ToListAsync();
+            }
+        }
     }
 
     public class SubscriptionValidationResult

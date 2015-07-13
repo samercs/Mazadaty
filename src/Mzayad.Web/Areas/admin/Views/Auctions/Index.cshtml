@@ -30,14 +30,14 @@
 }
 
 @(Html.Kendo().Grid(Model.Auctions)
-                    .Init(ajax => ajax.Action("GetAuctions", "Auctions", new { search = Model.Search }))
+    .Init(ajax => ajax.Action("GetAuctions", "Auctions", new { search = Model.Search }))
     .Columns(columns =>
     {
         columns.Bound(i => i.Title).Title("Title");
         columns.Bound(i => i.Status).ClientTemplate("#= getLabel(data) #");
         columns.Bound(i => i.StartUtc).Format("{0:dd/MM/yyyy HH:mm}").Title("Start");
         columns.Bound(i => i.Duration).Format("{0} minutes");
-        columns.Bound(i => i.BuyNowEnabled).Title("Buy Now").ClientTemplate("#= kendoFormatter.getYesNo(data.BuyNowEnabled) #"); ;
+        columns.Bound(i => i.BuyNowEnabled).Title("Buy Now").ClientTemplate("#= KendoFormatter.getYesNo(data.BuyNowEnabled) #"); ;
         columns.LinkColumn("Details", "auctions/edit/#=AuctionId#");
     })
 )
