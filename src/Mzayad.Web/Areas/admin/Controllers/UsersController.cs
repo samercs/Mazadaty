@@ -21,12 +21,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
     [RouteArea("admin"), RoutePrefix("users"), RoleAuthorize(Role.Administrator)]
     public class UsersController : ApplicationController
     {
-        private readonly SubscriptionLogService _subscriptionLogService;
+        private readonly SubscriptionService _subscriptionService;
+        private readonly TokenService _tokenService;
 
         public UsersController(IAppServices appServices)
             : base(appServices)
         {
-            _subscriptionLogService = new SubscriptionLogService(DataContextFactory);
+            _subscriptionService = new SubscriptionService(DataContextFactory);
+            _tokenService = new TokenService(DataContextFactory);
         }
 
         public async Task<ActionResult> Index(string search = "", Role? role = null)
@@ -92,7 +94,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return HttpNotFound();
             }
 
-            var model = await new DetailsViewModel().Hydrate(user, AuthService, _subscriptionLogService);
+            var model = await new DetailsViewModel().Hydrate(user, AuthService, _subscriptionService, _tokenService);
 
             return View(model);
         }
@@ -108,7 +110,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             if (!ModelState.IsValid)
             {
-                await model.Hydrate(user, AuthService, _subscriptionLogService);
+                await model.Hydrate(user, AuthService, _subscriptionService, _tokenService);
 
                 return View("Details", model);
             }
@@ -175,20 +177,11 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return HttpNotFound();
             }
 
-            var oldSubscriptionValue = user.SubscriptionUtc;
-            user.SubscriptionUtc = model.CurrentSubscription.AddHours(-3); // AST -> UTC
-            await AuthService.UpdateUser(user);
+            var modifiedSubscriptionUtc = model.CurrentSubscription.AddHours(-3); // AST -> UTC
+            var currentUser = await AuthService.CurrentUser();
+            var hostAddress = AuthService.UserHostAddress();
 
-            var subscriptionLog = new SubscriptionLog
-            {
-                UserId = user.Id,
-                ModifiedByUserId = AuthService.CurrentUserId(),
-                OriginalSubscriptionUtc = oldSubscriptionValue,
-                ModifiedSubscriptionUtc = model.CurrentSubscription,
-                UserHostAddress = AuthService.UserHostAddress()
-            };
-
-            await _subscriptionLogService.Save(subscriptionLog);
+            await _subscriptionService.AddSubscriptionToUser(user, modifiedSubscriptionUtc, currentUser, hostAddress);
 
             SetStatusMessage("The user subscription has been updated successfully.");
             return RedirectToAction("Details", "Users", new { id = user.Id });
@@ -197,7 +190,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         [HttpPost]
         public async Task<JsonResult> GetSubscriptionLog([DataSourceRequest] DataSourceRequest request, string id)
         {
-            var logs = await _subscriptionLogService.GetByUserId(id);
+            var logs = await _subscriptionService.GetSubscriptionLogsByUserId(id);
             return Json(logs.ToDataSourceResult(request));
         }
     }

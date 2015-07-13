@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Mzayad.Data;
+﻿using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
-using OrangeJetpack.Base.Core.Formatting;
-using System;
-using System.Data.Entity;
-using System.Threading.Tasks;
 using OrangeJetpack.Localization;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Mzayad.Services
 {
@@ -23,7 +22,8 @@ namespace Mzayad.Services
             {
                 var order = await dc.Orders
                     .Include(i => i.Address)
-                    .Include(i => i.Items)
+                    .Include(i => i.Items.Select(j => j.Product))
+                    .Include(i => i.Items.Select(j => j.Subscription))
                     .Include(i => i.Logs)
                     .SingleOrDefaultAsync(i => i.OrderId == id);
 
@@ -53,27 +53,29 @@ namespace Mzayad.Services
 
                 }
 
-
-                return
-                    await query.Include(i => i.Address).Include(i => i.Items).OrderBy(i => i.SubmittedUtc).ToListAsync();
+                return await query
+                    .Include(i => i.Address)
+                    .Include(i => i.Items)
+                    .OrderBy(i => i.SubmittedUtc)
+                    .ToListAsync();
             }
         }
 
-        public async Task<Order> CreateOrder(int auctionId, int bidId)
+        public async Task<Order> CreateOrderForAuction(Auction auction, Bid bid)
         {
             using (var dc = DataContext())
             {
-                var bid = await dc.Bids.Include(i => i.User.Address).SingleOrDefaultAsync(i => i.BidId == bidId);
-                
-                var auction =
-                    await dc.Auctions.Include(i => i.Product).SingleOrDefaultAsync(i => i.AuctionId == auctionId);
-
-                if (bid == null || auction == null)
+                var order = new Order
                 {
-                    return null;
-                }
-                
-                var order = CreateOrder(auction, bid);
+                    Type = OrderType.Auction,
+                    UserId = bid.UserId,
+                    Status = OrderStatus.InProgress,
+                    PaymentMethod = PaymentMethod.Knet,
+                    AllowPhoneSms = false,
+                    Address = ShippingAddress.Create(bid.User),
+                    Items = CreateOrderItems(bid, auction),
+                    Logs = CreateOrderLogs(bid)
+                };
 
                 dc.Orders.Add(order);
                 await dc.SaveChangesAsync();
@@ -81,38 +83,78 @@ namespace Mzayad.Services
             }
         }
 
-        private static Order CreateOrder(Auction auction, Bid bid)
-        {
-            return new Order
+        public async Task<Order> CreateOrderForSubscription(Subscription subscription, ApplicationUser user, PaymentMethod paymentMethod, string userHostAddress)
+        {          
+            var order = new Order
             {
-                Type = OrderType.Auction,
-                UserId = bid.UserId,
-                Status = OrderStatus.InProgress,
-                PaymentMethod = PaymentMethod.Knet,
+                Type = OrderType.Subscription,
+                UserId = user.Id,
                 AllowPhoneSms = false,
-                Address = CreateShippingAddress(bid),
-                Items = CreateOrderItems(bid, auction),
-                Logs = CreateOrderLogs(bid)
+                Address = ShippingAddress.Create(user)
             };
+
+            SetStatus(order, OrderStatus.InProgress, user.Id, userHostAddress);
+
+            switch (paymentMethod)
+            {
+                case PaymentMethod.Tokens:
+                    UpdateOrderForTokenPayment(order, subscription, userHostAddress);
+                    break;
+                case PaymentMethod.Knet:
+                    UpdateOrderForKnetPayment(order, subscription, userHostAddress);
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
+            order.RecalculateTotal();
+
+            using (var dc = DataContext())
+            {
+                dc.Orders.Add(order);
+                await dc.SaveChangesAsync();
+                return order;
+            }
         }
 
-        private static ShippingAddress CreateShippingAddress(Bid bid)
+        private static void UpdateOrderForTokenPayment(Order order, Subscription subscription, string userHostAddress)
         {
-            return new ShippingAddress
+            order.PaymentMethod = PaymentMethod.Tokens;
+            order.Items = new[]
             {
-                AddressLine1 = bid.User.Address.AddressLine1,
-                AddressLine2 = bid.User.Address.AddressLine2,
-                AddressLine3 = bid.User.Address.AddressLine3,
-                AddressLine4 = bid.User.Address.AddressLine4,
-                CityArea = bid.User.Address.CityArea,
-                CountryCode = bid.User.Address.CountryCode,
-                PostalCode = bid.User.Address.PostalCode,
-                StateProvince = bid.User.Address.StateProvince,
-                            
-                Name = NameFormatter.GetFullName(bid.User.FirstName, bid.User.LastName),
-                PhoneCountryCode = bid.User.PhoneCountryCode,
-                PhoneLocalNumber = bid.User.PhoneNumber               
+                new OrderItem
+                {
+                    ItemPrice = 0,
+                    Name = subscription.Name,
+                    Quantity = 1,
+                    SubscriptionId = subscription.SubscriptionId
+                }
             };
+
+            // purchases with tokens are automaticallyed "shipped"
+            SetStatus(order, OrderStatus.Shipped, order.UserId, userHostAddress);
+
+            var utcNow = DateTime.UtcNow;
+
+            order.SubmittedUtc = utcNow;
+            order.ShippedUtc = utcNow;
+        }
+
+        private static void UpdateOrderForKnetPayment(Order order, Subscription subscription, string userHostAddress)
+        {
+            order.PaymentMethod = PaymentMethod.Tokens;
+            order.Items = new[]
+            {
+                new OrderItem
+                {
+                    ItemPrice = subscription.PriceCurrency.GetValueOrDefault(0),
+                    Name = subscription.Name,
+                    Quantity = 1,
+                    SubscriptionId = subscription.SubscriptionId
+                }
+            };
+
+            order.SubmittedUtc = DateTime.UtcNow;
         }
 
         private static OrderItem[] CreateOrderItems(Bid bid, Auction auction)
@@ -144,7 +186,7 @@ namespace Mzayad.Services
 
         public async Task<Order> Update(Order order)
         {
-            using (var dc=DataContext())
+            using (var dc = DataContext())
             {
                 dc.Orders.Attach(order);
                 dc.ShippingAddresses.Attach(order.Address);
@@ -213,21 +255,41 @@ namespace Mzayad.Services
 
         public async Task SubmitOrder(Order order, string userHostAddress)
         {
-            //using (var dc = DataContext())
-            //{
-            //    foreach (var item in order.Items)
-            //    {
-            //        var skuId = item.SkuId;
-            //        var sku = await dc.Skus.SingleOrDefaultAsync(i => i.SkuId == skuId);
-            //        if (sku != null)
-            //        {
-            //            sku.Quantity--;
-            //        }
-            //    }
-            //    await dc.SaveChangesAsync();
-            //}
+            using (var dc = DataContext())
+            {
+                dc.Orders.Attach(order);
 
-            await UpdateStatus(order, OrderStatus.Processing, userHostAddress);
+                DecrementProductOrSubscriptionInventory(order);
+
+                var orderHasPhysicalGoods = order.Items.Any(i => i.ProductId.HasValue);
+                if (orderHasPhysicalGoods)
+                {
+                    SetStatus(order, OrderStatus.Processing, null, userHostAddress);
+                }
+                else
+                {
+                    SetStatus(order, OrderStatus.Shipped, null, userHostAddress);
+                    order.ShippedUtc = DateTime.UtcNow;
+                }
+
+                await dc.SaveChangesAsync();
+            }
+        }
+
+        private static void DecrementProductOrSubscriptionInventory(Order order)
+        {
+            foreach (var item in order.Items)
+            {
+                if (item.Product != null)
+                {
+                    item.Product.Quantity -= 1;
+                }
+
+                if (item.Subscription != null)
+                {
+                    item.Subscription.Quantity -= 1;
+                }
+            }
         }
     }
 }

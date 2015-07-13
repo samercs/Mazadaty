@@ -28,7 +28,8 @@ namespace Mzayad.Services.Payment
                 return await dc.KnetTransactions
                     .Include(i => i.Order)
                     .Include(i => i.Order.Address)
-                    .Include(i => i.Order.Items)
+                    .Include(i => i.Order.Items.Select(j => j.Product))
+                    .Include(i => i.Order.Items.Select(j => j.Subscription))
                     .SingleOrDefaultAsync(i => i.PaymentId == paymentId);
             }
         }

@@ -27,7 +27,8 @@ namespace Mzayad.Services.Tests.Fakes
         public IDbSet<Subscription> Subscriptions { get; set; }
         public IDbSet<WishList> WishLists { get; set; }
         public IDbSet<KnetTransaction> KnetTransactions { get; set; }
-        public IDbSet<SubscriptionLog> SubscriptionLogs { get; set; } 
+        public IDbSet<SubscriptionLog> SubscriptionLogs { get; set; }
+        public IDbSet<TokenLog> TokenLogs { get; set; }
         public IDbSet<SplashAd> SplashAds { get; set; } 
 
         public InMemoryDataContext()
@@ -35,9 +36,11 @@ namespace Mzayad.Services.Tests.Fakes
             Auctions = new TestDbSet<Auction>();
             Categories = new TestDbSet<Category>();
             CategoryNotifications = new TestDbSet<CategoryNotification>();
+            Orders = new TestDbSet<Order>();
         }
 
         public int SaveChangesCount { get; private set; }
+        
         public int SaveChanges()
         {
             SaveChangesCount++;

@@ -1,22 +1,19 @@
-﻿@using Mzayad.Core.Formatting
+﻿@using OrangeJetpack.Base.Core.Formatting
+@using DateTimeFormatter = Mzayad.Core.Formatting.DateTimeFormatter
 @model DateTime?
 
 @if (!Model.HasValue)
 {
-    <span class="text-warning">Never Subscribed</span>
+    <span class="text-warning">@Global.NoSubscription</span>
 }
 else
 {
     if (Model.Value > DateTime.UtcNow)
     {
-        <span>
-            <span class="text-success">ACTIVE </span> until @DateTimeFormatter.ToLocalTime(Model.Value, DateTimeFormatter.Format.Full)
-        </span>
+        <span>@Html.Raw(StringFormatter.ObjectFormat(Global.SubscriptionActiveUntil, new { DateTime = DateTimeFormatter.ToLocalTime(Model.Value, DateTimeFormatter.Format.Full) }))</span>
     }
     else
     {
-        <span>
-            <span class="text-danger">EXPIRED </span> on @DateTimeFormatter.ToLocalTime(Model, DateTimeFormatter.Format.Full)
-        </span>
+        <span>@Html.Raw(StringFormatter.ObjectFormat(Global.SubscriptionExpiredOn, new { DateTime = DateTimeFormatter.ToLocalTime(Model.Value, DateTimeFormatter.Format.Full) }))</span>
     }
 }

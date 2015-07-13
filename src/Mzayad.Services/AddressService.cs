@@ -8,7 +8,8 @@ namespace Mzayad.Services
 {
     public class AddressService : ServiceBase
     {
-        public AddressService(IDataContextFactory dataContextFactory) : base(dataContextFactory)
+        public AddressService(IDataContextFactory dataContextFactory)
+            : base(dataContextFactory)
         {
         }
 
@@ -36,14 +37,19 @@ namespace Mzayad.Services
 
                     return newAddress;
                 }
-                
+
                 throw new NotImplementedException();
             }
         }
 
-        public async Task<Address> GetAddress(int addressId)
+        public async Task<Address> GetAddress(int? addressId)
         {
-            using (var dc=DataContext())
+            if (!addressId.HasValue)
+            {
+                return null;
+            }
+
+            using (var dc = DataContext())
             {
                 return await dc.Addresses.SingleOrDefaultAsync(i => i.AddressId == addressId);
             }
@@ -51,7 +57,7 @@ namespace Mzayad.Services
 
         public async Task<Address> Update(Address address)
         {
-            using (var dc=DataContext())
+            using (var dc = DataContext())
             {
                 dc.SetModified(address);
                 await dc.SaveChangesAsync();

@@ -6,6 +6,7 @@ using Mzayad.Services;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
 using System.Web.Mvc;
+using Mzayad.Data;
 using Mzayad.Models.Enum;
 using Mzayad.Web.Extensions;
 using Mzayad.Web.Models.Account;
@@ -26,6 +27,7 @@ namespace Mzayad.Web.Controllers
         private readonly NotificationService _notificationService;
         private readonly UserProfileService _userProfileService;
         private readonly AvatarService _avatarService;
+        
         public UserController(IAppServices appServices)
             : base(appServices)
         {

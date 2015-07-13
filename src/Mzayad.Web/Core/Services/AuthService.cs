@@ -9,7 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Mzayad.Data;
 using Mzayad.Models;
+using Mzayad.Services.Identity;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Identity;
 
@@ -18,18 +20,18 @@ namespace Mzayad.Web.Core.Services
     public class AuthService : IAuthService
     {
         private readonly HttpContextBase _httpContext;
-        private readonly ApplicationUserManager _userManager;
-        private readonly ApplicationRoleManager _roleManager;
-        private readonly ApplicationSignInManager _signInManager;
+        private readonly UserManager _userManager;
+        private readonly RoleManager _roleManager;
+        private readonly SignInManager _signInManager;
         private readonly IAuthenticationManager _authenticationManager;
         private readonly ICookieService _cookieService;
         
-        public AuthService(HttpContextBase httpContext, ICookieService cookieService)
+        public AuthService(HttpContextBase httpContext, ICookieService cookieService, IDataContextFactory dataContextFactory)
         {
             _httpContext = httpContext;
-            _userManager = httpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            _roleManager = httpContext.GetOwinContext().Get<ApplicationRoleManager>();
-            _signInManager = httpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            _userManager = new UserManager(dataContextFactory);
+            _roleManager = new RoleManager(dataContextFactory);
+            _signInManager = httpContext.GetOwinContext().Get<SignInManager>();
             _authenticationManager = httpContext.GetOwinContext().Authentication;
             _cookieService = cookieService;
         }
@@ -223,8 +225,7 @@ namespace Mzayad.Web.Core.Services
 
         public async Task<IEnumerable<ApplicationUser>> GetUsersInRole(Role role)
         {
-            var roleManager = _httpContext.GetOwinContext().Get<ApplicationRoleManager>();
-            var userRole = await roleManager.FindByNameAsync(role.ToString());
+            var userRole = await _roleManager.FindByNameAsync(role.ToString());
             var userIds = userRole.Users.Select(i => i.UserId).ToList();
             var users = _userManager.Users.Where(i => userIds.Contains(i.Id));
             return await users.ToListAsync();

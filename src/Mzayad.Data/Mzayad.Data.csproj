@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Mzayad.Data</RootNamespace>
     <AssemblyName>Mzayad.Data</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -245,6 +246,14 @@
     <Compile Include="Migrations\201507091144131_RenameSubscriptionPriceFields.Designer.cs">
       <DependentUpon>201507091144131_RenameSubscriptionPriceFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507091434549_UpdateOrderItemForSubscription.cs" />
+    <Compile Include="Migrations\201507091434549_UpdateOrderItemForSubscription.Designer.cs">
+      <DependentUpon>201507091434549_UpdateOrderItemForSubscription.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507131452306_AddTokenLogs.cs" />
+    <Compile Include="Migrations\201507131452306_AddTokenLogs.Designer.cs">
+      <DependentUpon>201507131452306_AddTokenLogs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -393,6 +402,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507091144131_RenameSubscriptionPriceFields.resx">
       <DependentUpon>201507091144131_RenameSubscriptionPriceFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507091434549_UpdateOrderItemForSubscription.resx">
+      <DependentUpon>201507091434549_UpdateOrderItemForSubscription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507131452306_AddTokenLogs.resx">
+      <DependentUpon>201507131452306_AddTokenLogs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

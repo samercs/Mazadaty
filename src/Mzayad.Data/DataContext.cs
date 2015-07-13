@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Mzayad.Models;
+using Mzayad.Models.Payment;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Mzayad.Models;
-using Mzayad.Models.Payment;
 
 namespace Mzayad.Data
 {
@@ -32,7 +31,8 @@ namespace Mzayad.Data
         public IDbSet<Subscription> Subscriptions { get; set; }
         public IDbSet<WishList> WishLists { get; set; }
         public IDbSet<KnetTransaction> KnetTransactions { get; set; }
-        public IDbSet<SubscriptionLog> SubscriptionLogs { get; set; } 
+        public IDbSet<SubscriptionLog> SubscriptionLogs { get; set; }
+        public IDbSet<TokenLog> TokenLogs { get; set; }
         public IDbSet<SplashAd> SplashAds { get; set; } 
 
         public DataContext(): base("DefaultConnection")
