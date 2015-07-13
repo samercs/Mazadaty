@@ -106,15 +106,14 @@ namespace Mzayad.Services
                 dc.SetModified(subscription);
                 await dc.SaveChangesAsync();
                 return subscription;
-
             }
         }
 
-        public async Task AddUserSubscription(ApplicationUser user, Subscription subscription,
+        public async Task AddSubscriptionToUser(ApplicationUser user, Subscription subscription,
             ApplicationUser modifiedByUser, string userHostAddress)
         {        
             user = await _userManager.FindByIdAsync(user.Id);
-            var modifiedSubscriptionUtc = user.SubscriptionUtc.GetValueOrDefault(DateTime.Today).AddDays(subscription.Duration);
+            var modifiedSubscriptionUtc = user.SubscriptionUtc.GetValueOrDefault(DateTime.UtcNow).AddDays(subscription.Duration);
 
             await AddAndLogUserSubscription(user, modifiedSubscriptionUtc, modifiedByUser, userHostAddress);
         }
@@ -140,7 +139,7 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task AddUserSubscription(ApplicationUser user, DateTime subscriptionUtc, ApplicationUser modifiedByUser, string userHostAddress)
+        public async Task AddSubscriptionToUser(ApplicationUser user, DateTime subscriptionUtc, ApplicationUser modifiedByUser, string userHostAddress)
         {
             user = await _userManager.FindByIdAsync(user.Id);
 
@@ -214,10 +213,28 @@ namespace Mzayad.Services
 
             var order = await _orderService.CreateOrderForSubscription(subscription, user, PaymentMethod.Tokens, userHostAddress);
 
-            await _tokenService.AddUserTokens(user, -(subscription.PriceTokens), user, userHostAddress);
-            await AddUserSubscription(user, subscription, user, userHostAddress);
+            await _tokenService.AddTokensToUser(user, -(subscription.PriceTokens), user, userHostAddress);
+            await AddSubscriptionToUser(user, subscription, user, userHostAddress);
+            await DecrementSubscriptionQuantity(subscription);
 
             // TODO: send email notification
+        }
+
+        private async Task DecrementSubscriptionQuantity(Subscription subscription)
+        {
+            if (!subscription.Quantity.HasValue)
+            {
+                return;
+            }
+            
+            using (var dc = DataContext())
+            {
+                dc.Subscriptions.Attach(subscription);
+
+                subscription.Quantity = subscription.Quantity.Value - 1;
+
+                await dc.SaveChangesAsync();
+            }
         }
     }
 

@@ -181,7 +181,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             var currentUser = await AuthService.CurrentUser();
             var hostAddress = AuthService.UserHostAddress();
 
-            await _subscriptionService.AddUserSubscription(user, modifiedSubscriptionUtc, currentUser, hostAddress);
+            await _subscriptionService.AddSubscriptionToUser(user, modifiedSubscriptionUtc, currentUser, hostAddress);
 
             SetStatusMessage("The user subscription has been updated successfully.");
             return RedirectToAction("Details", "Users", new { id = user.Id });

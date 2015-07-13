@@ -745,6 +745,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Subscription.
+        /// </summary>
+        public static string NoSubscription {
+            get {
+                return ResourceManager.GetString("NoSubscription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Notifications.
         /// </summary>
         public static string Notifications {
@@ -1285,6 +1294,24 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;span class=&quot;text-success&quot;&gt;ACTIVE&lt;/span&gt; until {DateTime}.
+        /// </summary>
+        public static string SubscriptionActiveUntil {
+            get {
+                return ResourceManager.GetString("SubscriptionActiveUntil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;span class=&quot;text-danger&quot;&gt;EXPIRED&lt;/span&gt; on {DateTime}.
+        /// </summary>
+        public static string SubscriptionExpiredOn {
+            get {
+                return ResourceManager.GetString("SubscriptionExpiredOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {PriceCurrency} or {PriceTokens} tokens.
         /// </summary>
         public static string SubscriptionPriceKdAndTokens {
@@ -1299,6 +1326,15 @@ namespace Mzayad.Web.Resources {
         public static string SubscriptionPriceTokens {
             get {
                 return ResourceManager.GetString("SubscriptionPriceTokens", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Congratulations, you have successfully purchased &lt;strong&gt;{Subscription.Name}&lt;/strong&gt; and we have updated your account..
+        /// </summary>
+        public static string SubscriptionPurchaseAcknowledgement {
+            get {
+                return ResourceManager.GetString("SubscriptionPurchaseAcknowledgement", resourceCulture);
             }
         }
         

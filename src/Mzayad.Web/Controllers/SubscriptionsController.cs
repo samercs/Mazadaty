@@ -5,6 +5,8 @@ using Mzayad.Models.Enum;
 using Mzayad.Services;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Models.Subscriptions;
+using Mzayad.Web.Resources;
+using OrangeJetpack.Base.Core.Formatting;
 
 namespace Mzayad.Web.Controllers
 {
@@ -85,9 +87,9 @@ namespace Mzayad.Web.Controllers
 
             await _subscriptionService.BuySubscriptionWithTokens(subscription, user, AuthService.UserHostAddress());
 
-            
+            SetStatusMessage(StringFormatter.ObjectFormat(Global.SubscriptionPurchaseAcknowledgement, new { subscription }));
 
-            return Content("Subscription purchased with tokens.");
+            return RedirectToAction("Dashboard", "User");
         }
 
     }

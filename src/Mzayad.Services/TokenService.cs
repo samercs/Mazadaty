@@ -14,7 +14,7 @@ namespace Mzayad.Services
             _userManager = new UserManager(dataContextFactory);
         }
 
-        public async Task AddUserTokens(ApplicationUser user, int? tokens, ApplicationUser modifiedByUser, string userHostAddress)
+        public async Task AddTokensToUser(ApplicationUser user, int? tokens, ApplicationUser modifiedByUser, string userHostAddress)
         {
             if (!tokens.HasValue)
             {
