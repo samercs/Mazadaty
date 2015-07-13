@@ -9,28 +9,29 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Mzayad.Web.Areas.Reports.Models.Subscriptions;
+using Mzayad.Web.Areas.Reports.Models.Tokens;
 using Mzayad.Web.Core.Attributes;
 using Mzayad.Web.Core.Identity;
 
 namespace Mzayad.Web.Areas.Reports.Controllers
 {
     [RoleAuthorize(Role.Administrator)]
-    [RouteArea("reports"), RoutePrefix("subscriptions")]
-    public class SubscriptionsController : ApplicationController
+    [RouteArea("reports"), RoutePrefix("tokens")]
+    public class TokensController : ApplicationController
     {
-        private readonly SubscriptionService _subscriptionLogService;
+        private readonly TokenService _tokenService;
 
-        public SubscriptionsController(IAppServices appServices)
+        public TokensController(IAppServices appServices)
             : base(appServices)
         {
-            _subscriptionLogService = new SubscriptionService(DataContextFactory);
+            _tokenService = new TokenService(DataContextFactory);
         }
 
         [Route("logs")]
         public async Task<ActionResult> Logs()
         {
-            var subscriptionLogs = await _subscriptionLogService.GetSubscriptionLogs();
-            var viewModel = subscriptionLogs.Select(SubscriptionLogViewModel.Create);
+            var subscriptionLogs = await _tokenService.GetTokenLogs();
+            var viewModel = subscriptionLogs.Select(TokenLogViewModel.Create);
             
             return View(viewModel);
         }
@@ -39,8 +40,8 @@ namespace Mzayad.Web.Areas.Reports.Controllers
         [Route("logs/json")]
         public async Task<JsonResult> LogsAsJson([DataSourceRequest] DataSourceRequest request)
         {
-            var subscriptionLogs = await _subscriptionLogService.GetSubscriptionLogs();
-            var results = subscriptionLogs.Select(SubscriptionLogViewModel.Create);
+            var subscriptionLogs = await _tokenService.GetTokenLogs();
+            var results = subscriptionLogs.Select(TokenLogViewModel.Create);
             
             return Json(results.ToDataSourceResult(request));
         }
@@ -48,10 +49,10 @@ namespace Mzayad.Web.Areas.Reports.Controllers
         [Route("logs/excel")]
         public async Task<ExcelResult> LogsAsExcel()
         {
-            var subscriptionLogs = await _subscriptionLogService.GetSubscriptionLogs();
-            var results = subscriptionLogs.Select(SubscriptionLogViewModel.Create);
+            var subscriptionLogs = await _tokenService.GetTokenLogs();
+            var results = subscriptionLogs.Select(TokenLogViewModel.Create);
 
-            return Excel(results, "Subscription Logs");
+            return Excel(results, "Token Logs");
         }
 
 

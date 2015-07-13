@@ -19,7 +19,7 @@
 
 <ul class="link-list">
     <li>@Html.ActionLink("Create New Auction", "SelectProduct", "Auctions")</li>
-    <li><a href="@Url.Action("DownloadExcel", "Auctions", new { search = Model.Search })"><i class="fa fa-file-excel-o fa-pad-right"></i>Download Excel</a></li>
+    <li><a href="@Url.Action("DownloadExcel", "Auctions", new { search = Model.Search })"><i class="fa fa-file-excel-o fa-pad-right"></i>Export to Excel</a></li>
 </ul>
 
 @if (!Model.Auctions.Any())
