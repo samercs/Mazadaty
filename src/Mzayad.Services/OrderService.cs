@@ -12,11 +12,8 @@ namespace Mzayad.Services
 {
     public class OrderService : ServiceBase
     {
-        private readonly SubscriptionService _subscriptionService;
-        
         public OrderService(IDataContextFactory dataContextFactory) : base(dataContextFactory)
         {
-            _subscriptionService = new SubscriptionService(dataContextFactory);
         }
 
         public async Task<Order> GetById(int id, string languageCode = "en")

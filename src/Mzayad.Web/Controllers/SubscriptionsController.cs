@@ -83,11 +83,11 @@ namespace Mzayad.Web.Controllers
             var user = await AuthService.CurrentUser();
             user.Address = await _addressService.GetAddress(user.AddressId);
 
-            var order = await _orderService.CreateOrderForSubscription(subscription, user, PaymentMethod.Tokens, AuthService.UserHostAddress());
+            await _subscriptionService.BuySubscriptionWithTokens(subscription, user, AuthService.UserHostAddress());
 
+            
 
-
-            return Content("");
+            return Content("Subscription purchased with tokens.");
         }
 
     }

@@ -12,9 +12,12 @@ namespace Mzayad.Services
 {
     public class SubscriptionService : ServiceBase
     {
+        private readonly OrderService _orderService;
+        
         public SubscriptionService(IDataContextFactory dataContextFactory)
             : base(dataContextFactory)
         {
+            _orderService = new OrderService(dataContextFactory);
         }
 
         public async Task<IReadOnlyCollection<Subscription>> GetActiveSubscriptions(string languageCode)
@@ -105,9 +108,9 @@ namespace Mzayad.Services
         /// <summary>
         /// Gets an indicator as to whether or not a subscription is valid for purchase.
         /// </summary>
-        public static SubscriptionValidityResult ValidateSubscription(Subscription subscription)
+        public static SubscriptionValidationResult ValidateSubscription(Subscription subscription)
         {
-            var result = new SubscriptionValidityResult
+            var result = new SubscriptionValidationResult
             {
                 IsValid = true
             };
@@ -115,7 +118,7 @@ namespace Mzayad.Services
             if (subscription == null)
             {
                 result.IsValid = false;
-                result.Reason = SubscriptionValidityResult.ReasonType.Null;
+                result.Reason = SubscriptionValidationResult.ReasonType.Null;
                 
                 return result;
             }
@@ -123,7 +126,7 @@ namespace Mzayad.Services
             if (subscription.Status != SubscriptionStatus.Active)
             {
                 result.IsValid = false;
-                result.Reason = SubscriptionValidityResult.ReasonType.Disabled;
+                result.Reason = SubscriptionValidationResult.ReasonType.Disabled;
                 
                 return result;
             }
@@ -131,7 +134,7 @@ namespace Mzayad.Services
             if (subscription.ExpirationUtc.HasValue && subscription.ExpirationUtc.Value < DateTime.UtcNow)
             {
                 result.IsValid = false;
-                result.Reason = SubscriptionValidityResult.ReasonType.Expired;
+                result.Reason = SubscriptionValidationResult.ReasonType.Expired;
                 
                 return result;
             }
@@ -139,7 +142,7 @@ namespace Mzayad.Services
             if (subscription.Quantity.HasValue && subscription.Quantity.Value <= 0)
             {
                 result.IsValid = false;
-                result.Reason = SubscriptionValidityResult.ReasonType.NoQuantity;
+                result.Reason = SubscriptionValidationResult.ReasonType.NoQuantity;
 
                 return result;
             }
@@ -149,7 +152,7 @@ namespace Mzayad.Services
             return result;
         }
 
-        public async Task BuySubscriptionWithTokens(Subscription subscription, ApplicationUser user)
+        public async Task BuySubscriptionWithTokens(Subscription subscription, ApplicationUser user, string userHostAddress = null)
         {
             var result = ValidateSubscription(subscription);
             if (!result.IsValid)
@@ -166,17 +169,18 @@ namespace Mzayad.Services
             {
                 throw new Exception("Subscription cannot be purchased, user does not have enough available tokens.");
             }
-            
-            
-            // create order
+
+            var order = await _orderService.CreateOrderForSubscription(subscription, user, PaymentMethod.Tokens, userHostAddress);
+
             // decrement user tokens
             // log decrement user tokens
             // increase user subscription
             // log increase user subscription
+            // send email notification
         }
     }
 
-    public class SubscriptionValidityResult
+    public class SubscriptionValidationResult
     {
         public bool IsValid { get; set; }
         public ReasonType Reason { get; set; }
