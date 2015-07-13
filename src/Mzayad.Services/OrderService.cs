@@ -86,12 +86,7 @@ namespace Mzayad.Services
         }
 
         public async Task<Order> CreateOrderForSubscription(Subscription subscription, ApplicationUser user, PaymentMethod paymentMethod, string userHostAddress)
-        {
-            if (!_subscriptionService.ValidateSubscription(subscription))
-            {
-                throw new Exception("Subscription is no longer valid.");
-            }
-            
+        {          
             var order = new Order
             {
                 Type = OrderType.Subscription,

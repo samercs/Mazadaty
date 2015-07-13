@@ -78,6 +78,7 @@
     <Compile Include="Fakes\TestDbAsyncEnumerator.cs" />
     <Compile Include="Fakes\TestDbAsyncQueryProvider.cs" />
     <Compile Include="Fakes\TestDbSet.cs" />
+    <Compile Include="SubscriptionServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

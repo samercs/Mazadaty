@@ -80,31 +80,6 @@ namespace Mzayad.Services
             }
         }
 
-        public bool ValidateSubscription(Subscription subscription)
-        {
-            if (subscription == null)
-            {
-                return false;
-            }
-            
-            if (subscription.Status != SubscriptionStatus.Active)
-            {
-                return false;
-            }
-
-            if (subscription.ExpirationUtc.HasValue && subscription.ExpirationUtc.Value < DateTime.UtcNow)
-            {
-                return false;
-            }
-
-            if (subscription.Quantity.HasValue && subscription.Quantity.Value <= 0)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
         public async Task<Subscription> Add(Subscription subscription)
         {
             using (var dc = DataContext())
@@ -125,6 +100,93 @@ namespace Mzayad.Services
                 return subscription;
 
             }
+        }
+
+        /// <summary>
+        /// Gets an indicator as to whether or not a subscription is valid for purchase.
+        /// </summary>
+        public static SubscriptionValidityResult ValidateSubscription(Subscription subscription)
+        {
+            var result = new SubscriptionValidityResult
+            {
+                IsValid = true
+            };
+            
+            if (subscription == null)
+            {
+                result.IsValid = false;
+                result.Reason = SubscriptionValidityResult.ReasonType.Null;
+                
+                return result;
+            }
+
+            if (subscription.Status != SubscriptionStatus.Active)
+            {
+                result.IsValid = false;
+                result.Reason = SubscriptionValidityResult.ReasonType.Disabled;
+                
+                return result;
+            }
+
+            if (subscription.ExpirationUtc.HasValue && subscription.ExpirationUtc.Value < DateTime.UtcNow)
+            {
+                result.IsValid = false;
+                result.Reason = SubscriptionValidityResult.ReasonType.Expired;
+                
+                return result;
+            }
+
+            if (subscription.Quantity.HasValue && subscription.Quantity.Value <= 0)
+            {
+                result.IsValid = false;
+                result.Reason = SubscriptionValidityResult.ReasonType.NoQuantity;
+
+                return result;
+            }
+
+            result.IsValid = true;
+
+            return result;
+        }
+
+        public async Task BuySubscriptionWithTokens(Subscription subscription, ApplicationUser user)
+        {
+            var result = ValidateSubscription(subscription);
+            if (!result.IsValid)
+            {
+                throw new Exception("Subscription is not valid for purchase.");
+            }
+
+            if (!subscription.PriceTokensIsValid)
+            {
+                throw new Exception("Subscription is not valid for purchase with tokens.");
+            }
+
+            if (subscription.PriceTokens > user.Tokens)
+            {
+                throw new Exception("Subscription cannot be purchased, user does not have enough available tokens.");
+            }
+            
+            
+            // create order
+            // decrement user tokens
+            // log decrement user tokens
+            // increase user subscription
+            // log increase user subscription
+        }
+    }
+
+    public class SubscriptionValidityResult
+    {
+        public bool IsValid { get; set; }
+        public ReasonType Reason { get; set; }
+
+        public enum ReasonType
+        {
+            Null,
+            Disabled,
+            Expired,
+            NoQuantity
         }
     }
 }

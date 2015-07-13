@@ -85,11 +85,7 @@ namespace Mzayad.Web.Controllers
 
             var order = await _orderService.CreateOrderForSubscription(subscription, user, PaymentMethod.Tokens, AuthService.UserHostAddress());
 
-            // create order
-            // decrement user tokens
-            // log decrement user tokens
-            // increase user subscription
-            // log increase user subscription
+
 
             return Content("");
         }
