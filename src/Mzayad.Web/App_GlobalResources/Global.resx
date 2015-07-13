@@ -574,6 +574,6 @@
     <value>{PriceCurrency} or {PriceTokens} tokens</value>
   </data>
   <data name="SubscriptionPriceTokens" xml:space="preserve">
-    <value>{PurchaseTokens} tokens</value>
+    <value>{PriceTokens} tokens</value>
   </data>
 </root>
