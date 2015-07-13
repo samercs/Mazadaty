@@ -1303,6 +1303,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are buying the subscription &lt;strong&gt;{Name}&lt;/strong&gt; for &lt;strong&gt;{FormattedPrice}&lt;/strong&gt;, this &lt;strong&gt;{Duration} day&lt;/strong&gt; subscription will give you a valid subscription until &lt;strong&gt;{NewExpiration}&lt;/strong&gt;. Your account will be updated as soon as the purchase is complete..
+        /// </summary>
+        public static string SubscriptionBuyInstructions {
+            get {
+                return ResourceManager.GetString("SubscriptionBuyInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;span class=&quot;text-danger&quot;&gt;EXPIRED&lt;/span&gt; on {DateTime}.
         /// </summary>
         public static string SubscriptionExpiredOn {

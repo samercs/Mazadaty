@@ -1,12 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using Mzayad.Models.Enum;
-using Mzayad.Services;
+﻿using Mzayad.Services;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Models.Subscriptions;
 using Mzayad.Web.Resources;
 using OrangeJetpack.Base.Core.Formatting;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using Mzayad.Services.Payment;
 
 namespace Mzayad.Web.Controllers
 {
@@ -14,14 +13,14 @@ namespace Mzayad.Web.Controllers
     public class SubscriptionsController : ApplicationController
     {
         private readonly SubscriptionService _subscriptionService;
-        private readonly OrderService _orderService;
         private readonly AddressService _addressService;
+        private readonly KnetService _knetService;
         
         public SubscriptionsController(IAppServices appServices) : base(appServices)
         {
             _subscriptionService = new SubscriptionService(DataContextFactory);
-            _orderService = new OrderService(DataContextFactory);
             _addressService = new AddressService(DataContextFactory);
+            _knetService = new KnetService(DataContextFactory);
         }
 
         [Route("")]
@@ -92,5 +91,23 @@ namespace Mzayad.Web.Controllers
             return RedirectToAction("Dashboard", "User");
         }
 
+        [Route("buy/{subscriptionId:int}/knet")]
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> BuyWithKnet(int subscriptionId, FormCollection formCollection)
+        {
+            var subscription = await _subscriptionService.GetValidSubscription(subscriptionId, Language);
+            if (subscription == null)
+            {
+                return HttpNotFound();
+            }
+
+            var user = await AuthService.CurrentUser();
+            user.Address = await _addressService.GetAddress(user.AddressId);
+
+            var order = await _subscriptionService.BuySubscriptionWithKnet(subscription, user, AuthService.UserHostAddress());
+            var result = await _knetService.InitTransaction(order, AuthService.CurrentUserId(), AuthService.UserHostAddress());
+
+            return Redirect(result.RedirectUrl);
+        }
     }
 }

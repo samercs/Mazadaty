@@ -22,7 +22,8 @@ namespace Mzayad.Services
             {
                 var order = await dc.Orders
                     .Include(i => i.Address)
-                    .Include(i => i.Items)
+                    .Include(i => i.Items.Select(j => j.Product))
+                    .Include(i => i.Items.Select(j => j.Subscription))
                     .Include(i => i.Logs)
                     .SingleOrDefaultAsync(i => i.OrderId == id);
 
@@ -96,14 +97,17 @@ namespace Mzayad.Services
 
             switch (paymentMethod)
             {
-                case PaymentMethod.Knet:
-                    throw new NotImplementedException();
                 case PaymentMethod.Tokens:
                     UpdateOrderForTokenPayment(order, subscription, userHostAddress);
+                    break;
+                case PaymentMethod.Knet:
+                    UpdateOrderForKnetPayment(order, subscription, userHostAddress);
                     break;
                 default:
                     throw new NotImplementedException();
             }
+
+            order.RecalculateTotal();
 
             using (var dc = DataContext())
             {
@@ -134,6 +138,23 @@ namespace Mzayad.Services
 
             order.SubmittedUtc = utcNow;
             order.ShippedUtc = utcNow;
+        }
+
+        private static void UpdateOrderForKnetPayment(Order order, Subscription subscription, string userHostAddress)
+        {
+            order.PaymentMethod = PaymentMethod.Tokens;
+            order.Items = new[]
+            {
+                new OrderItem
+                {
+                    ItemPrice = subscription.PriceCurrency.GetValueOrDefault(0),
+                    Name = subscription.Name,
+                    Quantity = 1,
+                    SubscriptionId = subscription.SubscriptionId
+                }
+            };
+
+            order.SubmittedUtc = DateTime.UtcNow;
         }
 
         private static OrderItem[] CreateOrderItems(Bid bid, Auction auction)
@@ -234,21 +255,41 @@ namespace Mzayad.Services
 
         public async Task SubmitOrder(Order order, string userHostAddress)
         {
-            //using (var dc = DataContext())
-            //{
-            //    foreach (var item in order.Items)
-            //    {
-            //        var skuId = item.SkuId;
-            //        var sku = await dc.Skus.SingleOrDefaultAsync(i => i.SkuId == skuId);
-            //        if (sku != null)
-            //        {
-            //            sku.Quantity--;
-            //        }
-            //    }
-            //    await dc.SaveChangesAsync();
-            //}
+            using (var dc = DataContext())
+            {
+                dc.Orders.Attach(order);
 
-            await UpdateStatus(order, OrderStatus.Processing, userHostAddress);
+                DecrementProductOrSubscriptionInventory(order);
+
+                var orderHasPhysicalGoods = order.Items.Any(i => i.ProductId.HasValue);
+                if (orderHasPhysicalGoods)
+                {
+                    SetStatus(order, OrderStatus.Processing, null, userHostAddress);
+                }
+                else
+                {
+                    SetStatus(order, OrderStatus.Shipped, null, userHostAddress);
+                    order.ShippedUtc = DateTime.UtcNow;
+                }
+
+                await dc.SaveChangesAsync();
+            }
+        }
+
+        private static void DecrementProductOrSubscriptionInventory(Order order)
+        {
+            foreach (var item in order.Items)
+            {
+                if (item.Product != null)
+                {
+                    item.Product.Quantity -= 1;
+                }
+
+                if (item.Subscription != null)
+                {
+                    item.Subscription.Quantity -= 1;
+                }
+            }
         }
     }
 }

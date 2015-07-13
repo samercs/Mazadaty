@@ -591,4 +591,7 @@
   <data name="SubscriptionPurchaseAcknowledgement" xml:space="preserve">
     <value>Congratulations, you have successfully purchased &lt;strong&gt;{Subscription.Name}&lt;/strong&gt; and we have updated your account.</value>
   </data>
+  <data name="SubscriptionBuyInstructions" xml:space="preserve">
+    <value>You are buying the subscription &lt;strong&gt;{Name}&lt;/strong&gt; for &lt;strong&gt;{FormattedPrice}&lt;/strong&gt;, this &lt;strong&gt;{Duration} day&lt;/strong&gt; subscription will give you a valid subscription until &lt;strong&gt;{NewExpiration}&lt;/strong&gt;. Your account will be updated as soon as the purchase is complete.</value>
+  </data>
 </root>

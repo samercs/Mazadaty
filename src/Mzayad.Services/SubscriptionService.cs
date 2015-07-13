@@ -193,7 +193,7 @@ namespace Mzayad.Services
             return result;
         }
 
-        public async Task BuySubscriptionWithTokens(Subscription subscription, ApplicationUser user, string userHostAddress = null)
+        public async Task<Order> BuySubscriptionWithTokens(Subscription subscription, ApplicationUser user, string userHostAddress = null)
         {
             var result = ValidateSubscription(subscription);
             if (!result.IsValid)
@@ -218,6 +218,31 @@ namespace Mzayad.Services
             await DecrementSubscriptionQuantity(subscription);
 
             // TODO: send email notification
+
+            return order;
+        }
+
+        public async Task<Order> BuySubscriptionWithKnet(Subscription subscription, ApplicationUser user, string userHostAddress = null)
+        {
+            var result = ValidateSubscription(subscription);
+            if (!result.IsValid)
+            {
+                throw new Exception("Subscription is not valid for purchase.");
+            }
+
+            if (!subscription.PriceCurrencyIsValid)
+            {
+                throw new Exception("Subscription is not valid for purchase with tokens.");
+            }
+
+            var order = await _orderService.CreateOrderForSubscription(subscription, user, PaymentMethod.Knet, userHostAddress);
+
+            //await AddSubscriptionToUser(user, subscription, user, userHostAddress);
+            //await DecrementSubscriptionQuantity(subscription);
+
+            // TODO: send email notification
+
+            return order;
         }
 
         private async Task DecrementSubscriptionQuantity(Subscription subscription)

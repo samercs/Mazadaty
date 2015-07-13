@@ -82,11 +82,13 @@ namespace Mzayad.Web.Controllers
                                                  transaction.TrackId, transaction.ReferenceNumber,
                                                  DateTime.UtcNow, CurrencyFormatter.Format(transaction.Order.Total));
 
-            //await SendNotifications(transaction, transactionNotes);
+            // TODO: await SendNotifications(transaction, transactionNotes);
             
             var redirectUrl = Url.Action("Success", "Orders", new { transaction.OrderId, transaction.PaymentId, Language }, RequestService.GetUrlScheme());
+            var redirectResponse = string.Format("REDIRECT={0}", redirectUrl);
+            //return Content(redirectResponse);
 
-            return Content(string.Format("REDIRECT={0}", redirectUrl));
+            return Redirect(redirectUrl);
         }
 
         public new async Task<ActionResult> Error(string paymentId)

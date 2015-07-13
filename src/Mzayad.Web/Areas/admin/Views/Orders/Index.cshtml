@@ -20,7 +20,7 @@
 }
 
 <ul class="link-list">
-    <li><a href="@Url.Action("OrdersExcel", "Orders", new { search = Model.Search, status = Model.Status })"><i class="fa fa-file-excel-o fa-pad-right"></i>Download Excel</a></li>
+    <li><a href="@Url.Action("OrdersExcel", "Orders", new { search = Model.Search, status = Model.Status })"><i class="fa fa-file-excel-o fa-pad-right"></i>Export to Excel</a></li>
 </ul>
 
 @if (!Model.Orders.Any())
