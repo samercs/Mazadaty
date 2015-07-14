@@ -1,13 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Mzayad.Models;
+﻿using Mzayad.Models;
+using Mzayad.Models.Enum;
 using Mzayad.Services;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
-using System.Web.Mvc;
-using Mzayad.Data;
-using Mzayad.Models.Enum;
 using Mzayad.Web.Extensions;
 using Mzayad.Web.Models.Account;
 using Mzayad.Web.Models.Shared;
@@ -16,6 +11,10 @@ using Mzayad.Web.Resources;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Models;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Mzayad.Web.Controllers
 {
@@ -27,6 +26,7 @@ namespace Mzayad.Web.Controllers
         private readonly NotificationService _notificationService;
         private readonly UserProfileService _userProfileService;
         private readonly AvatarService _avatarService;
+        private readonly BidService _bidService;
         
         public UserController(IAppServices appServices)
             : base(appServices)
@@ -36,6 +36,7 @@ namespace Mzayad.Web.Controllers
             _notificationService = new NotificationService(DataContextFactory);
             _userProfileService = new UserProfileService(appServices.DataContextFactory);
             _avatarService = new AvatarService(appServices.DataContextFactory);
+            _bidService = new BidService(DataContextFactory);
         }
 
         [Route("dashboard")]
@@ -46,7 +47,8 @@ namespace Mzayad.Web.Controllers
             var viewModel = new DashboardViewModel
             {
                 ApplicationUser = user,
-                UserProfile = await _userProfileService.GetByUser(user)
+                UserProfile = await _userProfileService.GetByUser(user),
+                BidHistory = await _bidService.GetRecentBidHistoryForUser(user, Language)
             };
 
             return View(viewModel);

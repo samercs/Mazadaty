@@ -1,4 +1,5 @@
-﻿using Mzayad.Models;
+﻿using System.Collections.Generic;
+using Mzayad.Models;
 
 namespace Mzayad.Web.Models.User
 {
@@ -6,5 +7,6 @@ namespace Mzayad.Web.Models.User
     {
         public ApplicationUser ApplicationUser { get; set; }
         public UserProfile UserProfile { get; set; }
+        public IReadOnlyCollection<Bid> BidHistory { get; set; } 
     }
 }

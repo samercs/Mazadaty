@@ -3,6 +3,7 @@ using Mzayad.Models.Enum;
 using Mzayad.Services.Tests.Fakes;
 using NUnit.Framework;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Mzayad.Services.Tests
@@ -13,6 +14,23 @@ namespace Mzayad.Services.Tests
     [TestFixture]
     public class AuctionServiceTests
     {
+   
+        
+
+        [Test]
+        public void Method_Scenario_Expected()
+        {
+            var url = "http://localhost:15189/ar/user/dashboard";
+            var lang = "en/";
+
+            var re = new Regex(@"/en|ar/");
+
+            var actual = re.Replace(url, lang);
+
+            Assert.AreEqual("http://localhost:15189/en/user/dashboard", actual);
+        }
+
+
         [Test]
         public async Task GetCurrentAuctions_NoAuctions_ReturnsEmptyList()
         {

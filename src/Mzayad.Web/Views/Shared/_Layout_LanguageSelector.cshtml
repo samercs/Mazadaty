@@ -5,7 +5,7 @@
 }
 
 <li>
-    @using (Html.BeginForm("ChangeLanguage", "Home", new { area = "" }))
+    @using (Html.BeginForm("ChangeLanguage", "Home", new { area = "", language = Html.Language() }))
     {
         @Html.AntiForgeryToken()
         <input type="hidden" name="returnUrl" value="@Request.Url" />

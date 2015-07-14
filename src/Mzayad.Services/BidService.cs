@@ -1,8 +1,10 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Mzayad.Data;
 using Mzayad.Models;
+using OrangeJetpack.Localization;
 
 namespace Mzayad.Services
 {
@@ -44,5 +46,28 @@ namespace Mzayad.Services
                     .FirstOrDefaultAsync();
             }
         }
+
+        public async Task<IReadOnlyCollection<Bid>> GetRecentBidHistoryForUser(ApplicationUser user, string language = null)
+        {
+            using (var dc = DataContext())
+            {
+                var bids = await dc.Bids
+                    .Include(i => i.Auction)
+                    .Where(i => i.UserId == user.Id)
+                    .OrderByDescending(i => i.CreatedUtc)
+                    .Take(50)
+                    .ToListAsync();
+
+                if (language != null)
+                {
+                    foreach (var auction in bids.Select(i => i.Auction).Distinct())
+                    {
+                        auction.Localize(language, i => i.Title);
+                    }
+                }
+
+                return bids;
+            }
+        } 
     }
 }

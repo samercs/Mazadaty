@@ -142,6 +142,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auction.
+        /// </summary>
+        public static string Auction {
+            get {
+                return ResourceManager.GetString("Auction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Avatar (select one).
         /// </summary>
         public static string Avatar {
@@ -156,6 +165,15 @@ namespace Mzayad.Web.Resources {
         public static string Back {
             get {
                 return ResourceManager.GetString("Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bid History.
+        /// </summary>
+        public static string BidHistory {
+            get {
+                return ResourceManager.GetString("BidHistory", resourceCulture);
             }
         }
         
@@ -1362,6 +1380,15 @@ namespace Mzayad.Web.Resources {
         public static string TermsAndConditions {
             get {
                 return ResourceManager.GetString("TermsAndConditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time Left in Auction.
+        /// </summary>
+        public static string TimeLeft {
+            get {
+                return ResourceManager.GetString("TimeLeft", resourceCulture);
             }
         }
         

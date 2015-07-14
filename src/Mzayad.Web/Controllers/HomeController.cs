@@ -4,6 +4,7 @@ using Mzayad.Services;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
 using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Mzayad.Web.Models.Home;
@@ -52,11 +53,8 @@ namespace Mzayad.Web.Controllers
         {
             CookieService.Add(CookieKeys.LanguageCode, language, DateTime.Today.AddYears(10));
 
-            var routeInfo = new RouteInfo(returnUrl, "/");
-            routeInfo.RouteData.Values["language"] = language;
-            routeInfo.RouteData.Values.Remove("MS_DirectRouteMatches");
-            
-            return RedirectToRoute(routeInfo.RouteData.Values);
+            var redirectUrl = Regex.Replace(returnUrl.ToString(), @"/(en|ar)/", "/" + language + "/");
+            return Redirect(redirectUrl);
         }
     }
 }
