@@ -12,11 +12,8 @@ namespace Mzayad.Services
 {
     public class OrderService : ServiceBase
     {
-        private readonly SubscriptionService _subscriptionService;
-        
         public OrderService(IDataContextFactory dataContextFactory) : base(dataContextFactory)
         {
-            _subscriptionService = new SubscriptionService(dataContextFactory);
         }
 
         public async Task<Order> GetById(int id, string languageCode = "en")
@@ -88,72 +85,62 @@ namespace Mzayad.Services
 
         public async Task<Order> CreateOrderForSubscription(Subscription subscription, ApplicationUser user, PaymentMethod paymentMethod, string userHostAddress)
         {          
-            var order = new Order
-            {
-                Type = OrderType.Subscription,
-                UserId = user.Id,
-                AllowPhoneSms = false,
-                Address = ShippingAddress.Create(user)
-            };
-
-            SetStatus(order, OrderStatus.InProgress, user.Id, userHostAddress);
-
-            switch (paymentMethod)
-            {
-                case PaymentMethod.Tokens:
-                    UpdateOrderForTokenPayment(order, subscription, userHostAddress);
-                    break;
-                case PaymentMethod.Knet:
-                    UpdateOrderForKnetPayment(order, subscription, userHostAddress);
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
-
-            order.RecalculateTotal();
-
             using (var dc = DataContext())
             {
+                var order = new Order
+                {
+                    Type = OrderType.Subscription,
+                    UserId = user.Id,
+                    AllowPhoneSms = false,
+                    Address = ShippingAddress.Create(user)
+                };
+
+                SetStatus(order, OrderStatus.InProgress, user.Id, userHostAddress);
+
+                switch (paymentMethod)
+                {
+                    case PaymentMethod.Tokens:
+                        UpdateOrderForTokenPayment(order, subscription);
+                        break;
+                    case PaymentMethod.Knet:
+                        UpdateOrderForKnetPayment(order, subscription);
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+
+                order.RecalculateTotal();
+
                 dc.Orders.Add(order);
+                dc.Subscriptions.Attach(subscription);
+                
                 await dc.SaveChangesAsync();
                 return order;
             }
         }
 
-        private static void UpdateOrderForTokenPayment(Order order, Subscription subscription, string userHostAddress)
+        private static void UpdateOrderForTokenPayment(Order order, Subscription subscription)
         {
-            order.PaymentMethod = PaymentMethod.Tokens;
-            order.Items = new[]
-            {
-                new OrderItem
-                {
-                    ItemPrice = 0,
-                    Name = subscription.Name,
-                    Quantity = 1,
-                    SubscriptionId = subscription.SubscriptionId
-                }
-            };
-
-            // purchases with tokens are automaticallyed "shipped"
-            SetStatus(order, OrderStatus.Shipped, order.UserId, userHostAddress);
-
-            var utcNow = DateTime.UtcNow;
-
-            order.SubmittedUtc = utcNow;
-            order.ShippedUtc = utcNow;
+            UpdateOrderForPayment(order, subscription, PaymentMethod.Tokens, 0);
         }
 
-        private static void UpdateOrderForKnetPayment(Order order, Subscription subscription, string userHostAddress)
+        private static void UpdateOrderForKnetPayment(Order order, Subscription subscription)
         {
-            order.PaymentMethod = PaymentMethod.Tokens;
+            UpdateOrderForPayment(order, subscription, PaymentMethod.Knet, subscription.PriceCurrency.GetValueOrDefault(0));
+        }
+
+        private static void UpdateOrderForPayment(Order order, Subscription subscription, PaymentMethod paymentMethod, decimal itemPrice)
+        {
+            order.PaymentMethod = paymentMethod;
             order.Items = new[]
             {
                 new OrderItem
                 {
-                    ItemPrice = subscription.PriceCurrency.GetValueOrDefault(0),
+                    ItemPrice = itemPrice,
                     Name = subscription.Name,
                     Quantity = 1,
-                    SubscriptionId = subscription.SubscriptionId
+                    SubscriptionId = subscription.SubscriptionId,
+                    Subscription = subscription
                 }
             };
 
@@ -264,7 +251,7 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 dc.Orders.Attach(order);
-                SetStatus(order, OrderStatus.Shipped, modifiedByUserId, userHostAddress);
+                SetStatus(order, OrderStatus.Delivered, modifiedByUserId, userHostAddress);
                 order.ShippedUtc = DateTime.UtcNow;
                 await dc.SaveChangesAsync();
             }
@@ -272,11 +259,12 @@ namespace Mzayad.Services
 
         public async Task CompleteSubscriptionOrder(Order order, string modifiedByUserId, string userHostAddress)
         {
+            var subscriptionService = new SubscriptionService(DataContextFactory);
+            
             var subscriptionItems = order.Items.Where(orderItem => orderItem.SubscriptionId.HasValue);
             foreach (var item in subscriptionItems)
             {
-                await _subscriptionService.AddSubscriptionToUser(order.User, item.Subscription, order.User,
-                    userHostAddress);
+                await subscriptionService.AddSubscriptionToUser(order.UserId, item.Subscription, modifiedByUserId, userHostAddress);
             }
 
             await SaveOrderAsDelivered(order, modifiedByUserId, userHostAddress);

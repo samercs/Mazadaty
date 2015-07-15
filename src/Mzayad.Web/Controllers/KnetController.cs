@@ -40,7 +40,7 @@ namespace Mzayad.Web.Controllers
                 throw new ArgumentException("Cannot find KNET transaction for payment ID: " + paymentId);
             }
 
-            if (transaction.Order.Status == OrderStatus.Processing || transaction.Order.Status == OrderStatus.Shipped)
+            if (transaction.Order.Status == OrderStatus.Processing || transaction.Order.Status == OrderStatus.Delivered)
             {
                 throw new Exception("Cannot POST transaction for order already processing or shipped. Order ID: " + transaction.OrderId + ", Request Params: " + RequestService.GetRequestParams());
             }

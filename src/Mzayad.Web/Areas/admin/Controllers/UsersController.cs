@@ -178,10 +178,10 @@ namespace Mzayad.Web.Areas.admin.Controllers
             }
 
             var modifiedSubscriptionUtc = model.CurrentSubscription.AddHours(-3); // AST -> UTC
-            var currentUser = await AuthService.CurrentUser();
+            var currentUserId = AuthService.CurrentUserId();
             var hostAddress = AuthService.UserHostAddress();
 
-            await _subscriptionService.AddSubscriptionToUser(user, modifiedSubscriptionUtc, currentUser, hostAddress);
+            await _subscriptionService.AddSubscriptionToUser(user, modifiedSubscriptionUtc, currentUserId, hostAddress);
 
             SetStatusMessage("The user subscription has been updated successfully.");
             return RedirectToAction("Details", "Users", new { id = user.Id });

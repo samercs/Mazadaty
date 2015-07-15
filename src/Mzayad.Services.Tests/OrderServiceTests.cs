@@ -39,7 +39,7 @@ namespace Mzayad.Services.Tests
 
             Assert.AreEqual(OrderType.Subscription, order.Type);
             Assert.AreEqual(PaymentMethod.Tokens, order.PaymentMethod);
-            Assert.AreEqual(OrderStatus.Shipped, order.Status);
+            Assert.AreEqual(OrderStatus.Delivered, order.Status);
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace Mzayad.Services.Tests
             Assert.AreEqual(2, order.Logs.Count);
 
             CollectionAssert.Contains(order.Logs.Select(i => i.Status), OrderStatus.InProgress);
-            CollectionAssert.Contains(order.Logs.Select(i => i.Status), OrderStatus.Shipped);
+            CollectionAssert.Contains(order.Logs.Select(i => i.Status), OrderStatus.Delivered);
         }
 
     }

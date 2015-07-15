@@ -1,13 +1,11 @@
-﻿using System.Diagnostics;
-using System.Linq;
-using Mzayad.Services;
+﻿using Mzayad.Services;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
+using Mzayad.Web.Models.Home;
 using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Mzayad.Web.Models.Home;
 
 namespace Mzayad.Web.Controllers
 {

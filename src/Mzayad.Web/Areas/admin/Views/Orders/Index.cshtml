@@ -38,7 +38,7 @@ else
           columns.Bound(i => i.Address.CountryCode).Title("Country");
           columns.Bound(i => i.Total).ClientTemplate("KD #=Total#");
           columns.Bound(i => i.SubmittedUtc).Title("Submitted").Format("{0:dd/MM/yyyy}");
-          columns.Bound(i => i.ShippedUtc).Title("Shipped").Format("{0:dd/MM/yyyy}");
+          columns.Bound(i => i.ShippedUtc).Title("Delivered").Format("{0:dd/MM/yyyy}");
           columns.LinkColumn("Details", "orders/details/#=OrderId#");
       }))
 }

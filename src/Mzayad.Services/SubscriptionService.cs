@@ -14,15 +14,11 @@ namespace Mzayad.Services
     public class SubscriptionService : ServiceBase
     {
         private readonly UserManager  _userManager; 
-        private readonly TokenService _tokenService;
-        private readonly OrderService _orderService;
         
         public SubscriptionService(IDataContextFactory dataContextFactory)
             : base(dataContextFactory)
         {
             _userManager = new UserManager(dataContextFactory);
-            _tokenService = new TokenService(dataContextFactory);
-            _orderService = new OrderService(dataContextFactory);
         }
 
         public async Task<IReadOnlyCollection<Subscription>> GetActiveSubscriptions(string languageCode)
@@ -109,16 +105,19 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task AddSubscriptionToUser(ApplicationUser user, Subscription subscription,
-            ApplicationUser modifiedByUser, string userHostAddress)
+        public async Task AddSubscriptionToUser(string userId, Subscription subscription,
+            string modifiedByUserId, string userHostAddress)
         {        
-            user = await _userManager.FindByIdAsync(user.Id);
-            var modifiedSubscriptionUtc = user.SubscriptionUtc.GetValueOrDefault(DateTime.UtcNow).AddDays(subscription.Duration);
+            var user = await _userManager.FindByIdAsync(userId);
+            
+            var modifiedSubscriptionUtc = user.SubscriptionUtc
+                .GetValueOrDefault(DateTime.UtcNow)
+                .AddDays(subscription.Duration);
 
-            await AddAndLogUserSubscription(user, modifiedSubscriptionUtc, modifiedByUser, userHostAddress);
+            await AddAndLogUserSubscription(user, modifiedSubscriptionUtc, modifiedByUserId, userHostAddress);
         }
 
-        private async Task AddAndLogUserSubscription(ApplicationUser user, DateTime subscriptionUtc, ApplicationUser modifiedByUser, string userHostAddress)
+        private async Task AddAndLogUserSubscription(ApplicationUser user, DateTime subscriptionUtc, string modifiedByUserId, string userHostAddress)
         {
             var originalSubscriptionUtc = user.SubscriptionUtc;
             user.SubscriptionUtc = subscriptionUtc;
@@ -129,7 +128,7 @@ namespace Mzayad.Services
                 dc.SubscriptionLogs.Add(new SubscriptionLog
                 {
                     UserId = user.Id,
-                    ModifiedByUserId = modifiedByUser.Id,
+                    ModifiedByUserId = modifiedByUserId ?? user.Id,
                     OriginalSubscriptionUtc = originalSubscriptionUtc,
                     ModifiedSubscriptionUtc = subscriptionUtc,
                     UserHostAddress = userHostAddress
@@ -139,11 +138,11 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task AddSubscriptionToUser(ApplicationUser user, DateTime subscriptionUtc, ApplicationUser modifiedByUser, string userHostAddress)
+        public async Task AddSubscriptionToUser(ApplicationUser user, DateTime subscriptionUtc, string modifiedByUserId, string userHostAddress)
         {
             user = await _userManager.FindByIdAsync(user.Id);
 
-            await AddAndLogUserSubscription(user, subscriptionUtc, modifiedByUser, userHostAddress);
+            await AddAndLogUserSubscription(user, subscriptionUtc, modifiedByUserId, userHostAddress);
         }
 
         /// <summary>
@@ -195,6 +194,9 @@ namespace Mzayad.Services
 
         public async Task<Order> BuySubscriptionWithTokens(Subscription subscription, ApplicationUser user, string userHostAddress = null)
         {
+            var orderService = new OrderService(DataContextFactory);
+            var tokenService = new TokenService(DataContextFactory);
+            
             var result = ValidateSubscription(subscription);
             if (!result.IsValid)
             {
@@ -211,12 +213,12 @@ namespace Mzayad.Services
                 throw new Exception("Subscription cannot be purchased, user does not have enough available tokens.");
             }
 
-            var order = await _orderService.CreateOrderForSubscription(subscription, user, PaymentMethod.Tokens, userHostAddress);
-            await _orderService.SubmitOrderForProcessing(order, user.Id, userHostAddress);
+            var order = await orderService.CreateOrderForSubscription(subscription, user, PaymentMethod.Tokens, userHostAddress);
+            await orderService.SubmitOrderForProcessing(order, user.Id, userHostAddress);
 
-            await _tokenService.RemoveTokensFromUser(user, subscription.PriceTokens, user, userHostAddress);
+            await tokenService.RemoveTokensFromUser(user, subscription.PriceTokens, user, userHostAddress);
 
-            await _orderService.CompleteSubscriptionOrder(order, user.Id, userHostAddress);
+            await orderService.CompleteSubscriptionOrder(order, user.Id, userHostAddress);
             
             // TODO: send email notification
 
@@ -225,6 +227,8 @@ namespace Mzayad.Services
 
         public async Task<Order> BuySubscriptionWithKnet(Subscription subscription, ApplicationUser user, string userHostAddress = null)
         {
+            var orderService = new OrderService(DataContextFactory);
+            
             var result = ValidateSubscription(subscription);
             if (!result.IsValid)
             {
@@ -236,7 +240,7 @@ namespace Mzayad.Services
                 throw new Exception("Subscription is not valid for purchase with tokens.");
             }
 
-            var order = await _orderService.CreateOrderForSubscription(subscription, user, PaymentMethod.Knet, userHostAddress);
+            var order = await orderService.CreateOrderForSubscription(subscription, user, PaymentMethod.Knet, userHostAddress);
 
             //await AddSubscriptionToUser(user, subscription, user, userHostAddress);
             //await DecrementSubscriptionQuantity(subscription);
