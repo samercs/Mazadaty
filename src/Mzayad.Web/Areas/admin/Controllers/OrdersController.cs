@@ -93,7 +93,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return HttpNotFound();
             }
 
-            await _orderService.SetStatusAsShipped(order, _authService.CurrentUserId(), _authService.UserHostAddress());
+            await _orderService.SaveOrderAsDelivered(order, _authService.CurrentUserId(), _authService.UserHostAddress());
 
             if (sendNotification)
             {

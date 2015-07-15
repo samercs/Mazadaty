@@ -40,7 +40,7 @@ namespace Mzayad.Web.Controllers
                 throw new ArgumentException("Cannot find KNET transaction for payment ID: " + paymentId);
             }
 
-            if (transaction.Order.Status == OrderStatus.Processing || transaction.Order.Status == OrderStatus.Shipped)
+            if (transaction.Order.Status == OrderStatus.Processing || transaction.Order.Status == OrderStatus.Delivered)
             {
                 throw new Exception("Cannot POST transaction for order already processing or shipped. Order ID: " + transaction.OrderId + ", Request Params: " + RequestService.GetRequestParams());
             }
@@ -64,8 +64,24 @@ namespace Mzayad.Web.Controllers
                 return RedirectToAction("Error", new { paymentId });
             }
 
-            await _orderService.SubmitOrder(transaction.Order, AuthService.UserHostAddress());
+            await _orderService.SubmitOrderForProcessing(transaction.Order, null, AuthService.UserHostAddress());
 
+            if (transaction.Order.IsSubscription)
+            {
+                await _orderService.CompleteSubscriptionOrder(transaction.Order, null, AuthService.UserHostAddress());
+            }
+
+            // TODO: SendNotification(transaction);
+
+            var redirectUrl = Url.Action("Success", "Orders", new { transaction.OrderId, transaction.PaymentId, Language }, RequestService.GetUrlScheme());
+            var redirectResponse = string.Format("REDIRECT={0}", redirectUrl);
+            //return Content(redirectResponse);
+
+            return Redirect(redirectUrl);
+        }
+
+        private static void SendNotification(KnetTransaction transaction)
+        {
             var transactionNotes = string.Format("<p>&nbsp;</p>" +
                                                  "<table width='100%' cellpadding='8' cellspacing='0'>" +
                                                  "<tr><td colspan='2' style='background-color:#ebedee'><strong>KNET Transaction Details</strong></td>" +
@@ -78,17 +94,11 @@ namespace Mzayad.Web.Controllers
                                                  "<tr><td width='1%' nowrap='nowrap' style='text-align:right;white-space:nowrap'><strong>Ref No</strong></td><td>{5}</td>" +
                                                  "<tr><td width='1%' nowrap='nowrap' style='text-align:right;white-space:nowrap'><strong>Date/Time</strong></td><td>{6:dd MMM yyyy HH:mm:ss} GMT</td>" +
                                                  "</table>", transaction.PaymentId, transaction.Result,
-                                                 transaction.TransactionId, transaction.AuthorizationNumber,
-                                                 transaction.TrackId, transaction.ReferenceNumber,
-                                                 DateTime.UtcNow, CurrencyFormatter.Format(transaction.Order.Total));
+                transaction.TransactionId, transaction.AuthorizationNumber,
+                transaction.TrackId, transaction.ReferenceNumber,
+                DateTime.UtcNow, CurrencyFormatter.Format(transaction.Order.Total));
 
             // TODO: await SendNotifications(transaction, transactionNotes);
-            
-            var redirectUrl = Url.Action("Success", "Orders", new { transaction.OrderId, transaction.PaymentId, Language }, RequestService.GetUrlScheme());
-            var redirectResponse = string.Format("REDIRECT={0}", redirectUrl);
-            //return Content(redirectResponse);
-
-            return Redirect(redirectUrl);
         }
 
         public new async Task<ActionResult> Error(string paymentId)

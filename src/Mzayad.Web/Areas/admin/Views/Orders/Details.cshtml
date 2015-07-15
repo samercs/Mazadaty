@@ -43,7 +43,7 @@
     <ul class="link-list">
         <li><button id="print-invoice" type="button" class="btn btn-default">Print Invoice <i class="fa fa-print"></i></button></li>
 
-        @if (Model.Status != OrderStatus.Shipped)
+        @if (Model.Status != OrderStatus.Delivered)
         {
             <li>
                 <a class="btn btn-default" href="@Url.Action("Ship", new { id = Model.OrderId })">Ship Order <i class="fa fa-truck"></i></a>
@@ -73,7 +73,7 @@
                 <p class="form-control-static">@DateTimeFormatter.ToLocalTime(Model.SubmittedUtc, DateTimeFormatter.Format.Full)</p>
             </div>
             <div class="hidden-print">
-                <label class="col-xs-4 control-label">Shipped</label>
+                <label class="col-xs-4 control-label">Delivered</label>
                 <div class="col-xs-8">
                     <p class="form-control-static">@DateTimeFormatter.ToLocalTime(Model.ShippedUtc, DateTimeFormatter.Format.Full)</p>
                 </div>

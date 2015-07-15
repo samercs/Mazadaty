@@ -1,14 +1,13 @@
-﻿using System;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Mzayad.Data;
 using Mzayad.Models;
-using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Providers;
 using Owin;
+using System;
 
 namespace Mzayad.Web
 {
@@ -23,7 +22,7 @@ namespace Mzayad.Web
             app.CreatePerOwinContext(DataContext.Create);
             //app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             //app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
-            app.CreatePerOwinContext<SignInManager>(SignInManager.Create);
+            //app.CreatePerOwinContext<SignInManager>(SignInManager.Create);
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {

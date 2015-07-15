@@ -603,4 +603,25 @@
   <data name="TimeLeft" xml:space="preserve">
     <value>Time Left in Auction</value>
   </data>
+  <data name="BuyNow" xml:space="preserve">
+    <value>Buy Now</value>
+  </data>
+  <data name="SubscriptionDurationDetailsLabel" xml:space="preserve">
+    <value>&lt;strong&gt;Duration:&lt;/strong&gt; {Duration} days</value>
+  </data>
+  <data name="SubscriptionPriceDetailsLabel" xml:space="preserve">
+    <value>&lt;strong&gt;Price:&lt;/strong&gt; {FormattedPrice}</value>
+  </data>
+  <data name="SubscriptionQuantityDetailsLabel" xml:space="preserve">
+    <value>&lt;strong&gt;Quantity:&lt;/strong&gt; {Quantity}</value>
+  </data>
+  <data name="SubscriptionQuantityNoLimit" xml:space="preserve">
+    <value>no limit</value>
+  </data>
+  <data name="SubscriptionQuantityQuantityRemaining" xml:space="preserve">
+    <value>only {Quantity} left!</value>
+  </data>
+  <data name="SubscriptionQuantitySoldOut" xml:space="preserve">
+    <value>SOLD OUT</value>
+  </data>
 </root>

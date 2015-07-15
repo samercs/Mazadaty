@@ -46,6 +46,18 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task RemoveTokensFromUser(ApplicationUser user, int? tokens, ApplicationUser modifiedByUser, string userHostAddress)
+        {
+            if (!tokens.HasValue)
+            {
+                return;
+            }
+
+            tokens = tokens * -1;
+
+            await AddTokensToUser(user, tokens, modifiedByUser, userHostAddress);
+        }
+
         /// <summary>
         /// Gets a collection of token logs.
         /// </summary>

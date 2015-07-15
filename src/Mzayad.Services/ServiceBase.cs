@@ -4,16 +4,16 @@ namespace Mzayad.Services
 {
     public abstract class ServiceBase
     {
-        private readonly IDataContextFactory _dataContextFactory;
+        protected readonly IDataContextFactory DataContextFactory;
 
         protected IDataContext DataContext()
         {
-            return _dataContextFactory.GetContext();
+            return DataContextFactory.GetContext();
         }
-        
+
         protected ServiceBase(IDataContextFactory dataContextFactory)
         {
-            _dataContextFactory = dataContextFactory;
+            DataContextFactory = dataContextFactory;
         }
     }
 }
