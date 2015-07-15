@@ -31,7 +31,7 @@ namespace Mzayad.Web.Core.Services
             _httpContext = httpContext;
             _userManager = new UserManager(dataContextFactory);
             _roleManager = new RoleManager(dataContextFactory);
-            _signInManager = httpContext.GetOwinContext().Get<SignInManager>();
+            _signInManager = new SignInManager(_userManager, _httpContext.GetOwinContext().Authentication);
             _authenticationManager = httpContext.GetOwinContext().Authentication;
             _cookieService = cookieService;
         }
