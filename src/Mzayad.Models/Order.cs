@@ -48,6 +48,9 @@ namespace Mzayad.Models
             Total = Subtotal + Shipping;
         }
 
-        
+        public bool IsSubscription
+        {
+            get { return Items.Any(i => i.SubscriptionId.HasValue); }
+        }
     }
 }

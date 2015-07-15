@@ -12,8 +12,11 @@ namespace Mzayad.Services
 {
     public class OrderService : ServiceBase
     {
+        private readonly SubscriptionService _subscriptionService;
+        
         public OrderService(IDataContextFactory dataContextFactory) : base(dataContextFactory)
         {
+            _subscriptionService = new SubscriptionService(dataContextFactory);
         }
 
         public async Task<Order> GetById(int id, string languageCode = "en")
@@ -200,13 +203,13 @@ namespace Mzayad.Services
         /// <summary>
         /// Updates an order status and addes a log of the status change.
         /// </summary>
-        public async Task<Order> UpdateStatus(Order order, OrderStatus status, string userHostAddress, string userId = null)
+        public async Task<Order> UpdateStatus(Order order, OrderStatus status, string modifiedUserId, string userHostAddress)
         {
             using (var dc = DataContext())
             {
                 dc.Orders.Attach(order);
 
-                SetStatus(order, status, userId, userHostAddress);
+                SetStatus(order, status, modifiedUserId, userHostAddress);
 
                 await dc.SaveChangesAsync();
 
@@ -214,27 +217,16 @@ namespace Mzayad.Services
             }
         }
 
-        private static void SetStatus(Order order, OrderStatus status, string userId, string userHostAddress)
+        private static void SetStatus(Order order, OrderStatus status, string modifiedByUserId, string userHostAddress)
         {
             order.Status = status;
             order.Logs = order.Logs ?? new HashSet<OrderLog>();
             order.Logs.Add(new OrderLog
             {
-                UserId = userId,
+                UserId = modifiedByUserId,
                 UserHostAddress = userHostAddress,
                 Status = status
             });
-        }
-
-        public async Task SetStatusAsShipped(Order order,  string userId, string userHostAddress)
-        {
-            using (var dc = DataContext())
-            {
-                dc.Orders.Attach(order);
-                SetStatus(order, OrderStatus.Shipped, userId, userHostAddress);
-                order.ShippedUtc = DateTime.UtcNow;
-                await dc.SaveChangesAsync();
-            }
         }
 
         public async Task<Order> SaveShippingAndPayment(Order order, PaymentMethod? paymentMethod)
@@ -253,7 +245,7 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task SubmitOrder(Order order, string userHostAddress)
+        public async Task SubmitOrderForProcessing(Order order, string modifiedByUserId, string userHostAddress)
         {
             using (var dc = DataContext())
             {
@@ -261,19 +253,33 @@ namespace Mzayad.Services
 
                 DecrementProductOrSubscriptionInventory(order);
 
-                var orderHasPhysicalGoods = order.Items.Any(i => i.ProductId.HasValue);
-                if (orderHasPhysicalGoods)
-                {
-                    SetStatus(order, OrderStatus.Processing, null, userHostAddress);
-                }
-                else
-                {
-                    SetStatus(order, OrderStatus.Shipped, null, userHostAddress);
-                    order.ShippedUtc = DateTime.UtcNow;
-                }
+                SetStatus(order, OrderStatus.Processing, modifiedByUserId, userHostAddress);
 
                 await dc.SaveChangesAsync();
             }
+        }
+
+        public async Task SaveOrderAsDelivered(Order order, string modifiedByUserId, string userHostAddress)
+        {
+            using (var dc = DataContext())
+            {
+                dc.Orders.Attach(order);
+                SetStatus(order, OrderStatus.Shipped, modifiedByUserId, userHostAddress);
+                order.ShippedUtc = DateTime.UtcNow;
+                await dc.SaveChangesAsync();
+            }
+        }
+
+        public async Task CompleteSubscriptionOrder(Order order, string modifiedByUserId, string userHostAddress)
+        {
+            var subscriptionItems = order.Items.Where(orderItem => orderItem.SubscriptionId.HasValue);
+            foreach (var item in subscriptionItems)
+            {
+                await _subscriptionService.AddSubscriptionToUser(order.User, item.Subscription, order.User,
+                    userHostAddress);
+            }
+
+            await SaveOrderAsDelivered(order, modifiedByUserId, userHostAddress);
         }
 
         private static void DecrementProductOrSubscriptionInventory(Order order)

@@ -212,11 +212,12 @@ namespace Mzayad.Services
             }
 
             var order = await _orderService.CreateOrderForSubscription(subscription, user, PaymentMethod.Tokens, userHostAddress);
+            await _orderService.SubmitOrderForProcessing(order, user.Id, userHostAddress);
 
-            await _tokenService.AddTokensToUser(user, -(subscription.PriceTokens), user, userHostAddress);
-            await AddSubscriptionToUser(user, subscription, user, userHostAddress);
-            await DecrementSubscriptionQuantity(subscription);
+            await _tokenService.RemoveTokensFromUser(user, subscription.PriceTokens, user, userHostAddress);
 
+            await _orderService.CompleteSubscriptionOrder(order, user.Id, userHostAddress);
+            
             // TODO: send email notification
 
             return order;
