@@ -6,6 +6,6 @@ namespace Mzayad.Models.Enum
         InProgress = 1,
         PendingPayment = 2,
         Processing = 3,
-        Shipped = 4
+        Delivered = 4
     }
 }
