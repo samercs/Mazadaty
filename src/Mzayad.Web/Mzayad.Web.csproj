@@ -333,6 +333,7 @@
     <Compile Include="Core\Configuration\RouteInfo.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Controllers\DocsController.cs" />
+    <Compile Include="Core\Configuration\CustomViewPage.cs" />
     <Compile Include="Core\ModelBinder\DateTimeModelBinder.cs" />
     <Compile Include="Core\Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Core\Services\GeolocationService.cs" />
@@ -685,7 +686,9 @@
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />

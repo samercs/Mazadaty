@@ -232,6 +232,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Buy Now.
+        /// </summary>
+        public static string BuyNow {
+            get {
+                return ResourceManager.GetString("BuyNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Buy Subscription.
         /// </summary>
         public static string BuySubscription {
@@ -1330,11 +1339,29 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;strong&gt;Duration:&lt;/strong&gt; {Duration} days.
+        /// </summary>
+        public static string SubscriptionDurationDetailsLabel {
+            get {
+                return ResourceManager.GetString("SubscriptionDurationDetailsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;span class=&quot;text-danger&quot;&gt;EXPIRED&lt;/span&gt; on {DateTime}.
         /// </summary>
         public static string SubscriptionExpiredOn {
             get {
                 return ResourceManager.GetString("SubscriptionExpiredOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;strong&gt;Price:&lt;/strong&gt; {FormattedPrice}.
+        /// </summary>
+        public static string SubscriptionPriceDetailsLabel {
+            get {
+                return ResourceManager.GetString("SubscriptionPriceDetailsLabel", resourceCulture);
             }
         }
         
@@ -1362,6 +1389,42 @@ namespace Mzayad.Web.Resources {
         public static string SubscriptionPurchaseAcknowledgement {
             get {
                 return ResourceManager.GetString("SubscriptionPurchaseAcknowledgement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;strong&gt;Quantity:&lt;/strong&gt; {Quantity}.
+        /// </summary>
+        public static string SubscriptionQuantityDetailsLabel {
+            get {
+                return ResourceManager.GetString("SubscriptionQuantityDetailsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no limit.
+        /// </summary>
+        public static string SubscriptionQuantityNoLimit {
+            get {
+                return ResourceManager.GetString("SubscriptionQuantityNoLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to only {Quantity} left!.
+        /// </summary>
+        public static string SubscriptionQuantityQuantityRemaining {
+            get {
+                return ResourceManager.GetString("SubscriptionQuantityQuantityRemaining", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SOLD OUT.
+        /// </summary>
+        public static string SubscriptionQuantitySoldOut {
+            get {
+                return ResourceManager.GetString("SubscriptionQuantitySoldOut", resourceCulture);
             }
         }
         

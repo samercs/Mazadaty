@@ -139,6 +139,10 @@ p.form-control-static:after {
   background: #132e72;
   color: #ffffff;
 }
+.btn-default[disabled] {
+  background: #132e72;
+  opacity: 0.4;
+}
 .btn-sm,
 .btn-sm:hover,
 .btn-sm:focus {
