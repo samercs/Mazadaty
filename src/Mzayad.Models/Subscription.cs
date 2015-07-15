@@ -32,6 +32,11 @@ namespace Mzayad.Models
             get { return PriceTokens.HasValue && PriceTokens.Value > 0; }
         }
 
+        public bool IsSoldOut
+        {
+            get { return Quantity.HasValue && Quantity.Value <= 0; }
+        }
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (!(PriceCurrencyIsValid || PriceTokensIsValid))
