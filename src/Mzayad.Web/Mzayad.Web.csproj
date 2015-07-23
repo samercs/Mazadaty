@@ -26,6 +26,7 @@
     <RestorePackages>true</RestorePackages>
     <ApplicationInsightsResourceId />
     <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -138,11 +139,11 @@
       <HintPath>..\..\packages\OrangeJetpack.Regionalization.0.0.6\lib\OrangeJetpack.Regionalization.dll</HintPath>
     </Reference>
     <Reference Include="OrangeJetpack.Services.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.27\lib\OrangeJetpack.Services.Client.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.30\lib\OrangeJetpack.Services.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Services.Models, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.27\lib\OrangeJetpack.Services.Models.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.30\lib\OrangeJetpack.Services.Models.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RestSharp">

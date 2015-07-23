@@ -227,14 +227,14 @@ namespace Mzayad.Web.Controllers
                 email.Message = string.Format(template.Message, user.FirstName, GetPasswordResetUrl(user.Email));
             }
 
-            try
-            {
+            //try
+            //{
                 await MessageService.Send(email.WithTemplate());
-            }
-            catch (Exception ex)
-            {
-                new RaygunClient().Send(ex);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    new RaygunClient().Send(ex);
+            //}
         }
 
         [AllowAnonymous]
