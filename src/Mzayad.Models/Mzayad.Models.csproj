@@ -101,6 +101,7 @@
     <Compile Include="Sponsor.cs" />
     <Compile Include="Subscription.cs" />
     <Compile Include="SubscriptionLog.cs" />
+    <Compile Include="TokenLog.cs" />
     <Compile Include="UserProfile.cs" />
     <Compile Include="WishList.cs" />
     <Compile Include="WishListAdminModel.cs" />

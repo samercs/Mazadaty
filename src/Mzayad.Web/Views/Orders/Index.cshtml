@@ -3,8 +3,7 @@
 @model Mzayad.Models.Order
 
 @{
-    ViewBag.Title = "Order Detail";
-    
+    ViewBag.Title = "Order Details";
 }
 
 <div class="panel panel-default">
@@ -16,19 +15,19 @@
         @foreach (var item in Model.Items)
         {
             <div class="form-group">
-                <label class="col-sm-2 control-label">@Global.ItemName : </label>
+                <label class="col-sm-2 control-label">@Global.ItemName:</label>
                 <div class="col-sm-10">
                     <p class="form-control-static">@item.Localize("en",i=>i.Name).Name</p>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">@Global.ItemPrices : </label>
+                <label class="col-sm-2 control-label">@Global.ItemPrices:</label>
                 <div class="col-sm-10">
                     <p class="form-control-static">@item.ItemPrice</p>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">@Global.Quantity : </label>
+                <label class="col-sm-2 control-label">@Global.Quantity:</label>
                 <div class="col-sm-10">
                     <p class="form-control-static">@item.Quantity</p>
                 </div>

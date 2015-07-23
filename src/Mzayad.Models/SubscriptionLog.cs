@@ -10,11 +10,15 @@ namespace Mzayad.Models
         
         [Required, StringLength(128)]
         public string UserId { get; set; }
+        
         [Required, StringLength(128)]
         public string ModifiedByUserId { get; set; }
+        
         public DateTime? OriginalSubscriptionUtc { get; set; }
+        
         [Required]
         public DateTime ModifiedSubscriptionUtc { get; set; }
+        
         [Required, StringLength(15)]
         public string UserHostAddress { get; set; }
 

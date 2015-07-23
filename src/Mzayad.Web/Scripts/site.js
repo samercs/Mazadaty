@@ -93,16 +93,6 @@
 
 })(jQuery, new WOW());
 
-var kendoFormatter = {
-    getYesNo: function (value) {
-        if (value === true) {
-            return "<span class='text-yes'>Yes</span>";
-        } else {
-            return "<span class='text-no'>No</span>";
-        }
-    }
-}
-
 var TimeUtilities = {
     getDays: function (days) {
         return days === 1 ? "1 day " : days + " days ";

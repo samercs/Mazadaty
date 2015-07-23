@@ -1,62 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Kendo.Mvc.Extensions;
+﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Mzayad.Services;
 using Mzayad.Web.Controllers;
 using Mzayad.Web.Core.ActionResults;
-using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Base.Core.Formatting;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using Mzayad.Web.Areas.Reports.Models.Subscriptions;
+using Mzayad.Web.Core.Attributes;
+using Mzayad.Web.Core.Identity;
 
 namespace Mzayad.Web.Areas.Reports.Controllers
 {
+    [RoleAuthorize(Role.Administrator)]
+    [RouteArea("reports"), RoutePrefix("subscriptions")]
     public class SubscriptionsController : ApplicationController
     {
-
-        private readonly SubscriptionLogService _subscriptionLogService;
+        private readonly SubscriptionService _subscriptionLogService;
 
         public SubscriptionsController(IAppServices appServices)
             : base(appServices)
         {
-            _subscriptionLogService=new SubscriptionLogService(DataContextFactory);
+            _subscriptionLogService = new SubscriptionService(DataContextFactory);
         }
-        
-        // GET: Reports/Subscriptions
-        public async Task<ActionResult> Index()
+
+        [Route("logs")]
+        public async Task<ActionResult> Logs()
         {
-            var model = await _subscriptionLogService.GetAll();
-            return View(model);
+            var subscriptionLogs = await _subscriptionLogService.GetSubscriptionLogs();
+            var viewModel = subscriptionLogs.Select(SubscriptionLogViewModel.Create);
+            
+            return View(viewModel);
         }
 
         [HttpPost]
-        public async Task<JsonResult> GetSubscriptionLog([DataSourceRequest] DataSourceRequest request)
+        [Route("logs/json")]
+        public async Task<JsonResult> LogsAsJson([DataSourceRequest] DataSourceRequest request)
         {
-            var result = await _subscriptionLogService.GetAll();
-            return Json(result.ToDataSourceResult(request));
+            var subscriptionLogs = await _subscriptionLogService.GetSubscriptionLogs();
+            var results = subscriptionLogs.Select(SubscriptionLogViewModel.Create);
+            
+            return Json(results.ToDataSourceResult(request));
         }
 
-        public async Task<ExcelResult> ToExcel()
+        [Route("logs/excel")]
+        public async Task<ExcelResult> LogsAsExcel()
         {
-            var tmp = await _subscriptionLogService.GetAll();
-            var results = tmp.Select(i => new
-            {
-                Id=i.SubscriptionLogId,
-                DateTime= i.CreatedUtc,
-                User=NameFormatter.GetFullName(i.User.FirstName,i.User.LastName),
-                OrginalValue=i.OriginalSubscriptionUtc,
-                NewValue=i.ModifiedSubscriptionUtc,
-                Change="+" + i.DaysAdded + " Days",
-                ChangedBy = NameFormatter.GetFullName(i.ModifiedByUser.FirstName, i.ModifiedByUser.LastName)
-            });
+            var subscriptionLogs = await _subscriptionLogService.GetSubscriptionLogs();
+            var results = subscriptionLogs.Select(SubscriptionLogViewModel.Create);
 
-            return Excel(results, "SubscriptionLog");
+            return Excel(results, "Subscription Logs");
         }
 
-        
+
     }
 }

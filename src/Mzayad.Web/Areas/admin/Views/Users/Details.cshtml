@@ -143,4 +143,50 @@
     </table>
 }
 
+@if (Model.TokenLogs.Any())
+{
+    <h2>Token Log</h2>
 
+    <table class="@Html.Css().GridTable">
+        <thead>
+            <tr>
+                <th>Date/Time</th>
+                <th>Original Amount</th>
+                <th>New Amount</th>
+                <th>Change</th>
+                <th>Changed By</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.TokenLogs)
+            {
+                <tr>
+                    <td>
+                        @DateTimeFormatter.ToLocalTime(item.CreatedUtc, DateTimeFormatter.Format.Full)
+                    </td>
+                    <td>
+                        @string.Format("{0} tokens", item.OriginalTokenAmount)
+                    </td>
+                    <td>
+                        @string.Format("{0} tokens", item.ModifiedTokenAmount)
+                    </td>
+                    <td>
+                        @if (item.TokensAdded > 0)
+                        {
+                            <span class="text-success">+ @("token".ToQuantity(item.TokensAdded))</span>
+                        }
+                        else if (item.TokensAdded < 0)
+                        {
+                            <span class="text-warning">@("token".ToQuantity(item.TokensAdded))</span>
+                        }
+                        else
+                        {
+                            <span>0 days</span>
+                        }
+                    </td>
+                    <td>@NameFormatter.GetFullName(item.ModifiedByUser.FirstName, item.ModifiedByUser.LastName)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

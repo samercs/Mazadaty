@@ -310,7 +310,10 @@
     <Compile Include="Areas\Api\Models\Auctions\AuctionModel.cs" />
     <Compile Include="Areas\Api\Models\Users\UserModel.cs" />
     <Compile Include="Areas\Api\Models\Users\UserPostModel.cs" />
+    <Compile Include="Areas\Reports\Controllers\TokensController.cs" />
     <Compile Include="Areas\Reports\Controllers\SubscriptionsController.cs" />
+    <Compile Include="Areas\Reports\Models\Tokens\TokenLogViewModel.cs" />
+    <Compile Include="Areas\Reports\Models\Subscriptions\SubscriptionLogViewModel.cs" />
     <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
     <Compile Include="Controllers\ApplicationApiController.cs" />
     <Compile Include="Controllers\AuctionsController.cs" />
@@ -345,9 +348,7 @@
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Core\Configuration\CookieKeys.cs" />
-    <Compile Include="Core\Identity\ApplicationRoleManager.cs" />
-    <Compile Include="Core\Identity\ApplicationSignInManager.cs" />
-    <Compile Include="Core\Identity\ApplicationUserManager.cs" />
+    <Compile Include="Core\Identity\SignInManager.cs" />
     <Compile Include="Core\Identity\Role.cs" />
     <Compile Include="Core\Services\AppSettings.cs" />
     <Compile Include="Core\Services\AuthService.cs" />
@@ -578,6 +579,7 @@
     <Content Include="Content\nivo\default\next.png" />
     <Content Include="Content\nivo\default\prev%402x.png" />
     <Content Include="Content\nivo\default\prev.png" />
+    <Content Include="Scripts\site-kendo.js" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml">
       <SubType>Code</SubType>
     </Content>
@@ -615,12 +617,13 @@
     <Content Include="Areas\Admin\Views\WishLists\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Users\EditSubscription.cshtml" />
     <Content Include="Areas\Reports\Views\web.config" />
-    <Content Include="Areas\Reports\Views\Subscriptions\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\Subscriptions\Logs.cshtml" />
     <Content Include="Areas\Reports\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Reports\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\SplashAds\Index.cshtml" />
     <Content Include="Areas\Admin\Views\SplashAds\Upload.cshtml" />
     <Content Include="Areas\Admin\Views\Levels\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\Tokens\Logs.cshtml" />
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
@@ -669,6 +672,7 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Scripts\nivo\bower.json" />
     <Content Include="Scripts\nivo\README.md" />
+    <Content Include="Scripts\site-kendo.js.map" />
     <None Include="Views\Home\SignalR.cshtml" />
     <Content Include="404.html" />
     <Content Include="500.html" />
@@ -731,11 +735,11 @@
     <Content Include="Views\Shared\DisplayTemplates\SubscriptionUtc.cshtml" />
     <Content Include="Views\Subscriptions\Index.cshtml" />
     <Content Include="Views\Subscriptions\Buy.cshtml" />
+    <Content Include="Views\Subscriptions\BuyWithTokens.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Api\Views\Shared\" />
-    <Folder Include="Areas\Reports\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -769,6 +773,9 @@
       <LastGenOutput>Global.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Mzayad.Web.Resources</CustomToolNamespace>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\site-kendo.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -21,5 +21,10 @@ namespace Mzayad.Web.Models.Subscriptions
                 return CurrentExpirationUtc.Value.AddDays(Subscription.Duration);
             }
         }
+
+        public int AvailableTokensAfterPurchase
+        {
+            get { return AvailableTokens - Subscription.PriceTokens.GetValueOrDefault(0); }
+        }
     }
 }

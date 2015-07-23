@@ -35,5 +35,10 @@ namespace Mzayad.Web.Extensions
                 .HtmlAttributes(new { @class = "link-cell" })
                 .ClientTemplate(string.Format("<a href=\"{0}\">{1}</a>", href, text));
         }
+
+        public static GridBoundColumnBuilder<T> FormatDateTime<T>(this GridBoundColumnBuilder<T> builder) where T : class
+        {
+            return builder.Format("{0:dd/MM/yyyy hh:mm tt}");
+        }
     }
 }

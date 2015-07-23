@@ -34,7 +34,7 @@ namespace Mzayad.Models
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (!PriceCurrencyIsValid || !PriceTokensIsValid)
+            if (!(PriceCurrencyIsValid || PriceTokensIsValid))
             {
                 yield return new ValidationResult("Purchase price cannot be null or zero.", new[] { "PriceCurrency", "PriceTokens" });
             }

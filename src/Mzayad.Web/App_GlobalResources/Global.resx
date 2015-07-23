@@ -568,12 +568,30 @@
     <value>Buy for {FormattedPrice}</value>
   </data>
   <data name="BuyForPriceTokens" xml:space="preserve">
-    <value>Buy for {TokenAmount} tokens</value>
+    <value>Buy with {PriceTokens} tokens</value>
   </data>
   <data name="SubscriptionPriceKdAndTokens" xml:space="preserve">
     <value>{PriceCurrency} or {PriceTokens} tokens</value>
   </data>
   <data name="SubscriptionPriceTokens" xml:space="preserve">
-    <value>{PurchaseTokens} tokens</value>
+    <value>{PriceTokens} tokens</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="NoSubscription" xml:space="preserve">
+    <value>No Subscription</value>
+  </data>
+  <data name="SubscriptionActiveUntil" xml:space="preserve">
+    <value>&lt;span class="text-success"&gt;ACTIVE&lt;/span&gt; until {DateTime}</value>
+  </data>
+  <data name="SubscriptionExpiredOn" xml:space="preserve">
+    <value>&lt;span class="text-danger"&gt;EXPIRED&lt;/span&gt; on {DateTime}</value>
+  </data>
+  <data name="SubscriptionPurchaseAcknowledgement" xml:space="preserve">
+    <value>Congratulations, you have successfully purchased &lt;strong&gt;{Subscription.Name}&lt;/strong&gt; and we have updated your account.</value>
+  </data>
+  <data name="SubscriptionBuyInstructions" xml:space="preserve">
+    <value>You are buying the subscription &lt;strong&gt;{Name}&lt;/strong&gt; for &lt;strong&gt;{FormattedPrice}&lt;/strong&gt;, this &lt;strong&gt;{Duration} day&lt;/strong&gt; subscription will give you a valid subscription until &lt;strong&gt;{NewExpiration}&lt;/strong&gt;. Your account will be updated as soon as the purchase is complete.</value>
   </data>
 </root>

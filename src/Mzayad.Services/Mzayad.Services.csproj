@@ -53,8 +53,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="OrangeJetpack.Base.Core">
-      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.5\lib\OrangeJetpack.Base.Core.dll</HintPath>
+    <Reference Include="OrangeJetpack.Base.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.7\lib\OrangeJetpack.Base.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Localization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -73,6 +74,7 @@
     <Compile Include="BidService.cs" />
     <Compile Include="CategoryService.cs" />
     <Compile Include="EmailTemplateService.cs" />
+    <Compile Include="Identity\RoleManager.cs" />
     <Compile Include="LevelService.cs" />
     <Compile Include="NotificationService.cs" />
     <Compile Include="OrderService.cs" />
@@ -83,8 +85,9 @@
     <Compile Include="SpecificationService.cs" />
     <Compile Include="SplashAdService.cs" />
     <Compile Include="SponsorService.cs" />
-    <Compile Include="SubscriptionLogService.cs" />
     <Compile Include="SubscriptionService.cs" />
+    <Compile Include="TokenService.cs" />
+    <Compile Include="Identity\UserManager.cs" />
     <Compile Include="UserProfileService.cs" />
     <Compile Include="WishListService.cs" />
   </ItemGroup>

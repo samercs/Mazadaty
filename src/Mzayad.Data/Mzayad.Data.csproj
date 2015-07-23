@@ -250,6 +250,10 @@
     <Compile Include="Migrations\201507091434549_UpdateOrderItemForSubscription.Designer.cs">
       <DependentUpon>201507091434549_UpdateOrderItemForSubscription.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507131452306_AddTokenLogs.cs" />
+    <Compile Include="Migrations\201507131452306_AddTokenLogs.Designer.cs">
+      <DependentUpon>201507131452306_AddTokenLogs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -401,6 +405,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507091434549_UpdateOrderItemForSubscription.resx">
       <DependentUpon>201507091434549_UpdateOrderItemForSubscription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507131452306_AddTokenLogs.resx">
+      <DependentUpon>201507131452306_AddTokenLogs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

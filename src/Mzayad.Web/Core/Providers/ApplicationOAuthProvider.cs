@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
+using Mzayad.Data;
 using Mzayad.Models;
+using Mzayad.Services.Identity;
 using Mzayad.Web.Core.Identity;
 
 namespace Mzayad.Web.Core.Providers
@@ -27,10 +30,9 @@ namespace Mzayad.Web.Core.Providers
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
+            var userManager = new UserManager(new DataContextFactory());
 
-            ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
-
+            var user = await userManager.FindAsync(context.UserName, context.Password);
             if (user == null)
             {
                 context.SetError("invalid_grant", "The user name or password is incorrect.");
