@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivityEvent.cs" />
     <Compile Include="Address.cs" />
     <Compile Include="ApplicationUser.cs" />
     <Compile Include="Auction.cs" />
@@ -74,14 +75,15 @@
     <Compile Include="Category.cs" />
     <Compile Include="CategoryNotification.cs" />
     <Compile Include="EmailTemplate.cs" />
-    <Compile Include="Enum\AuctionStatus.cs" />
-    <Compile Include="Enum\OrderStatus.cs" />
-    <Compile Include="Enum\PaymentMethod.cs" />
-    <Compile Include="Enum\EmailTemplateType.cs" />
-    <Compile Include="Enum\OrderType.cs" />
-    <Compile Include="Enum\PaymentStatus.cs" />
-    <Compile Include="Enum\SubscriptionStatus.cs" />
-    <Compile Include="Enum\UserProfileStatus.cs" />
+    <Compile Include="Enums\ActivityType.cs" />
+    <Compile Include="Enums\AuctionStatus.cs" />
+    <Compile Include="Enums\OrderStatus.cs" />
+    <Compile Include="Enums\PaymentMethod.cs" />
+    <Compile Include="Enums\EmailTemplateType.cs" />
+    <Compile Include="Enums\OrderType.cs" />
+    <Compile Include="Enums\PaymentStatus.cs" />
+    <Compile Include="Enums\SubscriptionStatus.cs" />
+    <Compile Include="Enums\UserProfileStatus.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="ModelBase.cs" />
     <Compile Include="Order.cs" />
