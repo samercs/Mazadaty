@@ -139,11 +139,11 @@
       <HintPath>..\..\packages\OrangeJetpack.Regionalization.0.0.6\lib\OrangeJetpack.Regionalization.dll</HintPath>
     </Reference>
     <Reference Include="OrangeJetpack.Services.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.30\lib\OrangeJetpack.Services.Client.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.33\lib\OrangeJetpack.Services.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Services.Models, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.30\lib\OrangeJetpack.Services.Models.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.33\lib\OrangeJetpack.Services.Models.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RestSharp">
@@ -320,6 +320,7 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\KnetController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\QueueTestController.cs" />
     <Compile Include="Controllers\SubscriptionsController.cs" />
     <Compile Include="Controllers\WishListController.cs" />
     <Compile Include="Core\ActionResults\ExcelResult.cs" />
@@ -739,6 +740,7 @@
     <Content Include="Views\Subscriptions\Index.cshtml" />
     <Content Include="Views\Subscriptions\Buy.cshtml" />
     <Content Include="Views\Subscriptions\BuyWithTokens.cshtml" />
+    <Content Include="Views\QueueTest\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
