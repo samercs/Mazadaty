@@ -308,7 +308,6 @@
     <Compile Include="Areas\Admin\Models\WishList\IndexViewModel.cs" />
     <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
     <Compile Include="Areas\Api\Controllers\AuctionsController.cs" />
-    <Compile Include="Areas\Api\Controllers\TestController.cs" />
     <Compile Include="Areas\Api\Controllers\UsersController.cs" />
     <Compile Include="Areas\Api\Models\Auctions\AuctionModel.cs" />
     <Compile Include="Areas\Api\Models\Users\UserModel.cs" />

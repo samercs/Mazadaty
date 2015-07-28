@@ -18,6 +18,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using Mzayad.Services.Identity;
 using Mzayad.Web.Controllers;
 
 namespace Mzayad.Web.Areas.Api.Controllers
@@ -25,11 +26,13 @@ namespace Mzayad.Web.Areas.Api.Controllers
     [RoutePrefix("api/users")]
     public class UsersController : ApplicationApiController
     {
+        private readonly UserService _userService;
         private readonly UserProfileService _userProfileService;
         private readonly AddressService _addressService;
 
         public UsersController(IAppServices appServices) : base(appServices)
         {
+            _userService = new UserService(appServices.DataContextFactory);
             _userProfileService = new UserProfileService(appServices.DataContextFactory);
             _addressService = new AddressService(appServices.DataContextFactory); 
         }
@@ -37,7 +40,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
         [Route("{username}")]
         public async Task<IHttpActionResult> Get(string username)
         {
-            var applicationUser = await AuthService.GetUserByName(username);
+            var applicationUser = await _userService.GetUserByName(username);
             if (applicationUser == null)
             {
                 return NotFound();
@@ -89,16 +92,11 @@ namespace Mzayad.Web.Areas.Api.Controllers
 
             var address = await _addressService.SaveAddress(model.Address);
             user.AddressId = address.AddressId;
-            await AuthService.UpdateUser(user);
+            await _userService.UpdateUser(user);
 
             await SendNewUserWelcomeEmail(user);
-            return Ok(string.Format("user created sucessfully"));
-
-
-
-
+            return Ok();
         }
-
 
         [HttpPost, Route("action/password-reset")]
         public async Task<IHttpActionResult> PasswordReset(NeedPasswordViewModel model)
@@ -127,7 +125,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 return BadRequest(messages);
             }
 
-            var user = await AuthService.GetUserById(id);
+            var user = await _userService.GetUserById(id);
             var originalEmail = user.Email;
             bool emailChanged = false;
 
@@ -140,7 +138,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
             }
             user.PhoneCountryCode = string.IsNullOrEmpty(model.PhoneCountryCode) ? user.PhoneCountryCode : model.PhoneCountryCode;
             user.PhoneNumber = string.IsNullOrEmpty(model.PhoneNumber) ? user.PhoneNumber : model.PhoneNumber;
-            await AuthService.UpdateUser(user);
+            await _userService.UpdateUser(user);
 
             if (user.AddressId.HasValue && model.Address != null)
             {
@@ -160,7 +158,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 await SendEmailChangedEmail(user, originalEmail);
             }
 
-            return Ok("User updated successfully.");
+            return Ok();
         }
 
         private async Task SendEmailChangedEmail(ApplicationUser user, string originalEmail)
@@ -205,7 +203,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 Subject = Global.ResetPassword
             };
 
-            var user = await AuthService.GetUserByEmail(emailAddress);
+            var user = await _userService.GetUserByEmail(emailAddress);
             if (user == null)
             {
                 template = await EmailTemplateService.GetByTemplateType(EmailTemplateType.NoAccount, "en");
@@ -257,20 +255,18 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 return BadRequest(messages);
             }
 
-            var user = await AuthService.GetUserById(id);
+            var user = await _userService.GetUserById(id);
             if (user == null)
             {
                 return BadRequest("user not found");
             }
-            var result = await AuthService.ChangePassword(user.Id, model.CurrentPassword, model.NewPassword);
+            var result = await _userService.ChangePassword(user.Id, model.CurrentPassword, model.NewPassword);
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
             }
 
-            return Ok("password has been changed");
-
-
+            return Ok();
         }
 
         private IHttpActionResult GetErrorResult(IdentityResult result)
@@ -295,7 +291,6 @@ namespace Mzayad.Web.Areas.Api.Controllers
 
             if (ModelState.IsValid)
             {
-                // No ModelState errors are available to send, so just return an empty BadRequest.
                 return BadRequest();
             }
 

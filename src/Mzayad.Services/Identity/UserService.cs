@@ -32,6 +32,11 @@ namespace Mzayad.Services.Identity
             return await _userManager.FindByEmailAsync(email);
         }
 
+        public async Task<ApplicationUser> GetUserByName(string username)
+        {
+            return await _userManager.FindByNameAsync(username);
+        }
+
         public async Task<IReadOnlyCollection<ApplicationUser>> GetUsers(string search = "", string role = null)
         {
             var users = _userManager.Users;
@@ -66,12 +71,19 @@ namespace Mzayad.Services.Identity
 
         public async Task<IdentityResult> UpdateUser(ApplicationUser user)
         {
-            return await _userManager.UpdateAsync(user);
+            var update = await _userManager.FindByIdAsync(user.Id);
+            update.FirstName = user.FirstName;
+            update.LastName = user.LastName;
+            update.Email = user.Email;
+            update.PhoneCountryCode = user.PhoneCountryCode;
+            update.PhoneNumber = user.PhoneNumber;
+
+            return await _userManager.UpdateAsync(update);
         }
 
-        public async Task<IdentityResult> ChangePassword(IIdentity identity, string oldPassword, string newPassword)
+        public async Task<IdentityResult> ChangePassword(string userId, string oldPassword, string newPassword)
         {
-            return await _userManager.ChangePasswordAsync(identity.GetUserId(), oldPassword, newPassword);
+            return await _userManager.ChangePasswordAsync(userId, oldPassword, newPassword);
         }
 
         public string HashPassword(string password)

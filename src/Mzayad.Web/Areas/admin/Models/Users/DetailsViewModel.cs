@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Mzayad.Models;
 using Mzayad.Services;
+using Mzayad.Services.Identity;
 using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Base.Core.Formatting;
@@ -38,7 +39,7 @@ namespace Mzayad.Web.Areas.admin.Models.Users
         public IReadOnlyCollection<SubscriptionLog> SubscriptionLogs { get; set; }
         public IReadOnlyCollection<TokenLog> TokenLogs { get; set; }
 
-        public async Task<DetailsViewModel> Hydrate(ApplicationUser user, IAuthService authService, SubscriptionService subscriptionService, TokenService tokenService)
+        public async Task<DetailsViewModel> Hydrate(ApplicationUser user, UserService userService, SubscriptionService subscriptionService, TokenService tokenService)
         {
             UserId = user.Id;
             FirstName = user.FirstName;
@@ -48,7 +49,7 @@ namespace Mzayad.Web.Areas.admin.Models.Users
             CreatedUtc = user.CreatedUtc;
             SubscriptionUtc = user.SubscriptionUtc;
 
-            var roles = (await authService.GetRolesForUser(user.Id));
+            var roles = (await userService.GetRolesForUser(user.Id));
 
             Roles = (from Role role in Enum.GetValues(typeof(Role))
                      select new SelectListItem
