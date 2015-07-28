@@ -10,12 +10,12 @@ namespace Mzayad.Web.Controllers
     public class QueueTestController : Controller
     {
         private readonly IAuthService _authService;
-        private readonly IActivityService _activityService;
+        private readonly IActivityQueueService _activityQueueService;
 
-        public QueueTestController(IAuthService authService, IActivityService activityService)
+        public QueueTestController(IAuthService authService, IActivityQueueService activityQueueService)
         {
             _authService = authService;
-            _activityService = activityService;
+            _activityQueueService = activityQueueService;
         }
 
         [Route("test")]
@@ -28,7 +28,7 @@ namespace Mzayad.Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Test(FormCollection formCollection)
         {
-            _activityService.AddActivity(ActivityType.TestActivity, _authService.CurrentUserId());
+            _activityQueueService.QueueActivity(ActivityType.TestActivity, _authService.CurrentUserId());
 
             return View();
         }

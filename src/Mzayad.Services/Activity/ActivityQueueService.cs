@@ -7,22 +7,22 @@ using Newtonsoft.Json;
 
 namespace Mzayad.Services.Activity
 {
-    public interface IActivityService
+    public interface IActivityQueueService
     {
-        Task AddActivity(ActivityType activityType, string userId);
+        Task QueueActivity(ActivityType activityType, string userId);
     }
 
-    public class ActivityService : IActivityService
+    public class ActivityQueueService : IActivityQueueService
     {
         private const string QueueName = "activities";
         private readonly CloudStorageAccount _storageAccount;
 
-        public ActivityService(string connectionString)
+        public ActivityQueueService(string connectionString)
         {
             _storageAccount = CloudStorageAccount.Parse(connectionString);  
         }
 
-        public async Task AddActivity(ActivityType activityType, string userId)
+        public async Task QueueActivity(ActivityType activityType, string userId)
         {
             var client = _storageAccount.CreateCloudQueueClient();
             var queue = client.GetQueueReference(QueueName);

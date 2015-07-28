@@ -93,7 +93,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Activity\ActivityService.cs" />
+    <Compile Include="Activity\ActivityEventService.cs" />
+    <Compile Include="Activity\ActivityQueueService.cs" />
     <Compile Include="AddressService.cs" />
     <Compile Include="AuctionService.cs" />
     <Compile Include="AvatarService.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="CategoryService.cs" />
     <Compile Include="EmailTemplateService.cs" />
     <Compile Include="Identity\RoleManager.cs" />
+    <Compile Include="Identity\UserService.cs" />
     <Compile Include="LevelService.cs" />
     <Compile Include="NotificationService.cs" />
     <Compile Include="OrderService.cs" />
