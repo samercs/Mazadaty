@@ -2,7 +2,7 @@
 {
     public enum ActivityType
     {
-        TestActivity,
+        TestActivity = 0,
         SubmitBid,
         AutoBid,
         WinAuction,
