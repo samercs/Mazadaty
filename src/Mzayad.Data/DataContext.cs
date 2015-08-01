@@ -34,6 +34,7 @@ namespace Mzayad.Data
         public IDbSet<SubscriptionLog> SubscriptionLogs { get; set; }
         public IDbSet<TokenLog> TokenLogs { get; set; }
         public IDbSet<SplashAd> SplashAds { get; set; } 
+        public IDbSet<Trophy> Trophies{ get; set; } 
 
         public DataContext(): base("DefaultConnection")
         {

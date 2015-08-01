@@ -81,6 +81,7 @@
     <Compile Include="Enum\OrderType.cs" />
     <Compile Include="Enum\PaymentStatus.cs" />
     <Compile Include="Enum\SubscriptionStatus.cs" />
+    <Compile Include="Enum\TrophyKey.cs" />
     <Compile Include="Enum\UserProfileStatus.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="ModelBase.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Subscription.cs" />
     <Compile Include="SubscriptionLog.cs" />
     <Compile Include="TokenLog.cs" />
+    <Compile Include="Trophy.cs" />
     <Compile Include="UserProfile.cs" />
     <Compile Include="WishList.cs" />
     <Compile Include="WishListAdminModel.cs" />
