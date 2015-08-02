@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
+using OrangeJetpack.Localization;
 
 namespace Mzayad.Services
 {
@@ -16,11 +17,12 @@ namespace Mzayad.Services
             :base(dataContextFactory)
         { }
 
-        public async Task<IEnumerable<Trophy>> GetAll()
+        public async Task<IEnumerable<Trophy>> GetAll(string languageCode="en")
         {
             using (var dc = new DataContext())
             {
-                return await dc.Trophies.ToListAsync();
+                var trophies = await dc.Trophies.ToListAsync();
+                return trophies.Localize(languageCode, i => i.Name, i => i.Description);
             }
         }
 

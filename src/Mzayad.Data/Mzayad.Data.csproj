@@ -254,9 +254,9 @@
     <Compile Include="Migrations\201507131452306_AddTokenLogs.Designer.cs">
       <DependentUpon>201507131452306_AddTokenLogs.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201508011543333_AddTrophy.cs" />
-    <Compile Include="Migrations\201508011543333_AddTrophy.Designer.cs">
-      <DependentUpon>201508011543333_AddTrophy.cs</DependentUpon>
+    <Compile Include="Migrations\201508022203509_AddTrophy.cs" />
+    <Compile Include="Migrations\201508022203509_AddTrophy.Designer.cs">
+      <DependentUpon>201508022203509_AddTrophy.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -413,8 +413,8 @@
     <EmbeddedResource Include="Migrations\201507131452306_AddTokenLogs.resx">
       <DependentUpon>201507131452306_AddTokenLogs.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508011543333_AddTrophy.resx">
-      <DependentUpon>201508011543333_AddTrophy.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201508022203509_AddTrophy.resx">
+      <DependentUpon>201508022203509_AddTrophy.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -5,8 +5,9 @@ using OrangeJetpack.Localization;
 
 namespace Mzayad.Models
 {
-    public class Trophy : ModelBase
+    public class Trophy : ModelBase, ILocalizable
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int TrophyId { get; set; }
 
         [Required, Index(IsUnique = true)]

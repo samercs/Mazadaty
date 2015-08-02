@@ -11,7 +11,7 @@ namespace Mzayad.Data.Migrations
                 "dbo.Trophies",
                 c => new
                     {
-                        TrophyId = c.Int(nullable: false, identity: true),
+                        TrophyId = c.Int(nullable: false),
                         Key = c.Int(nullable: false),
                         Name = c.String(nullable: false),
                         Description = c.String(nullable: false),

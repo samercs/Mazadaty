@@ -13,7 +13,7 @@ namespace Mzayad.Data.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201508011543333_AddTrophy"; }
+            get { return "201508022203509_AddTrophy"; }
         }
         
         string IMigrationMetadata.Source
