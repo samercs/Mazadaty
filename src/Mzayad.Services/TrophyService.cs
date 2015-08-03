@@ -26,11 +26,19 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<Trophy> GetBykey(TrophyKey key)
+        public async Task<Trophy> GetTrophy(TrophyKey key)
         {
             using (var dc = new DataContext())
             {
                 return await dc.Trophies.SingleOrDefaultAsync(i => i.Key == key);
+            }
+        }
+
+        public async Task<Trophy> GetTrophy(int trophyId)
+        {
+            using (var dc = new DataContext())
+            {
+                return await dc.Trophies.SingleOrDefaultAsync(i => i.TrophyId == trophyId);
             }
         }
 

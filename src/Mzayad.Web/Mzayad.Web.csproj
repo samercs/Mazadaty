@@ -627,6 +627,7 @@
     <Content Include="Areas\Admin\Views\Levels\Index.cshtml" />
     <Content Include="Areas\Reports\Views\Tokens\Logs.cshtml" />
     <Content Include="Areas\Admin\Views\Trophies\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Trophies\Edit.cshtml" />
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
