@@ -33,7 +33,8 @@ namespace Mzayad.Data
         IDbSet<SubscriptionLog> SubscriptionLogs { get; set; }
         IDbSet<TokenLog> TokenLogs { get; set; } 
         IDbSet<SplashAd> SplashAds { get; set; }
-        IDbSet<Trophy> Trophies { get; set; } 
+        IDbSet<Trophy> Trophies { get; set; }
+        IDbSet<UserTrophy> UsersTrophies { get; set; }
 
         int SaveChanges();
         Task<int> SaveChangesAsync();

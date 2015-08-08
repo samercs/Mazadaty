@@ -31,6 +31,7 @@ namespace Mzayad.Services.Tests.Fakes
         public IDbSet<TokenLog> TokenLogs { get; set; }
         public IDbSet<SplashAd> SplashAds { get; set; }
         public IDbSet<Trophy> Trophies { get; set; }
+        public IDbSet<UserTrophy> UsersTrophies { get; set; }
 
         public InMemoryDataContext()
         {

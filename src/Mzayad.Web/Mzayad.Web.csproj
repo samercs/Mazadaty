@@ -742,6 +742,7 @@
     <Content Include="Views\Subscriptions\Index.cshtml" />
     <Content Include="Views\Subscriptions\Buy.cshtml" />
     <Content Include="Views\Subscriptions\BuyWithTokens.cshtml" />
+    <Content Include="Views\User\Trophies.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

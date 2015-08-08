@@ -27,7 +27,8 @@ namespace Mzayad.Web.Controllers
         private readonly UserProfileService _userProfileService;
         private readonly AvatarService _avatarService;
         private readonly BidService _bidService;
-        
+        private readonly TrophyService _trophyService;
+
         public UserController(IAppServices appServices)
             : base(appServices)
         {
@@ -37,6 +38,7 @@ namespace Mzayad.Web.Controllers
             _userProfileService = new UserProfileService(appServices.DataContextFactory);
             _avatarService = new AvatarService(appServices.DataContextFactory);
             _bidService = new BidService(DataContextFactory);
+            _trophyService = new TrophyService(DataContextFactory);
         }
 
         [Route("dashboard")]
@@ -246,12 +248,21 @@ namespace Mzayad.Web.Controllers
                 userProfile.Avatar = null;
                 userProfile.AvatarId = selectedAvatar.Value;
             }
-            
+
             await _userProfileService.Update(userProfile);
-            
+
             SetStatusMessage("Your profile has been saved successfully.");
             return RedirectToAction("Dashboard");
 
+        }
+
+        [Route("trophies")]
+        public async Task<ActionResult> Trophies()
+        {
+            var userId = AuthService.CurrentUserId();
+            var trophies = await _trophyService.GetMostRecentByUser(userId, Language);
+
+            return View(trophies);
         }
     }
 }
