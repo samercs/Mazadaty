@@ -33,7 +33,8 @@ namespace Mzayad.Data
         public IDbSet<KnetTransaction> KnetTransactions { get; set; }
         public IDbSet<SubscriptionLog> SubscriptionLogs { get; set; }
         public IDbSet<TokenLog> TokenLogs { get; set; }
-        public IDbSet<SplashAd> SplashAds { get; set; } 
+        public IDbSet<SplashAd> SplashAds { get; set; }
+        public IDbSet<ActivityEvent> ActivityEvents { get; set; }
 
         public DataContext(): base("DefaultConnection")
         {

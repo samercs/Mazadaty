@@ -8,6 +8,7 @@ namespace Mzayad.Web.Core.Services
         public EmailSettings EmailSettings { get; private set; }
         public string SiteName { get; private set; }
         public string CacheConnection { get; private set; }
+        public string StorageConnection { get; private set; }
         public decimal LocalShipping { get; private set; }
         public string AzureCdnUrlHost { get; private set; }
         public string ProjectKey { get; private set; }
@@ -17,6 +18,7 @@ namespace Mzayad.Web.Core.Services
         {
             SiteName = appSettings["SiteName"];
             CacheConnection = appSettings["CacheConnection"];
+            StorageConnection = appSettings["StorageConnection"];
             AzureCdnUrlHost = appSettings["AzureCdnUrlHost"];
 
             ProjectKey = appSettings["OrangeJetpack.Services:Project.Key"];

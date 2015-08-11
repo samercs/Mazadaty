@@ -15,12 +15,15 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Mzayad.Services.Identity;
 
 namespace Mzayad.Web.Controllers
 {
     [RoutePrefix("{language}/user"), Authorize]
     public class UserController : ApplicationController
     {
+        private readonly UserService _userService;
         private readonly AddressService _addressService;
         private readonly CategoryService _categoryService;
         private readonly NotificationService _notificationService;
@@ -31,6 +34,7 @@ namespace Mzayad.Web.Controllers
         public UserController(IAppServices appServices)
             : base(appServices)
         {
+            _userService = new UserService(DataContextFactory);
             _addressService = new AddressService(DataContextFactory);
             _categoryService = new CategoryService(DataContextFactory);
             _notificationService = new NotificationService(DataContextFactory);
@@ -71,7 +75,7 @@ namespace Mzayad.Web.Controllers
                 return View(model);
             }
 
-            var result = await AuthService.ChangePassword(User.Identity, model.CurrentPassword, model.NewPassword);
+            var result = await _userService.ChangePassword(User.Identity.GetUserId(), model.CurrentPassword, model.NewPassword);
             if (!result.Succeeded)
             {
                 SetStatusMessage(Global.PasswordChangeFailureMessage, StatusMessageType.Error);
@@ -142,7 +146,7 @@ namespace Mzayad.Web.Controllers
             user.Email = model.Email;
             user.PhoneCountryCode = model.PhoneCountryCode;
             user.PhoneNumber = model.PhoneNumber;
-            await AuthService.UpdateUser(user);
+            await _userService.UpdateUser(user);
 
             if (user.AddressId.HasValue)
             {

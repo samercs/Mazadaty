@@ -8,6 +8,7 @@ using Autofac.Integration.WebApi;
 using Autofac.Integration.SignalR;
 using Microsoft.AspNet.SignalR;
 using Mzayad.Data;
+using Mzayad.Services.Activity;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Services.Client.Messaging;
 using OrangeJetpack.Services.Client.Storage;
@@ -40,6 +41,7 @@ namespace Mzayad.Web
             });
             
             builder.Register<IMessageService>(c => new MessageService(c.Resolve<IAppSettings>().EmailSettings));
+            builder.Register<IActivityQueueService>(c => new ActivityQueueService(c.Resolve<IAppSettings>().StorageConnection));
 
             builder.Register(GetCacheService).SingleInstance();
 
@@ -63,13 +65,13 @@ namespace Mzayad.Web
         {
             return new HttpCacheService();
 
-#if DEBUG
-            return new HttpCacheService();
-#else           
-            var connectionString = c.Resolve<IAppSettings>().CacheConnection;
-            var cacheKeyPrefix = "mz";
-            return new RedisCacheService(connectionString, cacheKeyPrefix);
-#endif
+//#if DEBUG
+//            return new HttpCacheService();
+//#else           
+//            var connectionString = c.Resolve<IAppSettings>().CacheConnection;
+//            var cacheKeyPrefix = "mz";
+//            return new RedisCacheService(connectionString, cacheKeyPrefix);
+//#endif
         }
     }
 }
