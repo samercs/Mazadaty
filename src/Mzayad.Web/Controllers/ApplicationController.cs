@@ -24,7 +24,6 @@ namespace Mzayad.Web.Controllers
         protected readonly IAuthService AuthService;
         protected readonly ICookieService CookieService;
         protected readonly IMessageService MessageService;
-        protected readonly IGeolocationService GeolocationService;
         protected readonly ICacheService CacheService;
         protected readonly IRequestService RequestService;
         protected readonly IStorageService StorageService;
@@ -37,7 +36,6 @@ namespace Mzayad.Web.Controllers
             AuthService = appServices.AuthService;
             CookieService = appServices.CookieService;
             MessageService = appServices.MessageService;
-            GeolocationService = appServices.GeolocationService;
             CacheService = appServices.CacheService;
             RequestService = appServices.RequestService;
             StorageService = appServices.StorageService;

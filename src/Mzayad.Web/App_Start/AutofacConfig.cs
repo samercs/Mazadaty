@@ -32,8 +32,7 @@ namespace Mzayad.Web
             builder.RegisterType<AuthService>().As<IAuthService>();
             builder.RegisterType<CookieService>().As<ICookieService>();
             builder.RegisterType<RequestService>().As<IRequestService>();
-            builder.RegisterType<GeolocationService>().As<IGeolocationService>();
-
+            
             builder.Register<IStorageService>(c =>
             {
                 var appSettings = c.Resolve<IAppSettings>();

@@ -40,6 +40,10 @@ function Deploy-WebApp
     if ($buildSucceeded)
     { 
         Write-Host "Build completed successfully." 
+
+        #$webClient = new-object System.Net.WebClient
+        #$webClient.Headers.Add("user-agent", "PowerShell Script")
+        #$webClient.DownloadString($url + "/ok?" + (Get-Date).Ticks);
     }
     else
     { 
@@ -49,6 +53,4 @@ function Deploy-WebApp
 
 Deploy-WebApp -Profile $profile -Configuration "Release" -Username $username -Password $password;
 
-$webClient = new-object System.Net.WebClient
-$webClient.Headers.Add("user-agent", "PowerShell Script")
-$webClient.DownloadString($url + "/ok?" + (Get-Date).Ticks);
+
