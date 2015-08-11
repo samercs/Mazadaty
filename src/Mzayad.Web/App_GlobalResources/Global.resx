@@ -636,4 +636,10 @@
   <data name="XpAward" xml:space="preserve">
     <value>Points</value>
   </data>
+  <data name="RetailPrice" xml:space="preserve">
+    <value>Retail Price: {RetailPrice}</value>
+  </data>
+  <data name="Specifications" xml:space="preserve">
+    <value>Specifications</value>
+  </data>
 </root>

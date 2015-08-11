@@ -1,5 +1,15 @@
 ﻿@import url("variables");
 
+body {
+    padding-top: 75px;
+    padding-bottom: 20px;
+}
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
 .navbar-inverse {
     background: @base;
 }
@@ -18,4 +28,221 @@
 #page-title {
     padding-bottom: 0.5em;
     border-bottom: 1px solid #eee;
+}
+
+.alert {
+    border-radius: 0;
+    border-width: 2px;
+    border-left-width: 10px;
+    font-size: @font-size + 0.1;
+
+    .alert-link {
+        font-weight: normal;
+        text-decoration: underline !important;
+    }
+}
+
+.alert-success {
+    border-color: @success;
+    color: @success;
+    background: fade(@success, 5%);
+
+    .alert-link {
+        color: @success;
+    }
+}
+
+.alert-danger {
+    border-color: @danger;
+    color: @danger;
+    background: fade(@danger, 5%);
+
+    .alert-link {
+        color: @danger;
+    }
+}
+
+.alert-warning {
+    border-color: @warning;
+    color: @warning;
+    background: fade(@warning, 5%);
+
+    .alert-link {
+        color: @warning;
+    }
+}
+
+.alert-info {
+    border-color: @info;
+    color: @info;
+    background: fade(@info, 5%);
+
+    .alert-link {
+        color: @info;
+    }
+}
+
+.link-list {
+    margin: 0 0 1em 0;
+    padding: 0;
+    list-style: none;
+    text-align: right;
+
+    li {
+        display: inline;
+        margin-right: 8px;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
+    form {
+        display: inline-block;
+    }
+}
+
+
+.menu-list {
+    margin: 0 0 20px 0;
+    padding: 8px;
+    background-color: @dark2;
+    border-top: 16px solid @dark1;
+
+    li {
+        list-style: none;
+
+        &.menu-list-hidden {
+            display: none;
+        }
+    }
+
+    a {
+        display: inline-block;
+        width: 100%;
+        padding: 8px;
+        color: @white;
+        text-decoration: none !important;
+        border-left: 4px solid @dark2;
+
+        &:hover {
+            background-color: lighten(@dark2, 5);
+            border-left: 4px solid @white;
+            color: white !important;
+        }
+    }
+}
+
+@media screen {
+    .fit-cell,
+    .link-cell {
+        width: 1%;
+        white-space: nowrap;
+    }
+}
+
+.fa-pad-left {
+    padding-left: 4px;
+}
+
+.fa-pad-right {
+    padding-right: 4px;
+}
+
+.fa-fw.fa-pad-right {
+    margin-right: 6px;
+}
+
+.table {
+    font-size: 1.4rem;
+
+    > thead > tr > th {
+        vertical-align: top;
+        border-bottom: none;
+        background-color: @base !important;
+        color: white !important;
+        font-weight: normal;
+    }
+
+    > tbody {
+        > tr > td {
+            border-top: none;
+            border-bottom: 1px solid #ddd;
+        }
+
+        > tr:last-child > td {
+            border-bottom-width: 2px;
+        }
+    }
+
+    &.table-bordered {
+        border: none;
+
+        > thead > tr > th,
+        > tfoot > tr > th {
+            border: 1px solid @base;
+        }
+    }
+}
+
+.bs-callout {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+    font-size: 85%;
+}
+
+.bs-callout h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.bs-callout p:last-child {
+    margin-bottom: 0;
+}
+
+.bs-callout code {
+    border-radius: 3px;
+}
+
+.bs-callout + .bs-callout {
+    margin-top: -5px;
+}
+
+.bs-callout-success {
+    border-left-color: @success;
+}
+
+.bs-callout-success h4 {
+    color: @success;
+}
+
+.bs-callout-danger {
+    border-left-color: @danger;
+}
+
+.bs-callout-danger h4 {
+    color: @danger;
+}
+
+.bs-callout-warning {
+    border-left-color: @warning;
+}
+
+.bs-callout-warning h4 {
+    color: @warning;
+}
+
+.bs-callout-info {
+    border-left-color: @info;
+}
+
+.bs-callout-info h4 {
+    color: @info;
+}
+
+.panel {
+    border-radius: 0;
 }

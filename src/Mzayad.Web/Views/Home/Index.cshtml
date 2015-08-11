@@ -28,11 +28,11 @@
                     <div data-bind="template: { name: displayTemplate }"></div>
                     <div class="product-information">
                         <div class="product-description">
-                            <h3>Description</h3>
+                            <h3>@Global.Description</h3>
                             <div data-bind="html: description"></div>
                         </div>
                         <div class="product-specifications" data-bind="visible: specifications.length > 0">
-                            <h3>Specifications</h3>
+                            <h3>@Global.Specifications</h3>
                             <ul class="list-unstyled" data-bind="foreach: specifications">
                                 <li><span data-bind="text: name"></span>: <span data-bind="text: value"></span></li>
                             </ul>

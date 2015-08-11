@@ -1,0 +1,71 @@
+﻿@import "variables.less";
+
+html { font-size: 62.5%; } 
+
+body {
+    font-family: ubuntu;
+}
+
+body > div { 
+    font-size: @font-size; 
+    line-height: @line-height;
+}
+
+h1, h2, h3, h4 {
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+
+h1 {
+    font-size: @font-size + 0.8;
+}
+
+h2 {
+    font-size: @font-size + 0.5;
+}
+
+h3 {
+    font-size: @font-size + 0.3;
+}
+
+p, ul, ol, ul ul, ol ul, ul ol, ol ol {
+    margin-bottom: 1em;
+}
+
+.lead {
+    font-size: @font-size + 0.1;
+    font-weight: normal;
+
+    @media @media-desktop {
+        font-size: @font-size + 0.5;
+    }
+}
+
+.instruction {
+    font-size: @font-size + 0.1;
+    margin-bottom: 2em;
+}
+
+.text-larger {
+    font-size: 120%;
+}
+
+.text-success {
+    color: @success;
+}
+
+.text-danger {
+    color: @danger;
+}
+
+.text-warning {
+    color: @warning;
+}
+
+.text-yes {
+    color: @success;
+}
+
+.text-no {
+    color: @danger;
+}
