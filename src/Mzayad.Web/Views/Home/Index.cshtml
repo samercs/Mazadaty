@@ -9,8 +9,7 @@
 }
 
 @section styles { 
-    <link href="~/content/nivo/nivo-lightbox.css" rel="stylesheet" />
-    <link href="~/content/nivo/default/default.css" rel="stylesheet" />
+    @Styles.Render("~/css/nivo")
 }
 
 @if (!Model.Auctions.Any())
@@ -46,7 +45,7 @@
                         <button class="btn btn-link btn-sm btn-show-less">Less<i class="fa fa-caret-up fa-pad-left"></i></button>
                     </div>
                     <div class="buy-now" data-bind="if: buyNowEnabled">
-                        <a class="btn btn-default" href="#">Buy Now</a>
+                        <a class="btn btn-default" data-bind="attr: { href: buyNowUrl }">@Global.BuyNow</a>
                     </div>
                 </div>
             </div>
@@ -111,7 +110,7 @@
 
         @Scripts.Render("~/js/knockout")
         @Scripts.Render("~/js/signalR")       
-        <script src="~/scripts/nivo/nivo-lightbox.min.js"></script>
+        @Scripts.Render("~/js/nivo")       
         <script src="/signalr/hubs"></script>
         <script>
 
@@ -137,16 +136,20 @@
 
                     self.displayTemplate = function() {
                         switch (self.status()) {
-                        case "Live":
-                            return "live-template";
-                        case "Upcoming":
-                            return "upcoming-template";
-                        case "Closed":
-                            return "closed-template";
-                        default:
-                            throw "Invalid auction status.";
+                            case "Live":
+                                return "live-template";
+                            case "Upcoming":
+                                return "upcoming-template";
+                            case "Closed":
+                                return "closed-template";
+                            default:
+                                throw "Invalid auction status."; 
                         }
                     }
+
+                    self.buyNowUrl = ko.computed(function() {
+                        return "@LanguageCode/orders/buy-now/" + self.auctionId;
+                    });
 
                     self.timeLeftFormatted = ko.computed(function() {
                         return TimeUtilities.getTimeLeft(self.timeLeft());
@@ -177,7 +180,7 @@
                     };
 
                     self.redirectOrder = function(orderId) {
-                        location.href = "@Html.Language()/orders/shipping/" + orderId;
+                        location.href = "@LanguageCode/orders/shipping/" + orderId;
                     };
                 };
 

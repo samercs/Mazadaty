@@ -14,13 +14,27 @@ namespace Mzayad.Web.Controllers
     [RoutePrefix("{language}/orders")]
     public class OrdersController : ApplicationController
     {
+        private readonly AuctionService _auctionService;
         private readonly OrderService _orderService;
         private readonly KnetService _knetService;
 
         public OrdersController(IAppServices appServices) : base(appServices)
         {
+            _auctionService = new AuctionService(DataContextFactory);
             _orderService = new OrderService(DataContextFactory);
             _knetService = new KnetService(DataContextFactory);
+        }
+
+        [Route("buy-now/{auctionId:int}")]
+        public async Task<ActionResult> BuyNow(int auctionId)
+        {
+            var auction = await _auctionService.GetAuction(auctionId, Language);
+            if (auction == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(auction);
         }
 
         [Route("shipping/{orderId:int}")]

@@ -1,0 +1,27 @@
+﻿@model Mzayad.Models.Auction
+@{
+    ViewBag.Title = Global.BuyNow;
+}
+
+@section styles {
+    @Styles.Render("~/css/nivo")
+}
+
+@Html.DisplayForModel()
+
+@section scripts {
+    @Scripts.Render("~/js/nivo")
+    <script>
+        $(function () {
+
+            var initNivo = function () {
+                $(".product-image").nivoLightbox();
+            }
+
+            $(function () {
+                initNivo();
+            });
+
+        });
+    </script>
+}

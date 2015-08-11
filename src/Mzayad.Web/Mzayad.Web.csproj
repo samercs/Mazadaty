@@ -25,7 +25,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <ApplicationInsightsResourceId />
-    <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>1.5</TypeScriptToolsVersion>
     <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -673,10 +673,7 @@
     <Content Include="Scripts\kendo.aspnetmvc.min.js" />
     <Content Include="Scripts\kendo.web.min.js" />
     <Content Include="Scripts\npm.js" />
-    <Content Include="Scripts\site.js" />
-    <Content Include="Scripts\site.min.js">
-      <DependentUpon>site.js</DependentUpon>
-    </Content>
+    <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />
     <Content Include="Scripts\wow.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -706,9 +703,6 @@
     <Content Include="Views\Shared\EditorTemplates\LocalizedContent.cshtml" />
     <Content Include="Views\Shared\_Layout_LanguageSelector.cshtml" />
     <Content Include="Views\Shared\_Layout_UserMyAccount.cshtml" />
-    <Content Include="Scripts\site.min.js.map">
-      <DependentUpon>site.js</DependentUpon>
-    </Content>
     <Content Include="Views\Account\NeedPassword.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\SignIn.cshtml" />
@@ -750,6 +744,9 @@
     <Content Include="Views\Subscriptions\BuyWithTokens.cshtml" />
     <Content Include="Views\QueueTest\Test.cshtml" />
     <Content Include="Views\User\Trophies.cshtml" />
+    <Content Include="Views\Orders\BuyNow.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Auction.cshtml" />
+    <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

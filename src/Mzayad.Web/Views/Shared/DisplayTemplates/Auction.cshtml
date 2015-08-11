@@ -1,0 +1,37 @@
+﻿@using Mzayad.Core.Formatting
+@model Mzayad.Models.Auction
+
+
+
+<div class="row">
+    <div class="col-md-8 col-sm-6">
+        <div class="auction-details">
+            <h2 class="auction-title">@Model.Title</h2>
+            <div class="product-information">
+                <div class="product-description">
+                    <h3>Description</h3>
+                    <div>@Html.Raw(Model.Product.Description)</div>
+                </div>
+                <div class="product-specifications">
+                    <h3>Specifications</h3>
+                    <ul class="list-unstyled">
+                        @foreach (var specification in Model.Product.ProductSpecifications)
+                        {
+                            <li>@specification.Specification: @specification.Value</li>
+                        }      
+                    </ul>
+                </div>
+                <div class="auction-price">Retail price: @CurrencyFormatter.Format(Model.RetailPrice)</div>
+                <div class="more-overlay"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6 text-center">
+        <a class="product-image" href="@Model.Product.MainImage().ImageLgUrl" title="@Model.Product.Name"><img class="img-responsive" src="@Model.Product.MainImage().ImageMdUrl" alt="@Model.Product.Name"></a>
+        @*<ul class="product-images list-unstyled" data-bind="foreach: images">
+            <li data-bind="if: $index() !== 0">
+                <a class="product-image" data-bind="attr: { href: imageLgUrl, 'data-lightbox-gallery': $parent.auctionId, title: $parent.title }"><img data-bind="attr: { src: imageSmUrl, alt: $parent.title }" alt=""></a>
+            </li>
+        </ul>*@
+    </div>
+</div>

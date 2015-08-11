@@ -39,6 +39,7 @@ namespace Mzayad.Web
                 "~/scripts/site.js",
                 "~/scripts/site-kendo.js"));
 
+            bundles.Add(new ScriptBundle("~/js/nivo").Include("~/scripts/nivo/nivo-lightbox.min.js"));
             bundles.Add(new ScriptBundle("~/js/validate").Include("~/scripts/jquery.validate*"));
             bundles.Add(new ScriptBundle("~/js/slugify").Include("~/scripts/jquery.slugify*"));
 
@@ -61,6 +62,10 @@ namespace Mzayad.Web
 
             bundles.Add(new ScriptBundle("~/js/image-uploader").Include("~/scripts/dropzone.js", "~/scripts/image-uploader.js"));
             bundles.Add(new StyleBundle("~/css/image-uploader").Include("~/content/image-uploader.css"));
+
+            bundles.Add(new StyleBundle("~/css/nivo").Include(
+                "~/content/nivo/nivo-lightbox.css",
+                "~/content/nivo/default/default.css"));
         }
     }
 }

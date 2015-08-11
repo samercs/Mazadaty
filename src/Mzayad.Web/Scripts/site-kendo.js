@@ -1,14 +1,14 @@
-﻿var KendoFormatter = (function () {
+var KendoFormatter = (function () {
     function KendoFormatter() {
     }
     KendoFormatter.getYesNo = function (value) {
         if (value) {
             return "<span class='text-yes'>Yes</span>";
-        } else {
+        }
+        else {
             return "<span class='text-no'>No</span>";
         }
     };
-
     KendoFormatter.formatDate = function (value) {
         return "xxx";
     };
