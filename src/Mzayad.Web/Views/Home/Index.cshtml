@@ -9,8 +9,7 @@
 }
 
 @section styles { 
-    <link href="~/content/nivo/nivo-lightbox.css" rel="stylesheet" />
-    <link href="~/content/nivo/default/default.css" rel="stylesheet" />
+    @Styles.Render("~/css/nivo")
 }
 
 @if (!Model.Auctions.Any())
@@ -29,11 +28,11 @@
                     <div data-bind="template: { name: displayTemplate }"></div>
                     <div class="product-information">
                         <div class="product-description">
-                            <h3>Description</h3>
+                            <h3>@Global.Description</h3>
                             <div data-bind="html: description"></div>
                         </div>
                         <div class="product-specifications" data-bind="visible: specifications.length > 0">
-                            <h3>Specifications</h3>
+                            <h3>@Global.Specifications</h3>
                             <ul class="list-unstyled" data-bind="foreach: specifications">
                                 <li><span data-bind="text: name"></span>: <span data-bind="text: value"></span></li>
                             </ul>
@@ -44,6 +43,9 @@
                     <div class="information-toggles text-right">
                         <button class="btn btn-link btn-sm btn-show-more">More<i class="fa fa-caret-down fa-pad-left"></i></button>
                         <button class="btn btn-link btn-sm btn-show-less">Less<i class="fa fa-caret-up fa-pad-left"></i></button>
+                    </div>
+                    <div class="buy-now" data-bind="if: buyNowEnabled">
+                        <a class="btn btn-default" data-bind="attr: { href: buyNowUrl }">@Global.BuyNow</a>
                     </div>
                 </div>
             </div>
@@ -108,7 +110,7 @@
 
         @Scripts.Render("~/js/knockout")
         @Scripts.Render("~/js/signalR")       
-        <script src="~/scripts/nivo/nivo-lightbox.min.js"></script>
+        @Scripts.Render("~/js/nivo")       
         <script src="/signalr/hubs"></script>
         <script>
 
@@ -119,10 +121,11 @@
 
                     self.auctionId = data.auctionId;
                     self.title = data.title;
-                    self.description = data.description,
-                        self.specifications = data.specifications,
-                        self.retailPrice = data.retailPrice,
-                        self.images = data.images;
+                    self.description = data.description;
+                    self.specifications = data.specifications;
+                    self.retailPrice = data.retailPrice;
+                    self.buyNowEnabled = data.buyNowEnabled;
+                    self.images = data.images;
 
                     self.status = ko.observable(data.status);
                     self.isLoaded = ko.observable(false);
@@ -133,16 +136,20 @@
 
                     self.displayTemplate = function() {
                         switch (self.status()) {
-                        case "Live":
-                            return "live-template";
-                        case "Upcoming":
-                            return "upcoming-template";
-                        case "Closed":
-                            return "closed-template";
-                        default:
-                            throw "Invalid auction status.";
+                            case "Live":
+                                return "live-template";
+                            case "Upcoming":
+                                return "upcoming-template";
+                            case "Closed":
+                                return "closed-template";
+                            default:
+                                throw "Invalid auction status."; 
                         }
                     }
+
+                    self.buyNowUrl = ko.computed(function() {
+                        return "@LanguageCode/orders/buy-now/" + self.auctionId;
+                    });
 
                     self.timeLeftFormatted = ko.computed(function() {
                         return TimeUtilities.getTimeLeft(self.timeLeft());
@@ -173,7 +180,7 @@
                     };
 
                     self.redirectOrder = function(orderId) {
-                        location.href = "@Html.Language()/orders/shipping/" + orderId;
+                        location.href = "@LanguageCode/orders/auction/" + orderId;
                     };
                 };
 

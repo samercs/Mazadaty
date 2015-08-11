@@ -41,16 +41,16 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<IEnumerable<Order>> GetOrders(OrderStatus status, string search = "")
+        public async Task<IReadOnlyCollection<Order>> GetOrders(OrderStatus status, string search = "")
         {
             using (var dc = DataContext())
             {
                 var query = dc.Orders.Where(i => i.Status == status);
                 if (!string.IsNullOrEmpty(search))
                 {
-                    query =
-                        query.Where(i => i.Address.Name.Contains(search) || i.Address.PhoneLocalNumber.Contains(search));
-
+                    query = query.Where(i => 
+                        i.Address.Name.Contains(search) || 
+                        i.Address.PhoneLocalNumber.Contains(search));
                 }
 
                 return await query
@@ -73,8 +73,8 @@ namespace Mzayad.Services
                     PaymentMethod = PaymentMethod.Knet,
                     AllowPhoneSms = false,
                     Address = ShippingAddress.Create(bid.User),
-                    Items = CreateOrderItems(bid, auction),
-                    Logs = CreateOrderLogs(bid)
+                    Items = CreateOrderItems(auction, bid.Amount),
+                    Logs = CreateOrderLogs(bid.UserId)
                 };
 
                 dc.Orders.Add(order);
@@ -83,7 +83,29 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<Order> CreateOrderForSubscription(Subscription subscription, ApplicationUser user, PaymentMethod paymentMethod, string userHostAddress)
+        public async Task<Order> CreateOrderForBuyNow(Auction auction, ApplicationUser user)
+        {
+            using (var dc = DataContext())
+            {
+                var order = new Order
+                {
+                    Type = OrderType.Auction,
+                    UserId = user.Id,
+                    Status = OrderStatus.InProgress,
+                    PaymentMethod = PaymentMethod.Knet,
+                    AllowPhoneSms = false,
+                    Address = ShippingAddress.Create(user),
+                    Items = CreateOrderItems(auction, auction.BuyNowPrice),
+                    Logs = CreateOrderLogs(user.Id)
+                };
+
+                dc.Orders.Add(order);
+                await dc.SaveChangesAsync();
+                return order;
+            }
+        }
+
+        public async Task<Order> CreateOrderForSubscription(Subscription subscription, ApplicationUser user, PaymentMethod paymentMethod)
         {          
             using (var dc = DataContext())
             {
@@ -95,7 +117,7 @@ namespace Mzayad.Services
                     Address = ShippingAddress.Create(user)
                 };
 
-                SetStatus(order, OrderStatus.InProgress, user.Id, userHostAddress);
+                SetStatus(order, OrderStatus.InProgress, user.Id);
 
                 switch (paymentMethod)
                 {
@@ -147,13 +169,18 @@ namespace Mzayad.Services
             order.SubmittedUtc = DateTime.UtcNow;
         }
 
-        private static OrderItem[] CreateOrderItems(Bid bid, Auction auction)
+        private static OrderItem[] CreateOrderItems(Auction auction, decimal? itemPrice)
         {
+            if (!itemPrice.HasValue)
+            {
+                throw new Exception("Cannot create order with no item price.");
+            }
+
             return new[]
             {
                 new OrderItem
                 {
-                    ItemPrice = bid.Amount,
+                    ItemPrice = itemPrice.Value,
                     Name = auction.Product.Name,
                     Quantity = 1,
                     ProductId = auction.ProductId
@@ -161,15 +188,14 @@ namespace Mzayad.Services
             };
         }
 
-        private static OrderLog[] CreateOrderLogs(Bid bid)
+        private static OrderLog[] CreateOrderLogs(string userId)
         {
             return new[]
             {
                 new OrderLog
                 {
                     Status = OrderStatus.InProgress,
-                    UserId = bid.UserId,
-                    UserHostAddress = bid.UserHostAddress
+                    UserId = userId
                 }
             };
         }
@@ -190,13 +216,13 @@ namespace Mzayad.Services
         /// <summary>
         /// Updates an order status and addes a log of the status change.
         /// </summary>
-        public async Task<Order> UpdateStatus(Order order, OrderStatus status, string modifiedUserId, string userHostAddress)
+        public async Task<Order> UpdateStatus(Order order, OrderStatus status, string modifiedUserId)
         {
             using (var dc = DataContext())
             {
                 dc.Orders.Attach(order);
 
-                SetStatus(order, status, modifiedUserId, userHostAddress);
+                SetStatus(order, status, modifiedUserId);
 
                 await dc.SaveChangesAsync();
 
@@ -204,14 +230,13 @@ namespace Mzayad.Services
             }
         }
 
-        private static void SetStatus(Order order, OrderStatus status, string modifiedByUserId, string userHostAddress)
+        private static void SetStatus(Order order, OrderStatus status, string modifiedByUserId)
         {
             order.Status = status;
             order.Logs = order.Logs ?? new HashSet<OrderLog>();
             order.Logs.Add(new OrderLog
             {
                 UserId = modifiedByUserId,
-                UserHostAddress = userHostAddress,
                 Status = status
             });
         }
@@ -232,7 +257,7 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task SubmitOrderForProcessing(Order order, string modifiedByUserId, string userHostAddress)
+        public async Task SubmitOrderForProcessing(Order order, string modifiedByUserId)
         {
             using (var dc = DataContext())
             {
@@ -240,18 +265,18 @@ namespace Mzayad.Services
 
                 DecrementProductOrSubscriptionInventory(order);
 
-                SetStatus(order, OrderStatus.Processing, modifiedByUserId, userHostAddress);
+                SetStatus(order, OrderStatus.Processing, modifiedByUserId);
 
                 await dc.SaveChangesAsync();
             }
         }
 
-        public async Task SaveOrderAsDelivered(Order order, string modifiedByUserId, string userHostAddress)
+        public async Task SaveOrderAsDelivered(Order order, string modifiedByUserId)
         {
             using (var dc = DataContext())
             {
                 dc.Orders.Attach(order);
-                SetStatus(order, OrderStatus.Delivered, modifiedByUserId, userHostAddress);
+                SetStatus(order, OrderStatus.Delivered, modifiedByUserId);
                 order.ShippedUtc = DateTime.UtcNow;
                 await dc.SaveChangesAsync();
             }
@@ -267,7 +292,7 @@ namespace Mzayad.Services
                 await subscriptionService.AddSubscriptionToUser(order.UserId, item.Subscription, modifiedByUserId, userHostAddress);
             }
 
-            await SaveOrderAsDelivered(order, modifiedByUserId, userHostAddress);
+            await SaveOrderAsDelivered(order, modifiedByUserId);
         }
 
         private static void DecrementProductOrSubscriptionInventory(Order order)

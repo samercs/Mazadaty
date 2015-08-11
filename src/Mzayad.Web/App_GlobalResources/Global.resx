@@ -636,4 +636,16 @@
   <data name="XpAward" xml:space="preserve">
     <value>Points</value>
   </data>
+  <data name="RetailPrice" xml:space="preserve">
+    <value>Retail Price: {RetailPrice}</value>
+  </data>
+  <data name="Specifications" xml:space="preserve">
+    <value>Specifications</value>
+  </data>
+  <data name="BuyNowPrice" xml:space="preserve">
+    <value>Buy Now Price: {BuyNowPrice}</value>
+  </data>
+  <data name="OutOfStockErrorMessage" xml:space="preserve">
+    <value>We're sorry, this product is no longer in stock or available.</value>
+  </data>
 </root>

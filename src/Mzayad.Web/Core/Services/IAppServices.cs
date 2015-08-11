@@ -11,7 +11,6 @@ namespace Mzayad.Web.Core.Services
         IAuthService AuthService { get; }
         ICookieService CookieService { get; }
         IMessageService MessageService { get; }
-        IGeolocationService GeolocationService { get; }
         ICacheService CacheService { get; }
         IRequestService RequestService { get; }
         IStorageService StorageService { get; }

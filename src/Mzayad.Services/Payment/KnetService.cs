@@ -110,7 +110,7 @@ namespace Mzayad.Services.Payment
 
         private async Task<KnetTransaction> CreateTransaction(Order order, string paymentId, string userId, string userHostAddress)
         {
-            await _orderService.UpdateStatus(order, OrderStatus.PendingPayment, userId, userHostAddress);
+            await _orderService.UpdateStatus(order, OrderStatus.PendingPayment, userId);
 
             using (var dc = DataContext())
             {
