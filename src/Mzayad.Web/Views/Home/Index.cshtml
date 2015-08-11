@@ -119,10 +119,11 @@
 
                     self.auctionId = data.auctionId;
                     self.title = data.title;
-                    self.description = data.description,
-                        self.specifications = data.specifications,
-                        self.retailPrice = data.retailPrice,
-                        self.images = data.images;
+                    self.description = data.description;
+                    self.specifications = data.specifications;
+                    self.retailPrice = data.retailPrice;
+                    self.buyNowEnabled = data.buyNowEnabled;
+                    self.images = data.images;
 
                     self.status = ko.observable(data.status);
                     self.isLoaded = ko.observable(false);
