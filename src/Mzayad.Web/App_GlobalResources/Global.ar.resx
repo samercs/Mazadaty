@@ -456,4 +456,16 @@
   <data name="Subtotal" xml:space="preserve">
     <value>المجموع الفرعي</value>
   </data>
+  <data name="AwardedOn" xml:space="preserve">
+    <value>منحت فى</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>الوصف</value>
+  </data>
+  <data name="Trophies" xml:space="preserve">
+    <value>الجوائز</value>
+  </data>
+  <data name="XpAward" xml:space="preserve">
+    <value>النقاط</value>
+  </data>
 </root>

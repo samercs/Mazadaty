@@ -261,6 +261,14 @@
     <Compile Include="Migrations\201507281150437_AddActivityEvents.cs" />
     <Compile Include="Migrations\201507281150437_AddActivityEvents.Designer.cs">
       <DependentUpon>201507281150437_AddActivityEvents.cs</DependentUpon>
+    </Compile>  
+    <Compile Include="Migrations\201508022203509_AddTrophy.cs" />
+    <Compile Include="Migrations\201508022203509_AddTrophy.Designer.cs">
+      <DependentUpon>201508022203509_AddTrophy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508081237389_AddUsertrophies.cs" />
+    <Compile Include="Migrations\201508081237389_AddUsertrophies.Designer.cs">
+      <DependentUpon>201508081237389_AddUsertrophies.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -419,6 +427,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507281150437_AddActivityEvents.resx">
       <DependentUpon>201507281150437_AddActivityEvents.cs</DependentUpon>
+    </EmbeddedResource>  
+    <EmbeddedResource Include="Migrations\201508022203509_AddTrophy.resx">
+      <DependentUpon>201508022203509_AddTrophy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508081237389_AddUsertrophies.resx">
+      <DependentUpon>201508081237389_AddUsertrophies.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -3,10 +3,12 @@ using Mzayad.Models;
 using Mzayad.Models.Payment;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Mzayad.Data.Migrations;
 
 namespace Mzayad.Data
 {
@@ -35,6 +37,8 @@ namespace Mzayad.Data
         public IDbSet<TokenLog> TokenLogs { get; set; }
         public IDbSet<SplashAd> SplashAds { get; set; }
         public IDbSet<ActivityEvent> ActivityEvents { get; set; }
+        public IDbSet<Trophy> Trophies{ get; set; }
+        public IDbSet<UserTrophy> UsersTrophies { get; set; }
 
         public DataContext(): base("DefaultConnection")
         {

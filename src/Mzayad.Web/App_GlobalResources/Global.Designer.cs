@@ -160,6 +160,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Awarded on.
+        /// </summary>
+        public static string AwardedOn {
+            get {
+                return ResourceManager.GetString("AwardedOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back.
         /// </summary>
         public static string Back {
@@ -417,6 +426,15 @@ namespace Mzayad.Web.Resources {
         public static string DeleteWishList {
             get {
                 return ResourceManager.GetString("DeleteWishList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
             }
         }
         
@@ -1465,6 +1483,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Trophies.
+        /// </summary>
+        public static string Trophies {
+            get {
+                return ResourceManager.GetString("Trophies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string UserName {
@@ -1551,6 +1578,15 @@ namespace Mzayad.Web.Resources {
         public static string WishListItemRemoveMessage {
             get {
                 return ResourceManager.GetString("WishListItemRemoveMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points.
+        /// </summary>
+        public static string XpAward {
+            get {
+                return ResourceManager.GetString("XpAward", resourceCulture);
             }
         }
         

@@ -624,4 +624,16 @@
   <data name="SubscriptionQuantitySoldOut" xml:space="preserve">
     <value>SOLD OUT</value>
   </data>
+  <data name="AwardedOn" xml:space="preserve">
+    <value>Awarded on</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Trophies" xml:space="preserve">
+    <value>Trophies</value>
+  </data>
+  <data name="XpAward" xml:space="preserve">
+    <value>Points</value>
+  </data>
 </root>

@@ -2,6 +2,7 @@
 using Mzayad.Models.Payment;
 using System;
 using System.Data.Entity;
+using System.Diagnostics.PerformanceData;
 using System.Threading.Tasks;
 
 namespace Mzayad.Data
@@ -31,6 +32,8 @@ namespace Mzayad.Data
         IDbSet<TokenLog> TokenLogs { get; set; } 
         IDbSet<SplashAd> SplashAds { get; set; }
         IDbSet<ActivityEvent> ActivityEvents { get; set; } 
+        IDbSet<Trophy> Trophies { get; set; }
+        IDbSet<UserTrophy> UsersTrophies { get; set; }
 
         int SaveChanges();
         Task<int> SaveChangesAsync();
