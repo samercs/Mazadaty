@@ -29,6 +29,7 @@ namespace Mzayad.Web.Models.Home
         public string Status { get; set; }
         public string Description { get; set; }
         public string RetailPrice { get; set; }
+        public bool BuyNowEnabled { get; set; }
         public decimal? LastBidAmount { get; set; }
         public string LastBidUser { get; set; }
         public DateTime StartUtc { get; set; }
@@ -44,6 +45,7 @@ namespace Mzayad.Web.Models.Home
                 Status = GetStatus(auction),
                 Description = auction.Product.Description,
                 RetailPrice = CurrencyFormatter.Format(auction.Product.RetailPrice),
+                BuyNowEnabled = auction.BuyNowEnabled,
                 LastBidAmount = auction.WonAmount,
                 LastBidUser = GetWonByUserName(auction.WonByUser),
                 StartUtc = auction.StartUtc,
