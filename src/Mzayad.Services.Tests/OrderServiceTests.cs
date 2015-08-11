@@ -29,7 +29,7 @@ namespace Mzayad.Services.Tests
 
             var orderService = new OrderService(new InMemoryDataContextFactory());
 
-            return await orderService.CreateOrderForSubscription(subscription, user, PaymentMethod.Tokens, Constants.AnyHostAddress);
+            return await orderService.CreateOrderForSubscription(subscription, user, PaymentMethod.Tokens);
         }
         
         [Test]

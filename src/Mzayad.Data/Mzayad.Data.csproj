@@ -274,6 +274,10 @@
     <Compile Include="Migrations\201508111047156_MergeMigration.Designer.cs">
       <DependentUpon>201508111047156_MergeMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508111415388_RemoveOrderLogHostAddress.cs" />
+    <Compile Include="Migrations\201508111415388_RemoveOrderLogHostAddress.Designer.cs">
+      <DependentUpon>201508111415388_RemoveOrderLogHostAddress.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -440,6 +444,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508111047156_MergeMigration.resx">
       <DependentUpon>201508111047156_MergeMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508111415388_RemoveOrderLogHostAddress.resx">
+      <DependentUpon>201508111415388_RemoveOrderLogHostAddress.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,14 +1,14 @@
-﻿using Mzayad.Services;
+﻿using Mzayad.Models.Enum;
+using Mzayad.Models.Payment;
+using Mzayad.Services;
+using Mzayad.Services.Payment;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Models.Order;
 using Mzayad.Web.Models.Shared;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using Mzayad.Models.Enum;
-using Mzayad.Models.Payment;
-using Mzayad.Services.Payment;
 using Mzayad.Web.Resources;
 using OrangeJetpack.Base.Web;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 using DetailsViewModel = Mzayad.Web.Models.Order.DetailsViewModel;
 
 namespace Mzayad.Web.Controllers
@@ -19,12 +19,14 @@ namespace Mzayad.Web.Controllers
         private readonly AuctionService _auctionService;
         private readonly OrderService _orderService;
         private readonly KnetService _knetService;
+        private readonly AddressService _addressService;
 
         public OrdersController(IAppServices appServices) : base(appServices)
         {
             _auctionService = new AuctionService(DataContextFactory);
             _orderService = new OrderService(DataContextFactory);
             _knetService = new KnetService(DataContextFactory);
+            _addressService = new AddressService(DataContextFactory);
         }
 
         [Route("buy-now/{auctionId:int}")]
@@ -55,7 +57,29 @@ namespace Mzayad.Web.Controllers
                 return RedirectToAction("BuyNow", new {auction.AuctionId});
             }
 
-            return View(auction);
+
+            var user = await AuthService.CurrentUser();
+            user.Address = await _addressService.GetAddress(user.AddressId);
+
+            var order = await _orderService.CreateOrderForBuyNow(auction, user);
+
+            return RedirectToAction("Shipping", new { order.OrderId });
+        }
+
+        [Route("auction/{orderId:int}")]
+        public async Task<ActionResult> Auction(int orderId)
+        {
+            var order = await _orderService.GetById(orderId);
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+
+            var user = await AuthService.CurrentUser();
+
+            SetStatusMessage("Congratulations {0} you've won! First things first, please enter your shipping address below.", user.FirstName);
+
+            return await Shipping(orderId);
         }
 
         [Route("shipping/{orderId:int}")]
