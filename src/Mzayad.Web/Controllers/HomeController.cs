@@ -3,6 +3,7 @@ using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Models.Home;
 using System;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -53,6 +54,12 @@ namespace Mzayad.Web.Controllers
 
             var redirectUrl = Regex.Replace(returnUrl.ToString(), @"/(en|ar)/", "/" + language + "/");
             return Redirect(redirectUrl);
+        }
+
+        [Route("~/ok")]
+        public ActionResult Ok()
+        {
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }
 }

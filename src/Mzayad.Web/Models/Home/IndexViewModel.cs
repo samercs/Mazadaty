@@ -45,7 +45,7 @@ namespace Mzayad.Web.Models.Home
                 Status = GetStatus(auction),
                 Description = auction.Product.Description,
                 RetailPrice = CurrencyFormatter.Format(auction.Product.RetailPrice),
-                BuyNowEnabled = auction.BuyNowEnabled,
+                BuyNowEnabled = auction.BuyNowAvailable(),
                 LastBidAmount = auction.WonAmount,
                 LastBidUser = GetWonByUserName(auction.WonByUser),
                 StartUtc = auction.StartUtc,

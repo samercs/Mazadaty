@@ -13,7 +13,7 @@ using DetailsViewModel = Mzayad.Web.Models.Order.DetailsViewModel;
 
 namespace Mzayad.Web.Controllers
 {
-    [RoutePrefix("{language}/orders")]
+    [RoutePrefix("{language}/orders"), Authorize]
     public class OrdersController : ApplicationController
     {
         private readonly AuctionService _auctionService;
@@ -51,12 +51,11 @@ namespace Mzayad.Web.Controllers
                 return HttpNotFound();
             }
 
-            if (!auction.AvailableForBuyNow())
+            if (!auction.BuyNowAvailable())
             {
                 SetStatusMessage(Global.OutOfStockErrorMessage, StatusMessageType.Error);
                 return RedirectToAction("BuyNow", new {auction.AuctionId});
             }
-
 
             var user = await AuthService.CurrentUser();
             user.Address = await _addressService.GetAddress(user.AddressId);
@@ -97,10 +96,6 @@ namespace Mzayad.Web.Controllers
                 AddressViewModel = new AddressViewModel(order.Address).Hydrate(),
                 ShippingAddress = order.Address,              
             };
-
-            var user = await AuthService.CurrentUser();
-
-            SetStatusMessage("Congratulations {0} you've won! First things first, please enter your shipping address below.", user.FirstName);
 
             return View(model);
         }

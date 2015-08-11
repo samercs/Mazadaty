@@ -18,7 +18,7 @@
                         <ul class="list-unstyled">
                             @foreach (var specification in Model.Product.ProductSpecifications)
                             {
-                                <li>@specification.Specification: @specification.Value</li>
+                                <li>@specification.Specification.Name: @specification.Value</li>
                             }
                         </ul>
                     </div>

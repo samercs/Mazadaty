@@ -566,6 +566,8 @@
     <Content Include="Areas\Admin\Views\Categories\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Products\Add.cshtml" />
     <Content Include="Areas\Admin\Views\Products\Edit.cshtml" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\knockout-3.3.0.debug.js" />
     <Content Include="Scripts\knockout-3.3.0.js" />
     <Content Include="Scripts\moment-with-locales.js" />
@@ -587,6 +589,7 @@
     <Content Include="Content\nivo\default\prev%402x.png" />
     <Content Include="Content\nivo\default\prev.png" />
     <Content Include="Scripts\site-kendo.js" />
+    <Content Include="Scripts\site.js" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml">
       <SubType>Code</SubType>
     </Content>
@@ -635,17 +638,18 @@
     <Content Include="Areas\Admin\Views\Trophies\Edit.cshtml" />
     <Content Include="Content\site-typography.less" />
     <None Include="compilerconfig.json" />
-    <None Include="Content\site.less" />
-    <Content Include="Fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="Content\site.less" />
     <Content Include="Fonts\fontawesome-webfont.woff" />
     <Content Include="Fonts\fontawesome-webfont.ttf" />
     <Content Include="Fonts\fontawesome-webfont.eot" />
     <Content Include="Fonts\FontAwesome.otf" />
     <None Include="Content\variables.less" />
+    <Content Include="Fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Fonts\glyphicons-halflings-regular.eot" />
     <None Include="Properties\PublishProfiles\Mzayad.pubxml" />
     <Content Include="Scripts\address.min.js.map">
       <DependentUpon>address.js</DependentUpon>
@@ -653,8 +657,6 @@
     <Content Include="Properties\webjobs-list.json" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\address.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\dropzone.js" />
     <Content Include="Scripts\image-uploader.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />
@@ -674,7 +676,6 @@
     <Content Include="Scripts\jquery.validate._defaults.js" />
     <Content Include="Scripts\kendo.aspnetmvc.min.js" />
     <Content Include="Scripts\kendo.web.min.js" />
-    <Content Include="Scripts\npm.js" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />
     <Content Include="Scripts\wow.min.js" />
@@ -682,6 +683,7 @@
     <Content Include="Scripts\nivo\bower.json" />
     <Content Include="Scripts\nivo\README.md" />
     <Content Include="Scripts\site-kendo.js.map" />
+    <Content Include="Scripts\site.js.map" />
     <None Include="Views\Home\SignalR.cshtml" />
     <Content Include="404.html" />
     <Content Include="500.html" />
