@@ -61,5 +61,9 @@ namespace Mzayad.Models
             return Status != AuctionStatus.Closed && StartUtc <= DateTime.UtcNow;
         }
 
+        public bool AvailableForBuyNow()
+        {
+            return BuyNowEnabled && BuyNowQuantity > 0 && Product.Quantity > 0;
+        }
     }
 }

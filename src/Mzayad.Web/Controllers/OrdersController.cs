@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using Mzayad.Models.Enum;
 using Mzayad.Models.Payment;
 using Mzayad.Services.Payment;
+using Mzayad.Web.Resources;
+using OrangeJetpack.Base.Web;
 using DetailsViewModel = Mzayad.Web.Models.Order.DetailsViewModel;
 
 namespace Mzayad.Web.Controllers
@@ -32,6 +34,25 @@ namespace Mzayad.Web.Controllers
             if (auction == null)
             {
                 return HttpNotFound();
+            }
+
+            return View(auction);
+        }
+
+        [Route("buy-now/{auctionId:int}")]
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> BuyNow(int auctionId, FormCollection formCollection)
+        {
+            var auction = await _auctionService.GetAuction(auctionId, Language);
+            if (auction == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (!auction.AvailableForBuyNow())
+            {
+                SetStatusMessage(Global.OutOfStockErrorMessage, StatusMessageType.Error);
+                return RedirectToAction("BuyNow", new {auction.AuctionId});
             }
 
             return View(auction);

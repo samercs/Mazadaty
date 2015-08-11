@@ -633,6 +633,8 @@
     <Content Include="Areas\Reports\Views\Tokens\Logs.cshtml" />
     <Content Include="Areas\Admin\Views\Trophies\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Trophies\Edit.cshtml" />
+    <Content Include="Content\site-typography.less" />
+    <None Include="compilerconfig.json" />
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />

@@ -250,6 +250,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Buy Now Price: {BuyNowPrice}.
+        /// </summary>
+        public static string BuyNowPrice {
+            get {
+                return ResourceManager.GetString("BuyNowPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Buy Subscription.
         /// </summary>
         public static string BuySubscription {
@@ -885,6 +894,15 @@ namespace Mzayad.Web.Resources {
         public static string OrderSummary {
             get {
                 return ResourceManager.GetString("OrderSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We&apos;re sorry, this product is no longer in stock or available..
+        /// </summary>
+        public static string OutOfStockErrorMessage {
+            get {
+                return ResourceManager.GetString("OutOfStockErrorMessage", resourceCulture);
             }
         }
         

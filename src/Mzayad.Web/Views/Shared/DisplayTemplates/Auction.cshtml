@@ -11,18 +11,27 @@
                     <h3>@Global.Description</h3>
                     <div>@Html.Raw(Model.Product.Description)</div>
                 </div>
-                <div class="product-specifications">
-                    <h3>@Global.Specifications</h3>
-                    <ul class="list-unstyled">
-                        @foreach (var specification in Model.Product.ProductSpecifications)
-                        {
-                            <li>@specification.Specification: @specification.Value</li>
-                        }
-                    </ul>
-                </div>
+                @if (Model.Product.ProductSpecifications.Any())
+                {
+                    <div class="product-specifications">
+                        <h3>@Global.Specifications</h3>
+                        <ul class="list-unstyled">
+                            @foreach (var specification in Model.Product.ProductSpecifications)
+                            {
+                                <li>@specification.Specification: @specification.Value</li>
+                            }
+                        </ul>
+                    </div>
+                }
                 <div class="auction-price">
-                    @StringFormatter.ObjectFormat(Global.RetailPrice, new { RetailPrice = CurrencyFormatter.Format(Model.RetailPrice) })
+                    @StringFormatter.ObjectFormat(Global.RetailPrice, new {RetailPrice = CurrencyFormatter.Format(Model.RetailPrice)})
                 </div>
+                @if (Model.BuyNowEnabled)
+                {
+                    <div class="buy-now-price">
+                        @StringFormatter.ObjectFormat(Global.BuyNowPrice, new { BuyNowPrice = CurrencyFormatter.Format(Model.BuyNowPrice) })
+                    </div>
+                }            
             </div>
         </div>
     </div>
