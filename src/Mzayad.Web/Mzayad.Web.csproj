@@ -119,9 +119,9 @@
     <Reference Include="Mindscape.Raygun4Net4">
       <HintPath>..\..\packages\Mindscape.Raygun4Net.Mvc.5.0.0\lib\net40\Mindscape.Raygun4Net4.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.7\lib\OrangeJetpack.Base.Core.dll</HintPath>
@@ -285,7 +285,6 @@
     <Compile Include="Areas\Admin\Controllers\SplashAdsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SponsorsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubscriptionsController.cs" />
-    <Compile Include="Areas\Admin\Controllers\TrophiesController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\Admin\Controllers\WishListsController.cs" />
     <Compile Include="Areas\Admin\Models\Auctions\AddEditViewModel.cs" />
@@ -338,6 +337,7 @@
     <Compile Include="Core\Configuration\CustomViewPage.cs" />
     <Compile Include="Core\ModelBinder\DateTimeModelBinder.cs" />
     <Compile Include="Core\Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Core\Services\TrophiesEngine.cs" />
     <Compile Include="Core\Services\GeolocationService.cs" />
     <Compile Include="Core\Services\HttpCacheService.cs" />
     <Compile Include="Core\Services\ICacheService.cs" />
@@ -626,8 +626,6 @@
     <Content Include="Areas\Admin\Views\SplashAds\Upload.cshtml" />
     <Content Include="Areas\Admin\Views\Levels\Index.cshtml" />
     <Content Include="Areas\Reports\Views\Tokens\Logs.cshtml" />
-    <Content Include="Areas\Admin\Views\Trophies\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Trophies\Edit.cshtml" />
     <None Include="Content\site.less" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
@@ -742,7 +740,6 @@
     <Content Include="Views\Subscriptions\Index.cshtml" />
     <Content Include="Views\Subscriptions\Buy.cshtml" />
     <Content Include="Views\Subscriptions\BuyWithTokens.cshtml" />
-    <Content Include="Views\User\Trophies.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
