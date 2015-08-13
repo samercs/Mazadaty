@@ -33,17 +33,21 @@ function Deploy-WebApp
     Remove-Module Invoke-MsBuild -ErrorAction SilentlyContinue
     Import-Module ($currDirectory.Path + '\Invoke-MsBuild.psm1') -Scope Local -Verbose:$false
 
-    $params = "/property:Configuration={0};PublishProfile={1};UserName={2};Password={3};DeployOnBuild=true;WarningLevel=1;AllowUntrustedCertificate=true /verbosity:m" -f $configuration, $profile, $username, $password
+    $params = "/property:Configuration={0};PublishProfile={1};UserName={2};Password={3};DeployWeb=true;WarningLevel=1;AllowUntrustedCertificate=true /verbosity:m" -f $configuration, $profile, $username, $password
 
     $buildSucceeded = Invoke-MsBuild -Path $solutionFile.FullName -ShowBuildWindowAndPromptForInputBeforeClosing -MsBuildParameters $params
 
     if ($buildSucceeded)
     { 
-        Write-Host "Build completed successfully." 
+        $url = $url + "/ok?" + (Get-Date).Ticks;
+        
+        Write-Host "Build completed successfully, warming $url..." 
 
-        #$webClient = new-object System.Net.WebClient
-        #$webClient.Headers.Add("user-agent", "PowerShell Script")
-        #$webClient.DownloadString($url + "/ok?" + (Get-Date).Ticks);
+        $webClient = new-object System.Net.WebClient
+        $webClient.Headers.Add("user-agent", "PowerShell Script")
+        $webClient.DownloadString($url);
+
+        Write-Host "Deploy completed.";
     }
     else
     { 
