@@ -40,32 +40,32 @@ namespace Mzayad.Web.Controllers
             return View();
         }
 
-        [Route("about")]
+        [Route("~/{language}/about")]
         public ActionResult About()
         {
             return View();
         }
 
-        [Route("buy-now")]
+        [Route("~/{language}/buy-now")]
         public ActionResult BuyNow()
         {
             return View();
         }
 
-        [Route("contact-us")]
+        [Route("~/{language}/contact-us")]
         public ActionResult ContactUs()
         {
             return View();
         }
 
-        [Route("terms-and-conditions")]
+        [Route("~/{language}/terms-and-conditions")]
         public ActionResult TermsAndConditions()
         {
             return View();
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        [Route("change-language")]
+        [Route("~/change-language")]
         public ActionResult ChangeLanguage(string language, Uri returnUrl)
         {
             CookieService.Add(CookieKeys.LanguageCode, language, DateTime.Today.AddYears(10));
