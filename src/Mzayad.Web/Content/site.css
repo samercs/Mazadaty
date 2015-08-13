@@ -73,17 +73,18 @@ body {
   padding-right: 15px;
 }
 .navbar-inverse {
-  background: #132e72;
+  background: white;
 }
-.navbar-inverse .navbar-brand,
+/*.navbar-inverse .navbar-brand,
 .navbar-inverse .navbar-nav > li > a {
-  color: white;
+    color: white;
 }
+
 .navbar-nav .btn-link {
-  border: 0;
-  padding: 15px;
-  color: white !important;
-}
+    border: 0;
+    padding: 15px;
+    color: white !important;
+}*/
 #page-title {
   padding-bottom: 0.5em;
   border-bottom: 1px solid #eee;
@@ -193,7 +194,7 @@ body {
 .table > thead > tr > th {
   vertical-align: top;
   border-bottom: none;
-  background-color: #132e72 !important;
+  background-color: #33ace0 !important;
   color: white !important;
   font-weight: normal;
 }
@@ -209,7 +210,7 @@ body {
 }
 .table.table-bordered > thead > tr > th,
 .table.table-bordered > tfoot > tr > th {
-  border: 1px solid #132e72;
+  border: 1px solid #33ace0;
 }
 .bs-callout {
   padding: 20px;
@@ -397,11 +398,11 @@ p.form-control-static:after {
 .btn-default,
 .btn-default:hover,
 .btn-default:focus {
-  background: #132e72;
+  background: #33ace0;
   color: #ffffff;
 }
 .btn-default[disabled] {
-  background: #132e72;
+  background: #33ace0;
   opacity: 0.4;
 }
 .btn-sm,
@@ -545,7 +546,7 @@ input[type="checkbox"].input-validation-error {
   margin-bottom: 20px;
 }
 #home-index #auction-list > li .auction-details h2 {
-  color: #132e72;
+  color: #33ace0;
   font-size: 4.8rem;
 }
 #home-index #auction-list > li .auction-details h3 {
@@ -650,5 +651,5 @@ input[type="checkbox"].input-validation-error {
   font-size: 4.2rem;
   font-weight: bold;
   color: #fff;
-  background: #132e72;
+  background: #33ace0;
 }

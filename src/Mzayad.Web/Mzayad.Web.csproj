@@ -428,6 +428,24 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="android-chrome-144x144.png" />
+    <Content Include="android-chrome-192x192.png" />
+    <Content Include="android-chrome-36x36.png" />
+    <Content Include="android-chrome-48x48.png" />
+    <Content Include="android-chrome-72x72.png" />
+    <Content Include="android-chrome-96x96.png" />
+    <Content Include="apple-touch-icon-114x114.png" />
+    <Content Include="apple-touch-icon-120x120.png" />
+    <Content Include="apple-touch-icon-144x144.png" />
+    <Content Include="apple-touch-icon-152x152.png" />
+    <Content Include="apple-touch-icon-180x180.png" />
+    <Content Include="apple-touch-icon-57x57.png" />
+    <Content Include="apple-touch-icon-60x60.png" />
+    <Content Include="apple-touch-icon-72x72.png" />
+    <Content Include="apple-touch-icon-76x76.png" />
+    <Content Include="apple-touch-icon-precomposed.png" />
+    <Content Include="apple-touch-icon.png" />
+    <Content Include="browserconfig.xml" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -521,6 +539,9 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="favicon-16x16.png" />
+    <Content Include="favicon-32x32.png" />
+    <Content Include="favicon-96x96.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -600,7 +621,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="manifest.json" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
+    <Content Include="mstile-144x144.png" />
+    <Content Include="mstile-150x150.png" />
+    <Content Include="mstile-310x150.png" />
+    <Content Include="mstile-310x310.png" />
+    <Content Include="mstile-70x70.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
