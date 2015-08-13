@@ -740,6 +740,9 @@
     <Content Include="Scripts\site-kendo.js.map" />
     <Content Include="Scripts\site.js.map" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\BuyNow.cshtml" />
+    <Content Include="Views\Home\ContactUs.cshtml" />
     <None Include="Views\Home\SignalR.cshtml" />
     <Content Include="404.html" />
     <Content Include="500.html" />

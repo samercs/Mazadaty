@@ -1,7 +1,7 @@
 ﻿@using Mzayad.Web.Extensions
 @using OrangeJetpack.Base.Web.Extensions
 <!DOCTYPE html>
-<html lang="@Html.Language()" dir="@(Html.IsArabic() ? "rtl" : "ltr")">
+<html lang="@LanguageCode" dir="@(Html.IsArabic() ? "rtl" : "ltr")">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,25 +34,37 @@
     @RenderSection("styles", false)
 </head>
 <body id="@Html.Ojs().PageIdentifier()">
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="@Url.Action("Index", "Home", new {area = "", language = Html.Language()})" class="navbar-brand">Mzayad</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    @Html.Partial("_Layout_UserMyAccount")
-                    <li>@Html.ActionLink(Global.Home, "Index", "Home", new { area = "", language = Html.Language() }, null)</li>
-                    @Html.Partial("_Layout_LanguageSelector")
-                </ul>
-            </div>
-        </div>
+<div class="navbar navbar-inverse navbar-fixed-top">
+
+    @{
+        var routeValues = new {area = "", language = LanguageCode };
+    }
+
+    <div class="container">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a href="@Url.Action("Index", "Home", routeValues)" class="navbar-brand">MZAYAD</a>
+        <nav class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right navbar-user">
+                @Html.Partial("_Layout_UserMyAccount")
+                @Html.Partial("_Layout_LanguageSelector")
+            </ul>
+        </nav>
     </div>
+    <div class="container">
+        <nav class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left navbar-main">
+                <li>@Html.ActionLink(Global.Home, "Index", "Home", routeValues, null)</li>
+                <li>@Html.ActionLink(Global.About, "About", "Home", routeValues, null)</li>
+                <li>@Html.ActionLink(Global.BuyNow, "BuyNow", "Home", routeValues, null)</li>
+                <li>@Html.ActionLink(Global.ContactUs, "ContactUs", "Home", routeValues, null)</li>
+            </ul>
+        </nav>
+    </div>
+</div>
     <div id="main" class="container body-content">
         @if (!string.IsNullOrWhiteSpace(ViewBag.Title))
         {

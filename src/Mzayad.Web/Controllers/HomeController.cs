@@ -40,6 +40,24 @@ namespace Mzayad.Web.Controllers
             return View();
         }
 
+        [Route("about")]
+        public ActionResult About()
+        {
+            return View();
+        }
+
+        [Route("buy-now")]
+        public ActionResult BuyNow()
+        {
+            return View();
+        }
+
+        [Route("contact-us")]
+        public ActionResult ContactUs()
+        {
+            return View();
+        }
+
         [Route("terms-and-conditions")]
         public ActionResult TermsAndConditions()
         {
