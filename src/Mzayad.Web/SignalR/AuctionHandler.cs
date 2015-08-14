@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Mzayad.Web.Core.Trophies;
 
 namespace Mzayad.Web.SignalR
 {
@@ -183,6 +184,8 @@ namespace Mzayad.Web.SignalR
             auction.AddBid(username);
 
             await _bidService.AddBid(auctionId, userId, auction.LastBidAmount.GetValueOrDefault(), secondsLeft,hostAddress);
+            var trophyEngine = new TrophiesEngine(new TrophyService(new DataContextFactory()));
+            trophyEngine.EarnTrophy(userId);
 
             _cacheService.Set(cacheKey, auction);
         }
