@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Web.Mvc;
 using System.Threading.Tasks;
 using Mindscape.Raygun4Net;

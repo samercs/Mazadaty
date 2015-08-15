@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+Ôªøusing System.Collections.Generic;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
 using OrangeJetpack.Localization;
@@ -7,7 +7,7 @@ namespace Mzayad.Data.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class InsertEmailTemplate : DbMigration
     {
         public override void Up()
@@ -21,12 +21,12 @@ namespace Mzayad.Data.Migrations
                     Subject = (new[]
                     {
                         new LocalizedContent("en", "Welcome to {0}"),
-                        new LocalizedContent("ar", "{0} √Â·« »ﬂ ›Ì")
+                        new LocalizedContent("ar", "{0} √É√•√°√á√∞ √à√ü √ù√≠")
                     }).Serialize(),
                     Message = (new[]
                     {
                         new LocalizedContent("en", @"<p>Hi {0}!</p><p>I wanted to personally thank you for registering on the K7L cosmetics website. As a &#39;Thank You&#39;, please find below a 20% discount coupon for you to use on your purchase, which I hope will be soon?</p><p>I look forward to hearing your reviews and feedback on your purchases in the future. If you have any tips or ideas you would like to share with me, I would LOVE to hear from you! Please email me at <a href=""mailto:areej@K7L.com"">areej@K7L.com</a>.</p><p>If you have not joined us on social media yet, please find us at @k7lcosmetics on Instagram and Twitter, and K7L Cosmetics on Facebook. Make sure you follow us for a chance to win lots of products! Dont forget to tag us with #k7lcosmetics so we can find you!</p><p>Stay Pretty!</p><p>Areej</p><p>&nbsp;</p><p>20% Discount Code: <strong>{1}</strong></p>"),
-                        new LocalizedContent("ar", @"<p>„—Õ»« {0}!</p><p>√Êœ¯ √‰ √‘ﬂ—ﬂ ‘Œ’Ì« ⁄·Ï  ”Ã·ﬂ ›Ì „Êﬁ⁄ „” Õ÷—«   Ã„Ì· K7L. ≈·Ìﬂ ›Ì „« Ì·Ì ﬁ”Ì„… Œ’„ »‰”»… 20% Ì„ﬂ‰ﬂ «·«” ›«œ… „‰Â« ﬂ⁄—»Ê‰ ‘ﬂ— „‰ ﬁ»·Ì ⁄‰œ ≈ „«„ √Ì ⁄„·Ì… ‘—«¡ ⁄»— Â–« «·„Êﬁ⁄. ·«   √Œ—Ì »«” Œœ«„Â«!</p><p>√‰« √ ÿ·⁄ ﬁœ„« ·”„«⁄  ⁄·Ìﬁ« ﬂ Ê¬—«∆ﬂ »‘√‰ „‘ —Ì« ﬂ° ›≈–« ﬂ«‰ ·œÌﬂ √Ì ‰’«∆Õ √Ê √›ﬂ«—  ÊœÌ‰ „‘«—ﬂ Â« „⁄Ì° ”ÌﬂÊ‰ „‰ œÊ«⁄Ì ”—Ê—Ì «· Ê«’· „⁄ﬂ! —«”·Ì‰Ì „‰ ›÷·ﬂ ⁄·Ï  <a href=""mailto:areej@K7L.co"">areej@K7L.com</a>.</p><p>≈–« ·„  ‰÷„Ì »⁄œ ≈·Ï ’›Õ« ‰« ⁄·Ï ‘»ﬂ«  «· Ê«’· «·«Ã „«⁄Ì° «»ÕÀÌ ⁄‰  @k7lcosmetics ⁄·Ï ≈‰” €—«„ Ê  ÊÌ — Ê⁄‰ K7L Costmetics . «Õ—’Ì ⁄·Ï √‰   «»⁄Ì‰« ·›—’… «·›Ê“ »«·ﬂÀÌ— „‰ «·„‰ Ã« ! Ê·«  ‰”Ì √‰  ÷⁄Ì Â«‘  «€ # hash tag˛  #k7lcosmetics ·ﬂÌ ‰—Ï „«  ‘«—ﬂÌ‰Â ⁄‰«! </p><p>Ê‘ﬂ—«!</p><p>√—ÌÃ</p><p>&nbsp;</p><p>—„“ Œ’„ 20%  <strong>{1}</strong></p>")
+                        new LocalizedContent("ar", @"<p>√£√ë√ç√à√á√∞ {0}!</p><p>√É√¶√è√∏ √É√§ √É√î√ü√ë√ü √î√é√ï√≠√á√∞ √ö√°√¨ √ä√ì√å√°√ü √ù√≠ √£√¶√û√ö √£√ì√ä√ç√ñ√ë√á√ä √ä√å√£√≠√° K7L. √Ö√°√≠√ü √ù√≠ √£√á √≠√°√≠ √û√ì√≠√£√â √é√ï√£ √à√§√ì√à√â 20% √≠√£√ü√§√ü √á√°√á√ì√ä√ù√á√è√â √£√§√•√á √ü√ö√ë√à√¶√§ √î√ü√ë √£√§ √û√à√°√≠ √ö√§√è √Ö√ä√£√á√£ √É√≠ √ö√£√°√≠√â √î√ë√á√Å √ö√à√ë √•√ê√á √á√°√£√¶√û√ö. √°√á √ä√ä√É√é√ë√≠ √à√á√ì√ä√é√è√á√£√•√á!</p><p>√É√§√á √É√ä√ò√°√ö √û√è√£√á√∞ √°√ì√£√á√ö √ä√ö√°√≠√û√á√ä√ü √¶√Ç√ë√á√Ü√ü √à√î√É√§ √£√î√ä√ë√≠√á√ä√ü¬° √ù√Ö√ê√á √ü√á√§ √°√è√≠√ü √É√≠ √§√ï√á√Ü√ç √É√¶ √É√ù√ü√á√ë √ä√¶√è√≠√§ √£√î√á√ë√ü√ä√•√á √£√ö√≠¬° √ì√≠√ü√¶√§ √£√§ √è√¶√á√ö√≠ √ì√ë√¶√ë√≠ √á√°√ä√¶√á√ï√° √£√ö√ü! √ë√á√ì√°√≠√§√≠ √£√§ √ù√ñ√°√ü √ö√°√¨  <a href=""mailto:areej@K7L.co"">areej@K7L.com</a>.</p><p>√Ö√ê√á √°√£ √ä√§√ñ√£√≠ √à√ö√è √Ö√°√¨ √ï√ù√ç√á√ä√§√á √ö√°√¨ √î√à√ü√á√ä √á√°√ä√¶√á√ï√° √á√°√á√å√ä√£√á√ö√≠¬° √á√à√ç√ã√≠ √ö√§  @k7lcosmetics √ö√°√¨ √Ö√§√ì√ä√õ√ë√á√£ √¶ √ä√¶√≠√ä√ë √¶√ö√§ K7L Costmetics . √á√ç√ë√ï√≠ √ö√°√¨ √É√§ √ä√ä√á√à√ö√≠√§√á √°√ù√ë√ï√â √á√°√ù√¶√í √à√á√°√ü√ã√≠√ë √£√§ √á√°√£√§√ä√å√á√ä! √¶√°√á √ä√§√ì√≠ √É√§ √ä√ñ√ö√≠ √•√á√î √ä√á√õ # hash tag√æ  #k7lcosmetics √°√ü√≠ √§√ë√¨ √£√á √ä√î√á√ë√ü√≠√§√• √ö√§√á! </p><p>√¶√î√ü√ë√á√∞!</p><p>√É√ë√≠√å</p><p>&nbsp;</p><p>√ë√£√í √é√ï√£ 20%  <strong>{1}</strong></p>")
                     }).Serialize()
                 },
                 new EmailTemplate
@@ -36,12 +36,12 @@ namespace Mzayad.Data.Migrations
                     Subject = (new[]
                     {
                         new LocalizedContent("en", "Reset Password"),
-                        new LocalizedContent("ar", "≈⁄«œ… ÷»ÿ ﬂ·„… «·„—Ê—")
+                        new LocalizedContent("ar", "√Ö√ö√á√è√â √ñ√à√ò √ü√°√£√â √á√°√£√ë√¶√ë")
                     }).Serialize(),
                     Message = (new[]
                     {
                         new LocalizedContent("en", @"<p>Hello {0}, we have received a request to reset your password. Please follow the link below to begin resetting your password.</p><p><a href=""{1}"">Reset Password</a></p>"),
-                        new LocalizedContent("ar", @"<p>„—Õ»« {0}° ·ﬁœ  ·ﬁÌ‰« ÿ·»« ·≈⁄«œ… ÷»ÿ ﬂ·„… „—Ê—ﬂ. « »⁄Ì „‰ ›÷·ﬂ «·—«»ÿ √œ‰«Â ··»œ¡ »≈⁄«œ… ÷»ÿ ﬂ·„… „—Ê—ﬂ.</p><p><a href=""{1}"">≈⁄«œ… ÷»ÿ ﬂ·„… «·„—Ê—</a></p>")
+                        new LocalizedContent("ar", @"<p>√£√ë√ç√à√á√∞ {0}¬° √°√û√è √ä√°√û√≠√§√á √ò√°√à√á√∞ √°√Ö√ö√á√è√â √ñ√à√ò √ü√°√£√â √£√ë√¶√ë√ü. √á√ä√à√ö√≠ √£√§ √ù√ñ√°√ü √á√°√ë√á√à√ò √É√è√§√á√• √°√°√à√è√Å √à√Ö√ö√á√è√â √ñ√à√ò √ü√°√£√â √£√ë√¶√ë√ü.</p><p><a href=""{1}"">√Ö√ö√á√è√â √ñ√à√ò √ü√°√£√â √á√°√£√ë√¶√ë</a></p>")
                     }).Serialize()
                 }
                 ,
@@ -52,12 +52,12 @@ namespace Mzayad.Data.Migrations
                     Subject = (new[]
                     {
                         new LocalizedContent("en", "Password Changed"),
-                        new LocalizedContent("ar", " „  €ÌÌ— ﬂ·„… «·„—Ê—")
+                        new LocalizedContent("ar", "√ä√£ √ä√õ√≠√≠√ë √ü√°√£√â √á√°√£√ë√¶√ë")
                     }).Serialize(),
                     Message = (new[]
                     {
                         new LocalizedContent("en", @"<p>Hi {0}, this email is just to confirm your password was recently changed on the {1} website. If you did not make this change please let us know.</p>"),
-                        new LocalizedContent("ar", @"<p>„—Õ»« {0}° ‰—”· ·ﬂ Â–Â «·—”«·… ·· √ﬂÌœ ⁄·Ï √‰¯ﬂ ﬁ„  » €ÌÌ— ﬂ·„… „—Ê—ﬂ „ƒŒ—« ⁄·Ï „Êﬁ⁄ {1} «·≈·ﬂ —Ê‰Ì.</p>")
+                        new LocalizedContent("ar", @"<p>√£√ë√ç√à√á√∞ {0}¬° √§√ë√ì√° √°√ü √•√ê√• √á√°√ë√ì√á√°√â √°√°√ä√É√ü√≠√è √ö√°√¨ √É√§√∏√ü √û√£√ä √à√ä√õ√≠√≠√ë √ü√°√£√â √£√ë√¶√ë√ü √£√Ñ√é√ë√á√∞ √ö√°√¨ √£√¶√û√ö {1} √á√°√Ö√°√ü√ä√ë√¶√§√≠.</p>")
                     }).Serialize()
                 }
                 ,
@@ -68,16 +68,31 @@ namespace Mzayad.Data.Migrations
                     Subject = (new[]
                     {
                         new LocalizedContent("en", "Email Changed"),
-                        new LocalizedContent("ar", " „  €ÌÌ— ⁄‰Ê«‰ «·»—Ìœ «·≈·ﬂ —Ê‰Ì")
+                        new LocalizedContent("ar", "√ä√£ √ä√õ√≠√≠√ë √ö√§√¶√á√§ √á√°√à√ë√≠√è √á√°√Ö√°√ü√ä√ë√¶√§√≠")
                     }).Serialize(),
                     Message = (new[]
                     {
                         new LocalizedContent("en", @"Hi {0}, this email is just to confirm your email address was recently changed on the {1} website. If you did not make this change please let us know."),
-                        new LocalizedContent("ar", @"„—Õ»« {0}° ‰—”· ·ﬂ Â–Â «·—”«·… ·· √ﬂÌœ ⁄·Ï √‰¯Â  „  €ÌÌ— ⁄‰Ê«‰ »—Ìœﬂ «·≈·ﬂ —Ê‰Ì „ƒŒ—« ⁄·Ï „Êﬁ⁄ {1} «·≈·ﬂ —Ê‰Ì. «·—Ã«¡ ≈»·«€‰« ›Ì Õ«· ·„  ﬁÊ„Ì √‰  »Â–« «· €ÌÌ—.")
+                        new LocalizedContent("ar", @"√£√ë√ç√à√á√∞ {0}¬° √§√ë√ì√° √°√ü √•√ê√• √á√°√ë√ì√á√°√â √°√°√ä√É√ü√≠√è √ö√°√¨ √É√§√∏√• √ä√£ √ä√õ√≠√≠√ë √ö√§√¶√á√§ √à√ë√≠√è√ü √á√°√Ö√°√ü√ä√ë√¶√§√≠ √£√Ñ√é√ë√á√∞ √ö√°√¨ √£√¶√û√ö {1} √á√°√Ö√°√ü√ä√ë√¶√§√≠. √á√°√ë√å√á√Å √Ö√à√°√á√õ√§√á √ù√≠ √ç√á√° √°√£ √ä√û√¶√£√≠ √É√§√ä √à√•√ê√á √á√°√ä√õ√≠√≠√ë.")
+                    }).Serialize()
+                },
+                new EmailTemplate
+                {
+                    TemplateType = EmailTemplateType.TrohpyEarned,
+                    Description = "Send as a confirmation that a trophies have been earned",
+                    Subject = (new[]
+                    {
+                        new LocalizedContent("en", "Trophy"),
+                        new LocalizedContent("ar", "ŸÉÿ£ÿ≥")
+                    }).Serialize(),
+                    Message = (new[]
+                    {
+                        new LocalizedContent("en", @"Hi {0}, this email is just to inform you have earned trophies below:</br></br>{1}"),
+                        new LocalizedContent("ar", @"ŸÖÿ®ÿ±ŸàŸÉ ÿßŸÜÿ™ ŸÅÿ≤ÿ™ ÿ®ÿßŸÑŸÉÿ§Ÿàÿ≥ ÿßŸÑÿ£ÿ™Ÿäÿ© </br></br>{1}")
                     }).Serialize()
                 }
-                
-                
+
+
 
             };
 
@@ -86,7 +101,7 @@ namespace Mzayad.Data.Migrations
                 Sql(string.Format("INSERT INTO [dbo].[EmailTemplates] ([TemplateType], [Description], [Subject], [Message]) VALUES ({0}, N'{1}', N'{2}', N'{3}');", (int)emailTemplate.TemplateType, emailTemplate.Description, emailTemplate.Subject, emailTemplate.Message));
             }
         }
-        
+
         public override void Down()
         {
         }

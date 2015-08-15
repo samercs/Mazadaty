@@ -54,6 +54,15 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<UserProfile> GetByUserId(string userId)
+        {
+            using (var dc = DataContext())
+            {
+                var userProfile = await dc.UserProfiles.Include(i => i.Avatar).SingleOrDefaultAsync(i => i.UserId == userId);
+                return userProfile;
+            }
+        }
+
         public async Task<UserProfile> Update(UserProfile userProfile)
         {
             using (var dc = DataContext())
