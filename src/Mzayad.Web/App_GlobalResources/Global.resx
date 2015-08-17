@@ -648,4 +648,10 @@
   <data name="OutOfStockErrorMessage" xml:space="preserve">
     <value>We're sorry, this product is no longer in stock or available.</value>
   </data>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Contact Us</value>
+  </data>
 </root>

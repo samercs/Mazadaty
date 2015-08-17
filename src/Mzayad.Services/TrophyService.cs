@@ -83,5 +83,15 @@ namespace Mzayad.Services
                 return false;
             }
         }
+
+        public async Task<UserTrophy> GetLastEarnedTrophy(TrophyKey key, string userId)
+        {
+            using (var dc = new DataContext())
+            {
+                return await dc.UsersTrophies.Where(i => i.UserId == userId && i.TrophyId == (int)key)
+                        .OrderByDescending(i => i.CreatedUtc)
+                        .FirstOrDefaultAsync();
+            }
+        }
     }
 }
