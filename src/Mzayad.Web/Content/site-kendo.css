@@ -16,7 +16,7 @@
   background-color: transparent;
 }
 .k-pager-wrap {
-  background-color: #132e72;
+  background-color: #33ace0;
 }
 .k-pager-wrap .k-link {
   border: none;
@@ -37,7 +37,7 @@
 .k-scheduler .k-scheduler-toolbar .k-state-selected,
 .k-scheduler .k-today.k-state-selected,
 .k-marquee-color {
-  color: #ffffff;
-  background-color: #96afee;
-  border-color: #96afee;
+  color: #33ace0;
+  background-color: #ffffff;
+  border-color: #ffffff;
 }

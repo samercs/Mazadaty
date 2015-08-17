@@ -19,7 +19,6 @@ namespace Mzayad.Services.Tests.Fakes
         public IDbSet<Sponsor> Sponsors { get; set; }
         public IDbSet<Bid> Bids { get; set; }
         public IDbSet<Avatar> Avatars { get; set; }
-        public IDbSet<UserProfile> UserProfiles { get; set; }
         public IDbSet<ShippingAddress> ShippingAddresses { get; set; }
         public IDbSet<Order> Orders { get; set; }
         public IDbSet<OrderItem> OrderItems { get; set; }

@@ -27,7 +27,6 @@ namespace Mzayad.Web.Controllers
         private readonly AddressService _addressService;
         private readonly CategoryService _categoryService;
         private readonly NotificationService _notificationService;
-        private readonly UserProfileService _userProfileService;
         private readonly AvatarService _avatarService;
         private readonly BidService _bidService;
         private readonly TrophyService _trophyService;
@@ -39,7 +38,6 @@ namespace Mzayad.Web.Controllers
             _addressService = new AddressService(DataContextFactory);
             _categoryService = new CategoryService(DataContextFactory);
             _notificationService = new NotificationService(DataContextFactory);
-            _userProfileService = new UserProfileService(appServices.DataContextFactory);
             _avatarService = new AvatarService(appServices.DataContextFactory);
             _bidService = new BidService(DataContextFactory);
             _trophyService = new TrophyService(DataContextFactory);
@@ -52,8 +50,7 @@ namespace Mzayad.Web.Controllers
 
             var viewModel = new DashboardViewModel
             {
-                ApplicationUser = user,
-                UserProfile = await _userProfileService.GetByUser(user),
+                User = user,
                 BidHistory = await _bidService.GetRecentBidHistoryForUser(user, Language)
             };
 
@@ -229,8 +226,7 @@ namespace Mzayad.Web.Controllers
         public async Task<ActionResult> EditProfile()
         {
             var user = await AuthService.CurrentUser();
-            var userProfile = await _userProfileService.GetByUser(user);
-            var model = await new EditProfileModel().Hydrate(_avatarService, userProfile);
+            var model = await new EditProfileModel().Hydrate(_avatarService, user);
             return View(model);
         }
 
@@ -238,26 +234,19 @@ namespace Mzayad.Web.Controllers
         public async Task<ActionResult> EditProfile(EditProfileModel model, int? selectedAvatar)
         {
             var user = await AuthService.CurrentUser();
-            var userProfile = await _userProfileService.GetByUser(user);
+            user.ProfileStatus = model.User.ProfileStatus;
 
-            if (!ModelState.IsValid)
-            {
-                return View(await model.Hydrate(_avatarService, userProfile));
-            }
-
-            userProfile.Status = model.UserProfile.Status;
-            //userProfile.ProfileUrl = model.UserProfile.ProfileUrl;
             if (selectedAvatar.HasValue)
             {
-                userProfile.Avatar = null;
-                userProfile.AvatarId = selectedAvatar.Value;
+                var avatar = await _avatarService.GetById(selectedAvatar.Value);
+                user.AvatarUrl = avatar.Url;
             }
 
-            await _userProfileService.Update(userProfile);
+            await _userService.UpdateUser(user);
 
             SetStatusMessage("Your profile has been saved successfully.");
-            return RedirectToAction("Dashboard");
 
+            return RedirectToAction("Dashboard");
         }
 
         [Route("trophies")]

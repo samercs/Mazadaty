@@ -286,6 +286,14 @@
     <Compile Include="Migrations\201508171445273_AddUserAvatarUrl.Designer.cs">
       <DependentUpon>201508171445273_AddUserAvatarUrl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508171537047_AddUserProfileStatus.cs" />
+    <Compile Include="Migrations\201508171537047_AddUserProfileStatus.Designer.cs">
+      <DependentUpon>201508171537047_AddUserProfileStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508171554244_RemoveUserProfile.cs" />
+    <Compile Include="Migrations\201508171554244_RemoveUserProfile.Designer.cs">
+      <DependentUpon>201508171554244_RemoveUserProfile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -461,6 +469,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508171445273_AddUserAvatarUrl.resx">
       <DependentUpon>201508171445273_AddUserAvatarUrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508171537047_AddUserProfileStatus.resx">
+      <DependentUpon>201508171537047_AddUserProfileStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508171554244_RemoveUserProfile.resx">
+      <DependentUpon>201508171554244_RemoveUserProfile.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

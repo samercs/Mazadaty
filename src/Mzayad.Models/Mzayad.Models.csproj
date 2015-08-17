@@ -110,7 +110,6 @@
     <Compile Include="SubscriptionLog.cs" />
     <Compile Include="TokenLog.cs" />
     <Compile Include="Trophy.cs" />
-    <Compile Include="UserProfile.cs" />
     <Compile Include="UserTrophy.cs" />
     <Compile Include="WishList.cs" />
     <Compile Include="WishListAdminModel.cs" />

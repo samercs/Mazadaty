@@ -14,7 +14,7 @@ namespace Mzayad.Services
         {
         }
 
-        public async Task<IEnumerable<Avatar>> GetAll()
+        public async Task<IReadOnlyCollection<Avatar>> GetAll()
         {
             using (var dc = DataContext())
             {
