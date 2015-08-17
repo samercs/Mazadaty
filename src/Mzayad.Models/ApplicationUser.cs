@@ -28,16 +28,12 @@ namespace Mzayad.Models
         public DateTime? SubscriptionUtc { get; set; }
 
         public virtual Address Address { get; set; }
-        public virtual UserProfile Profile { get; set; }
-
+        
         public virtual IEnumerable<CategoryNotification> Notifications { get; set; }
-        public virtual IEnumerable<WishList> WishLists { get; set; } 
+        public virtual IEnumerable<WishList> WishLists { get; set; }
 
-        //public string CreatedLocalTime
-        //{
-        //    get { return DateTimeFormatter.ToLocalTime(CreatedUtc); }
-        //}
-
+        [DataType(DataType.Url)]
+        public string AvatarUrl { get; set; }
         public int Level { get; set; }
         public int Xp { get; set; }
         public int Tokens { get; set; }

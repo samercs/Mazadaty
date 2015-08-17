@@ -278,6 +278,14 @@
     <Compile Include="Migrations\201508111415388_RemoveOrderLogHostAddress.Designer.cs">
       <DependentUpon>201508111415388_RemoveOrderLogHostAddress.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508171441380_DropActivityLogs.cs" />
+    <Compile Include="Migrations\201508171441380_DropActivityLogs.Designer.cs">
+      <DependentUpon>201508171441380_DropActivityLogs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508171445273_AddUserAvatarUrl.cs" />
+    <Compile Include="Migrations\201508171445273_AddUserAvatarUrl.Designer.cs">
+      <DependentUpon>201508171445273_AddUserAvatarUrl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -447,6 +455,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508111415388_RemoveOrderLogHostAddress.resx">
       <DependentUpon>201508111415388_RemoveOrderLogHostAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508171441380_DropActivityLogs.resx">
+      <DependentUpon>201508171441380_DropActivityLogs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508171445273_AddUserAvatarUrl.resx">
+      <DependentUpon>201508171445273_AddUserAvatarUrl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -68,7 +68,6 @@ namespace Mzayad.Services
                     .Where(i => i.Status == AuctionStatus.Closed)
                     .Include(i => i.Product.ProductImages)
                     .Include(i => i.Product.ProductSpecifications.Select(j => j.Specification))
-                    .Include(i => i.WonByUser.Profile)
                     .OrderByDescending(i => i.ClosedUtc)
                     .ToListAsync();
 

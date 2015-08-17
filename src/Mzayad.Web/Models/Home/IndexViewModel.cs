@@ -70,7 +70,7 @@ namespace Mzayad.Web.Models.Home
             {
                 viewModel.WonByAmount = CurrencyFormatter.Format(auction.WonAmount);
                 viewModel.WonByUserName = auction.WonByUser.UserName;
-                viewModel.WonByAvatarUrl = auction.WonByUser.Profile.Avatar.Url;
+                viewModel.WonByAvatarUrl = auction.WonByUser.AvatarUrl;
             }
 
             return viewModel;
