@@ -75,15 +75,12 @@
                         <div class="auction-tile-title">@auction.Title</div>
                         <div class="auction-tile-prices">
                             <div class="auction-tile-retail-price">Retail Price: @auction.RetailPrice</div>
-                            <div class="auction-tile-winning-price">Retail Price: @auction.WonByAmount</div>
+                            <div class="auction-tile-winning-price">Winning Price: @auction.WonByAmount</div>
                         </div>
                         <div class="auction-tile-won-by-avater">
-
-
-
+                            <img src="@auction.WonByAvatarUrl" alt="@auction.WonByUserName" width="64" height="64" />
+                            <div class="auction-title-username">@auction.WonByUserName</div>
                         </div>
-
-
                         <div class="auction-tile-buynow-price">Buy Now: @auction.BuyNowPrice</div>
                     </div>
                 </div>
