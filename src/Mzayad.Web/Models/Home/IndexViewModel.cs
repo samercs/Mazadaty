@@ -10,15 +10,21 @@ namespace Mzayad.Web.Models.Home
 {
     public class IndexViewModel
     {
-        public IEnumerable<AuctionViewModel> Auctions { get; set; }
-        public IEnumerable<int> LiveAuctionIds { get; set; } 
+        public IReadOnlyCollection<AuctionViewModel> ClosedAuctions { get; set; }
+        public IReadOnlyCollection<AuctionViewModel> LiveAuctions { get; set; }
+        public IReadOnlyCollection<int> LiveAuctionIds { get; set; } 
 
-        public IndexViewModel(IEnumerable<Auction> auctions)
+        public IndexViewModel(IReadOnlyCollection<Auction> auctions)
         {
-            auctions = auctions.ToList();
+            ClosedAuctions = auctions.Where(i => i.Status == AuctionStatus.Closed)
+                .Select(AuctionViewModel.Create)
+                .ToList();
             
-            Auctions = auctions.Select(AuctionViewModel.Create);
-            LiveAuctionIds = auctions.Where(i => i.IsLive()).Select(i => i.AuctionId);
+            LiveAuctions = auctions.Where(i => i.IsLive())
+                .Select(AuctionViewModel.Create)
+                .ToList();
+            
+            LiveAuctionIds = LiveAuctions.Select(i => i.AuctionId).ToList();
         }
     }
 
@@ -33,8 +39,9 @@ namespace Mzayad.Web.Models.Home
         public decimal? LastBidAmount { get; set; }
         public string LastBidUser { get; set; }
         public DateTime StartUtc { get; set; }
-        public IEnumerable<AuctionImageViewModel> Images { get; set; }
-        public IEnumerable<ProductSpecificationViewModel> Specifications { get; set; }
+        public AuctionImageViewModel MainImage { get; set; }
+        public IReadOnlyCollection<AuctionImageViewModel> Images { get; set; }
+        public IReadOnlyCollection<ProductSpecificationViewModel> Specifications { get; set; }
 
         public static AuctionViewModel Create(Auction auction)
         {
@@ -49,6 +56,7 @@ namespace Mzayad.Web.Models.Home
                 LastBidAmount = auction.WonAmount,
                 LastBidUser = GetWonByUserName(auction.WonByUser),
                 StartUtc = auction.StartUtc,
+                MainImage = AuctionImageViewModel.Create(auction.Product.MainImage()),
                 Images = GetImages(auction),
                 Specifications = GetSpecifications(auction.Product.ProductSpecifications)
             };
@@ -61,13 +69,13 @@ namespace Mzayad.Web.Models.Home
             return user == null ? "" : user.UserName;
         }
 
-        private static IEnumerable<ProductSpecificationViewModel> GetSpecifications(IEnumerable<ProductSpecification> specifications)
+        private static IReadOnlyCollection<ProductSpecificationViewModel> GetSpecifications(IEnumerable<ProductSpecification> specifications)
         {
             return specifications.Select(specification => new ProductSpecificationViewModel
             {
                 Name = specification.Specification.Name,
                 Value = specification.Value
-            });
+            }).ToList();
         }
 
         private static string GetStatus(Auction auction)
@@ -82,7 +90,7 @@ namespace Mzayad.Web.Models.Home
                 : RenderStatus.Upcoming.ToString();
         }
 
-        private static IEnumerable<AuctionImageViewModel> GetImages(Auction auction)
+        private static IReadOnlyCollection<AuctionImageViewModel> GetImages(Auction auction)
         {
             if (!auction.Product.ProductImages.Any())
             {
@@ -97,12 +105,7 @@ namespace Mzayad.Web.Models.Home
                 };
             }
 
-            return auction.Product.ProductImages.Select(i => new AuctionImageViewModel
-            {
-                ImageSmUrl = i.ImageSmUrl,
-                ImageMdUrl = i.ImageMdUrl,
-                ImageLgUrl = i.ImageLgUrl
-            });
+            return auction.Product.ProductImages.Select(AuctionImageViewModel.Create).ToList();
         }
 
         private enum RenderStatus { Live, Closed, Upcoming }
@@ -113,6 +116,16 @@ namespace Mzayad.Web.Models.Home
         public string ImageSmUrl { get; set; }
         public string ImageMdUrl { get; set; }
         public string ImageLgUrl { get; set; }
+
+        public static AuctionImageViewModel Create(ProductImage image)
+        {
+            return new AuctionImageViewModel
+            {
+                ImageSmUrl = image.ImageSmUrl,
+                ImageMdUrl = image.ImageMdUrl,
+                ImageLgUrl = image.ImageLgUrl
+            };
+        }
     }
 
     public class ProductSpecificationViewModel

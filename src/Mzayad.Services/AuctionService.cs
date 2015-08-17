@@ -38,7 +38,7 @@ namespace Mzayad.Services
         /// <summary>
         /// Gets a list of recent and upcoming public auctions.
         /// </summary>
-        public async Task<IEnumerable<Auction>> GetCurrentAuctions(string language = "en")
+        public async Task<IReadOnlyCollection<Auction>> GetCurrentAuctions(string language = "en")
         {
             using (var dc = DataContext())
             {
@@ -56,7 +56,7 @@ namespace Mzayad.Services
                     LocalizeProduct(product, language);
                 }
 
-                return auctions.Localize(language, i => i.Title);
+                return auctions.Localize(language, i => i.Title).ToList();
             }
         }
 

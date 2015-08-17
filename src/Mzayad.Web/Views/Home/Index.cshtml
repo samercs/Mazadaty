@@ -17,9 +17,75 @@
     <p><img class="img-responsive" src="https://az723232.vo.msecnd.net/assets/hero-movie-635750647415139708.jpg" alt="" /></p>
 }
 
-@if (!Model.Auctions.Any())
+<style>
+
+    #closed-auctions {
+        margin: 0 -10px 15px -10px;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        overflow: hidden;
+    }
+
+    #closed-auctions li {
+        width: 25%;
+        float: left;
+        display: flex;
+        padding: 10px;
+        
+    }
+
+    .auction-tile {
+        min-width: 0;
+        border: 1px solid #EBEBEB;
+        text-align: center;
+    }
+
+    .auction-tile-image {
+        padding: 10px;
+    }
+
+    .auction-tile-details {
+        padding: 10px;
+        border-top: 1px solid #EBEBEB;
+    }
+
+    .auction-tile-title {
+        
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+</style>
+
+@if (Model.ClosedAuctions.Any())
 {
-    @Html.StatusMessage("There are no auctions available at this time.", StatusMessageType.Warning)
+    <ul id="closed-auctions">
+        @foreach (var auction in Model.ClosedAuctions.Take(4))
+        {
+            <li>
+                <div class="auction-tile">
+                    <div class="auction-tile-image">
+                        <img class="img-responsive" src="@auction.MainImage.ImageMdUrl" alt="@auction.Title" />
+                    </div>
+                    <div class="auction-tile-details">
+                        <div class="auction-tile-title">@auction.Title</div>
+                        <div class="auction-tile-prices">
+                            
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+}
+
+@if (!Model.LiveAuctions.Any())
+{
+    @Html.StatusMessage("There are no live auctions available at this time.", StatusMessageType.Warning)
 
     return;
 }
@@ -205,7 +271,7 @@
                     self.auctions(mappedAuctions);
                 };
 
-                var auctions = @Html.Raw(JsonConvert.SerializeObject(Model.Auctions, Formatting.Indented, new JsonSerializerSettings {ContractResolver = new CamelCasePropertyNamesContractResolver()}));
+                var auctions = @Html.Raw(JsonConvert.SerializeObject(Model.LiveAuctions, Formatting.Indented, new JsonSerializerSettings {ContractResolver = new CamelCasePropertyNamesContractResolver()}));
                 var viewModel = new AuctionsViewModel(auctions);
 
                 ko.applyBindings(viewModel);
