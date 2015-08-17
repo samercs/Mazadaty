@@ -19,7 +19,7 @@ namespace Mzayad.Data.Migrations
         {
             var trophoies = new List<Trophy>
             {
-                new Trophy(){TrophyId = (int)TrophyKey.BidonNewYear, Key=TrophyKey.BidonNewYear, Name = "[{'k':'en','v':'Bid on new year'}]",Description = "[{'k':'en','v':'Bid on new year'}]",IconUrl = "",XpAward = 0},
+                new Trophy(){TrophyId = (int)TrophyKey.BidOnNewYear, Key=TrophyKey.BidOnNewYear, Name = "[{'k':'en','v':'Bid on new year'}]",Description = "[{'k':'en','v':'Bid on new year'}]",IconUrl = "",XpAward = 0},
                 new Trophy(){TrophyId = (int)TrophyKey.BidOnIslamicNewYear, Key=TrophyKey.BidOnIslamicNewYear, Name = "[{'k':'en','v':'Bid on Islamic new year'}]",Description = "[{'k':'en','v':'Bid on Islamic new year'}]",IconUrl = "",XpAward = 0},
                 new Trophy(){TrophyId = (int)TrophyKey.BidOnEid, Key=TrophyKey.BidOnEid, Name = "[{'k':'en','v':'Bid on Eid'}]",Description = "[{'k':'en','v':'Bid on Eid'}]",IconUrl = "",XpAward = 0},
                 new Trophy(){TrophyId = (int)TrophyKey.BidOnAnniversary, Key=TrophyKey.BidOnAnniversary, Name = "[{'k':'en','v':'Bid on anniversary'}]",Description = "[{'k':'en','v':'Bid on anniversary'}]",IconUrl = "",XpAward = 0},

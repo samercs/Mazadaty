@@ -2,7 +2,7 @@
 {
     public enum TrophyKey
     {
-        BidonNewYear = 1,
+        BidOnNewYear = 1,
         BidOnIslamicNewYear = 2,
         BidOnEid = 3,
         BidOnAnniversary = 4,

@@ -9,6 +9,7 @@ namespace Mzayad.Models.Enum
         EmailChanged = 4,
         NoAccount = 5,
         AuctionCreated = 6,
-        OrderShipped = 7
+        OrderShipped = 7,
+        TrohpyEarned = 8
     }
 }

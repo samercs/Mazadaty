@@ -11,6 +11,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Mzayad.Web.Core.Trophies;
+using OrangeJetpack.Services.Client.Messaging;
 
 namespace Mzayad.Web.SignalR
 {
@@ -42,7 +44,11 @@ namespace Mzayad.Web.SignalR
         private ICacheService _cacheService;
         private AuctionService _auctionService;
         private BidService _bidService;
-        
+        private TrophyService _trophyService;
+        private EmailTemplateService _emailTemplateService;
+        private UserProfileService _userProfileService;
+        private MessageService _messageService;
+
         public AuctionHandler Setup(IDataContextFactory dataContextFactory, ICacheService cacheService)
         {
             if (_cacheService == null)
@@ -59,7 +65,26 @@ namespace Mzayad.Web.SignalR
             {
                 _bidService = new BidService(dataContextFactory);
             }
-            
+
+            if (_trophyService == null)
+            {
+                _trophyService = new TrophyService(dataContextFactory);
+            }
+
+            if (_emailTemplateService == null)
+            {
+                _emailTemplateService = new EmailTemplateService(dataContextFactory);
+            }
+
+            if (_userProfileService == null)
+            {
+                _userProfileService = new UserProfileService(dataContextFactory);
+            }
+
+            if (_messageService == null)
+            {
+                _messageService = new MessageService(new EmailSettings());
+            }
             return this;
         }
 
@@ -181,8 +206,11 @@ namespace Mzayad.Web.SignalR
             var secondsLeft = auction.SecondsLeft;
 
             auction.AddBid(username);
-
-            await _bidService.AddBid(auctionId, userId, auction.LastBidAmount.GetValueOrDefault(), secondsLeft,hostAddress);
+            await _bidService.AddBid(auctionId, userId, auction.LastBidAmount.GetValueOrDefault(), secondsLeft, hostAddress);
+            
+            // Earn trophy
+            var trophyEngine = new TrophiesEngine(_trophyService, _emailTemplateService , _userProfileService, _messageService);
+            trophyEngine.EarnTrophy(userId);
 
             _cacheService.Set(cacheKey, auction);
         }

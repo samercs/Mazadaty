@@ -320,7 +320,6 @@
     <Compile Include="Areas\Admin\Controllers\SplashAdsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SponsorsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubscriptionsController.cs" />
-    <Compile Include="Areas\Admin\Controllers\TrophiesController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\Admin\Controllers\WishListsController.cs" />
     <Compile Include="Areas\Admin\Models\Auctions\AddEditViewModel.cs" />
@@ -373,6 +372,9 @@
     <Compile Include="Core\Configuration\CustomViewPage.cs" />
     <Compile Include="Core\ModelBinder\DateTimeModelBinder.cs" />
     <Compile Include="Core\Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Core\Trophies\BidOnNewYearTrophyChecker.cs" />
+    <Compile Include="Core\Trophies\TrophiesChecker.cs" />
+    <Compile Include="Core\Trophies\TrophiesEngine.cs" />
     <Compile Include="Core\Services\HttpCacheService.cs" />
     <Compile Include="Core\Services\ICacheService.cs" />
     <Compile Include="Core\Services\IRequestService.cs" />
