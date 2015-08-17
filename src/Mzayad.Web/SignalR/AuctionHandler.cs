@@ -7,10 +7,13 @@ using Mzayad.Web.Core.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Mzayad.Models.Enums;
+using Mzayad.Services.Activity;
 using Mzayad.Services.Identity;
 using Mzayad.Web.Core.Trophies;
 using OrangeJetpack.Services.Client.Messaging;
@@ -49,6 +52,7 @@ namespace Mzayad.Web.SignalR
         private EmailTemplateService _emailTemplateService;
         private UserService _userService;
         private MessageService _messageService;
+        private IActivityQueueService _activityQueueService;
 
         public AuctionHandler Setup(IDataContextFactory dataContextFactory, ICacheService cacheService)
         {
@@ -86,6 +90,12 @@ namespace Mzayad.Web.SignalR
             {
                 _messageService = new MessageService(new EmailSettings());
             }
+
+            if (_activityQueueService == null)
+            {
+                _activityQueueService = new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
+            }
+
             return this;
         }
 
@@ -212,6 +222,9 @@ namespace Mzayad.Web.SignalR
             // Earn trophy
             var trophyEngine = new TrophiesEngine(_trophyService, _userService, _emailTemplateService, _messageService);
             trophyEngine.EarnTrophy(userId);
+
+            await _activityQueueService.QueueActivity(ActivityType.SubmitBid, userId);
+
 
             _cacheService.Set(cacheKey, auction);
         }
