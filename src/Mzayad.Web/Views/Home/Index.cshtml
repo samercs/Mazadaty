@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
+@using Mzayad.Core.Formatting
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
 @using OrangeJetpack.Base.Web
@@ -73,9 +74,17 @@
                     <div class="auction-tile-details">
                         <div class="auction-tile-title">@auction.Title</div>
                         <div class="auction-tile-prices">
-                            
+                            <div class="auction-tile-retail-price">Retail Price: @auction.RetailPrice</div>
+                            <div class="auction-tile-winning-price">Retail Price: @auction.WinningPrice</div>
+                        </div>
+                        <div class="auction-tile-won-by-avater">
+
+
+
                         </div>
 
+
+                        <div class="auction-tile-buynow-price">Buy Now: @auction.BuyNowPrice</div>
                     </div>
                 </div>
             </li>

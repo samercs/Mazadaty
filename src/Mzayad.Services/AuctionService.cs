@@ -60,6 +60,27 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<IReadOnlyCollection<Auction>> GetClosedAuctions(string language = "en")
+        {
+            using (var dc = DataContext())
+            {
+                var auctions = await dc.Auctions
+                    .Where(i => i.Status == AuctionStatus.Closed)
+                    .Include(i => i.Product.ProductImages)
+                    .Include(i => i.Product.ProductSpecifications.Select(j => j.Specification))
+                    .Include(i => i.WonByUser.Profile)
+                    .OrderByDescending(i => i.ClosedUtc)
+                    .ToListAsync();
+
+                foreach (var product in auctions.Select(i => i.Product).Distinct())
+                {
+                    LocalizeProduct(product, language);
+                }
+
+                return auctions.Localize(language, i => i.Title).ToList();
+            }
+        }
+
         private static void LocalizeProduct(Product product, string language)
         {
             // order product images

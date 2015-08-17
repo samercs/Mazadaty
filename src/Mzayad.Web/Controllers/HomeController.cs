@@ -29,8 +29,9 @@ namespace Mzayad.Web.Controllers
 
             //var auctions = await CacheService.TryGet(CacheKeys.CurrentAuctions, () => _auctionService.GetCurrentAuctions(Language), TimeSpan.FromDays(1));
             var auctions = await _auctionService.GetCurrentAuctions(Language);
+            var closedAuctions = await _auctionService.GetClosedAuctions(Language);
 
-            var viewModel = new IndexViewModel(auctions);
+            var viewModel = new IndexViewModel(auctions, closedAuctions);
 
             return View(viewModel);
         }

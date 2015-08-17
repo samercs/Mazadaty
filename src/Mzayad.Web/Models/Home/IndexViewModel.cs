@@ -14,11 +14,9 @@ namespace Mzayad.Web.Models.Home
         public IReadOnlyCollection<AuctionViewModel> LiveAuctions { get; set; }
         public IReadOnlyCollection<int> LiveAuctionIds { get; set; } 
 
-        public IndexViewModel(IReadOnlyCollection<Auction> auctions)
+        public IndexViewModel(IEnumerable<Auction> auctions, IEnumerable<Auction> closedAuctions)
         {
-            ClosedAuctions = auctions.Where(i => i.Status == AuctionStatus.Closed)
-                .Select(AuctionViewModel.Create)
-                .ToList();
+            ClosedAuctions = closedAuctions.Select(AuctionViewModel.Create).ToList();
             
             LiveAuctions = auctions.Where(i => i.IsLive())
                 .Select(AuctionViewModel.Create)
@@ -35,7 +33,13 @@ namespace Mzayad.Web.Models.Home
         public string Status { get; set; }
         public string Description { get; set; }
         public string RetailPrice { get; set; }
+        public string BuyNowPrice { get; set; }
         public bool BuyNowEnabled { get; set; }
+
+        public string WonByAmount { get; set; }
+        public string WonByAvatarUrl { get; set; }
+        public string WonByUserName { get; set; }
+
         public decimal? LastBidAmount { get; set; }
         public string LastBidUser { get; set; }
         public DateTime StartUtc { get; set; }
@@ -52,6 +56,7 @@ namespace Mzayad.Web.Models.Home
                 Status = GetStatus(auction),
                 Description = auction.Product.Description,
                 RetailPrice = CurrencyFormatter.Format(auction.Product.RetailPrice),
+                BuyNowPrice = CurrencyFormatter.Format(auction.BuyNowPrice),
                 BuyNowEnabled = auction.BuyNowAvailable(),
                 LastBidAmount = auction.WonAmount,
                 LastBidUser = GetWonByUserName(auction.WonByUser),
@@ -60,6 +65,13 @@ namespace Mzayad.Web.Models.Home
                 Images = GetImages(auction),
                 Specifications = GetSpecifications(auction.Product.ProductSpecifications)
             };
+
+            if (auction.WonByUser != null)
+            {
+                viewModel.WonByAmount = CurrencyFormatter.Format(auction.WonAmount);
+                viewModel.WonByUserName = auction.WonByUser.UserName;
+                viewModel.WonByAvatarUrl = auction.WonByUser.Profile.Avatar.Url;
+            }
 
             return viewModel;
         }
