@@ -624,6 +624,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="manifest.json" />
+    <Content Include="Content\site-auctions.less" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="mstile-144x144.png" />
     <Content Include="mstile-150x150.png" />
@@ -733,6 +734,7 @@
     <Content Include="Scripts\jquery.validate._defaults.js" />
     <Content Include="Scripts\kendo.aspnetmvc.min.js" />
     <Content Include="Scripts\kendo.web.min.js" />
+    <Content Include="Views\Shared\DisplayTemplates\AuctionTile.cshtml" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />
     <Content Include="Scripts\wow.min.js" />
