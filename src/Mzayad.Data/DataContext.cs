@@ -3,12 +3,10 @@ using Mzayad.Models;
 using Mzayad.Models.Payment;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Mzayad.Data.Migrations;
 
 namespace Mzayad.Data
 {
@@ -25,7 +23,6 @@ namespace Mzayad.Data
         public IDbSet<Sponsor> Sponsors { get; set; }
         public IDbSet<Bid> Bids { get; set; }
         public IDbSet<Avatar> Avatars { get; set; }
-        public IDbSet<UserProfile> UserProfiles { get; set; }
         public IDbSet<ShippingAddress> ShippingAddresses { get; set; }
         public IDbSet<Order> Orders { get; set; }
         public IDbSet<OrderItem> OrderItems { get; set; }

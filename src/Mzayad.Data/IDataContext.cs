@@ -20,7 +20,6 @@ namespace Mzayad.Data
         IDbSet<Sponsor> Sponsors { get; set; }
         IDbSet<Bid> Bids { get; set; }
         IDbSet<Avatar> Avatars { get; set; }
-        IDbSet<UserProfile> UserProfiles { get; set; }
         IDbSet<ShippingAddress> ShippingAddresses { get; set; }
         IDbSet<Order> Orders { get; set; }
         IDbSet<OrderItem> OrderItems { get; set; }

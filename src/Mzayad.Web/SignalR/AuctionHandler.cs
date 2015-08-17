@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Mzayad.Services.Identity;
 using Mzayad.Web.Core.Trophies;
 using OrangeJetpack.Services.Client.Messaging;
 
@@ -46,7 +47,7 @@ namespace Mzayad.Web.SignalR
         private BidService _bidService;
         private TrophyService _trophyService;
         private EmailTemplateService _emailTemplateService;
-        private UserProfileService _userProfileService;
+        private UserService _userService;
         private MessageService _messageService;
 
         public AuctionHandler Setup(IDataContextFactory dataContextFactory, ICacheService cacheService)
@@ -76,9 +77,9 @@ namespace Mzayad.Web.SignalR
                 _emailTemplateService = new EmailTemplateService(dataContextFactory);
             }
 
-            if (_userProfileService == null)
+            if (_userService == null)
             {
-                _userProfileService = new UserProfileService(dataContextFactory);
+                _userService = new UserService(dataContextFactory);
             }
 
             if (_messageService == null)
@@ -209,7 +210,7 @@ namespace Mzayad.Web.SignalR
             await _bidService.AddBid(auctionId, userId, auction.LastBidAmount.GetValueOrDefault(), secondsLeft, hostAddress);
             
             // Earn trophy
-            var trophyEngine = new TrophiesEngine(_trophyService, _emailTemplateService , _userProfileService, _messageService);
+            var trophyEngine = new TrophiesEngine(_trophyService, _userService, _emailTemplateService, _messageService);
             trophyEngine.EarnTrophy(userId);
 
             _cacheService.Set(cacheKey, auction);

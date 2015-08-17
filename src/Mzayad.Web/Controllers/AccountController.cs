@@ -24,13 +24,11 @@ namespace Mzayad.Web.Controllers
     {
         private readonly UserService _userService;
         private readonly AddressService _addressService;
-        private readonly UserProfileService _userProfileService;
         
         public AccountController(IAppServices appServices) : base(appServices)
         {
             _userService = new UserService(appServices.DataContextFactory);
             _addressService = new AddressService(appServices.DataContextFactory);
-            _userProfileService=new UserProfileService(appServices.DataContextFactory);
         }
 
         [Route("sign-in")]
@@ -126,7 +124,8 @@ namespace Mzayad.Web.Controllers
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 PhoneCountryCode = model.PhoneCountryCode,
-                PhoneNumber = model.PhoneNumber
+                PhoneNumber = model.PhoneNumber,
+                ProfileStatus = UserProfileStatus.Private
             };
 
             var result = await AuthService.CreateUser(user, model.Password);
@@ -139,8 +138,6 @@ namespace Mzayad.Web.Controllers
             var address = await _addressService.SaveAddress(model.Address);
             user.AddressId = address.AddressId;
             await _userService.UpdateUser(user);
-
-            await _userProfileService.CreateNewProfile(user);
 
             await SendNewUserWelcomeEmail(user);
             SetNameAndEmailCookies(user, "");

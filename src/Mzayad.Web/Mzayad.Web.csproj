@@ -496,6 +496,9 @@
     <Content Include="Content\site-kendo.css">
       <DependentUpon>site-kendo.less</DependentUpon>
     </Content>
+    <Content Include="Content\site-kendo.min.css">
+      <DependentUpon>site-kendo.css</DependentUpon>
+    </Content>
     <Content Include="Content\site-layout.css">
       <DependentUpon>site-layout.less</DependentUpon>
     </Content>

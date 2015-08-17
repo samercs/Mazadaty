@@ -121,7 +121,6 @@
     <Compile Include="TokenService.cs" />
     <Compile Include="Identity\UserManager.cs" />
     <Compile Include="TrophyService.cs" />
-    <Compile Include="UserProfileService.cs" />
     <Compile Include="WishListService.cs" />
   </ItemGroup>
   <ItemGroup>

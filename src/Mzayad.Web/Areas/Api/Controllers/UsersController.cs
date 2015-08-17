@@ -27,13 +27,11 @@ namespace Mzayad.Web.Areas.Api.Controllers
     public class UsersController : ApplicationApiController
     {
         private readonly UserService _userService;
-        private readonly UserProfileService _userProfileService;
         private readonly AddressService _addressService;
 
         public UsersController(IAppServices appServices) : base(appServices)
         {
             _userService = new UserService(appServices.DataContextFactory);
-            _userProfileService = new UserProfileService(appServices.DataContextFactory);
             _addressService = new AddressService(appServices.DataContextFactory); 
         }
 
@@ -46,15 +44,13 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 return NotFound();
             }
 
-            var userProfile = await _userProfileService.GetByUser(applicationUser);
-                 
             var user = new UserModel
             {
                 UserId = applicationUser.Id,
                 FullName = NameFormatter.GetFullName(applicationUser.FirstName, applicationUser.LastName),
                 UserName = applicationUser.UserName,
                 Email = applicationUser.Email,
-                AvatarUrl = userProfile.Avatar.Url
+                AvatarUrl = applicationUser.AvatarUrl
             };
 
             return Ok(user);
