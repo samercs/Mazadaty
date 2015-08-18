@@ -320,6 +320,7 @@
     <Compile Include="Areas\Admin\Controllers\SplashAdsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SponsorsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubscriptionsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TrophiesController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\Admin\Controllers\WishListsController.cs" />
     <Compile Include="Areas\Admin\Models\Auctions\AddEditViewModel.cs" />
@@ -333,6 +334,7 @@
     <Compile Include="Areas\Admin\Models\SplashAds\IndexViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Sponsors\AddViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Subscription\AddViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Trophies\EditViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Users\DetailsViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Users\EditSubscriptionViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Users\IndexViewModel.cs" />

@@ -1,73 +1,59 @@
-﻿@model Mzayad.Models.Trophy
+﻿@using Mzayad.Web.Extensions
+@model Mzayad.Web.Areas.Admin.Models.Trophies.EditViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Trophy";
 }
+
+<div class="row">
+    <div class="@Html.Css().FormNormal">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Trophy.Name)
+                    @Html.EditorFor(model => model.Trophy.Name)
+                    @Html.ValidationMessageFor(model => model.Trophy.Name, "Please add a trophy name.")
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Trophy.Description)
+                    @Html.EditorFor(model => model.Trophy.Description)
+                    @Html.ValidationMessageFor(model => model.Trophy.Description, "Please add a trophy description")
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Trophy.IconUrl, "Icon URL")
+                    @Html.EditorFor(model => model.Trophy.IconUrl, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Trophy.IconUrl, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Trophy.XpAward, "XP Award")
+                    @Html.TextBoxFor(model => model.Trophy.XpAward, new { @class = "form-control", type = "number", min = "0" })
+                    @Html.ValidationMessageFor(model => model.Trophy.XpAward, "Please enter a valid XP amount.")
+                </div>
+
+            </section>
+
+            <section class="form-buttons">
+                <button type="submit" class="btn btn-default">Save</button>
+            </section>
+        }
+    </div>
+</div>
+
 @section scripts
 {
-    <script src="/scripts/site.js"></script>
-<script>
+    <script>
         $(document).ready(function () {
-           
             $("input[type='text'].localized-input[data-language='ar']").each(function () {
                 $(this).css("direction", "rtl");
             });
         });
-</script>
+    </script>
 }
-<h2>Edit</h2>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Trophy</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        @Html.HiddenFor(model => model.TrophyId)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IconUrl, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IconUrl, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IconUrl, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.XpAward, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.XpAward, new { htmlAttributes = new { @class = "form-control", type = "number", min = "0" } })
-                @Html.ValidationMessageFor(model => model.XpAward, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
