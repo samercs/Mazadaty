@@ -111,7 +111,7 @@ p.form-control-static:after {
 .btn, .btn:hover, .btn:focus {
     padding: 10px 24px;
     outline: none !important;
-    border: none !important;
+    border: none;
     box-shadow: none;
     text-shadow: none;
     opacity: 1;
@@ -154,6 +154,11 @@ p.form-control-static:after {
     opacity: 0.4;
 }
 
+.btn-unstyled {
+    border: 1px solid @black !important;
+    color: @black;
+}
+
 .btn-sm, .btn-sm:hover, .btn-sm:focus {
     padding: 5px 10px;
     font-size: 1.4rem;
@@ -166,6 +171,10 @@ p.form-control-static:after {
 .btn-link.btn-xs {
     padding: 0;
     font-size: 1.2rem;
+}
+
+.btn-rounded {
+    border-radius: 500px;
 }
 
 .field-validation-error {

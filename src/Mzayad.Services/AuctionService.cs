@@ -51,34 +51,38 @@ namespace Mzayad.Services
                     .ThenBy(i => i.StartUtc)
                     .ToListAsync();
 
-                foreach (var product in auctions.Select(i => i.Product).Distinct())
-                {
-                    LocalizeProduct(product, language);
-                }
-
-                return auctions.Localize(language, i => i.Title).ToList();
+                return LocalizeAuctions(language, auctions);
             }
         }
 
-        public async Task<IReadOnlyCollection<Auction>> GetClosedAuctions(string language = "en")
+        public async Task<IReadOnlyCollection<Auction>> GetClosedAuctions(string language, int count)
         {
             using (var dc = DataContext())
             {
-                var auctions = await dc.Auctions
-                    .Where(i => i.Status == AuctionStatus.Closed)
-                    .Include(i => i.Product.ProductImages)
-                    .Include(i => i.Product.ProductSpecifications.Select(j => j.Specification))
-                    .Include(i => i.WonByUser)
-                    .OrderByDescending(i => i.ClosedUtc)
-                    .ToListAsync();
+                var auctions = await GetAuctionsQuery(dc, AuctionStatus.Closed).Take(count).ToListAsync();
 
-                foreach (var product in auctions.Select(i => i.Product).Distinct())
-                {
-                    LocalizeProduct(product, language);
-                }
-
-                return auctions.Localize(language, i => i.Title).ToList();
+                return LocalizeAuctions(language, auctions);
             }
+        }
+
+        private static IOrderedQueryable<Auction> GetAuctionsQuery(IDataContext dc, AuctionStatus auctionStatus)
+        {
+            return dc.Auctions
+                .Where(i => i.Status == auctionStatus)
+                .Include(i => i.Product.ProductImages)
+                .Include(i => i.Product.ProductSpecifications.Select(j => j.Specification))
+                .Include(i => i.WonByUser)
+                .OrderByDescending(i => i.ClosedUtc);
+        }
+
+        private static IReadOnlyCollection<Auction> LocalizeAuctions(string language, List<Auction> auctions)
+        {
+            foreach (var product in auctions.Select(i => i.Product).Distinct())
+            {
+                LocalizeProduct(product, language);
+            }
+
+            return auctions.Localize(language, i => i.Title).ToList();
         }
 
         private static void LocalizeProduct(Product product, string language)

@@ -9,10 +9,18 @@
     overflow: hidden;
 
     li {
-        width: 25%;
+        width: 100%;
         float: left;
         display: flex;
         padding: 10px;
+    }
+
+    @media (min-width: 560px) {
+        width: 50%;
+    }
+
+    @media (min-width: 992px) {
+        width: 25%;
     }
 }
 
@@ -20,19 +28,32 @@
     min-width: 0;
     border: 1px solid #EBEBEB;
     text-align: center;
-}
 
-.auction-tile-image {
-    padding: 10px;
-}
+    .auction-tile-row {
+        padding: 6px;
+    }
 
-.auction-tile-details {
-    padding: 10px;
-    border-top: 1px solid #EBEBEB;
-}
+    .auction-tile-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: @font-size + 0.1;
+    }
 
-.auction-tile-title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    .auction-tile-image {
+        padding: 10px;
+    }
+
+    .auction-tile-details {
+        padding: 10px;
+        border-top: 1px solid #EBEBEB;
+    }
+
+    .auction-tile-retail-price {
+        color: @lightgrey;
+    }
+
+    .auction-tile-winning-price {
+        font-weight: bold;
+    }
 }

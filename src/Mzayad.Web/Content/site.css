@@ -404,7 +404,7 @@ p.form-control-static:after {
 .btn:focus {
   padding: 10px 24px;
   outline: none !important;
-  border: none !important;
+  border: none;
   box-shadow: none;
   text-shadow: none;
   opacity: 1;
@@ -452,6 +452,10 @@ p.form-control-static:after {
   background: #33ace0;
   opacity: 0.4;
 }
+.btn-unstyled {
+  border: 1px solid #333333 !important;
+  color: #333333;
+}
 .btn-sm,
 .btn-sm:hover,
 .btn-sm:focus {
@@ -464,6 +468,9 @@ p.form-control-static:after {
 .btn-link.btn-xs {
   padding: 0;
   font-size: 1.2rem;
+}
+.btn-rounded {
+  border-radius: 500px;
 }
 .field-validation-error {
   color: #b94a48;
@@ -709,25 +716,45 @@ input[type="checkbox"].input-validation-error {
   overflow: hidden;
 }
 #closed-auctions li {
-  width: 25%;
+  width: 100%;
   float: left;
   display: flex;
   padding: 10px;
+}
+@media (min-width: 560px) {
+  #closed-auctions {
+    width: 50%;
+  }
+}
+@media (min-width: 992px) {
+  #closed-auctions {
+    width: 25%;
+  }
 }
 .auction-tile {
   min-width: 0;
   border: 1px solid #EBEBEB;
   text-align: center;
 }
-.auction-tile-image {
-  padding: 10px;
+.auction-tile .auction-tile-row {
+  padding: 6px;
 }
-.auction-tile-details {
-  padding: 10px;
-  border-top: 1px solid #EBEBEB;
-}
-.auction-tile-title {
+.auction-tile .auction-tile-title {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 1.6rem;
+}
+.auction-tile .auction-tile-image {
+  padding: 10px;
+}
+.auction-tile .auction-tile-details {
+  padding: 10px;
+  border-top: 1px solid #EBEBEB;
+}
+.auction-tile .auction-tile-retail-price {
+  color: #aaaaaa;
+}
+.auction-tile .auction-tile-winning-price {
+  font-weight: bold;
 }

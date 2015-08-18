@@ -21,11 +21,13 @@
 @if (Model.ClosedAuctions.Any())
 {
     <ul id="closed-auctions">
-        @foreach (var auction in Model.ClosedAuctions.Take(4))
+        @foreach (var auction in Model.ClosedAuctions)
         {
             <li>@Html.DisplayFor(m => auction, "AuctionTile")</li>
         }
     </ul>
+
+    <p class="text-center"><a class="btn btn-unstyled text-uppercase" href="@Url.Action("Closed", "Auctions", new { Area = "", Language = LanguageCode })">@Global.ViewAllClosedAuctions</a></p>
 }
 
 @if (!Model.LiveAuctions.Any())

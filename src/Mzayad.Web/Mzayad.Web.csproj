@@ -408,6 +408,10 @@
     </Compile>
     <Compile Include="Models\Account\AccountViewModels.cs" />
     <Compile Include="Models\Account\UserAccountViewModel.cs" />
+    <Compile Include="Models\Auctions\AuctionImageViewModel.cs" />
+    <Compile Include="Models\Auctions\AuctionViewModel.cs" />
+    <Compile Include="Models\Auctions\ClosedAuctionsViewModel.cs" />
+    <Compile Include="Models\Auctions\ProductSpecificationViewModel.cs" />
     <Compile Include="Models\Home\IndexViewModel.cs" />
     <Compile Include="Models\Order\DetailsViewModel.cs" />
     <Compile Include="Models\Order\OrderSummaryViewModel.cs" />
@@ -750,6 +754,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\BuyNow.cshtml" />
     <Content Include="Views\Home\ContactUs.cshtml" />
+    <Content Include="Views\Auctions\Closed.cshtml" />
     <None Include="Views\Home\SignalR.cshtml" />
     <Content Include="404.html" />
     <Content Include="500.html" />

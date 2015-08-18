@@ -1,23 +1,31 @@
-﻿@model Mzayad.Web.Models.Home.AuctionViewModel
+﻿@using OrangeJetpack.Base.Core.Formatting
+@model Mzayad.Web.Models.Auctions.AuctionViewModel
 
 <div class="auction-tile">
     <div class="auction-tile-image">
         <img class="img-responsive" src="@Model.MainImage.ImageMdUrl" alt="@Model.Title" />
     </div>
     <div class="auction-tile-details">
-        <div class="auction-tile-title">@Model.Title</div>
-        <div class="auction-tile-prices">
-            <div class="auction-tile-retail-price">Retail Price: @Model.RetailPrice</div>
-            <div class="auction-tile-winning-price">Winning Price: @Model.WonByAmount</div>
+        <div class="auction-tile-title auction-tile-row">@Model.Title</div>
+        <div class="auction-tile-prices auction-tile-row">
+            <div class="auction-tile-retail-price">
+                @StringFormatter.ObjectFormat(Global.RetailPriceWithLabel, new { Model.RetailPrice })
+            </div>
+            <div class="auction-tile-winning-price">
+                @StringFormatter.ObjectFormat(Global.WinningPriceWithLabel, new { WinningPrice = Model.WonByAmount })
+            </div>
         </div>
-        <div class="auction-tile-won-by-avater">
+        <div class="auction-tile-won-by-avater auction-tile-row">
             <img src="@Model.WonByAvatarUrl" alt="@Model.WonByUserName" width="64" height="64" />
             <div class="auction-title-username">@Model.WonByUserName</div>
         </div>
         @if (Model.BuyNowEnabled)
         {
-            <div class="auction-tile-buynow-price">Buy Now: @Model.BuyNowPrice</div>
-                            <a class="btn btn-default btn-rounded" href="@Url.Action("BuyNow", "Orders", new { language = LanguageCode, auctionId = Model.AuctionId })">Buy Now</a>
+            <div class="auction-tile-buynow auction-tile-row">
+                <a class="btn btn-default btn-rounded text-uppercase" href="@Url.Action("BuyNow", "Orders", new {language = LanguageCode, auctionId = Model.AuctionId})">
+                    @StringFormatter.ObjectFormat(Global.BuyNowWithPrice, new { Model.BuyNowPrice })
+                </a>
+            </div>
         }
     </div>
 </div>
