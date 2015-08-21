@@ -6,8 +6,11 @@ using Microsoft.Azure.WebJobs;
 using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Enums;
+using Mzayad.Services;
 using Mzayad.Services.Activity;
 using Mzayad.Services.Identity;
+using Mzayad.Services.Trophies;
+using OrangeJetpack.Services.Client.Messaging;
 
 namespace Mzayad.WebJobs
 {
@@ -44,6 +47,13 @@ namespace Mzayad.WebJobs
             {
                 var dataContextFactory = new DataContextFactory();
 
+                var _trophyService = new TrophyService(dataContextFactory);
+                var _emailTemplateService = new EmailTemplateService(dataContextFactory);
+                var _userService = new UserService(dataContextFactory);
+                var _messageService = new MessageService(new EmailSettings());
+
+                var trophyEngine = new TrophiesEngine(_trophyService, _userService, _emailTemplateService, _messageService);
+
                 var userService = new UserService(dataContextFactory);
                 var user = await userService.GetUserById(activityEvent.UserId);
                 if (user == null)
@@ -56,6 +66,10 @@ namespace Mzayad.WebJobs
                 {
                     case ActivityType.TestActivity:
                         await HandleTestActivity(user, log);
+                        break;
+                    case ActivityType.SubmitBid:
+                        // Earn trophy
+                       trophyEngine.EarnTrophy(user.Id);
                         break;
                     default:
                         await LogMessageAsync(log, string.Format("No event handling for activity {0}.", activityEvent.Type));

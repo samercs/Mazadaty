@@ -48,10 +48,6 @@ namespace Mzayad.Web.SignalR
         private ICacheService _cacheService;
         private AuctionService _auctionService;
         private BidService _bidService;
-        private TrophyService _trophyService;
-        private EmailTemplateService _emailTemplateService;
-        private UserService _userService;
-        private MessageService _messageService;
         private IActivityQueueService _activityQueueService;
 
         public AuctionHandler Setup(IDataContextFactory dataContextFactory, ICacheService cacheService)
@@ -69,26 +65,6 @@ namespace Mzayad.Web.SignalR
             if (_bidService == null)
             {
                 _bidService = new BidService(dataContextFactory);
-            }
-
-            if (_trophyService == null)
-            {
-                _trophyService = new TrophyService(dataContextFactory);
-            }
-
-            if (_emailTemplateService == null)
-            {
-                _emailTemplateService = new EmailTemplateService(dataContextFactory);
-            }
-
-            if (_userService == null)
-            {
-                _userService = new UserService(dataContextFactory);
-            }
-
-            if (_messageService == null)
-            {
-                _messageService = new MessageService(new EmailSettings());
             }
 
             if (_activityQueueService == null)
@@ -219,10 +195,6 @@ namespace Mzayad.Web.SignalR
             auction.AddBid(username);
             await _bidService.AddBid(auctionId, userId, auction.LastBidAmount.GetValueOrDefault(), secondsLeft, hostAddress);
             
-            // Earn trophy
-            var trophyEngine = new TrophiesEngine(_trophyService, _userService, _emailTemplateService, _messageService);
-            trophyEngine.EarnTrophy(userId);
-
             await _activityQueueService.QueueActivity(ActivityType.SubmitBid, userId);
 
 
