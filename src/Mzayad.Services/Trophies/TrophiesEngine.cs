@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mzayad.Models.Enum;
-using Mzayad.Services;
 using Mzayad.Services.Identity;
-using Mzayad.Web.Extensions;
 using OrangeJetpack.Services.Client.Messaging;
 using OrangeJetpack.Services.Models;
 
-namespace Mzayad.Web.Core.Trophies
+namespace Mzayad.Services.Trophies
 {
     public class TrophiesEngine
     {
@@ -46,7 +44,7 @@ namespace Mzayad.Web.Core.Trophies
                     Subject = template.Subject,
                     Message = string.Format(template.Message, "[user.FirstName]" , string.Join(" - ",earnedTrophies))
                 };
-                await _messageService.Send(email.WithTemplate());
+                await _messageService.Send(email);
             }
             catch //(Exception ex)
             {

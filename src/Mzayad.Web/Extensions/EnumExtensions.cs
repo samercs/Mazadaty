@@ -18,19 +18,5 @@ namespace Mzayad.Web.Extensions
             var attribute = value.GetAttribute<DescriptionAttribute>();
             return attribute == null ? value.ToString() : attribute.Description;
         }
-
-        public static string Name(this Enum value)
-        {
-            var output = new StringBuilder("");
-            foreach (var c in value.ToString().ToCharArray())
-            {
-                if (char.IsUpper(c))
-                {
-                    output.Append(" ");
-                }
-                output.Append(c);
-            }
-            return output.ToString();
-        }
     }
 }

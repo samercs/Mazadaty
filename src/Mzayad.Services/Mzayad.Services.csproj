@@ -85,6 +85,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\OrangeJetpack.Localization.1.5.6\lib\OrangeJetpack.Localization.dll</HintPath>
     </Reference>
+    <Reference Include="OrangeJetpack.Services.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.33\lib\OrangeJetpack.Services.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OrangeJetpack.Services.Models, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.33\lib\OrangeJetpack.Services.Models.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -120,6 +128,10 @@
     <Compile Include="SubscriptionService.cs" />
     <Compile Include="TokenService.cs" />
     <Compile Include="Identity\UserManager.cs" />
+    <Compile Include="Trophies\BidOnNewYearTrophyChecker.cs" />
+    <Compile Include="Trophies\EnumExtension.cs" />
+    <Compile Include="Trophies\TrophiesChecker.cs" />
+    <Compile Include="Trophies\TrophiesEngine.cs" />
     <Compile Include="TrophyService.cs" />
     <Compile Include="WishListService.cs" />
   </ItemGroup>

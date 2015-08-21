@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using Mzayad.Models.Enums;
 using Mzayad.Services.Activity;
 using Mzayad.Services.Identity;
-using Mzayad.Web.Core.Trophies;
+using Mzayad.Services.Trophies;
 using OrangeJetpack.Services.Client.Messaging;
 
 namespace Mzayad.Web.SignalR
