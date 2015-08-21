@@ -11,7 +11,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Mzayad.Web.Core.Trophies;
+using Mzayad.Services.Trophies;
 using OrangeJetpack.Services.Client.Messaging;
 
 namespace Mzayad.Web.SignalR

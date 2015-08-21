@@ -337,9 +337,6 @@
     <Compile Include="Core\Configuration\CustomViewPage.cs" />
     <Compile Include="Core\ModelBinder\DateTimeModelBinder.cs" />
     <Compile Include="Core\Providers\ApplicationOAuthProvider.cs" />
-    <Compile Include="Core\Trophies\BidOnNewYearTrophyChecker.cs" />
-    <Compile Include="Core\Trophies\TrophiesChecker.cs" />
-    <Compile Include="Core\Trophies\TrophiesEngine.cs" />
     <Compile Include="Core\Services\GeolocationService.cs" />
     <Compile Include="Core\Services\HttpCacheService.cs" />
     <Compile Include="Core\Services\ICacheService.cs" />

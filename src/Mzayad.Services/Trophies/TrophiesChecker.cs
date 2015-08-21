@@ -1,8 +1,7 @@
 using System.Threading.Tasks;
 using Mzayad.Models.Enum;
-using Mzayad.Services;
 
-namespace Mzayad.Web.Core.Trophies
+namespace Mzayad.Services.Trophies
 {
     public abstract class TrophiesChecker
     {
