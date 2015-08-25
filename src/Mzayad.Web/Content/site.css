@@ -668,6 +668,32 @@ input[type="checkbox"].input-validation-error {
   color: #33ace0;
   text-transform: uppercase;
 }
+#home-index #auction-list .auction-item .auction-details .auction-bid-details {
+  text-align: center;
+}
+#home-index #auction-list .auction-item .auction-details .auction-bid-label {
+  text-transform: uppercase;
+}
+#home-index #auction-list .auction-item .auction-details .auction-bid-form .form-control,
+#home-index #auction-list .auction-item .auction-details .auction-bid-form .btn-default {
+  font-size: 2.5rem;
+  font-weight: bold;
+  line-height: normal;
+}
+#home-index #auction-list .auction-item .auction-details .auction-bid-form .form-control {
+  padding: 8px;
+  background-color: white;
+  border: 2px solid #ec6127;
+  border-top-left-radius: 500px;
+  border-bottom-left-radius: 500px;
+  text-align: center;
+}
+#home-index #auction-list .auction-item .auction-details .auction-bid-form .btn-default {
+  background-color: #ec6127;
+  border-top-right-radius: 500px;
+  border-bottom-right-radius: 500px;
+  text-transform: uppercase;
+}
 #closed-auctions {
   margin: 0 -10px 15px -10px;
   padding: 0;

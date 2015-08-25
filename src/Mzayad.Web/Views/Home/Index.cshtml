@@ -73,17 +73,23 @@
 
                         <div class="clearfix"></div>
 
-                        <div class="auction-last-bid" data-bind="text: lastBidFormatted"></div>
-                        <div class="auction-bid-actions" style="padding-top: 12px;">
-                            @if (Request.IsAuthenticated)
-                            {
-                                <button type="button" class="btn btn-default" data-bind="click: submitBid">Bid</button>
-
-                            }
-                            else
-                            {
-                                <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new {ReturnUrl = "/"})">Bid</a>
-                            }
+                        <div class="row">
+                            <div class="auction-bid-details col-md-8">
+                                <div class="auction-bid-label"><small>Current Auction Price</small></div>
+                                <div class="auction-bid-form input-group">
+                                    <input type="text" class="form-control" readonly="readonly" data-bind="value: lastBidFormatted">
+                                    <span class="input-group-btn">
+                                        @if (Request.IsAuthenticated)
+                                        {
+                                            <button type="button" class="btn btn-default" data-bind="click: submitBid">Bid</button>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new {ReturnUrl = "/"})">Bid</a>
+                                        }
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -152,15 +158,11 @@
                 });
 
                 self.lastBidFormatted = ko.computed(function() {
-                    if (!self.lastBidUser()) {
+                    if (!self.lastBidAmount()) {
                         return "";
                     }
 
-                    if (self.status() === "Closed") {
-                        return "Winning Bid: KD " + self.lastBidAmount() + " by " + self.lastBidUser();
-                    }
-
-                    return "Current Bid: KD " + self.lastBidAmount() + " by " + self.lastBidUser();
+                    return "KD " + self.lastBidAmount();
                 });
 
                 self.startTimeFormatted = ko.computed(function() {
