@@ -40,7 +40,7 @@
     <li class="auction-item">
         <div class="row">
             <div class="col-md-6">
-                <img class="auction-image img-responsive" data-bind="attr: { src: images[0].imageMdUrl, alt: title }" alt="">
+                <img class="auction-image img-responsive" data-bind="attr: { src: imageUrl, alt: title }" alt="">
             </div>
 
             <div class="col-md-6">
@@ -134,30 +134,27 @@
 
                 self.auctionId = data.auctionId;
                 self.title = data.title;
-                self.description = data.description;
-                self.specifications = data.specifications;
                 self.retailPrice = data.retailPrice;
                 self.buyNowEnabled = data.buyNowEnabled;
-                self.images = data.images;
+                self.imageUrl = data.imageUrl;
+                //self.images = data.images;
                 
                 self.bids = ko.observable(data.bids);
                 self.status = ko.observable(data.status);
                 self.isLoaded = ko.observable(false);
-                self.timeLeft = ko.observable();
+                self.secondsLeft = ko.observable();
                 self.lastBidAmount = ko.observable(data.lastBidAmount);
-                self.lastBidUser = ko.observable(data.lastBidUser);
-                self.startUtc = ko.observable(data.startUtc);
-
+                
                 self.timeLeftHours = ko.computed(function() {
-                    return App.TimeUtilities.getHours(self.timeLeft());
+                    return App.TimeUtilities.getHours(self.secondsLeft());
                 });
 
                 self.timeLeftMinutes = ko.computed(function() {
-                    return App.TimeUtilities.getMinutes(self.timeLeft());
+                    return App.TimeUtilities.getMinutes(self.secondsLeft());
                 });
 
                 self.timeLeftSeconds = ko.computed(function() {
-                    return App.TimeUtilities.getSeconds(self.timeLeft());
+                    return App.TimeUtilities.getSeconds(self.secondsLeft());
                 });
 
                 self.buyNowUrl = ko.computed(function() {
@@ -168,20 +165,12 @@
                     return "Retail Price: " + self.retailPrice;
                 });
 
-                self.timeLeftFormatted = ko.computed(function() {
-                    return TimeUtilities.getTimeLeft(self.timeLeft());
-                });
-
                 self.lastBidFormatted = ko.computed(function() {
                     if (!self.lastBidAmount()) {
                         return "";
                     }
 
                     return "KD " + self.lastBidAmount();
-                });
-
-                self.startTimeFormatted = ko.computed(function() {
-                    return "Starting: " + moment(self.startUtc()).format('D MMM HH:mm');
                 });
 
                 self.submitBid = function() {
@@ -223,11 +212,10 @@
                 var auctionJson = $.parseJSON(results);
                 for (var i = 0, len = auctionJson.length; i < len; ++i) {
                     var auction = auctionJson[i];
-                    var model = viewModel.getAuction(auction.id);
+                    var model = viewModel.getAuction(auction.auctionId);
                     if (model) {
-                        model.timeLeft(auction.t);
-                        model.lastBidAmount(auction.a);
-                        model.lastBidUser(auction.u);
+                        model.secondsLeft(auction.secondsLeft);
+                        model.lastBidAmount(auction.lastBidAmount);
                         model.bids(auction.bids);
                         model.isLoaded(true);
                     }

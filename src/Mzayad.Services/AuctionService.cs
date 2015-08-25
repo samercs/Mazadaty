@@ -55,24 +55,52 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<IReadOnlyCollection<Auction>> GetClosedAuctions(string language, int count)
+        public async Task<IReadOnlyCollection<Auction>> GetLiveAuctions(string language)
         {
             using (var dc = DataContext())
             {
-                var auctions = await GetAuctionsQuery(dc, AuctionStatus.Closed).Take(count).ToListAsync();
+                var auctions = await GetAuctionsQuery(dc, AuctionStatus.Public)
+                    .OrderBy(i => i.StartUtc)
+                    .ToListAsync();
 
                 return LocalizeAuctions(language, auctions);
             }
         }
 
-        private static IOrderedQueryable<Auction> GetAuctionsQuery(IDataContext dc, AuctionStatus auctionStatus)
+        /// <summary>
+        /// Gets a collection of public auctions having a collection of AuctionIds.
+        /// </summary>
+        public async Task<IEnumerable<Auction>> GetLiveAuctions(IEnumerable<int> auctionIds)
+        {
+            using (var dc = DataContext())
+            {
+                return await GetAuctionsQuery(dc, AuctionStatus.Public)
+                    .Where(i => auctionIds.Contains(i.AuctionId))
+                    .ToListAsync();
+            }
+        }
+
+        public async Task<IReadOnlyCollection<Auction>> GetClosedAuctions(string language, int count)
+        {
+            using (var dc = DataContext())
+            {
+                var auctions = await GetAuctionsQuery(dc, AuctionStatus.Closed)
+                    .Take(count)
+                    .OrderByDescending(i => i.ClosedUtc)
+                    .ToListAsync();
+
+                return LocalizeAuctions(language, auctions);
+            }
+        }
+
+        private static IQueryable<Auction> GetAuctionsQuery(IDataContext dc, AuctionStatus auctionStatus)
         {
             return dc.Auctions
                 .Where(i => i.Status == auctionStatus)
                 .Include(i => i.Product.ProductImages)
-                .Include(i => i.Product.ProductSpecifications.Select(j => j.Specification))
+                //.Include(i => i.Product.ProductSpecifications.Select(j => j.Specification))
                 .Include(i => i.WonByUser)
-                .OrderByDescending(i => i.ClosedUtc);
+                .Include(i => i.Bids.Select(j => j.User));
         }
 
         private static IReadOnlyCollection<Auction> LocalizeAuctions(string language, List<Auction> auctions)
@@ -93,12 +121,12 @@ namespace Mzayad.Services
             // localize products
             product.Localize(language, i => i.Name, i => i.Description);
 
-            // localize specifications
-            foreach (var specification in product.ProductSpecifications)
-            {
-                specification.Localize(language, i => i.Value);
-                specification.Specification.Localize(language, i => i.Name);
-            }
+            //// localize specifications
+            //foreach (var specification in product.ProductSpecifications)
+            //{
+            //    specification.Localize(language, i => i.Value);
+            //    specification.Specification.Localize(language, i => i.Name);
+            //}
         }
 
         public async Task<IEnumerable<Auction>> GetAuctions(string search = null)
@@ -112,20 +140,6 @@ namespace Mzayad.Services
                 }
                 
                 return await dc.Auctions.Include(i => i.Product).OrderByDescending(i => i.StartUtc).ToListAsync();
-            }
-        }
-
-        /// <summary>
-        /// Gets a collection of public auctions having a collection of AuctionIds.
-        /// </summary>
-        public async Task<IEnumerable<Auction>> GetPublicAuctions(IEnumerable<int> auctionIds)
-        {
-            using (var dc = DataContext())
-            {
-                return await dc.Auctions
-                    .Where(i => auctionIds.Contains(i.AuctionId))
-                    .Where(i => i.Status == AuctionStatus.Public)
-                    .ToListAsync();
             }
         }
 

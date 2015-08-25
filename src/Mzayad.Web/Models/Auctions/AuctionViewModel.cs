@@ -13,7 +13,7 @@ namespace Mzayad.Web.Models.Auctions
         public int AuctionId { get; set; }
         public string Title { get; set; }
         public string Status { get; set; }
-        public string Description { get; set; }
+        //public string Description { get; set; }
         public string RetailPrice { get; set; }
         public string BuyNowPrice { get; set; }
         public bool BuyNowEnabled { get; set; }
@@ -25,9 +25,10 @@ namespace Mzayad.Web.Models.Auctions
         public decimal? LastBidAmount { get; set; }
         public string LastBidUser { get; set; }
         public DateTime StartUtc { get; set; }
-        public AuctionImageViewModel MainImage { get; set; }
-        public IReadOnlyCollection<AuctionImageViewModel> Images { get; set; }
-        public IReadOnlyCollection<ProductSpecificationViewModel> Specifications { get; set; }
+        //public AuctionImageViewModel MainImage { get; set; }
+        public string ImageUrl { get; set; }
+        //public IReadOnlyCollection<AuctionImageViewModel> Images { get; set; }
+        //public IReadOnlyCollection<ProductSpecificationViewModel> Specifications { get; set; }
 
         public static AuctionViewModel Create(Auction auction)
         {
@@ -36,16 +37,17 @@ namespace Mzayad.Web.Models.Auctions
                 AuctionId = auction.AuctionId,
                 Title = auction.Title, 
                 Status = GetStatus(auction),
-                Description = auction.Product.Description,
+                //Description = auction.Product.Description,
                 RetailPrice = CurrencyFormatter.Format(auction.Product.RetailPrice),
                 BuyNowPrice = CurrencyFormatter.Format(auction.BuyNowPrice),
                 BuyNowEnabled = auction.BuyNowAvailable(),
                 LastBidAmount = auction.WonAmount,
                 LastBidUser = GetWonByUserName(auction.WonByUser),
                 StartUtc = auction.StartUtc,
-                MainImage = AuctionImageViewModel.Create(auction.Product.MainImage()),
-                Images = GetImages(auction),
-                Specifications = GetSpecifications(auction.Product.ProductSpecifications)
+                //MainImage = AuctionImageViewModel.Create(auction.Product.MainImage()),
+                ImageUrl = auction.Product.MainImage().ImageMdUrl
+                //Images = GetImages(auction)
+                //Specifications = GetSpecifications(auction.Product.ProductSpecifications)
             };
 
             if (auction.WonByUser != null)
@@ -63,14 +65,14 @@ namespace Mzayad.Web.Models.Auctions
             return user == null ? "" : user.UserName;
         }
 
-        private static IReadOnlyCollection<ProductSpecificationViewModel> GetSpecifications(IEnumerable<ProductSpecification> specifications)
-        {
-            return specifications.Select(specification => new ProductSpecificationViewModel
-            {
-                Name = specification.Specification.Name,
-                Value = specification.Value
-            }).ToList();
-        }
+        //private static IReadOnlyCollection<ProductSpecificationViewModel> GetSpecifications(IEnumerable<ProductSpecification> specifications)
+        //{
+        //    return specifications.Select(specification => new ProductSpecificationViewModel
+        //    {
+        //        Name = specification.Specification.Name,
+        //        Value = specification.Value
+        //    }).ToList();
+        //}
 
         private static string GetStatus(Auction auction)
         {
@@ -84,23 +86,23 @@ namespace Mzayad.Web.Models.Auctions
                 : RenderStatus.Upcoming.ToString();
         }
 
-        private static IReadOnlyCollection<AuctionImageViewModel> GetImages(Auction auction)
-        {
-            if (!auction.Product.ProductImages.Any())
-            {
-                return new[]
-                {
-                    new AuctionImageViewModel
-                    {
-                        ImageSmUrl = ProductImage.NoImageUrl,
-                        ImageMdUrl = ProductImage.NoImageUrl,
-                        ImageLgUrl = ProductImage.NoImageUrl
-                    }
-                };
-            }
+        //private static IReadOnlyCollection<AuctionImageViewModel> GetImages(Auction auction)
+        //{
+        //    if (!auction.Product.ProductImages.Any())
+        //    {
+        //        return new[]
+        //        {
+        //            new AuctionImageViewModel
+        //            {
+        //                ImageSmUrl = ProductImage.NoImageUrl,
+        //                ImageMdUrl = ProductImage.NoImageUrl,
+        //                ImageLgUrl = ProductImage.NoImageUrl
+        //            }
+        //        };
+        //    }
 
-            return auction.Product.ProductImages.Select(AuctionImageViewModel.Create).ToList();
-        }
+        //    return auction.Product.ProductImages.Select(AuctionImageViewModel.Create).ToList();
+        //}
 
         private enum RenderStatus { Live, Closed, Upcoming }
     }

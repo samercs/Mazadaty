@@ -10,7 +10,7 @@ var Auction = function (data) {
     self.images = data.images;
     self.status = ko.observable(data.status);
     self.isLoaded = ko.observable(false);
-    self.timeLeft = ko.observable();
+    self.secondsLeft = ko.observable();
     self.lastBidAmount = ko.observable(data.lastBidAmount);
     self.lastBidUser = ko.observable(data.lastBidUser);
     self.startUtc = ko.observable(data.startUtc);
@@ -30,7 +30,7 @@ var Auction = function (data) {
         return "orders/buy-now/" + self.auctionId;
     });
     self.timeLeftFormatted = ko.computed(function () {
-        return TimeUtilities.getTimeLeft(self.timeLeft());
+        return TimeUtilities.getTimeLeft(self.secondsLeft());
     });
     self.lastBidFormatted = ko.computed(function () {
         if (!self.lastBidUser()) {

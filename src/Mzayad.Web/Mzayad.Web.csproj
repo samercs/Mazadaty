@@ -429,7 +429,7 @@
     <Compile Include="Models\WishList\AddViewModel.cs" />
     <Compile Include="Models\WishList\IndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SignalR\Auction.cs" />
+    <Compile Include="SignalR\AuctionModel.cs" />
     <Compile Include="SignalR\AuctionHandler.cs" />
     <Compile Include="SignalR\AuctionHub.cs" />
     <Compile Include="SignalR\UserHandler.cs" />

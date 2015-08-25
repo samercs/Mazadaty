@@ -11,7 +11,7 @@
 
     self.status = ko.observable(data.status);
     self.isLoaded = ko.observable(false);
-    self.timeLeft = ko.observable();
+    self.secondsLeft = ko.observable();
     self.lastBidAmount = ko.observable(data.lastBidAmount);
     self.lastBidUser = ko.observable(data.lastBidUser);
     self.startUtc = ko.observable(data.startUtc);
@@ -34,7 +34,7 @@
     });
 
     self.timeLeftFormatted = ko.computed(function () {
-        return TimeUtilities.getTimeLeft(self.timeLeft());
+        return TimeUtilities.getTimeLeft(self.secondsLeft());
     });
 
     self.lastBidFormatted = ko.computed(function () {
