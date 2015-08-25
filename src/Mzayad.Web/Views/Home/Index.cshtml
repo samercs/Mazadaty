@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNet.Identity
-@using Mzayad.Core.Formatting
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
 @using OrangeJetpack.Base.Web
@@ -9,7 +8,7 @@
     ViewBag.Title = Global.Home;
 }
 
-@section styles { 
+@section styles {
     @Styles.Render("~/css/nivo")
 }
 
@@ -37,289 +36,203 @@
     return;
 }
 
-<ul id="auction-list" class="list-unstyled" data-bind="foreach: auctions">
-    <li class="auction">
+<ul id="auction-list" data-bind="foreach: auctions">
+    <li class="auction-item">
         <div class="row">
-            <div class="col-md-8 col-sm-6">
+            <div class="col-md-6">
+                <img class="auction-image img-responsive" data-bind="attr: { src: images[0].imageMdUrl, alt: title }" alt="">
+            </div>
+
+            <div class="col-md-6">
+
                 <div class="auction-details">
                     <h2 class="auction-title" data-bind="text: title"></h2>
-                    <div data-bind="template: { name: displayTemplate }"></div>
-                    <div class="product-information">
-                        <div class="product-description">
-                            <h3>@Global.Description</h3>
-                            <div data-bind="html: description"></div>
-                        </div>
-                        <div class="product-specifications" data-bind="visible: specifications.length > 0">
-                            <h3>@Global.Specifications</h3>
-                            <ul class="list-unstyled" data-bind="foreach: specifications">
-                                <li><span data-bind="text: name"></span>: <span data-bind="text: value"></span></li>
-                            </ul>
-                        </div>
-                        <div class="auction-price">Retail price: <span data-bind="text: retailPrice"></span></div>
-                        <div class="more-overlay"></div>
+                    <div class="auction-retail-price" data-bind="text: retailPriceFormatted"></div>
+
+                    <div class="auction-status-loading" data-bind="visible: !isLoaded()">
+                        <i class="fa fa-spin fa-cog"></i>
+                        Loading...
                     </div>
-                    <div class="information-toggles text-right">
-                        <button class="btn btn-link btn-sm btn-show-more">More<i class="fa fa-caret-down fa-pad-left"></i></button>
-                        <button class="btn btn-link btn-sm btn-show-less">Less<i class="fa fa-caret-up fa-pad-left"></i></button>
-                    </div>
-                    <div class="buy-now" data-bind="if: buyNowEnabled">
-                        <a class="btn btn-default" data-bind="attr: { href: buyNowUrl }">@Global.BuyNow</a>
+
+                    <div class="auction-status-details" data-bind="visible: isLoaded()">
+
+                        <ol class="auction-time-left">
+                            <li class="auction-time-part">
+                                <div class="auction-time-value" data-bind="text: timeLeftHours"></div>
+                                <div class="auction-time-label"><small>Hours</small></div>
+                            </li>
+                            <li class="auction-time-part">
+                                <div class="auction-time-value" data-bind="text: timeLeftMinutes"></div>
+                                <div class="auction-time-label"><small>Minutes</small></div>
+                            </li>
+                            <li class="auction-time-part">
+                                <div class="auction-time-value" data-bind="text: timeLeftSeconds"></div>
+                                <div class="auction-time-label"><small>Seconds</small></div>
+                            </li>
+                        </ol>
+
+                        <div class="clearfix"></div>
+
+                        <div class="auction-last-bid" data-bind="text: lastBidFormatted"></div>
+                        <div class="auction-bid-actions" style="padding-top: 12px;">
+                            @if (Request.IsAuthenticated)
+                            {
+                                <button type="button" class="btn btn-default" data-bind="click: submitBid">Bid</button>
+
+                            }
+                            else
+                            {
+                                <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new {ReturnUrl = "/"})">Bid</a>
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 col-sm-6 text-center">
-                <a class="product-image" data-bind="attr: { href: images[0].imageLgUrl, 'data-lightbox-gallery': auctionId, title: title }"><img data-bind="attr: { src: images[0].imageMdUrl, alt: title }" alt=""></a>
-                <ul class="product-images list-unstyled" data-bind="foreach: images">
-                    <li data-bind="if: $index() !== 0">
-                        <a class="product-image" data-bind="attr: { href: imageLgUrl, 'data-lightbox-gallery': $parent.auctionId, title: $parent.title }"><img data-bind="attr: { src: imageSmUrl, alt: $parent.title }" alt=""></a>
-                    </li>
-                </ul>
+
+
+                <div class="buy-now" data-bind="if: buyNowEnabled">
+                    <a class="btn btn-default" data-bind="attr: { href: buyNowUrl }">@Global.BuyNow</a>
+                </div>
             </div>
         </div>
     </li>
 </ul>
 
-<button id="clear-cache" type="button" class="btn btn-default btn-sm hidden">Clear Cache</button>
+@section scripts {
 
-<script type="text/html" id="closed-template">
-    <div class="auction-status status-closed">
-        <div class="auction-status-label">Closed</div>
-        <div class="auction-status-details">
-            <div class="auction-last-bid" data-bind="text: lastBidFormatted"></div>
-        </div>
-    </div>
-</script>
+    @Scripts.Render("~/js/knockout")
+    @Scripts.Render("~/js/signalR")
+    <script src="/signalr/hubs"></script>
+    <script>
 
-<script type="text/html" id="live-template">
-    <div class="auction-status status-live">
-        <div class="auction-status-label">Live <i class="fa fa-bolt"></i></div>
-        <div class="auction-status-loading" data-bind="visible: !isLoaded()">
-            <i class="fa fa-spin fa-cog"></i>
-            Loading...
-        </div>
-        <div class="auction-status-details" data-bind="visible: isLoaded()">
-            <div class="auction-time-left" data-bind="text: timeLeftFormatted"></div>
-            <div class="auction-last-bid" data-bind="text: lastBidFormatted"></div>
-            <div class="auction-bid-actions" style="padding-top: 12px;">
-                @if (Request.IsAuthenticated)
-                {
-                    <button type="button" class="btn btn-default" data-bind="click: submitBid">Bid</button>
-                    
-                }
-                else
-                {
-                    <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new { ReturnUrl = "/" })">Bid</a>
-                }
-            </div>
-        </div>
-    </div>
-</script>
+        $(function() {
 
-<script type="text/html" id="upcoming-template">
-    <div class="auction-status status-upcoming">
-        <div class="auction-status-label">Upcoming</div>
-        <div class="auction-status-details">
-            <div class="auction-start-time" data-bind="text: startTimeFormatted"></div>
-        </div>
-    </div>
-</script>
+            var auctions = @Html.Raw(JsonConvert.SerializeObject(Model.LiveAuctions, Formatting.Indented, new JsonSerializerSettings {ContractResolver = new CamelCasePropertyNamesContractResolver()}));
+            var auctionIds = @JsonConvert.SerializeObject(Model.LiveAuctionIds);
 
-    @section scripts {
+            var Auction = function(data) {
+                var self = this;
 
-        @Scripts.Render("~/js/knockout")
-        @Scripts.Render("~/js/signalR")       
-        @Scripts.Render("~/js/nivo")       
-        <script src="/signalr/hubs"></script>
-        <script>
+                self.auctionId = data.auctionId;
+                self.title = data.title;
+                self.description = data.description;
+                self.specifications = data.specifications;
+                self.retailPrice = data.retailPrice;
+                self.buyNowEnabled = data.buyNowEnabled;
+                self.images = data.images;
 
-            $(function() {
+                self.status = ko.observable(data.status);
+                self.isLoaded = ko.observable(false);
+                self.timeLeft = ko.observable();
+                self.lastBidAmount = ko.observable(data.lastBidAmount);
+                self.lastBidUser = ko.observable(data.lastBidUser);
+                self.startUtc = ko.observable(data.startUtc);
 
-                var Auction = function(data) {
-                    var self = this;
+                self.timeLeftHours = ko.computed(function() {
+                    return App.TimeUtilities.getHours(self.timeLeft());
+                });
 
-                    self.auctionId = data.auctionId;
-                    self.title = data.title;
-                    self.description = data.description;
-                    self.specifications = data.specifications;
-                    self.retailPrice = data.retailPrice;
-                    self.buyNowEnabled = data.buyNowEnabled;
-                    self.images = data.images;
+                self.timeLeftMinutes = ko.computed(function() {
+                    return App.TimeUtilities.getMinutes(self.timeLeft());
+                });
 
-                    self.status = ko.observable(data.status);
-                    self.isLoaded = ko.observable(false);
-                    self.timeLeft = ko.observable();
-                    self.lastBidAmount = ko.observable(data.lastBidAmount);
-                    self.lastBidUser = ko.observable(data.lastBidUser);
-                    self.startUtc = ko.observable(data.startUtc);
+                self.timeLeftSeconds = ko.computed(function() {
+                    return App.TimeUtilities.getSeconds(self.timeLeft());
+                });
 
-                    self.displayTemplate = function() {
-                        switch (self.status()) {
-                            case "Live":
-                                return "live-template";
-                            case "Upcoming":
-                                return "upcoming-template";
-                            case "Closed":
-                                return "closed-template";
-                            default:
-                                throw "Invalid auction status."; 
-                        }
+                self.buyNowUrl = ko.computed(function() {
+                    return "@LanguageCode/orders/buy-now/" + self.auctionId;
+                });
+
+                self.retailPriceFormatted = ko.computed(function() {
+                    return "Retail Price: " + self.retailPrice;
+                });
+
+                self.timeLeftFormatted = ko.computed(function() {
+                    return TimeUtilities.getTimeLeft(self.timeLeft());
+                });
+
+                self.lastBidFormatted = ko.computed(function() {
+                    if (!self.lastBidUser()) {
+                        return "";
                     }
 
-                    self.buyNowUrl = ko.computed(function() {
-                        return "@LanguageCode/orders/buy-now/" + self.auctionId;
-                    });
+                    if (self.status() === "Closed") {
+                        return "Winning Bid: KD " + self.lastBidAmount() + " by " + self.lastBidUser();
+                    }
 
-                    self.timeLeftFormatted = ko.computed(function() {
-                        return TimeUtilities.getTimeLeft(self.timeLeft());
-                    });
+                    return "Current Bid: KD " + self.lastBidAmount() + " by " + self.lastBidUser();
+                });
 
-                    self.lastBidFormatted = ko.computed(function() {
-                        if (!self.lastBidUser()) {
-                            return "";
-                        }
+                self.startTimeFormatted = ko.computed(function() {
+                    return "Starting: " + moment(self.startUtc()).format('D MMM HH:mm');
+                });
 
-                        if (self.status() === "Closed") {
-                            return "Winning Bid: KD " + self.lastBidAmount() + " by " + self.lastBidUser();
-                        }
-
-                        return "Current Bid: KD " + self.lastBidAmount() + " by " + self.lastBidUser();
-                    });
-
-                    self.startTimeFormatted = ko.computed(function() {
-                        return "Starting: " + moment(self.startUtc()).format('D MMM HH:mm');
-                    });
-
-                    self.submitBid = function() {
-                        auctionHub.server.submitBid(self.auctionId);
-                    };
-
-                    self.closeAuction = function() {
-                        self.status("Closed");
-                    };
-
-                    self.redirectOrder = function(orderId) {
-                        location.href = "@LanguageCode/orders/auction/" + orderId;
-                    };
+                self.submitBid = function() {
+                    auctionHub.server.submitBid(self.auctionId);
                 };
 
-                var AuctionsViewModel = function(data) {
-                    var self = this;
-                    self.auctions = ko.observableArray([]);
-
-                    self.getAuction = function(auctionId) {
-                        for (var i = 0, len = self.auctions().length; i < len; i++) {
-                            if (self.auctions()[i].auctionId === auctionId)
-                                return self.auctions()[i];
-                        }
-                        return null;
-                    };
-
-                    var mappedAuctions = $.map(data, function(auction) { return new Auction(auction); });
-                    self.auctions(mappedAuctions);
+                self.closeAuction = function() {
+                    self.status("Closed");
                 };
 
-                var auctions = @Html.Raw(JsonConvert.SerializeObject(Model.LiveAuctions, Formatting.Indented, new JsonSerializerSettings {ContractResolver = new CamelCasePropertyNamesContractResolver()}));
-                var viewModel = new AuctionsViewModel(auctions);
+                self.redirectOrder = function(orderId) {
+                    location.href = "@LanguageCode/orders/auction/" + orderId;
+                };
+            };
 
-                ko.applyBindings(viewModel);
+            var AuctionsViewModel = function(data) {
+                var self = this;
+                self.auctions = ko.observableArray([]);
 
-                var auctionIds = @JsonConvert.SerializeObject(Model.LiveAuctionIds);
-                var auctionHub = $.connection.auctionHub;
+                self.getAuction = function(auctionId) {
+                    for (var i = 0, len = self.auctions().length; i < len; i++) {
+                        if (self.auctions()[i].auctionId === auctionId)
+                            return self.auctions()[i];
+                    }
+                    return null;
+                };
 
-                auctionHub.client.updateAuctions = function(results) {
+                var mappedAuctions = $.map(data, function(auction) { return new Auction(auction); });
+                self.auctions(mappedAuctions);
+            };
+
+            var viewModel = new AuctionsViewModel(auctions);
+            ko.applyBindings(viewModel);
+
+            var auctionHub = $.connection.auctionHub;
+
+            auctionHub.client.updateAuctions = function(results) {
+                console.log(results);
+                var auctionJson = $.parseJSON(results);
+                for (var i = 0, len = auctionJson.length; i < len; ++i) {
+                    var auction = auctionJson[i];
+                    var auctionDetail = viewModel.getAuction(auction.id);
+                    if (auctionDetail) {
+                        auctionDetail.timeLeft(auction.t);
+                        auctionDetail.lastBidAmount(auction.a);
+                        auctionDetail.lastBidUser(auction.u);
+                        auctionDetail.isLoaded(true);
+                    }
+                }
+            };
+
+            auctionHub.client.closeAuction = function(auctionId, userId, orderId) {
+                var auction = viewModel.getAuction(auctionId);
+                if (auction) {
+                    auction.closeAuction();
+                    if (userId === "@User.Identity.GetUserId()") {
+                        auction.redirectOrder(orderId);
+                    }
+                }
+            }
+
+            $.connection.hub.logging = true;
+            $.connection.hub.start().done(function() {
+                auctionHub.server.initAuctions(auctionIds).done(function(results) {
                     console.log(results);
-                    var auctionJson = $.parseJSON(results);
-                    for (var i = 0, len = auctionJson.length; i < len; ++i) {
-                        var auction = auctionJson[i];
-                        var auctionDetail = viewModel.getAuction(auction.id);
-                        if (auctionDetail) {
-                            auctionDetail.timeLeft(auction.t);
-                            auctionDetail.lastBidAmount(auction.a);
-                            auctionDetail.lastBidUser(auction.u);
-                            auctionDetail.isLoaded(true);
-                        }
-                    }
-                };
-
-                auctionHub.client.closeAuction = function(auctionId, userId, orderId) {
-                    var auction = viewModel.getAuction(auctionId);
-                    if (auction) {
-                        auction.closeAuction();                
-                        if (userId === "@User.Identity.GetUserId()") {
-                            auction.redirectOrder(orderId);
-                        }
-                    }
-                }
-
-                $.connection.hub.logging = true;
-                $.connection.hub.start().done(function() {
-                    auctionHub.server.initAuctions(auctionIds).done(function(results) {
-                        console.log(results);
-                    });
                 });
-
-                var initDescription = function() {
-                    $(".product-information").each(function() {
-                        var $this = $(this);
-
-                        $this.data("scrollHeight", $this[0].scrollHeight);
-
-                        if ($this.height() === 200) {
-                            $this.find(".more-overlay").show();
-                            var toggles = $this.siblings(".information-toggles");
-                            toggles.find(".btn-show-more").show();
-                        }
-                    });
-                };
-
-                var bindEvents = function() {
-                    $(".btn-show-more").on("click", showMoreInformation);
-                    $(".btn-show-less").on("click", showLessInformation);
-
-                    $("#clear-cache").on("click", function() {
-                        auctionHub.server.clearAuctionCache();
-                    });
-                };
-
-                var showMoreInformation = function() {
-                    var $this = $(this);
-                    var auctionDetails = $this.parents(".auction-details");
-                    var productInformation = auctionDetails.find(".product-information");
-                    var scrollHeight = productInformation.data("scrollHeight");
-                    var moreOverlay = productInformation.find(".more-overlay");
-                    var showLess = $this.siblings(".btn-show-less");
-
-                    productInformation.animate({ maxHeight: scrollHeight }, 500);
-                    moreOverlay.hide();
-                    showLess.show();
-                    $this.hide();
-                };
-
-                var showLessInformation = function() {
-                    var $this = $(this);
-                    var auctionDetails = $this.parents(".auction-details");
-                    var productInformation = auctionDetails.find(".product-information");
-                    var moreOverlay = productInformation.find(".more-overlay");
-                    var showMore = $this.siblings(".btn-show-more");
-
-                    productInformation.animate({ maxHeight: 200 }, 500);
-                    moreOverlay.show();
-                    showMore.show();
-                    $this.hide();
-                };
-
-                var initNivo = function() {
-                    $(".product-image").nivoLightbox();
-                }
-
-                $(function() {
-                    initDescription();
-                    bindEvents();
-                    initNivo();
-                });
-
             });
+        });
 
-
-        </script>
-    }
+    </script>
+}

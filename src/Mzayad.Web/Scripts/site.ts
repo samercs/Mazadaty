@@ -69,6 +69,22 @@
 
 })(jQuery);
 
+module App {
+    
+    export class TimeUtilities {
+        static getHours(seconds: number) {
+            return Math.floor(seconds/3600);
+        }
+        static getMinutes(seconds: number) {
+            return Math.floor((seconds / 60) % 60);
+        }
+        static getSeconds(seconds: number) {
+            return Math.floor(seconds % 60);
+        }
+    }
+}
+
+
 var TimeUtilities = {
     getDays(days) {
         return days === 1 ? "1 day " : days + " days ";

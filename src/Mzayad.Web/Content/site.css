@@ -584,128 +584,89 @@ input[type="checkbox"].input-validation-error {
 #home-index #page-title {
   display: none;
 }
-#home-index #auction-list > li {
+#home-index #auction-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#home-index #auction-list .auction-item {
   margin-bottom: 30px;
   padding: 20px;
   border: 1px solid #dbdbdb;
   background-color: white;
 }
-#home-index #auction-list > li:last-child {
+#home-index #auction-list .auction-item:last-child {
   margin-bottom: 0;
 }
-#home-index #auction-list > li .auction-details .auction-title,
-#home-index #auction-list > li .auction-details .auction-status,
-#home-index #auction-list > li .auction-details .auction-specs,
-#home-index #auction-list > li .auction-details .auction-price {
-  margin-bottom: 20px;
-}
-#home-index #auction-list > li .auction-details h2 {
-  color: #33ace0;
-  font-size: 4.8rem;
-}
-#home-index #auction-list > li .auction-details h3 {
-  font-size: 2rem;
-}
-#home-index #auction-list > li .auction-details .product-information {
-  position: relative;
-  max-height: 200px;
-  overflow: hidden;
-}
-#home-index #auction-list > li .auction-details .product-information .more-overlay {
-  display: none;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 20px;
-  background: transparent url('/content/images/transparent-gradient.png') center center repeat-x;
-}
-#home-index #auction-list > li .auction-details .product-information .product-specifications > ul {
-  -moz-column-count: 2;
-  -webkit-column-count: 2;
-  column-count: 2;
-}
-#home-index #auction-list > li .auction-details .btn-show-more,
-#home-index #auction-list > li .auction-details .btn-show-less {
-  display: none;
-  padding: 0;
-  font-size: 1.4rem;
-}
-#home-index #auction-list > li .auction-status {
-  position: relative;
-  display: table;
-  border-collapse: separate;
-  text-align: center;
-  border: 2px solid;
-  width: 100%;
-}
-#home-index #auction-list > li .auction-status .auction-status-loading {
+#home-index #auction-list .auction-item .auction-status-loading {
   padding: 15px;
   font-size: 1.7rem;
   font-style: italic;
 }
-#home-index #auction-list > li .auction-status .auction-status-label,
-#home-index #auction-list > li .auction-status .auction-status-details {
-  display: table-cell;
-  padding: 12px;
-  font-size: 1.8rem;
+#home-index #auction-list .auction-item .auction-details .auction-title,
+#home-index #auction-list .auction-item .auction-details .auction-retail-price,
+#home-index #auction-list .auction-item .auction-details .auction-status,
+#home-index #auction-list .auction-item .auction-details .auction-specs,
+#home-index #auction-list .auction-item .auction-details .auction-price {
+  margin-bottom: 15px;
 }
-#home-index #auction-list > li .auction-status .auction-status-label {
-  width: 150px;
+#home-index #auction-list .auction-item .auction-details .auction-title {
   white-space: nowrap;
-  vertical-align: middle;
-  color: white;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  font-size: 3.1rem;
 }
-#home-index #auction-list > li .auction-status .auction-status-label i.fa {
-  font-weight: normal;
+#home-index #auction-list .auction-item .auction-details .auction-retail-price {
+  text-transform: uppercase;
+  color: #aaaaaa;
+  font-size: 1.7rem;
 }
-#home-index #auction-list > li .auction-status .auction-status-details {
-  position: relative;
+#home-index #auction-list .auction-item .auction-details .auction-time-left {
+  margin: 0 0 15px 0;
+  padding: 15px 0;
+  border-top: 1px solid #dbdbdb;
+  border-bottom: 1px solid #dbdbdb;
+  list-style: none;
+  overflow: hidden;
+}
+#home-index #auction-list .auction-item .auction-details .auction-time-left .auction-time-part {
   float: left;
-  z-index: 2;
+  margin: 0 30px 0 0;
+  text-align: center;
+}
+#home-index #auction-list .auction-item .auction-details .auction-time-left .auction-time-part:last-child {
+  margin-right: 0;
+}
+#home-index #auction-list .auction-item .auction-details .auction-time-left .auction-time-part .auction-time-value {
+  position: relative;
+  min-width: 76px;
+  margin: 0 0 10px 0;
+  padding: 20px 10px;
+  background-color: #33ace0;
+  color: #ffffff;
+  font-size: 2.5rem;
+  line-height: normal;
+  border-radius: 10px;
+}
+@media (min-width: 768px) {
+  #home-index #auction-list .auction-item .auction-details .auction-time-left .auction-time-part .auction-time-value {
+    font-size: 4.1rem;
+  }
+}
+#home-index #auction-list .auction-item .auction-details .auction-time-left .auction-time-part .auction-time-value:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  border-top: 1px solid #389ECF;
+  height: 1px;
   width: 100%;
 }
-#home-index #auction-list > li .auction-status.status-closed {
-  border-color: #b94a48;
-  background-color: rgba(185, 74, 72, 0.05);
-}
-#home-index #auction-list > li .auction-status.status-closed > .auction-status-label {
-  background-color: #b94a48;
-}
-#home-index #auction-list > li .auction-status.status-live {
-  border-color: #008c00;
-  background-color: rgba(0, 140, 0, 0.05);
-}
-#home-index #auction-list > li .auction-status.status-live > .auction-status-label {
-  background-color: #008c00;
-}
-#home-index #auction-list > li .auction-status.status-upcoming {
-  border-color: #d9a300;
-  background-color: rgba(217, 163, 0, 0.05);
-}
-#home-index #auction-list > li .auction-status.status-upcoming > .auction-status-label {
-  background-color: #d9a300;
-}
-#home-index #auction-list > li .product-image,
-#home-index #auction-list > li .product-image img {
-  display: inline-block;
-  max-width: 100%;
-  height: auto;
-}
-#home-index #auction-list > li .product-images {
-  -moz-column-count: 3;
-  -webkit-column-count: 3;
-  column-count: 3;
-}
-#home-index #auction-list > li .upcoming-date {
-  padding: 25px;
-  text-align: center;
+#home-index #auction-list .auction-item .auction-details .auction-time-left .auction-time-part .auction-time-label {
+  color: #33ace0;
   text-transform: uppercase;
-  font-size: 4.2rem;
-  font-weight: bold;
-  color: #fff;
-  background: #33ace0;
 }
 #closed-auctions {
   margin: 0 -10px 15px -10px;
