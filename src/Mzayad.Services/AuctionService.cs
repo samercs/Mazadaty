@@ -22,14 +22,12 @@ namespace Mzayad.Services
             _orderService=new OrderService(dataContextFactory);
         }
 
-        public async Task<Auction> Add(Auction auction, Action onAdded)
+        public async Task<Auction> Add(Auction auction)
         {
             using (var dc = DataContext())
             {
                 dc.Auctions.Add(auction);
                 await dc.SaveChangesAsync();
-
-                onAdded();
 
                 return await GetAuction(dc, auction.AuctionId);
             }
@@ -169,7 +167,7 @@ namespace Mzayad.Services
         }
 
 
-        public async Task<Auction> Update(Auction auction, Action onUpdated)
+        public async Task<Auction> Update(Auction auction)
         {
             using (var dc = DataContext())
             {
@@ -178,8 +176,6 @@ namespace Mzayad.Services
                 dc.Auctions.Attach(auction);
                 dc.SetModified(auction);
                 await dc.SaveChangesAsync();
-
-                onUpdated();
 
                 return await GetAuction(dc, auction.AuctionId);
             }

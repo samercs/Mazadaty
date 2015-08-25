@@ -125,14 +125,23 @@
 
     @Scripts.Render("~/js/knockout")
     @Scripts.Render("~/js/signalR")
-    <script src="/signalr/hubs"></script>
+    @if (Request.IsLocal)
+    {
+        <script src="/signalr/hubs"></script>
+    }
+    else
+    {
+        <script src="https://mzayad.azurewebsites.net/signalr/hubs"></script>
+    }
+    
     <script>
 
         $(function() {
 
             var auctions = @Html.Raw(JsonConvert.SerializeObject(Model.LiveAuctions, Formatting.Indented, new JsonSerializerSettings {ContractResolver = new CamelCasePropertyNamesContractResolver()}));
             var auctionIds = @JsonConvert.SerializeObject(Model.LiveAuctionIds);
-
+            var auctionHub = $.connection.auctionHub;
+            
             var Auction = function(data) {
                 var self = this;
 
@@ -141,7 +150,6 @@
                 self.retailPrice = data.retailPrice;
                 self.buyNowEnabled = data.buyNowEnabled;
                 self.imageUrl = data.imageUrl;
-                //self.images = data.images;
                 
                 self.bids = ko.observable(data.bids);
                 self.status = ko.observable(data.status);
@@ -209,8 +217,6 @@
             var viewModel = new AuctionsViewModel(auctions);
             ko.applyBindings(viewModel);
 
-            var auctionHub = $.connection.auctionHub;
-
             auctionHub.client.updateAuctions = function(results) {
                 console.log(results);
                 var auctionJson = $.parseJSON(results);
@@ -236,8 +242,14 @@
                 }
             }
 
-            $.connection.hub.logging = true;
-            $.connection.hub.start().done(function() {
+            //$.connection.hub.logging = true;
+
+            @if (!Request.IsLocal)
+            {
+                <text>$.connection.hub.url = "https://mzayad.azurewebsites.net/signalr";</text>
+            }
+            
+            $.connection.hub.start().done(function() {          
                 auctionHub.server.initAuctions(auctionIds).done(function(results) {
                     console.log(results);
                 });

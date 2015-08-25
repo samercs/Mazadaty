@@ -83,7 +83,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             
             model.Auction.StartUtc = model.Auction.StartUtc.AddHours(-3);       
             
-            var auction = await _auctionService.Add(model.Auction, () => CacheService.Delete(CacheKeys.CurrentAuctions));
+            var auction = await _auctionService.Add(model.Auction);
 
             if (auction.Status == AuctionStatus.Public)
             {
@@ -225,7 +225,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             auction.BuyNowPrice = model.Auction.BuyNowPrice;
             auction.BuyNowQuantity = model.Auction.BuyNowQuantity;
 
-            await _auctionService.Update(auction, () => CacheService.Delete(CacheKeys.CurrentAuctions));
+            await _auctionService.Update(auction);
 
             if (isActivated)
             {
@@ -252,7 +252,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             {
                 auction.Status = AuctionStatus.Public;
 
-                await _auctionService.Update(auction, () => CacheService.Delete(CacheKeys.CurrentAuctions));
+                await _auctionService.Update(auction);
                 
                 await SendAuctionNotifications(auction);
             }

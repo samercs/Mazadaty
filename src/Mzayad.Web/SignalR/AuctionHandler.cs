@@ -13,12 +13,9 @@ using OrangeJetpack.Services.Client.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Mzayad.Web.SignalR
 {
@@ -90,83 +87,27 @@ namespace Mzayad.Web.SignalR
             return this;
         }
 
-        public async Task ClearAuctionCache()
-        {
-            var cacheKeys = _cacheService.GetSetMembers("LiveAuctionKeys");
-            foreach (var cacheKey in cacheKeys)
-            {
-                await _cacheService.Delete(cacheKey);
-            }
-
-            await _cacheService.Delete("LiveAuctionKeys");
-        }
-
         public async Task<string> InitAuctions(int[] auctionIds)
         {      
-            Trace.TraceInformation("InitAuctions(" + string.Join(",", auctionIds) + ")");
-            
             var auctions = await _auctionService.GetLiveAuctions(auctionIds);
-            
-            Trace.TraceInformation("Auctions: " + auctions.Count());
+            var auctionModels = auctions.Select(AuctionModel.Create).ToList();
 
-            try
-            {
-                AddAuctionsToCache(auctions.Select(AuctionModel.Create));
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(ex.Message);
-            }
+            AddAuctionsToCache(auctionModels);
 
-            var auctionJson = Serialize(GetAuctionsFromCache());
-
-            Trace.TraceInformation(auctionJson);
+            var cachedAuctions = GetAuctionsFromCache();
+            var auctionJson = Serialize(cachedAuctions);
 
             return auctionJson;
         }
 
         private IReadOnlyCollection<AuctionModel> GetAuctionsFromCache()
         {
-            Trace.TraceInformation("GetAuctionsFromCache()");
-
             return _cacheService.GetList<AuctionModel>(CacheKeys.LiveAuctions);
-
-            //var cacheKeys = _cacheService.GetSetMembers("LiveAuctionKeys");
-            //foreach (var cacheKey in cacheKeys)
-            //{
-            //    Trace.TraceInformation("getting auction for cache key: " + cacheKey);
-
-            //    var auction = _cacheService.Get<AuctionModel>(cacheKey);
-
-            //    Trace.TraceInformation(Serialize(auction));
-
-            //    yield return auction;
-            //}
         }
 
         private void AddAuctionsToCache(IEnumerable<AuctionModel> auctions)
         {
-            Trace.TraceInformation("AddAuctionsToCache(): " + JsonConvert.SerializeObject(auctions));
-
             _cacheService.SetList(CacheKeys.LiveAuctions, auctions);
-
-            //foreach (var auction in publicAuctions)
-            //{
-            //    var cacheKey = string.Format(CacheKeys.LiveAuctionItem, auction.AuctionId);
-            //    Trace.TraceInformation("processing cache key: " + cacheKey);
-
-            //    if (!_cacheService.Exists(cacheKey))
-            //    {
-            //        Trace.TraceInformation("cache key NOT exists");
-
-            //        _cacheService.Set(cacheKey, AuctionModel.Create(auction));
-            //        _cacheService.AddToSet("LiveAuctionKeys", cacheKey);
-            //    }
-            //    else
-            //    {
-            //        Trace.TraceInformation("cache key exists");
-            //    }
-            //}
         }
 
         private void  UpdateAuctions(object state)
@@ -187,13 +128,12 @@ namespace Mzayad.Web.SignalR
                     return;
                 }
 
-
                 foreach (var auction in cacheAuctions)
                 {
                     auction.SecondsLeft = Math.Max(auction.SecondsLeft - 1, 0);
                     if (auction.SecondsLeft <= 0)
                     {
-                        CloseAuction("", auction);
+                        CloseAuction(auction);
                     }
 
                     auction.Bids = new Queue<BidModel>(auction.Bids.OrderByDescending(i => i.BidAmount));
@@ -201,48 +141,19 @@ namespace Mzayad.Web.SignalR
 
                 _cacheService.SetList(CacheKeys.LiveAuctions, cacheAuctions);
 
-                //var cacheKeys = _cacheService.GetSetMembers("LiveAuctionKeys").ToList();
-                //foreach (var cacheKey in cacheKeys)
-                //{
-                //    var auction = _cacheService.Get<AuctionModel>(cacheKey);
-
-                //    auction.SecondsLeft = Math.Max(auction.SecondsLeft - 1, 0);
-                //    if (auction.SecondsLeft <= 0)
-                //    {
-                //        CloseAuction(cacheKey, auction);
-                //    }
-
-                //    _cacheService.Set(cacheKey, auction);
-
-                //    liveAuctions.Add(auction);
-                //}
-
-                //foreach (var auction in liveAuctions)
-                //{
-                //    auction.Bids = new Queue<BidModel>(auction.Bids.OrderByDescending(i => i.BidAmount));
-                //}
-
                 Clients.All.updateAuctions(Serialize(cacheAuctions));
 
                 _updatingAuctions = false;
             }
         }
 
-        private void CloseAuction(string cacheKey, AuctionModel auction)
+        private void CloseAuction(AuctionModel auction)
         {
             var auctions = _cacheService.GetList<AuctionModel>(CacheKeys.LiveAuctions);
             auctions = auctions.Where(i => i.AuctionId != auction.AuctionId).ToList();
             _cacheService.SetList(CacheKeys.LiveAuctions, auctions);
 
             var order = _auctionService.CloseAuction(auction.AuctionId).Result;
-
-            
-
-            //_cacheService.RemoveFromSet("LiveAuctionKeys", cacheKey);
-            //var task = _auctionService.CloseAuction(auction.AuctionId,
-            //    () => _cacheService.Delete(CacheKeys.CurrentAuctions));
-
-            //var order = task.Result;
 
             Clients.All.closeAuction(auction.AuctionId, order.UserId, order.OrderId);
         }
@@ -274,10 +185,6 @@ namespace Mzayad.Web.SignalR
             //trophyEngine.EarnTrophy(userId);
 
             await _activityQueueService.QueueActivity(ActivityType.SubmitBid, userId);
-
-
-
-            //_cacheService.Set(cacheKey, auction);
         }
 
         private static string Serialize(object value)

@@ -3,10 +3,12 @@ using System.Linq;
 using StackExchange.Redis;
 using System;
 using System.Collections;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Mzayad.Web.Core.Services
 {
@@ -43,78 +45,20 @@ namespace Mzayad.Web.Core.Services
             _cacheKeyPrefix = cacheKeyPrefix;
         }
 
-        public bool Exists(string key)
-        {
-            key = GetKey(key);
-            return CacheDatabase.KeyExists(key);
-        }
-
-        public void AddToSet(string key, string value)
-        {
-            key = GetKey(key);
-            CacheDatabase.SetAdd(key, value);
-        }
-
-        public IEnumerable<string> GetSetMembers(string key)
-        {
-            key = GetKey(key);
-            
-            var redisValues = CacheDatabase.SetMembers(key);
-            return redisValues.Select(i => i.ToString());
-        }
-
-        public void RemoveFromSet(string key, string value)
-        {
-            key = GetKey(key);
-            CacheDatabase.SetRemove(key, value);
-        }
-
         public T Get<T>(string key) where T : class
         {
             key = GetKey(key);
             return Deserialize<T>(CacheDatabase.StringGet(key));
         }
 
-        public T TryGet<T>(string key, Func<T> getValue, TimeSpan expiry) where T : class
-        {
-            key = GetKey(key);
-
-            var value = Get<T>(key);
-            if (value == null)
-            {
-                value = getValue();
-                Set(key, value, expiry);
-            }
-            else if (value is ICollection)
-            {
-                var collection = value as ICollection;
-                if (collection.Count == 0)
-                {
-                    value = getValue();
-                    Set(key, value, expiry);
-                }
-            } 
-
-            return value;
-        }
-
-        public async Task<T> TryGet<T>(string key, Func<Task<T>> getValue, TimeSpan expiry) where T : class
+        public async Task<T> TryGet<T>(string key, Func<Task<T>> getValue) where T : class
         {
             key = GetKey(key);
             var value = Get<T>(key);
             if (value == null)
             {
                 value = await getValue();
-                Set(key, value, expiry);
-            }
-            else if (value is ICollection)
-            {
-                var collection = value as ICollection;
-                if (collection.Count == 0)
-                {
-                    value = await getValue();
-                    Set(key, value, expiry);
-                }
+                Set(key, value);
             }
 
             return value;
@@ -122,8 +66,16 @@ namespace Mzayad.Web.Core.Services
 
         public IReadOnlyCollection<T> GetList<T>(string key) where T : class
         {
-            key = GetKey(key);
-            return Deserialize<IReadOnlyCollection<T>>(CacheDatabase.StringGet(key));
+            try
+            {
+                key = GetKey(key);
+                return Deserialize<IReadOnlyCollection<T>>(CacheDatabase.StringGet(key));
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(ex.Message);
+                return null;
+            }
         }
 
         public async Task<IReadOnlyCollection<T>> TryGetList<T>(string key, Func<Task<IReadOnlyCollection<T>>> getValue) where T : class
@@ -143,25 +95,22 @@ namespace Mzayad.Web.Core.Services
         public void Set(string key, object value)
         {
             key = GetKey(key);
-            CacheDatabase.StringSet(key, Serialize(value));
-        }
-
-        public void Set(string key, object value, TimeSpan expiry)
-        {
-            key = GetKey(key);
-            CacheDatabase.StringSet(key, Serialize(value), expiry);
+            CacheDatabase.StringSet(key, Serialize(value), _expiration);
         }
 
         public void SetList<T>(string key, IEnumerable<T> list)
         {
-            key = GetKey(key);
-            CacheDatabase.StringSet(key, Serialize(list), _expiration);
-        }
+            Trace.TraceInformation("SetList(): " + JsonConvert.SerializeObject(list));
 
-        public async Task Delete(string key)
-        {
-            key = GetKey(key);
-            await CacheDatabase.KeyDeleteAsync(key);
+            try
+            {
+                key = GetKey(key);
+                CacheDatabase.StringSet(key, Serialize(list), _expiration);
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(ex.Message);
+            }
         }
 
         private string GetKey(string key)

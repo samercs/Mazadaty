@@ -20,11 +20,6 @@ namespace Mzayad.Web.SignalR
             _auctionHandler = auctionHandler.Setup(dataContextFactory, cacheService);
         }
 
-        public async Task ClearAuctionCache()
-        {
-            await _auctionHandler.ClearAuctionCache();
-        }
-
         public async Task<string> InitAuctions(int[] auctionIds)
         {
             return await _auctionHandler.InitAuctions(auctionIds);

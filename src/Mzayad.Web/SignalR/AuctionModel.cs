@@ -21,7 +21,14 @@ namespace Mzayad.Web.SignalR
 
         public decimal BidIncrement { get; set; }
 
-        public Queue<BidModel> Bids { get; set; } 
+        //private BidModel[] _bids;
+        //public Queue<BidModel> Bids
+        //{
+        //    get { return new Queue<BidModel>(_bids); }
+        //    set { _bids = value.ToArray(); }
+        //}
+
+        public Queue<BidModel> Bids { get; set; }
 
         public static AuctionModel Create(Auction auction)
         {

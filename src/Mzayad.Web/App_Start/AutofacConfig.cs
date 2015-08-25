@@ -62,15 +62,15 @@ namespace Mzayad.Web
         /// </remarks>
         private static ICacheService GetCacheService(IComponentContext c)
         {
-            return new HttpCacheService();
+            //return new HttpCacheService();
 
-//#if DEBUG
-//            return new HttpCacheService();
-//#else           
-//            var connectionString = c.Resolve<IAppSettings>().CacheConnection;
-//            var cacheKeyPrefix = "mz";
-//            return new RedisCacheService(connectionString, cacheKeyPrefix);
-//#endif
+#if DEBUG
+            return new HttpCacheService();
+#else           
+            var connectionString = c.Resolve<IAppSettings>().CacheConnection;
+            var cacheKeyPrefix = "mz";
+            return new RedisCacheService(connectionString, cacheKeyPrefix);
+#endif
         }
     }
 }
