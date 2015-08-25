@@ -188,7 +188,7 @@ namespace Mzayad.Services
         /// <summary>
         /// Closes an auction and records the highest bid.
         /// </summary>
-        public async Task<Order> CloseAuction(int auctionId, Action onUpdated)
+        public async Task<Order> CloseAuction(int auctionId)
         {
             using (var dc = DataContext())
             {
@@ -208,11 +208,6 @@ namespace Mzayad.Services
                 }
 
                 await dc.SaveChangesAsync();
-
-                if (onUpdated != null)
-                {
-                    onUpdated();
-                }
 
                 if (winningBid != null)
                 {

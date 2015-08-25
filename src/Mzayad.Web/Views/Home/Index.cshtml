@@ -19,12 +19,14 @@
 
 @if (Model.ClosedAuctions.Any())
 {
-    <ul id="closed-auctions">
+    <h2>Closed Auctions</h2>
+
+    <ol id="closed-auctions">
         @foreach (var auction in Model.ClosedAuctions)
         {
             <li>@Html.DisplayFor(m => auction, "AuctionTile")</li>
         }
-    </ul>
+    </ol>
 
     <p class="text-center"><a class="btn btn-unstyled text-uppercase" href="@Url.Action("Closed", "Auctions", new { Area = "", Language = LanguageCode })">@Global.ViewAllClosedAuctions</a></p>
 }
@@ -36,7 +38,9 @@
     return;
 }
 
-<ul id="auction-list" data-bind="foreach: auctions">
+<h2>Live Auctions</h2>
+
+<ol id="auction-list" data-bind="foreach: auctions">
     <li class="auction-item">
         <div class="row">
             <div class="col-md-6">
@@ -46,7 +50,7 @@
             <div class="col-md-6">
 
                 <div class="auction-details">
-                    <h2 class="auction-title" data-bind="text: title"></h2>
+                    <h3 class="auction-title" data-bind="text: title"></h3>
                     <div class="auction-retail-price" data-bind="text: retailPriceFormatted"></div>
 
                     <div class="auction-status-loading" data-bind="visible: !isLoaded()">
@@ -115,7 +119,7 @@
             </div>
         </div>
     </li>
-</ul>
+</ol>
 
 @section scripts {
 

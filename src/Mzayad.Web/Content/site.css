@@ -584,6 +584,12 @@ input[type="checkbox"].input-validation-error {
 #home-index #page-title {
   display: none;
 }
+#home-index h2 {
+  margin: 50px 0 25px 0;
+  font-size: 2.5rem;
+  text-align: center;
+  text-transform: uppercase;
+}
 #home-index #auction-list {
   margin: 0;
   padding: 0;
@@ -730,7 +736,7 @@ input[type="checkbox"].input-validation-error {
   width: 100%;
   float: left;
   display: flex;
-  padding: 10px;
+  padding: 0 10px;
 }
 @media (min-width: 560px) {
   #closed-auctions li {

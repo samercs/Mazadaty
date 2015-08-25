@@ -19,7 +19,6 @@ namespace Mzayad.Web.SignalR
         [JsonIgnore]
         public int Duration { get; set; }
 
-        [JsonIgnore]
         public decimal BidIncrement { get; set; }
 
         public Queue<BidModel> Bids { get; set; } 
@@ -35,7 +34,7 @@ namespace Mzayad.Web.SignalR
                 Bids = GetBidsQueue(auction.Bids)
             };
 
-            model.LastBidAmount = model.Bids.Max(i => i.BidAmount);
+            model.LastBidAmount = model.Bids.Any() ? model.Bids.Max(i => i.BidAmount) : 0;
             model.UpdateSecondsLeft();
 
             return model;

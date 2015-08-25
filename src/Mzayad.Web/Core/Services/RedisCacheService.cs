@@ -12,6 +12,8 @@ namespace Mzayad.Web.Core.Services
 {
     public class RedisCacheService : ICacheService
     {
+        private readonly TimeSpan _expiration = TimeSpan.FromMinutes(5);
+
         private ConnectionMultiplexer _cacheConnection;
         protected ConnectionMultiplexer CacheConnection
         {
@@ -118,6 +120,26 @@ namespace Mzayad.Web.Core.Services
             return value;
         }
 
+        public IReadOnlyCollection<T> GetList<T>(string key) where T : class
+        {
+            key = GetKey(key);
+            return Deserialize<IReadOnlyCollection<T>>(CacheDatabase.StringGet(key));
+        }
+
+        public async Task<IReadOnlyCollection<T>> TryGetList<T>(string key, Func<Task<IReadOnlyCollection<T>>> getValue) where T : class
+        {
+            key = GetKey(key);
+
+            var list = GetList<T>(key);
+            if (list == null)
+            {
+                list = await getValue();
+                SetList(key, list);
+            }
+
+            return list;
+        }
+
         public void Set(string key, object value)
         {
             key = GetKey(key);
@@ -128,6 +150,12 @@ namespace Mzayad.Web.Core.Services
         {
             key = GetKey(key);
             CacheDatabase.StringSet(key, Serialize(value), expiry);
+        }
+
+        public void SetList<T>(string key, IEnumerable<T> list)
+        {
+            key = GetKey(key);
+            CacheDatabase.StringSet(key, Serialize(list), _expiration);
         }
 
         public async Task Delete(string key)

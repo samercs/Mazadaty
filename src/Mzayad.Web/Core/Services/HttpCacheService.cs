@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace Mzayad.Web.Core.Services
 {
@@ -73,6 +76,29 @@ namespace Mzayad.Web.Core.Services
             return value;
         }
 
+        public IReadOnlyCollection<T> GetList<T>(string key) where T : class
+        {
+            var value = Get<string>(key);
+            if (value == null)
+            {
+                return null;
+            }
+
+            return JsonConvert.DeserializeObject<IReadOnlyCollection<T>>(value);
+        }
+
+        public async Task<IReadOnlyCollection<T>> TryGetList<T>(string key, Func<Task<IReadOnlyCollection<T>>> getValue) where T : class
+        {
+            var value = GetList<T>(key);
+            if (value == null)
+            {
+                value = await getValue();
+                SetList(key, value);
+            }
+
+            return value;
+        }
+
         public void Set(string key, object value)
         {
             HttpRuntime.Cache[key] = value;
@@ -81,6 +107,30 @@ namespace Mzayad.Web.Core.Services
         public void Set(string key, object value, TimeSpan expiry)
         {
             HttpRuntime.Cache[key] = value;
+        }
+
+        public void SetList<T>(string key, IEnumerable<T> list)
+        {
+            Trace.TraceInformation("SetList()");
+
+            if (list == null || !list.Any())
+            {
+                Trace.TraceWarning("SetList(): Empty list.");
+                return;
+            }
+
+            try
+            {
+                var json = JsonConvert.SerializeObject(list);
+
+                Trace.TraceInformation("SetList(): " + json);
+
+                HttpRuntime.Cache[key] = json;
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(ex.Message);
+            }
         }
 
         public async Task Delete(string key)
