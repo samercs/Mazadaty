@@ -35,7 +35,8 @@
                 .auction-retail-price,
                 .auction-status,
                 .auction-specs,
-                .auction-price {
+                .auction-price,
+                .auction-bid-form {
                     margin-bottom: 15px;
                 }
 
@@ -113,7 +114,7 @@
                 }
 
                 .auction-bid-form {
-
+                    
                     .form-control,
                     .btn-default {
                         font-size: @font-size + 1;
@@ -135,6 +136,35 @@
                         border-top-right-radius: 500px;
                         border-bottom-right-radius: 500px;
                         text-transform: uppercase;
+                    }
+                }
+
+                .auction-recent-bids {
+                    margin: 0;
+                    padding: 0;
+                    list-style: none;
+
+                    > li {
+                        margin-bottom: 10px;
+
+                        &:nth-child(2) {
+                            opacity: 0.66;
+                        }
+
+                        &:nth-child(3) {
+                            opacity: 0.33;
+                        }
+                    }
+
+                    .auction-recent-username {
+                        padding: 4px 8px;
+                        -ms-text-overflow: ellipsis;
+                        -o-text-overflow: ellipsis;
+                        text-overflow: ellipsis;
+                    }
+
+                    .auction-recent-bidamount {
+                        padding: 4px 0;
                     }
                 }
             }

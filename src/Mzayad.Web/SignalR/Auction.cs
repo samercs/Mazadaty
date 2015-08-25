@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Mzayad.Models;
 using Newtonsoft.Json;
 
 namespace Mzayad.Web.SignalR
@@ -27,12 +29,15 @@ namespace Mzayad.Web.SignalR
         [JsonIgnore]
         public decimal BidIncrement { get; set; }
 
+        public Queue<Bid> Bids { get; set; } 
+
         public Auction(Mzayad.Models.Auction auction)
         {
             AuctionId = auction.AuctionId;
             StartUtc = auction.StartUtc;
             Duration = auction.Duration;
             BidIncrement = auction.BidIncrement;
+            Bids = new Queue<Bid>(3);
             
             UpdateSecondsLeft();
         }
@@ -42,16 +47,38 @@ namespace Mzayad.Web.SignalR
             SecondsLeft = (int)Math.Floor(StartUtc.AddMinutes(Duration).Subtract(DateTime.UtcNow).TotalSeconds);
         }
 
-        public void AddBid(string username)
+        public Bid AddBid(ApplicationUser user)
         {
             LastBidAmount = (LastBidAmount ?? 0) + BidIncrement;
-            LastBidderName = username;
             
+            var bid = new Bid
+            {
+                AvatarUrl = user.AvatarUrl,
+                UserName = user.UserName,
+                BidAmount = LastBidAmount.Value
+            };
+
+            Bids.Enqueue(bid);
+
+            while (Bids.Count > 3)
+            {
+                Bids.Dequeue();
+            }
 
             if (SecondsLeft < 12)
             {
                 SecondsLeft = 12;
             }
+
+            return bid;
         }
+    }
+
+    [Serializable]
+    internal class Bid
+    {
+        public string AvatarUrl { get; set; }
+        public string UserName { get; set; }
+        public decimal BidAmount { get; set; }
     }
 }

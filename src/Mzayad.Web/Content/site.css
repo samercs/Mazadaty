@@ -607,7 +607,8 @@ input[type="checkbox"].input-validation-error {
 #home-index #auction-list .auction-item .auction-details .auction-retail-price,
 #home-index #auction-list .auction-item .auction-details .auction-status,
 #home-index #auction-list .auction-item .auction-details .auction-specs,
-#home-index #auction-list .auction-item .auction-details .auction-price {
+#home-index #auction-list .auction-item .auction-details .auction-price,
+#home-index #auction-list .auction-item .auction-details .auction-bid-form {
   margin-bottom: 15px;
 }
 #home-index #auction-list .auction-item .auction-details .auction-title {
@@ -693,6 +694,29 @@ input[type="checkbox"].input-validation-error {
   border-top-right-radius: 500px;
   border-bottom-right-radius: 500px;
   text-transform: uppercase;
+}
+#home-index #auction-list .auction-item .auction-details .auction-recent-bids {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#home-index #auction-list .auction-item .auction-details .auction-recent-bids > li {
+  margin-bottom: 10px;
+}
+#home-index #auction-list .auction-item .auction-details .auction-recent-bids > li:nth-child(2) {
+  opacity: 0.66;
+}
+#home-index #auction-list .auction-item .auction-details .auction-recent-bids > li:nth-child(3) {
+  opacity: 0.33;
+}
+#home-index #auction-list .auction-item .auction-details .auction-recent-bids .auction-recent-username {
+  padding: 4px 8px;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+#home-index #auction-list .auction-item .auction-details .auction-recent-bids .auction-recent-bidamount {
+  padding: 4px 0;
 }
 #closed-auctions {
   margin: 0 -10px 15px -10px;

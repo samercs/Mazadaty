@@ -89,6 +89,20 @@
                                         }
                                     </span>
                                 </div>
+                                <ol class="auction-recent-bids" data-bind="foreach: bids">
+                                    <li>
+                                        <div class="pull-left">
+                                            <img data-bind="attr: { src: avatarUrl, alt: userName }" width="32"/>
+                                        </div>
+                                        <div class="auction-recent-username pull-left">
+                                            <span data-bind="text: userName"></span>
+                                        </div>
+                                        <div class="auction-recent-bidamount pull-right">
+                                            KD <span data-bind="text: bidAmount"></span>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </li>
+                                </ol>
                             </div>
                         </div>
                     </div>
@@ -125,7 +139,8 @@
                 self.retailPrice = data.retailPrice;
                 self.buyNowEnabled = data.buyNowEnabled;
                 self.images = data.images;
-
+                
+                self.bids = ko.observable(data.bids);
                 self.status = ko.observable(data.status);
                 self.isLoaded = ko.observable(false);
                 self.timeLeft = ko.observable();
@@ -208,12 +223,13 @@
                 var auctionJson = $.parseJSON(results);
                 for (var i = 0, len = auctionJson.length; i < len; ++i) {
                     var auction = auctionJson[i];
-                    var auctionDetail = viewModel.getAuction(auction.id);
-                    if (auctionDetail) {
-                        auctionDetail.timeLeft(auction.t);
-                        auctionDetail.lastBidAmount(auction.a);
-                        auctionDetail.lastBidUser(auction.u);
-                        auctionDetail.isLoaded(true);
+                    var model = viewModel.getAuction(auction.id);
+                    if (model) {
+                        model.timeLeft(auction.t);
+                        model.lastBidAmount(auction.a);
+                        model.lastBidUser(auction.u);
+                        model.bids(auction.bids);
+                        model.isLoaded(true);
                     }
                 }
             };

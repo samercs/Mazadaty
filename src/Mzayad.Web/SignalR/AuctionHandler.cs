@@ -12,10 +12,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 using Mzayad.Models.Enums;
 using Mzayad.Services.Activity;
 using Mzayad.Services.Identity;
 using Mzayad.Web.Core.Trophies;
+using Newtonsoft.Json.Serialization;
 using OrangeJetpack.Services.Client.Messaging;
 
 namespace Mzayad.Web.SignalR
@@ -56,20 +58,9 @@ namespace Mzayad.Web.SignalR
 
         public AuctionHandler Setup(IDataContextFactory dataContextFactory, ICacheService cacheService)
         {
-            if (_cacheService == null)
-            {
-                _cacheService = cacheService;
-            }
-
-            if (_auctionService == null)
-            {
-                _auctionService = new AuctionService(dataContextFactory);
-            }
-
-            if (_bidService == null)
-            {
-                _bidService = new BidService(dataContextFactory);
-            }
+            _cacheService = _cacheService ?? cacheService;
+            _auctionService = _auctionService ?? new AuctionService(dataContextFactory);
+            _bidService = _bidService ?? new BidService(dataContextFactory);
 
             if (_trophyService == null)
             {
@@ -200,7 +191,7 @@ namespace Mzayad.Web.SignalR
             Clients.All.closeAuction(auction.AuctionId, order.UserId, order.OrderId);
         }
 
-        public async Task SubmitBid(int auctionId, string userId, string username,string hostAddress)
+        public async Task SubmitBid(int auctionId, string userId, string hostAddress)
         {
             if (string.IsNullOrEmpty(userId))
             {
@@ -214,17 +205,16 @@ namespace Mzayad.Web.SignalR
                 return;
             }
 
-            var secondsLeft = auction.SecondsLeft;
-
-            auction.AddBid(username);
-            await _bidService.AddBid(auctionId, userId, auction.LastBidAmount.GetValueOrDefault(), secondsLeft, hostAddress);
+            var user = await _userService.GetUserById(userId);
+            var bid = auction.AddBid(user);
+            
+            await _bidService.AddBid(auctionId, userId, bid.BidAmount, auction.SecondsLeft, hostAddress);
             
             // Earn trophy
-            var trophyEngine = new TrophiesEngine(_trophyService, _userService, _emailTemplateService, _messageService);
-            trophyEngine.EarnTrophy(userId);
+            //var trophyEngine = new TrophiesEngine(_trophyService, _userService, _emailTemplateService, _messageService);
+            //trophyEngine.EarnTrophy(userId);
 
             await _activityQueueService.QueueActivity(ActivityType.SubmitBid, userId);
-
 
             _cacheService.Set(cacheKey, auction);
         }
@@ -233,7 +223,8 @@ namespace Mzayad.Web.SignalR
         {
             return JsonConvert.SerializeObject(value, new JsonSerializerSettings
             {
-                NullValueHandling = NullValueHandling.Ignore
+                NullValueHandling = NullValueHandling.Ignore,
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
             });
         }
     }

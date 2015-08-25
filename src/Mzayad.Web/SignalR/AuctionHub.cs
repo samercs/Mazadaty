@@ -34,37 +34,23 @@ namespace Mzayad.Web.SignalR
         {
             var identity = Context.User.Identity;
             var userId = identity.GetUserId();
-            var username = identity.GetUserName();
             var hostAddress = GetIpAddress();
                  
-            await _auctionHandler.SubmitBid(auctionId, userId, username,hostAddress);
-        }
-
-        public string GetUsername()
-        {
-            return Context.User.Identity.GetUserName();
+            await _auctionHandler.SubmitBid(auctionId, userId, hostAddress);
         }
 
         protected string GetIpAddress()
         {
-            string ipAddress;
+            var ipAddress = "";
             object tempObject;
 
-            Context.Request.Environment.TryGetValue("server.RemoteIpAddress", out tempObject);
-
-            if (tempObject != null)
+            if (Context.Request.Environment.TryGetValue("server.RemoteIpAddress", out tempObject))
             {
-                ipAddress = (string)tempObject;
-            }
-            else
-            {
-                ipAddress = "";
+                ipAddress = tempObject.ToString();
             }
 
             return ipAddress;
-        }
-
-        
+        }     
 
         //public override Task OnConnected()
         //{

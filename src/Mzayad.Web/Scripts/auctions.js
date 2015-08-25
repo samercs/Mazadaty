@@ -43,6 +43,7 @@ var Auction = function (data) {
     });
     self.startTimeFormatted = ko.computed(function () { return ("Starting: " + moment(_this.startUtc()).format('D MMM HH:mm')); });
     self.submitBid = function () {
+        //auctionHub.server.submitBid(self.auctionId);
     };
     self.closeAuction = function () {
         _this.status("Closed");
