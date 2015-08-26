@@ -2,12 +2,16 @@
 using System.Web.Mvc;
 using Mzayad.Models;
 using Mzayad.Services;
+using Mzayad.Web.Areas.Admin.Models.Trophies;
 using Mzayad.Web.Controllers;
+using Mzayad.Web.Core.Attributes;
+using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Localization;
 
 namespace Mzayad.Web.Areas.Admin.Controllers
 {
+    [RouteArea("admin"), RoutePrefix("trophies"), RoleAuthorize(Role.Administrator)]
     public class TrophiesController : ApplicationController
     {
         private readonly TrophyService _trophyService;
@@ -16,13 +20,14 @@ namespace Mzayad.Web.Areas.Admin.Controllers
         {
             _trophyService = new TrophyService(DataContextFactory);   
         } 
-        // GET: Admin/Trophies
-        public async Task<ActionResult> Index(string languageCode="en")
+
+        public async Task<ActionResult> Index()
         {
-            var model = await _trophyService.GetAll(languageCode);
+            var model = await _trophyService.GetAll();
             return View(model);
         }
 
+        [Route("edit/{id}")]
         public async Task<ActionResult> Edit(int id)
         {
             var trophy = await _trophyService.GetTrophy(id);
@@ -30,11 +35,18 @@ namespace Mzayad.Web.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(trophy);
+
+            var viewModel = new EditViewModel
+            {
+                Trophy = trophy
+            };
+
+            return View(viewModel);
         }
         
+        [Route("edit/{id}")]
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, Trophy model, LocalizedContent[] name, LocalizedContent[] description)
+        public async Task<ActionResult> Edit(int id, EditViewModel model, LocalizedContent[] name, LocalizedContent[] description)
         {
             var trophy = await _trophyService.GetTrophy(id);
             if (trophy == null)
@@ -42,19 +54,14 @@ namespace Mzayad.Web.Areas.Admin.Controllers
                 return HttpNotFound();
             }
 
-            //if (!TryUpdateModel(trophy, "Trophy"))
-            //{
-            //    return View(trophy);
-            //}
-
             trophy.Name = name.Serialize();
             trophy.Description = description.Serialize();
+            trophy.IconUrl = model.Trophy.IconUrl;
+            trophy.XpAward = model.Trophy.XpAward;
 
             await _trophyService.Update(trophy);
 
-            //var trophyName = trophy.Localize("en", i => i.Name).Name;
-
-            //SetStatusMessage($"Trophy {trophyName} successfully updated.");
+            SetStatusMessage("Trophy successfully updated.");
 
             return RedirectToAction("Index");
         }

@@ -1,5 +1,6 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="address.js" />
+/// <reference path="auctions.js" />
 /// <reference path="bootstrap.min.js" />
 /// <reference path="dropzone.js" />
 /// <reference path="image-uploader.js" />

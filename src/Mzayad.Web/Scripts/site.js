@@ -35,7 +35,7 @@
         var minute = parent.find(".minute-picker").val();
         date.setHours(hour);
         date.setMinutes(minute);
-        hidden.val(date.toISOString());
+        hidden.val(date.toLocaleString());
     };
     var bindEvents = function () {
         $("form").on("change", ".auto-submit", autoSubmitForm);
@@ -52,6 +52,24 @@
         initRequiredLabels();
     });
 })(jQuery);
+var App;
+(function (App) {
+    var TimeUtilities = (function () {
+        function TimeUtilities() {
+        }
+        TimeUtilities.getHours = function (seconds) {
+            return Math.floor(seconds / 3600);
+        };
+        TimeUtilities.getMinutes = function (seconds) {
+            return Math.floor((seconds / 60) % 60);
+        };
+        TimeUtilities.getSeconds = function (seconds) {
+            return Math.floor(seconds % 60);
+        };
+        return TimeUtilities;
+    })();
+    App.TimeUtilities = TimeUtilities;
+})(App || (App = {}));
 var TimeUtilities = {
     getDays: function (days) {
         return days === 1 ? "1 day " : days + " days ";

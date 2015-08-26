@@ -4,5 +4,6 @@ namespace Mzayad.Web.Core.Services
     {
         string GetRequestParams();
         string GetUrlScheme();
+        string GetHostAddress();
     }
 }

@@ -654,4 +654,19 @@
   <data name="ContactUs" xml:space="preserve">
     <value>Contact Us</value>
   </data>
+  <data name="BuyNowWithPrice" xml:space="preserve">
+    <value>Buy Now {BuyNowPrice}</value>
+  </data>
+  <data name="ClosedAuctions" xml:space="preserve">
+    <value>Closed Auctions</value>
+  </data>
+  <data name="RetailPriceWithLabel" xml:space="preserve">
+    <value>Retail Price: {RetailPrice}</value>
+  </data>
+  <data name="ViewAllClosedAuctions" xml:space="preserve">
+    <value>View All Closed Auctions</value>
+  </data>
+  <data name="WinningPriceWithLabel" xml:space="preserve">
+    <value>Winning Price: {WinningPrice}</value>
+  </data>
 </root>
