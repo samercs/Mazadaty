@@ -41,14 +41,10 @@ namespace Mzayad.Web.Areas.admin.Controllers
         {
             var status = model.Status ?? OrderStatus.Processing;
             var orders = await _orderService.GetOrders(status, model.Search);
+            //orders.ForEach(i => i.RecalculateTotal());
 
             model.Status = model.Status ?? OrderStatus.Processing;
-            if (orders != null)
-            {
-                orders.ForEach(i =>i.RecalculateTotal());
-                
-                model.Orders = orders;
-            }
+            model.Orders = orders;
 
             return View(model);
         }
@@ -93,7 +89,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return HttpNotFound();
             }
 
-            await _orderService.SaveOrderAsDelivered(order, _authService.CurrentUserId(), _authService.UserHostAddress());
+            await _orderService.SaveOrderAsDelivered(order, _authService.CurrentUserId());
 
             if (sendNotification)
             {

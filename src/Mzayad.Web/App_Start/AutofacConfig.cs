@@ -8,6 +8,7 @@ using Autofac.Integration.WebApi;
 using Autofac.Integration.SignalR;
 using Microsoft.AspNet.SignalR;
 using Mzayad.Data;
+using Mzayad.Services.Activity;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Services.Client.Messaging;
 using OrangeJetpack.Services.Client.Storage;
@@ -31,8 +32,7 @@ namespace Mzayad.Web
             builder.RegisterType<AuthService>().As<IAuthService>();
             builder.RegisterType<CookieService>().As<ICookieService>();
             builder.RegisterType<RequestService>().As<IRequestService>();
-            builder.RegisterType<GeolocationService>().As<IGeolocationService>();
-
+            
             builder.Register<IStorageService>(c =>
             {
                 var appSettings = c.Resolve<IAppSettings>();
@@ -40,6 +40,7 @@ namespace Mzayad.Web
             });
             
             builder.Register<IMessageService>(c => new MessageService(c.Resolve<IAppSettings>().EmailSettings));
+            builder.Register<IActivityQueueService>(c => new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString));
 
             builder.Register(GetCacheService).SingleInstance();
 
@@ -61,7 +62,7 @@ namespace Mzayad.Web
         /// </remarks>
         private static ICacheService GetCacheService(IComponentContext c)
         {
-            return new HttpCacheService();
+            //return new HttpCacheService();
 
 #if DEBUG
             return new HttpCacheService();

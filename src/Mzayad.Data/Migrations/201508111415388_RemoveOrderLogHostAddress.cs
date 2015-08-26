@@ -1,0 +1,18 @@
+namespace Mzayad.Data.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class RemoveOrderLogHostAddress : DbMigration
+    {
+        public override void Up()
+        {
+            DropColumn("dbo.OrderLogs", "UserHostAddress");
+        }
+        
+        public override void Down()
+        {
+            AddColumn("dbo.OrderLogs", "UserHostAddress", c => c.String(nullable: false, maxLength: 15));
+        }
+    }
+}

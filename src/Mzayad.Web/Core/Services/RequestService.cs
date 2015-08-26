@@ -25,5 +25,10 @@ namespace Mzayad.Web.Core.Services
         {
             return _httpContext.Request.Url == null ? "http" : _httpContext.Request.Url.Scheme;
         }
+
+        public string GetHostAddress()
+        {
+            return _httpContext.Request.UserHostAddress;
+        }
     }
 }

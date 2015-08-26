@@ -61,6 +61,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string About {
+            get {
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Item.
         /// </summary>
         public static string AddNewItem {
@@ -250,6 +259,24 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Buy Now Price: {BuyNowPrice}.
+        /// </summary>
+        public static string BuyNowPrice {
+            get {
+                return ResourceManager.GetString("BuyNowPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buy Now {BuyNowPrice}.
+        /// </summary>
+        public static string BuyNowWithPrice {
+            get {
+                return ResourceManager.GetString("BuyNowWithPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Buy Subscription.
         /// </summary>
         public static string BuySubscription {
@@ -331,6 +358,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Closed Auctions.
+        /// </summary>
+        public static string ClosedAuctions {
+            get {
+                return ResourceManager.GetString("ClosedAuctions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm Password.
         /// </summary>
         public static string ConfirmPassword {
@@ -345,6 +381,15 @@ namespace Mzayad.Web.Resources {
         public static string ConfirmPasswordMatchErrorMessage {
             get {
                 return ResourceManager.GetString("ConfirmPasswordMatchErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contact Us.
+        /// </summary>
+        public static string ContactUs {
+            get {
+                return ResourceManager.GetString("ContactUs", resourceCulture);
             }
         }
         
@@ -889,6 +934,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to We&apos;re sorry, this product is no longer in stock or available..
+        /// </summary>
+        public static string OutOfStockErrorMessage {
+            get {
+                return ResourceManager.GetString("OutOfStockErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         public static string Password {
@@ -1204,6 +1258,24 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Retail Price: {RetailPrice}.
+        /// </summary>
+        public static string RetailPrice {
+            get {
+                return ResourceManager.GetString("RetailPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retail Price: {RetailPrice}.
+        /// </summary>
+        public static string RetailPriceWithLabel {
+            get {
+                return ResourceManager.GetString("RetailPriceWithLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Save {
@@ -1263,6 +1335,15 @@ namespace Mzayad.Web.Resources {
         public static string SignOut {
             get {
                 return ResourceManager.GetString("SignOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specifications.
+        /// </summary>
+        public static string Specifications {
+            get {
+                return ResourceManager.GetString("Specifications", resourceCulture);
             }
         }
         
@@ -1546,11 +1627,29 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View All Closed Auctions.
+        /// </summary>
+        public static string ViewAllClosedAuctions {
+            get {
+                return ResourceManager.GetString("ViewAllClosedAuctions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Welcome!.
         /// </summary>
         public static string Welcome {
             get {
                 return ResourceManager.GetString("Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Winning Price: {WinningPrice}.
+        /// </summary>
+        public static string WinningPriceWithLabel {
+            get {
+                return ResourceManager.GetString("WinningPriceWithLabel", resourceCulture);
             }
         }
         

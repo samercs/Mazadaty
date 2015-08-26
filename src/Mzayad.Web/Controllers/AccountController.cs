@@ -1,34 +1,34 @@
-﻿using System;
-using System.Web.Mvc;
-using System.Threading.Tasks;
-using Mindscape.Raygun4Net;
+﻿using Mindscape.Raygun4Net;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Services;
+using Mzayad.Services.Identity;
 using Mzayad.Web.Core.Configuration;
-using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Extensions;
 using Mzayad.Web.Models.Account;
 using Mzayad.Web.Models.Shared;
 using Mzayad.Web.Resources;
 using OrangeJetpack.Base.Core.Formatting;
+using OrangeJetpack.Base.Core.Security;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Services.Models;
-using OrangeJetpack.Base.Core.Security;
+using System;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Mzayad.Web.Controllers
 {
     [RoutePrefix("{language}/account")]
     public class AccountController : ApplicationController
     {
+        private readonly UserService _userService;
         private readonly AddressService _addressService;
-        private readonly UserProfileService _userProfileService;
         
         public AccountController(IAppServices appServices) : base(appServices)
         {
+            _userService = new UserService(appServices.DataContextFactory);
             _addressService = new AddressService(appServices.DataContextFactory);
-            _userProfileService=new UserProfileService(appServices.DataContextFactory);
         }
 
         [Route("sign-in")]
@@ -124,7 +124,8 @@ namespace Mzayad.Web.Controllers
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 PhoneCountryCode = model.PhoneCountryCode,
-                PhoneNumber = model.PhoneNumber
+                PhoneNumber = model.PhoneNumber,
+                ProfileStatus = UserProfileStatus.Private
             };
 
             var result = await AuthService.CreateUser(user, model.Password);
@@ -136,9 +137,7 @@ namespace Mzayad.Web.Controllers
 
             var address = await _addressService.SaveAddress(model.Address);
             user.AddressId = address.AddressId;
-            await AuthService.UpdateUser(user);
-
-            await _userProfileService.CreateNewProfile(user);
+            await _userService.UpdateUser(user);
 
             await SendNewUserWelcomeEmail(user);
             SetNameAndEmailCookies(user, "");
@@ -212,7 +211,7 @@ namespace Mzayad.Web.Controllers
                 Subject = Global.ResetPassword
             };
 
-            var user = await AuthService.GetUserByEmail(emailAddress);
+            var user = await _userService.GetUserByEmail(emailAddress);
             if (user == null)
             {
                 template = await EmailTemplateService.GetByTemplateType(EmailTemplateType.NoAccount, Language);
@@ -258,7 +257,7 @@ namespace Mzayad.Web.Controllers
                 return Error(errorMessage);
             }
 
-            var user = await AuthService.GetUserByEmail(tokenParameters.Email);
+            var user = await _userService.GetUserByEmail(tokenParameters.Email);
             if (user == null)
             {
                 return Error(Global.ResetPasswordCannotFindUserAccount);
@@ -269,8 +268,8 @@ namespace Mzayad.Web.Controllers
                 return View(viewModel);
             }
 
-            user.PasswordHash = AuthService.HashPassword(viewModel.NewPassword);
-            await AuthService.UpdateUser(user);
+            user.PasswordHash = _userService.HashPassword(viewModel.NewPassword);
+            await _userService.UpdateUser(user);
             await AuthService.SignIn(user);
 
             SetStatusMessage(Global.PasswordSuccessfullyChanged);

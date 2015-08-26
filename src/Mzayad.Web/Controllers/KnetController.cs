@@ -64,7 +64,7 @@ namespace Mzayad.Web.Controllers
                 return RedirectToAction("Error", new { paymentId });
             }
 
-            await _orderService.SubmitOrderForProcessing(transaction.Order, null, AuthService.UserHostAddress());
+            await _orderService.SubmitOrderForProcessing(transaction.Order, null);
 
             if (transaction.Order.IsSubscription)
             {

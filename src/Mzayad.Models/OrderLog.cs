@@ -16,9 +16,6 @@ namespace Mzayad.Models
         [Required]
         public OrderStatus Status { get; set; }
 
-        [Required, StringLength(15)]
-        public string UserHostAddress { get; set; }
-
         public virtual Order Order { get; set; }
 
         [ForeignKey("UserId")]

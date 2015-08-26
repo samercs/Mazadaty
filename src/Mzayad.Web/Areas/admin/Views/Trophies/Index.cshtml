@@ -1,47 +1,32 @@
-﻿@model IEnumerable<Mzayad.Models.Trophy>
+﻿@using Mzayad.Web.Extensions
+@model IEnumerable<Mzayad.Models.Trophy>
 
-<h2>Trophies</h2>
+@{
+    ViewBag.Title = "Trophies";
 
-
-<ul class="link-list">
-    
-</ul>
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IconUrl)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.XpAward)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IconUrl)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.XpAward)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TrophyId })
-        </td>
-    </tr>
 }
-
+<table class="@Html.Css().GridTable">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>XP Awarded</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><img class="img-thumbnail" src="@item.IconUrl" alt="@item.Name" width="32" /></td>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>@item.XpAward</td>
+                <td class="link-cell">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.TrophyId })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>

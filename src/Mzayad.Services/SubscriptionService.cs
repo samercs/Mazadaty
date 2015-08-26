@@ -213,8 +213,8 @@ namespace Mzayad.Services
                 throw new Exception("Subscription cannot be purchased, user does not have enough available tokens.");
             }
 
-            var order = await orderService.CreateOrderForSubscription(subscription, user, PaymentMethod.Tokens, userHostAddress);
-            await orderService.SubmitOrderForProcessing(order, user.Id, userHostAddress);
+            var order = await orderService.CreateOrderForSubscription(subscription, user, PaymentMethod.Tokens);
+            await orderService.SubmitOrderForProcessing(order, user.Id);
 
             await tokenService.RemoveTokensFromUser(user, subscription.PriceTokens, user, userHostAddress);
 
@@ -240,7 +240,7 @@ namespace Mzayad.Services
                 throw new Exception("Subscription is not valid for purchase with tokens.");
             }
 
-            var order = await orderService.CreateOrderForSubscription(subscription, user, PaymentMethod.Knet, userHostAddress);
+            var order = await orderService.CreateOrderForSubscription(subscription, user, PaymentMethod.Knet);
 
             //await AddSubscriptionToUser(user, subscription, user, userHostAddress);
             //await DecrementSubscriptionQuantity(subscription);

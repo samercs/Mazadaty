@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Mzayad.Models;
+using Mzayad.Models.Payment;
+using System;
 using System.Data.Entity;
 using System.Diagnostics.PerformanceData;
 using System.Threading.Tasks;
-using Mzayad.Models;
-using Mzayad.Models.Payment;
 
 namespace Mzayad.Data
 {
@@ -22,7 +20,6 @@ namespace Mzayad.Data
         IDbSet<Sponsor> Sponsors { get; set; }
         IDbSet<Bid> Bids { get; set; }
         IDbSet<Avatar> Avatars { get; set; }
-        IDbSet<UserProfile> UserProfiles { get; set; }
         IDbSet<ShippingAddress> ShippingAddresses { get; set; }
         IDbSet<Order> Orders { get; set; }
         IDbSet<OrderItem> OrderItems { get; set; }
@@ -33,6 +30,7 @@ namespace Mzayad.Data
         IDbSet<SubscriptionLog> SubscriptionLogs { get; set; }
         IDbSet<TokenLog> TokenLogs { get; set; } 
         IDbSet<SplashAd> SplashAds { get; set; }
+        IDbSet<ActivityEvent> ActivityEvents { get; set; } 
         IDbSet<Trophy> Trophies { get; set; }
         IDbSet<UserTrophy> UsersTrophies { get; set; }
 

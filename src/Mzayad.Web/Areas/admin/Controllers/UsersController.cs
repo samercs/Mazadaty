@@ -1,32 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Mzayad.Web.Controllers;
-using Mzayad.Web.Core.Services;
-using System.Web.Mvc;
-using Kendo.Mvc.Extensions;
+﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
-using Mzayad.Models;
 using Mzayad.Services;
+using Mzayad.Services.Identity;
 using Mzayad.Web.Areas.admin.Models.Users;
 using Mzayad.Web.Areas.Admin.Models.Users;
+using Mzayad.Web.Controllers;
 using Mzayad.Web.Core.ActionResults;
 using Mzayad.Web.Core.Attributes;
 using Mzayad.Web.Core.Identity;
+using Mzayad.Web.Core.Services;
 using OrangeJetpack.Base.Core.Formatting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
     [RouteArea("admin"), RoutePrefix("users"), RoleAuthorize(Role.Administrator)]
     public class UsersController : ApplicationController
     {
+        private readonly UserService _userService;
         private readonly SubscriptionService _subscriptionService;
         private readonly TokenService _tokenService;
 
         public UsersController(IAppServices appServices)
             : base(appServices)
         {
+            _userService = new UserService(DataContextFactory);
             _subscriptionService = new SubscriptionService(DataContextFactory);
             _tokenService = new TokenService(DataContextFactory);
         }
@@ -36,7 +38,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             var viewModel = new IndexViewModel
             {
                 Search = search,
-                Users = await AuthService.GetUsers(search, role),
+                Users = await _userService.GetUsers(search, role.ToString()),
                 Role = role,
                 RoleList = GetRoleList()
             };
@@ -59,13 +61,13 @@ namespace Mzayad.Web.Areas.admin.Controllers
         [HttpPost]
         public async Task<JsonResult> GetUsers([DataSourceRequest] DataSourceRequest request, string search = null, Role? role = null)
         {
-            var results = await AuthService.GetUsers(search, role);
+            var results = await _userService.GetUsers(search, role.ToString());
             return Json(results.ToDataSourceResult(request));
         }
 
         public async Task<ExcelResult> UsersExcel(string search = "", Role? role = null)
         {
-            var users = await AuthService.GetUsers(search, role);
+            var users = await _userService.GetUsers(search, role.ToString());
             var results = users.Select(i => new
             {
                 i.Id,
@@ -88,13 +90,13 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
         public async Task<ActionResult> Details(string id)
         {
-            var user = await AuthService.GetUserById(id);
+            var user = await _userService.GetUserById(id);
             if (user == null)
             {
                 return HttpNotFound();
             }
 
-            var model = await new DetailsViewModel().Hydrate(user, AuthService, _subscriptionService, _tokenService);
+            var model = await new DetailsViewModel().Hydrate(user, _userService, _subscriptionService, _tokenService);
 
             return View(model);
         }
@@ -102,7 +104,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Details(string id, DetailsViewModel model, string[] selectedRoles)
         {
-            var user = await AuthService.GetUserById(id);
+            var user = await _userService.GetUserById(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -110,7 +112,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             if (!ModelState.IsValid)
             {
-                await model.Hydrate(user, AuthService, _subscriptionService, _tokenService);
+                await model.Hydrate(user, _userService, _subscriptionService, _tokenService);
 
                 return View("Details", model);
             }
@@ -121,7 +123,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             user.Email = model.Email;
 
             await UpdateRoles(id, selectedRoles);
-            await AuthService.UpdateUser(user);
+            await _userService.UpdateUser(user);
 
             SetStatusMessage(string.Format("User {0} successfully updated.", user.UserName));
 
@@ -140,10 +142,10 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
         private async Task RemoveUserFromRoles(string userId)
         {
-            var roles = await AuthService.GetAllRoles();
+            var roles = await _userService.GetAllRoles();
             foreach (var role in roles)
             {
-                await AuthService.RemoveUserFromRole(userId, role.Name);
+                await _userService.RemoveUserFromRole(userId, role.Name);
             }
         }
 
@@ -151,14 +153,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
         {
             foreach (var role in roles)
             {
-                await AuthService.AddUserToRole(userId, role);
+                await _userService.AddUserToRole(userId, role);
             }
         }
 
         [Route("edit-subscription/{id}")]
         public async Task<ActionResult> EditSubscription(string id)
         {
-            var user = await AuthService.GetUserById(id);
+            var user = await _userService.GetUserById(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -171,7 +173,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> EditSubscription(EditSubscriptionViewModel model)
         {
-            var user = await AuthService.GetUserById(model.User.Id);
+            var user = await _userService.GetUserById(model.User.Id);
             if (user == null)
             {
                 return HttpNotFound();

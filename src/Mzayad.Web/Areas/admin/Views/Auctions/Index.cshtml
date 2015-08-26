@@ -72,8 +72,11 @@
         var getLabel = function (auction) {
             if (auction.Status === 1) {
                 return "<span class='label label-warning'>Hidden</span> <button class='activate-auction btn btn-link btn-xs' data-auction-id='" + auction.AuctionId + "'>Activate</button>";
-            } else {
+            }
+            else if (auction.Status === 2) {
                 return "<span class='label label-success'>Public</span>";
+            } else {
+                return "<span class='label label-default'>Closed</span>";
             }
         }
    

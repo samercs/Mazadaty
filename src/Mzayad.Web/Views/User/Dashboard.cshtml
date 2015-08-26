@@ -18,29 +18,29 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">Username</label>
             <div class="col-sm-10">
-                <p class="form-control-static">@Model.ApplicationUser.UserName</p>
+                <p class="form-control-static">@Model.User.UserName</p>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">Contact</label>
             <div class="col-sm-10">
                 <ul class="form-control-static list-unstyled">
-                    <li>@NameFormatter.GetFullName(Model.ApplicationUser.FirstName, Model.ApplicationUser.LastName)</li>
-                    <li>@Model.ApplicationUser.Email</li>
-                    <li>@PhoneNumberFormatter.Format(Model.ApplicationUser.PhoneCountryCode, Model.ApplicationUser.PhoneNumber)</li>
+                    <li>@NameFormatter.GetFullName(Model.User.FirstName, Model.User.LastName)</li>
+                    <li>@Model.User.Email</li>
+                    <li>@PhoneNumberFormatter.Format(Model.User.PhoneCountryCode, Model.User.PhoneNumber)</li>
                 </ul>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">Subscription</label>
             <div class="col-sm-10">
-                <p class="form-control-static">@Html.DisplayFor(m => m.ApplicationUser.SubscriptionUtc, "SubscriptionUtc")</p>
+                <p class="form-control-static">@Html.DisplayFor(m => m.User.SubscriptionUtc, "SubscriptionUtc")</p>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">Tokens</label>
             <div class="col-sm-10">
-                <p class="form-control-static">@StringFormatter.ObjectFormat(Global.SubscriptionPriceTokens, new { PriceTokens = Model.ApplicationUser.Tokens })</p>
+                <p class="form-control-static">@StringFormatter.ObjectFormat(Global.SubscriptionPriceTokens, new { PriceTokens = Model.User.Tokens })</p>
             </div>
         </div>
     </div>
@@ -55,10 +55,10 @@
     <div class="panel-body form-horizontal">
         <div class="form-group">
             <div class="col-sm-2">
-                <img class="img-responsive" src="@Model.UserProfile.Avatar.Url" alt="responsive"/>
+                <img class="img-responsive" src="@Model.User.AvatarUrl" alt="responsive"/>
             </div>
             <div class="col-sm-10">
-                @switch (Model.UserProfile.Status)
+                @switch (Model.User.ProfileStatus)
                 {
                     case UserProfileStatus.Private:
                         <p class="form-control-static">Your profile is currently <strong class="text-no"><i class="fa fa-lock"></i> PRIVATE</strong> and hidden from other users.

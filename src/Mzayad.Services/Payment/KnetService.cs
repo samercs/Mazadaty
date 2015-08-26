@@ -76,41 +76,41 @@ namespace Mzayad.Services.Payment
         {
             return await GetFakeTransaction(order, userId, userHostAddress);
                   
-            var result = new InitTransactionResult();
+            //var result = new InitTransactionResult();
 
-            using (var client = new HttpClient())
-            {
-                const string url = "http://knetprocessor.cloudapp.net/api/knet";
+            //using (var client = new HttpClient())
+            //{
+            //    const string url = "http://knetprocessor.cloudapp.net/api/knet";
 
-                var responseMessage = await client.PostAsJsonAsync(url, new
-                {
-                    Amount = order.Total
-                });
+            //    var responseMessage = await client.PostAsJsonAsync(url, new
+            //    {
+            //        Amount = order.Total
+            //    });
 
-                var responseContent = await responseMessage.Content.ReadAsStringAsync();
+            //    var responseContent = await responseMessage.Content.ReadAsStringAsync();
 
-                var knetResponse = JsonConvert.DeserializeObject<KnetResponse>(responseContent);
-                if (knetResponse.TransactionCode != 0)
-                {
-                    result.Status = PaymentStatus.Failure;
-                    result.Message = knetResponse.ErrorMsg;
-                    return result;
-                }
+            //    var knetResponse = JsonConvert.DeserializeObject<KnetResponse>(responseContent);
+            //    if (knetResponse.TransactionCode != 0)
+            //    {
+            //        result.Status = PaymentStatus.Failure;
+            //        result.Message = knetResponse.ErrorMsg;
+            //        return result;
+            //    }
 
-                await CreateTransaction(
-                    order, knetResponse.PaymentId,
-                    userId,
-                    userHostAddress);
+            //    await CreateTransaction(
+            //        order, knetResponse.PaymentId,
+            //        userId,
+            //        userHostAddress);
 
-                result.Status = PaymentStatus.Success;
-                result.RedirectUrl = knetResponse.PaymentUrl;
-                return result;
-            }
+            //    result.Status = PaymentStatus.Success;
+            //    result.RedirectUrl = knetResponse.PaymentUrl;
+            //    return result;
+            //}
         }
 
         private async Task<KnetTransaction> CreateTransaction(Order order, string paymentId, string userId, string userHostAddress)
         {
-            await _orderService.UpdateStatus(order, OrderStatus.PendingPayment, userId, userHostAddress);
+            await _orderService.UpdateStatus(order, OrderStatus.PendingPayment, userId);
 
             using (var dc = DataContext())
             {

@@ -2,6 +2,7 @@
 using Mzayad.Data;
 using Mzayad.Web.Core.Configuration;
 using System;
+using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -24,7 +25,7 @@ namespace Mzayad.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutofacConfig.RegisterAll();
             Database.SetInitializer<DataContext>(null);
-
+            
             ModelBinders.Binders.Add(typeof(DateTime), new DateTimeBinder());
             ModelBinders.Binders.Add(typeof(DateTime?), new NullableDateTimeBinder());
         }

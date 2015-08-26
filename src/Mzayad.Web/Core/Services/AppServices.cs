@@ -11,7 +11,6 @@ namespace Mzayad.Web.Core.Services
         public IAuthService AuthService { get; private set; }
         public ICookieService CookieService { get; private set; }
         public IMessageService MessageService { get; private set; }
-        public IGeolocationService GeolocationService { get; private set; }
         public ICacheService CacheService { get; private set; }
         public IRequestService RequestService { get; private set; }
         public IStorageService StorageService { get; private set; }
@@ -22,7 +21,6 @@ namespace Mzayad.Web.Core.Services
             IAuthService authService,
             ICookieService cookieService,
             IMessageService messageService,
-            IGeolocationService geolocationService,
             ICacheService caceService,
             IRequestService requestService,
             IStorageService storageService)
@@ -32,7 +30,6 @@ namespace Mzayad.Web.Core.Services
             AuthService = authService;
             CookieService = cookieService;
             MessageService = messageService;
-            GeolocationService = geolocationService;
             CacheService = caceService;
             RequestService = requestService;
             StorageService = storageService;

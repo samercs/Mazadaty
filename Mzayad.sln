@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mzayad.Web", "src\Mzayad.Web\Mzayad.Web.csproj", "{C0BCF77F-69FC-46AC-9044-0C6EE6A10FB3}"
 EndProject
@@ -29,6 +29,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mzayad.Core.Tests", "src\Mzayad.Core.Tests\Mzayad.Core.Tests.csproj", "{91A9D9B0-16B6-4B33-82A3-E67B2A351220}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mzayad.Model.Tests", "src\Mzayad.Model.Tests\Mzayad.Model.Tests.csproj", "{B4C619FB-9633-4713-95FF-4BE1B8579E1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mzayad.WebJobs", "Mzayad.WebJobs\Mzayad.WebJobs.csproj", "{DA1E5C7E-A6CE-4A61-88B0-CADEBD824FEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +74,10 @@ Global
 		{B4C619FB-9633-4713-95FF-4BE1B8579E1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4C619FB-9633-4713-95FF-4BE1B8579E1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4C619FB-9633-4713-95FF-4BE1B8579E1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA1E5C7E-A6CE-4A61-88B0-CADEBD824FEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA1E5C7E-A6CE-4A61-88B0-CADEBD824FEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA1E5C7E-A6CE-4A61-88B0-CADEBD824FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA1E5C7E-A6CE-4A61-88B0-CADEBD824FEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

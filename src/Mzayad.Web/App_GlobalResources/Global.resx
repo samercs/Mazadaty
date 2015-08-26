@@ -636,4 +636,37 @@
   <data name="XpAward" xml:space="preserve">
     <value>Points</value>
   </data>
+  <data name="RetailPrice" xml:space="preserve">
+    <value>Retail Price: {RetailPrice}</value>
+  </data>
+  <data name="Specifications" xml:space="preserve">
+    <value>Specifications</value>
+  </data>
+  <data name="BuyNowPrice" xml:space="preserve">
+    <value>Buy Now Price: {BuyNowPrice}</value>
+  </data>
+  <data name="OutOfStockErrorMessage" xml:space="preserve">
+    <value>We're sorry, this product is no longer in stock or available.</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Contact Us</value>
+  </data>
+  <data name="BuyNowWithPrice" xml:space="preserve">
+    <value>Buy Now {BuyNowPrice}</value>
+  </data>
+  <data name="ClosedAuctions" xml:space="preserve">
+    <value>Closed Auctions</value>
+  </data>
+  <data name="RetailPriceWithLabel" xml:space="preserve">
+    <value>Retail Price: {RetailPrice}</value>
+  </data>
+  <data name="ViewAllClosedAuctions" xml:space="preserve">
+    <value>View All Closed Auctions</value>
+  </data>
+  <data name="WinningPriceWithLabel" xml:space="preserve">
+    <value>Winning Price: {WinningPrice}</value>
+  </data>
 </root>

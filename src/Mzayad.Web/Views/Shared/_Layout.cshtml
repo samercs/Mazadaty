@@ -1,40 +1,71 @@
 ﻿@using Mzayad.Web.Extensions
 @using OrangeJetpack.Base.Web.Extensions
 <!DOCTYPE html>
-<html lang="@Html.Language()" dir="@(Html.IsArabic() ? "rtl" : "ltr")">
+<html lang="@LanguageCode" dir="@(Html.IsArabic() ? "rtl" : "ltr")">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@Html.PageTitle()</title> 
-    <link href="//fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet" type="text/css">
-    <link rel="apple-touch-icon" href="//az723232.vo.msecnd.net/assets/mzayad-favicon-32x32-635593381391686784.png"> @* should be 152x152 *@
-    <link rel="icon" href="//az723232.vo.msecnd.net/assets/mzayad-favicon-32x32-635593381391686784.png">@* should be 96x96 *@
-    <!--[if IE]><link rel="shortcut icon" href="/favicon.ico"><![endif]--> @* should be 16x16 and 32x32 *@
+    <title>@Html.PageTitle()</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" />
+
+    @* generated from http://realfavicongenerator.net/ *@
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="//az723232.vo.msecnd.net/assets/mzayad-favicon-32x32-635593381391686784.png">@* should be 144x144 *@
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
     @Styles.Render("~/css")
     @RenderSection("styles", false)
 </head>
 <body id="@Html.Ojs().PageIdentifier()">
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="@Url.Action("Index", "Home", new {area = "", language = Html.Language()})" class="navbar-brand"><i class="fa fa-gavel fa-lg"></i> Mzayad</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    @Html.Partial("_Layout_UserMyAccount")
-                    <li>@Html.ActionLink(Global.Home, "Index", "Home", new { area = "", language = Html.Language() }, null)</li>
-                    @Html.Partial("_Layout_LanguageSelector")
-                </ul>
-            </div>
-        </div>
+<div class="navbar navbar-inverse navbar-fixed-top">
+
+    @{
+        var routeValues = new {area = "", language = LanguageCode };
+    }
+
+    <div class="container">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a href="@Url.Action("Index", "Home", routeValues)" class="navbar-brand">MZAYAD</a>
+        <nav class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right navbar-user">
+                @Html.Partial("_Layout_UserMyAccount")
+                @Html.Partial("_Layout_LanguageSelector")
+            </ul>
+        </nav>
     </div>
+    <div class="container">
+        <nav class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left navbar-main">
+                <li>@Html.ActionLink(Global.Home, "Index", "Home", routeValues, null)</li>
+                <li>@Html.ActionLink(Global.About, "About", "Home", routeValues, null)</li>
+                <li>@Html.ActionLink(Global.BuyNow, "BuyNow", "Home", routeValues, null)</li>
+                <li>@Html.ActionLink(Global.BuySubscription, "Index", "Subscriptions", routeValues, null)</li>
+                <li>@Html.ActionLink(Global.ContactUs, "ContactUs", "Home", routeValues, null)</li>
+            </ul>
+        </nav>
+    </div>
+</div>
     <div id="main" class="container body-content">
         @if (!string.IsNullOrWhiteSpace(ViewBag.Title))
         {
@@ -48,7 +79,8 @@
         </footer>
     </div>
     @Scripts.Render("~/js/jquery")
+    @Scripts.Render("~/js/bootstrap")
     @Scripts.Render("~/js/site")
-    @RenderSection("scripts", required: false)
+    @RenderSection("scripts", false)
 </body>
 </html>

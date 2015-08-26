@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Mzayad.Models.Enum;
 
 namespace Mzayad.Models
 {
@@ -28,18 +29,23 @@ namespace Mzayad.Models
         public DateTime? SubscriptionUtc { get; set; }
 
         public virtual Address Address { get; set; }
-
+        
         public virtual IEnumerable<CategoryNotification> Notifications { get; set; }
-        public virtual IEnumerable<WishList> WishLists { get; set; } 
+        public virtual IEnumerable<WishList> WishLists { get; set; }
 
-        //public string CreatedLocalTime
-        //{
-        //    get { return DateTimeFormatter.ToLocalTime(CreatedUtc); }
-        //}
-
+        [DataType(DataType.Url)]
+        public string AvatarUrl { get; set; }
         public int Level { get; set; }
         public int Xp { get; set; }
         public int Tokens { get; set; }
+
+        [Required]
+        public UserProfileStatus ProfileStatus { get; set; }
+
+        public string ProfileUrl
+        {
+            get { return string.Format("https://www.mzayad.com/profiles/{0}", UserName.ToLowerInvariant()); }
+        }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mzayad.Models.Enum;
+using Mzayad.Services.Identity;
 using OrangeJetpack.Services.Client.Messaging;
 using OrangeJetpack.Services.Models;
 
@@ -10,25 +11,25 @@ namespace Mzayad.Services.Trophies
     public class TrophiesEngine
     {
         private readonly TrophyService _trophyService;
+        private readonly UserService _userService;
         private readonly EmailTemplateService _emailTemplateService;
-        private readonly UserProfileService _userProfileService;
         private readonly MessageService _messageService;
 
-        public TrophiesEngine(TrophyService trophyService, EmailTemplateService emailTemplateService, UserProfileService userProfileService, MessageService messageService)
+        public TrophiesEngine(TrophyService trophyService, UserService userService, EmailTemplateService emailTemplateService, MessageService messageService)
         {
             _trophyService = trophyService;
+            _userService = userService;
             _emailTemplateService = emailTemplateService;
-            _userProfileService = userProfileService;
             _messageService = messageService;
         }
 
         public async void EarnTrophy(string userId)
         {
             var earnedTrophies = new List<string>();
-            var user = await _userProfileService.GetByUserId(userId);
+            var user = await _userService.GetUserById(userId);
             foreach (var key in from key in Enum.GetValues(typeof(TrophyKey)).Cast<TrophyKey>()
                                 let checker = TrophiesChecker.CreateInstance(key, _trophyService)
-                                where checker.Check(user.UserId).Result select key)
+                                where checker.Check(user.Id).Result select key)
             {
                 await _trophyService.AddToUser((int)key, userId);
                 earnedTrophies.Add(key.Name());

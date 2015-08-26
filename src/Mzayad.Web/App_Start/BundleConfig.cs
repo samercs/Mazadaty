@@ -6,19 +6,24 @@ namespace Mzayad.Web
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
+            BundleTable.EnableOptimizations = true;
+
             bundles.UseCdn = true;
 
-            var jquery = new ScriptBundle("~/js/jquery", 
-                "//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js").Include(
+            var jquery = new ScriptBundle("~/js/jquery", "//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js").Include(
                 "~/scripts/jquery-{version}.js");
             jquery.CdnFallbackExpression = "window.jQuery";
             bundles.Add(jquery);
 
-            var jqueryui = new ScriptBundle("~/js/jquery-ui",
-                "//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js").Include(
+            var jqueryui = new ScriptBundle("~/js/jquery-ui", "//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js").Include(
                 "~/scripts/jquery-ui-{version}.js");
             jqueryui.CdnFallbackExpression = "window.jQuery.ui";
             bundles.Add(jqueryui);
+
+            var bootstrap = new ScriptBundle("~/js/bootstrap", "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js").Include(
+                "~/scripts/bootstrap.js");
+            bootstrap.CdnFallbackExpression = "$.fn.modal";
+            bundles.Add(bootstrap);
 
             var knockout = new ScriptBundle("~/js/knockout",
                 "//ajax.aspnetcdn.com/ajax/knockout/knockout-3.3.0.js").Include(
@@ -33,25 +38,15 @@ namespace Mzayad.Web
             bundles.Add(signalR);
 
             bundles.Add(new ScriptBundle("~/js/site").Include(
-                "~/scripts/bootstrap.js",
                 "~/scripts/moment.js",
-                "~/scripts/wow.js",
                 "~/scripts/site.js",
                 "~/scripts/site-kendo.js"));
 
+            bundles.Add(new ScriptBundle("~/js/nivo").Include("~/scripts/nivo/nivo-lightbox.min.js"));
             bundles.Add(new ScriptBundle("~/js/validate").Include("~/scripts/jquery.validate*"));
             bundles.Add(new ScriptBundle("~/js/slugify").Include("~/scripts/jquery.slugify*"));
 
-            bundles.Add(new StyleBundle("~/css").Include(
-                "~/content/bootstrap.css",
-                "~/content/bootstrap-theme.css",
-                "~/content/font-awesome.css",
-                "~/content/animate.css",
-                "~/content/site-forms.css",
-                "~/content/site-layout.css",
-                "~/content/site-arabic.css",
-                "~/content/site-home.css",
-                "~/content/site.css"));
+            bundles.Add(new StyleBundle("~/css").Include("~/content/site.css"));
 
             bundles.Add(new StyleBundle("~/css/admin").Include(
                 "~/content/kendo/kendo.common.css",
@@ -61,6 +56,10 @@ namespace Mzayad.Web
 
             bundles.Add(new ScriptBundle("~/js/image-uploader").Include("~/scripts/dropzone.js", "~/scripts/image-uploader.js"));
             bundles.Add(new StyleBundle("~/css/image-uploader").Include("~/content/image-uploader.css"));
+
+            bundles.Add(new StyleBundle("~/css/nivo").Include(
+                "~/content/nivo/nivo-lightbox.css",
+                "~/content/nivo/default/default.css"));
         }
     }
 }
