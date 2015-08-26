@@ -203,7 +203,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
         [Route("edit/{id:int}")]
         [HttpPost,ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, AddEditViewModel model, LocalizedContent[] title)
+        public async Task<ActionResult> Edit(int id, AddEditViewModel model, LocalizedContent[] title, FormCollection fc)
         {
             var auction = await _auctionService.GetAuction(id);
             if (auction == null)

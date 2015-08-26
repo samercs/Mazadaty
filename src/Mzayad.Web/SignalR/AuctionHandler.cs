@@ -13,6 +13,7 @@ using OrangeJetpack.Services.Client.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -88,7 +89,9 @@ namespace Mzayad.Web.SignalR
         }
 
         public async Task<string> InitAuctions(int[] auctionIds)
-        {      
+        {   
+            Trace.TraceInformation("InitAuctions(): {0}", JsonConvert.SerializeObject(auctionIds));
+               
             var auctions = await _auctionService.GetLiveAuctions(auctionIds);
             var auctionModels = auctions.Select(AuctionModel.Create).ToList();
 
@@ -102,11 +105,17 @@ namespace Mzayad.Web.SignalR
 
         private IReadOnlyCollection<AuctionModel> GetAuctionsFromCache()
         {
-            return _cacheService.GetList<AuctionModel>(CacheKeys.LiveAuctions);
+            var auctions = _cacheService.GetList<AuctionModel>(CacheKeys.LiveAuctions);
+
+            Trace.TraceInformation("GetAuctionsFromCache(): {0}", JsonConvert.SerializeObject(auctions));
+
+            return auctions;
         }
 
         private void AddAuctionsToCache(IEnumerable<AuctionModel> auctions)
         {
+            Trace.TraceInformation("AddAuctionsToCache(): {0}", JsonConvert.SerializeObject(auctions));
+
             _cacheService.SetList(CacheKeys.LiveAuctions, auctions);
         }
 
@@ -124,19 +133,26 @@ namespace Mzayad.Web.SignalR
                 var cacheAuctions = _cacheService.GetList<AuctionModel>(CacheKeys.LiveAuctions);
                 if (cacheAuctions == null)
                 {
+                    Trace.TraceInformation("UpdateAuctions(): no auctions in cache");
+
                     _updatingAuctions = false;
                     return;
                 }
 
                 foreach (var auction in cacheAuctions)
                 {
+                    Trace.TraceInformation("UpdateAuctions(): processing {0}", JsonConvert.SerializeObject(auction));
+
                     auction.SecondsLeft = Math.Max(auction.SecondsLeft - 1, 0);
                     if (auction.SecondsLeft <= 0)
                     {
                         CloseAuction(auction);
                     }
 
-                    auction.Bids = new Queue<BidModel>(auction.Bids.OrderByDescending(i => i.BidAmount));
+                    if (auction.Bids != null && auction.Bids.Any())
+                    {
+                        auction.Bids = new Queue<BidModel>(auction.Bids.OrderByDescending(i => i.BidAmount));
+                    }
                 }
 
                 _cacheService.SetList(CacheKeys.LiveAuctions, cacheAuctions);

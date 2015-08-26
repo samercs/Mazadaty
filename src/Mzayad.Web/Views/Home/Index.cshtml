@@ -42,6 +42,11 @@
 
 <ol id="auction-list" data-bind="foreach: auctions">
     <li class="auction-item">
+
+        <!-- ko if: $index() == 0 -->
+        <div class="live-action-ribbon">Live Auctions</div>
+        <!-- /ko -->
+        
         <div class="row">
             <div class="col-md-6">
                 <img class="auction-image img-responsive" data-bind="attr: { src: imageUrl, alt: title }" alt="">
@@ -50,6 +55,7 @@
             <div class="col-md-6">
 
                 <div class="auction-details">
+
                     <h3 class="auction-title" data-bind="text: title"></h3>
                     <div class="auction-retail-price" data-bind="text: retailPriceFormatted"></div>
 
@@ -63,15 +69,21 @@
                         <ol class="auction-time-left">
                             <li class="auction-time-part">
                                 <div class="auction-time-value" data-bind="text: timeLeftHours"></div>
-                                <div class="auction-time-label"><small>Hours</small></div>
+                                <div class="auction-time-label">
+                                    <small>Hours</small>
+                                </div>
                             </li>
                             <li class="auction-time-part">
                                 <div class="auction-time-value" data-bind="text: timeLeftMinutes"></div>
-                                <div class="auction-time-label"><small>Minutes</small></div>
+                                <div class="auction-time-label">
+                                    <small>Minutes</small>
+                                </div>
                             </li>
                             <li class="auction-time-part">
                                 <div class="auction-time-value" data-bind="text: timeLeftSeconds"></div>
-                                <div class="auction-time-label"><small>Seconds</small></div>
+                                <div class="auction-time-label">
+                                    <small>Seconds</small>
+                                </div>
                             </li>
                         </ol>
 
@@ -79,7 +91,9 @@
 
                         <div class="row">
                             <div class="auction-bid-details col-md-8">
-                                <div class="auction-bid-label"><small>Current Auction Price</small></div>
+                                <div class="auction-bid-label">
+                                    <small>Current Auction Price</small>
+                                </div>
                                 <div class="auction-bid-form input-group">
                                     <input type="text" class="form-control" readonly="readonly" data-bind="value: lastBidFormatted">
                                     <span class="input-group-btn">
@@ -96,7 +110,7 @@
                                 <ol class="auction-recent-bids" data-bind="foreach: bids">
                                     <li>
                                         <div class="pull-left">
-                                            <img data-bind="attr: { src: avatarUrl, alt: userName }" width="32"/>
+                                            <img data-bind="attr: { src: avatarUrl, alt: userName }" width="32" />
                                         </div>
                                         <div class="auction-recent-username pull-left">
                                             <span data-bind="text: userName"></span>

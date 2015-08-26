@@ -596,6 +596,7 @@ input[type="checkbox"].input-validation-error {
   list-style: none;
 }
 #home-index #auction-list .auction-item {
+  position: relative;
   margin-bottom: 30px;
   padding: 20px;
   border: 1px solid #dbdbdb;
@@ -603,6 +604,17 @@ input[type="checkbox"].input-validation-error {
 }
 #home-index #auction-list .auction-item:last-child {
   margin-bottom: 0;
+}
+#home-index #auction-list .auction-item .live-action-ribbon {
+  position: absolute;
+  z-index: 9999;
+  top: 10px;
+  left: 0;
+  padding: 8px 32px 8px 16px;
+  background: transparent url(//az723232.vo.msecnd.net/assets/auctions-ribbon-635761938753702703.png) center right no-repeat;
+  color: white;
+  font-size: 1.7rem;
+  text-transform: uppercase;
 }
 #home-index #auction-list .auction-item .auction-status-loading {
   padding: 15px;

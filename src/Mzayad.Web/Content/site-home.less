@@ -21,6 +21,7 @@
         list-style: none;
 
         .auction-item {
+            position: relative;
             margin-bottom: 30px;
             padding: 20px;
             border: 1px solid @border-color;
@@ -30,6 +31,18 @@
                 margin-bottom: 0;
             }
 
+            .live-action-ribbon {
+                position: absolute;
+                z-index: 9999;
+                top: 10px;
+                left: 0;
+                padding: 8px 32px 8px 16px;
+                background: transparent url(//az723232.vo.msecnd.net/assets/auctions-ribbon-635761938753702703.png) center right no-repeat;
+                color: white;
+                font-size: @font-size + 0.2;
+                text-transform: uppercase;
+            }
+            
             .auction-status-loading {
                 padding: 15px;
                 font-size: @font-size + 0.2;

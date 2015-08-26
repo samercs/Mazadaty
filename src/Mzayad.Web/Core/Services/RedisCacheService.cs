@@ -100,7 +100,7 @@ namespace Mzayad.Web.Core.Services
 
         public void SetList<T>(string key, IEnumerable<T> list)
         {
-            Trace.TraceInformation("SetList(): " + JsonConvert.SerializeObject(list));
+            //Trace.TraceInformation("SetList(): " + JsonConvert.SerializeObject(list));
 
             try
             {
