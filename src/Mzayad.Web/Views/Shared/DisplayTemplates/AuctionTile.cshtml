@@ -9,16 +9,19 @@
         <h3 class="auction-tile-title auction-tile-row">@Model.Title</h3>
         <div class="auction-tile-prices auction-tile-row">
             <div class="auction-tile-retail-price">
-                @StringFormatter.ObjectFormat(Global.RetailPriceWithLabel, new {Model.RetailPrice})
+                @StringFormatter.ObjectFormat(Global.RetailPriceWithLabel, new { Model.RetailPrice })
             </div>
-            <div class="auction-tile-winning-price">
-                @StringFormatter.ObjectFormat(Global.WinningPriceWithLabel, new {WinningPrice = Model.WonByAmount})
-            </div>
+            @if (!string.IsNullOrWhiteSpace(Model.WonByAmount))
+            {
+                <div class="auction-tile-winning-price">
+                    @StringFormatter.ObjectFormat(Global.WinningPriceWithLabel, new { WinningPrice = Model.WonByAmount })
+                </div>
+            }
         </div>
         @if (Model.WonByUserName != null)
         {
             <div class="auction-tile-won-by-avater auction-tile-row">
-                <img src="@Model.WonByAvatarUrl" alt="@Model.WonByUserName" width="64" height="64"/>
+                <img src="@Model.WonByAvatarUrl" alt="@Model.WonByUserName" width="64" height="64" />
                 <div class="auction-title-username">@Model.WonByUserName</div>
             </div>
         }

@@ -8,12 +8,10 @@
 <table class="@Html.Css().GridTable">
     <thead>
         <tr>
+            <th></th>
             <th>Name</th>
             <th>Description</th>
-            <th>Icon URL</th>
-            <th>
-                XP Awarded
-            </th>
+            <th>XP Awarded</th>
             <th></th>
         </tr>
     </thead>
@@ -21,18 +19,11 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td><small>@Html.DisplayFor(modelItem => item.IconUrl)</small>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.XpAward)
-                </td>
-                <td>
+                <td><img class="img-thumbnail" src="@item.IconUrl" alt="@item.Name" width="32" /></td>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>@item.XpAward</td>
+                <td class="link-cell">
                     @Html.ActionLink("Edit", "Edit", new { id = item.TrophyId })
                 </td>
             </tr>

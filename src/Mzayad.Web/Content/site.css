@@ -748,7 +748,7 @@ input[type="checkbox"].input-validation-error {
   width: 100%;
   float: left;
   display: flex;
-  padding: 0 10px;
+  padding: 0 10px 20px 10px;
 }
 @media (min-width: 560px) {
   #closed-auctions li {
