@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Mzayad.Web.Core.Services
+namespace Mzayad.Web.Core.Caching
 {
     public interface ICacheService
     {

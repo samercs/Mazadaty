@@ -4,6 +4,7 @@ using Mzayad.Web.Core.Services;
 using OrangeJetpack.Services.Client.Messaging;
 using OrangeJetpack.Services.Client.Storage;
 using System.Web.Http;
+using Mzayad.Web.Core.Caching;
 
 namespace Mzayad.Web.Controllers
 {

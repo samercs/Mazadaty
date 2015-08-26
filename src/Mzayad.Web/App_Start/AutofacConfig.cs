@@ -9,6 +9,7 @@ using Autofac.Integration.SignalR;
 using Microsoft.AspNet.SignalR;
 using Mzayad.Data;
 using Mzayad.Services.Activity;
+using Mzayad.Web.Core.Caching;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Services.Client.Messaging;
 using OrangeJetpack.Services.Client.Storage;

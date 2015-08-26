@@ -3,6 +3,7 @@ using Microsoft.AspNet.SignalR;
 using Mzayad.Data;
 using Mzayad.Web.Core.Services;
 using System.Threading.Tasks;
+using Mzayad.Web.Core.Caching;
 
 namespace Mzayad.Web.SignalR
 {

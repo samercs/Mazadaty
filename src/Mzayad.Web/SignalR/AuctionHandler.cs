@@ -5,8 +5,8 @@ using Mzayad.Models.Enums;
 using Mzayad.Services;
 using Mzayad.Services.Activity;
 using Mzayad.Services.Identity;
+using Mzayad.Web.Core.Caching;
 using Mzayad.Web.Core.Configuration;
-using Mzayad.Web.Core.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -16,8 +16,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Mzayad.Services.Trophies;
-using OrangeJetpack.Services.Client.Messaging;
 
 namespace Mzayad.Web.SignalR
 {

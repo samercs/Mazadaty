@@ -367,6 +367,9 @@
     <Compile Include="Core\ActionResults\ExcelResult.cs" />
     <Compile Include="Core\Attributes\LanguageRoutePrefix.cs" />
     <Compile Include="Core\Attributes\RequireHttpsAttribute.cs" />
+    <Compile Include="Core\Caching\HttpCacheService.cs" />
+    <Compile Include="Core\Caching\ICacheService.cs" />
+    <Compile Include="Core\Caching\RedisCacheService.cs" />
     <Compile Include="Core\Configuration\AddressPartialResolver.cs" />
     <Compile Include="Core\Attributes\RoleAuthorizeAttribute.cs" />
     <Compile Include="Areas\Admin\Models\Categories\AddViewModel.cs" />
@@ -379,10 +382,7 @@
     <Compile Include="Core\Configuration\CustomViewPage.cs" />
     <Compile Include="Core\ModelBinder\DateTimeModelBinder.cs" />
     <Compile Include="Core\Providers\ApplicationOAuthProvider.cs" />
-    <Compile Include="Core\Services\HttpCacheService.cs" />
-    <Compile Include="Core\Services\ICacheService.cs" />
     <Compile Include="Core\Services\IRequestService.cs" />
-    <Compile Include="Core\Services\RedisCacheService.cs" />
     <Compile Include="Core\Services\RequestService.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -837,7 +837,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Api\Views\Shared\" />
-    <Folder Include="Core\Caching\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mzayad.Core\Mzayad.Core.csproj">

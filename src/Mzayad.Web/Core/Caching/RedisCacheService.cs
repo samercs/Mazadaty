@@ -1,16 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using StackExchange.Redis;
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using StackExchange.Redis;
 
-namespace Mzayad.Web.Core.Services
+namespace Mzayad.Web.Core.Caching
 {
     public class RedisCacheService : ICacheService
     {

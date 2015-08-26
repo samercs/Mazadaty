@@ -133,7 +133,6 @@
     <Compile Include="Trophies\TrophiesChecker.cs" />
     <Compile Include="Trophies\TrophiesEngine.cs" />
     <Compile Include="TrophyService.cs" />
-    <Compile Include="UserProfileService.cs" />
     <Compile Include="WishListService.cs" />
   </ItemGroup>
   <ItemGroup>
