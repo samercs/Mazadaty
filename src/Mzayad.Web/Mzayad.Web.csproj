@@ -417,7 +417,10 @@
     <Compile Include="Models\Auctions\AuctionViewModel.cs" />
     <Compile Include="Models\Auctions\ClosedAuctionsViewModel.cs" />
     <Compile Include="Models\Auctions\ProductSpecificationViewModel.cs" />
+    <Compile Include="Models\BidModel.cs" />
     <Compile Include="Models\Home\IndexViewModel.cs" />
+    <Compile Include="Models\LiveAuctionExtendedModel.cs" />
+    <Compile Include="Models\LiveAuctionModel.cs" />
     <Compile Include="Models\Order\DetailsViewModel.cs" />
     <Compile Include="Models\Order\OrderSummaryViewModel.cs" />
     <Compile Include="Models\Order\OrderViewModel.cs" />
@@ -432,7 +435,6 @@
     <Compile Include="Models\WishList\AddViewModel.cs" />
     <Compile Include="Models\WishList\IndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SignalR\AuctionModel.cs" />
     <Compile Include="SignalR\AuctionHandler.cs" />
     <Compile Include="SignalR\AuctionHub.cs" />
     <Compile Include="SignalR\UserHandler.cs" />

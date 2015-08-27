@@ -1,44 +1,43 @@
-﻿using System;
+using Mzayad.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Mzayad.Models;
 using Newtonsoft.Json;
 
-namespace Mzayad.Web.SignalR
+namespace Mzayad.Web.Models
 {
     [Serializable]
-    internal class AuctionModel
+    internal class LiveAuctionModel
     {
         public int AuctionId { get; set; }
         public int SecondsLeft { get; set; }
         public decimal? LastBidAmount { get; set; }
-        
-        [JsonIgnore]
-        public DateTime StartUtc { get; set; }
+
+        internal DateTime StartUtc;
+        internal int Duration;
+        internal decimal BidIncrement;
 
         [JsonIgnore]
-        public int Duration { get; set; }
-
-        public decimal BidIncrement { get; set; }
-
-        //private BidModel[] _bids;
-        //public Queue<BidModel> Bids
-        //{
-        //    get { return new Queue<BidModel>(_bids); }
-        //    set { _bids = value.ToArray(); }
-        //}
-
         public Queue<BidModel> Bids { get; set; }
 
-        public static AuctionModel Create(Auction auction)
+        [JsonProperty("bids")]
+        public BidModel[] BidsReversed
         {
-            var model = new AuctionModel
+            get
+            {
+                return Bids.OrderByDescending(i => i.BidAmount).ToArray();
+            }
+        }
+
+        public static LiveAuctionModel Create(Auction auction)
+        {
+            var model = new LiveAuctionModel
             {
                 AuctionId = auction.AuctionId,
                 StartUtc = auction.StartUtc,
                 Duration = auction.Duration,
                 BidIncrement = auction.BidIncrement,
-                Bids = GetBidsQueue(auction.Bids)
+                Bids = BidModel.Create(auction.Bids)
             };
 
             model.LastBidAmount = model.Bids.Any() ? model.Bids.Max(i => i.BidAmount) : 0;
@@ -47,16 +46,7 @@ namespace Mzayad.Web.SignalR
             return model;
         }
 
-        private static Queue<BidModel> GetBidsQueue(IEnumerable<Bid> bids)
-        {
-            return new Queue<BidModel>(bids
-                .OrderByDescending(i => i.BidId)
-                .Take(3)
-                .OrderBy(i => i.BidId)
-                .Select(BidModel.Create));
-        }
-
-        private void UpdateSecondsLeft()
+        internal void UpdateSecondsLeft()
         {
             SecondsLeft = (int)Math.Floor(StartUtc.AddMinutes(Duration).Subtract(DateTime.UtcNow).TotalSeconds);
         }
@@ -86,23 +76,5 @@ namespace Mzayad.Web.SignalR
 
             return bid;
         }
-    }
-
-    [Serializable]
-    internal class BidModel
-    {
-        public string AvatarUrl { get; set; }
-        public string UserName { get; set; }
-        public decimal BidAmount { get; set; }
-
-        internal static BidModel Create(Bid bid)
-        {
-            return new BidModel
-            {
-                AvatarUrl = bid.User.AvatarUrl,
-                UserName = bid.User.UserName,
-                BidAmount = bid.Amount
-            };
-        } 
     }
 }

@@ -4,6 +4,7 @@ using Mzayad.Web.Core.Services;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Mzayad.Web.Areas.Api.Models.Auctions;
+using Mzayad.Web.Models;
 
 namespace Mzayad.Web.Areas.Api.Controllers
 {
@@ -22,7 +23,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
         public async Task<IHttpActionResult> GetLiveAuctions()
         {
             var auctions = await _auctionService.GetLiveAuctions(Language);
-            var viewModel = auctions.Select(AuctionModel.Create);
+            var viewModel = auctions.Select(LiveAuctionExtendedModel.Create);
 
             return Ok(viewModel);
         }
