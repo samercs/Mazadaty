@@ -35,7 +35,7 @@
         var minute = parent.find(".minute-picker").val();
         date.setHours(hour);
         date.setMinutes(minute);
-        hidden.val(date.toLocaleString());
+        hidden.val(date.toISOString());
     };
     var bindEvents = function () {
         $("form").on("change", ".auto-submit", autoSubmitForm);

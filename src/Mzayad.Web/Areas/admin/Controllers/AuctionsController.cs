@@ -9,7 +9,6 @@ using Mzayad.Web.Areas.admin.Models.Auctions;
 using Mzayad.Web.Controllers;
 using Mzayad.Web.Core.ActionResults;
 using Mzayad.Web.Core.Attributes;
-using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Extensions;
@@ -148,7 +147,6 @@ namespace Mzayad.Web.Areas.admin.Controllers
             
             foreach (var auction in auctions)
             {
-                auction.StartUtc = auction.StartUtc.AddHours(3);
                 auction.Product.Localize("en", i => i.Name);
             }
 
@@ -219,7 +217,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             auction.MaximumBid = model.Auction.MaximumBid;
             auction.ProductId = model.Auction.ProductId;
             auction.RetailPrice = model.Auction.RetailPrice;
-            auction.StartUtc = model.Auction.StartUtc.AddHours(-3); // AST > UTC
+            auction.StartUtc = model.Auction.StartUtc;
             auction.Status = model.Auction.Status;
             auction.BuyNowEnabled = model.Auction.BuyNowEnabled;
             auction.BuyNowPrice = model.Auction.BuyNowPrice;

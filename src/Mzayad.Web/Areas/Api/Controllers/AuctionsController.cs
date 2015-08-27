@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Mzayad.Services;
-using Mzayad.Web.Controllers;
 using Mzayad.Web.Core.Services;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -19,8 +18,8 @@ namespace Mzayad.Web.Areas.Api.Controllers
         }
 
         [HttpGet]
-        [Route("current")]
-        public async Task<IHttpActionResult> CurrentAuctions()
+        [Route("live")]
+        public async Task<IHttpActionResult> GetLiveAuctions()
         {
             var auctions = await _auctionService.GetCurrentAuctions("en"); // TODO use correct language
             var viewModel = auctions.Select(AuctionModel.Create);

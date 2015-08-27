@@ -3,7 +3,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(Mzayad.Web.Startup))]
+[assembly: OwinStartup(typeof(Mzayad.Web.Startup))]
 namespace Mzayad.Web
 {
     public partial class Startup
@@ -11,8 +11,6 @@ namespace Mzayad.Web
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-
-            //app.MapSignalR();
 
             app.Map("/signalr", map =>
             {

@@ -1,12 +1,12 @@
-﻿using Mzayad.Data;
+using System.Web.Http;
+using Mzayad.Data;
 using Mzayad.Services;
+using Mzayad.Web.Core.Caching;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Services.Client.Messaging;
 using OrangeJetpack.Services.Client.Storage;
-using System.Web.Http;
-using Mzayad.Web.Core.Caching;
 
-namespace Mzayad.Web.Controllers
+namespace Mzayad.Web.Areas.Api.Controllers
 {
     public abstract class ApplicationApiController : ApiController
     {

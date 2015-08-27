@@ -47,7 +47,7 @@
         date.setHours(hour);
         date.setMinutes(minute);
 
-        hidden.val(date.toLocaleString());
+        hidden.val(date.toISOString());
     };
 
     var bindEvents = () => {

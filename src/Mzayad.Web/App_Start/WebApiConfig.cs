@@ -9,11 +9,8 @@ namespace Mzayad.Web
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
-            // Configure Web API to use only bearer token authentication.
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
-            //config.EnableCors(); // TODO this doesn't add CORs headers, added to web.config instead
 
             config.MapHttpAttributeRoutes();
 

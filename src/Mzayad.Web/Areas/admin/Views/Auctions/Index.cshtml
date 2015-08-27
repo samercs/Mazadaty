@@ -37,7 +37,7 @@
         columns.Bound(i => i.Status).ClientTemplate("#= getLabel(data) #");
         columns.Bound(i => i.StartUtc).Format("{0:dd/MM/yyyy HH:mm}").Title("Start");
         columns.Bound(i => i.Duration).Format("{0} minutes");
-        columns.Bound(i => i.BuyNowEnabled).Title("Buy Now").ClientTemplate("#= KendoFormatter.getYesNo(data.BuyNowEnabled) #"); ;
+        columns.Bound(i => i.BuyNowEnabled).Title("Buy Now").ClientTemplate("#= KendoFormatter.getYesNo(data.BuyNowEnabled) #");
         columns.LinkColumn("Details", "auctions/edit/#=AuctionId#");
     })
 )
