@@ -21,7 +21,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
         [Route("live")]
         public async Task<IHttpActionResult> GetLiveAuctions()
         {
-            var auctions = await _auctionService.GetCurrentAuctions("en"); // TODO use correct language
+            var auctions = await _auctionService.GetLiveAuctions(Language);
             var viewModel = auctions.Select(AuctionModel.Create);
 
             return Ok(viewModel);
@@ -31,7 +31,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
         [Route("{auctionId:int}")]
         public async Task<IHttpActionResult> GetAuction(int auctionId)
         {
-            var auction = await _auctionService.GetAuction(auctionId, "en"); // TODO use correct language
+            var auction = await _auctionService.GetAuction(auctionId, Language);
             if (auction == null)
             {
                 return NotFound();
