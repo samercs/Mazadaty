@@ -83,13 +83,6 @@ namespace Mzayad.Services
                 return false;
             }
         }
-        public async void AddToUser(IEnumerable<Trophy> trophies, string userId)
-        {
-            foreach(var trophy in trophies)
-            {
-                await AddToUser(trophy.TrophyId, userId);
-            }
-        }
 
         public async Task<UserTrophy> GetLastEarnedTrophy(TrophyKey key, string userId)
         {
