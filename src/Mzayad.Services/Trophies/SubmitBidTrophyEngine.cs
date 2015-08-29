@@ -21,9 +21,8 @@ namespace Mzayad.Services.Trophies
 
         public IEnumerable<Trophy> EvaluateActivityForPossibleTrophy(ApplicationUser user)
         {
+            // Bid on New Year
             yield return CheckBidOnNewYears(user.Id);
-            // bid on Eid
-            // bid on birthday
         }
 
         private Trophy CheckBidOnNewYears(string userId)
