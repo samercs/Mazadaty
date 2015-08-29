@@ -115,6 +115,7 @@
     <Compile Include="EmailTemplateService.cs" />
     <Compile Include="Identity\RoleManager.cs" />
     <Compile Include="Identity\UserService.cs" />
+    <Compile Include="IslamicCalendarService.cs" />
     <Compile Include="LevelService.cs" />
     <Compile Include="NotificationService.cs" />
     <Compile Include="OrderService.cs" />

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mzayad.Models
 {
@@ -7,21 +9,22 @@ namespace Mzayad.Models
     {
         public int IslamicCalendarId { get; set; }
 
+        [Required , Index("IX_HijriYear",IsUnique = true)]
         public int HijriYear { get; set; }
 
-        [Required]
+        [Required , DisplayName("New Year")]
         public DateTime NewYear { get; set; }
 
-        [Required]
+        [Required, DisplayName("Eid Fetr From")]
         public DateTime EidFetrFrom { get; set; }
 
-        [Required]
+        [Required, DisplayName("Eid Fetr To")]
         public DateTime EidFetrTo { get; set; }
 
-        [Required]
+        [Required, DisplayName("Eid Adha From")]
         public DateTime EidAdhaFrom { get; set; }
 
-        [Required]
+        [Required, DisplayName("Eid Adha To")]
         public DateTime EidAdhaTo { get; set; }
 
         public static IslamicCalendar CreateInstance(int hijriYear)

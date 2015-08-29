@@ -325,6 +325,7 @@
     <Compile Include="Areas\Admin\Controllers\SplashAdsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SponsorsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubscriptionsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\IslamicCalendarController.cs" />
     <Compile Include="Areas\Admin\Controllers\TrophiesController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\Admin\Controllers\WishListsController.cs" />
@@ -339,6 +340,7 @@
     <Compile Include="Areas\Admin\Models\SplashAds\IndexViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Sponsors\AddViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Subscription\AddViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\IslamicCalendars\EditViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Trophies\EditViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Users\DetailsViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Users\EditSubscriptionViewModel.cs" />
@@ -640,6 +642,8 @@
     <Content Include="manifest.json" />
     <Content Include="Content\site-auctions.less" />
     <Content Include="Scripts\auctions.js.map" />
+    <Content Include="Areas\Admin\Views\IslamicCalendar\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\IslamicCalendar\Edit.cshtml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="mstile-144x144.png" />
     <Content Include="mstile-150x150.png" />
