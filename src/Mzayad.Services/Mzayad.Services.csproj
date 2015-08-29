@@ -128,10 +128,9 @@
     <Compile Include="SubscriptionService.cs" />
     <Compile Include="TokenService.cs" />
     <Compile Include="Identity\UserManager.cs" />
-    <Compile Include="Trophies\BidOnNewYearTrophyChecker.cs" />
     <Compile Include="Trophies\EnumExtensions.cs" />
-    <Compile Include="Trophies\TrophiesChecker.cs" />
-    <Compile Include="Trophies\TrophiesEngine.cs" />
+    <Compile Include="Trophies\SubmitBidTrophyEngine.cs" />
+    <Compile Include="Trophies\TrophyEngineFactory.cs" />
     <Compile Include="TrophyService.cs" />
     <Compile Include="WishListService.cs" />
   </ItemGroup>
