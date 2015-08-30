@@ -29,7 +29,7 @@ namespace Mzayad.Services.Trophies
 
             // Bid on New Islamic Year
             yield return CheckBidOnIslamicNewYear(user.Id);
-            
+
             // Bid on Eid
             yield return CheckBidOnEid(user.Id);
         }
@@ -49,7 +49,7 @@ namespace Mzayad.Services.Trophies
         }
         private Trophy CheckBidOnIslamicNewYear(string userId)
         {
-            if(calendar == null)
+            if (calendar == null)
             {
                 return null;
             }
@@ -67,12 +67,33 @@ namespace Mzayad.Services.Trophies
                 return null;
             }
             var userTrophy = _trophyService.GetLastEarnedTrophy(TrophyKey.BidOnEid, userId).Result;
-            if ((userTrophy.CreatedUtc.Date>= calendar.EidAdhaFrom.Date && userTrophy.CreatedUtc.Date <= calendar.EidAdhaTo.Date)
+            if ((userTrophy.CreatedUtc.Date >= calendar.EidAdhaFrom.Date && userTrophy.CreatedUtc.Date <= calendar.EidAdhaTo.Date)
                 || (userTrophy.CreatedUtc.Date >= calendar.EidFetrFrom.Date && userTrophy.CreatedUtc.Date <= calendar.EidFetrTo.Date))
             {
                 return null;
             }
-            return new Trophy() { TrophyId = (int)TrophyKey.BidOnEid};
+            return new Trophy() { TrophyId = (int)TrophyKey.BidOnEid };
+        }
+        private Trophy CheckBidOnAnniversary(string userId)
+        {
+            var user = _userService.GetUserById(userId).Result;
+            if (user == null)
+            {
+                return null;
+            }
+            if (user.CreatedUtc.Day != DateTime.Now.Day || user.CreatedUtc.Month != DateTime.Now.Month)
+            {
+                return null;
+            }
+            var userTrophy = _trophyService.GetLastEarnedTrophy(TrophyKey.BidOnAnniversary, userId).Result;
+            if (userTrophy != null)
+            {
+                if (userTrophy.CreatedUtc.Date == DateTime.Now.Date || userTrophy.CreatedUtc.Year == user.CreatedUtc.Date.Year)
+                {
+                    return null;
+                }
+            }
+            return new Trophy() { TrophyId = (int)TrophyKey.BidOnAnniversary };
         }
     }
 }
