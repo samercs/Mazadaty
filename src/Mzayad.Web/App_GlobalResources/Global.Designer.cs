@@ -1600,6 +1600,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Trophies Achieved.
+        /// </summary>
+        public static string TrophiesAchieved {
+            get {
+                return ResourceManager.GetString("TrophiesAchieved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string UserName {
@@ -1650,6 +1659,15 @@ namespace Mzayad.Web.Resources {
         public static string UserNameValidateIsValid {
             get {
                 return ResourceManager.GetString("UserNameValidateIsValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View All.
+        /// </summary>
+        public static string ViewAll {
+            get {
+                return ResourceManager.GetString("ViewAll", resourceCulture);
             }
         }
         

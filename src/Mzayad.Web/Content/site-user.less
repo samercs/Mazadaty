@@ -2,14 +2,30 @@
 
 #dashboard-header {
     background-color: #262626;
+    margin-bottom: 20px;
 }
 
 .dashboard-cell {
-    padding: 38px 0;
+    padding: 24px;
+    text-align: center;
+
+    @media @media-desktop {
+        padding: 38px 0;
+    }
 }
 
 #dashboard-avatar {
-    padding: 30px 0 30px 30px;
+    padding: 30px;
+
+    @media @media-desktop {
+        padding-right: 0;
+    }
+}
+
+#dashboard-details {
+    @media @media-desktop {
+        text-align: left;
+    }
 }
 
 .dashboard-padded {
@@ -43,11 +59,6 @@
     }
 }
 
-.dashboard-number,
-.dashboard-label {
-    text-align: center;
-}
-
 .dashboard-number {
     padding-bottom: 16px;
     font-size: @font-size + 1.5;
@@ -58,4 +69,69 @@
 .dashboard-label {
     font-size: @font-size + 0.5;
     color: @white;
+}
+
+.dashboard-panel {
+    border: 1px solid @lightgrey;
+    box-shadow: none;
+
+    .panel-heading {
+        background-image: none;
+        background-color: @lightgrey;
+
+        h3 {
+            display: inline-block;
+            font-size: @font-size + 0.3;
+            font-weight: normal;
+        }
+
+        a {
+            display: inline-block;
+            padding: 4px 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background-color: @white;
+            color: @black;
+            border-radius: 500px;
+        }
+    }
+}
+
+#dashboard-trophies {
+    margin: 0 -10px -20px -10px;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+
+    li {
+        width: 50%;
+        float: left;
+        display: flex;
+        padding: 0 10px 20px 10px;
+    }
+
+    @media (min-width: 560px) {
+        li {
+            width: 25%;
+        }
+    }
+
+    @media (min-width: 992px) {
+        li {
+            width: 12.5%;
+        }
+    }
+}
+
+.dashboard-trophy {
+    min-width: 0;
+    border: 1px solid @lightgrey;
+    text-align: center;
+
+    .dashboard-trophy-name {
+        padding: 8px;
+        font-size: 1.4rem;
+    }
 }

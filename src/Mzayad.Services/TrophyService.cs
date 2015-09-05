@@ -47,6 +47,7 @@ namespace Mzayad.Services
                 var trophies = await dc.UsersTrophies
                     .Include(i => i.Trophy)
                     .Where(i => i.UserId == userId)
+                    .OrderByDescending(i => i.CreatedUtc)
                     .Select(i => i.Trophy)
                     .ToListAsync();
 

@@ -47,7 +47,7 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<IReadOnlyCollection<Bid>> GetRecentBidHistoryForUser(ApplicationUser user, string language = null)
+        public async Task<IReadOnlyCollection<Bid>> GetRecentBidHistoryForUser(ApplicationUser user, string language)
         {
             using (var dc = DataContext())
             {
@@ -58,12 +58,9 @@ namespace Mzayad.Services
                     .Take(50)
                     .ToListAsync();
 
-                if (language != null)
+                foreach (var auction in bids.Select(i => i.Auction).Distinct())
                 {
-                    foreach (var auction in bids.Select(i => i.Auction).Distinct())
-                    {
-                        auction.Localize(language, i => i.Title);
-                    }
+                    auction.Localize(language, i => i.Title);
                 }
 
                 return bids;

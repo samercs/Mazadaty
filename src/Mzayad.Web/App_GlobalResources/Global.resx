@@ -678,4 +678,10 @@
   <data name="Tokens" xml:space="preserve">
     <value>Tokens</value>
   </data>
+  <data name="TrophiesAchieved" xml:space="preserve">
+    <value>Trophies Achieved</value>
+  </data>
+  <data name="ViewAll" xml:space="preserve">
+    <value>View All</value>
+  </data>
 </root>
