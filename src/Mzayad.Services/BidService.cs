@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Mzayad.Data;
 using Mzayad.Models;
 using OrangeJetpack.Localization;
+using System;
 
 namespace Mzayad.Services
 {
@@ -68,6 +69,18 @@ namespace Mzayad.Services
 
                 return bids;
             }
-        } 
+        }
+
+        public async Task<IReadOnlyCollection<Bid>> GetByUser(string userId, DateTime? from = null)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.Bids
+                    .Where(i => i.UserId == userId && (from.HasValue && i.CreatedUtc.Date >= from.Value.Date || !from.HasValue))
+                    .GroupBy(i => i.CreatedUtc.Date)
+                    .Select(g => g.OrderByDescending(i=> i.CreatedUtc).First())
+                    .ToListAsync();
+            }
+        }
     }
 }

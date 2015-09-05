@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
@@ -12,6 +13,8 @@ namespace Mzayad.Services.Trophies
         private readonly UserService _userService;
         private readonly TrophyService _trophyService;
         private readonly IslamicCalendarService _islamicCalendarService;
+        private readonly BidService _bidService;
+
         private IslamicCalendar calendar;
 
         public SubmitBidTrophyEngine(IDataContextFactory dataContextFactory)
@@ -19,6 +22,8 @@ namespace Mzayad.Services.Trophies
             _userService = new UserService(dataContextFactory);
             _trophyService = new TrophyService(dataContextFactory);
             _islamicCalendarService = new IslamicCalendarService(dataContextFactory);
+            _bidService = new BidService(dataContextFactory);
+
             calendar = _islamicCalendarService.GetByDate(DateTime.UtcNow.Date).Result;
         }
 
@@ -32,6 +37,9 @@ namespace Mzayad.Services.Trophies
 
             // Bid on Eid
             yield return CheckBidOnEid(user.Id);
+
+            //Bid 3 days in a row
+            yield return CheckBid3DaysInRow(user.Id);
         }
 
         private Trophy CheckBidOnNewYear(string userId)
@@ -94,6 +102,35 @@ namespace Mzayad.Services.Trophies
                 }
             }
             return new Trophy() { TrophyId = (int)TrophyKey.BidOnAnniversary };
+        }
+        private Trophy CheckBid3DaysInRow(string userId)
+        {
+            var bids = _bidService.GetByUser(userId, DateTime.Now.AddDays(-2)).Result;
+            for (var x = -2; x < 0; x++)
+            {
+                if (!bids.Any(i => i.CreatedUtc.Date == DateTime.Now.AddDays(x).Date))
+                {
+                    return null;
+                }
+            }
+            if (!GainBidInRowTrophyBefore(TrophyKey.BidDayStreak3, userId))
+            {
+                return new Trophy() { TrophyId = (int)TrophyKey.BidDayStreak3 };
+            }
+            return null;
+        }
+        private bool GainBidInRowTrophyBefore(TrophyKey key, string userId)
+        {
+            var userTrophy = _trophyService.GetLastEarnedTrophy(key, userId).Result;
+            if (userTrophy == null)
+            {
+                return false;
+            }
+            if (userTrophy.CreatedUtc.Date == DateTime.Now.Date)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
