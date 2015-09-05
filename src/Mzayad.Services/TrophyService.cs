@@ -40,6 +40,20 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<IReadOnlyCollection<Trophy>> GetTrophies(string userId, string languageCode)
+        {
+            using (var dc = new DataContext())
+            {
+                var trophies = await dc.UsersTrophies
+                    .Include(i => i.Trophy)
+                    .Where(i => i.UserId == userId)
+                    .Select(i => i.Trophy)
+                    .ToListAsync();
+
+                return trophies.Localize(languageCode, i => i.Name, i => i.Description).ToList();
+            }
+        }
+
         public async Task<IEnumerable<UserTrophy>> GetMostRecentByUser(string userId, string languageCode = "en")
         {
             using (var dc = new DataContext())

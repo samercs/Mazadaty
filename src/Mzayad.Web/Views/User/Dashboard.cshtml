@@ -8,13 +8,117 @@
     ViewBag.Title = Global.Dashboard;
 }
 
+@section styles{
+    <style>
+        #page-title {
+            display: none;
+        }
+    </style>
+}
+
+<div id="dashboard-header">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-3">
+                    <div id="dashboard-avatar">
+                        <img class="img-responsive" src="@Model.User.AvatarUrl" alt="@Model.User.UserName" />
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="dashboard-cell">
+                        <div id="dashboard-username" class="text-uppercase">@Model.User.UserName</div>
+                        <div id="dashboard-subscription" class="text-uppercase">
+                            <small>
+                                @F(Global.SubscriptionLabelAndStatus, new
+                           {
+                               StatusText = Html.DisplayFor(m => m.User.SubscriptionUtc, "SubscriptionUtc").ToString()
+                           })
+                            </small>
+                        </div>
+                        <div id="dashboard-progress">
+                            <div class="progress pull-left">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="@Model.LevelPercentage" aria-valuemin="0" aria-valuemax="100" style="width: @Model.LevelPercentage%;">
+                                    <span class="sr-only">@Model.LevelPercentage% Complete</span>
+                                </div>
+                            </div>
+                            <small>@(Model.User.Xp)/@(Model.NextLevel.XpRequired)</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="dashboard-cell">
+                        <div class="dashboard-number">@Model.User.Xp</div>
+                        <div class="dashboard-label text-uppercase">@Global.Experience</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="dashboard-cell">
+                        <div class="dashboard-number">@Model.User.Tokens</div>
+                        <div class="dashboard-label text-uppercase">@Global.Tokens</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="dashboard-cell">
+                        <div class="dashboard-number">@Model.Trophies.Count</div>
+                        <div class="dashboard-label text-uppercase">@Global.Trophies</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title" style="display: inline-block">Account</h3>
         <div class="pull-right"><a href="@Url.Action("EditAccount")"><small>@Global.EditAccount</small></a></div>
     </div>
     <div class="panel-body form-horizontal">
-        
+
         <div class="form-group">
             <label class="col-sm-2 control-label">Username</label>
             <div class="col-sm-10">
@@ -49,23 +153,26 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title" style="display: inline-block">Profile</h3>
-        <div class="pull-right"><a href="@Url.Action("EditProfile")"><small>@Global.EditProfile</small></a>
+        <div class="pull-right">
+            <a href="@Url.Action("EditProfile")"><small>@Global.EditProfile</small></a>
         </div>
     </div>
     <div class="panel-body form-horizontal">
         <div class="form-group">
             <div class="col-sm-2">
-                <img class="img-responsive" src="@Model.User.AvatarUrl" alt="responsive"/>
+                <img class="img-responsive" src="@Model.User.AvatarUrl" alt="responsive" />
             </div>
             <div class="col-sm-10">
                 @switch (Model.User.ProfileStatus)
                 {
                     case UserProfileStatus.Private:
-                        <p class="form-control-static">Your profile is currently <strong class="text-no"><i class="fa fa-lock"></i> PRIVATE</strong> and hidden from other users.
+                        <p class="form-control-static">
+                            Your profile is currently <strong class="text-no"><i class="fa fa-lock"></i> PRIVATE</strong> and hidden from other users.
                         </p>
                         break;
                     case UserProfileStatus.Public:
-                        <p class="form-control-static">Your profile is currently <strong class="text-yes"><i class="fa fa-unlock"></i> PUBLIC</strong> and visible to other Mzayad users.
+                        <p class="form-control-static">
+                            Your profile is currently <strong class="text-yes"><i class="fa fa-unlock"></i> PUBLIC</strong> and visible to other Mzayad users.
                         </p>
                         break;
                 }
@@ -74,7 +181,7 @@
     </div>
 </div>
 
-@if (Model.BidHistory.Any())
+@if (Model.Bids.Any())
 {
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -91,15 +198,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach (var item in Model.BidHistory)
+                    @foreach (var item in Model.Bids)
                 {
-                    <tr>
-                        <td>@DateTimeFormatter.ToLocalTime(item.CreatedUtc, DateTimeFormatter.Format.Full)</td>
-                        <td>@item.Auction.Title</td>
-                        <td>@CurrencyFormatter.Format(item.Amount)</td>
-                        <td>@TimeSpan.FromSeconds(item.SecondsLeft).Humanize(4)</td>
-                    </tr>
-                }
+                        <tr>
+                            <td>@DateTimeFormatter.ToLocalTime(item.CreatedUtc, DateTimeFormatter.Format.Full)</td>
+                            <td>@item.Auction.Title</td>
+                            <td>@CurrencyFormatter.Format(item.Amount)</td>
+                            <td>@TimeSpan.FromSeconds(item.SecondsLeft).Humanize(4)</td>
+                        </tr>
+                    }
                 </tbody>
             </table>
 

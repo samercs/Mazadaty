@@ -787,3 +787,51 @@ input[type="checkbox"].input-validation-error {
 .auction-tile .auction-tile-winning-price {
   font-weight: bold;
 }
+#dashboard-header {
+  background-color: #262626;
+}
+.dashboard-cell {
+  padding: 38px 0;
+}
+#dashboard-avatar {
+  padding: 30px 0 30px 30px;
+}
+.dashboard-padded {
+  padding-bottom: 4px;
+}
+#dashboard-username {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #33ace0;
+  padding-bottom: 4px;
+}
+#dashboard-subscription {
+  color: #ffffff !important;
+  padding-bottom: 4px;
+}
+#dashboard-progress {
+  color: #ffffff;
+}
+#dashboard-progress .progress {
+  width: 200px;
+  height: 6px;
+  margin: 8px 8px 0 0;
+}
+#dashboard-progress .progress-bar {
+  background-image: none;
+  background-color: #33ace0;
+}
+.dashboard-number,
+.dashboard-label {
+  text-align: center;
+}
+.dashboard-number {
+  padding-bottom: 16px;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #33ace0;
+}
+.dashboard-label {
+  font-size: 2rem;
+  color: #ffffff;
+}

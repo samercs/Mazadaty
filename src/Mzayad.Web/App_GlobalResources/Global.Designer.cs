@@ -547,6 +547,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Experience.
+        /// </summary>
+        public static string Experience {
+            get {
+                return ResourceManager.GetString("Experience", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to First Name.
         /// </summary>
         public static string FirstName {
@@ -1456,6 +1465,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Subscription: {StatusText}.
+        /// </summary>
+        public static string SubscriptionLabelAndStatus {
+            get {
+                return ResourceManager.GetString("SubscriptionLabelAndStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;strong&gt;Price:&lt;/strong&gt; {FormattedPrice}.
         /// </summary>
         public static string SubscriptionPriceDetailsLabel {
@@ -1551,6 +1569,15 @@ namespace Mzayad.Web.Resources {
         public static string TimeLeft {
             get {
                 return ResourceManager.GetString("TimeLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tokens.
+        /// </summary>
+        public static string Tokens {
+            get {
+                return ResourceManager.GetString("Tokens", resourceCulture);
             }
         }
         

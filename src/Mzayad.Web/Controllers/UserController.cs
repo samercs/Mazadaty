@@ -48,10 +48,10 @@ namespace Mzayad.Web.Controllers
         {
             var user = await AuthService.CurrentUser();
 
-            var viewModel = new DashboardViewModel
+            var viewModel = new DashboardViewModel(user)
             {
-                User = user,
-                BidHistory = await _bidService.GetRecentBidHistoryForUser(user, Language)
+                Bids = await _bidService.GetRecentBidHistoryForUser(user, Language),
+                Trophies = await _trophyService.GetTrophies(user.Id, Language)
             };
 
             return View(viewModel);

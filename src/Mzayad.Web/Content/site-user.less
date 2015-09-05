@@ -1,0 +1,61 @@
+﻿@import "variables.less";
+
+#dashboard-header {
+    background-color: #262626;
+}
+
+.dashboard-cell {
+    padding: 38px 0;
+}
+
+#dashboard-avatar {
+    padding: 30px 0 30px 30px;
+}
+
+.dashboard-padded {
+    padding-bottom: 4px;
+}
+
+#dashboard-username {
+    font-size: @font-size + 1.5;
+    font-weight: bold;
+    color: @base;
+    .dashboard-padded();
+}
+
+#dashboard-subscription {
+    color: @white !important;
+    .dashboard-padded();
+}
+
+#dashboard-progress {
+    color: @white;
+
+    .progress {
+        width: 200px;
+        height: 6px;
+        margin: 8px 8px 0 0;
+    }
+
+    .progress-bar {
+        background-image: none;
+        background-color: @base;
+    }
+}
+
+.dashboard-number,
+.dashboard-label {
+    text-align: center;
+}
+
+.dashboard-number {
+    padding-bottom: 16px;
+    font-size: @font-size + 1.5;
+    font-weight: bold;
+    color: @base;
+}
+
+.dashboard-label {
+    font-size: @font-size + 0.5;
+    color: @white;
+}

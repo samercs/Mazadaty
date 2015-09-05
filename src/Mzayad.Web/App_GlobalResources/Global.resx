@@ -669,4 +669,13 @@
   <data name="WinningPriceWithLabel" xml:space="preserve">
     <value>Winning Price: {WinningPrice}</value>
   </data>
+  <data name="Experience" xml:space="preserve">
+    <value>Experience</value>
+  </data>
+  <data name="SubscriptionLabelAndStatus" xml:space="preserve">
+    <value>Subscription: {StatusText}</value>
+  </data>
+  <data name="Tokens" xml:space="preserve">
+    <value>Tokens</value>
+  </data>
 </root>
