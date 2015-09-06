@@ -43,14 +43,13 @@ namespace Mzayad.WebJobs
             var message = string.Format("Processing activity {0} for user ID {1}...", activityEvent.Type, activityEvent.UserId);
             await LogMessageAsync(log, message);
 
+            var dataContextFactory = new DataContextFactory();
+            var userService = new UserService(dataContextFactory);
+            var trophyService = new TrophyService(dataContextFactory);
+            var trophyEngine = TrophyEngineFactory.CreateInstance(activityEvent.Type, dataContextFactory);
+
             try
             {
-                var dataContextFactory = new DataContextFactory();
-
-                var _trophyService = new TrophyService(dataContextFactory);
-                ITrophyEngine trophyEngine;
-
-                var userService = new UserService(dataContextFactory);
                 var user = await userService.GetUserById(activityEvent.UserId);
                 if (user == null)
                 {
@@ -60,13 +59,9 @@ namespace Mzayad.WebJobs
 
                 switch (activityEvent.Type)
                 {
-                    case ActivityType.TestActivity:
-                        await HandleTestActivity(user, log);
-                        break;
                     case ActivityType.SubmitBid:
-                        trophyEngine = TrophyEngineFactory.CreateInstance(activityEvent.Type, dataContextFactory);
-                        var submitBidTrophies = trophyEngine.EvaluateActivityForPossibleTrophy(user);
-                        _trophyService.AddToUser(submitBidTrophies, user.Id);
+                        var trophies = trophyEngine.GetEarnedTrophies(user);
+                        trophyService.AwardTrophyToUser(trophies, user.Id);
                         break;
                     default:
                         await LogMessageAsync(log, string.Format("No event handling for activity {0}.", activityEvent.Type));
@@ -81,11 +76,6 @@ namespace Mzayad.WebJobs
                 LogMessage(log, ex.Message);
                 throw;
             }
-        }
-
-        private static async Task HandleTestActivity(ApplicationUser user, TextWriter log)
-        {
-            await LogMessageAsync(log, string.Format("Handling activity for {0}.", user.Email));
         }
     }
 }

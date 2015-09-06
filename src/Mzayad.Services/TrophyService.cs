@@ -82,33 +82,30 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<bool> AddToUser(int trophyId, string userId)
+        public async Task AwardTrophyToUser(TrophyKey trophyKey, string userId)
         {
             using (var dc = new DataContext())
             {
-                var trophy = await dc.Trophies.SingleOrDefaultAsync(i => i.TrophyId == trophyId);
-                if (null != trophy)
-                {
-                    dc.UsersTrophies.Add(new UserTrophy()
-                    {
-                        TrophyId = trophy.TrophyId,
-                        UserId = userId,
-                        XpAwarded = trophy.XpAward
-                    });
-                    var user = await dc.Users.SingleOrDefaultAsync(i => i.Id == userId);
-                    user.Xp += trophy.XpAward;
+                var trophy = await dc.Trophies.SingleOrDefaultAsync(i => i.Key == trophyKey);
 
-                    await dc.SaveChangesAsync();
-                    return true;
-                }
-                return false;
+                dc.UsersTrophies.Add(new UserTrophy
+                {
+                    TrophyId = trophy.TrophyId,
+                    UserId = userId,
+                    XpAwarded = trophy.XpAward
+                });
+
+                var user = await dc.Users.SingleOrDefaultAsync(i => i.Id == userId);
+                user.Xp += trophy.XpAward;
+
+                await dc.SaveChangesAsync();
             }
         }
-        public async void AddToUser(IEnumerable<Trophy> trophies, string userId)
+        public async void AwardTrophyToUser(IEnumerable<TrophyKey> trophyKeys, string userId)
         {
-            foreach (var trophy in trophies)
+            foreach (var trophy in trophyKeys)
             {
-                await AddToUser(trophy.TrophyId, userId);
+                await AwardTrophyToUser(trophy, userId);
             }
         }
 
@@ -116,7 +113,9 @@ namespace Mzayad.Services
         {
             using (var dc = new DataContext())
             {
-                return await dc.UsersTrophies.Where(i => i.UserId == userId && i.TrophyId == (int)key)
+                return await dc.UsersTrophies
+                        .Where(i => i.UserId == userId)
+                        .Where(i => i.Trophy.Key == key)
                         .OrderByDescending(i => i.CreatedUtc)
                         .FirstOrDefaultAsync();
             }
