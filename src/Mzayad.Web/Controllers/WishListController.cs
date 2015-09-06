@@ -49,7 +49,7 @@ namespace Mzayad.Web.Controllers
 
         public ActionResult Remove(int id)
         {
-            return DeleteConfirmation(Global.DeleteWishList, Global.WishListItemDeleteConfirmation);
+            return DeleteConfirmation(Global.RemoveItem, Global.WishListItemDeleteConfirmation);
         }
 
         [HttpPost, ValidateAntiForgeryToken]

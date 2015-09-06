@@ -123,9 +123,6 @@ body {
   padding: 30px 15px 15px 15px !important;
   border: 0;
 }
-.dropdown-menu > li > a {
-  text-align: center;
-}
 .dropdown-menu > li > a:hover,
 .dropdown-menu > li > a:focus {
   color: white !important;
@@ -225,6 +222,9 @@ body {
     width: 1%;
     white-space: nowrap;
   }
+}
+.image-cell {
+  width: 144px;
 }
 .fa-pad-left {
   padding-left: 4px;
@@ -639,7 +639,7 @@ input[type="checkbox"].input-validation-error {
 }
 #home-index #auction-list .auction-item .auction-details .auction-retail-price {
   text-transform: uppercase;
-  color: #aaaaaa;
+  color: #f3f3f3;
   font-size: 1.7rem;
 }
 #home-index #auction-list .auction-item .auction-details .auction-time-left {
@@ -762,7 +762,7 @@ input[type="checkbox"].input-validation-error {
 }
 .auction-tile {
   min-width: 0;
-  border: 1px solid #EBEBEB;
+  border: 1px solid #f3f3f3;
   text-align: center;
 }
 .auction-tile .auction-tile-row {
@@ -782,8 +782,124 @@ input[type="checkbox"].input-validation-error {
   border-top: 1px solid #EBEBEB;
 }
 .auction-tile .auction-tile-retail-price {
-  color: #aaaaaa;
+  color: #f3f3f3;
 }
 .auction-tile .auction-tile-winning-price {
   font-weight: bold;
+}
+#dashboard-header {
+  background-color: #262626;
+  margin-bottom: 20px;
+}
+.dashboard-cell {
+  padding: 24px;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .dashboard-cell {
+    padding: 38px 0;
+  }
+}
+#dashboard-avatar {
+  padding: 30px;
+}
+@media (min-width: 768px) {
+  #dashboard-avatar {
+    padding-right: 0;
+  }
+}
+@media (min-width: 768px) {
+  #dashboard-details {
+    text-align: left;
+  }
+}
+.dashboard-padded {
+  padding-bottom: 4px;
+}
+#dashboard-username {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #33ace0;
+  padding-bottom: 4px;
+}
+#dashboard-subscription {
+  color: #ffffff !important;
+  padding-bottom: 4px;
+}
+#dashboard-progress {
+  color: #ffffff;
+}
+#dashboard-progress .progress {
+  width: 200px;
+  height: 6px;
+  margin: 8px 8px 0 0;
+}
+#dashboard-progress .progress-bar {
+  background-image: none;
+  background-color: #33ace0;
+}
+.dashboard-number {
+  padding-bottom: 16px;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #33ace0;
+}
+.dashboard-label {
+  font-size: 2rem;
+  color: #ffffff;
+}
+.dashboard-panel {
+  border: 1px solid #f3f3f3;
+  box-shadow: none;
+}
+.dashboard-panel .panel-heading {
+  background-image: none;
+  background-color: #f3f3f3;
+}
+.dashboard-panel .panel-heading h3 {
+  display: inline-block;
+  font-size: 1.8rem;
+  font-weight: normal;
+}
+.dashboard-panel .panel-heading a {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  background-color: #ffffff;
+  color: #333333;
+  border-radius: 500px;
+}
+.dashboard-flex-list {
+  margin: 0 -10px -20px -10px;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+.dashboard-flex-list li {
+  width: 50%;
+  float: left;
+  display: flex;
+  padding: 0 10px 20px 10px;
+}
+.dashboard-flex-list li .dashboard-flex-item {
+  min-width: 0;
+  border: 1px solid #f3f3f3;
+  text-align: center;
+}
+.dashboard-flex-list li .dashboard-flex-item .dashboard-flex-name {
+  padding: 8px;
+  font-size: 1.4rem;
+}
+@media (min-width: 560px) {
+  .dashboard-flex-list li {
+    width: 25%;
+  }
+}
+@media (min-width: 992px) {
+  .dashboard-flex-list li {
+    width: 12.5%;
+  }
 }

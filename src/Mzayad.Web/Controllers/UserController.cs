@@ -30,6 +30,8 @@ namespace Mzayad.Web.Controllers
         private readonly AvatarService _avatarService;
         private readonly BidService _bidService;
         private readonly TrophyService _trophyService;
+        private readonly AuctionService _auctionService;
+        private readonly WishListService _wishListService;
 
         public UserController(IAppServices appServices)
             : base(appServices)
@@ -38,9 +40,11 @@ namespace Mzayad.Web.Controllers
             _addressService = new AddressService(DataContextFactory);
             _categoryService = new CategoryService(DataContextFactory);
             _notificationService = new NotificationService(DataContextFactory);
-            _avatarService = new AvatarService(appServices.DataContextFactory);
+            _avatarService = new AvatarService(DataContextFactory);
             _bidService = new BidService(DataContextFactory);
             _trophyService = new TrophyService(DataContextFactory);
+            _auctionService = new AuctionService(DataContextFactory);
+            _wishListService = new WishListService(DataContextFactory);
         }
 
         [Route("dashboard")]
@@ -48,10 +52,12 @@ namespace Mzayad.Web.Controllers
         {
             var user = await AuthService.CurrentUser();
 
-            var viewModel = new DashboardViewModel
+            var viewModel = new DashboardViewModel(user)
             {
-                User = user,
-                BidHistory = await _bidService.GetRecentBidHistoryForUser(user, Language)
+                Bids = await _bidService.GetRecentBidHistoryForUser(user.Id, Language),
+                Trophies = await _trophyService.GetTrophies(user.Id, Language),
+                Auctions = await _auctionService.GetAuctionsWon(user.Id, Language),
+                WishLists = await _wishListService.GetByUser(user.Id)
             };
 
             return View(viewModel);
@@ -253,9 +259,27 @@ namespace Mzayad.Web.Controllers
         public async Task<ActionResult> Trophies()
         {
             var userId = AuthService.CurrentUserId();
-            var trophies = await _trophyService.GetMostRecentByUser(userId, Language);
+            var trophies = await _trophyService.GetUsersTrophies(userId, Language);
 
             return View(trophies);
+        }
+
+        [Route("bid-history")]
+        public async Task<ActionResult> BidHistory()
+        {
+            var userId = AuthService.CurrentUserId();
+            var bids = await _bidService.GetBidHistoryForUser(userId, Language);
+
+            return View(bids);
+        }
+
+        [Route("auction-history")]
+        public async Task<ActionResult> AuctionHistory()
+        {
+            var userId = AuthService.CurrentUserId();
+            var auctions = await _auctionService.GetAuctionsWon(userId, Language);
+
+            return View(auctions);
         }
     }
 }

@@ -127,7 +127,7 @@ namespace Mzayad.Services
             //}
         }
 
-        public async Task<IEnumerable<Auction>> GetAuctions(string search = null)
+        public async Task<IReadOnlyCollection<Auction>> GetAllAuctions(string search = null)
         {
             using (var dc = DataContext())
             {
@@ -138,6 +138,20 @@ namespace Mzayad.Services
                 }
                 
                 return await dc.Auctions.Include(i => i.Product).OrderByDescending(i => i.StartUtc).ToListAsync();
+            }
+        }
+
+        public async Task<IReadOnlyCollection<Auction>> GetAuctionsWon(string userId, string language)
+        {
+            using (var dc = DataContext())
+            {
+                var auctions = await dc.Auctions
+                    .Where(i => i.WonByUserId == userId)
+                    .Include(i => i.Product.ProductImages)
+                    .OrderByDescending(i => i.ClosedUtc)
+                    .ToListAsync();
+
+                return LocalizeAuctions(language, auctions);
             }
         }
 

@@ -2,6 +2,8 @@
 @using Mzayad.Web.Extensions
 @if (Request.IsAuthenticated)
 {
+    var routeValues = new {area = "", language = Html.Language()};
+
     if (User.IsInRole(Role.Administrator.ToString()))
     {
         <li>
@@ -11,16 +13,22 @@
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">@string.Format(Global.HelloFirstName, User.Identity.GetDisplayName())<i class="fa fa-caret-down fa-pad-left"></i></a>
         <ul class="dropdown-menu">
-            <li>@Html.ActionLink(Global.Dashboard, "Dashboard", "User", new { area = "", language = Html.Language() }, null)</li>
-            <li>@Html.ActionLink(Global.BuySubscription, "Index", "Subscriptions", new { area = "", language = Html.Language() }, null)</li>
+            <li><a href="@Url.Action("Dashboard","User", routeValues)"><i class="fa fa-fw fa-pad-right fa-tachometer"></i>@Global.Dashboard</a></li>
+            <li><a href="@Url.Action("EditAccount","User", routeValues)"><i class="fa fa-fw fa-pad-right fa-user"></i>@Global.EditAccount</a></li>
+            <li><a href="@Url.Action("EditProfile", "User", routeValues)"><i class="fa fa-fw fa-pad-right fa-rocket"></i>@Global.EditProfile</a></li>
+            <li><a href="@Url.Action("Index", "Subscriptions", routeValues)"><i class="fa fa-fw fa-pad-right fa-gift"></i>@Global.BuySubscription</a></li>
+            <li><a href="@Url.Action("ChangePassword", "User", routeValues)"><i class="fa fa-fw fa-pad-right fa-lock"></i>@Global.ChangePassword</a></li>
+            <li><a href="@Url.Action("Notifications", "User", routeValues)"><i class="fa fa-fw fa-pad-right fa-bullhorn"></i>@Global.Notifications</a></li>
+            <li><a href="@Url.Action("Trophies", "User", routeValues)"><i class="fa fa-fw fa-pad-right fa-trophy"></i>@Global.Trophies</a></li>
+            <li><a href="@Url.Action("Index","WishList", routeValues)"><i class="fa fa-fw fa-pad-right fa-star"></i>@Global.MyWishList</a></li>
             <li>
-                <a href="javascript:document.getElementById('signout').submit();">@Global.SignOut</a>
+                <a href="javascript:document.getElementById('signout').submit();"><i class="fa fa-fw fa-pad-right fa-sign-out"></i>@Global.SignOut</a>
                 @using (Html.BeginForm("SignOut", "Account", new { area = "", language = Html.Language() }, FormMethod.Post, new { id = "signout" }))
                 {
                     @Html.AntiForgeryToken()
                 }
             </li>
-            
+
         </ul>
     </li>
 }

@@ -143,7 +143,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
         private async Task<IEnumerable<Auction>> GetAuctions(string search = null)
         {
-            var auctions = (await _auctionService.GetAuctions(search)).Localize("en", i => i.Title);
+            var auctions = (await _auctionService.GetAllAuctions(search)).Localize("en", i => i.Title);
             
             foreach (var auction in auctions)
             {

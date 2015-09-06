@@ -1,21 +1,16 @@
-﻿@model IEnumerable<Mzayad.Models.UserTrophy>
+﻿@using Mzayad.Core.Formatting
+@model IEnumerable<Mzayad.Models.UserTrophy>
 
 @{
     ViewBag.Title = Global.Trophies;
 }
 
-<h2>@Global.Trophies</h2>
-<ul class="link-list"></ul>
-<table class="table table-bordered">
+<table class="@Html.Css().GridTable">
+    <thead>
     <tr>
+        <th></th>
         <th>
-            @Global.Name
-        </th>
-        <th>
-            @Global.Description
-        </th>
-        <th>
-            
+            @Global.Trophy
         </th>
         <th>
             @Global.XpAward
@@ -24,25 +19,21 @@
             @Global.AwardedOn
         </th>
     </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Trophy.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Trophy.Description)
-        </td>
-        <td>
-            <img src="@item.Trophy.IconUrl" style="width: 25px;"/>
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.XpAwarded)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedUtc)
-        </td>
-    </tr>
-}
-
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="image-cell">
+                    <img class="img-responsive" src="@item.Trophy.IconUrl" alt="@item.Trophy.Name" />
+                </td>
+                <td>
+                    <p>@item.Trophy.Name</p>
+                    <p><em>@item.Trophy.Description</em></p>
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.XpAwarded)</td>
+                <td>@DateTimeFormatter.ToLocalTime(item.CreatedUtc, DateTimeFormatter.Format.Sortable)</td>
+            </tr>
+        }
+    </tbody>
 </table>

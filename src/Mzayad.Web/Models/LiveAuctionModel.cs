@@ -25,6 +25,11 @@ namespace Mzayad.Web.Models
         {
             get
             {
+                if (Bids == null || !Bids.Any())
+                {
+                    return new BidModel[0];
+                }
+
                 return Bids.OrderByDescending(i => i.BidAmount).ToArray();
             }
         }

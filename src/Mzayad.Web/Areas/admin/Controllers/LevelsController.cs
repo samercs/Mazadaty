@@ -10,10 +10,9 @@ namespace Mzayad.Web.Areas.Admin.Controllers
         public ActionResult Index()
         {
             var levels = new List<Level>();
-            var lvlService = new LevelService();
             for (var x = 1; x <= 100; x++)
             {
-                levels.Add(lvlService.GetLevel(x));
+                levels.Add(LevelService.GetLevel(x));
             }
             return View(levels);
         }
