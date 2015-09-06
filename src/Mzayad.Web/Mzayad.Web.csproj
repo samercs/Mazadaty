@@ -752,6 +752,8 @@
     <Content Include="Scripts\kendo.aspnetmvc.min.js" />
     <Content Include="Scripts\kendo.web.min.js" />
     <Content Include="Views\Shared\DisplayTemplates\AuctionTile.cshtml" />
+    <Content Include="Views\User\BidHistory.cshtml" />
+    <Content Include="Views\User\AuctionHistory.cshtml" />
     <TypeScriptCompile Include="Scripts\auctions.ts" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />
@@ -814,7 +816,6 @@
     <Content Include="Views\Orders\Submit.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Address.cshtml" />
     <Content Include="Views\WishList\Index.cshtml" />
-    <Content Include="Views\WishList\_ViewStart.cshtml" />
     <Content Include="Views\WishList\Add.cshtml" />
     <Content Include="Views\Knet\Error.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\KnetTransaction.cshtml" />

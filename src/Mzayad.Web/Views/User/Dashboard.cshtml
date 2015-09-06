@@ -82,17 +82,75 @@
             <div class="clearfix"></div>
         </div>
         <div class="panel-body">
-            <ul id="dashboard-trophies">
+            <ul class="dashboard-flex-list">
                 @foreach (var trophy in Model.Trophies.Take(10))
                 {
                     <li>
-                        <div class="dashboard-trophy">
+                        <div class="dashboard-flex-item">
                             <img class="img-responsive" src="@trophy.IconUrl" alt="@trophy.Name" />
-                            <div class="dashboard-trophy-name text-uppercase">@trophy.Name</div>
+                            <div class="dashboard-flex-name text-uppercase">@trophy.Name</div>
                         </div>
                     </li>
                 }
             </ul>
+        </div>
+    </div>
+}
+
+@if (Model.Auctions.Any())
+{
+    <div class="panel dashboard-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title text-uppercase">@Global.ItemsWon</h3>
+            <div class="pull-right"><a class="text-uppercase" href="@Url.Action("AuctionHistory")">@Global.ViewAll</a></div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            <ul class="dashboard-flex-list">
+                @foreach (var auction in Model.Auctions.Take(10))
+                {
+                    <li>
+                        <div class="dashboard-flex-item">
+                            <img class="img-responsive" src="@auction.Product.MainImage().ImageSmUrl" alt="@auction.Title" />
+                            <div class="dashboard-flex-name text-uppercase">@auction.Title</div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+}
+
+@if (Model.WishLists.Any())
+{
+    <div class="panel dashboard-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title text-uppercase">@Global.MyWishList</h3>
+            <div class="pull-right"><a class="text-uppercase" href="@Url.Action("Index", "WishList")">@Global.ViewAll</a></div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            <table class="@Html.Css().GridTable">
+                <thead>
+                    <tr>
+                        <th>@Global.ItemName</th>
+                        <th>@Global.Added</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.WishLists)
+                    {
+                        <tr>
+                            <td>@item.NameEntered</td>
+                            <td>@DateTimeFormatter.ToLocalTime(item.CreatedUtc)</td>
+                            <td class="link-cell">
+                                @Html.ActionLink(Global.Remove, "Remove", "WishList", new { id = item.WishListId }, null)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 }
@@ -102,6 +160,8 @@
     <div class="panel dashboard-panel">
         <div class="panel-heading">
             <h3 class="panel-title text-uppercase">@Global.BidHistory</h3>
+            <div class="pull-right"><a class="text-uppercase" href="@Url.Action("BidHistory")">@Global.ViewAll</a></div>
+            <div class="clearfix"></div>
         </div>
         <div class="panel-body">
             <table class="@Html.Css().GridTable">
@@ -125,7 +185,6 @@
                     }
                 </tbody>
             </table>
-
         </div>
     </div>
 }

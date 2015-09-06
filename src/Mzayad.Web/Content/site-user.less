@@ -97,7 +97,7 @@
     }
 }
 
-#dashboard-trophies {
+.dashboard-flex-list {
     margin: 0 -10px -20px -10px;
     padding: 0;
     list-style: none;
@@ -110,6 +110,17 @@
         float: left;
         display: flex;
         padding: 0 10px 20px 10px;
+
+        .dashboard-flex-item {
+            min-width: 0;
+            border: 1px solid @lightgrey;
+            text-align: center;
+
+            .dashboard-flex-name {
+                padding: 8px;
+                font-size: 1.4rem;
+            }
+        }
     }
 
     @media (min-width: 560px) {
@@ -122,16 +133,5 @@
         li {
             width: 12.5%;
         }
-    }
-}
-
-.dashboard-trophy {
-    min-width: 0;
-    border: 1px solid @lightgrey;
-    text-align: center;
-
-    .dashboard-trophy-name {
-        padding: 8px;
-        font-size: 1.4rem;
     }
 }

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using Mzayad.Data;
+using Mzayad.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Mzayad.Data;
-using Mzayad.Models;
 
 namespace Mzayad.Services
 {
@@ -17,7 +15,7 @@ namespace Mzayad.Services
         {
         }
 
-        public async Task<IEnumerable<WishList>> GetByUser(string userId)
+        public async Task<IReadOnlyCollection<WishList>> GetByUser(string userId)
         {
             using (var dc=DataContext())
             {

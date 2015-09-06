@@ -47,15 +47,15 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<IReadOnlyCollection<Bid>> GetRecentBidHistoryForUser(ApplicationUser user, string language)
+        public async Task<IReadOnlyCollection<Bid>> GetRecentBidHistoryForUser(string userId, string language)
         {
             using (var dc = DataContext())
             {
                 var bids = await dc.Bids
                     .Include(i => i.Auction)
-                    .Where(i => i.UserId == user.Id)
+                    .Where(i => i.UserId == userId)
                     .OrderByDescending(i => i.CreatedUtc)
-                    .Take(50)
+                    .Take(20)
                     .ToListAsync();
 
                 foreach (var auction in bids.Select(i => i.Auction).Distinct())
@@ -65,6 +65,25 @@ namespace Mzayad.Services
 
                 return bids;
             }
-        } 
+        }
+
+        public async Task<IReadOnlyCollection<Bid>> GetBidHistoryForUser(string userId, string language)
+        {
+            using (var dc = DataContext())
+            {
+                var bids = await dc.Bids
+                    .Include(i => i.Auction)
+                    .Where(i => i.UserId == userId)
+                    .OrderByDescending(i => i.CreatedUtc)
+                    .ToListAsync();
+
+                foreach (var auction in bids.Select(i => i.Auction).Distinct())
+                {
+                    auction.Localize(language, i => i.Title);
+                }
+
+                return bids;
+            }
+        }
     }
 }

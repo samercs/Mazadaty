@@ -465,8 +465,8 @@
   <data name="AddToWishList" xml:space="preserve">
     <value>Add to my wishlist</value>
   </data>
-  <data name="DeleteWishList" xml:space="preserve">
-    <value>Delete wishlist item ?</value>
+  <data name="RemoveItem" xml:space="preserve">
+    <value>Remove Item</value>
   </data>
   <data name="NameEnteredValidationMessage" xml:space="preserve">
     <value>please enter product or item name</value>
@@ -634,7 +634,7 @@
     <value>Trophies</value>
   </data>
   <data name="XpAward" xml:space="preserve">
-    <value>Points</value>
+    <value>XP Earned</value>
   </data>
   <data name="RetailPrice" xml:space="preserve">
     <value>Retail Price: {RetailPrice}</value>
@@ -683,5 +683,17 @@
   </data>
   <data name="ViewAll" xml:space="preserve">
     <value>View All</value>
+  </data>
+  <data name="Trophy" xml:space="preserve">
+    <value>Trophy</value>
+  </data>
+  <data name="Added" xml:space="preserve">
+    <value>Added</value>
+  </data>
+  <data name="AuctionHistory" xml:space="preserve">
+    <value>Auctio History</value>
+  </data>
+  <data name="ItemsWon" xml:space="preserve">
+    <value>Items Won</value>
   </data>
 </root>
