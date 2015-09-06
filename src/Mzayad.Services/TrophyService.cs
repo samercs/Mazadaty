@@ -83,6 +83,7 @@ namespace Mzayad.Services
                 return false;
             }
         }
+
         public async void AddToUser(IEnumerable<Trophy> trophies, string userId)
         {
             foreach (var trophy in trophies)
@@ -95,7 +96,7 @@ namespace Mzayad.Services
         {
             using (var dc = new DataContext())
             {
-                return await dc.UsersTrophies.Where(i => i.UserId == userId && i.TrophyId == (int)key)
+                return await dc.UsersTrophies.Where(i => i.UserId == userId && i.Trophy.Key == key)
                         .OrderByDescending(i => i.CreatedUtc)
                         .FirstOrDefaultAsync();
             }
