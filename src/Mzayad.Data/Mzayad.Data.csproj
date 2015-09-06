@@ -302,6 +302,10 @@
     <Compile Include="Migrations\201508292015035_IslamicCalendar.Designer.cs">
       <DependentUpon>201508292015035_IslamicCalendar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509061300297_AddHijriUniqueIndex.cs" />
+    <Compile Include="Migrations\201509061300297_AddHijriUniqueIndex.Designer.cs">
+      <DependentUpon>201509061300297_AddHijriUniqueIndex.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -486,6 +490,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508292015035_IslamicCalendar.resx">
       <DependentUpon>201508292015035_IslamicCalendar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509061300297_AddHijriUniqueIndex.resx">
+      <DependentUpon>201509061300297_AddHijriUniqueIndex.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
