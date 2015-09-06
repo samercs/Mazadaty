@@ -32,6 +32,7 @@ namespace Mzayad.Services.Tests.Fakes
         public IDbSet<ActivityEvent> ActivityEvents { get; set; }
         public IDbSet<Trophy> Trophies { get; set; }
         public IDbSet<UserTrophy> UsersTrophies { get; set; }
+        public IDbSet<IslamicCalendar> IslamicCalendars { get; set; }
 
         public InMemoryDataContext()
         {

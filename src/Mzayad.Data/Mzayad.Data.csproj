@@ -53,6 +53,10 @@
       <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="OrangeJetpack.Base.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.8\lib\OrangeJetpack.Base.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="OrangeJetpack.Base.Data">
       <HintPath>..\..\packages\OrangeJetpack.Base.Data.0.1.0\lib\OrangeJetpack.Base.Data.dll</HintPath>
     </Reference>
@@ -294,6 +298,10 @@
     <Compile Include="Migrations\201508171554244_RemoveUserProfile.Designer.cs">
       <DependentUpon>201508171554244_RemoveUserProfile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508292015035_IslamicCalendar.cs" />
+    <Compile Include="Migrations\201508292015035_IslamicCalendar.Designer.cs">
+      <DependentUpon>201508292015035_IslamicCalendar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -475,6 +483,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508171554244_RemoveUserProfile.resx">
       <DependentUpon>201508171554244_RemoveUserProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508292015035_IslamicCalendar.resx">
+      <DependentUpon>201508292015035_IslamicCalendar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

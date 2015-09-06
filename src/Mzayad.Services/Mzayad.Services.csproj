@@ -115,6 +115,7 @@
     <Compile Include="EmailTemplateService.cs" />
     <Compile Include="Identity\RoleManager.cs" />
     <Compile Include="Identity\UserService.cs" />
+    <Compile Include="IslamicCalendarService.cs" />
     <Compile Include="LevelService.cs" />
     <Compile Include="NotificationService.cs" />
     <Compile Include="OrderService.cs" />
@@ -128,10 +129,8 @@
     <Compile Include="SubscriptionService.cs" />
     <Compile Include="TokenService.cs" />
     <Compile Include="Identity\UserManager.cs" />
-    <Compile Include="Trophies\BidOnNewYearTrophyChecker.cs" />
-    <Compile Include="Trophies\EnumExtensions.cs" />
-    <Compile Include="Trophies\TrophiesChecker.cs" />
-    <Compile Include="Trophies\TrophiesEngine.cs" />
+    <Compile Include="Trophies\SubmitBidTrophyEngine.cs" />
+    <Compile Include="Trophies\TrophyEngineFactory.cs" />
     <Compile Include="TrophyService.cs" />
     <Compile Include="WishListService.cs" />
   </ItemGroup>
@@ -153,6 +152,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

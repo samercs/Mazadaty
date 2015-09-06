@@ -48,11 +48,7 @@ namespace Mzayad.WebJobs
                 var dataContextFactory = new DataContextFactory();
 
                 var _trophyService = new TrophyService(dataContextFactory);
-                var _emailTemplateService = new EmailTemplateService(dataContextFactory);
-                var _userService = new UserService(dataContextFactory);
-                var _messageService = new MessageService(new EmailSettings());
-
-                var trophyEngine = new TrophiesEngine(_trophyService, _userService, _emailTemplateService, _messageService);
+                ITrophyEngine trophyEngine;
 
                 var userService = new UserService(dataContextFactory);
                 var user = await userService.GetUserById(activityEvent.UserId);
@@ -68,8 +64,9 @@ namespace Mzayad.WebJobs
                         await HandleTestActivity(user, log);
                         break;
                     case ActivityType.SubmitBid:
-                        // Earn trophy
-                       trophyEngine.EarnTrophy(user.Id);
+                        trophyEngine = TrophyEngineFactory.CreateInstance(activityEvent.Type, dataContextFactory);
+                        var submitBidTrophies = trophyEngine.EvaluateActivityForPossibleTrophy(user);
+                        _trophyService.AddToUser(submitBidTrophies, user.Id);
                         break;
                     default:
                         await LogMessageAsync(log, string.Format("No event handling for activity {0}.", activityEvent.Type));
