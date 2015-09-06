@@ -1,9 +1,7 @@
 ﻿using Mzayad.Data;
-using Mzayad.Models;
 using Mzayad.Models.Enums;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Mzayad.Services.Trophies
 {
@@ -25,11 +23,4 @@ namespace Mzayad.Services.Trophies
             throw new NotImplementedException("Cannot find appropriate trophy engine");
         }
     }
-
-    public interface ITrophyEngine
-    {
-        IEnumerable<Trophy> EvaluateActivityForPossibleTrophy(ApplicationUser user);
-    }
-
-    
 }
