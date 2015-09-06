@@ -24,9 +24,9 @@ namespace Mzayad.Web.Models.User
             CurrentLevel = LevelService.GetLevelByXp(user.Xp);
             NextLevel = LevelService.GetLevel(CurrentLevel.Index + 1);
 
-            double nextXp = NextLevel.XpRequired;
-            
-            LevelPercentage = (int)Math.Floor((nextXp - user.Xp) / nextXp * 100d);
+            var percentage = (double)user.Xp / NextLevel.XpRequired * 100d;
+
+            LevelPercentage = (int)Math.Floor(percentage);
         }
     }
 }
