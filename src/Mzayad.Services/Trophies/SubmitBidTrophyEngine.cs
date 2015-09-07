@@ -48,8 +48,11 @@ namespace Mzayad.Services.Trophies
             //Bid 7 days in a row
             yield return CheckBid7DaysInRow(user.Id);
 
-            //Bid 7 days in a row
+            //Bid 30 days in a row
             yield return CheckBid30DaysInRow(user.Id);
+
+            //Bid 90 days in a row
+            yield return CheckBid90DaysInRow(user.Id);
         }
 
         private TrophyKey? CheckBidOnNewYear(string userId)
@@ -151,6 +154,21 @@ namespace Mzayad.Services.Trophies
             }
 
             if (!GainBidInRowTrophyBefore(TrophyKey.BidDayStreak30, userId))
+            {
+                return TrophyKey.BidDayStreak7;
+            }
+            return null;
+        }
+
+        private TrophyKey? CheckBid90DaysInRow(string userId)
+        {
+            var streak = _bidService.GetConsecutiveBidDays(userId).Result;
+            if (streak < 90)
+            {
+                return null;
+            }
+
+            if (!GainBidInRowTrophyBefore(TrophyKey.BidDayStreak90, userId))
             {
                 return TrophyKey.BidDayStreak7;
             }
