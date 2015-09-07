@@ -105,7 +105,8 @@ namespace Mzayad.Services.Trophies
             }
             return TrophyKey.BidOnAnniversary;
         }
-        private Trophy CheckBid3DaysInRow(string userId)
+
+        private TrophyKey? CheckBid3DaysInRow(string userId)
         {
             var bids = _bidService.GetByUser(userId, DateTime.Now.AddDays(-2)).Result;
             for (var x = -2; x < 0; x++)
@@ -117,10 +118,11 @@ namespace Mzayad.Services.Trophies
             }
             if (!GainBidInRowTrophyBefore(TrophyKey.BidDayStreak3, userId))
             {
-                return new Trophy() { TrophyId = (int)TrophyKey.BidDayStreak3 };
+                return TrophyKey.BidDayStreak3;
             }
             return null;
         }
+
         private bool GainBidInRowTrophyBefore(TrophyKey key, string userId)
         {
             var userTrophy = _trophyService.GetLastEarnedTrophy(key, userId).Result;
