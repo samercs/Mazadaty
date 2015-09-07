@@ -125,7 +125,8 @@ namespace Mzayad.Services.Trophies
             }
             return null;
         }
-        private Trophy CheckBid7DaysInRow(string userId)
+
+        private TrophyKey? CheckBid7DaysInRow(string userId)
         {
             var bids = _bidService.GetByUser(userId, DateTime.Now.AddDays(-6)).Result;
             for (var x = -6; x < 0; x++)
@@ -137,7 +138,7 @@ namespace Mzayad.Services.Trophies
             }
             if (!GainBidInRowTrophyBefore(TrophyKey.BidDayStreak7, userId))
             {
-                return new Trophy() { TrophyId = (int)TrophyKey.BidDayStreak7 };
+                return TrophyKey.BidDayStreak7;
             }
             return null;
         }
