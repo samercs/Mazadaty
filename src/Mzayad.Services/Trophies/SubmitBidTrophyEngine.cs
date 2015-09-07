@@ -129,7 +129,7 @@ namespace Mzayad.Services.Trophies
                 return null;
             }
 
-            if (!GainBidInRowTrophyBefore(TrophyKey.BidDayStreak3, userId))
+            if (!GainTrophyToday(TrophyKey.BidDayStreak3, userId))
             {
                 return TrophyKey.BidDayStreak3;
             }
@@ -144,7 +144,7 @@ namespace Mzayad.Services.Trophies
                 return null;
             }
 
-            if (!GainBidInRowTrophyBefore(TrophyKey.BidDayStreak7, userId))
+            if (!GainTrophyToday(TrophyKey.BidDayStreak7, userId))
             {
                 return TrophyKey.BidDayStreak7;
             }
@@ -159,7 +159,7 @@ namespace Mzayad.Services.Trophies
                 return null;
             }
 
-            if (!GainBidInRowTrophyBefore(TrophyKey.BidDayStreak30, userId))
+            if (!GainTrophyToday(TrophyKey.BidDayStreak30, userId))
             {
                 return TrophyKey.BidDayStreak30;
             }
@@ -174,7 +174,7 @@ namespace Mzayad.Services.Trophies
                 return null;
             }
 
-            if (!GainBidInRowTrophyBefore(TrophyKey.BidDayStreak90, userId))
+            if (!GainTrophyToday(TrophyKey.BidDayStreak90, userId))
             {
                 return TrophyKey.BidDayStreak90;
             }
@@ -189,7 +189,7 @@ namespace Mzayad.Services.Trophies
                 return null;
             }
 
-            if (!GainBidInRowTrophyBefore(TrophyKey.BidDayStreak180, userId))
+            if (!GainTrophyToday(TrophyKey.BidDayStreak180, userId))
             {
                 return TrophyKey.BidDayStreak180;
             }
@@ -204,14 +204,14 @@ namespace Mzayad.Services.Trophies
                 return null;
             }
 
-            if (!GainBidInRowTrophyBefore(TrophyKey.BidDayStreak365, userId))
+            if (!GainTrophyToday(TrophyKey.BidDayStreak365, userId))
             {
                 return TrophyKey.BidDayStreak365;
             }
             return null;
         }
 
-        private bool GainBidInRowTrophyBefore(TrophyKey key, string userId)
+        private bool GainTrophyToday(TrophyKey key, string userId)
         {
             var userTrophy = _trophyService.GetLastEarnedTrophy(key, userId).Result;
             if (userTrophy == null)
