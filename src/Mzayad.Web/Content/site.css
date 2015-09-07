@@ -639,7 +639,7 @@ input[type="checkbox"].input-validation-error {
 }
 #home-index #auction-list .auction-item .auction-details .auction-retail-price {
   text-transform: uppercase;
-  color: #f3f3f3;
+  color: #bbbbbb;
   font-size: 1.7rem;
 }
 #home-index #auction-list .auction-item .auction-details .auction-time-left {
@@ -782,7 +782,7 @@ input[type="checkbox"].input-validation-error {
   border-top: 1px solid #EBEBEB;
 }
 .auction-tile .auction-tile-retail-price {
-  color: #f3f3f3;
+  color: #bbbbbb;
 }
 .auction-tile .auction-tile-winning-price {
   font-weight: bold;

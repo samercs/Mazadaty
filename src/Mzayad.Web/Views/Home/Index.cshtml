@@ -107,7 +107,7 @@
                                         }
                                     </span>
                                 </div>
-                                <ol class="auction-recent-bids" data-bind="foreach: bids">
+                                <ol class="auction-recent-bids" data-bind="foreach: bidsReversed">
                                     <li>
                                         <div class="pull-left">
                                             <img data-bind="attr: { src: avatarUrl, alt: userName }" width="32" />
@@ -165,12 +165,18 @@
                 self.buyNowEnabled = data.buyNowEnabled;
                 self.imageUrl = data.imageUrl;
                 
-                self.bids = ko.observable(data.bids);
+                self.bids = ko.observableArray(data.bids);
                 self.status = ko.observable(data.status);
                 self.isLoaded = ko.observable(false);
                 self.secondsLeft = ko.observable();
                 self.lastBidAmount = ko.observable(data.lastBidAmount);
-                
+
+                self.bidsReversed = ko.computed(function() {
+                    return self.bids().sort(function(l, r) {
+                        return l.bidAmount < r.bidAmount ? 1 : -1;
+                    });
+                });
+
                 self.timeLeftHours = ko.computed(function() {
                     return App.TimeUtilities.getHours(self.secondsLeft());
                 });
@@ -200,7 +206,7 @@
                 });
 
                 self.submitBid = function() {
-                    auctionHub.server.submitBid(self.auctionId);
+                    auctionHub.server.submitBid(self.auctionId, '@User.Identity.GetUserId()');
                 };
 
                 self.closeAuction = function() {

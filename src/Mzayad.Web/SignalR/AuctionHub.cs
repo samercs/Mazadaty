@@ -1,9 +1,8 @@
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.SignalR;
 using Mzayad.Data;
-using Mzayad.Web.Core.Services;
-using System.Threading.Tasks;
 using Mzayad.Web.Core.Caching;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Mzayad.Web.SignalR
 {
@@ -27,10 +26,12 @@ namespace Mzayad.Web.SignalR
             return await _auctionHandler.InitAuctions(auctionIds);
         }
 
-        public async Task SubmitBid(int auctionId)
+        public async Task SubmitBid(int auctionId, string userId)
         {
-            var identity = Context.User.Identity;
-            var userId = identity.GetUserId();
+            //Trace.TraceInformation("SubmitBid(): AuctionId = {0}, UserId = {1}", auctionId, userId);
+
+            //var identity = Context.User.Identity;
+            //var userId = identity.GetUserId();
             var hostAddress = GetIpAddress();
                  
             await _auctionHandler.SubmitBid(auctionId, userId, hostAddress);

@@ -82,14 +82,14 @@ namespace Mzayad.Web.SignalR
         {
             var auctions = _cacheService.GetList<LiveAuctionModel>(CacheKeys.LiveAuctions);
 
-            Trace.TraceInformation("GetAuctionsFromCache(): {0}", JsonConvert.SerializeObject(auctions));
+            //Trace.TraceInformation("GetAuctionsFromCache(): {0}", JsonConvert.SerializeObject(auctions));
 
             return auctions;
         }
 
         private void AddAuctionsToCache(IEnumerable<LiveAuctionModel> auctions)
         {
-            Trace.TraceInformation("AddAuctionsToCache(): {0}", JsonConvert.SerializeObject(auctions));
+            //Trace.TraceInformation("AddAuctionsToCache(): {0}", JsonConvert.SerializeObject(auctions));
 
             _cacheService.SetList(CacheKeys.LiveAuctions, auctions);
         }
@@ -108,7 +108,7 @@ namespace Mzayad.Web.SignalR
                 var cacheAuctions = _cacheService.GetList<LiveAuctionModel>(CacheKeys.LiveAuctions);
                 if (cacheAuctions == null)
                 {
-                    Trace.TraceInformation("UpdateAuctions(): no auctions in cache");
+                    //Trace.TraceInformation("UpdateAuctions(): no auctions in cache");
 
                     _updatingAuctions = false;
                     return;
@@ -116,18 +116,13 @@ namespace Mzayad.Web.SignalR
 
                 foreach (var auction in cacheAuctions)
                 {
-                    Trace.TraceInformation("UpdateAuctions(): processing {0}", JsonConvert.SerializeObject(auction));
+                    //Trace.TraceInformation("UpdateAuctions(): processing {0}", JsonConvert.SerializeObject(auction));
 
                     auction.SecondsLeft = Math.Max(auction.SecondsLeft - 1, 0);
                     if (auction.SecondsLeft <= 0)
                     {
                         CloseAuction(auction);
                     }
-
-                    //if (auction.Bids != null && auction.Bids.Any())
-                    //{
-                    //    auction.Bids = new Queue<BidModel>(auction.Bids.OrderByDescending(i => i.BidAmount));
-                    //}
                 }
 
                 _cacheService.SetList(CacheKeys.LiveAuctions, cacheAuctions);
@@ -151,6 +146,8 @@ namespace Mzayad.Web.SignalR
 
         public async Task SubmitBid(int auctionId, string userId, string hostAddress)
         {
+            //Trace.TraceInformation("SubmitBid(): UserId = {0}", userId);
+
             if (string.IsNullOrEmpty(userId))
             {
                 return;

@@ -2,7 +2,6 @@ using Mzayad.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 
 namespace Mzayad.Web.Models
 {
@@ -15,24 +14,23 @@ namespace Mzayad.Web.Models
 
         internal DateTime StartUtc;
         internal int Duration;
-        internal decimal BidIncrement;
+        public decimal BidIncrement;
 
-        [JsonIgnore]
         public Queue<BidModel> Bids { get; set; }
 
-        [JsonProperty("bids")]
-        public BidModel[] BidsReversed
-        {
-            get
-            {
-                if (Bids == null || !Bids.Any())
-                {
-                    return new BidModel[0];
-                }
+        //[JsonProperty("bids")]
+        //public BidModel[] BidsReversed
+        //{
+        //    get
+        //    {
+        //        if (Bids == null || !Bids.Any())
+        //        {
+        //            return new BidModel[0];
+        //        }
 
-                return Bids.OrderByDescending(i => i.BidAmount).ToArray();
-            }
-        }
+        //        return Bids.OrderByDescending(i => i.BidAmount).ToArray();
+        //    }
+        //}
 
         public static LiveAuctionModel Create(Auction auction)
         {
