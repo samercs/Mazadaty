@@ -101,6 +101,7 @@ namespace Mzayad.Services
                 await dc.SaveChangesAsync();
             }
         }
+
         public async void AwardTrophyToUser(IEnumerable<TrophyKey> trophyKeys, string userId)
         {
             foreach (var trophy in trophyKeys)

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Mzayad.Data;
 using Mzayad.Models;
 using OrangeJetpack.Localization;
+using System;
 
 namespace Mzayad.Services
 {
@@ -83,6 +84,56 @@ namespace Mzayad.Services
                 }
 
                 return bids;
+            }
+        }
+
+        public async Task<IReadOnlyCollection<Bid>> GetByUser(string userId, DateTime? from = null)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.Bids
+                    .Where(i => i.UserId == userId && (from.HasValue && i.CreatedUtc.Date >= from.Value.Date || !from.HasValue))
+                    .GroupBy(i => i.CreatedUtc.Date)
+                    .Select(g => g.OrderByDescending(i=> i.CreatedUtc).First())
+                    .ToListAsync();
+            }
+        }
+
+        /// <summary>
+        /// Gets the total amount of consecutive days that a user has bid since today.
+        /// </summary>
+        public async Task<int> GetConsecutiveBidDays(string userId)
+        {
+            using (var dc = DataContext())
+            {
+                var userBidDates = await dc.Bids
+                    .Where(i => i.UserId == userId)
+                    .OrderByDescending(i => i.CreatedUtc)
+                    .Select(i => i.CreatedUtc)
+                    .ToListAsync();
+
+                // if user has never bid or has not bid today
+                if (!userBidDates.Any() || userBidDates.First().Date != DateTime.UtcNow.Date)
+                {
+                    return 0;
+                }
+
+                var bidsGroupedByDate = userBidDates.GroupBy(i => i.Date).ToList();
+
+                var streak = 1;
+
+                for (var i = 0; i < bidsGroupedByDate.Count - 1; i++)
+                {
+                    var dateDifference = bidsGroupedByDate[i].Key.Subtract(bidsGroupedByDate[i+1].Key).Days;
+                    if (dateDifference != 1)
+                    {
+                        return streak;
+                    }
+
+                    streak++;
+                }
+
+                return streak;
             }
         }
     }

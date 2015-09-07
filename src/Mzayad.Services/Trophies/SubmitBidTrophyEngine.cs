@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
@@ -12,6 +13,8 @@ namespace Mzayad.Services.Trophies
     {
         private readonly UserService _userService;
         private readonly TrophyService _trophyService;
+        private readonly BidService _bidService;
+
         private readonly IslamicCalendar _calendar;
 
         public SubmitBidTrophyEngine(IDataContextFactory dataContextFactory)
@@ -20,6 +23,8 @@ namespace Mzayad.Services.Trophies
             _trophyService = new TrophyService(dataContextFactory);
 
             var islamicCalendarService = new IslamicCalendarService(dataContextFactory);
+            _bidService = new BidService(dataContextFactory);
+
             _calendar = islamicCalendarService.GetByDate(DateTime.UtcNow.Date).Result;
         }
 
@@ -35,7 +40,13 @@ namespace Mzayad.Services.Trophies
             yield return CheckBidOnNewYear(user.Id);
             yield return CheckBidOnIslamicNewYear(user.Id);
             yield return CheckBidOnEid(user.Id);
-            yield return CheckBidOnAnniversary(user);
+			yield return CheckBidOnAnniversary(user);
+
+            //Bid 3 days in a row
+			yield return CheckBid3DaysInRow(user.Id);
+
+            //Bid 7 days in a row
+            yield return CheckBid7DaysInRow(user.Id);
         }
 
         private TrophyKey? CheckBidOnNewYear(string userId)
@@ -96,6 +107,50 @@ namespace Mzayad.Services.Trophies
                 }
             }
             return TrophyKey.BidOnAnniversary;
+        }
+
+        private TrophyKey? CheckBid3DaysInRow(string userId)
+        {
+            var streak = _bidService.GetConsecutiveBidDays(userId).Result;
+            if (streak < 3)
+            {
+                return null;
+            }
+
+            if (!GainBidInRowTrophyBefore(TrophyKey.BidDayStreak3, userId))
+            {
+                return TrophyKey.BidDayStreak3;
+            }
+            return null;
+        }
+
+        private TrophyKey? CheckBid7DaysInRow(string userId)
+        {
+            var streak = _bidService.GetConsecutiveBidDays(userId).Result;
+            if (streak < 7)
+            {
+                return null;
+            }
+
+            if (!GainBidInRowTrophyBefore(TrophyKey.BidDayStreak7, userId))
+            {
+                return TrophyKey.BidDayStreak7;
+            }
+            return null;
+        }
+
+        private bool GainBidInRowTrophyBefore(TrophyKey key, string userId)
+        {
+            var userTrophy = _trophyService.GetLastEarnedTrophy(key, userId).Result;
+            if (userTrophy == null)
+            {
+                return false;
+            }
+            if (userTrophy.CreatedUtc.Date == DateTime.Now.Date)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
