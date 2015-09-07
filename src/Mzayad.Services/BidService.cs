@@ -98,5 +98,39 @@ namespace Mzayad.Services
                     .ToListAsync();
             }
         }
+
+        public async Task<int> GetConsecutiveBidDays(string userId)
+        {
+            using (var dc = DataContext())
+            {
+                var last100Bids = await dc.Bids
+                    .Where(i => i.UserId == userId)
+                    .Take(100)
+                    .OrderByDescending(i => i.CreatedUtc)
+                    .ToListAsync();
+
+                if (!last100Bids.Any())
+                {
+                    return 0;
+                }
+
+                var bidsGroupedByDate = last100Bids.GroupBy(i => i.CreatedUtc.Date).ToList();
+
+                var streak = 1;
+
+                for (var i = 0; i < bidsGroupedByDate.Count - 1; i++)
+                {
+                    var dateDifference = bidsGroupedByDate[i].Key.Subtract(bidsGroupedByDate[i+1].Key).Days;
+                    if (dateDifference != 1)
+                    {
+                        return streak;
+                    }
+
+                    streak++;
+                }
+
+                return streak;
+            }
+        }
     }
 }

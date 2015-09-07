@@ -111,14 +111,12 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckBid3DaysInRow(string userId)
         {
-            var bids = _bidService.GetByUser(userId, DateTime.Now.AddDays(-2)).Result;
-            for (var x = -2; x < 0; x++)
+            var streak = _bidService.GetConsecutiveBidDays(userId).Result;
+            if (streak < 3)
             {
-                if (!bids.Any(i => i.CreatedUtc.Date == DateTime.Now.AddDays(x).Date))
-                {
-                    return null;
-                }
+                return null;
             }
+
             if (!GainBidInRowTrophyBefore(TrophyKey.BidDayStreak3, userId))
             {
                 return TrophyKey.BidDayStreak3;
@@ -128,14 +126,12 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckBid7DaysInRow(string userId)
         {
-            var bids = _bidService.GetByUser(userId, DateTime.Now.AddDays(-6)).Result;
-            for (var x = -6; x < 0; x++)
+            var streak = _bidService.GetConsecutiveBidDays(userId).Result;
+            if (streak < 7)
             {
-                if (!bids.Any(i => i.CreatedUtc.Date == DateTime.Now.AddDays(x).Date))
-                {
-                    return null;
-                }
+                return null;
             }
+
             if (!GainBidInRowTrophyBefore(TrophyKey.BidDayStreak7, userId))
             {
                 return TrophyKey.BidDayStreak7;

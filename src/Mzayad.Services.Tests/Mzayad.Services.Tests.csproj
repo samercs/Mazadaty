@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuctionServiceTests.cs" />
+    <Compile Include="BidServiceTests.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Fakes\InMemoryDataContext.cs" />
     <Compile Include="Fakes\InMemoryDataContextFactory.cs" />
