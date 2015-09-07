@@ -99,22 +99,26 @@ namespace Mzayad.Services
             }
         }
 
+        /// <summary>
+        /// Gets the total amount of consecutive days that a user has bid since today.
+        /// </summary>
         public async Task<int> GetConsecutiveBidDays(string userId)
         {
             using (var dc = DataContext())
             {
-                var last100Bids = await dc.Bids
+                var userBidDates = await dc.Bids
                     .Where(i => i.UserId == userId)
-                    .Take(100)
                     .OrderByDescending(i => i.CreatedUtc)
+                    .Select(i => i.CreatedUtc)
                     .ToListAsync();
 
-                if (!last100Bids.Any())
+                // if user has never bid or has not bid today
+                if (!userBidDates.Any() || userBidDates.First().Date != DateTime.UtcNow.Date)
                 {
                     return 0;
                 }
 
-                var bidsGroupedByDate = last100Bids.GroupBy(i => i.CreatedUtc.Date).ToList();
+                var bidsGroupedByDate = userBidDates.GroupBy(i => i.Date).ToList();
 
                 var streak = 1;
 

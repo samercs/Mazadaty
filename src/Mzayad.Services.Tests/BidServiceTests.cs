@@ -30,9 +30,9 @@ namespace Mzayad.Services.Tests
         {
             var bidService = GetBidService(new[]
             {
-                new Bid {UserId = Constants.AnyUserId, CreatedUtc = new DateTime(2000, 1, 1)},
-                new Bid {UserId = Constants.AnyUserId, CreatedUtc = new DateTime(2000, 1, 2)},
-                new Bid {UserId = Constants.AnyUserId, CreatedUtc = new DateTime(2000, 1, 3)}
+                new Bid {UserId = Constants.AnyUserId, CreatedUtc = DateTime.UtcNow},
+                new Bid {UserId = Constants.AnyUserId, CreatedUtc = DateTime.UtcNow.AddDays(-1)},
+                new Bid {UserId = Constants.AnyUserId, CreatedUtc = DateTime.UtcNow.AddDays(-2)}
             });
             var result = await bidService.GetConsecutiveBidDays(Constants.AnyUserId);
 
@@ -44,11 +44,11 @@ namespace Mzayad.Services.Tests
         {
             var bidService = GetBidService(new[]
             {
-                new Bid {UserId = Constants.AnyUserId, CreatedUtc = new DateTime(2000, 1, 1)},
-                new Bid {UserId = Constants.AnyUserId, CreatedUtc = new DateTime(2000, 1, 1)},
-                new Bid {UserId = Constants.AnyUserId, CreatedUtc = new DateTime(2000, 1, 1)},
-                new Bid {UserId = Constants.AnyUserId, CreatedUtc = new DateTime(2000, 1, 2)},
-                new Bid {UserId = Constants.AnyUserId, CreatedUtc = new DateTime(2000, 1, 3)}
+                new Bid {UserId = Constants.AnyUserId, CreatedUtc = DateTime.UtcNow},
+                new Bid {UserId = Constants.AnyUserId, CreatedUtc = DateTime.UtcNow.AddDays(-1)},
+                new Bid {UserId = Constants.AnyUserId, CreatedUtc = DateTime.UtcNow.AddDays(-2)},
+                new Bid {UserId = Constants.AnyUserId, CreatedUtc = DateTime.UtcNow.AddDays(-2)},
+                new Bid {UserId = Constants.AnyUserId, CreatedUtc = DateTime.UtcNow.AddDays(-2)}
             });
             var result = await bidService.GetConsecutiveBidDays(Constants.AnyUserId);
 
@@ -60,9 +60,9 @@ namespace Mzayad.Services.Tests
         {
             var bidService = GetBidService(new[]
             {
-                new Bid {UserId = Constants.AnyUserId, CreatedUtc = new DateTime(2000, 1, 1)},
-                new Bid {UserId = Constants.AnyUserId, CreatedUtc = new DateTime(2000, 1, 3)},
-                new Bid {UserId = Constants.AnyUserId, CreatedUtc = new DateTime(2000, 1, 4)}
+                new Bid {UserId = Constants.AnyUserId, CreatedUtc = DateTime.UtcNow},
+                new Bid {UserId = Constants.AnyUserId, CreatedUtc = DateTime.UtcNow.AddDays(-1)},
+                new Bid {UserId = Constants.AnyUserId, CreatedUtc = DateTime.UtcNow.AddDays(-3)}
             });
             var result = await bidService.GetConsecutiveBidDays(Constants.AnyUserId);
 
