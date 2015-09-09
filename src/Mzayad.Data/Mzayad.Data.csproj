@@ -306,6 +306,10 @@
     <Compile Include="Migrations\201509061300297_AddHijriUniqueIndex.Designer.cs">
       <DependentUpon>201509061300297_AddHijriUniqueIndex.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509091452096_AddSessionLogTable.cs" />
+    <Compile Include="Migrations\201509091452096_AddSessionLogTable.Designer.cs">
+      <DependentUpon>201509091452096_AddSessionLogTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -493,6 +497,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201509061300297_AddHijriUniqueIndex.resx">
       <DependentUpon>201509061300297_AddHijriUniqueIndex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509091452096_AddSessionLogTable.resx">
+      <DependentUpon>201509091452096_AddSessionLogTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

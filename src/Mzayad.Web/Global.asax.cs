@@ -2,7 +2,6 @@
 using Mzayad.Data;
 using Mzayad.Web.Core.Configuration;
 using System;
-using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -12,6 +11,10 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Mzayad.Web.Core.ModelBinder;
+using Mzayad.Services;
+using Mzayad.Models;
+using System.Diagnostics;
+using Microsoft.AspNet.Identity;
 
 namespace Mzayad.Web
 {
@@ -25,7 +28,7 @@ namespace Mzayad.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutofacConfig.RegisterAll();
             Database.SetInitializer<DataContext>(null);
-            
+
             ModelBinders.Binders.Add(typeof(DateTime), new DateTimeBinder());
             ModelBinders.Binders.Add(typeof(DateTime?), new NullableDateTimeBinder());
         }
@@ -39,6 +42,7 @@ namespace Mzayad.Web
 
         protected void Application_BeginRequest()
         {
+            Trace.TraceInformation("Application_BeginRequest");
             if (Request.Headers.AllKeys.Contains("Origin") && Request.HttpMethod == "OPTIONS")
             {
                 Response.Flush();
@@ -48,7 +52,7 @@ namespace Mzayad.Web
         protected void Application_AcquireRequestState(object sender, EventArgs e)
         {
             var cultureInfo = GetCultureFromRoute() ?? GetCultureFromCookie() ?? GetCultureFromThread();
-            
+
             cultureInfo.DateTimeFormat.Calendar = new GregorianCalendar();
             cultureInfo.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
 
@@ -56,11 +60,26 @@ namespace Mzayad.Web
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
         }
 
+        protected void Session_Start(object sender, EventArgs e)
+        {
+            if (HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var _sessionLog = new SessionLogService(new DataContextFactory());
+                 _sessionLog.Insert(new SessionLog()
+                {
+                    Browser = Request.UserAgent,
+                    IP = Request.UserHostAddress,
+                    UserId = HttpContext.Current.User.Identity.GetUserId()
+                 });
+
+            }
+        }
+
         private CultureInfo GetCultureFromRoute()
         {
             var handler = Context.Handler as MvcHandler;
             var routeData = handler == null ? null : handler.RequestContext.RouteData;
-            var languageRoute = routeData == null ? null : routeData.Values["language"];        
+            var languageRoute = routeData == null ? null : routeData.Values["language"];
             return languageRoute == null ? null : CultureInfo.CreateSpecificCulture(languageRoute.ToString());
         }
 

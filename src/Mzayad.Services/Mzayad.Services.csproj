@@ -123,6 +123,7 @@
     <Compile Include="ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBase.cs" />
+    <Compile Include="SessionLogService.cs" />
     <Compile Include="SpecificationService.cs" />
     <Compile Include="SplashAdService.cs" />
     <Compile Include="SponsorService.cs" />
