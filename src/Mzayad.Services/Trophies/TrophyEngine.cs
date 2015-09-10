@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
@@ -15,6 +16,13 @@ namespace Mzayad.Services.Trophies
             _trophyService = new TrophyService(dataContextFactory);
         }
 
+        public IEnumerable<TrophyKey> GetEarnedTrophies(ApplicationUser user)
+        {
+            return TryGetEarnedTrophies(user)
+                .Where(i => i.HasValue)
+                .Select(i => i.Value);
+        }
+
         protected bool GainTrophyToday(TrophyKey key, string userId)
         {
             var userTrophy = _trophyService.GetLastEarnedTrophy(key, userId).Result;
@@ -28,7 +36,7 @@ namespace Mzayad.Services.Trophies
             }
             return false;
         }
-
-        public abstract IEnumerable<TrophyKey> GetEarnedTrophies(ApplicationUser user);
+        
+        protected abstract IEnumerable<TrophyKey?> TryGetEarnedTrophies(ApplicationUser user);
     }
 }

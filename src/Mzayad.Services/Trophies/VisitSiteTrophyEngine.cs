@@ -15,14 +15,8 @@ namespace Mzayad.Services.Trophies
         {
             _sessionLogService = new SessionLogService(dataContextFactory);
         }
-        public override IEnumerable<TrophyKey> GetEarnedTrophies(ApplicationUser user)
-        {
-            return TryGetEarnedTrophies(user)
-                .Where(i => i.HasValue)
-                .Select(i => i.Value);
-        }
 
-        private IEnumerable<TrophyKey?> TryGetEarnedTrophies(ApplicationUser user)
+        protected override IEnumerable<TrophyKey?> TryGetEarnedTrophies(ApplicationUser user)
         {
             //Check Return to Mzayad after 30 days of inactivity;
             yield return CheckReturnAfterInactivity(user);

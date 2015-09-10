@@ -26,14 +26,7 @@ namespace Mzayad.Services.Trophies
             _calendar = islamicCalendarService.GetByDate(DateTime.UtcNow.Date).Result;
         }
 
-        public override IEnumerable<TrophyKey> GetEarnedTrophies(ApplicationUser user)
-        {
-            return TryGetEarnedTrophies(user)
-                .Where(i => i.HasValue)
-                .Select(i => i.Value);
-        }
-
-        private IEnumerable<TrophyKey?> TryGetEarnedTrophies(ApplicationUser user)
+        protected override IEnumerable<TrophyKey?> TryGetEarnedTrophies(ApplicationUser user)
         {
             yield return CheckBidOnNewYear(user.Id);
             yield return CheckBidOnIslamicNewYear(user.Id);
