@@ -1,4 +1,6 @@
-﻿using Mzayad.Data;
+﻿using System;
+using System.Linq;
+using Mzayad.Data;
 using Mzayad.Models;
 
 namespace Mzayad.Services
@@ -16,6 +18,13 @@ namespace Mzayad.Services
                 dc.SessionLogs.Add(sessionLog);
                 dc.SaveChanges();
                 return sessionLog;
+            }
+        }
+        public SessionLog GetLastVisitBeforeToday(string userId)
+        {
+            using (var dc = new DataContext())
+            {
+                return dc.SessionLogs.Last(i => i.UserId == userId && i.CreatedUtc.Date != DateTime.UtcNow.Date);
             }
         }
     }

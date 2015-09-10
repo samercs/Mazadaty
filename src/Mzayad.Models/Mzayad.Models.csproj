@@ -88,7 +88,7 @@
     <Compile Include="Enums\PaymentStatus.cs" />
     <Compile Include="Enums\SubscriptionStatus.cs" />
     <Compile Include="Enums\UserProfileStatus.cs" />
-    <Compile Include="Enum\TrophyKey.cs" />
+    <Compile Include="Enums\TrophyKey.cs" />
     <Compile Include="IslamicCalendar.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="ModelBase.cs" />

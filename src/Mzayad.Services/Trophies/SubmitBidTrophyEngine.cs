@@ -5,22 +5,20 @@ using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Services.Identity;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Mzayad.Services.Trophies
 {
-    public class SubmitBidTrophyEngine : ITrophyEngine
+    public class SubmitBidTrophyEngine : TrophyEngine
     {
         private readonly UserService _userService;
-        private readonly TrophyService _trophyService;
         private readonly BidService _bidService;
 
         private readonly IslamicCalendar _calendar;
 
         public SubmitBidTrophyEngine(IDataContextFactory dataContextFactory)
+            :base(dataContextFactory)
         {
             _userService = new UserService(dataContextFactory);
-            _trophyService = new TrophyService(dataContextFactory);
 
             var islamicCalendarService = new IslamicCalendarService(dataContextFactory);
             _bidService = new BidService(dataContextFactory);
@@ -28,7 +26,7 @@ namespace Mzayad.Services.Trophies
             _calendar = islamicCalendarService.GetByDate(DateTime.UtcNow.Date).Result;
         }
 
-        public IEnumerable<TrophyKey> GetEarnedTrophies(ApplicationUser user)
+        public override IEnumerable<TrophyKey> GetEarnedTrophies(ApplicationUser user)
         {
             return TryGetEarnedTrophies(user)
                 .Where(i => i.HasValue)
@@ -210,19 +208,6 @@ namespace Mzayad.Services.Trophies
             }
             return null;
         }
-
-        private bool GainTrophyToday(TrophyKey key, string userId)
-        {
-            var userTrophy = _trophyService.GetLastEarnedTrophy(key, userId).Result;
-            if (userTrophy == null)
-            {
-                return false;
-            }
-            if (userTrophy.CreatedUtc.Date == DateTime.Now.Date)
-            {
-                return true;
-            }
-            return false;
-        }
+        
     }
 }
