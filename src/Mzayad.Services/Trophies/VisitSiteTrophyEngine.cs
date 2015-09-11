@@ -26,6 +26,9 @@ namespace Mzayad.Services.Trophies
 
             //Check visit site 7 days in row
             yield return CheckVisit7ConsecutiveDays(user.Id);
+
+            //Check visit site 30 days in row
+            yield return CheckVisit30ConsecutiveDays(user.Id);
         }
 
         private TrophyKey? CheckReturnAfterInactivity(ApplicationUser user)
@@ -67,6 +70,21 @@ namespace Mzayad.Services.Trophies
             if (!GainTrophyToday(TrophyKey.VisitDayStreak7, userId))
             {
                 return TrophyKey.VisitDayStreak7;
+            }
+            return null;
+        }
+
+        private TrophyKey? CheckVisit30ConsecutiveDays(string userId)
+        {
+            var streak = _sessionLogService.GetConsecutiveVisitDays(userId).Result;
+            if (streak < 30)
+            {
+                return null;
+            }
+
+            if (!GainTrophyToday(TrophyKey.VisitDayStreak30, userId))
+            {
+                return TrophyKey.VisitDayStreak30;
             }
             return null;
         }
