@@ -2,6 +2,9 @@
 using System.Linq;
 using Mzayad.Data;
 using Mzayad.Models;
+using System.Threading.Tasks;
+using System.Data.Entity;
+using Mzayad.Core.Extensions;
 
 namespace Mzayad.Services
 {
@@ -25,6 +28,23 @@ namespace Mzayad.Services
             using (var dc = new DataContext())
             {
                 return dc.SessionLogs.Last(i => i.UserId == userId && i.CreatedUtc.Date != DateTime.UtcNow.Date);
+            }
+        }
+
+        /// <summary>
+        /// Gets the total amount of consecutive days that a user has bid since today.
+        /// </summary>
+        public async Task<int> GetConsecutiveVisitDays(string userId)
+        {
+            using (var dc = DataContext())
+            {
+                var userSessionDates = await dc.SessionLogs
+                    .Where(i => i.UserId == userId)
+                    .OrderByDescending(i => i.CreatedUtc)
+                    .Select(i => i.CreatedUtc)
+                    .ToListAsync();
+
+                return userSessionDates.Consecutive();
             }
         }
     }
