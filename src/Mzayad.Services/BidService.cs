@@ -116,5 +116,16 @@ namespace Mzayad.Services
                 return userBidDates.Consecutive();
             }
         }
+
+        public async Task<int> CountUserBids(string userId,DateTime? from = null)
+        {
+            using (var db = DataContext())
+            {
+                return await db.Bids.CountAsync(i => i.UserId == userId && (
+                                                                (from.HasValue && i.CreatedUtc >= from.Value)
+                                                                ||
+                                                                !from.HasValue));
+            }
+        }
     }
 }

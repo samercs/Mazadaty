@@ -16,7 +16,7 @@ namespace Mzayad.Services.Trophies
         private readonly IslamicCalendar _calendar;
 
         public SubmitBidTrophyEngine(IDataContextFactory dataContextFactory)
-            :base(dataContextFactory)
+            : base(dataContextFactory)
         {
             _userService = new UserService(dataContextFactory);
 
@@ -31,10 +31,10 @@ namespace Mzayad.Services.Trophies
             yield return CheckBidOnNewYear(user.Id);
             yield return CheckBidOnIslamicNewYear(user.Id);
             yield return CheckBidOnEid(user.Id);
-			yield return CheckBidOnAnniversary(user);
+            yield return CheckBidOnAnniversary(user);
 
             //Bid 3 days in a row
-			yield return CheckBid3DaysInRow(user.Id);
+            yield return CheckBid3DaysInRow(user.Id);
 
             //Bid 7 days in a row
             yield return CheckBid7DaysInRow(user.Id);
@@ -50,6 +50,9 @@ namespace Mzayad.Services.Trophies
 
             //Bid 365 days in a row
             yield return CheckBid365DaysInRow(user.Id);
+
+            //Bid 10 Times
+            yield return CheckBid10(user.Id);
         }
 
         private TrophyKey? CheckBidOnNewYear(string userId)
@@ -201,6 +204,16 @@ namespace Mzayad.Services.Trophies
             }
             return null;
         }
-        
+
+        private TrophyKey? CheckBid10(string userId)
+        {
+            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.Bid10, userId).Result;
+            var bids = _bidService.CountUserBids(userId, lastTime?.CreatedUtc).Result;
+            if (bids == 10)
+            {
+                return TrophyKey.Bid10;
+            }
+            return null;
+        }
     }
 }
