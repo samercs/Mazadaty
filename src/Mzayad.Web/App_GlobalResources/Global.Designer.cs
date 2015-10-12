@@ -889,6 +889,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You have no trophies yet but there are a lot of ways to earn them, keep using the site and you&apos;ll get one soon..
+        /// </summary>
+        public static string NoTrophiesMessage {
+            get {
+                return ResourceManager.GetString("NoTrophiesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You have no wishlist items yet, click the Add Item link to start your wishlist..
         /// </summary>
         public static string NoWishlistMessage {

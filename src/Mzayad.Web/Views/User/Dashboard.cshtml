@@ -31,9 +31,9 @@
                         <div id="dashboard-subscription" class="text-uppercase">
                             <small>
                                 @F(Global.SubscriptionLabelAndStatus, new
-                           {
-                               StatusText = Html.DisplayFor(m => m.User.SubscriptionUtc, "SubscriptionUtc").ToString()
-                           })
+                                {
+                                    StatusText = Html.DisplayFor(m => m.User.SubscriptionUtc, "SubscriptionUtc").ToString()
+                                })
                             </small>
                         </div>
                         <div id="dashboard-progress">
@@ -57,16 +57,16 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div class="dashboard-cell">
+                    <a href="@Url.Action("Index", "Subscriptions")" class="dashboard-cell">
                         <div class="dashboard-number">@Model.User.Tokens</div>
                         <div class="dashboard-label text-uppercase">@Global.Tokens</div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-sm-4">
-                    <div class="dashboard-cell">
+                    <a href="@Url.Action("Trophies", "User")" class="dashboard-cell">
                         <div class="dashboard-number">@Model.Trophies.Count</div>
                         <div class="dashboard-label text-uppercase">@Global.Trophies</div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>

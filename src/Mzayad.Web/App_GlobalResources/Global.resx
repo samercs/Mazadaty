@@ -696,4 +696,7 @@
   <data name="ItemsWon" xml:space="preserve">
     <value>Items Won</value>
   </data>
+  <data name="NoTrophiesMessage" xml:space="preserve">
+    <value>You have no trophies yet but there are a lot of ways to earn them, keep using the site and you'll get one soon.</value>
+  </data>
 </root>

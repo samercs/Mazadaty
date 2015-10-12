@@ -5,6 +5,13 @@
     ViewBag.Title = Global.Trophies;
 }
 
+@if (!Model.Any())
+{
+    <div class="alert alert-warning">@Global.NoTrophiesMessage</div>
+
+    return;
+}
+
 <table class="@Html.Css().GridTable">
     <thead>
     <tr>

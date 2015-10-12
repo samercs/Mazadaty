@@ -790,8 +790,10 @@ input[type="checkbox"].input-validation-error {
   margin-bottom: 20px;
 }
 .dashboard-cell {
+  display: block;
   padding: 24px;
   text-align: center;
+  text-decoration: none !important;
 }
 @media (min-width: 768px) {
   .dashboard-cell {
