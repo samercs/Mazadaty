@@ -54,5 +54,20 @@ namespace Mzayad.Services
                 await dc.SaveChangesAsync();
             }
         }
+
+        public ApplicationUser TryGetAutoBid(int auctionId, int secondsLeft)
+        {
+            if (secondsLeft%10 != 0)
+            {
+                return null;
+            }
+
+            using (var dc = DataContext())
+            {
+                return dc.AutoBids
+                    .Include(i => i.User)
+                    .FirstOrDefault()?.User;
+            }
+        }
     }
 }
