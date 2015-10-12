@@ -11,6 +11,8 @@ using Mzayad.Services.Activity;
 using Mzayad.Services.Identity;
 using Mzayad.Services.Trophies;
 using OrangeJetpack.Services.Client.Messaging;
+using Mzayad.Models.Enum;
+using System.Collections.Generic;
 
 namespace Mzayad.WebJobs
 {
@@ -57,12 +59,20 @@ namespace Mzayad.WebJobs
                     return;
                 }
 
+                IEnumerable<TrophyKey> trophies;
+
                 switch (activityEvent.Type)
                 {
                     case ActivityType.SubmitBid:
-                        var trophies = trophyEngine.GetEarnedTrophies(user);
+                        trophies = trophyEngine.GetEarnedTrophies(user);
                         trophyService.AwardTrophyToUser(trophies, user.Id);
                         break;
+
+                    case ActivityType.VisitSite:
+                        trophies = trophyEngine.GetEarnedTrophies(user);
+                        trophyService.AwardTrophyToUser(trophies, user.Id);
+                        break;
+
                     default:
                         await LogMessageAsync(log, string.Format("No event handling for activity {0}.", activityEvent.Type));
                         break;

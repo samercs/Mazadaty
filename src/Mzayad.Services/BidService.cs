@@ -6,6 +6,7 @@ using Mzayad.Data;
 using Mzayad.Models;
 using OrangeJetpack.Localization;
 using System;
+using Mzayad.Core.Extensions;
 
 namespace Mzayad.Services
 {
@@ -111,29 +112,19 @@ namespace Mzayad.Services
                     .OrderByDescending(i => i.CreatedUtc)
                     .Select(i => i.CreatedUtc)
                     .ToListAsync();
+                
+                return userBidDates.Consecutive();
+            }
+        }
 
-                // if user has never bid or has not bid today
-                if (!userBidDates.Any() || userBidDates.First().Date != DateTime.UtcNow.Date)
-                {
-                    return 0;
-                }
-
-                var bidsGroupedByDate = userBidDates.GroupBy(i => i.Date).ToList();
-
-                var streak = 1;
-
-                for (var i = 0; i < bidsGroupedByDate.Count - 1; i++)
-                {
-                    var dateDifference = bidsGroupedByDate[i].Key.Subtract(bidsGroupedByDate[i+1].Key).Days;
-                    if (dateDifference != 1)
-                    {
-                        return streak;
-                    }
-
-                    streak++;
-                }
-
-                return streak;
+        public async Task<int> CountUserBids(string userId,DateTime? from = null)
+        {
+            using (var db = DataContext())
+            {
+                return await db.Bids.CountAsync(i => i.UserId == userId && (
+                                                                (from.HasValue && i.CreatedUtc >= from.Value)
+                                                                ||
+                                                                !from.HasValue));
             }
         }
     }

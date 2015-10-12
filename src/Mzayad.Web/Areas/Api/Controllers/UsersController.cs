@@ -28,11 +28,13 @@ namespace Mzayad.Web.Areas.Api.Controllers
     {
         private readonly UserService _userService;
         private readonly AddressService _addressService;
+        private readonly SessionLogService _sessionLogService;
 
         public UsersController(IAppServices appServices) : base(appServices)
         {
             _userService = new UserService(appServices.DataContextFactory);
-            _addressService = new AddressService(appServices.DataContextFactory); 
+            _addressService = new AddressService(appServices.DataContextFactory);
+            _sessionLogService = new SessionLogService(appServices.DataContextFactory);
         }
 
         [Route("{username}")]
@@ -291,6 +293,12 @@ namespace Mzayad.Web.Areas.Api.Controllers
             }
 
             return BadRequest(ModelState);
+        }
+
+        [HttpPost,Route("session/log")]
+        public void LogSession()
+        {
+            _sessionLogService .Insert(AuthService.GetSessionLog());
         }
     }
 }

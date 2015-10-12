@@ -77,6 +77,35 @@ namespace Mzayad.Services.Tests
 
             Assert.AreEqual(0, result);
         }
+
+        [Test]
+        public async Task CountUserBids_FromDate_Returns2()
+        {
+            var bidService = GetBidService(new[]
+            {
+                new Bid {UserId = Constants.AnyUserId, CreatedUtc = DateTime.UtcNow},
+                new Bid {UserId = Constants.AnyUserId, CreatedUtc = DateTime.UtcNow.AddDays(-1)},
+                new Bid {UserId = Constants.AnyUserId, CreatedUtc = DateTime.UtcNow.AddDays(-3)}
+            });
+            var result = await bidService.CountUserBids(Constants.AnyUserId, DateTime.UtcNow.AddDays(-1));
+
+            Assert.AreEqual(2, result);
+        }
+
+
+        [Test]
+        public async Task CountUserBids_NoFromDate_Returns3()
+        {
+            var bidService = GetBidService(new[]
+            {
+                new Bid {UserId = Constants.AnyUserId, CreatedUtc = DateTime.UtcNow},
+                new Bid {UserId = Constants.AnyUserId, CreatedUtc = DateTime.UtcNow.AddDays(-1)},
+                new Bid {UserId = Constants.AnyUserId, CreatedUtc = DateTime.UtcNow.AddDays(-3)}
+            });
+            var result = await bidService.CountUserBids(Constants.AnyUserId);
+
+            Assert.AreEqual(3, result);
+        }
     }
 
     // ReSharper restore InconsistentNaming

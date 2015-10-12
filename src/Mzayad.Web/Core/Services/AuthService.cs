@@ -66,6 +66,16 @@ namespace Mzayad.Web.Core.Services
             return _httpContext.Request.UserHostAddress;
         }
 
+        public SessionLog GetSessionLog()
+        {
+             return new SessionLog()
+            {
+                 Browser = _httpContext.Request.UserAgent,
+                 IP = UserHostAddress(),
+                 UserId = CurrentUserId()
+             };
+        }
+
         public async Task<ApplicationUser> SignIn(string username, string password, bool rememberMe)
         {
             ApplicationUser user;

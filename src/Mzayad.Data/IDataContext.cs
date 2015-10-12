@@ -34,6 +34,7 @@ namespace Mzayad.Data
         IDbSet<Trophy> Trophies { get; set; }
         IDbSet<UserTrophy> UsersTrophies { get; set; }
         IDbSet<IslamicCalendar> IslamicCalendars { get; set; }
+        IDbSet<SessionLog> SessionLogs { get; set; }
 
         int SaveChanges();
         Task<int> SaveChangesAsync();

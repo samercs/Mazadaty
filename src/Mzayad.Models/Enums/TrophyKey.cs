@@ -6,6 +6,7 @@
         BidOnIslamicNewYear = 2,
         BidOnEid = 3,
         BidOnAnniversary = 4,
+
         ReturnAfterInactivity = 5,
 
         BidDayStreak3 = 6,

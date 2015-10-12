@@ -123,15 +123,17 @@
     <Compile Include="ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBase.cs" />
+    <Compile Include="SessionLogService.cs" />
     <Compile Include="SpecificationService.cs" />
     <Compile Include="SplashAdService.cs" />
     <Compile Include="SponsorService.cs" />
     <Compile Include="SubscriptionService.cs" />
     <Compile Include="TokenService.cs" />
     <Compile Include="Identity\UserManager.cs" />
-    <Compile Include="Trophies\ITrophyEngine.cs" />
+    <Compile Include="Trophies\TrophyEngine.cs" />
     <Compile Include="Trophies\SubmitBidTrophyEngine.cs" />
     <Compile Include="Trophies\TrophyEngineFactory.cs" />
+    <Compile Include="Trophies\VisitSiteTrophyEngine.cs" />
     <Compile Include="TrophyService.cs" />
     <Compile Include="WishListService.cs" />
   </ItemGroup>

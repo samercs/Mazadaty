@@ -7,12 +7,13 @@ namespace Mzayad.Services.Trophies
 {
     public static class TrophyEngineFactory
     {
-        private static readonly Dictionary<ActivityType, Func<IDataContextFactory, ITrophyEngine>> Dictionary = new Dictionary<ActivityType, Func<IDataContextFactory, ITrophyEngine>>
+        private static readonly Dictionary<ActivityType, Func<IDataContextFactory, TrophyEngine>> Dictionary = new Dictionary<ActivityType, Func<IDataContextFactory, TrophyEngine>>
         {
-            { ActivityType.SubmitBid, d => new SubmitBidTrophyEngine(d) }
+            { ActivityType.SubmitBid, d => new SubmitBidTrophyEngine(d) },
+            { ActivityType.VisitSite , d => new VisitSiteTrophyEngine(d)}
         };
 
-        public static ITrophyEngine CreateInstance(ActivityType activityType, IDataContextFactory dataContextFactor)
+        public static TrophyEngine CreateInstance(ActivityType activityType, IDataContextFactory dataContextFactor)
         {
             var engine = Dictionary[activityType];
             if (engine != null)

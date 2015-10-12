@@ -5,22 +5,20 @@ using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Services.Identity;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Mzayad.Services.Trophies
 {
-    public class SubmitBidTrophyEngine : ITrophyEngine
+    public class SubmitBidTrophyEngine : TrophyEngine
     {
         private readonly UserService _userService;
-        private readonly TrophyService _trophyService;
         private readonly BidService _bidService;
 
         private readonly IslamicCalendar _calendar;
 
         public SubmitBidTrophyEngine(IDataContextFactory dataContextFactory)
+            : base(dataContextFactory)
         {
             _userService = new UserService(dataContextFactory);
-            _trophyService = new TrophyService(dataContextFactory);
 
             var islamicCalendarService = new IslamicCalendarService(dataContextFactory);
             _bidService = new BidService(dataContextFactory);
@@ -28,25 +26,51 @@ namespace Mzayad.Services.Trophies
             _calendar = islamicCalendarService.GetByDate(DateTime.UtcNow.Date).Result;
         }
 
-        public IEnumerable<TrophyKey> GetEarnedTrophies(ApplicationUser user)
-        {
-            return TryGetEarnedTrophies(user)
-                .Where(i => i.HasValue)
-                .Select(i => i.Value);
-        }
-
-        private IEnumerable<TrophyKey?> TryGetEarnedTrophies(ApplicationUser user)
+        protected override IEnumerable<TrophyKey?> TryGetEarnedTrophies(ApplicationUser user)
         {
             yield return CheckBidOnNewYear(user.Id);
             yield return CheckBidOnIslamicNewYear(user.Id);
             yield return CheckBidOnEid(user.Id);
-			yield return CheckBidOnAnniversary(user);
+            yield return CheckBidOnAnniversary(user);
 
             //Bid 3 days in a row
-			yield return CheckBid3DaysInRow(user.Id);
+            yield return CheckBid3DaysInRow(user.Id);
 
             //Bid 7 days in a row
             yield return CheckBid7DaysInRow(user.Id);
+
+            //Bid 30 days in a row
+            yield return CheckBid30DaysInRow(user.Id);
+
+            //Bid 90 days in a row
+            yield return CheckBid90DaysInRow(user.Id);
+
+            //Bid 180 days in a row
+            yield return CheckBid180DaysInRow(user.Id);
+
+            //Bid 365 days in a row
+            yield return CheckBid365DaysInRow(user.Id);
+
+            //Bid 10 Times
+            yield return CheckBid10(user.Id);
+
+            //Bid 50 Times
+            yield return CheckBid50(user.Id);
+
+            //Bid 100 Times
+            yield return CheckBid100(user.Id);
+
+            //Bid 250 Times
+            yield return CheckBid250(user.Id);
+
+            //Bid 500 Times
+            yield return CheckBid500(user.Id);
+
+            //Bid 1000 Times
+            yield return CheckBid1000(user.Id);
+
+            //Bid 2000 Times
+            yield return CheckBid2000(user.Id);
         }
 
         private TrophyKey? CheckBidOnNewYear(string userId)
@@ -117,7 +141,7 @@ namespace Mzayad.Services.Trophies
                 return null;
             }
 
-            if (!GainBidInRowTrophyBefore(TrophyKey.BidDayStreak3, userId))
+            if (!GainTrophyToday(TrophyKey.BidDayStreak3, userId))
             {
                 return TrophyKey.BidDayStreak3;
             }
@@ -132,25 +156,148 @@ namespace Mzayad.Services.Trophies
                 return null;
             }
 
-            if (!GainBidInRowTrophyBefore(TrophyKey.BidDayStreak7, userId))
+            if (!GainTrophyToday(TrophyKey.BidDayStreak7, userId))
             {
                 return TrophyKey.BidDayStreak7;
             }
             return null;
         }
 
-        private bool GainBidInRowTrophyBefore(TrophyKey key, string userId)
+        private TrophyKey? CheckBid30DaysInRow(string userId)
         {
-            var userTrophy = _trophyService.GetLastEarnedTrophy(key, userId).Result;
-            if (userTrophy == null)
+            var streak = _bidService.GetConsecutiveBidDays(userId).Result;
+            if (streak < 30)
             {
-                return false;
+                return null;
             }
-            if (userTrophy.CreatedUtc.Date == DateTime.Now.Date)
+
+            if (!GainTrophyToday(TrophyKey.BidDayStreak30, userId))
             {
-                return true;
+                return TrophyKey.BidDayStreak30;
             }
-            return false;
+            return null;
+        }
+
+        private TrophyKey? CheckBid90DaysInRow(string userId)
+        {
+            var streak = _bidService.GetConsecutiveBidDays(userId).Result;
+            if (streak < 90)
+            {
+                return null;
+            }
+
+            if (!GainTrophyToday(TrophyKey.BidDayStreak90, userId))
+            {
+                return TrophyKey.BidDayStreak90;
+            }
+            return null;
+        }
+
+        private TrophyKey? CheckBid180DaysInRow(string userId)
+        {
+            var streak = _bidService.GetConsecutiveBidDays(userId).Result;
+            if (streak < 180)
+            {
+                return null;
+            }
+
+            if (!GainTrophyToday(TrophyKey.BidDayStreak180, userId))
+            {
+                return TrophyKey.BidDayStreak180;
+            }
+            return null;
+        }
+
+        private TrophyKey? CheckBid365DaysInRow(string userId)
+        {
+            var streak = _bidService.GetConsecutiveBidDays(userId).Result;
+            if (streak < 365)
+            {
+                return null;
+            }
+
+            if (!GainTrophyToday(TrophyKey.BidDayStreak365, userId))
+            {
+                return TrophyKey.BidDayStreak365;
+            }
+            return null;
+        }
+
+        private TrophyKey? CheckBid10(string userId)
+        {
+            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.Bid10, userId).Result;
+            var bids = _bidService.CountUserBids(userId, lastTime?.CreatedUtc).Result;
+            if (bids == 10)
+            {
+                return TrophyKey.Bid10;
+            }
+            return null;
+        }
+
+        private TrophyKey? CheckBid50(string userId)
+        {
+            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.Bid50, userId).Result;
+            var bids = _bidService.CountUserBids(userId, lastTime?.CreatedUtc).Result;
+            if (bids == 50)
+            {
+                return TrophyKey.Bid50;
+            }
+            return null;
+        }
+
+        private TrophyKey? CheckBid100(string userId)
+        {
+            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.Bid100, userId).Result;
+            var bids = _bidService.CountUserBids(userId, lastTime?.CreatedUtc).Result;
+            if (bids == 100)
+            {
+                return TrophyKey.Bid100;
+            }
+            return null;
+        }
+
+        private TrophyKey? CheckBid250(string userId)
+        {
+            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.Bid250, userId).Result;
+            var bids = _bidService.CountUserBids(userId, lastTime?.CreatedUtc).Result;
+            if (bids == 250)
+            {
+                return TrophyKey.Bid250;
+            }
+            return null;
+        }
+
+        private TrophyKey? CheckBid500(string userId)
+        {
+            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.Bid500,userId).Result;
+            var bids = _bidService.CountUserBids(userId, lastTime?.CreatedUtc).Result;
+            if (bids == 500)
+            {
+                return TrophyKey.Bid500;
+            }
+            return null;
+        }
+
+        private TrophyKey? CheckBid1000(string userId)
+        {
+            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.Bid1000, userId).Result;
+            var bids = _bidService.CountUserBids(userId, lastTime?.CreatedUtc).Result;
+            if (bids == 1000)
+            {
+                return TrophyKey.Bid1000;
+            }
+            return null;
+        }
+
+        private TrophyKey? CheckBid2000(string userId)
+        {
+            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.Bid2000, userId).Result;
+            var bids = _bidService.CountUserBids(userId, lastTime?.CreatedUtc).Result;
+            if (bids == 2000)
+            {
+                return TrophyKey.Bid2000;
+            }
+            return null;
         }
     }
 }

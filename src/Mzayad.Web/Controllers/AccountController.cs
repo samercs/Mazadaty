@@ -1,4 +1,5 @@
 ﻿using Mindscape.Raygun4Net;
+using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Services;
@@ -60,6 +61,9 @@ namespace Mzayad.Web.Controllers
             }
 
             SetNameAndEmailCookies(user, model.UsernameOrEmail);
+
+            var _sessionLog = new SessionLogService(new DataContextFactory());
+            _sessionLog.Insert(AuthService.GetSessionLog());
 
             return !string.IsNullOrEmpty(returnUrl) 
                 ? RedirectToLocal(returnUrl) 
