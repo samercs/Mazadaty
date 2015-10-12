@@ -30,9 +30,10 @@ namespace Mzayad.Web.Controllers
             return View(model);
         }
 
-        public async Task<ActionResult> Add()
+        public async Task<ActionResult> Add(string item = "")
         {
-            var model = await (new AddViewModel()).Hydrate(AuthService, _productService);
+            var model = await new AddViewModel().Hydrate(AuthService, _productService);
+            model.WishList.NameEntered = item;
 
             return View(model);
         }
@@ -42,9 +43,10 @@ namespace Mzayad.Web.Controllers
         {
             model.WishList.NameNormalized = model.WishList.NameEntered;
             await _wishListService.Add(model.WishList);
-            SetStatusMessage(Global.WishListItemAddedMessage);
-            return RedirectToAction("Index");
 
+            SetStatusMessage(Global.WishListItemAddedMessage);
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult Remove(int id)

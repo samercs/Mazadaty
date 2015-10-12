@@ -106,7 +106,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add to my wishlist.
+        ///   Looks up a localized string similar to Add to Wishlist.
         /// </summary>
         public static string AddToWishList {
             get {
@@ -124,7 +124,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Allow Phone Sms .
+        ///   Looks up a localized string similar to Allow Phone SMS.
         /// </summary>
         public static string AllowPhoneSmsLabel {
             get {
@@ -178,6 +178,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auto Bid.
+        /// </summary>
+        public static string AutoBid {
+            get {
+                return ResourceManager.GetString("AutoBid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Avatar (select one).
         /// </summary>
         public static string Avatar {
@@ -201,6 +210,15 @@ namespace Mzayad.Web.Resources {
         public static string Back {
             get {
                 return ResourceManager.GetString("Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bid.
+        /// </summary>
+        public static string Bid {
+            get {
+                return ResourceManager.GetString("Bid", resourceCulture);
             }
         }
         
@@ -448,6 +466,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current Auction Price.
+        /// </summary>
+        public static string CurrentAuctionPrice {
+            get {
+                return ResourceManager.GetString("CurrentAuctionPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current Password.
         /// </summary>
         public static string CurrentPassword {
@@ -601,6 +628,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hours.
+        /// </summary>
+        public static string Hours {
+            get {
+                return ResourceManager.GetString("Hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to We&apos;re sorry, but the email address or password you have entered is incorrect..
         /// </summary>
         public static string InvalidUserNameOrPassword {
@@ -736,11 +772,29 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Live Auctions.
+        /// </summary>
+        public static string LiveAuctions {
+            get {
+                return ResourceManager.GetString("LiveAuctions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
         public static string Loading {
             get {
                 return ResourceManager.GetString("Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minutes.
+        /// </summary>
+        public static string Minutes {
+            get {
+                return ResourceManager.GetString("Minutes", resourceCulture);
             }
         }
         
@@ -1335,6 +1389,15 @@ namespace Mzayad.Web.Resources {
         public static string SaveAndContinue {
             get {
                 return ResourceManager.GetString("SaveAndContinue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seconds.
+        /// </summary>
+        public static string Seconds {
+            get {
+                return ResourceManager.GetString("Seconds", resourceCulture);
             }
         }
         

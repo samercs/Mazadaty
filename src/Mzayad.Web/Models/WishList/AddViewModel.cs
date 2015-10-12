@@ -8,16 +8,15 @@ namespace Mzayad.Web.Models.WishList
     public class AddViewModel
     {
         public Mzayad.Models.WishList WishList { get; set; }
-
         public IEnumerable<string> ProductList { get; set; }
 
-        public async Task<AddViewModel> Hydrate(IAuthService authService,ProductService productService)
+        public async Task<AddViewModel> Hydrate(IAuthService authService, ProductService productService)
         {
             if (WishList == null)
             {
                 WishList = new Mzayad.Models.WishList()
                 {
-                    UserId   = authService.CurrentUserId()
+                    UserId = authService.CurrentUserId()
                 };
             }
 

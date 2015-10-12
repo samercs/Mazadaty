@@ -13,7 +13,7 @@ h2,
 h3,
 h4 {
   margin-top: 0;
-  margin-bottom: 1em;
+  margin-bottom: 20px;
 }
 h1 {
   font-size: 2.3rem;
@@ -31,7 +31,7 @@ ul ul,
 ol ul,
 ul ol,
 ol ol {
-  margin-bottom: 1em;
+  margin-bottom: 20px;
 }
 .lead {
   font-size: 1.6rem;
@@ -734,6 +734,18 @@ input[type="checkbox"].input-validation-error {
 #home-index #auction-list .auction-item .auction-details .auction-recent-bids .auction-recent-bidamount {
   padding: 4px 0;
 }
+#home-index #auction-list .auction-item .auction-details .auction-action-buttons {
+  margin: 0 -10px;
+  padding: 0;
+  list-style: none;
+}
+#home-index #auction-list .auction-item .auction-details .auction-action-buttons li {
+  float: left;
+  padding: 10px;
+}
+#home-index #auction-list .auction-item .auction-details .auction-action-buttons li a {
+  font-size: 1.3rem !important;
+}
 #closed-auctions {
   margin: 0 -10px 15px -10px;
   padding: 0;
@@ -762,6 +774,9 @@ input[type="checkbox"].input-validation-error {
   min-width: 0;
   border: 1px solid #F3F3F3;
   text-align: center;
+}
+.auction-tile a {
+  font-size: 1.2rem !important;
 }
 .auction-tile .auction-tile-row {
   padding: 6px;

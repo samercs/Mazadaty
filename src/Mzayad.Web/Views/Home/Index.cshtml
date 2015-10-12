@@ -44,7 +44,7 @@
     <li class="auction-item">
 
         <!-- ko if: $index() == 0 -->
-        <div class="live-action-ribbon">Live Auctions</div>
+        <div class="live-action-ribbon">@Global.LiveAuctions</div>
         <!-- /ko -->
         
         <div class="row">
@@ -61,7 +61,7 @@
 
                     <div class="auction-status-loading" data-bind="visible: !isLoaded()">
                         <i class="fa fa-spin fa-cog"></i>
-                        Loading...
+                        @Global.Loading
                     </div>
 
                     <div class="auction-status-details" data-bind="visible: isLoaded()">
@@ -70,19 +70,19 @@
                             <li class="auction-time-part">
                                 <div class="auction-time-value" data-bind="text: timeLeftHours"></div>
                                 <div class="auction-time-label">
-                                    <small>Hours</small>
+                                    <small>@Global.Hours</small>
                                 </div>
                             </li>
                             <li class="auction-time-part">
                                 <div class="auction-time-value" data-bind="text: timeLeftMinutes"></div>
                                 <div class="auction-time-label">
-                                    <small>Minutes</small>
+                                    <small>@Global.Minutes</small>
                                 </div>
                             </li>
                             <li class="auction-time-part">
                                 <div class="auction-time-value" data-bind="text: timeLeftSeconds"></div>
                                 <div class="auction-time-label">
-                                    <small>Seconds</small>
+                                    <small>@Global.Seconds</small>
                                 </div>
                             </li>
                         </ol>
@@ -92,25 +92,25 @@
                         <div class="row">
                             <div class="auction-bid-details col-md-8">
                                 <div class="auction-bid-label">
-                                    <small>Current Auction Price</small>
+                                    <small>@Global.CurrentAuctionPrice</small>
                                 </div>
                                 <div class="auction-bid-form input-group">
                                     <input type="text" class="form-control" readonly="readonly" data-bind="value: lastBidFormatted">
                                     <span class="input-group-btn">
                                         @if (Request.IsAuthenticated)
                                         {
-                                            <button type="button" class="btn btn-default" data-bind="click: submitBid">Bid</button>
+                                            <button type="button" class="btn btn-default" data-bind="click: submitBid">@Global.Bid</button>
                                         }
                                         else
                                         {
-                                            <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new {ReturnUrl = "/"})">Bid</a>
+                                            <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new {ReturnUrl = "/"})">@Global.Bid</a>
                                         }
                                     </span>
                                 </div>
                                 <ol class="auction-recent-bids" data-bind="foreach: bidsReversed">
                                     <li>
                                         <div class="pull-left">
-                                            <img data-bind="attr: { src: avatarUrl, alt: userName }" width="32" />
+                                            <img data-bind="attr: { src: avatarUrl, alt: userName }" width="32"/>
                                         </div>
                                         <div class="auction-recent-username pull-left">
                                             <span data-bind="text: userName"></span>
@@ -123,12 +123,19 @@
                                 </ol>
                             </div>
                         </div>
+
+                        <ul class="auction-action-buttons">
+                            <li data-bind="if: buyNowEnabled">
+                                <a class="btn btn-default btn-rounded" data-bind="attr: { href: buyNowUrl }">@Global.BuyNow</a>
+                            </li>
+                            <li>
+                                <a class="btn btn-unstyled btn-rounded" data-bind="attr: { href: autoBidUrl }">@Global.AutoBid</a>
+                            </li>
+                            <li>
+                                <a class="btn btn-unstyled btn-rounded" data-bind="attr: { href: wishListUrl }">@Global.AddToWishList</a>
+                            </li>
+                        </ul>
                     </div>
-                </div>
-
-
-                <div class="buy-now" data-bind="if: buyNowEnabled">
-                    <a class="btn btn-default" data-bind="attr: { href: buyNowUrl }">@Global.BuyNow</a>
                 </div>
             </div>
         </div>
@@ -155,7 +162,7 @@
             var auctions = @Html.Raw(JsonConvert.SerializeObject(Model.LiveAuctions, Formatting.Indented, new JsonSerializerSettings {ContractResolver = new CamelCasePropertyNamesContractResolver()}));
             var auctionIds = @JsonConvert.SerializeObject(Model.LiveAuctionIds);
             var auctionHub = $.connection.auctionHub;
-            
+
             var Auction = function(data) {
                 var self = this;
 
@@ -164,7 +171,7 @@
                 self.retailPrice = data.retailPrice;
                 self.buyNowEnabled = data.buyNowEnabled;
                 self.imageUrl = data.imageUrl;
-                
+
                 self.bids = ko.observableArray(data.bids);
                 self.status = ko.observable(data.status);
                 self.isLoaded = ko.observable(false);
@@ -191,6 +198,14 @@
 
                 self.buyNowUrl = ko.computed(function() {
                     return "@LanguageCode/orders/buy-now/" + self.auctionId;
+                });
+
+                self.autoBidUrl = ko.computed(function() {
+                    return "@LanguageCode/auto-bid/settings/" + self.auctionId;
+                });
+
+                self.wishListUrl = ko.computed(function() {
+                    return "@LanguageCode/wishlist/add?item=" + self.title;
                 });
 
                 self.retailPriceFormatted = ko.computed(function() {
@@ -268,8 +283,8 @@
             {
                 <text>$.connection.hub.url = "https://mzayad.azurewebsites.net/signalr";</text>
             }
-            
-            $.connection.hub.start().done(function() {          
+
+            $.connection.hub.start().done(function() {
                 auctionHub.server.initAuctions(auctionIds).done(function(results) {
                     console.log(results);
                 });
