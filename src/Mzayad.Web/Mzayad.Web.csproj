@@ -211,7 +211,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="StackExchange.Redis, Version=1.0.316.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\StackExchange.Redis.1.0.414\lib\net45\StackExchange.Redis.dll</HintPath>
+      <HintPath>..\..\packages\StackExchange.Redis.1.0.481\lib\net45\StackExchange.Redis.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -429,6 +429,7 @@
     <Compile Include="Models\Order\ShippingAddressViewModel.cs" />
     <Compile Include="Models\Shared\AddressViewModel.cs" />
     <Compile Include="Models\Shared\DeleteConfirmationViewModel.cs" />
+    <Compile Include="Models\Shared\SubscriptionExpiration.cs" />
     <Compile Include="Models\Subscriptions\BuyNowViewModel.cs" />
     <Compile Include="Models\User\ChangePasswordViewModel.cs" />
     <Compile Include="Models\User\DashboardViewModel.cs" />
@@ -758,6 +759,7 @@
     <Content Include="Views\Shared\DisplayTemplates\AuctionTile.cshtml" />
     <Content Include="Views\User\BidHistory.cshtml" />
     <Content Include="Views\User\AuctionHistory.cshtml" />
+    <Content Include="Views\Shared\_Layout_SubscriptionStatus.cshtml" />
     <TypeScriptCompile Include="Scripts\auctions.ts" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />

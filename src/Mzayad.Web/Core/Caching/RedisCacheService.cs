@@ -97,17 +97,23 @@ namespace Mzayad.Web.Core.Caching
 
         public void SetList<T>(string key, IEnumerable<T> list)
         {
-            //Trace.TraceInformation("SetList(): " + JsonConvert.SerializeObject(list));
+            key = GetKey(key);
 
             try
-            {
-                key = GetKey(key);
+            {         
                 CacheDatabase.StringSet(key, Serialize(list), _expiration);
             }
             catch (Exception ex)
             {
                 Trace.TraceError(ex.Message);
             }
+        }
+
+        public void Delete(string key)
+        {
+            key = GetKey(key);
+
+            CacheDatabase.KeyDelete(key);
         }
 
         private string GetKey(string key)

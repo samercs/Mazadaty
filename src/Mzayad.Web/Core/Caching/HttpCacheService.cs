@@ -59,5 +59,10 @@ namespace Mzayad.Web.Core.Caching
 
             HttpRuntime.Cache[key] = json;
         }
+
+        public void Delete(string key)
+        {
+            HttpRuntime.Cache.Remove(key);
+        }
     }
 }

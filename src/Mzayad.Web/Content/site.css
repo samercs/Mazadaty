@@ -127,6 +127,12 @@ body {
   background-color: #33ace0;
   background-image: none;
 }
+#header-subscription {
+  padding-top: 10px;
+}
+#header-subscription a {
+  text-decoration: none !important;
+}
 #page-title {
   padding-bottom: 0.5em;
   border-bottom: 1px solid #eee;

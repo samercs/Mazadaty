@@ -46,7 +46,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a href="@Url.Action("Index", "Home", routeValues)" class="navbar-brand">ZEEDLI</a>
+        <a href="@Url.Action("Index", "Home", routeValues)" class="navbar-brand text-uppercase">Zeedli</a>
         <nav class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right navbar-user">
                 @Html.Partial("_Layout_UserMyAccount")
@@ -55,6 +55,7 @@
         </nav>
     </div>
     <div class="container">
+        @Html.Action("SubscriptionStatus", "Home")
         <nav class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-left navbar-main">
                 <li>@Html.ActionLink(Global.Home, "Index", "Home", routeValues, null)</li>
@@ -64,6 +65,7 @@
                 <li>@Html.ActionLink(Global.ContactUs, "ContactUs", "Home", routeValues, null)</li>
             </ul>
         </nav>
+
     </div>
 </div>
     <div id="main" class="container body-content">
