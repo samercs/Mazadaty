@@ -109,6 +109,7 @@
     <Compile Include="Activity\ActivityQueueService.cs" />
     <Compile Include="AddressService.cs" />
     <Compile Include="AuctionService.cs" />
+    <Compile Include="AutoBidService.cs" />
     <Compile Include="AvatarService.cs" />
     <Compile Include="BidService.cs" />
     <Compile Include="CategoryService.cs" />

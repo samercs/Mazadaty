@@ -55,7 +55,7 @@
         </nav>
     </div>
     <div class="container">
-        @Html.Action("SubscriptionStatus", "Home")
+        @Html.Action("SubscriptionStatus", "Home", new { area = "" })
         <nav class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-left navbar-main">
                 <li>@Html.ActionLink(Global.Home, "Index", "Home", routeValues, null)</li>

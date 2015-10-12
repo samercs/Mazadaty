@@ -187,6 +187,51 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete your auto bid for this auction?.
+        /// </summary>
+        public static string AutoBidDeleteConfirmation {
+            get {
+                return ResourceManager.GetString("AutoBidDeleteConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto bid successfully deleted..
+        /// </summary>
+        public static string AutoBidDeleteSuccess {
+            get {
+                return ResourceManager.GetString("AutoBidDeleteSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Auto Bid.
+        /// </summary>
+        public static string AutoBidDeleteTitle {
+            get {
+                return ResourceManager.GetString("AutoBidDeleteTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The auto bid feature randomly selects users that have opted into auto bids and submits bids for them as auctions progress. Opting into auto bids for an auction does not guarantee that we&apos;ll auto bid for you..
+        /// </summary>
+        public static string AutoBidInstructions {
+            get {
+                return ResourceManager.GetString("AutoBidInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto bid successfully set..
+        /// </summary>
+        public static string AutoBidSaveSuccess {
+            get {
+                return ResourceManager.GetString("AutoBidSaveSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Avatar (select one).
         /// </summary>
         public static string Avatar {
@@ -786,6 +831,15 @@ namespace Mzayad.Web.Resources {
         public static string Loading {
             get {
                 return ResourceManager.GetString("Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Bid.
+        /// </summary>
+        public static string MaxBid {
+            get {
+                return ResourceManager.GetString("MaxBid", resourceCulture);
             }
         }
         
@@ -1407,6 +1461,15 @@ namespace Mzayad.Web.Resources {
         public static string SendInstructions {
             get {
                 return ResourceManager.GetString("SendInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Auto Bid.
+        /// </summary>
+        public static string SetAutoBid {
+            get {
+                return ResourceManager.GetString("SetAutoBid", resourceCulture);
             }
         }
         
