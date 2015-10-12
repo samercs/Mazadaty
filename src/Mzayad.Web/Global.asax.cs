@@ -64,8 +64,8 @@ namespace Mzayad.Web
         {
             if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                var _sessionLog = new SessionLogService(new DataContextFactory());
-                 _sessionLog.Insert(new SessionLog()
+                var sessionLog = new SessionLogService(new DataContextFactory());
+                 sessionLog.Insert(new SessionLog()
                 {
                     Browser = Request.UserAgent,
                     IP = Request.UserHostAddress,
