@@ -59,14 +59,7 @@ namespace Mzayad.Services
 
         public ApplicationUser TryGetAutoBid(int auctionId, int secondsLeft, decimal? lastBidAmount)
         {
-            if (secondsLeft <= 0)
-            {
-                return null;
-            }
-
-            var factor = GetTimeZoneFactor(secondsLeft);
-            var frequency = factor/12;
-            if (secondsLeft%frequency != 0)
+            if (secondsLeft <= 0 || !FallsOnAutoBidSecond(secondsLeft))
             {
                 return null;
             }
@@ -85,23 +78,26 @@ namespace Mzayad.Services
             }
         }
 
+        private static bool FallsOnAutoBidSecond(int secondsLeft)
+        {
+            var factor = GetTimeZoneFactor(secondsLeft);
+            var frequency = factor / 12;
+
+            return secondsLeft%frequency == 0;
+        }
+
         private static int GetTimeZoneFactor(int secondsLeft)
         {
-            if (secondsLeft <= 12)
-            {
-                return 12;
-            }
-
             var x = 12;
 
             while (true)
             {
-                x = x*2;
-
                 if (x >= secondsLeft)
                 {
                     return x;
                 }
+
+                x = x * 2;
             }
         }
     }
