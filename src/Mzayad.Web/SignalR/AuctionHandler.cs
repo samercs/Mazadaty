@@ -115,7 +115,8 @@ namespace Mzayad.Web.SignalR
 
                 foreach (var auction in cacheAuctions)
                 {
-                    auction.SecondsLeft = Math.Max(auction.SecondsLeft - 1, 0);
+                    SubtractOneSecond(auction);
+
                     if (auction.SecondsLeft <= 0)
                     {
                         CloseAuction(auction, cacheAuctions);
@@ -134,6 +135,18 @@ namespace Mzayad.Web.SignalR
                 Clients.All.updateAuctions(Serialize(cacheAuctions));
 
                 _updatingAuctions = false;
+            }
+        }
+
+        private static void SubtractOneSecond(LiveAuctionModel auction)
+        {
+            if (auction.SecondsLeft > 12)
+            {
+                auction.UpdateSecondsLeft();
+            }
+            else
+            {
+                auction.SecondsLeft = Math.Max(auction.SecondsLeft - 1, 0);
             }
         }
 

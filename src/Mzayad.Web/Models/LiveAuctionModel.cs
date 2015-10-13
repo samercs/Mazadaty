@@ -12,8 +12,8 @@ namespace Mzayad.Web.Models
         public int SecondsLeft { get; set; }
         public decimal? LastBidAmount { get; set; }
 
-        internal DateTime StartUtc;
-        internal int Duration;
+        public DateTime StartUtc;
+        public int Duration;
         public decimal BidIncrement;
 
         public Queue<BidModel> Bids { get; set; }

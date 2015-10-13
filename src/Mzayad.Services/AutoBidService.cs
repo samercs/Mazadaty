@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using Mzayad.Data;
 using Mzayad.Models;
@@ -57,7 +58,14 @@ namespace Mzayad.Services
 
         public ApplicationUser TryGetAutoBid(int auctionId, int secondsLeft)
         {
-            if (secondsLeft%10 != 0)
+            if (secondsLeft <= 0)
+            {
+                return null;
+            }
+
+            var factor = GetTimeZoneFactor(secondsLeft);
+            var frequency = factor/12;
+            if (secondsLeft%frequency != 0)
             {
                 return null;
             }
@@ -67,6 +75,26 @@ namespace Mzayad.Services
                 return dc.AutoBids
                     .Include(i => i.User)
                     .FirstOrDefault()?.User;
+            }
+        }
+
+        private static int GetTimeZoneFactor(int secondsLeft)
+        {
+            if (secondsLeft <= 12)
+            {
+                return 12;
+            }
+
+            var x = 12;
+
+            while (true)
+            {
+                x = x*2;
+
+                if (x >= secondsLeft)
+                {
+                    return x;
+                }
             }
         }
     }

@@ -43,6 +43,7 @@ namespace Mzayad.Services.Tests.Fakes
             CategoryNotifications = new TestDbSet<CategoryNotification>();
             Orders = new TestDbSet<Order>();
             Bids = new TestDbSet<Bid>();
+            AutoBids = new TestDbSet<AutoBid>();
         }
 
         public int SaveChangesCount { get; private set; }
