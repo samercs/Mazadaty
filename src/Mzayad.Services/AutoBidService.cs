@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using Mzayad.Data;
@@ -56,7 +57,7 @@ namespace Mzayad.Services
             }
         }
 
-        public ApplicationUser TryGetAutoBid(int auctionId, int secondsLeft)
+        public ApplicationUser TryGetAutoBid(int auctionId, int secondsLeft, decimal? lastBidAmount)
         {
             if (secondsLeft <= 0)
             {
@@ -70,11 +71,17 @@ namespace Mzayad.Services
                 return null;
             }
 
+            lastBidAmount = lastBidAmount ?? 0;
+
             using (var dc = DataContext())
             {
-                return dc.AutoBids
-                    .Include(i => i.User)
-                    .FirstOrDefault()?.User;
+                var autoBids = dc.AutoBids
+                    .Where(i => i.AuctionId == auctionId)
+                    .Where(i => i.MaxBid > lastBidAmount)
+                    .OrderBy(c => Guid.NewGuid())
+                    .FirstOrDefault();
+
+                return autoBids?.User;
             }
         }
 

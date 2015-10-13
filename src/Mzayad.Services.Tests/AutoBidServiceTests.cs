@@ -52,9 +52,32 @@ namespace Mzayad.Services.Tests
             });
 
             var service = new AutoBidService(new InMemoryDataContextFactory(dc));
-            var user = service.TryGetAutoBid(Constants.AnyInt, secondsLeft);
+            var user = service.TryGetAutoBid(Constants.AnyInt, secondsLeft, 0);
 
             Assert.AreEqual(user != null, expectedNotNull);
+        }
+
+        [Test]
+        public void TryGetAutoBid_OneAutoBidWithMaxLessThanLastBidAmount_ReturnsNull()
+        {
+            const int lastBidAmount = 10;
+
+            var dc = new InMemoryDataContext();
+            dc.AutoBids.Add(new AutoBid
+            {
+                AuctionId = Constants.AnyInt,
+                UserId = Constants.AnyUserId,
+                User = new ApplicationUser
+                {
+                    Id = Constants.AnyUserId
+                },
+                MaxBid = lastBidAmount
+            });
+
+            var service = new AutoBidService(new InMemoryDataContextFactory(dc));
+            var user = service.TryGetAutoBid(Constants.AnyInt, 1, lastBidAmount);
+
+            Assert.IsNull(user);
         }
     }
 

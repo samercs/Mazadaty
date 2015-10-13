@@ -123,7 +123,7 @@ namespace Mzayad.Web.SignalR
                         continue;
                     }
 
-                    var user = _autoBidService.TryGetAutoBid(auction.AuctionId, auction.SecondsLeft);
+                    var user = _autoBidService.TryGetAutoBid(auction.AuctionId, auction.SecondsLeft, auction.LastBidAmount);
                     if (user != null)
                     {
                         SubmitAutoBid(auction, user);
