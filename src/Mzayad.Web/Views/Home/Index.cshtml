@@ -125,7 +125,7 @@
                         </div>
 
                         <ul class="auction-action-buttons">
-                            <li data-bind="if: buyNowEnabled">
+                            <li data-bind="visible: buyNowEnabled">
                                 <a class="btn btn-default btn-rounded" data-bind="attr: { href: buyNowUrl }">@Global.BuyNow</a>
                             </li>
                             <li>
@@ -201,7 +201,7 @@
                 });
 
                 self.autoBidUrl = ko.computed(function() {
-                    return "@LanguageCode/auto-bid/settings/" + self.auctionId;
+                    return "@LanguageCode/auto-bid/edit/" + self.auctionId;
                 });
 
                 self.wishListUrl = ko.computed(function() {
@@ -277,7 +277,7 @@
                 }
             }
 
-            //$.connection.hub.logging = true;
+           $.connection.hub.logging = true;
 
             @if (!Request.IsLocal)
             {

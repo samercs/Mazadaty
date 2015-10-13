@@ -38,6 +38,7 @@ namespace Mzayad.Data
         public IDbSet<UserTrophy> UsersTrophies { get; set; }
         public IDbSet<IslamicCalendar> IslamicCalendars { get; set; }
         public IDbSet<SessionLog> SessionLogs { get; set; }
+        public IDbSet<AutoBid> AutoBids { get; set; }
 
         public DataContext(): base("DefaultConnection")
         {

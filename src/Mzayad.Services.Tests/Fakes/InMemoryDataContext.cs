@@ -34,6 +34,7 @@ namespace Mzayad.Services.Tests.Fakes
         public IDbSet<UserTrophy> UsersTrophies { get; set; }
         public IDbSet<IslamicCalendar> IslamicCalendars { get; set; }
         public IDbSet<SessionLog> SessionLogs { get; set; }
+        public IDbSet<AutoBid> AutoBids { get; set; }
 
         public InMemoryDataContext()
         {
@@ -42,6 +43,7 @@ namespace Mzayad.Services.Tests.Fakes
             CategoryNotifications = new TestDbSet<CategoryNotification>();
             Orders = new TestDbSet<Order>();
             Bids = new TestDbSet<Bid>();
+            AutoBids = new TestDbSet<AutoBid>();
         }
 
         public int SaveChangesCount { get; private set; }

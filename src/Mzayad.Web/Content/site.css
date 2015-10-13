@@ -39,7 +39,7 @@ ol ol {
 }
 @media (min-width: 768px) {
   .lead {
-    font-size: 2rem;
+    font-size: 1.7rem;
   }
 }
 .instruction {

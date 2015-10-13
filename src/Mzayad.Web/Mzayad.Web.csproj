@@ -28,7 +28,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <ApplicationInsightsResourceId />
-    <TypeScriptToolsVersion>1.5</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>1.6</TypeScriptToolsVersion>
     <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -179,7 +179,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.7\lib\OrangeJetpack.Base.Core.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.8\lib\OrangeJetpack.Base.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -361,6 +361,7 @@
     <Compile Include="Areas\Reports\Models\Subscriptions\SubscriptionLogViewModel.cs" />
     <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
     <Compile Include="Controllers\AuctionsController.cs" />
+    <Compile Include="Controllers\AutoBidController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\KnetController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
@@ -420,6 +421,7 @@
     <Compile Include="Models\Auctions\ClosedAuctionsViewModel.cs" />
     <Compile Include="Models\Auctions\ProductSpecificationViewModel.cs" />
     <Compile Include="Models\BidModel.cs" />
+    <Compile Include="Models\EditAutoBidViewModel.cs" />
     <Compile Include="Models\Home\IndexViewModel.cs" />
     <Compile Include="Models\LiveAuctionExtendedModel.cs" />
     <Compile Include="Models\LiveAuctionModel.cs" />
@@ -774,6 +776,7 @@
     <Content Include="Views\Home\BuyNow.cshtml" />
     <Content Include="Views\Home\ContactUs.cshtml" />
     <Content Include="Views\Auctions\Closed.cshtml" />
+    <Content Include="Views\AutoBid\Edit.cshtml" />
     <None Include="Views\Home\SignalR.cshtml" />
     <Content Include="404.html" />
     <Content Include="500.html" />

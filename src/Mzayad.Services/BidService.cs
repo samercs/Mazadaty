@@ -16,7 +16,24 @@ namespace Mzayad.Services
         {
         }
 
-        public async Task AddBid(int auctionId, string userId, decimal amount, int secondsLeft, string hostAddress)
+        public void AddBid(int auctionId, string userId, decimal amount, int secondsLeft, string hostAddress)
+        {
+            using (var dc = DataContext())
+            {
+                dc.Bids.Add(new Bid
+                {
+                    AuctionId = auctionId,
+                    UserId = userId,
+                    Amount = amount,
+                    SecondsLeft = secondsLeft,
+                    UserHostAddress = hostAddress
+                });
+
+                dc.SaveChanges();
+            }
+        }
+
+        public async Task AddBidAsync(int auctionId, string userId, decimal amount, int secondsLeft, string hostAddress)
         {
             using (var dc = DataContext())
             {

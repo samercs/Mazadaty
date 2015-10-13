@@ -720,4 +720,28 @@
   <data name="Seconds" xml:space="preserve">
     <value>Seconds</value>
   </data>
+  <data name="AutoBidDeleteConfirmation" xml:space="preserve">
+    <value>Are you sure you want to delete your auto bid for this auction?</value>
+  </data>
+  <data name="AutoBidDeleteSuccess" xml:space="preserve">
+    <value>Auto bid successfully deleted.</value>
+  </data>
+  <data name="AutoBidDeleteTitle" xml:space="preserve">
+    <value>Delete Auto Bid</value>
+  </data>
+  <data name="AutoBidInstructions" xml:space="preserve">
+    <value>The auto bid feature randomly selects users that have opted into auto bids and submits bids for them as auctions progress. Opting into auto bids for an auction does not guarantee that we'll auto bid for you.</value>
+  </data>
+  <data name="AutoBidSaveSuccess" xml:space="preserve">
+    <value>Auto bid successfully set.</value>
+  </data>
+  <data name="MaxBid" xml:space="preserve">
+    <value>Max Bid</value>
+  </data>
+  <data name="SetAutoBid" xml:space="preserve">
+    <value>Set Auto Bid</value>
+  </data>
+  <data name="AuctionWinMessage" xml:space="preserve">
+    <value>Congratulations {FirstName} you've won! First things first, please enter your shipping address below.</value>
+  </data>
 </root>
