@@ -178,6 +178,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Congratulations {FirstName} you&apos;ve won! First things first, please enter your shipping address below..
+        /// </summary>
+        public static string AuctionWinMessage {
+            get {
+                return ResourceManager.GetString("AuctionWinMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auto Bid.
         /// </summary>
         public static string AutoBid {

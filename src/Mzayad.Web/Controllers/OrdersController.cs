@@ -9,11 +9,14 @@ using Mzayad.Web.Resources;
 using OrangeJetpack.Base.Web;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Mzayad.Models;
+using Mzayad.Web.Core.Attributes;
+using OrangeJetpack.Base.Core.Formatting;
 using DetailsViewModel = Mzayad.Web.Models.Order.DetailsViewModel;
 
 namespace Mzayad.Web.Controllers
 {
-    [RoutePrefix("{language}/orders"), Authorize]
+    [LanguageRoutePrefix("orders"), Authorize]
     public class OrdersController : ApplicationController
     {
         private readonly AuctionService _auctionService;
@@ -76,9 +79,9 @@ namespace Mzayad.Web.Controllers
 
             var user = await AuthService.CurrentUser();
 
-            SetStatusMessage("Congratulations {0} you've won! First things first, please enter your shipping address below.", user.FirstName);
+            SetStatusMessage(StringFormatter.ObjectFormat(Global.AuctionWinMessage, new { user.FirstName }));
 
-            return await Shipping(orderId);
+            return Shipping(order);
         }
 
         [Route("shipping/{orderId:int}")]
@@ -90,14 +93,19 @@ namespace Mzayad.Web.Controllers
                 return HttpNotFound();
             }
 
+            return Shipping(order);
+        }
+
+        private ActionResult Shipping(Order order)
+        {
             var model = new ShippingAddressViewModel
             {
                 Order = order,
                 AddressViewModel = new AddressViewModel(order.Address).Hydrate(),
-                ShippingAddress = order.Address,              
+                ShippingAddress = order.Address,
             };
 
-            return View(model);
+            return View("Shipping", model);
         }
 
         [Route("shipping/{orderId:int}")]

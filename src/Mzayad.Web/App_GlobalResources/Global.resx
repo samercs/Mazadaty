@@ -741,4 +741,7 @@
   <data name="SetAutoBid" xml:space="preserve">
     <value>Set Auto Bid</value>
   </data>
+  <data name="AuctionWinMessage" xml:space="preserve">
+    <value>Congratulations {FirstName} you've won! First things first, please enter your shipping address below.</value>
+  </data>
 </root>

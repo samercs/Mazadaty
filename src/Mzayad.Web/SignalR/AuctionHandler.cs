@@ -68,26 +68,40 @@ namespace Mzayad.Web.SignalR
 
         public async Task<string> InitAuctions(int[] auctionIds)
         {
-            var cachedAuctions = GetAuctionsFromCache() ?? new List<LiveAuctionModel>();
-            var missingIds = auctionIds.Except(cachedAuctions.Select(i => i.AuctionId)).ToList();
-            if (!missingIds.Any())
+            Trace.TraceInformation("InitAuctions: " + string.Join(", ", auctionIds));
+
+            try
             {
-                return Serialize(cachedAuctions);
+                var cachedAuctions = GetAuctionsFromCache();
+                var missingIds = auctionIds.Except(cachedAuctions.Select(i => i.AuctionId)).ToList();
+                if (!missingIds.Any())
+                {
+                    return Serialize(cachedAuctions);
+                }
+
+                var auctions = await _auctionService.GetLiveAuctions(missingIds);
+                var auctionModels = auctions.Select(LiveAuctionModel.Create).ToList();
+
+                auctionModels.AddRange(cachedAuctions);
+
+                SaveAuctionsToCache(auctionModels);
+
+                return Serialize(auctionModels);
             }
+            catch (Exception ex)
+            {
+                Trace.TraceError(ex.Message);
 
-            var auctions = await _auctionService.GetLiveAuctions(missingIds);
-            var auctionModels = auctions.Select(LiveAuctionModel.Create).ToList();
-
-            auctionModels.AddRange(cachedAuctions);
-
-            SaveAuctionsToCache(auctionModels);
-
-            return Serialize(auctionModels);
+                return Serialize(new List<LiveAuctionModel>());
+            }
         }
 
-        private IReadOnlyCollection<LiveAuctionModel> GetAuctionsFromCache()
+        private List<LiveAuctionModel> GetAuctionsFromCache()
         {
-            return _cacheService.GetList<LiveAuctionModel>(CacheKeys.LiveAuctions);
+            var auctions = _cacheService.GetList<LiveAuctionModel>(CacheKeys.LiveAuctions) ??
+                           new List<LiveAuctionModel>();
+
+            return auctions.ToList();
         }
 
         private void SaveAuctionsToCache(IEnumerable<LiveAuctionModel> auctions)
@@ -106,20 +120,23 @@ namespace Mzayad.Web.SignalR
 
                 _updatingAuctions = true;
 
-                var cacheAuctions = GetAuctionsFromCache();
-                if (cacheAuctions == null)
+                var auctions = GetAuctionsFromCache();
+                if (auctions == null)
                 {
                     _updatingAuctions = false;
                     return;
                 }
 
-                foreach (var auction in cacheAuctions)
+                foreach (var auction in auctions.ToList())
                 {
                     SubtractOneSecond(auction);
 
                     if (auction.SecondsLeft <= 0)
                     {
-                        CloseAuction(auction, cacheAuctions);
+                        CloseAuction(auction.AuctionId);
+
+                        auctions.RemoveAll(i => i.AuctionId == auction.AuctionId);
+
                         continue;
                     }
 
@@ -130,9 +147,9 @@ namespace Mzayad.Web.SignalR
                     }
                 }
 
-                SaveAuctionsToCache(cacheAuctions);
+                SaveAuctionsToCache(auctions);
 
-                Clients.All.updateAuctions(Serialize(cacheAuctions));
+                Clients.All.updateAuctions(Serialize(auctions));
 
                 _updatingAuctions = false;
             }
@@ -150,14 +167,11 @@ namespace Mzayad.Web.SignalR
             }
         }
 
-        private void CloseAuction(LiveAuctionModel auction, IEnumerable<LiveAuctionModel> auctions)
+        private void CloseAuction(int auctionId)
         {
-            auctions = auctions.Where(i => i.AuctionId != auction.AuctionId).ToList();
-            SaveAuctionsToCache(auctions);
+            var order = _auctionService.CloseAuction(auctionId).Result;
 
-            var order = _auctionService.CloseAuction(auction.AuctionId).Result;
-
-            Clients.All.closeAuction(auction.AuctionId, order.UserId, order.OrderId);
+            Clients.All.closeAuction(auctionId, order.UserId, order.OrderId);
         }
 
         public async Task SubmitBid(int auctionId, string userId, string hostAddress)
