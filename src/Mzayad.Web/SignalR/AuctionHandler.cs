@@ -168,7 +168,7 @@ namespace Mzayad.Web.SignalR
             
             await _bidService.AddBid(auctionId, userId, bid.BidAmount, auction.SecondsLeft, hostAddress);
             
-            await _activityQueueService.QueueActivity(ActivityType.SubmitBid, userId);
+            await _activityQueueService.QueueActivity(ActivityType.SubmitBid, userId , 5);// 5 points for submitting bid, it should be configured
         }
 
         private static string Serialize(object value)

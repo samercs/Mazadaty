@@ -28,7 +28,7 @@ namespace Mzayad.Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Test(FormCollection formCollection)
         {
-            _activityQueueService.QueueActivity(ActivityType.TestActivity, _authService.CurrentUserId());
+            _activityQueueService.QueueActivity(ActivityType.TestActivity, _authService.CurrentUserId(),5);
 
             return View();
         }
