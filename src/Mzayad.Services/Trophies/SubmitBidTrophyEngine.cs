@@ -54,6 +54,9 @@ namespace Mzayad.Services.Trophies
             //Bid 10 Times
             yield return CheckBid10(user.Id);
 
+            //Bid 25 Times
+            yield return CheckBid25(user.Id);
+
             //Bid 50 Times
             yield return CheckBid50(user.Id);
 
@@ -71,6 +74,9 @@ namespace Mzayad.Services.Trophies
 
             //Bid 2000 Times
             yield return CheckBid2000(user.Id);
+
+            //Bid 5000 Times
+            yield return CheckBid5000(user.Id);
         }
 
         private TrophyKey? CheckBidOnNewYear(string userId)
@@ -234,6 +240,17 @@ namespace Mzayad.Services.Trophies
             return null;
         }
 
+        private TrophyKey? CheckBid25(string userId)
+        {
+            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.Bid25, userId).Result;
+            var bids = _bidService.CountUserBids(userId, lastTime?.CreatedUtc).Result;
+            if (bids == 25)
+            {
+                return TrophyKey.Bid25;
+            }
+            return null;
+        }
+
         private TrophyKey? CheckBid50(string userId)
         {
             var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.Bid50, userId).Result;
@@ -296,6 +313,17 @@ namespace Mzayad.Services.Trophies
             if (bids == 2000)
             {
                 return TrophyKey.Bid2000;
+            }
+            return null;
+        }
+
+        private TrophyKey? CheckBid5000(string userId)
+        {
+            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.Bid5000, userId).Result;
+            var bids = _bidService.CountUserBids(userId, lastTime?.CreatedUtc).Result;
+            if (bids == 5000)
+            {
+                return TrophyKey.Bid5000;
             }
             return null;
         }
