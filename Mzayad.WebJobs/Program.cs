@@ -13,8 +13,8 @@ using Mzayad.Services.Trophies;
 using Mzayad.Models.Enum;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using Newtonsoft.Json;
+using System.Text;
+using OrangeJetpack.Localization;
 
 namespace Mzayad.WebJobs
 {
@@ -51,6 +51,8 @@ namespace Mzayad.WebJobs
             var userService = new UserService(dataContextFactory);
             var trophyService = new TrophyService(dataContextFactory);
             var trophyEngine = TrophyEngineFactory.CreateInstance(activityEvent.Type, dataContextFactory);
+            var emailTemplateService = new EmailTemplateService(dataContextFactory);
+            EmailTemplate emailTemplate;
 
             try
             {
@@ -68,19 +70,23 @@ namespace Mzayad.WebJobs
                     case ActivityType.SubmitBid:
                         trophies = trophyEngine.GetEarnedTrophies(user);
                         trophyService.AwardTrophyToUser(trophies, user.Id);
+                        emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrohpyEarned);
+                        await SendEmail(user, emailTemplate);
                         break;
 
                     case ActivityType.VisitSite:
                         trophies = trophyEngine.GetEarnedTrophies(user);
                         trophyService.AwardTrophyToUser(trophies, user.Id);
                         break;
+
                     case ActivityType.EarnXp:
                         user.Xp += activityEvent.XP;
                         var newLevel = LevelService.GetLevelByXp(user.Xp).Index;
                         if (newLevel > user.Level)
                         {
                             user.Level = newLevel;
-                            await SendEmail(user.Email, "Congratulations!! you have been leveled up!!!", "Congratulations");
+                            emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.LevelUp);
+                            await SendEmail(user, emailTemplate);
                         }
                         await userService.UpdateUser(user);
                         break;
@@ -99,7 +105,7 @@ namespace Mzayad.WebJobs
                 throw;
             }
         }
-        private static async Task SendEmail(string toEmail, string message, string subject)
+        private static async Task SendEmail(ApplicationUser user, EmailTemplate emailTemplate)
         {
             using (var client = new HttpClient())
             {
@@ -109,9 +115,9 @@ namespace Mzayad.WebJobs
                 {
                     new KeyValuePair<string, string>("FromAddress", "admin@mzayad.com"),
                     new KeyValuePair<string, string>("FromName", "Mzayad"),
-                    new KeyValuePair<string, string>("Message", message),
-                    new KeyValuePair<string, string>("Subject",subject),
-                    new KeyValuePair<string, string>("ToAddress",toEmail)
+                    new KeyValuePair<string, string>("Message", string.Format(emailTemplate.Localize("us", i=> i.Message).Message,user.FirstName,"Mzayad")),
+                    new KeyValuePair<string, string>("Subject",emailTemplate.Subject),
+                    new KeyValuePair<string, string>("ToAddress",user.Email)
                 });
 
                 await client.PostAsync("messages", requestContent);
