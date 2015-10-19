@@ -18,17 +18,17 @@ namespace Mzayad.Services
                 };
             }
             return new Level()
-                    {
-                        Name = lvl.ToString(),
-                        Index = lvl,
-                        TokensAwarded = 5 * lvl,
-                        XpRequired = GetXp(lvl)
-                    };
+            {
+                Name = lvl.ToString(),
+                Index = lvl,
+                TokensAwarded = 5 * lvl,
+                XpRequired = GetXp(lvl)
+            };
         }
 
         public static Level GetLevelByXp(int xp)
         {
-            for (var i = 1;; i++)
+            for (var i = 1; ; i++)
             {
                 var currLevel = GetLevel(i);
                 var nextLevel = GetLevel(i + 1);
@@ -42,7 +42,7 @@ namespace Mzayad.Services
 
         private static int GetXp(int lvl)
         {
-            return Level.XpBase/2*((int)Math.Pow(lvl, 2) - lvl);
+            return Level.XpBase / 2 * ((int)Math.Pow(lvl, 2) - lvl);
         }
     }
 }

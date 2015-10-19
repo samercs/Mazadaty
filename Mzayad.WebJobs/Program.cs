@@ -10,9 +10,11 @@ using Mzayad.Services;
 using Mzayad.Services.Activity;
 using Mzayad.Services.Identity;
 using Mzayad.Services.Trophies;
-using OrangeJetpack.Services.Client.Messaging;
 using Mzayad.Models.Enum;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
 
 namespace Mzayad.WebJobs
 {
@@ -72,6 +74,16 @@ namespace Mzayad.WebJobs
                         trophies = trophyEngine.GetEarnedTrophies(user);
                         trophyService.AwardTrophyToUser(trophies, user.Id);
                         break;
+                    case ActivityType.EarnXp:
+                        user.Xp += activityEvent.XP;
+                        var newLevel = LevelService.GetLevelByXp(user.Xp).Index;
+                        if (newLevel > user.Level)
+                        {
+                            user.Level = newLevel;
+                            await SendEmail(user.Email, "Congratulations!! you have been leveled up!!!", "Congratulations");
+                        }
+                        await userService.UpdateUser(user);
+                        break;
 
                     default:
                         await LogMessageAsync(log, string.Format("No event handling for activity {0}.", activityEvent.Type));
@@ -85,6 +97,24 @@ namespace Mzayad.WebJobs
             {
                 LogMessage(log, ex.Message);
                 throw;
+            }
+        }
+        private static async Task SendEmail(string toEmail, string message, string subject)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44300/area/api/");
+
+                var requestContent = new FormUrlEncodedContent(new[]
+                {
+                    new KeyValuePair<string, string>("FromAddress", "admin@mzayad.com"),
+                    new KeyValuePair<string, string>("FromName", "Mzayad"),
+                    new KeyValuePair<string, string>("Message", message),
+                    new KeyValuePair<string, string>("Subject",subject),
+                    new KeyValuePair<string, string>("ToAddress",toEmail)
+                });
+
+                await client.PostAsync("messages", requestContent);
             }
         }
     }

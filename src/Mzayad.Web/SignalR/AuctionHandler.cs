@@ -50,23 +50,23 @@ namespace Mzayad.Web.SignalR
         private AuctionService _auctionService;
         private UserService _userService;
         private BidService _bidService;
-        
+
         public AuctionHandler Setup(IDataContextFactory dataContextFactory, ICacheService cacheService)
         {
             _cacheService = _cacheService ?? cacheService;
             _auctionService = _auctionService ?? new AuctionService(dataContextFactory);
             _userService = _userService ?? new UserService(dataContextFactory);
             _bidService = _bidService ?? new BidService(dataContextFactory);
-            _activityQueueService = _activityQueueService ?? 
+            _activityQueueService = _activityQueueService ??
                 new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
 
             return this;
         }
 
         public async Task<string> InitAuctions(int[] auctionIds)
-        {   
+        {
             Trace.TraceInformation("InitAuctions(): {0}", JsonConvert.SerializeObject(auctionIds));
-               
+
             var auctions = await _auctionService.GetLiveAuctions(auctionIds);
             var auctionModels = auctions.Select(LiveAuctionModel.Create).ToList();
 
@@ -94,7 +94,7 @@ namespace Mzayad.Web.SignalR
             _cacheService.SetList(CacheKeys.LiveAuctions, auctions);
         }
 
-        private void  UpdateAuctions(object state)
+        private void UpdateAuctions(object state)
         {
             lock (_updateLock)
             {
@@ -165,10 +165,12 @@ namespace Mzayad.Web.SignalR
             var bid = auction.AddBid(user);
 
             _cacheService.SetList(CacheKeys.LiveAuctions, auctions);
-            
+
             await _bidService.AddBid(auctionId, userId, bid.BidAmount, auction.SecondsLeft, hostAddress);
-            
-            await _activityQueueService.QueueActivity(ActivityType.SubmitBid, userId , 5);// 5 points for submitting bid, it should be configured
+
+            await _activityQueueService.QueueActivity(ActivityType.SubmitBid, userId);
+
+            await _activityQueueService.QueueActivity(ActivityType.EarnXp, userId, 5);
         }
 
         private static string Serialize(object value)
