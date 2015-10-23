@@ -9,5 +9,6 @@ namespace Mzayad.Models
         public string UserId { get; set; }
 
         public int XP { get; set; }
+        public string Language { get; set; }
     }
 }

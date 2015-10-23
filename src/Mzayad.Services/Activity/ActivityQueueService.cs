@@ -9,8 +9,8 @@ namespace Mzayad.Services.Activity
 {
     public interface IActivityQueueService
     {
-        Task QueueActivity(ActivityType activityType, string userId);
-        Task QueueActivity(ActivityType activityType, string userId, int xp);
+        Task QueueActivity(ActivityType activityType, string userId, string language = "en");
+        Task QueueActivity(ActivityType activityType, string userId, int xp, string language = "en");
     }
 
     public class ActivityQueueService : IActivityQueueService
@@ -23,23 +23,25 @@ namespace Mzayad.Services.Activity
             _storageAccount = CloudStorageAccount.Parse(connectionString);
         }
 
-        public async Task QueueActivity(ActivityType activityType, string userId)
-        {
-            var message = new CloudQueueMessage(JsonConvert.SerializeObject(new ActivityEvent
-            {
-                Type = activityType,
-                UserId = userId
-            }));
-
-            await CreateQueue().AddMessageAsync(message);
-        }
-        public async Task QueueActivity(ActivityType activityType, string userId, int xp)
+        public async Task QueueActivity(ActivityType activityType, string userId, string language = "en")
         {
             var message = new CloudQueueMessage(JsonConvert.SerializeObject(new ActivityEvent
             {
                 Type = activityType,
                 UserId = userId,
-                XP = xp
+                Language = language
+            }));
+
+            await CreateQueue().AddMessageAsync(message);
+        }
+        public async Task QueueActivity(ActivityType activityType, string userId, int xp, string language = "en")
+        {
+            var message = new CloudQueueMessage(JsonConvert.SerializeObject(new ActivityEvent
+            {
+                Type = activityType,
+                UserId = userId,
+                XP = xp,
+                Language = language
             }));
 
             await CreateQueue().AddMessageAsync(message);

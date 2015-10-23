@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -71,7 +72,8 @@ namespace Mzayad.WebJobs
                         trophies = trophyEngine.GetEarnedTrophies(user);
                         trophyService.AwardTrophyToUser(trophies, user.Id);
                         emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrohpyEarned);
-                        await SendEmail(user, emailTemplate);
+                        message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, TrophiesHtmlTable(trophies, trophyService));
+                        await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
                         break;
 
                     case ActivityType.VisitSite:
@@ -86,7 +88,8 @@ namespace Mzayad.WebJobs
                         {
                             user.Level = newLevel;
                             emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.LevelUp);
-                            await SendEmail(user, emailTemplate);
+                            message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, user.Level);
+                            await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
                         }
                         await userService.UpdateUser(user);
                         break;
@@ -105,7 +108,7 @@ namespace Mzayad.WebJobs
                 throw;
             }
         }
-        private static async Task SendEmail(ApplicationUser user, EmailTemplate emailTemplate)
+        private static async Task SendEmail(ApplicationUser user, string subject, string message)
         {
             using (var client = new HttpClient())
             {
@@ -115,13 +118,33 @@ namespace Mzayad.WebJobs
                 {
                     new KeyValuePair<string, string>("FromAddress", "admin@mzayad.com"),
                     new KeyValuePair<string, string>("FromName", "Mzayad"),
-                    new KeyValuePair<string, string>("Message", string.Format(emailTemplate.Localize("us", i=> i.Message).Message,user.FirstName,"Mzayad")),
-                    new KeyValuePair<string, string>("Subject",emailTemplate.Subject),
+                    new KeyValuePair<string, string>("Message", message),
+                    new KeyValuePair<string, string>("Subject",subject),
                     new KeyValuePair<string, string>("ToAddress",user.Email)
                 });
 
                 await client.PostAsync("messages", requestContent);
             }
+        }
+        private static async Task<string> TrophiesHtmlTable(IEnumerable<TrophyKey> keys, TrophyService trophyService)
+        {
+            var table = new StringBuilder();
+            table.Append("<table>");
+            Trophy trophy;
+            foreach (var key in Enum.GetValues(typeof(TrophyKey)).Cast<TrophyKey>())
+            {
+                trophy = await trophyService.GetTrophy(key);
+                if (trophy != null)
+                {
+                    table.Append("<tr>");
+                    table.Append("<td>" + trophy.Name + "</td>");
+                    table.Append("<td>" + trophy.Description + "</td>");
+                    table.Append("<td><img src='" + trophy.IconUrl + "' style='width:50px;'/></td>");
+                    table.Append("/<tr>");
+                }
+            }
+            table.Append("</table>");
+            return table.ToString();
         }
     }
 }

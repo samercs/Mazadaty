@@ -314,6 +314,10 @@
     <Compile Include="Migrations\201510171809212_AddXPToActivityEvents.Designer.cs">
       <DependentUpon>201510171809212_AddXPToActivityEvents.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510232022067_AddLangaugeToActivityEvent.cs" />
+    <Compile Include="Migrations\201510232022067_AddLangaugeToActivityEvent.Designer.cs">
+      <DependentUpon>201510232022067_AddLangaugeToActivityEvent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -507,6 +511,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510171809212_AddXPToActivityEvents.resx">
       <DependentUpon>201510171809212_AddXPToActivityEvents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510232022067_AddLangaugeToActivityEvent.resx">
+      <DependentUpon>201510232022067_AddLangaugeToActivityEvent.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
