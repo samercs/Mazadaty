@@ -1,5 +1,6 @@
 ﻿using Mzayad.Data;
 using Mzayad.Web.Core.Caching;
+using OrangeJetpack.Cms.Client;
 using OrangeJetpack.Services.Client.Messaging;
 using OrangeJetpack.Services.Client.Storage;
 
@@ -15,6 +16,7 @@ namespace Mzayad.Web.Core.Services
         public ICacheService CacheService { get; private set; }
         public IRequestService RequestService { get; private set; }
         public IStorageService StorageService { get; private set; }
+        public ICmsClient CmsClient { get; private set; }
 
         public AppServices(
             IDataContextFactory dataContextFactory,
@@ -24,7 +26,8 @@ namespace Mzayad.Web.Core.Services
             IMessageService messageService,
             ICacheService caceService,
             IRequestService requestService,
-            IStorageService storageService)
+            IStorageService storageService,
+            ICmsClient cmsClient)
         {
             DataContextFactory = dataContextFactory;
             AppSettings = appSettings;
@@ -34,6 +37,7 @@ namespace Mzayad.Web.Core.Services
             CacheService = caceService;
             RequestService = requestService;
             StorageService = storageService;
+            CmsClient = cmsClient;
         }
     }
 }

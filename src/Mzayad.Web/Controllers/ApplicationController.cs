@@ -12,6 +12,7 @@ using System.Web.Mvc;
 using Mzayad.Web.Core.ActionResults;
 using Mzayad.Web.Core.Caching;
 using OrangeJetpack.Base.Core.Extensions;
+using OrangeJetpack.Cms.Client;
 using OrangeJetpack.Services.Client.Storage;
 
 namespace Mzayad.Web.Controllers
@@ -28,6 +29,7 @@ namespace Mzayad.Web.Controllers
         protected readonly ICacheService CacheService;
         protected readonly IRequestService RequestService;
         protected readonly IStorageService StorageService;
+        protected readonly ICmsClient CmsClient;
         protected readonly EmailTemplateService EmailTemplateService;
         
         protected ApplicationController(IAppServices appServices)
@@ -40,8 +42,9 @@ namespace Mzayad.Web.Controllers
             CacheService = appServices.CacheService;
             RequestService = appServices.RequestService;
             StorageService = appServices.StorageService;
-            
-            EmailTemplateService=new EmailTemplateService(appServices.DataContextFactory);
+            CmsClient = appServices.CmsClient;
+
+            EmailTemplateService =new EmailTemplateService(appServices.DataContextFactory);
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)

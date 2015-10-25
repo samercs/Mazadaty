@@ -1,5 +1,6 @@
 ﻿using Mzayad.Data;
 using Mzayad.Web.Core.Caching;
+using OrangeJetpack.Cms.Client;
 using OrangeJetpack.Services.Client.Messaging;
 using OrangeJetpack.Services.Client.Storage;
 
@@ -15,5 +16,6 @@ namespace Mzayad.Web.Core.Services
         ICacheService CacheService { get; }
         IRequestService RequestService { get; }
         IStorageService StorageService { get; }
+        ICmsClient CmsClient { get; }
     }
 }

@@ -82,6 +82,43 @@ module App {
             return Math.floor(seconds % 60);
         }
     }
+
+    export class CkEditor {
+
+        static init() {
+            // ReSharper disable SuspiciousThisUsage
+            
+            const editorHeight = 300;
+
+            var fixValidation = function () {
+
+                this.document.on("input", () => {
+
+                    var instance = CKEDITOR.currentInstance;
+                    var name = instance.name;
+                    var data = instance.getData();
+                    var parent = $(`li[data-for='${name}']`);
+                    var inputs = parent.find(".localized-hidden, .localized-input");
+
+                    if (data.length >= 0) {
+                        inputs.val(data).addClass("valid");
+                    } else {
+                        inputs.val("").removeClass("valid");
+                    }
+                });
+            }
+
+            $("textarea.localized-input[data-language!='ar']").each(function () {
+                CKEDITOR.replace(this.id, { height: editorHeight }).on("instanceReady", fixValidation);
+            });
+
+            $("textarea.localized-input[data-language='ar']").each(function () {
+                CKEDITOR.replace(this.id, { height: editorHeight, contentsLangDirection: "rtl" });
+            });
+            
+            // ReSharper restore SuspiciousThisUsage
+        }
+    }
 }
 
 
