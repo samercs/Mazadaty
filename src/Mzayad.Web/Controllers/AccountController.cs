@@ -25,11 +25,13 @@ namespace Mzayad.Web.Controllers
     {
         private readonly UserService _userService;
         private readonly AddressService _addressService;
-        
+        private readonly SessionLogService _sessionLogService;
+         
         public AccountController(IAppServices appServices) : base(appServices)
         {
-            _userService = new UserService(appServices.DataContextFactory);
-            _addressService = new AddressService(appServices.DataContextFactory);
+            _userService = new UserService(DataContextFactory);
+            _addressService = new AddressService(DataContextFactory);
+            _sessionLogService = new SessionLogService(DataContextFactory);
         }
 
         [Route("sign-in")]
@@ -62,8 +64,9 @@ namespace Mzayad.Web.Controllers
 
             SetNameAndEmailCookies(user, model.UsernameOrEmail);
 
-            var _sessionLog = new SessionLogService(new DataContextFactory());
-            _sessionLog.Insert(AuthService.GetSessionLog());
+            var sessionLog = AuthService.GetSessionLog();
+            sessionLog.UserId = user.Id;
+            _sessionLogService.Insert(sessionLog);
 
             return !string.IsNullOrEmpty(returnUrl) 
                 ? RedirectToLocal(returnUrl) 

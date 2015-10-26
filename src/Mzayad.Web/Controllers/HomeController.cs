@@ -7,6 +7,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Mzayad.Web.Models.Shared;
 
 namespace Mzayad.Web.Controllers
 {
@@ -34,6 +35,31 @@ namespace Mzayad.Web.Controllers
             var viewModel = new IndexViewModel(liveAuctions, closedAuctions);
 
             return View(viewModel);
+        }
+
+        [ChildActionOnly]
+        public PartialViewResult SubscriptionStatus()
+        {
+            DateTime? subscriptionUtc = null;
+
+            if (AuthService.IsAuthenticated())
+            {
+                Task.Run(async () => { subscriptionUtc = (await GetSubscriptionUtc()).SubscriptionUtc; }).Wait();
+            }
+
+            return PartialView("_Layout_SubscriptionStatus", subscriptionUtc);
+        }
+
+        private async Task<SubscriptionExpiration> GetSubscriptionUtc()
+        {
+            var cacheKey = string.Format(CacheKeys.UserSubscriptionUtc, AuthService.CurrentUserId());
+            return await CacheService.TryGet(cacheKey, GetSubscriptionUtcFromUser);
+        }
+
+        private async Task<SubscriptionExpiration> GetSubscriptionUtcFromUser()
+        {
+            var user = await AuthService.CurrentUser();
+            return new SubscriptionExpiration(user.SubscriptionUtc);
         }
 
         public ActionResult SignalR()

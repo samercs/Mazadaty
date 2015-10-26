@@ -166,7 +166,7 @@ namespace Mzayad.Web.SignalR
 
             _cacheService.SetList(CacheKeys.LiveAuctions, auctions);
 
-            await _bidService.AddBid(auctionId, userId, bid.BidAmount, auction.SecondsLeft, hostAddress);
+            await _bidService.AddBidAsync(auctionId, userId, bid.BidAmount, auction.SecondsLeft, hostAddress);
 
             await _activityQueueService.QueueActivity(ActivityType.SubmitBid, userId);
 

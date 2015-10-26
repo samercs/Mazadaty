@@ -6,6 +6,8 @@ using OrangeJetpack.Base.Core.Formatting;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Mzayad.Services.Payment;
+using Mzayad.Web.Core.Configuration;
+using Mzayad.Web.Models.Shared;
 
 namespace Mzayad.Web.Controllers
 {
@@ -86,6 +88,8 @@ namespace Mzayad.Web.Controllers
 
             await _subscriptionService.BuySubscriptionWithTokens(subscription, user, AuthService.UserHostAddress());
 
+            await UpdateCachedSubscription();
+
             SetStatusMessage(StringFormatter.ObjectFormat(Global.SubscriptionPurchaseAcknowledgement, new { subscription }));
 
             return RedirectToAction("Dashboard", "User");
@@ -107,7 +111,16 @@ namespace Mzayad.Web.Controllers
             var order = await _subscriptionService.BuySubscriptionWithKnet(subscription, user, AuthService.UserHostAddress());
             var result = await _knetService.InitTransaction(order, AuthService.CurrentUserId(), AuthService.UserHostAddress());
 
+            await UpdateCachedSubscription();
+
             return Redirect(result.RedirectUrl);
+        }
+
+        private async Task UpdateCachedSubscription()
+        {
+            var user = await AuthService.CurrentUser();
+            var cacheKey = string.Format(CacheKeys.UserSubscriptionUtc, user.Id);
+            CacheService.Set(cacheKey, new SubscriptionExpiration(user.SubscriptionUtc));
         }
     }
 }

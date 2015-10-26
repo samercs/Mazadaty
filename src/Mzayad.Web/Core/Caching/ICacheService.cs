@@ -20,6 +20,6 @@ namespace Mzayad.Web.Core.Caching
         void Set(string key, object value);
         void SetList<T>(string key, IEnumerable<T> list);
 
-        //Task Delete(string key);
+        void Delete(string key);
     }
 }

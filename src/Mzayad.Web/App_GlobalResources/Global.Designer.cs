@@ -106,7 +106,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add to my wishlist.
+        ///   Looks up a localized string similar to Add to Wishlist.
         /// </summary>
         public static string AddToWishList {
             get {
@@ -124,7 +124,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Allow Phone Sms .
+        ///   Looks up a localized string similar to Allow Phone SMS.
         /// </summary>
         public static string AllowPhoneSmsLabel {
             get {
@@ -178,6 +178,69 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Congratulations {FirstName} you&apos;ve won! First things first, please enter your shipping address below..
+        /// </summary>
+        public static string AuctionWinMessage {
+            get {
+                return ResourceManager.GetString("AuctionWinMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Bid.
+        /// </summary>
+        public static string AutoBid {
+            get {
+                return ResourceManager.GetString("AutoBid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete your auto bid for this auction?.
+        /// </summary>
+        public static string AutoBidDeleteConfirmation {
+            get {
+                return ResourceManager.GetString("AutoBidDeleteConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto bid successfully deleted..
+        /// </summary>
+        public static string AutoBidDeleteSuccess {
+            get {
+                return ResourceManager.GetString("AutoBidDeleteSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Auto Bid.
+        /// </summary>
+        public static string AutoBidDeleteTitle {
+            get {
+                return ResourceManager.GetString("AutoBidDeleteTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The auto bid feature randomly selects users that have opted into auto bids and submits bids for them as auctions progress. Opting into auto bids for an auction does not guarantee that we&apos;ll auto bid for you..
+        /// </summary>
+        public static string AutoBidInstructions {
+            get {
+                return ResourceManager.GetString("AutoBidInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto bid successfully set..
+        /// </summary>
+        public static string AutoBidSaveSuccess {
+            get {
+                return ResourceManager.GetString("AutoBidSaveSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Avatar (select one).
         /// </summary>
         public static string Avatar {
@@ -201,6 +264,15 @@ namespace Mzayad.Web.Resources {
         public static string Back {
             get {
                 return ResourceManager.GetString("Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bid.
+        /// </summary>
+        public static string Bid {
+            get {
+                return ResourceManager.GetString("Bid", resourceCulture);
             }
         }
         
@@ -448,6 +520,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current Auction Price.
+        /// </summary>
+        public static string CurrentAuctionPrice {
+            get {
+                return ResourceManager.GetString("CurrentAuctionPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current Password.
         /// </summary>
         public static string CurrentPassword {
@@ -601,6 +682,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hours.
+        /// </summary>
+        public static string Hours {
+            get {
+                return ResourceManager.GetString("Hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to We&apos;re sorry, but the email address or password you have entered is incorrect..
         /// </summary>
         public static string InvalidUserNameOrPassword {
@@ -736,11 +826,38 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Live Auctions.
+        /// </summary>
+        public static string LiveAuctions {
+            get {
+                return ResourceManager.GetString("LiveAuctions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
         public static string Loading {
             get {
                 return ResourceManager.GetString("Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Bid.
+        /// </summary>
+        public static string MaxBid {
+            get {
+                return ResourceManager.GetString("MaxBid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minutes.
+        /// </summary>
+        public static string Minutes {
+            get {
+                return ResourceManager.GetString("Minutes", resourceCulture);
             }
         }
         
@@ -885,6 +1002,15 @@ namespace Mzayad.Web.Resources {
         public static string NotificationsInstructions {
             get {
                 return ResourceManager.GetString("NotificationsInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have no trophies yet but there are a lot of ways to earn them, keep using the site and you&apos;ll get one soon..
+        /// </summary>
+        public static string NoTrophiesMessage {
+            get {
+                return ResourceManager.GetString("NoTrophiesMessage", resourceCulture);
             }
         }
         
@@ -1330,11 +1456,29 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seconds.
+        /// </summary>
+        public static string Seconds {
+            get {
+                return ResourceManager.GetString("Seconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send Instructions.
         /// </summary>
         public static string SendInstructions {
             get {
                 return ResourceManager.GetString("SendInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Auto Bid.
+        /// </summary>
+        public static string SetAutoBid {
+            get {
+                return ResourceManager.GetString("SetAutoBid", resourceCulture);
             }
         }
         

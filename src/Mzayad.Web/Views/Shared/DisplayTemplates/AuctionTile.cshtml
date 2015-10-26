@@ -1,4 +1,5 @@
-﻿@using OrangeJetpack.Base.Core.Formatting
+﻿@using Mzayad.Models
+@using OrangeJetpack.Base.Core.Formatting
 @model Mzayad.Web.Models.Auctions.AuctionViewModel
 
 <div class="auction-tile">
@@ -33,5 +34,10 @@
                 </a>
             </div>
         }
+
+        <div class="auction-tile-row">
+            <a class="btn btn-rounded btn-outline btn-unstyled" href="@Url.Action("Add", "WishList", new { item = HttpUtility.UrlEncode(Model.Title) })">@Global.AddToWishList</a>
+        </div>
+
     </div>
 </div>

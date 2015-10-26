@@ -42,7 +42,6 @@ namespace Mzayad.Web
 
         protected void Application_BeginRequest()
         {
-            Trace.TraceInformation("Application_BeginRequest");
             if (Request.Headers.AllKeys.Contains("Origin") && Request.HttpMethod == "OPTIONS")
             {
                 Response.Flush();
@@ -64,8 +63,8 @@ namespace Mzayad.Web
         {
             if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                var _sessionLog = new SessionLogService(new DataContextFactory());
-                 _sessionLog.Insert(new SessionLog()
+                var sessionLog = new SessionLogService(new DataContextFactory());
+                 sessionLog.Insert(new SessionLog()
                 {
                     Browser = Request.UserAgent,
                     IP = Request.UserHostAddress,
