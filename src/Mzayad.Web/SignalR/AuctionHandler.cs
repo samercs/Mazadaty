@@ -194,6 +194,7 @@ namespace Mzayad.Web.SignalR
 
             await _bidService.AddBidAsync(auctionId, userId, bid.BidAmount, auction.SecondsLeft, hostAddress);
             await _activityQueueService.QueueActivityAsync(ActivityType.SubmitBid, userId);
+            await _activityQueueService.QueueActivityAsync(ActivityType.EarnXp, userId, 5);
 
             SaveAuctionsToCache(auctions);
         }
