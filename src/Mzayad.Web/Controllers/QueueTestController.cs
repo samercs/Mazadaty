@@ -37,7 +37,7 @@ namespace Mzayad.Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult TestEarnXp(FormCollection formCollection)
         {
-            _activityQueueService.QueueActivity(ActivityType.TestActivity, _authService.CurrentUserId(), 5);
+            _activityQueueService.QueueActivityAsync(ActivityType.TestActivity, _authService.CurrentUserId(), 5);
 
             return View();
         }

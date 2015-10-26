@@ -25,7 +25,7 @@ namespace Mzayad.Web.SignalR
         }
 
         public async Task SubmitBid(int auctionId, string userId)
-        {               
+        {
             await _auctionHandler.SubmitBid(auctionId, userId, GetIpAddress());
         }
 
@@ -40,7 +40,7 @@ namespace Mzayad.Web.SignalR
             }
 
             return ipAddress;
-        }     
+        }
 
         //public override Task OnConnected()
         //{
@@ -63,5 +63,5 @@ namespace Mzayad.Web.SignalR
 
         //    return base.OnDisconnected(false);
         //}
-    } 
+    }
 }

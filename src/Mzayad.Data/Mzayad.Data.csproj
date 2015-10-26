@@ -310,6 +310,14 @@
     <Compile Include="Migrations\201509091452096_AddSessionLogTable.Designer.cs">
       <DependentUpon>201509091452096_AddSessionLogTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510122033316_AddAutoBid.cs" />
+    <Compile Include="Migrations\201510122033316_AddAutoBid.Designer.cs">
+      <DependentUpon>201510122033316_AddAutoBid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510132306378_InsertNewTrophies.cs" />
+    <Compile Include="Migrations\201510132306378_InsertNewTrophies.Designer.cs">
+      <DependentUpon>201510132306378_InsertNewTrophies.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201510171809212_AddXPToActivityEvents.cs" />
     <Compile Include="Migrations\201510171809212_AddXPToActivityEvents.Designer.cs">
       <DependentUpon>201510171809212_AddXPToActivityEvents.cs</DependentUpon>
@@ -508,6 +516,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201509091452096_AddSessionLogTable.resx">
       <DependentUpon>201509091452096_AddSessionLogTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510122033316_AddAutoBid.resx">
+      <DependentUpon>201510122033316_AddAutoBid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510132306378_InsertNewTrophies.resx">
+      <DependentUpon>201510132306378_InsertNewTrophies.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510171809212_AddXPToActivityEvents.resx">
       <DependentUpon>201510171809212_AddXPToActivityEvents.cs</DependentUpon>

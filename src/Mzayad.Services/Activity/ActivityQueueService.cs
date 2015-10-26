@@ -9,8 +9,9 @@ namespace Mzayad.Services.Activity
 {
     public interface IActivityQueueService
     {
-        Task QueueActivity(ActivityType activityType, string userId, string language = "en");
-        Task QueueActivity(ActivityType activityType, string userId, int xp, string language = "en");
+        void QueueActivity(ActivityType activityType, string userId, string language = "en");
+        Task QueueActivityAsync(ActivityType activityType, string userId, string language = "en");
+        Task QueueActivityAsync(ActivityType activityType, string userId, int xp, string language = "en");
     }
 
     public class ActivityQueueService : IActivityQueueService
@@ -22,8 +23,18 @@ namespace Mzayad.Services.Activity
         {
             _storageAccount = CloudStorageAccount.Parse(connectionString);
         }
+        public void QueueActivity(ActivityType activityType, string userId, string language = "en")
+        {
+            var message = new CloudQueueMessage(JsonConvert.SerializeObject(new ActivityEvent
+            {
+                Type = activityType,
+                UserId = userId,
+                Language = language
+            }));
 
-        public async Task QueueActivity(ActivityType activityType, string userId, string language = "en")
+            CreateQueue().AddMessageAsync(message);
+        }
+        public async Task QueueActivityAsync(ActivityType activityType, string userId, string language = "en")
         {
             var message = new CloudQueueMessage(JsonConvert.SerializeObject(new ActivityEvent
             {
@@ -34,7 +45,7 @@ namespace Mzayad.Services.Activity
 
             await CreateQueue().AddMessageAsync(message);
         }
-        public async Task QueueActivity(ActivityType activityType, string userId, int xp, string language = "en")
+        public async Task QueueActivityAsync(ActivityType activityType, string userId, int xp, string language = "en")
         {
             var message = new CloudQueueMessage(JsonConvert.SerializeObject(new ActivityEvent
             {
