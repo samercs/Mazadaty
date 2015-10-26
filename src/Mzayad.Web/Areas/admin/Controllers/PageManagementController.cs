@@ -24,7 +24,7 @@ namespace Mzayad.Web.Areas.Admin.Controllers
         [Route("")]
         public async Task<ActionResult> Index()
         {
-            var pages = await CmsClient.GetPages("en");
+            var pages = await CmsClient.GetPages(Language);
 
             var model = new IndexViewModel()
             {
@@ -120,7 +120,6 @@ namespace Mzayad.Web.Areas.Admin.Controllers
 
             SetStatusMessage("Page has been saved successfully.");
             return RedirectToAction("Index", new { folderId = page.FolderId });
-
         }
 
         [Route("delete/{id:int}")]
