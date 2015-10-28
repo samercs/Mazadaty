@@ -94,6 +94,13 @@ namespace Mzayad.WebJobs
                         await userService.UpdateUser(user);
                         break;
 
+                    case ActivityType.AutoBid:
+                        trophies = trophyEngine.GetEarnedTrophies(user);
+                        trophyService.AwardTrophyToUser(trophies, user.Id);
+                        emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrohpyEarned);
+                        message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, TrophiesHtmlTable(trophies, trophyService));
+                        await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
+                        break;
                     default:
                         await LogMessageAsync(log, string.Format("No event handling for activity {0}.", activityEvent.Type));
                         break;

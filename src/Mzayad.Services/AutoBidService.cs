@@ -100,5 +100,19 @@ namespace Mzayad.Services
                 x = x * 2;
             }
         }
+
+        public async Task<int> CountUserAutoBids(string userId, DateTime? from = null)
+        {
+            using (var db = DataContext())
+            {
+                return await db.AutoBids.Where(i => i.UserId == userId && (
+                                                                (from.HasValue && i.CreatedUtc >= from.Value)
+                                                                ||
+                                                                !from.HasValue))
+                                        .Select(i => i.AuctionId)
+                                        .Distinct()
+                                        .CountAsync();
+            }
+        }
     }
 }
