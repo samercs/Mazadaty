@@ -25,13 +25,7 @@ namespace Mzayad.Web.Areas.Admin.Controllers
         public async Task<ActionResult> Index()
         {
             var pages = await CmsClient.GetPages(Language);
-
-            var model = new IndexViewModel()
-            {
-                Pages = pages
-            };
-
-            return View(model);
+            return View(pages);
         }
 
         [HttpPost]

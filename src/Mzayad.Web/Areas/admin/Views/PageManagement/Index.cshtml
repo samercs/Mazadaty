@@ -1,6 +1,6 @@
 ﻿@using Kendo.Mvc.UI
 @using Mzayad.Web.Extensions
-@model Mzayad.Web.Areas.Admin.Models.Pages.IndexViewModel
+@model IReadOnlyCollection<OrangeJetpack.Cms.Models.PageViewModel>
 @{
     ViewBag.Title = "Pages";
 }
@@ -10,14 +10,14 @@
     <li>@Html.ActionLink("Add Page", "Add", "Pages")</li>
 </ul>
 
-@if (!Model.Pages.Any())
+@if (!Model.Any())
 {
     <div class="alert alert-warning">There are currently no pages.</div>
 
     return;
 }
 
-@(Html.Kendo().Grid(Model.Pages)
+@(Html.Kendo().Grid(Model)
     .Init(ajax => ajax.Action("GetPages", "Pages"))
     .Columns(columns =>
     {

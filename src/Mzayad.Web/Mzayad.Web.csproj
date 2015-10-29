@@ -187,11 +187,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Cms.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Cms.Client.0.0.17\lib\net452\OrangeJetpack.Cms.Client.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Cms.Client.0.0.22\lib\net452\OrangeJetpack.Cms.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Cms.Models, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Cms.Client.0.0.17\lib\net452\OrangeJetpack.Cms.Models.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Cms.Client.0.0.22\lib\net452\OrangeJetpack.Cms.Models.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Localization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -384,6 +384,7 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\KnetController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Controllers\QueueTestController.cs" />
     <Compile Include="Controllers\SubscriptionsController.cs" />
     <Compile Include="Controllers\WishListController.cs" />
@@ -784,6 +785,7 @@
     <Content Include="Views\User\BidHistory.cshtml" />
     <Content Include="Views\User\AuctionHistory.cshtml" />
     <Content Include="Views\Shared\_Layout_SubscriptionStatus.cshtml" />
+    <Content Include="Views\Pages\Index.cshtml" />
     <TypeScriptCompile Include="Scripts\auctions.ts" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />
