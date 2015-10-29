@@ -29,6 +29,9 @@ namespace Mzayad.Services.Trophies
 
             //check auto bid 50 times
             yield return CheckAutoBid50(user.Id);
+
+            //check auto bid 100 times
+            yield return CheckAutoBid100(user.Id);
         }
 
         private TrophyKey? CheckAutoBid10(string userId)
@@ -58,6 +61,17 @@ namespace Mzayad.Services.Trophies
             var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.AutoBid50, userId).Result;
             var autoBids = _autoBidService.CountUserAutoBids(userId, lastTime?.CreatedUtc).Result;
             if (autoBids == 50)
+            {
+                return TrophyKey.AutoBid50;
+            }
+            return null;
+        }
+
+        private TrophyKey? CheckAutoBid100(string userId)
+        {
+            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.AutoBid100, userId).Result;
+            var autoBids = _autoBidService.CountUserAutoBids(userId, lastTime?.CreatedUtc).Result;
+            if (autoBids == 100)
             {
                 return TrophyKey.AutoBid50;
             }
