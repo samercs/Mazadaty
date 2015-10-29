@@ -44,7 +44,6 @@ namespace Mzayad.Web.Core.Caching
 
         public T Get<T>(string key) where T : class
         {
-            key = GetKey(key);
             return Deserialize<T>(CacheDatabase.StringGet(key));
         }
 
@@ -65,7 +64,6 @@ namespace Mzayad.Web.Core.Caching
         {
             try
             {
-                key = GetKey(key);
                 return Deserialize<IReadOnlyCollection<T>>(CacheDatabase.StringGet(key));
             }
             catch (Exception ex)
