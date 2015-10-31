@@ -228,5 +228,17 @@ namespace Mzayad.Services
                 return null;
             }
         }
+
+        public async Task<int> CountAuctionsWon(string userId,DateTime? from = null)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.Auctions
+                    .CountAsync(i => i.WonByUserId == userId && (
+                                                                (from.HasValue && i.CreatedUtc >= from.Value)
+                                                                ||
+                                                                !from.HasValue));
+            }
+        }
     }
 }

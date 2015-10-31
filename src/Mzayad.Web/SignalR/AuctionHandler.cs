@@ -172,6 +172,11 @@ namespace Mzayad.Web.SignalR
             var order = _auctionService.CloseAuction(auctionId).Result;
 
             Clients.All.closeAuction(auctionId, order.UserId, order.OrderId);
+
+            if(order != null)
+            {
+                _activityQueueService.QueueActivity(ActivityType.WinAuction, order.UserId);
+            }
         }
 
         public async Task SubmitBid(int auctionId, string userId, string hostAddress)

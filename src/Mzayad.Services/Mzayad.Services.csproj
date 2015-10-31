@@ -131,6 +131,7 @@
     <Compile Include="SubscriptionService.cs" />
     <Compile Include="TokenService.cs" />
     <Compile Include="Identity\UserManager.cs" />
+    <Compile Include="Trophies\WinAuctionTrophyEngine.cs" />
     <Compile Include="Trophies\AutoBidTrophyEngine.cs" />
     <Compile Include="Trophies\TrophyEngine.cs" />
     <Compile Include="Trophies\SubmitBidTrophyEngine.cs" />
