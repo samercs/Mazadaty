@@ -29,6 +29,9 @@ namespace Mzayad.Services.Trophies
 
             //check win 10 auctions
             yield return CheckWinAuction10(user.Id);
+
+            //check win 20 auctions
+            yield return CheckWinAuction20(user.Id);
         }
 
         private TrophyKey? CheckWinAuction1(string userId)
@@ -60,6 +63,17 @@ namespace Mzayad.Services.Trophies
             if (auctions == 10)
             {
                 return TrophyKey.WinAuction10;
+            }
+            return null;
+        }
+
+        private TrophyKey? CheckWinAuction20(string userId)
+        {
+            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.WinAuction20, userId).Result;
+            var auctions = _auctionService.CountAuctionsWon(userId, lastTime?.CreatedUtc).Result;
+            if (auctions == 20)
+            {
+                return TrophyKey.WinAuction20;
             }
             return null;
         }
