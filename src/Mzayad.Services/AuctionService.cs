@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mzayad.Models.Enum;
 using OrangeJetpack.Localization;
+using Mzayad.Core.Extensions;
 
 namespace Mzayad.Services
 {
@@ -238,6 +239,23 @@ namespace Mzayad.Services
                                                                 (from.HasValue && i.CreatedUtc >= from.Value)
                                                                 ||
                                                                 !from.HasValue));
+            }
+        }
+
+        /// <summary>
+        /// Gets the total amount of consecutive days that a user has bid since today.
+        /// </summary>
+        public async Task<int> GetConsecutiveWonDays(string userId)
+        {
+            using (var dc = DataContext())
+            {
+                var wonAuctionsDates = await dc.Auctions
+                    .Where(i => i.WonByUserId == userId && i.ClosedUtc.HasValue)
+                    .OrderByDescending(i => i.ClosedUtc)
+                    .Select(i => i.ClosedUtc.Value)
+                    .ToListAsync();
+
+                return wonAuctionsDates.Consecutive();
             }
         }
     }
