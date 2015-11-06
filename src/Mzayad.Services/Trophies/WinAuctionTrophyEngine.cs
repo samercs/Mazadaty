@@ -41,6 +41,9 @@ namespace Mzayad.Services.Trophies
 
             //check win auctions 3 days in row
             yield return CheckWinAuction3DaysInRow(user.Id);
+
+            //check win auctions 7 days in row
+            yield return CheckWinAuction7DaysInRow(user.Id);
         }
 
         private TrophyKey? CheckWinAuction1(string userId)
@@ -120,6 +123,21 @@ namespace Mzayad.Services.Trophies
             if (!GainTrophyToday(TrophyKey.WinDayStreak3, userId))
             {
                 return TrophyKey.WinDayStreak3;
+            }
+            return null;
+        }
+
+        private TrophyKey? CheckWinAuction7DaysInRow(string userId)
+        {
+            var streak = _auctionService.GetConsecutiveWonDays(userId).Result;
+            if (streak < 7)
+            {
+                return null;
+            }
+
+            if (!GainTrophyToday(TrophyKey.WinDayStreak7, userId))
+            {
+                return TrophyKey.WinDayStreak7;
             }
             return null;
         }
