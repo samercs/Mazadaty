@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -10,9 +11,11 @@ using Mzayad.Services;
 using Mzayad.Services.Activity;
 using Mzayad.Services.Identity;
 using Mzayad.Services.Trophies;
-using OrangeJetpack.Services.Client.Messaging;
 using Mzayad.Models.Enum;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Text;
+using OrangeJetpack.Localization;
 
 namespace Mzayad.WebJobs
 {
@@ -49,6 +52,8 @@ namespace Mzayad.WebJobs
             var userService = new UserService(dataContextFactory);
             var trophyService = new TrophyService(dataContextFactory);
             var trophyEngine = TrophyEngineFactory.CreateInstance(activityEvent.Type, dataContextFactory);
+            var emailTemplateService = new EmailTemplateService(dataContextFactory);
+            EmailTemplate emailTemplate;
 
             try
             {
@@ -66,11 +71,43 @@ namespace Mzayad.WebJobs
                     case ActivityType.SubmitBid:
                         trophies = trophyEngine.GetEarnedTrophies(user);
                         trophyService.AwardTrophyToUser(trophies, user.Id);
+                        emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrohpyEarned);
+                        message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, TrophiesHtmlTable(trophies, trophyService));
+                        await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
                         break;
 
                     case ActivityType.VisitSite:
                         trophies = trophyEngine.GetEarnedTrophies(user);
                         trophyService.AwardTrophyToUser(trophies, user.Id);
+                        break;
+
+                    case ActivityType.EarnXp:
+                        user.Xp += activityEvent.XP;
+                        var newLevel = LevelService.GetLevelByXp(user.Xp).Index;
+                        if (newLevel > user.Level)
+                        {
+                            user.Level = newLevel;
+                            emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.LevelUp);
+                            message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, user.Level);
+                            await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
+                        }
+                        await userService.UpdateUser(user);
+                        break;
+
+                    case ActivityType.AutoBid:
+                        trophies = trophyEngine.GetEarnedTrophies(user);
+                        trophyService.AwardTrophyToUser(trophies, user.Id);
+                        emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrohpyEarned);
+                        message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, TrophiesHtmlTable(trophies, trophyService));
+                        await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
+                        break;
+
+                    case ActivityType.WinAuction:
+                        trophies = trophyEngine.GetEarnedTrophies(user);
+                        trophyService.AwardTrophyToUser(trophies, user.Id);
+                        emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrohpyEarned);
+                        message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, TrophiesHtmlTable(trophies, trophyService));
+                        await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
                         break;
 
                     default:
@@ -86,6 +123,44 @@ namespace Mzayad.WebJobs
                 LogMessage(log, ex.Message);
                 throw;
             }
+        }
+        private static async Task SendEmail(ApplicationUser user, string subject, string message)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44300/area/api/");
+
+                var requestContent = new FormUrlEncodedContent(new[]
+                {
+                    new KeyValuePair<string, string>("FromAddress", "admin@mzayad.com"),
+                    new KeyValuePair<string, string>("FromName", "Mzayad"),
+                    new KeyValuePair<string, string>("Message", message),
+                    new KeyValuePair<string, string>("Subject",subject),
+                    new KeyValuePair<string, string>("ToAddress",user.Email)
+                });
+
+                await client.PostAsync("messages", requestContent);
+            }
+        }
+        private static async Task<string> TrophiesHtmlTable(IEnumerable<TrophyKey> keys, TrophyService trophyService)
+        {
+            var table = new StringBuilder();
+            table.Append("<table>");
+            Trophy trophy;
+            foreach (var key in Enum.GetValues(typeof(TrophyKey)).Cast<TrophyKey>())
+            {
+                trophy = await trophyService.GetTrophy(key);
+                if (trophy != null)
+                {
+                    table.Append("<tr>");
+                    table.Append("<td>" + trophy.Name + "</td>");
+                    table.Append("<td>" + trophy.Description + "</td>");
+                    table.Append("<td><img src='" + trophy.IconUrl + "' style='width:50px;'/></td>");
+                    table.Append("/<tr>");
+                }
+            }
+            table.Append("</table>");
+            return table.ToString();
         }
     }
 }

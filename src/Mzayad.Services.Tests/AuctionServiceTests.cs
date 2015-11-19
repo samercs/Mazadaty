@@ -2,6 +2,7 @@
 using Mzayad.Models.Enum;
 using Mzayad.Services.Tests.Fakes;
 using NUnit.Framework;
+using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -70,6 +71,31 @@ namespace Mzayad.Services.Tests
             var results = await auctionService.GetCurrentAuctions();
 
             Assert.AreEqual(2, results.Count());
+        }
+
+        [Test]
+        public void CountAuctionsWon_FromDate_Returns2()
+        {
+            var dc = new InMemoryDataContext();
+            var auctionId1 = Constants.AnyInt;
+            var auctionId2 = Constants.AnyInt + 1;
+            dc.Auctions.Add(new Auction
+            {
+                AuctionId = auctionId1,
+                WonByUserId = Constants.AnyUserId,
+                CreatedUtc = DateTime.UtcNow.AddDays(-1)
+            });
+            dc.Auctions.Add(new Auction
+            {
+                AuctionId = auctionId2,
+                WonByUserId = Constants.AnyUserId,
+                CreatedUtc = DateTime.UtcNow.AddDays(-4)
+            });
+
+            var service = new AuctionService(new InMemoryDataContextFactory(dc));
+            var result = service.CountAuctionsWon(Constants.AnyUserId, DateTime.UtcNow.AddDays(-7)).Result;
+
+            Assert.AreEqual(2, result);
         }
     }
 

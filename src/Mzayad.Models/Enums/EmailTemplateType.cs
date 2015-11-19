@@ -10,6 +10,7 @@ namespace Mzayad.Models.Enum
         NoAccount = 5,
         AuctionCreated = 6,
         OrderShipped = 7,
-        TrohpyEarned = 8
+        TrohpyEarned = 8,
+        LevelUp = 9
     }
 }

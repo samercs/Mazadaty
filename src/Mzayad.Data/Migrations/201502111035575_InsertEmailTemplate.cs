@@ -90,8 +90,20 @@ namespace Mzayad.Data.Migrations
                         new LocalizedContent("en", @"Hi {0}, this email is just to inform you have earned trophies below:</br></br>{1}"),
                         new LocalizedContent("ar", @"مبروك انت فزت بالكؤوس الأتية </br></br>{1}")
                     }).Serialize()
+                },
+                new EmailTemplate
+                {
+                    TemplateType = EmailTemplateType.LevelUp,
+                    Description="Send as confirmation that a user level has been up",
+                    Subject = (new[] {
+                        new LocalizedContent("en",@"Level up"),
+                        new LocalizedContent("ar",@"مستوى أعلى")
+                    }).Serialize(),
+                    Message = (new[] {
+                        new LocalizedContent("en",@"Hi {0}, this email is just to inform you moved one level up: your new level is {1}"),
+                        new LocalizedContent("ar",@"{0}, مبروك انت الأن فى المستوى {1}")
+                    }).Serialize()
                 }
-
 
 
             };

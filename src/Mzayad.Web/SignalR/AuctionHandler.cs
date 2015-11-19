@@ -60,7 +60,7 @@ namespace Mzayad.Web.SignalR
             _userService = _userService ?? new UserService(dataContextFactory);
             _bidService = _bidService ?? new BidService(dataContextFactory);
             _autoBidService = _autoBidService ?? new AutoBidService(dataContextFactory);
-            _activityQueueService = _activityQueueService ?? 
+            _activityQueueService = _activityQueueService ??
                 new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
 
             return this;
@@ -109,7 +109,7 @@ namespace Mzayad.Web.SignalR
             _cacheService.SetList(CacheKeys.LiveAuctions, auctions);
         }
 
-        private void  UpdateAuctions(object state)
+        private void UpdateAuctions(object state)
         {
             lock (_updateLock)
             {
@@ -172,6 +172,11 @@ namespace Mzayad.Web.SignalR
             var order = _auctionService.CloseAuction(auctionId).Result;
 
             Clients.All.closeAuction(auctionId, order.UserId, order.OrderId);
+
+            if(order != null)
+            {
+                _activityQueueService.QueueActivity(ActivityType.WinAuction, order.UserId);
+            }
         }
 
         public async Task SubmitBid(int auctionId, string userId, string hostAddress)
@@ -194,6 +199,7 @@ namespace Mzayad.Web.SignalR
 
             await _bidService.AddBidAsync(auctionId, userId, bid.BidAmount, auction.SecondsLeft, hostAddress);
             await _activityQueueService.QueueActivityAsync(ActivityType.SubmitBid, userId);
+            await _activityQueueService.QueueActivityAsync(ActivityType.EarnXp, userId, 5);
 
             SaveAuctionsToCache(auctions);
         }

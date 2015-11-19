@@ -9,6 +9,7 @@
         VerifyProfile,
         ReferFriend,
         VisitSite,
-        PurchaseSubscription
+        PurchaseSubscription,
+        EarnXp
     }
 }
