@@ -69,6 +69,38 @@ var App;
         return TimeUtilities;
     })();
     App.TimeUtilities = TimeUtilities;
+    var CkEditor = (function () {
+        function CkEditor() {
+        }
+        CkEditor.init = function () {
+            // ReSharper disable SuspiciousThisUsage
+            var editorHeight = 300;
+            var fixValidation = function () {
+                this.document.on("input", function () {
+                    var instance = CKEDITOR.currentInstance;
+                    var name = instance.name;
+                    var data = instance.getData();
+                    var parent = $("li[data-for='" + name + "']");
+                    var inputs = parent.find(".localized-hidden, .localized-input");
+                    if (data.length >= 0) {
+                        inputs.val(data).addClass("valid");
+                    }
+                    else {
+                        inputs.val("").removeClass("valid");
+                    }
+                });
+            };
+            $("textarea.localized-input[data-language!='ar']").each(function () {
+                CKEDITOR.replace(this.id, { height: editorHeight }).on("instanceReady", fixValidation);
+            });
+            $("textarea.localized-input[data-language='ar']").each(function () {
+                CKEDITOR.replace(this.id, { height: editorHeight, contentsLangDirection: "rtl" });
+            });
+            // ReSharper restore SuspiciousThisUsage
+        };
+        return CkEditor;
+    })();
+    App.CkEditor = CkEditor;
 })(App || (App = {}));
 var TimeUtilities = {
     getDays: function (days) {
