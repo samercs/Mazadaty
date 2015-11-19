@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
+﻿using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Mzayad.Data;
-using Mzayad.Models;
 using Mzayad.Services.Identity;
-using Mzayad.Web.Core.Identity;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Mzayad.Models;
 
 namespace Mzayad.Web.Core.Providers
 {
@@ -32,27 +28,35 @@ namespace Mzayad.Web.Core.Providers
         {
             var userManager = new UserManager(new DataContextFactory());
 
-            var user = await userManager.FindAsync(context.UserName, context.Password);
+            var userName = context.UserName;
+            if (userName.Contains("@"))
+            {
+                var emailUser = await userManager.FindByEmailAsync(userName);
+                if (emailUser != null)
+                {
+                    userName = emailUser.UserName;
+                }
+            }
+
+            var user = await userManager.FindAsync(userName, context.Password);
             if (user == null)
             {
                 context.SetError("invalid_grant", "The user name or password is incorrect.");
                 return;
             }
 
-            ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,
-               OAuthDefaults.AuthenticationType);
-            ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
-                CookieAuthenticationDefaults.AuthenticationType);
+            var oAuthIdentity = await user.GenerateUserIdentityAsync(userManager, OAuthDefaults.AuthenticationType);
+            var cookiesIdentity = await user.GenerateUserIdentityAsync(userManager, CookieAuthenticationDefaults.AuthenticationType);
 
-            AuthenticationProperties properties = CreateProperties(user.UserName);
-            AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
+            var properties = CreateProperties(user.UserName);
+            var ticket = new AuthenticationTicket(oAuthIdentity, properties);
             context.Validated(ticket);
             context.Request.Context.Authentication.SignIn(cookiesIdentity);
         }
 
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)
         {
-            foreach (KeyValuePair<string, string> property in context.Properties.Dictionary)
+            foreach (var property in context.Properties.Dictionary)
             {
                 context.AdditionalResponseParameters.Add(property.Key, property.Value);
             }

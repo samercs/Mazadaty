@@ -314,6 +314,10 @@
     <Compile Include="Migrations\201510122033316_AddAutoBid.Designer.cs">
       <DependentUpon>201510122033316_AddAutoBid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510132306378_InsertNewTrophies.cs" />
+    <Compile Include="Migrations\201510132306378_InsertNewTrophies.Designer.cs">
+      <DependentUpon>201510132306378_InsertNewTrophies.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -507,6 +511,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510122033316_AddAutoBid.resx">
       <DependentUpon>201510122033316_AddAutoBid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510132306378_InsertNewTrophies.resx">
+      <DependentUpon>201510132306378_InsertNewTrophies.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

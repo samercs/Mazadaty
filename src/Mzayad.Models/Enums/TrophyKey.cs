@@ -56,6 +56,9 @@
         BuyNow100 = 42,
 
         Bid10 = 43,
+
+        Bid25 = 67,
+
         Bid50 = 44,
         Bid100 = 45,
         Bid250 = 46,
@@ -63,13 +66,20 @@
         Bid1000 = 48,
         Bid2000 = 49,
 
+        Bid5000 = 68,
+
         AutoBid10 = 50,
+
+        AutoBid25 = 69,
+
         AutoBid50 = 51,
         AutoBid100 = 52,
         AutoBid250 = 53,
         AutoBid500 = 54,
         AutoBid1000 = 55,
         AutoBid2000 = 56,
+
+        AutoBid5000 = 70,
 
         SpendOnAnything100 = 57,
         SpendOnAnything500 = 58,
