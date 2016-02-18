@@ -196,7 +196,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete your auto bid for this auction?.
+        ///   Looks up a localized string similar to Are you sure you want to cancel your auto bid for this auction?.
         /// </summary>
         public static string AutoBidDeleteConfirmation {
             get {
@@ -205,7 +205,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Auto bid successfully deleted..
+        ///   Looks up a localized string similar to Auto bid successfully canceled..
         /// </summary>
         public static string AutoBidDeleteSuccess {
             get {
@@ -214,7 +214,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete Auto Bid.
+        ///   Looks up a localized string similar to Cancel Auto Bid.
         /// </summary>
         public static string AutoBidDeleteTitle {
             get {
@@ -1366,7 +1366,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to We&apos;re sorry, we cannot find a user account for this password reset attempt..
+        ///   Looks up a localized string similar to We&apos;re sorry, we cannot find a registered email for this password reset attempt..
         /// </summary>
         public static string ResetPasswordCannotFindUserAccount {
             get {

@@ -214,7 +214,7 @@
     <value>Reset Password</value>
   </data>
   <data name="ResetPasswordCannotFindUserAccount" xml:space="preserve">
-    <value>We're sorry, we cannot find a user account for this password reset attempt.</value>
+    <value>We're sorry, we cannot find a registered email for this password reset attempt.</value>
   </data>
   <data name="ResetPasswordEmailSentAcknowledgement" xml:space="preserve">
     <value>A password reset email has been sent to &lt;strong&gt;{0}&lt;/strong&gt;, simply follow the instructions in the email to complete the reset.</value>
@@ -721,13 +721,13 @@
     <value>Seconds</value>
   </data>
   <data name="AutoBidDeleteConfirmation" xml:space="preserve">
-    <value>Are you sure you want to delete your auto bid for this auction?</value>
+    <value>Are you sure you want to cancel your auto bid for this auction?</value>
   </data>
   <data name="AutoBidDeleteSuccess" xml:space="preserve">
-    <value>Auto bid successfully deleted.</value>
+    <value>Auto bid successfully canceled.</value>
   </data>
   <data name="AutoBidDeleteTitle" xml:space="preserve">
-    <value>Delete Auto Bid</value>
+    <value>Cancel Auto Bid</value>
   </data>
   <data name="AutoBidInstructions" xml:space="preserve">
     <value>The auto bid feature randomly selects users that have opted into auto bids and submits bids for them as auctions progress. Opting into auto bids for an auction does not guarantee that we'll auto bid for you.</value>

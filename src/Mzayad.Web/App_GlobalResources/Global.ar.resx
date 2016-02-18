@@ -154,10 +154,10 @@
     <value>الرجاء إدخال رقم المبنى.</value>
   </data>
   <data name="CategoryNotification" xml:space="preserve">
-    <value>تنبيهات التصنيفات</value>
+    <value>إشعارات التصنيف</value>
   </data>
   <data name="CategoryNotificationSaveMessage" xml:space="preserve">
-    <value>تم تعديل التنبيهات الخاص بك بنجاح . شكرا لك</value>
+    <value>تم تعديل الإشعارات الخاصة بك بنجاح. شكراً لك</value>
   </data>
   <data name="ChangeLanguage" xml:space="preserve">
     <value>تغيير اللغة</value>
@@ -205,10 +205,10 @@
     <value>تم تخزين بياناتك بنجاح . عليك اعادة الدخول الى الموقع</value>
   </data>
   <data name="EditAccountNameSuccessMessage" xml:space="preserve">
-    <value>تم تعديل بيانات بنجاح .</value>
+    <value>تم تعديل بياناتك بنجاح.</value>
   </data>
   <data name="EditProfile" xml:space="preserve">
-    <value>تعديل الملف</value>
+    <value>تعديل الملف الشخصى</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>عنوان البريد الإلكتروني</value>
@@ -262,22 +262,22 @@
     <value>الرجاء ادخال  اسم المنتج او العنصر</value>
   </data>
   <data name="NeedPassword" xml:space="preserve">
-    <value>كلمة مرور جديدة</value>
+    <value>تحتاج إلى كلمة مرور</value>
   </data>
   <data name="NeedPasswordInstructions" xml:space="preserve">
     <value>إذا فقدت أو نسيت كلمة مرورك، الرجاء إدخال عنوان بريدك الإلكتروني في الاستمارة أدناه وسنرسل لك تعليمات حول كيفية إعادة ضبط كلمة مرورك.</value>
   </data>
   <data name="NeedPasswordQuestion" xml:space="preserve">
-    <value>هل تحتاجين إلى كلمة المرور؟</value>
+    <value>هل تحتاج إلى كلمة المرور؟</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
-    <value>عملاء جدد</value>
+    <value>كلمة مرور جديدة</value>
   </data>
   <data name="NewPasswordValidationMessage" xml:space="preserve">
     <value>الرجاء إدخال كلمة المرور، يجب ألا تقل عن 6 أحرف.</value>
   </data>
   <data name="OptionLabel" xml:space="preserve">
-    <value>اختيار...</value>
+    <value>اختر...</value>
   </data>
   <data name="OrderItems" xml:space="preserve">
     <value>محتويات الطلب</value>
@@ -307,7 +307,7 @@
     <value>اسم المنتج او العنصر</value>
   </data>
   <data name="ProfileURL" xml:space="preserve">
-    <value>صفحة الملف</value>
+    <value>صفحة الملف الشخصى</value>
   </data>
   <data name="Quantity" xml:space="preserve">
     <value>الكمية</value>
@@ -331,22 +331,22 @@
     <value>إعادة ضبط كلمة المرور</value>
   </data>
   <data name="ResetPasswordCannotFindUserAccount" xml:space="preserve">
-    <value>عذراً، لكننا لم نجد حساب مستخدم لمحاولة إعادة ضبط كلمة المرور هذه.</value>
+    <value>عذراً, لكننا لم نجد بريد إلكترونى مسجل فى هذه المحاولة لإعادة ضبط كلمة المرور.</value>
   </data>
   <data name="ResetPasswordEmailSentAcknowledgement" xml:space="preserve">
-    <value>تم إرسال بريد إلكتروني إلى &lt;strong&gt;{0}&lt;/strong&gt; لإعادة ضبط كلمة المرور، اتبعي من فضلك التعليمات المدونة في البريد الإلكتروني لإتمام عملية إعادة الضبط.</value>
+    <value>تم إرسال بريد إلكتروني إلى &lt;strong&gt;{0}&lt;/strong&gt; لإعادة ضبط كلمة المرور، اتبع من فضلك التعليمات المدونة في البريد الإلكتروني لإتمام عملية إعادة الضبط.</value>
   </data>
   <data name="ResetPasswordExpiredTimestampException" xml:space="preserve">
-    <value>عذراً، لقد انتهت صلاحية الرابط الذي تحاولين استخدامه لإعادة ضبط كلمة مرورك.</value>
+    <value>عذراً، لقد انتهت صلاحية الرابط الذي تحاول استخدامه لإعادة ضبط كلمة مرورك.</value>
   </data>
   <data name="ResetPasswordInstructions" xml:space="preserve">
     <value>لإنهاء إعادة ضبط كلمة مرورك، الرجاء إدخال كلمة المرور الجديدة أدناه.</value>
   </data>
   <data name="ResetPasswordInvalidTokenException" xml:space="preserve">
-    <value>عذراً، إنّ الرابط الذي تحاولين استخدامه لإعادة ضبط كلمة المرور غير صالح.</value>
+    <value>عذراً، إنّ الرابط الذي تحاول استخدامه لإعادة ضبط كلمة المرور غير صالح.</value>
   </data>
   <data name="ResetPasswordMissingParametersException" xml:space="preserve">
-    <value>عذراً، إنّ الرابط الذي تحاولين استخدامه ينقصه عنصراً واحد أو أكثر.</value>
+    <value>عذراً، إنّ الرابط الذي تحاول استخدامه ينقصه عنصراً واحد أو أكثر.</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>حفظ</value>
@@ -355,7 +355,7 @@
     <value>إرسال التعليمات</value>
   </data>
   <data name="ShippingAddress" xml:space="preserve">
-    <value>عنوان الشحن</value>
+    <value>عنوان التوصيل</value>
   </data>
   <data name="SignIn" xml:space="preserve">
     <value>تسجيل الدخول</value>
@@ -373,10 +373,10 @@
     <value>الرجاء إدخال الولاية.</value>
   </data>
   <data name="Street" xml:space="preserve">
-    <value>رقم الشارع</value>
+    <value>الشارع</value>
   </data>
   <data name="StreetRequiredErrorMessage" xml:space="preserve">
-    <value>الرجاء إدخال رقم الشارع.</value>
+    <value>الرجاء إخال رقم أو إسم الشارع.</value>
   </data>
   <data name="Total" xml:space="preserve">
     <value>المجموع</value>
@@ -388,16 +388,16 @@
     <value>تم اضافة المنتج بنجاح .</value>
   </data>
   <data name="WishListItemDeleteConfirmation" xml:space="preserve">
-    <value>هل انت منأكد من حذف المنتج من القائمة المفضلة الخاص بك ؟</value>
+    <value>هل انت متأكد من حذف المنتج من القائمة المفضلة الخاص بك ؟</value>
   </data>
   <data name="WishListItemRemoveMessage" xml:space="preserve">
     <value>تم حذف المنتج من القائمةالمفضلة .</value>
   </data>
   <data name="ZipCode" xml:space="preserve">
-    <value>رقم المنطقة البريدية</value>
+    <value>الرمز البريدى</value>
   </data>
   <data name="ZipCodeRequiredErrorMessage" xml:space="preserve">
-    <value>الرجاء إدخال رقم المنطقة البريدية.</value>
+    <value>الرجاء إدخال الرمز البريدى.</value>
   </data>
   <data name="Amount" xml:space="preserve">
     <value>المبلغ</value>
@@ -415,7 +415,7 @@
     <value>المصادقة</value>
   </data>
   <data name="KnetDetails" xml:space="preserve">
-    <value>تفاصيل "كي نيت" KNET</value>
+    <value>تفاصيل "كي نت" KNET</value>
   </data>
   <data name="KnetPaymentIdLabel" xml:space="preserve">
     <value>هوية الدفع</value>
@@ -433,19 +433,19 @@
     <value>رقم الصفقة</value>
   </data>
   <data name="OrderId" xml:space="preserve">
-    <value>رقم الطلبية</value>
+    <value>رقم الطلب</value>
   </data>
   <data name="Payment" xml:space="preserve">
     <value>الدفع</value>
   </data>
   <data name="PaymentTransactionErrorMessage" xml:space="preserve">
-    <value>عذراً، لقد حصل خطأ أثناء محاولة معالجة صفقة تمت باستعمال بطاقة ائتمان أو بطاقة خصم. &lt;a href="{0}" class="alert-link"&gt;الرجاء تغيير طريقة الدفع أو المحاولة مجدداً&lt;/a&gt;.</value>
+    <value>عذراً، لقد حصل خطأ أثناء عملية الدفع. &lt;a href="{0}" class="alert-link"&gt;الرجاء تغيير طريقة الدفع أو المحاولة مجدداً&lt;/a&gt;.</value>
   </data>
   <data name="Placed" xml:space="preserve">
-    <value>تم وضع الطلبية</value>
+    <value>تاريخ الطلب</value>
   </data>
   <data name="Price" xml:space="preserve">
-    <value>الثمن</value>
+    <value>السعر</value>
   </data>
   <data name="Product" xml:space="preserve">
     <value>المنتج</value>
@@ -457,7 +457,7 @@
     <value>المجموع الفرعي</value>
   </data>
   <data name="AwardedOn" xml:space="preserve">
-    <value>منحت فى</value>
+    <value>تاريخ الحصول</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>الوصف</value>
@@ -467,5 +467,287 @@
   </data>
   <data name="XpAward" xml:space="preserve">
     <value>النقاط</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>عن زيدلي</value>
+  </data>
+  <data name="Added" xml:space="preserve">
+    <value>تمت الاضافة</value>
+  </data>
+  <data name="AllowPhoneSmsLabel" xml:space="preserve">
+    <value>السماح بارسال رسائل نصية للهاتف النقال</value>
+  </data>
+  <data name="Auction" xml:space="preserve">
+    <value>مزاد</value>
+  </data>
+  <data name="AuctionHistory" xml:space="preserve">
+    <value>مزادات سابقة</value>
+  </data>
+  <data name="AuctionWinMessage" xml:space="preserve">
+    <value>مبروك {FirstName} رسى عليكم المزاد! من فضلك ادخل العنوان للتوصيل في الاسفل.</value>
+  </data>
+  <data name="AutoBid" xml:space="preserve">
+    <value>مزايدة اوتوماتيكية</value>
+  </data>
+  <data name="AutoBidDeleteConfirmation" xml:space="preserve">
+    <value>هل أنت متأكد انك تريد ايقاف المزايدة الاوتوماتيكيه لهذا المزاد؟</value>
+  </data>
+  <data name="AutoBidDeleteSuccess" xml:space="preserve">
+    <value>تم ايقاف المزايدة الاوتوماتيكية بنجاح</value>
+  </data>
+  <data name="AutoBidDeleteTitle" xml:space="preserve">
+    <value>ايقاف المزايدة الاوتوماتيكية</value>
+  </data>
+  <data name="AutoBidInstructions" xml:space="preserve">
+    <value>المزايدة الاوتوماتيكية: يتم عشوائياً اختيار المستخدمين الراغبين بالمزايدة الاوتوماتيكية لوضع مزايداتهم أثناء المزاد. اختيارك للمزايدة الاوتوماتيكية لا تضمن لك المزايدة.</value>
+  </data>
+  <data name="AutoBidSaveSuccess" xml:space="preserve">
+    <value>تم اختيار المزايدة الاوتوماتيكية بنجاح</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>العودة</value>
+  </data>
+  <data name="Bid" xml:space="preserve">
+    <value>مزايدة</value>
+  </data>
+  <data name="BidHistory" xml:space="preserve">
+    <value>مزايدات سابقة</value>
+  </data>
+  <data name="BuyForPriceKd" xml:space="preserve">
+    <value>سعر الشراء  {FormattedPrice}</value>
+  </data>
+  <data name="BuyForPriceTokens" xml:space="preserve">
+    <value>شراء ب {PriceTokens} نقاط</value>
+  </data>
+  <data name="BuyNow" xml:space="preserve">
+    <value>اشتر الآن</value>
+  </data>
+  <data name="BuyNowPrice" xml:space="preserve">
+    <value>سعر "اشتر الآن":  {BuyNowPrice}</value>
+  </data>
+  <data name="BuyNowWithPrice" xml:space="preserve">
+    <value>اشتر الآن ب{BuyNowPrice}</value>
+  </data>
+  <data name="BuySubscription" xml:space="preserve">
+    <value>الاشتراك</value>
+  </data>
+  <data name="BuySubscriptionWithName" xml:space="preserve">
+    <value>الاشتراك - {Subscription.Name}</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>الفئات</value>
+  </data>
+  <data name="ClosedAuctions" xml:space="preserve">
+    <value>المزادات المنتهية</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>اتصل بنا</value>
+  </data>
+  <data name="CurrentAuctionPrice" xml:space="preserve">
+    <value>سعر المزاد الحالي</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>لوحة التحكم</value>
+  </data>
+  <data name="DontHaveAccountQuestion" xml:space="preserve">
+    <value>ليس لديك حساب؟</value>
+  </data>
+  <data name="Experience" xml:space="preserve">
+    <value>الخبرة</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>ساعات</value>
+  </data>
+  <data name="ItemsWon" xml:space="preserve">
+    <value>منتجات تم ربحها</value>
+  </data>
+  <data name="Kuwait" xml:space="preserve">
+    <value>الكويت</value>
+  </data>
+  <data name="LiveAuctions" xml:space="preserve">
+    <value>المزادات الفعّالة الآن</value>
+  </data>
+  <data name="MaxBid" xml:space="preserve">
+    <value>اعلى قيمة للمزايدة</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>دقائق</value>
+  </data>
+  <data name="NameOrEmailRequiredErrorMessage" xml:space="preserve">
+    <value>يرجى ادخال اسم المستخدم أو البريد الاالكتروني</value>
+  </data>
+  <data name="NewAuctionsByCategory" xml:space="preserve">
+    <value>مزادات جديدة حسب الفئة</value>
+  </data>
+  <data name="NewAuctionsByCategoryInstructions" xml:space="preserve">
+    <value>يمكننا ابلاغك عندما تتم اضافة مزاد لفئة محددة. لاستقبال هذا الاشعار، يرجى اختيار الفئة المفضلة  لديك:</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>لا</value>
+  </data>
+  <data name="NoSubscription" xml:space="preserve">
+    <value>لا يوجد إشتراك</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>الإشعارات</value>
+  </data>
+  <data name="NotificationsInstructions" xml:space="preserve">
+    <value>يمكنك اختيار عدة اشعارات، يرجى اختيار اي من الاشعارات التي ترغب باستقبالها.</value>
+  </data>
+  <data name="NoTrophiesMessage" xml:space="preserve">
+    <value>ليس لديك جوائز حتى الآن، ولكن هناك العديد من الطرق لتربح الجوائز. استخدم موقع زيدلي وسوف تربح جائزتك قريباً.</value>
+  </data>
+  <data name="NoWishlistMessage" xml:space="preserve">
+    <value>ليس لديك اي منتجات بالقائمة المفضلة حتى الآن، اضغط على رابط اضافة منتج للبدأ باضافة المنتجات المرغوب بشرائها بالقائمة المفضلة</value>
+  </data>
+  <data name="OrderDetails" xml:space="preserve">
+    <value>تفاصيل الطلب</value>
+  </data>
+  <data name="OrderReceived" xml:space="preserve">
+    <value>تم استلام الطلب</value>
+  </data>
+  <data name="OrderSuccessMessage" xml:space="preserve">
+    <value>شكراً لقيامك بعملية الشراء! سوف يتم ارسال رسالة بالبريد الالكتروني لتأكيد طلبك. تحتوي الرسالة على تفاصيل الطلب ورابط لتتبع الطلب</value>
+  </data>
+  <data name="OrderSummary" xml:space="preserve">
+    <value>ملخص الطلب</value>
+  </data>
+  <data name="OutOfStockErrorMessage" xml:space="preserve">
+    <value>نأسف! هذا المنتج غير متوفر الآن.</value>
+  </data>
+  <data name="PasswordInvalidErrorMessage" xml:space="preserve">
+    <value>يرجى إدخال رمز المرور المكون من 6 حروف أو أرقام أو رموز</value>
+  </data>
+  <data name="PaymentMethod" xml:space="preserve">
+    <value>طريقة الدفع</value>
+  </data>
+  <data name="PhoneNumberRequiredErrorMessage" xml:space="preserve">
+    <value>يرجى ادخال رقم هاتفك النقال</value>
+  </data>
+  <data name="RegisterLinkText" xml:space="preserve">
+    <value>سجل مجاناً</value>
+  </data>
+  <data name="RegisterNow" xml:space="preserve">
+    <value>سجل الآن</value>
+  </data>
+  <data name="RegistrationAgreementAcknowledgemen" xml:space="preserve">
+    <value>أنا اوافق على شروط وأحكام زيدلي.</value>
+  </data>
+  <data name="RegistrationErrorMessage" xml:space="preserve">
+    <value>نأسف! حدث خطأ اثناء تسجيل حسابك:  {0}.</value>
+  </data>
+  <data name="RegistrationWelcomeMessage" xml:space="preserve">
+    <value>مرحباً بك في زيدلي {0}! عندما تكون مستعداً &lt;a class='alert-link' href='#'&gt; يرجى مشاهدة المزادات القادمة &lt;i class='fa fa-pad-left fa-angle-right'&gt;&lt;/i&gt;&lt;/a&gt;</value>
+  </data>
+  <data name="RemoveItem" xml:space="preserve">
+    <value>ازالة منتج تم اختياره</value>
+  </data>
+  <data name="RetailPrice" xml:space="preserve">
+    <value>سعر السوق: {RetailPrice}</value>
+  </data>
+  <data name="RetailPriceWithLabel" xml:space="preserve">
+    <value>سعر السوق: {RetailPrice}</value>
+  </data>
+  <data name="SaveAndContinue" xml:space="preserve">
+    <value>حفظ و متابعة</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>ثواني</value>
+  </data>
+  <data name="SetAutoBid" xml:space="preserve">
+    <value>اختيار المزايدة الاوتوماتيكية</value>
+  </data>
+  <data name="Shipping" xml:space="preserve">
+    <value>التوصيل</value>
+  </data>
+  <data name="Specifications" xml:space="preserve">
+    <value>المواصفات</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>موافق</value>
+  </data>
+  <data name="SubmittingPleaseWait" xml:space="preserve">
+    <value>جاري تقديم الطلب، يرجى الانتظار…</value>
+  </data>
+  <data name="SubscriptionActiveUntil" xml:space="preserve">
+    <value>&lt;span class="text-success"&gt;الاشتراك صالح لغاية {DateTime}</value>
+  </data>
+  <data name="SubscriptionBuyInstructions" xml:space="preserve">
+    <value>انت تقوم الآن بعملية شراء  &lt;strong&gt;{Name}&lt;/strong&gt; بقيمة &lt;strong&gt;{FormattedPrice}&lt;/strong&gt;, هذا الاشتراك &lt;strong&gt;{Duration} day&lt;/strong&gt; صالح حتى  &lt;strong&gt;{NewExpiration}&lt;/strong&gt;. سوف يتم تحديث حسابك عند اتمام عملية الشراء.</value>
+  </data>
+  <data name="SubscriptionDurationDetailsLabel" xml:space="preserve">
+    <value>المدة: {Duration} أيام</value>
+  </data>
+  <data name="SubscriptionExpiredOn" xml:space="preserve">
+    <value>&lt;span class="text-danger"&gt;انتهى الاشتراك في{DateTime}</value>
+  </data>
+  <data name="SubscriptionLabelAndStatus" xml:space="preserve">
+    <value>الاشتراك: {StatusText}</value>
+  </data>
+  <data name="SubscriptionPriceDetailsLabel" xml:space="preserve">
+    <value>السعر:  {FormattedPrice}</value>
+  </data>
+  <data name="SubscriptionPriceKdAndTokens" xml:space="preserve">
+    <value>{PriceCurrency} أو {PriceTokens} نقاط</value>
+  </data>
+  <data name="SubscriptionPurchaseAcknowledgement" xml:space="preserve">
+    <value>مبروك، تمت عملية شراء &lt;strong&gt;{Subscription.Name}&lt;/strong&gt;  بنجاح. لقد تم تحديث حسابك.</value>
+  </data>
+  <data name="SubscriptionQuantityDetailsLabel" xml:space="preserve">
+    <value>الكمية:  {Quantity}</value>
+  </data>
+  <data name="SubscriptionQuantityNoLimit" xml:space="preserve">
+    <value>غير محدود</value>
+  </data>
+  <data name="SubscriptionQuantityQuantityRemaining" xml:space="preserve">
+    <value>المتبقي {Quantity} فقط!</value>
+  </data>
+  <data name="SubscriptionQuantitySoldOut" xml:space="preserve">
+    <value>مُباع</value>
+  </data>
+  <data name="TermsAndConditions" xml:space="preserve">
+    <value>الشروط والاحكام</value>
+  </data>
+  <data name="TimeLeft" xml:space="preserve">
+    <value>الوقت المتبقّي للمزاد</value>
+  </data>
+  <data name="Tokens" xml:space="preserve">
+    <value>رصيد النقاط</value>
+  </data>
+  <data name="TrophiesAchieved" xml:space="preserve">
+    <value>الجوائز المحققة</value>
+  </data>
+  <data name="Trophy" xml:space="preserve">
+    <value>جائزة</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>اسم المستخدم</value>
+  </data>
+  <data name="UserNameOrEmail" xml:space="preserve">
+    <value>اسم المستخدم أو البريد الاالكتروني</value>
+  </data>
+  <data name="UserNameRequiredErrorMessage" xml:space="preserve">
+    <value>اسم المستخدم يجب ان يحتوي فقط على حروف وأرقام</value>
+  </data>
+  <data name="UserNameValidateChecking" xml:space="preserve">
+    <value>التحقق من اسم المستخدم</value>
+  </data>
+  <data name="UserNameValidateError" xml:space="preserve">
+    <value>نأسف! اسم المستخدم غير متوفر.</value>
+  </data>
+  <data name="UserNameValidateIsValid" xml:space="preserve">
+    <value>اسم المستخدم رائع!</value>
+  </data>
+  <data name="ViewAll" xml:space="preserve">
+    <value>عرض الكل</value>
+  </data>
+  <data name="ViewAllClosedAuctions" xml:space="preserve">
+    <value>شاهد جميع المزادات المنتهية</value>
+  </data>
+  <data name="WinningPriceWithLabel" xml:space="preserve">
+    <value>سعر ترسية المزاد: {WinningPrice}</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>نعم</value>
   </data>
 </root>

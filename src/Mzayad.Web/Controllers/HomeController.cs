@@ -97,7 +97,7 @@ namespace Mzayad.Web.Controllers
         {
             CookieService.Add(CookieKeys.LanguageCode, language, DateTime.Today.AddYears(10));
 
-            var redirectUrl = Regex.Replace(returnUrl.ToString(), @"/(en|ar)/", "/" + language + "/");
+            var redirectUrl = Regex.Replace(returnUrl.ToString(), @"/(en|ar)", "/" + language);
             return Redirect(redirectUrl);
         }
 
