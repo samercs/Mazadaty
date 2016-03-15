@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mzayad.Web", "src\Mzayad.Web\Mzayad.Web.csproj", "{C0BCF77F-69FC-46AC-9044-0C6EE6A10FB3}"
 EndProject
@@ -29,6 +29,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mzayad.Model.Tests", "src\Mzayad.Model.Tests\Mzayad.Model.Tests.csproj", "{B4C619FB-9633-4713-95FF-4BE1B8579E1C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mzayad.WebJobs", "src\Mzayad.WebJobs\Mzayad.WebJobs.csproj", "{DA1E5C7E-A6CE-4A61-88B0-CADEBD824FEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mzayad.Services.Tests", "src\Mzayad.Services.Tests\Mzayad.Services.Tests.csproj", "{EC67C18C-2876-402F-ACE5-477063B05650}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +74,10 @@ Global
 		{DA1E5C7E-A6CE-4A61-88B0-CADEBD824FEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA1E5C7E-A6CE-4A61-88B0-CADEBD824FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA1E5C7E-A6CE-4A61-88B0-CADEBD824FEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC67C18C-2876-402F-ACE5-477063B05650}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC67C18C-2876-402F-ACE5-477063B05650}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC67C18C-2876-402F-ACE5-477063B05650}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC67C18C-2876-402F-ACE5-477063B05650}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,5 +86,6 @@ Global
 		{53CDD4AD-9EAC-4DE4-BD68-AE16CCB22DF4} = {580C6F43-28E1-4AEB-A499-2683DABA04FE}
 		{91A9D9B0-16B6-4B33-82A3-E67B2A351220} = {580C6F43-28E1-4AEB-A499-2683DABA04FE}
 		{B4C619FB-9633-4713-95FF-4BE1B8579E1C} = {580C6F43-28E1-4AEB-A499-2683DABA04FE}
+		{EC67C18C-2876-402F-ACE5-477063B05650} = {580C6F43-28E1-4AEB-A499-2683DABA04FE}
 	EndGlobalSection
 EndGlobal

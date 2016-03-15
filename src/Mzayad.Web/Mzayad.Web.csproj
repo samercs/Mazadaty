@@ -770,7 +770,7 @@
     <Content Include="Scripts\address.min.js.map">
       <DependentUpon>address.js</DependentUpon>
     </Content>
-    <None Include="Properties\webjobs-list.json.bak" />
+    <None Include="Properties\webjobs-list.json" />
     <Content Include="Scripts\address.js" />
     <Content Include="Scripts\dropzone.js" />
     <Content Include="Scripts\image-uploader.js" />
