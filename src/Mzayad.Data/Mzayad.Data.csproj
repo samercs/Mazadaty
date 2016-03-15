@@ -61,8 +61,8 @@
       <HintPath>..\..\packages\OrangeJetpack.Base.Data.0.1.0\lib\OrangeJetpack.Base.Data.dll</HintPath>
     </Reference>
     <Reference Include="OrangeJetpack.Localization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\OrangeJetpack.Localization.1.5.6\lib\OrangeJetpack.Localization.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Localization.1.5.7\lib\OrangeJetpack.Localization.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
