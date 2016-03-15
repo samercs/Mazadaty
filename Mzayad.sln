@@ -22,15 +22,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mzayad.Api.Tests", "src\Mza
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{580C6F43-28E1-4AEB-A499-2683DABA04FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mzayad.Services.Tests", "src\Mzayad.Services.Tests\Mzayad.Services.Tests.csproj", "{EC67C18C-2876-402F-ACE5-477063B05650}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mzayad.Core", "src\Mzayad.Core\Mzayad.Core.csproj", "{806EA484-DEBE-4C9D-8B1D-4D0655AAAB49}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mzayad.Core.Tests", "src\Mzayad.Core.Tests\Mzayad.Core.Tests.csproj", "{91A9D9B0-16B6-4B33-82A3-E67B2A351220}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mzayad.Model.Tests", "src\Mzayad.Model.Tests\Mzayad.Model.Tests.csproj", "{B4C619FB-9633-4713-95FF-4BE1B8579E1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mzayad.WebJobs", "Mzayad.WebJobs\Mzayad.WebJobs.csproj", "{DA1E5C7E-A6CE-4A61-88B0-CADEBD824FEC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mzayad.WebJobs", "src\Mzayad.WebJobs\Mzayad.WebJobs.csproj", "{DA1E5C7E-A6CE-4A61-88B0-CADEBD824FEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,10 +56,6 @@ Global
 		{53CDD4AD-9EAC-4DE4-BD68-AE16CCB22DF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53CDD4AD-9EAC-4DE4-BD68-AE16CCB22DF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53CDD4AD-9EAC-4DE4-BD68-AE16CCB22DF4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EC67C18C-2876-402F-ACE5-477063B05650}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EC67C18C-2876-402F-ACE5-477063B05650}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EC67C18C-2876-402F-ACE5-477063B05650}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EC67C18C-2876-402F-ACE5-477063B05650}.Release|Any CPU.Build.0 = Release|Any CPU
 		{806EA484-DEBE-4C9D-8B1D-4D0655AAAB49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{806EA484-DEBE-4C9D-8B1D-4D0655AAAB49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{806EA484-DEBE-4C9D-8B1D-4D0655AAAB49}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -84,7 +78,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{53CDD4AD-9EAC-4DE4-BD68-AE16CCB22DF4} = {580C6F43-28E1-4AEB-A499-2683DABA04FE}
-		{EC67C18C-2876-402F-ACE5-477063B05650} = {580C6F43-28E1-4AEB-A499-2683DABA04FE}
 		{91A9D9B0-16B6-4B33-82A3-E67B2A351220} = {580C6F43-28E1-4AEB-A499-2683DABA04FE}
 		{B4C619FB-9633-4713-95FF-4BE1B8579E1C} = {580C6F43-28E1-4AEB-A499-2683DABA04FE}
 	EndGlobalSection

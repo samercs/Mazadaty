@@ -25,17 +25,15 @@ function Deploy-WebApp
         $Password 
     )
     
-    $currDirectory = Resolve-Path .\
-    $rootDirectory = Resolve-Path ..\.\
+    $currDirectory = Resolve-Path .\ 
+    $webProjectDirectory = Get-ChildItem -Path (Resolve-Path ..\.\src) | ? { $_.Name.EndsWith(".Web") };
+    $webProjectFile = Get-ChildItem -Path $webProjectDirectory.FullName | ? {$_.Extension -eq ".csproj"} | Select-Object -First 1
 
-    $solutionFile = Get-ChildItem -Path $rootDirectory | where {$_.extension -eq ".sln"} | Select-Object -First 1
-        
-    Remove-Module Invoke-MsBuild -ErrorAction SilentlyContinue
+    Remove-Module Invoke-MsBuild -ErrorAction SilentlyContinue; 
     Import-Module ($currDirectory.Path + '\Invoke-MsBuild.psm1') -Scope Local -Verbose:$false
-
-    $params = "/property:Configuration={0};PublishProfile={1};UserName={2};Password={3};DeployWeb=true;WarningLevel=1;AllowUntrustedCertificate=true /verbosity:m" -f $configuration, $profile, $username, $password
-
-    $buildSucceeded = Invoke-MsBuild -Path $solutionFile.FullName -ShowBuildWindowAndPromptForInputBeforeClosing -MsBuildParameters $params
+    
+    $params = "/property:Configuration=Release;PublishProfile={0};UserName={1};Password={2};DeployOnBuild=true;WarningLevel=1;AllowUntrustedCertificate=true;VisualStudioVersion=14.0 /verbosity:m" -f $profile, $username, $password
+    $buildSucceeded = Invoke-MsBuild -Path $webProjectFile.FullName -ShowBuildWindowAndPromptForInputBeforeClosing -MsBuildParameters $params
 
     if ($buildSucceeded)
     { 
