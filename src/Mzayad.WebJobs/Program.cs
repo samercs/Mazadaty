@@ -19,10 +19,16 @@ using OrangeJetpack.Localization;
 
 namespace Mzayad.WebJobs
 {
-    class Program
+    internal class Program
     {
-        static void Main()
+        private static void Main()
         {
+            var slotName = Environment.GetEnvironmentVariable("APPSETTING_WEBSITE_SLOT_NAME");
+            if (slotName != "production")
+            {
+                return;
+            }
+
             new JobHost().RunAndBlock();
         }
     }
@@ -53,7 +59,6 @@ namespace Mzayad.WebJobs
             var trophyService = new TrophyService(dataContextFactory);
             var trophyEngine = TrophyEngineFactory.CreateInstance(activityEvent.Type, dataContextFactory);
             var emailTemplateService = new EmailTemplateService(dataContextFactory);
-            EmailTemplate emailTemplate;
 
             try
             {
@@ -65,6 +70,8 @@ namespace Mzayad.WebJobs
                 }
 
                 IEnumerable<TrophyKey> trophies;
+
+                EmailTemplate emailTemplate;
 
                 switch (activityEvent.Type)
                 {
@@ -124,15 +131,16 @@ namespace Mzayad.WebJobs
                 throw;
             }
         }
+
         private static async Task SendEmail(ApplicationUser user, string subject, string message)
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44300/area/api/");
+                client.BaseAddress = new Uri("https://mzayad.azurewebsites.net/area/api/");
 
                 var requestContent = new FormUrlEncodedContent(new[]
                 {
-                    new KeyValuePair<string, string>("FromAddress", "admin@mzayad.com"),
+                    new KeyValuePair<string, string>("FromAddress", "noreply@mzayad.com"),
                     new KeyValuePair<string, string>("FromName", "Mzayad"),
                     new KeyValuePair<string, string>("Message", message),
                     new KeyValuePair<string, string>("Subject",subject),
@@ -142,14 +150,14 @@ namespace Mzayad.WebJobs
                 await client.PostAsync("messages", requestContent);
             }
         }
+
         private static async Task<string> TrophiesHtmlTable(IEnumerable<TrophyKey> keys, TrophyService trophyService)
         {
             var table = new StringBuilder();
             table.Append("<table>");
-            Trophy trophy;
             foreach (var key in Enum.GetValues(typeof(TrophyKey)).Cast<TrophyKey>())
             {
-                trophy = await trophyService.GetTrophy(key);
+                var trophy = await trophyService.GetTrophy(key);
                 if (trophy != null)
                 {
                     table.Append("<tr>");
