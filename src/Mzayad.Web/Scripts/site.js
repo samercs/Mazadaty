@@ -67,7 +67,7 @@ var App;
             return Math.floor(seconds % 60);
         };
         return TimeUtilities;
-    })();
+    }());
     App.TimeUtilities = TimeUtilities;
     var CkEditor = (function () {
         function CkEditor() {
@@ -99,7 +99,7 @@ var App;
             // ReSharper restore SuspiciousThisUsage
         };
         return CkEditor;
-    })();
+    }());
     App.CkEditor = CkEditor;
 })(App || (App = {}));
 var TimeUtilities = {

@@ -13,5 +13,5 @@ var KendoFormatter = (function () {
         return "xxx";
     };
     return KendoFormatter;
-})();
+}());
 //# sourceMappingURL=site-kendo.js.map

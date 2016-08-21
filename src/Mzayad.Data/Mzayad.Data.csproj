@@ -326,6 +326,10 @@
     <Compile Include="Migrations\201510232022067_AddLangaugeToActivityEvent.Designer.cs">
       <DependentUpon>201510232022067_AddLangaugeToActivityEvent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608210917433_fixSessionLogsRelation.cs" />
+    <Compile Include="Migrations\201608210917433_fixSessionLogsRelation.Designer.cs">
+      <DependentUpon>201608210917433_fixSessionLogsRelation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -528,6 +532,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510232022067_AddLangaugeToActivityEvent.resx">
       <DependentUpon>201510232022067_AddLangaugeToActivityEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608210917433_fixSessionLogsRelation.resx">
+      <DependentUpon>201608210917433_fixSessionLogsRelation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -26,7 +26,7 @@ namespace Mzayad.Web.Controllers
         private readonly UserService _userService;
         private readonly AddressService _addressService;
         private readonly SessionLogService _sessionLogService;
-         
+
         public AccountController(IAppServices appServices) : base(appServices)
         {
             _userService = new UserService(DataContextFactory);
@@ -68,8 +68,8 @@ namespace Mzayad.Web.Controllers
             sessionLog.UserId = user.Id;
             _sessionLogService.Insert(sessionLog);
 
-            return !string.IsNullOrEmpty(returnUrl) 
-                ? RedirectToLocal(returnUrl) 
+            return !string.IsNullOrEmpty(returnUrl)
+                ? RedirectToLocal(returnUrl)
                 : RedirectToAction("Dashboard", "User", new { Language });
         }
 
@@ -79,6 +79,7 @@ namespace Mzayad.Web.Controllers
             CookieService.Add(CookieKeys.LastSignInEmail, usernameOrEmail, DateTime.Today.AddYears(10));
         }
 
+        [Route("sign-out")]
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult SignOut()
         {
@@ -157,21 +158,25 @@ namespace Mzayad.Web.Controllers
         private async Task SendNewUserWelcomeEmail(ApplicationUser user)
         {
             var template = await EmailTemplateService.GetByTemplateType(EmailTemplateType.AccountRegistration, Language);
-            var email = new Email
+            if (template != null)
             {
-                ToAddress = user.Email,
-                Subject = template.Subject,
-                Message = string.Format(template.Message, user.FirstName)
-            };
+                var email = new Email
+                {
+                    ToAddress = user.Email,
+                    Subject = template.Subject,
+                    Message = string.Format(template.Message, user.FirstName)
+                };
 
-            try
-            {
-                await MessageService.Send(email.WithTemplate());
+                try
+                {
+                    await MessageService.Send(email.WithTemplate());
+                }
+                catch (Exception ex)
+                {
+                    new RaygunClient().Send(ex);
+                }
             }
-            catch (Exception ex)
-            {
-                new RaygunClient().Send(ex);
-            }
+
         }
 
         public async Task<JsonResult> ValidateUserName(string username)
@@ -234,7 +239,7 @@ namespace Mzayad.Web.Controllers
 
             //try
             //{
-                await MessageService.Send(email.WithTemplate());
+            await MessageService.Send(email.WithTemplate());
             //}
             //catch (Exception ex)
             //{
@@ -322,6 +327,6 @@ namespace Mzayad.Web.Controllers
             return true;
         }
 
-        
+
     }
 }
