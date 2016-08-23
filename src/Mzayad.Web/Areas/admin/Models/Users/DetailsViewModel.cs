@@ -1,15 +1,13 @@
-﻿using System;
+﻿using Mzayad.Models;
+using Mzayad.Services.Identity;
+using Mzayad.Web.Core.Identity;
+using OrangeJetpack.Base.Core.Formatting;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Mzayad.Models;
-using Mzayad.Services;
-using Mzayad.Services.Identity;
-using Mzayad.Web.Core.Identity;
-using Mzayad.Web.Core.Services;
-using OrangeJetpack.Base.Core.Formatting;
 
 namespace Mzayad.Web.Areas.admin.Models.Users
 {
@@ -34,12 +32,17 @@ namespace Mzayad.Web.Areas.admin.Models.Users
 
         public DateTime? SubscriptionUtc { get; set; }
 
+        public string AvatarUrl { get; set; }
+
         public List<SelectListItem> Roles { get; set; }
 
         public IReadOnlyCollection<SubscriptionLog> SubscriptionLogs { get; set; }
         public IReadOnlyCollection<TokenLog> TokenLogs { get; set; }
+        public IReadOnlyCollection<UserTrophy> Trophies { get; set; }
+        public IReadOnlyCollection<Mzayad.Models.Auction> Auctions { get; set; }
+        public IReadOnlyCollection<Bid> Bids { get; set; }
 
-        public async Task<DetailsViewModel> Hydrate(ApplicationUser user, UserService userService, SubscriptionService subscriptionService, TokenService tokenService)
+        public async Task<DetailsViewModel> Hydrate(ApplicationUser user, UserService userService)
         {
             UserId = user.Id;
             FirstName = user.FirstName;
@@ -48,6 +51,7 @@ namespace Mzayad.Web.Areas.admin.Models.Users
             Email = user.Email;
             CreatedUtc = user.CreatedUtc;
             SubscriptionUtc = user.SubscriptionUtc;
+            AvatarUrl = user.AvatarUrl;
 
             var roles = (await userService.GetRolesForUser(user.Id));
 
@@ -59,9 +63,6 @@ namespace Mzayad.Web.Areas.admin.Models.Users
                          Selected = roles.Contains(role.ToString())
                      }).ToList();
 
-
-            SubscriptionLogs = await subscriptionService.GetSubscriptionLogsByUserId(UserId);
-            TokenLogs = await tokenService.GetTokenLogsByUserId(UserId);
             
             return this;
         }

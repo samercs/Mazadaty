@@ -1,4 +1,5 @@
 ﻿@using Humanizer
+@using Mzayad.Core.Formatting
 @using Mzayad.Web.Extensions
 @using Mzayad.Web.Resources
 @using OrangeJetpack.Base.Core.Formatting
@@ -15,6 +16,7 @@
 
     <div class="form-group">
         @Html.Label("Name")
+        <img src="@Model.AvatarUrl" alt="avatar" class="user-avatar" />
         <p class="form-control-static">
             @NameFormatter.GetFullName(Model.FirstName, Model.LastName)
         </p>
@@ -91,6 +93,87 @@
     </section>
 }
 
+@if (Model.Trophies.Any())
+{
+    <h2>Trophies Achieved</h2>
+    <table class="@Html.Css().GridTable">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>XP awarded</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var trophy in Model.Trophies)
+            {
+                <tr>
+                    <td class="text-center">
+                        <img src="@trophy.Trophy.IconUrl" alt="@trophy.Trophy.Name" class="img-cell" />
+                    </td>
+                    <td>@trophy.Trophy.Name</td>
+                    <td>@trophy.XpAwarded</td>
+                    <td>@DateTimeFormatter.ToLocalTime(trophy.CreatedUtc, DateTimeFormatter.Format.Full)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (Model.Auctions.Any())
+{
+    <h2>Items Won</h2>
+    <table class="@Html.Css().GridTable">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Auction</th>
+                <th>Date</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Auctions)
+            {
+                <tr>
+                    <td class="image-cell">
+                        <img class="img-responsive" src="@item.Product.MainImage().ImageSmUrl" alt="@item.Title"/>
+                    </td>
+                    <td>@item.Title</td>
+                    <td>@DateTimeFormatter.ToLocalTime(item.ClosedUtc)</td>
+                    <td>@CurrencyFormatter.Format(item.WonAmount)</td>
+                </tr>
+          }
+        </tbody>
+    </table>
+}
+
+@if (Model.Bids.Any())
+{
+    <h2>Bid History</h2>
+    <table class="@Html.Css().GridTable">
+        <thead>
+            <tr>
+                <th>Date\Time</th>
+                <th>Auction</th>
+                <th>Amount</th>
+                <th>Time Left in Auction</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Bids)
+            {
+                <tr>
+                    <td>@DateTimeFormatter.ToLocalTime(item.CreatedUtc, DateTimeFormatter.Format.Full)</td>
+                    <td>@item.Auction.Title</td>
+                    <td>@CurrencyFormatter.Format(item.Amount)</td>
+                    <td>@TimeSpan.FromSeconds(item.SecondsLeft).Humanize(4)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
 @if (Model.SubscriptionLogs.Any())
 {
@@ -98,47 +181,47 @@
 
     <table class="@Html.Css().GridTable">
         <thead>
-        <tr>
-            <th>Date/Time</th>
-            <th>Original Subscription</th>
-            <th>New Subscription</th>
-            <th>Change</th>
-            <th>Changed By</th>
-        </tr>
+            <tr>
+                <th>Date/Time</th>
+                <th>Original Subscription</th>
+                <th>New Subscription</th>
+                <th>Change</th>
+                <th>Changed By</th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var log in Model.SubscriptionLogs)
-        {
-            <tr>
-                <td>
-                    @DateTimeFormatter.ToLocalTime(log.CreatedUtc, DateTimeFormatter.Format.Full)
-                </td>
-                <td>
-                    @if (log.OriginalSubscriptionUtc.HasValue)
+            @foreach (var log in Model.SubscriptionLogs)
+            {
+                <tr>
+                    <td>
+                        @DateTimeFormatter.ToLocalTime(log.CreatedUtc, DateTimeFormatter.Format.Full)
+                    </td>
+                    <td>
+                        @if (log.OriginalSubscriptionUtc.HasValue)
                     {
-                        @DateTimeFormatter.ToLocalTime(log.OriginalSubscriptionUtc, DateTimeFormatter.Format.Full)
-                    }
-                </td>
-                <td>
-                    @DateTimeFormatter.ToLocalTime(log.ModifiedSubscriptionUtc, DateTimeFormatter.Format.Full)
-                </td>
-                <td>
-                    @if (log.DaysAdded > 0)
+                            @DateTimeFormatter.ToLocalTime(log.OriginalSubscriptionUtc, DateTimeFormatter.Format.Full)
+                        }
+                    </td>
+                    <td>
+                        @DateTimeFormatter.ToLocalTime(log.ModifiedSubscriptionUtc, DateTimeFormatter.Format.Full)
+                    </td>
+                    <td>
+                        @if (log.DaysAdded > 0)
                     {
-                        <span class="text-success">+ @("day".ToQuantity(log.DaysAdded))</span>
-                    }
-                    else if (log.DaysAdded < 0)
-                    {
-                        <span class="text-warning">- @("day".ToQuantity(log.DaysAdded))</span>
-                    }
-                    else
-                    {
-                        <span>0 days</span>
-                    }
-                </td>
-                <td>@NameFormatter.GetFullName(log.ModifiedByUser.FirstName, log.ModifiedByUser.LastName)</td>
-            </tr>
-        }
+                            <span class="text-success">+ @("day".ToQuantity(log.DaysAdded))</span>
+                        }
+                        else if (log.DaysAdded < 0)
+                        {
+                            <span class="text-warning">- @("day".ToQuantity(log.DaysAdded))</span>
+                        }
+                        else
+                        {
+                            <span>0 days</span>
+                        }
+                    </td>
+                    <td>@NameFormatter.GetFullName(log.ModifiedByUser.FirstName, log.ModifiedByUser.LastName)</td>
+                </tr>
+            }
         </tbody>
     </table>
 }

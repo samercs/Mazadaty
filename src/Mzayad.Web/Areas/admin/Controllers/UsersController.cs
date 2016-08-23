@@ -24,6 +24,9 @@ namespace Mzayad.Web.Areas.admin.Controllers
         private readonly UserService _userService;
         private readonly SubscriptionService _subscriptionService;
         private readonly TokenService _tokenService;
+        private readonly TrophyService _trophyService;
+        private readonly AuctionService _auctionService;
+        private readonly BidService _bidService;
 
         public UsersController(IAppServices appServices)
             : base(appServices)
@@ -31,6 +34,9 @@ namespace Mzayad.Web.Areas.admin.Controllers
             _userService = new UserService(DataContextFactory);
             _subscriptionService = new SubscriptionService(DataContextFactory);
             _tokenService = new TokenService(DataContextFactory);
+            _trophyService = new TrophyService(DataContextFactory);
+            _auctionService = new AuctionService(DataContextFactory);
+            _bidService = new BidService(DataContextFactory);
         }
 
         public async Task<ActionResult> Index(string search = "", Role? role = null)
@@ -96,7 +102,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return HttpNotFound();
             }
 
-            var model = await new DetailsViewModel().Hydrate(user, _userService, _subscriptionService, _tokenService);
+            var model = await new DetailsViewModel
+            {
+                SubscriptionLogs = await _subscriptionService.GetSubscriptionLogsByUserId(id),
+                TokenLogs = await _tokenService.GetTokenLogsByUserId(id),
+                Trophies = await _trophyService.GetUsersTrophies(id, Language),
+                Auctions = await _auctionService.GetAuctionsWon(user.Id, Language),
+                Bids = await _bidService.GetRecentBidHistoryForUser(user.Id, Language)
+            }.Hydrate(user, _userService);
 
             return View(model);
         }
@@ -112,7 +125,12 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             if (!ModelState.IsValid)
             {
-                await model.Hydrate(user, _userService, _subscriptionService, _tokenService);
+                model.SubscriptionLogs = await _subscriptionService.GetSubscriptionLogsByUserId(id);
+                model.TokenLogs = await _tokenService.GetTokenLogsByUserId(id);
+                model.Trophies = await _trophyService.GetUsersTrophies(id, Language);
+                model.Auctions = await _auctionService.GetAuctionsWon(user.Id, Language);
+                model.Bids = await _bidService.GetRecentBidHistoryForUser(user.Id, Language);
+                await model.Hydrate(user, _userService);
 
                 return View("Details", model);
             }
