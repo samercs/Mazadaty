@@ -48,8 +48,9 @@
         <!-- /ko -->
         
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 live-ribbon-container">
                 <img class="auction-image img-responsive" data-bind="attr: { src: imageUrl, alt: title }" alt="">
+                <div class="sponsor-ribbon"><span data-bind="text:sponsorName"></span></div>
             </div>
 
             <div class="col-md-6">
@@ -171,6 +172,7 @@
                 self.retailPrice = data.retailPrice;
                 self.buyNowEnabled = data.buyNowEnabled;
                 self.imageUrl = data.imageUrl;
+                self.sponsorName = data.sponsorName;
 
                 self.bids = ko.observableArray(data.bids);
                 self.status = ko.observable(data.status);
