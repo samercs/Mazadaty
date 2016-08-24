@@ -57,5 +57,8 @@ namespace Mzayad.Web.Core.Services
         Task AddUserToRole(string userId, string roleName);
         [Obsolete("Use Mzayad.Services.Identity.UserService instead.")]
         Task RemoveUserFromRole(string userId, string roleName);
+
+        Task Lock(string userId);
+        Task<bool> IsLocked(string userId);
     }
 }

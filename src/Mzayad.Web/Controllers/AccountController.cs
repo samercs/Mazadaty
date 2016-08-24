@@ -280,6 +280,11 @@ namespace Mzayad.Web.Controllers
                 return View(viewModel);
             }
 
+            if (await AuthService.IsLocked(user.Id))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             user.PasswordHash = _userService.HashPassword(viewModel.NewPassword);
             await _userService.UpdateUser(user);
             await AuthService.SignIn(user);
