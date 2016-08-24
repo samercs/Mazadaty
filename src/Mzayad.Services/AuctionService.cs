@@ -166,6 +166,15 @@ namespace Mzayad.Services
                 {
                     LocalizeProduct(auction.Product, language);
                     auction.Localize(language, i => i.Title);
+
+                    if (auction.Product.ProductSpecifications.Any())
+                    {
+                        foreach (var specification in auction.Product.ProductSpecifications)
+                        {
+                            specification.Localize(language, i => i.Value);
+                            specification.Specification.Localize(language, i => i.Name);
+                        }
+                    }
                 }
 
                 return auction;
