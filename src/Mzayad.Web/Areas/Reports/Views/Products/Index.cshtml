@@ -9,13 +9,13 @@
 <div class="row">
     <div class="@Html.Css().FormWide">
 
-        @using (Html.BeginForm("Index", "Products", FormMethod.Post, new {@class = "form-inline"}))
+        @using (Html.BeginForm("Index", "Products", FormMethod.Post, new { @class = "form-inline" }))
         {
             <div class="form-group">
                 @Html.EditorFor(i => i.DateRange, "DateRange")
                 <div class="col-md-2">
                     <button type="submit" class="btn btn-default">Submit</button>
-                </div>  
+                </div>
             </div>
         }
 
@@ -49,6 +49,11 @@
                     <td>@CurrencyFormatter.Format(@item.PurchasePrice * item.Quantity)</td>
                 </tr>
             }
+            <tr>
+                <td colspan="3" class="td-total">@Html.Label("Total")</td>
+                <td>@Model.Products.Sum(i => i.Quantity)</td>
+                <td>@CurrencyFormatter.Format(Model.Products.Sum(i => i.PurchasePrice))</td>
+            </tr>
         </tbody>
     </table>
 </div>

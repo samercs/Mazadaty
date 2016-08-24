@@ -511,6 +511,9 @@ input[type="checkbox"].input-validation-error {
 .localized-content .input-group-addon {
   min-width: 50px;
 }
+.td-total {
+  text-align: right;
+}
 :lang(ar) body {
   font-size: 1.6rem;
 }
