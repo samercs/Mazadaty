@@ -744,4 +744,10 @@
   <data name="AuctionWinMessage" xml:space="preserve">
     <value>Congratulations {FirstName} you've won! First things first, please enter your shipping address below.</value>
   </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
 </root>

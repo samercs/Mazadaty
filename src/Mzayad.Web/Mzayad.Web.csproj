@@ -372,8 +372,10 @@
     <Compile Include="Areas\Api\Models\Auctions\AuctionModel.cs" />
     <Compile Include="Areas\Api\Models\Users\UserModel.cs" />
     <Compile Include="Areas\Api\Models\Users\UserPostModel.cs" />
+    <Compile Include="Areas\Reports\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Reports\Controllers\TokensController.cs" />
     <Compile Include="Areas\Reports\Controllers\SubscriptionsController.cs" />
+    <Compile Include="Areas\Reports\Models\Products\IndexViewModel.cs" />
     <Compile Include="Areas\Reports\Models\Tokens\TokenLogViewModel.cs" />
     <Compile Include="Areas\Reports\Models\Subscriptions\SubscriptionLogViewModel.cs" />
     <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
@@ -439,6 +441,7 @@
     <Compile Include="Models\Auctions\ClosedAuctionsViewModel.cs" />
     <Compile Include="Models\Auctions\ProductSpecificationViewModel.cs" />
     <Compile Include="Models\BidModel.cs" />
+    <Compile Include="Models\DateRangeModel.cs" />
     <Compile Include="Models\EditAutoBidViewModel.cs" />
     <Compile Include="Models\Home\IndexViewModel.cs" />
     <Compile Include="Models\LiveAuctionExtendedModel.cs" />
@@ -669,6 +672,7 @@
     <Content Include="Areas\Admin\Views\PageManagement\Index.cshtml" />
     <Content Include="Areas\Admin\Views\PageManagement\Add.cshtml" />
     <Content Include="Areas\Admin\Views\PageManagement\Edit.cshtml" />
+    <Content Include="Areas\Reports\Views\Products\Index.cshtml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="mstile-144x144.png" />
     <Content Include="mstile-150x150.png" />
@@ -784,6 +788,7 @@
     <Content Include="Views\User\AuctionHistory.cshtml" />
     <Content Include="Views\Shared\_Layout_SubscriptionStatus.cshtml" />
     <Content Include="Views\Pages\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateRange.cshtml" />
     <TypeScriptCompile Include="Scripts\auctions.ts" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />
