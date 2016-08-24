@@ -26,13 +26,8 @@
                 <div class="col-sm-9">
                     <div id="dashboard-details" class="dashboard-cell">
                         <div id="dashboard-username" class="text-uppercase">@Model.User.UserName</div>
-                        <div id="dashboard-subscription" class="text-uppercase">
-                            <small>
-                                @F(Global.SubscriptionLabelAndStatus, new
-                                {
-                                    StatusText = Html.DisplayFor(m => m.User.SubscriptionUtc, "SubscriptionUtc").ToString()
-                                })
-                            </small>
+                        <div id="dashboard-level" class="text-uppercase">
+                            @Global.Level @Model.User.Level
                         </div>
                         <div id="dashboard-progress">
                             <div class="progress pull-left">
