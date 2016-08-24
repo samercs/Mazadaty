@@ -375,9 +375,11 @@
     <Compile Include="Areas\Reports\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Reports\Controllers\TokensController.cs" />
     <Compile Include="Areas\Reports\Controllers\SubscriptionsController.cs" />
+    <Compile Include="Areas\Reports\Controllers\TransactionsController.cs" />
     <Compile Include="Areas\Reports\Models\Products\IndexViewModel.cs" />
     <Compile Include="Areas\Reports\Models\Tokens\TokenLogViewModel.cs" />
     <Compile Include="Areas\Reports\Models\Subscriptions\SubscriptionLogViewModel.cs" />
+    <Compile Include="Areas\Reports\Models\Transactions\KnetViewModel.cs" />
     <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
     <Compile Include="Controllers\AuctionsController.cs" />
     <Compile Include="Controllers\AutoBidController.cs" />
@@ -673,6 +675,7 @@
     <Content Include="Areas\Admin\Views\PageManagement\Add.cshtml" />
     <Content Include="Areas\Admin\Views\PageManagement\Edit.cshtml" />
     <Content Include="Areas\Reports\Views\Products\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\Transactions\Knet.cshtml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="mstile-144x144.png" />
     <Content Include="mstile-150x150.png" />

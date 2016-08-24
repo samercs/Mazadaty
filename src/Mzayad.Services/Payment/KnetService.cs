@@ -15,7 +15,7 @@ namespace Mzayad.Services.Payment
     public class KnetService : ServiceBase
     {
         private readonly OrderService _orderService;
-        
+
         public KnetService(IDataContextFactory dataContextFactory) : base(dataContextFactory)
         {
             _orderService = new OrderService(dataContextFactory);
@@ -41,6 +41,19 @@ namespace Mzayad.Services.Payment
                 return await dc.KnetTransactions
                     .Include(i => i.Order)
                     .OrderByDescending(i => i.CreatedUtc)
+                    .ToListAsync();
+            }
+        }
+
+        public async Task<IReadOnlyCollection<KnetTransaction>> GetTransactionsByDate(DateTime startDate, DateTime endDate)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.KnetTransactions
+                    .Include(i => i.Order)
+                    .Where(i => i.CreatedUtc >= startDate)
+                    .Where(i => i.CreatedUtc <= endDate)
+                    .OrderByDescending(i => i.Order.OrderId)
                     .ToListAsync();
             }
         }
@@ -75,7 +88,7 @@ namespace Mzayad.Services.Payment
         public async Task<InitTransactionResult> InitTransaction(Order order, string userId, string userHostAddress)
         {
             return await GetFakeTransaction(order, userId, userHostAddress);
-                  
+
             //var result = new InitTransactionResult();
 
             //using (var client = new HttpClient())

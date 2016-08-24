@@ -1,0 +1,59 @@
+﻿@using Mzayad.Core.Formatting
+@using Mzayad.Web.Extensions
+@model Mzayad.Web.Areas.Reports.Models.Transactions.KnetViewModel
+
+@{
+    ViewBag.Title = "KNET Transactions";
+}
+
+<div class="row">
+    <div class="col-md-12 @Html.Css().FormWide">
+        @using (Html.BeginForm("Knet", "Transactions", FormMethod.Post, new { @class = "form-inline" }))
+        {
+            <div class="form-group">
+                @Html.EditorFor(i => i.DateRange, "DateRange")
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+    <div style="height: 60px;"></div>
+
+    @if (Model.KnetTransactions == null || !Model.KnetTransactions.Any())
+    {
+        <div class="alert alert-warning">There are currently KNET transactions match the selected dates, please pick another dates and try again.</div>
+        return;
+    }
+
+    <table class="@Html.Css().GridTable">
+        <thead>
+            <tr>
+                <th>Order Id</th>
+                <th>Amount</th>
+                <th>Transaction Id</th>
+                <th>TrackId</th>
+                <th>Created</th>
+                <th>Result</th>
+                <th>Authorization Number</th>
+                <th>Reference Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.KnetTransactions)
+            {
+                <tr>
+                    <td>@item.OrderId</td>
+                    <td>@CurrencyFormatter.Format(item.Order.Total)</td>
+                    <td>@item.TransactionId</td>
+                    <td>@item.TrackId</td>
+                    <td>@DateTimeFormatter.ToLocalTime(item.CreatedUtc, DateTimeFormatter.Format.Full)</td>
+                    <td>@item.Result</td>
+                    <td>@item.AuthorizationNumber</td>
+                    <td>@item.ReferenceNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
