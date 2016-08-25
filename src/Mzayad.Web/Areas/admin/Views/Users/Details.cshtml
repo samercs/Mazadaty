@@ -187,6 +187,7 @@
                 <th>New Subscription</th>
                 <th>Change</th>
                 <th>Changed By</th>
+                <th>Type</th>
             </tr>
         </thead>
         <tbody>
@@ -220,6 +221,16 @@
                         }
                     </td>
                     <td>@NameFormatter.GetFullName(log.ModifiedByUser.FirstName, log.ModifiedByUser.LastName)</td>
+                    <td>
+                        @if (Model.UserId == log.ModifiedByUserId)
+                        {
+                            <span class="label label-default">PURCHASE</span>
+                        }
+                        else
+                        {
+                            <span class="label label-success">GIFT</span>
+                        }
+                    </td>
                 </tr>
             }
         </tbody>
