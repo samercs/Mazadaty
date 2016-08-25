@@ -1528,6 +1528,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sponsor.
+        /// </summary>
+        public static string Sponsor {
+            get {
+                return ResourceManager.GetString("Sponsor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to State.
         /// </summary>
         public static string State {
@@ -1857,6 +1866,15 @@ namespace Mzayad.Web.Resources {
         public static string ViewAllClosedAuctions {
             get {
                 return ResourceManager.GetString("ViewAllClosedAuctions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Watch Video.
+        /// </summary>
+        public static string WatchVideo {
+            get {
+                return ResourceManager.GetString("WatchVideo", resourceCulture);
             }
         }
         

@@ -28,6 +28,7 @@ namespace Mzayad.Web.Models.Auctions
         //public AuctionImageViewModel MainImage { get; set; }
         public string ImageUrl { get; set; }
         public string SponsorName { get; set; }
+        public int ProductId { get; set; }
         //public IReadOnlyCollection<AuctionImageViewModel> Images { get; set; }
         //public IReadOnlyCollection<ProductSpecificationViewModel> Specifications { get; set; }
 
@@ -47,7 +48,8 @@ namespace Mzayad.Web.Models.Auctions
                 StartUtc = auction.StartUtc,
                 //MainImage = AuctionImageViewModel.Create(auction.Product.MainImage()),
                 ImageUrl = auction.Product.MainImage().ImageMdUrl,
-                SponsorName = auction.Product.Sponsor != null ? auction.Product.Sponsor.Name : string.Empty
+                SponsorName = auction.Product.Sponsor != null ? auction.Product.Sponsor.Name : string.Empty,
+                ProductId = auction.ProductId
                 //Images = GetImages(auction)
                 //Specifications = GetSpecifications(auction.Product.ProductSpecifications)
             };

@@ -4,26 +4,30 @@
 
 <div class="auction-tile">
     <div class="auction-tile-image">
-        <img class="img-responsive" src="@Model.ImageUrl" alt="@Model.Title" />
-        <div class="sponsor-ribbon"><span>@Model.SponsorName</span></div>
+        <a href="@Url.Action("Index", "Products", new { productId = Model.ProductId })">
+            <img class="img-responsive" src="@Model.ImageUrl" alt="@Model.Title" />
+            <div class="sponsor-ribbon"><span>@Model.SponsorName</span></div>
+        </a>
     </div>
     <div class="auction-tile-details">
-        <h3 class="auction-tile-title auction-tile-row">@Model.Title</h3>
+        <a href="@Url.Action("Index", "Products", new { productId = Model.ProductId })">
+            <h3 class="auction-tile-title auction-tile-row">@Model.Title</h3>
+        </a>
         <div class="auction-tile-prices auction-tile-row">
             <div class="auction-tile-retail-price">
-                @StringFormatter.ObjectFormat(Global.RetailPriceWithLabel, new { Model.RetailPrice })
+                @StringFormatter.ObjectFormat(Global.RetailPriceWithLabel, new {Model.RetailPrice})
             </div>
             @if (!string.IsNullOrWhiteSpace(Model.WonByAmount))
             {
                 <div class="auction-tile-winning-price">
-                    @StringFormatter.ObjectFormat(Global.WinningPriceWithLabel, new { WinningPrice = Model.WonByAmount })
+                    @StringFormatter.ObjectFormat(Global.WinningPriceWithLabel, new {WinningPrice = Model.WonByAmount})
                 </div>
             }
         </div>
         @if (Model.WonByUserName != null)
         {
             <div class="auction-tile-won-by-avater auction-tile-row">
-                <img src="@Model.WonByAvatarUrl" alt="@Model.WonByUserName" width="64" height="64" />
+                <img src="@Model.WonByAvatarUrl" alt="@Model.WonByUserName" width="64" height="64"/>
                 <div class="auction-title-username">@Model.WonByUserName</div>
             </div>
         }
@@ -31,13 +35,13 @@
         {
             <div class="auction-tile-buynow auction-tile-row">
                 <a class="btn btn-default btn-rounded text-uppercase" href="@Url.Action("BuyNow", "Orders", new {language = LanguageCode, auctionId = Model.AuctionId})">
-                    @StringFormatter.ObjectFormat(Global.BuyNowWithPrice, new { Model.BuyNowPrice })
+                    @StringFormatter.ObjectFormat(Global.BuyNowWithPrice, new {Model.BuyNowPrice})
                 </a>
             </div>
         }
 
         <div class="auction-tile-row">
-            <a class="btn btn-rounded btn-outline btn-unstyled" href="@Url.Action("Add", "WishList", new { item = HttpUtility.UrlEncode(Model.Title) })">@Global.AddToWishList</a>
+            <a class="btn btn-rounded btn-outline btn-unstyled" href="@Url.Action("Add", "WishList", new {item = HttpUtility.UrlEncode(Model.Title)})">@Global.AddToWishList</a>
         </div>
 
     </div>
