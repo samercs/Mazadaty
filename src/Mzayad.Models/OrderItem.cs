@@ -17,6 +17,7 @@ namespace Mzayad.Models
         
         public virtual Product Product { get; set; }
         public virtual Subscription Subscription { get; set; }
+        public  virtual Order Order { get; set; }
 
         [NotMapped]
         public decimal TotalPrice

@@ -7,7 +7,7 @@
 }
 
 <div class="row">
-    <div class="col-md-12 @Html.Css().FormWide">
+    <div class="@Html.Css().FormWide">
         @using (Html.BeginForm("Knet", "Transactions", FormMethod.Post, new { @class = "form-inline" }))
         {
             <div class="form-group">

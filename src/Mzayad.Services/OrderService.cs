@@ -48,8 +48,8 @@ namespace Mzayad.Services
                 var query = dc.Orders.Where(i => i.Status == status);
                 if (!string.IsNullOrEmpty(search))
                 {
-                    query = query.Where(i => 
-                        i.Address.Name.Contains(search) || 
+                    query = query.Where(i =>
+                        i.Address.Name.Contains(search) ||
                         i.Address.PhoneLocalNumber.Contains(search));
                 }
 
@@ -106,7 +106,7 @@ namespace Mzayad.Services
         }
 
         public async Task<Order> CreateOrderForSubscription(Subscription subscription, ApplicationUser user, PaymentMethod paymentMethod)
-        {          
+        {
             using (var dc = DataContext())
             {
                 var order = new Order
@@ -135,7 +135,7 @@ namespace Mzayad.Services
 
                 dc.Orders.Add(order);
                 dc.Subscriptions.Attach(subscription);
-                
+
                 await dc.SaveChangesAsync();
                 return order;
             }
@@ -285,7 +285,7 @@ namespace Mzayad.Services
         public async Task CompleteSubscriptionOrder(Order order, string modifiedByUserId, string userHostAddress)
         {
             var subscriptionService = new SubscriptionService(DataContextFactory);
-            
+
             var subscriptionItems = order.Items.Where(orderItem => orderItem.SubscriptionId.HasValue);
             foreach (var item in subscriptionItems)
             {
@@ -293,6 +293,24 @@ namespace Mzayad.Services
             }
 
             await SaveOrderAsDelivered(order, modifiedByUserId);
+        }
+
+        public async Task<IReadOnlyCollection<BuyNowTransactionModel>> GetBuyNowTransactions(DateTime startDate, DateTime endDate)
+        {
+            using (var dc = DataContext())
+            {
+                var orders = await dc.OrderItems
+                    .Include(i => i.Order.User)
+                    .Include(i => i.Product)
+                    .Where(i => i.Order.Status == OrderStatus.Delivered)
+                    .Where(i => i.Order.Type == OrderType.BuyNow)
+                    .Where(i => i.Order.CreatedUtc >= startDate)
+                    .Where(i => i.Order.CreatedUtc <= endDate)
+                    .ToListAsync();
+
+                return orders.Select(BuyNowTransactionModel.Create).ToList();
+
+            }
         }
 
         private static void DecrementProductOrSubscriptionInventory(Order order)

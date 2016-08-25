@@ -9,6 +9,7 @@ using OrangeJetpack.Base.Web;
 using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Mzayad.Services;
 
 namespace Mzayad.Web.Areas.Reports.Controllers
 {
@@ -17,10 +18,12 @@ namespace Mzayad.Web.Areas.Reports.Controllers
     public class TransactionsController : ApplicationController
     {
         private readonly KnetService _knetService;
+        private readonly OrderService _orderService;
 
         public TransactionsController(IAppServices appServices) : base(appServices)
         {
             _knetService = new KnetService(DataContextFactory);
+            _orderService = new OrderService(DataContextFactory);
         }
 
         [Route("knet")]
@@ -51,6 +54,36 @@ namespace Mzayad.Web.Areas.Reports.Controllers
 
             model.KnetTransactions = await _knetService.GetTransactionsByDate(model.DateRange.StartDate, model.DateRange.EndDate);
             return View(model);
-        } 
+        }
+
+        [Route("buy-now")]
+        public async Task<ActionResult> BuyNow()
+        {
+            var model = new BuyNowViewModel
+            {
+                DateRange = new DateRangeModel
+                {
+                    StartDate = DateTime.Now.AddDays(-7),
+                    EndDate = DateTime.Now
+                }
+            };
+
+            model.BuyNowTransactions = await _orderService.GetBuyNowTransactions(model.DateRange.StartDate, model.DateRange.EndDate);
+            return View(model);
+        }
+
+        [Route("buy-now")]
+        [HttpPost]
+        public async Task<ActionResult> BuyNow(BuyNowViewModel model)
+        {
+            if (model.DateRange.StartDate > model.DateRange.EndDate)
+            {
+                SetStatusMessage("End date is greater than start date, please pick another dates and try again.", StatusMessageType.Warning);
+                return View(model);
+            }
+
+            model.BuyNowTransactions = await _orderService.GetBuyNowTransactions(model.DateRange.StartDate, model.DateRange.EndDate);
+            return View(model);
+        }
     }
 }
