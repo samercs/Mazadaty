@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Mzayad.Data;
+using Mzayad.Models;
+using OrangeJetpack.Localization;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Mzayad.Data;
-using Mzayad.Models;
-using OrangeJetpack.Localization;
 
 namespace Mzayad.Services
 {
@@ -43,7 +41,7 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 var names = await dc.Products.Select(i => i.Name).ToListAsync();
-                var products = names.Select(i => new Product {Name = i}).ToList();
+                var products = names.Select(i => new Product { Name = i }).ToList();
 
                 var en = products.Localize("en", i => i.Name).Select(i => i.Name);
                 var ar = products.Localize("ar", i => i.Name).Select(i => i.Name);
@@ -52,20 +50,20 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<IEnumerable<Product>> GetProductsWithoutCategory(string languageCode,string search=null)
+        public async Task<IEnumerable<Product>> GetProductsWithoutCategory(string languageCode, string search = null)
         {
             using (var dc = DataContext())
             {
                 IEnumerable<Product> products;
                 if (!string.IsNullOrEmpty(search))
                 {
-                    products = await dc.Products.Where(i=>i.Name.Contains(search) || i.Description.Contains(search)).ToListAsync();    
+                    products = await dc.Products.Where(i => i.Name.Contains(search) || i.Description.Contains(search)).ToListAsync();
                 }
                 else
                 {
-                    products = await dc.Products.ToListAsync();    
+                    products = await dc.Products.ToListAsync();
                 }
-                
+
                 return products.Localize(languageCode, i => i.Name, i => i.Description).OrderBy(i => i.Name);
             }
         }
@@ -75,14 +73,14 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 product.Quantity = 1;
-                
+
                 dc.Products.Add(product);
                 await dc.SaveChangesAsync();
                 return product;
             }
         }
 
-        public async Task<Product> UpdateProduct(Product product, IEnumerable<int> categoryIds,List<ProductSpecification> productSpecifications )
+        public async Task<Product> UpdateProduct(Product product, IEnumerable<int> categoryIds, List<ProductSpecification> productSpecifications)
         {
             using (var dc = DataContext())
             {
@@ -93,12 +91,12 @@ namespace Mzayad.Services
                 {
                     product.Categories = dc.Categories.Where(i => categoryIds.Contains(i.CategoryId)).ToList();
                 }
-                
-                
-                
+
+
+
                 product.ProductSpecifications = productSpecifications;
-                
-                
+
+
                 await dc.SaveChangesAsync();
                 return product;
 
@@ -112,7 +110,8 @@ namespace Mzayad.Services
                 var product = await dc.Products
                     .Include(i => i.ProductImages)
                     .Include(i => i.Categories)
-                    .Include(i=>i.ProductSpecifications)
+                    .Include(i => i.ProductSpecifications.Select(j => j.Specification))
+                    .Include(i => i.Sponsor)
                     .SingleOrDefaultAsync(i => i.ProductId == productId);
 
                 if (product == null)

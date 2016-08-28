@@ -15,12 +15,12 @@ namespace Mzayad.Services
     {
         private readonly BidService _bidService;
         private readonly OrderService _orderService;
-        
+
         public AuctionService(IDataContextFactory dataContextFactory)
             : base(dataContextFactory)
         {
             _bidService = new BidService(dataContextFactory);
-            _orderService=new OrderService(dataContextFactory);
+            _orderService = new OrderService(dataContextFactory);
         }
 
         public async Task<Auction> Add(Auction auction)
@@ -92,6 +92,19 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<IReadOnlyCollection<Auction>> GetUpcomingAuctions(string language, int count)
+        {
+            using (var dc = DataContext())
+            {
+                var auctions = await GetAuctionsQuery(dc, AuctionStatus.Public)
+                    .Take(count)
+                    .OrderByDescending(i => i.StartUtc)
+                    .ToListAsync();
+
+                return LocalizeAuctions(language, auctions);
+            }
+        }
+
         private static IQueryable<Auction> GetAuctionsQuery(IDataContext dc, AuctionStatus auctionStatus)
         {
             return dc.Auctions
@@ -99,6 +112,7 @@ namespace Mzayad.Services
                 .Include(i => i.Product.ProductImages)
                 //.Include(i => i.Product.ProductSpecifications.Select(j => j.Specification))
                 .Include(i => i.WonByUser)
+                .Include(i => i.Product.Sponsor)
                 .Include(i => i.Bids.Select(j => j.User));
         }
 
@@ -120,6 +134,8 @@ namespace Mzayad.Services
             // localize products
             product.Localize(language, i => i.Name, i => i.Description);
 
+            product.Sponsor?.Localize(language, i => i.Name);
+
             //// localize specifications
             //foreach (var specification in product.ProductSpecifications)
             //{
@@ -137,7 +153,7 @@ namespace Mzayad.Services
                     return await dc.Auctions.Include(i => i.Product).Where(i => i.Product.Name.Contains(search)).OrderByDescending(i => i.StartUtc).ToListAsync();
 
                 }
-                
+
                 return await dc.Auctions.Include(i => i.Product).OrderByDescending(i => i.StartUtc).ToListAsync();
             }
         }
@@ -206,7 +222,7 @@ namespace Mzayad.Services
                 var auction = await dc.Auctions
                     .Include(i => i.Product)
                     .SingleAsync(i => i.AuctionId == auctionId);
-                    
+
                 auction.ClosedUtc = DateTime.UtcNow;
                 auction.Status = AuctionStatus.Closed;
 
@@ -215,7 +231,7 @@ namespace Mzayad.Services
                 {
                     auction.WonByUserId = winningBid.UserId;
                     auction.WonAmount = winningBid.Amount;
-                    auction.WonByBidId = winningBid.BidId;           
+                    auction.WonByBidId = winningBid.BidId;
                 }
 
                 await dc.SaveChangesAsync();
@@ -225,12 +241,12 @@ namespace Mzayad.Services
                     var order = await _orderService.CreateOrderForAuction(auction, winningBid);
                     return order;
                 }
-                
+
                 return null;
             }
         }
 
-        public async Task<int> CountAuctionsWon(string userId,DateTime? from = null)
+        public async Task<int> CountAuctionsWon(string userId, DateTime? from = null)
         {
             using (var dc = DataContext())
             {

@@ -27,6 +27,8 @@ namespace Mzayad.Web.Models.Auctions
         public DateTime StartUtc { get; set; }
         //public AuctionImageViewModel MainImage { get; set; }
         public string ImageUrl { get; set; }
+        public string SponsorName { get; set; }
+        public int ProductId { get; set; }
         //public IReadOnlyCollection<AuctionImageViewModel> Images { get; set; }
         //public IReadOnlyCollection<ProductSpecificationViewModel> Specifications { get; set; }
 
@@ -35,7 +37,7 @@ namespace Mzayad.Web.Models.Auctions
             var viewModel = new AuctionViewModel
             {
                 AuctionId = auction.AuctionId,
-                Title = auction.Title, 
+                Title = auction.Title,
                 Status = GetStatus(auction),
                 //Description = auction.Product.Description,
                 RetailPrice = CurrencyFormatter.Format(auction.Product.RetailPrice),
@@ -45,7 +47,9 @@ namespace Mzayad.Web.Models.Auctions
                 LastBidUser = GetWonByUserName(auction.WonByUser),
                 StartUtc = auction.StartUtc,
                 //MainImage = AuctionImageViewModel.Create(auction.Product.MainImage()),
-                ImageUrl = auction.Product.MainImage().ImageMdUrl
+                ImageUrl = auction.Product.MainImage().ImageMdUrl,
+                SponsorName = auction.Product.Sponsor != null ? auction.Product.Sponsor.Name : string.Empty,
+                ProductId = auction.ProductId
                 //Images = GetImages(auction)
                 //Specifications = GetSpecifications(auction.Product.ProductSpecifications)
             };
@@ -80,9 +84,9 @@ namespace Mzayad.Web.Models.Auctions
             {
                 return RenderStatus.Closed.ToString();
             }
-            
-            return auction.IsLive() 
-                ? RenderStatus.Live.ToString() 
+
+            return auction.IsLive()
+                ? RenderStatus.Live.ToString()
                 : RenderStatus.Upcoming.ToString();
         }
 

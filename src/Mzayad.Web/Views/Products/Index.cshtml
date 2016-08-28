@@ -1,0 +1,78 @@
+﻿@using Mzayad.Core.Formatting
+@model Mzayad.Models.Product
+
+@{
+    ViewBag.Title = @Model.Name;
+}
+
+@section styles
+{
+    <style>
+        dd,dt {
+            line-height: 2.5;
+        }
+
+        .vido-link {
+            padding-top: 15px;
+        }
+
+        .spec-span {
+            color: #999;
+            padding-left: 5px;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <img class="img-responsive" src="@Model.MainImage().ImageMdUrl" title="@Model.Name" alt="@Model.Name" />
+    </div>
+    <div class="col-md-8">
+        <dl class="dl-horizontal">
+            <dt>@Global.Name</dt>
+            <dd>@Model.Name</dd>
+            <dt>@Global.Price</dt>
+            <dd>@CurrencyFormatter.Format(Model.PurchasePrice)</dd>
+            @if (Model.SponsorId.HasValue)
+            {
+                <dt>@Global.Sponsor</dt>
+                <dd>@Model.Sponsor.Name</dd>
+            }
+            @if (!string.IsNullOrWhiteSpace(Model.VideoUrl))
+            {
+                <dt ></dt>
+                <dd class="vido-link">
+                    <a href="@Model.VideoUrl" target="blank">
+                        <span><i class="fa fa-2x fa-pad-right fa-youtube" aria-hidden="true"></i> @Global.WatchVideo</span>
+                    </a>
+                </dd>
+
+            }
+        </dl>
+    </div>
+    <div class="col-md-12">
+        <section>
+            @Html.Label(Global.Description)
+            <div>
+                @Html.Raw(Model.Description)
+            </div>
+        </section>
+        <hr/>
+        @if (Model.ProductSpecifications.Any())
+        {
+            <section>
+                @Html.Label(Global.Specifications)
+                <br/>
+                @foreach (var specification in Model.ProductSpecifications)
+                {
+                        <span>@specification.Specification.Name:</span>    
+                        <span class="spec-span">@specification.Value</span>    
+                        <br/>
+                }
+            </section>
+        }
+    </div>
+    
+</div>
+
+

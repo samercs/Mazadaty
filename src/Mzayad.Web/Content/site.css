@@ -795,6 +795,7 @@ input[type="checkbox"].input-validation-error {
 }
 .auction-tile .auction-tile-image {
   padding: 10px;
+  position: relative;
 }
 .auction-tile .auction-tile-details {
   padding: 10px;
@@ -805,6 +806,27 @@ input[type="checkbox"].input-validation-error {
 }
 .auction-tile .auction-tile-winning-price {
   font-weight: bold;
+}
+.live-ribbon-container {
+  left: -5px;
+  position: relative;
+}
+.sponsor-ribbon {
+  position: absolute;
+  left: 0;
+  bottom: 10px;
+  background: transparent url(https://az723232.vo.msecnd.net/assets/slack-imgscom-red-636076343102313840.png) center right no-repeat;
+}
+.sponsor-ribbon span {
+  color: #FFF;
+  float: left;
+  padding-right: 30px;
+  padding-left: 3px;
+  width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  -moz-text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
 #dashboard-header {
   background-color: #262626;
