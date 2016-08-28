@@ -1,10 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNet.Identity;
 using Mzayad.Core.Formatting;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
+using System;
+using Mzayad.Web.Core.Enums;
 
 namespace Mzayad.Web.Models.Auctions
 {
@@ -29,6 +28,7 @@ namespace Mzayad.Web.Models.Auctions
         public string ImageUrl { get; set; }
         public string SponsorName { get; set; }
         public int ProductId { get; set; }
+        public AuctionType Type { get; set; }
         //public IReadOnlyCollection<AuctionImageViewModel> Images { get; set; }
         //public IReadOnlyCollection<ProductSpecificationViewModel> Specifications { get; set; }
 

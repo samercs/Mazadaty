@@ -97,6 +97,7 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 var auctions = await GetAuctionsQuery(dc, AuctionStatus.Public)
+                    .Where(i => i.StartUtc > DateTime.UtcNow)
                     .Take(count)
                     .OrderByDescending(i => i.StartUtc)
                     .ToListAsync();
