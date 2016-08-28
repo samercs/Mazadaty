@@ -17,6 +17,119 @@
     <p><img class="img-responsive" src="https://az723232.vo.msecnd.net/assets/hero-movie-635750647415139708.jpg" alt="" /></p>
 }
 
+@if (!Model.LiveAuctions.Any())
+{
+    @Html.StatusMessage("There are no live auctions available at this time.", StatusMessageType.Warning)
+}
+else
+{
+    <h2>Live Auctions</h2>
+
+    <ol id="auction-list" data-bind="foreach: auctions">
+        <li class="auction-item">
+
+            <!-- ko if: $index() == 0 -->
+            <div class="live-action-ribbon">@Global.LiveAuctions</div>
+            <!-- /ko -->
+
+            <div class="row">
+                <div class="col-md-6 live-ribbon-container">
+                    <img class="auction-image img-responsive" data-bind="attr: { src: imageUrl, alt: title }" alt="">
+                    <img class="auction-image img-responsive" data-bind="attr: { src: imageUrl, alt: title }" alt="">
+                    <div class="sponsor-ribbon"><span data-bind="text:sponsorName"></span></div>
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="auction-details">
+
+                        <h3 class="auction-title" data-bind="text: title"></h3>
+                        <div class="auction-retail-price" data-bind="text: retailPriceFormatted"></div>
+
+                        <div class="auction-status-loading" data-bind="visible: !isLoaded()">
+                            <i class="fa fa-spin fa-cog"></i>
+                            @Global.Loading
+                        </div>
+
+                        <div class="auction-status-details" data-bind="visible: isLoaded()">
+
+                            <ol class="auction-time-left">
+                                <li class="auction-time-part">
+                                    <div class="auction-time-value" data-bind="text: timeLeftHours"></div>
+                                    <div class="auction-time-label">
+                                        <small>@Global.Hours</small>
+                                    </div>
+                                </li>
+                                <li class="auction-time-part">
+                                    <div class="auction-time-value" data-bind="text: timeLeftMinutes"></div>
+                                    <div class="auction-time-label">
+                                        <small>@Global.Minutes</small>
+                                    </div>
+                                </li>
+                                <li class="auction-time-part">
+                                    <div class="auction-time-value" data-bind="text: timeLeftSeconds"></div>
+                                    <div class="auction-time-label">
+                                        <small>@Global.Seconds</small>
+                                    </div>
+                                </li>
+                            </ol>
+
+                            <div class="clearfix"></div>
+
+                            <div class="row">
+                                <div class="auction-bid-details col-md-8">
+                                    <div class="auction-bid-label">
+                                        <small>@Global.CurrentAuctionPrice</small>
+                                    </div>
+                                    <div class="auction-bid-form input-group">
+                                        <input type="text" class="form-control" readonly="readonly" data-bind="value: lastBidFormatted">
+                                        <span class="input-group-btn">
+                                            @if (Request.IsAuthenticated)
+                                            {
+                                                <button type="button" class="btn btn-default" data-bind="click: submitBid">@Global.Bid</button>
+                                            }
+                                            else
+                                            {
+                                                <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new {ReturnUrl = "/"})">@Global.Bid</a>
+                                            }
+                                        </span>
+                                    </div>
+                                    <ol class="auction-recent-bids" data-bind="foreach: bidsReversed">
+                                        <li>
+                                            <div class="pull-left">
+                                                <img data-bind="attr: { src: avatarUrl, alt: userName }" width="32" />
+                                            </div>
+                                            <div class="auction-recent-username pull-left">
+                                                <span data-bind="text: userName"></span>
+                                            </div>
+                                            <div class="auction-recent-bidamount pull-right">
+                                                KD <span data-bind="text: bidAmount"></span>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+
+                            <ul class="auction-action-buttons">
+                                <li data-bind="visible: buyNowEnabled">
+                                    <a class="btn btn-default btn-rounded" data-bind="attr: { href: buyNowUrl }">@Global.BuyNow</a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-unstyled btn-rounded" data-bind="attr: { href: autoBidUrl }">@Global.AutoBid</a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-unstyled btn-rounded" data-bind="attr: { href: wishListUrl }">@Global.AddToWishList</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ol>
+}
+
 @if (Model.ClosedAuctions.Any())
 {
     <h2>Closed Auctions</h2>
@@ -31,118 +144,7 @@
     <p class="text-center"><a class="btn btn-unstyled text-uppercase" href="@Url.Action("Closed", "Auctions", new { Area = "", Language = LanguageCode })">@Global.ViewAllClosedAuctions</a></p>
 }
 
-@if (!Model.LiveAuctions.Any())
-{
-    @Html.StatusMessage("There are no live auctions available at this time.", StatusMessageType.Warning)
 
-    return;
-}
-
-<h2>Live Auctions</h2>
-
-<ol id="auction-list" data-bind="foreach: auctions">
-    <li class="auction-item">
-
-        <!-- ko if: $index() == 0 -->
-        <div class="live-action-ribbon">@Global.LiveAuctions</div>
-        <!-- /ko -->
-        
-        <div class="row">
-            <div class="col-md-6 live-ribbon-container">
-                <img class="auction-image img-responsive" data-bind="attr: { src: imageUrl, alt: title }" alt="">
-                <img class="auction-image img-responsive" data-bind="attr: { src: imageUrl, alt: title }" alt="">
-                <div class="sponsor-ribbon"><span data-bind="text:sponsorName"></span></div>
-            </div>
-
-            <div class="col-md-6">
-
-                <div class="auction-details">
-
-                    <h3 class="auction-title" data-bind="text: title"></h3>
-                    <div class="auction-retail-price" data-bind="text: retailPriceFormatted"></div>
-
-                    <div class="auction-status-loading" data-bind="visible: !isLoaded()">
-                        <i class="fa fa-spin fa-cog"></i>
-                        @Global.Loading
-                    </div>
-
-                    <div class="auction-status-details" data-bind="visible: isLoaded()">
-
-                        <ol class="auction-time-left">
-                            <li class="auction-time-part">
-                                <div class="auction-time-value" data-bind="text: timeLeftHours"></div>
-                                <div class="auction-time-label">
-                                    <small>@Global.Hours</small>
-                                </div>
-                            </li>
-                            <li class="auction-time-part">
-                                <div class="auction-time-value" data-bind="text: timeLeftMinutes"></div>
-                                <div class="auction-time-label">
-                                    <small>@Global.Minutes</small>
-                                </div>
-                            </li>
-                            <li class="auction-time-part">
-                                <div class="auction-time-value" data-bind="text: timeLeftSeconds"></div>
-                                <div class="auction-time-label">
-                                    <small>@Global.Seconds</small>
-                                </div>
-                            </li>
-                        </ol>
-
-                        <div class="clearfix"></div>
-
-                        <div class="row">
-                            <div class="auction-bid-details col-md-8">
-                                <div class="auction-bid-label">
-                                    <small>@Global.CurrentAuctionPrice</small>
-                                </div>
-                                <div class="auction-bid-form input-group">
-                                    <input type="text" class="form-control" readonly="readonly" data-bind="value: lastBidFormatted">
-                                    <span class="input-group-btn">
-                                        @if (Request.IsAuthenticated)
-                                        {
-                                            <button type="button" class="btn btn-default" data-bind="click: submitBid">@Global.Bid</button>
-                                        }
-                                        else
-                                        {
-                                            <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new {ReturnUrl = "/"})">@Global.Bid</a>
-                                        }
-                                    </span>
-                                </div>
-                                <ol class="auction-recent-bids" data-bind="foreach: bidsReversed">
-                                    <li>
-                                        <div class="pull-left">
-                                            <img data-bind="attr: { src: avatarUrl, alt: userName }" width="32"/>
-                                        </div>
-                                        <div class="auction-recent-username pull-left">
-                                            <span data-bind="text: userName"></span>
-                                        </div>
-                                        <div class="auction-recent-bidamount pull-right">
-                                            KD <span data-bind="text: bidAmount"></span>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </li>
-                                </ol>
-                            </div>
-                        </div>
-
-                        <ul class="auction-action-buttons">
-                            <li data-bind="visible: buyNowEnabled">
-                                <a class="btn btn-default btn-rounded" data-bind="attr: { href: buyNowUrl }">@Global.BuyNow</a>
-                            </li>
-                            <li>
-                                <a class="btn btn-unstyled btn-rounded" data-bind="attr: { href: autoBidUrl }">@Global.AutoBid</a>
-                            </li>
-                            <li>
-                                <a class="btn btn-unstyled btn-rounded" data-bind="attr: { href: wishListUrl }">@Global.AddToWishList</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </li>
-</ol>
 
 @section scripts {
 
