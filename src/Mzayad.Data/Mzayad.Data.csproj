@@ -330,6 +330,10 @@
     <Compile Include="Migrations\201608210917433_fixSessionLogsRelation.Designer.cs">
       <DependentUpon>201608210917433_fixSessionLogsRelation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608281022427_AddAutoBidStartEmailTemplate.cs" />
+    <Compile Include="Migrations\201608281022427_AddAutoBidStartEmailTemplate.Designer.cs">
+      <DependentUpon>201608281022427_AddAutoBidStartEmailTemplate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -535,6 +539,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608210917433_fixSessionLogsRelation.resx">
       <DependentUpon>201608210917433_fixSessionLogsRelation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608281022427_AddAutoBidStartEmailTemplate.resx">
+      <DependentUpon>201608281022427_AddAutoBidStartEmailTemplate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
