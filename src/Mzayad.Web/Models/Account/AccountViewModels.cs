@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Mzayad.Models;
 
 namespace Mzayad.Web.Models.Account
 {
@@ -35,6 +37,10 @@ namespace Mzayad.Web.Models.Account
         [StringLength(int.MaxValue, MinimumLength = 6)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
+        public int SelectedAvatar { get; set; }
+
+        public IReadOnlyCollection<Avatar> Avatars { get; set; }
     }
 
     public class ResetPasswordViewModel

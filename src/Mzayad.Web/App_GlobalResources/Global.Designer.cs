@@ -1492,6 +1492,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please select your avatar..
+        /// </summary>
+        public static string SelectAvatarErrorMessage {
+            get {
+                return ResourceManager.GetString("SelectAvatarErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send Instructions.
         /// </summary>
         public static string SendInstructions {
@@ -1555,20 +1564,20 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start Date.
-        /// </summary>
-        public static string StartDate {
-            get {
-                return ResourceManager.GetString("StartDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Sponsor.
         /// </summary>
         public static string Sponsor {
             get {
                 return ResourceManager.GetString("Sponsor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Date.
+        /// </summary>
+        public static string StartDate {
+            get {
+                return ResourceManager.GetString("StartDate", resourceCulture);
             }
         }
         

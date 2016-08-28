@@ -765,4 +765,7 @@
   <data name="UpcomingAuctions" xml:space="preserve">
     <value>Upcoming Auctions</value>
   </data>
+  <data name="SelectAvatarErrorMessage" xml:space="preserve">
+    <value>Please select your avatar.</value>
+  </data>
 </root>

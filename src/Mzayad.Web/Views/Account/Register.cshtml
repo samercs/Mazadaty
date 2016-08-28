@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
     <link rel="stylesheet" href="/content/flags/flags.css" />
     <style>
-        
         #username-validate {
             display: none;
             margin: 8px 0;
@@ -19,6 +18,14 @@
             font-style: italic;
         }
 
+        .selectedImg {
+            border: solid 2px #000000;
+            padding: 5px;
+        }
+
+        .normalImg {
+            cursor: pointer;
+        }
     </style>
 }
 
@@ -88,6 +95,23 @@
 
             <section>
                 <div class="form-group">
+                    <label>@Global.Avatar</label>
+                    <div class="row">
+                        @foreach (var item in Model.Avatars)
+                        {
+                            <div class="col-md-3" style="margin-bottom: 30px;">
+                                <img data-id="@item.AvatarId" src="@item.Url" title="@Global.ClickToSelect" alt="@item.Url" class="img-thumbnail img-responsive normalImg" />
+                            </div>
+                        }
+
+                        @Html.HiddenFor(i => i.SelectedAvatar,new {@class="avatar"})
+                    </div>
+                    @Html.ValidationMessageFor(i => i.SelectedAvatar, Global.SelectAvatarErrorMessage)
+                </div>
+            </section>
+
+            <section>
+                <div class="form-group">
                     <i class="fa fa-lg fa-check-square-o"></i>
                     @Html.Raw(string.Format(Global.RegistrationAgreementAcknowledgement, Url.Action("TermsAndConditions", "Home", new { Language = Html.Language() })))
                 </div>
@@ -105,45 +129,61 @@
     @Scripts.Render("~/js/validate")
     <script src="~/scripts/address.js"></script>
     <script>
-    (function($) {
+        (function($) {
 
-        $(function() {
-            bindEvents();
-            initAutocomplete();
-        });
+            $(function() {
+                bindEvents();
+                initAutocomplete();
 
-        var bindEvents = function() {
-            $("#UserName").on("blur", validateUserName);
-        };
+                $(".normalImg").click(function() {
+                    var $this = $(this);
+                    var id = $this.attr("data-id");
+                    $("#SelectedAvatar").val(id);
+                    $(".normalImg").removeClass("selectedImg");
+                    $this.addClass("selectedImg");
+                });
+            });
 
-        var validateUserName = function() {
-            var username = $(this).val();
-            if (username.length === 0) {
-                return;
-            }
+            var bindEvents = function() {
+                $("#UserName").on("blur", validateUserName);
+            };
 
-            $("#username-validate").show().children("div").hide();
-            $("#username-checking").show();
-
-            var url = "@Url.Action("ValidateUserName")";
-            var data = { username: username };
-
-            $.getJSON(url, data, function(d) {
-                $("#username-checking").hide();
-                if (d.IsValid) {
-                    $("#username-valid").show();
-                } else {
-                    $("#username-error").show();
+            var validateUserName = function() {
+                var username = $(this).val();
+                if (username.length === 0) {
+                    return;
                 }
-            });
-        };
 
-        var initAutocomplete = function() {
-            var areas =  @Html.Raw(JsonConvert.SerializeObject(Model.Address.KuwaitAreas));
-            $(".kuwait-area").autocomplete({
-                source: areas
+                $("#username-validate").show().children("div").hide();
+                $("#username-checking").show();
+
+                var url = "@Url.Action("ValidateUserName")";
+                var data = { username: username };
+
+                $.getJSON(url, data, function(d) {
+                    $("#username-checking").hide();
+                    if (d.IsValid) {
+                        $("#username-valid").show();
+                    } else {
+                        $("#username-error").show();
+                    }
+                });
+            };
+
+            var initAutocomplete = function() {
+                var areas =  @Html.Raw(JsonConvert.SerializeObject(Model.Address.KuwaitAreas));
+                $(".kuwait-area").autocomplete({
+                    source: areas
+                });
+            };
+
+            $.validator.addMethod("avatar", function(value) {
+                if (value === "" || parseInt(value) === 0) {
+                    return false;
+                }
+
+                return true;
             });
-        };
 
         })(jQuery);
     </script>
