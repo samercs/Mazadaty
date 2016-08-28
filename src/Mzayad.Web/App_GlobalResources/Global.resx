@@ -750,4 +750,7 @@
   <data name="WatchVideo" xml:space="preserve">
     <value>Watch Video</value>
   </data>
+  <data name="UpcomingAuctions" xml:space="preserve">
+    <value>Upcoming Auctions</value>
+  </data>
 </root>

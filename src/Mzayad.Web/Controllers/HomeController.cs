@@ -15,7 +15,7 @@ namespace Mzayad.Web.Controllers
     public class HomeController : ApplicationController
     {
         private readonly AuctionService _auctionService;
-        
+
         public HomeController(IAppServices appServices) : base(appServices)
         {
             _auctionService = new AuctionService(appServices.DataContextFactory);
@@ -31,8 +31,9 @@ namespace Mzayad.Web.Controllers
             //var auctions = await CacheService.TryGet(CacheKeys.CurrentAuctions, () => _auctionService.GetCurrentAuctions(Language), TimeSpan.FromDays(1));
             var liveAuctions = await _auctionService.GetLiveAuctions(Language);
             var closedAuctions = await _auctionService.GetClosedAuctions(Language, 12);
+            var upcomingAuctions = await _auctionService.GetUpcomingAuctions(Language, 12);
 
-            var viewModel = new IndexViewModel(liveAuctions, closedAuctions);
+            var viewModel = new IndexViewModel(liveAuctions, closedAuctions, upcomingAuctions);
 
             return View(viewModel);
         }

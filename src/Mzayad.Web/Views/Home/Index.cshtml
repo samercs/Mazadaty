@@ -23,7 +23,7 @@
 }
 else
 {
-    <h2>Live Auctions</h2>
+    <h2>@Global.LiveAuctions</h2>
 
     <ol id="auction-list" data-bind="foreach: auctions">
         <li class="auction-item">
@@ -130,9 +130,20 @@ else
     </ol>
 }
 
+@if (Model.UpcomingAuctions.Any())
+{
+    <h2>@Global.UpcomingAuctions</h2>
+    <ol id="closed-auctions">
+        @foreach (var auction in Model.UpcomingAuctions)
+        {
+            <li>@Html.DisplayFor(m => auction, "AuctionTile")</li>
+        }
+    </ol>
+}
+
 @if (Model.ClosedAuctions.Any())
 {
-    <h2>Closed Auctions</h2>
+    <h2>@Global.ClosedAuctions</h2>
 
     <ol id="closed-auctions">
         @foreach (var auction in Model.ClosedAuctions)

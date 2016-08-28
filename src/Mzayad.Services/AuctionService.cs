@@ -92,6 +92,19 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<IReadOnlyCollection<Auction>> GetUpcomingAuctions(string language, int count)
+        {
+            using (var dc = DataContext())
+            {
+                var auctions = await GetAuctionsQuery(dc, AuctionStatus.Public)
+                    .Take(count)
+                    .OrderByDescending(i => i.StartUtc)
+                    .ToListAsync();
+
+                return LocalizeAuctions(language, auctions);
+            }
+        }
+
         private static IQueryable<Auction> GetAuctionsQuery(IDataContext dc, AuctionStatus auctionStatus)
         {
             return dc.Auctions

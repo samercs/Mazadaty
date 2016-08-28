@@ -1798,6 +1798,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upcoming Auctions.
+        /// </summary>
+        public static string UpcomingAuctions {
+            get {
+                return ResourceManager.GetString("UpcomingAuctions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string UserName {
