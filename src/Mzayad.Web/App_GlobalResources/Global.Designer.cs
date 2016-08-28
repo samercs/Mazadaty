@@ -655,6 +655,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Female.
+        /// </summary>
+        public static string Female {
+            get {
+                return ResourceManager.GetString("Female", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to First Name.
         /// </summary>
         public static string FirstName {
@@ -669,6 +678,15 @@ namespace Mzayad.Web.Resources {
         public static string FirstNameRequiredErrorMessage {
             get {
                 return ResourceManager.GetString("FirstNameRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gender.
+        /// </summary>
+        public static string Gender {
+            get {
+                return ResourceManager.GetString("Gender", resourceCulture);
             }
         }
         
@@ -867,6 +885,15 @@ namespace Mzayad.Web.Resources {
         public static string Loading {
             get {
                 return ResourceManager.GetString("Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Male.
+        /// </summary>
+        public static string Male {
+            get {
+                return ResourceManager.GetString("Male", resourceCulture);
             }
         }
         
@@ -1555,20 +1582,20 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start Date.
-        /// </summary>
-        public static string StartDate {
-            get {
-                return ResourceManager.GetString("StartDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Sponsor.
         /// </summary>
         public static string Sponsor {
             get {
                 return ResourceManager.GetString("Sponsor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Date.
+        /// </summary>
+        public static string StartDate {
+            get {
+                return ResourceManager.GetString("StartDate", resourceCulture);
             }
         }
         

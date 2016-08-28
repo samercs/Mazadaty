@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Mzayad.Models.Enum;
+using Mzayad.Models.Enums;
 
 namespace Mzayad.Models
 {
@@ -39,6 +40,8 @@ namespace Mzayad.Models
         public int Level { get; set; }
         public int Xp { get; set; }
         public int Tokens { get; set; }
+        public Gender? Gender { get; set; }
+        public DateTime? Birthdate { get; set; }
 
         [Required]
         public UserProfileStatus ProfileStatus { get; set; }

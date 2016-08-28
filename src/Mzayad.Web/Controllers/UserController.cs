@@ -241,6 +241,7 @@ namespace Mzayad.Web.Controllers
         {
             var user = await AuthService.CurrentUser();
             user.ProfileStatus = model.User.ProfileStatus;
+            user.Gender = model.User.Gender;
 
             if (selectedAvatar.HasValue)
             {

@@ -79,6 +79,7 @@ namespace Mzayad.Services.Identity
             update.PhoneNumber = user.PhoneNumber;
             update.AvatarUrl = user.AvatarUrl;
             update.ProfileStatus = user.ProfileStatus;
+            update.Gender = user.Gender;
 
             return await _userManager.UpdateAsync(update);
         }

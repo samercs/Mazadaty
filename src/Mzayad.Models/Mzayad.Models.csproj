@@ -84,6 +84,7 @@
     <Compile Include="EmailTemplate.cs" />
     <Compile Include="Enums\ActivityType.cs" />
     <Compile Include="Enums\AuctionStatus.cs" />
+    <Compile Include="Enums\Gender.cs" />
     <Compile Include="Enums\OrderStatus.cs" />
     <Compile Include="Enums\PaymentMethod.cs" />
     <Compile Include="Enums\EmailTemplateType.cs" />
