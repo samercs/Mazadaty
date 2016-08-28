@@ -5,6 +5,7 @@ using System.Linq;
 using Mzayad.Data;
 using Mzayad.Models;
 using System.Threading.Tasks;
+using Mzayad.Models.Enum;
 
 namespace Mzayad.Services
 {
@@ -21,6 +22,20 @@ namespace Mzayad.Services
                 var autoBid = await dc.AutoBids.FirstOrDefaultAsync(i => i.UserId == userId && i.AuctionId == auctionId);
 
                 return autoBid;
+            }
+        }
+
+        public async Task<IReadOnlyCollection<AutoBid>> GetAutoBiddersForNotification()
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.AutoBids
+                    .Include(i => i.Auction)
+                    .Include(i => i.User)
+                    .Where(i => i.Auction.StartUtc >= DbFunctions.AddMinutes(DateTime.UtcNow, 15))
+                    .Where(i => i.Auction.StartUtc <= DbFunctions.AddMinutes(DateTime.UtcNow, 75))
+                    .Where(i => i.Auction.Status == AuctionStatus.Public)
+                    .ToListAsync();
             }
         }
 
@@ -83,7 +98,7 @@ namespace Mzayad.Services
             var factor = GetTimeZoneFactor(secondsLeft);
             var frequency = factor / 12;
 
-            return secondsLeft%frequency == 0;
+            return secondsLeft % frequency == 0;
         }
 
         private static int GetTimeZoneFactor(int secondsLeft)

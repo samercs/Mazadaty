@@ -3,6 +3,12 @@
   "WebJobs": [
     {
       "filePath": "../Mzayad.WebJobs/Mzayad.WebJobs.csproj"
+    },
+    {
+      "filePath": "../../Mzayad.AutoBidNotifier/Mzayad.AutoBidNotifier.csproj"
+    },
+    {
+      "filePath": "../Mzayad.AutoBidNotifier/Mzayad.AutoBidNotifier.csproj"
     }
   ]
 }
