@@ -677,6 +677,9 @@
     <Content Include="Areas\Admin\Views\PageManagement\Index.cshtml" />
     <Content Include="Areas\Admin\Views\PageManagement\Add.cshtml" />
     <Content Include="Areas\Admin\Views\PageManagement\Edit.cshtml" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <Content Include="Areas\Reports\Views\Products\Index.cshtml" />
     <Content Include="Areas\Reports\Views\Transactions\Knet.cshtml" />
     <Content Include="Areas\Reports\Views\Transactions\BuyNow.cshtml" />
@@ -915,6 +918,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Global.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Mzayad.Web.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
