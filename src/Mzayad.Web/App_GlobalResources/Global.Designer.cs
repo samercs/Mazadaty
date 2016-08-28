@@ -691,6 +691,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to How it Works.
+        /// </summary>
+        public static string HowItWorks {
+            get {
+                return ResourceManager.GetString("HowItWorks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to We&apos;re sorry, but the email address or password you have entered is incorrect..
         /// </summary>
         public static string InvalidUserNameOrPassword {
