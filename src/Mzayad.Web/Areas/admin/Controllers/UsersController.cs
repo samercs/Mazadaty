@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using OrangeJetpack.Base.Web;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
@@ -94,6 +95,11 @@ namespace Mzayad.Web.Areas.admin.Controllers
             if (user == null)
             {
                 return HttpNotFound();
+            }
+
+            if (await AuthService.IsLocked(id))
+            {
+                SetStatusMessage("This user's account is currently deleted or disabled.", StatusMessageType.Error);
             }
 
             var model = await new DetailsViewModel().Hydrate(user, _userService, _subscriptionService, _tokenService);
@@ -194,6 +200,26 @@ namespace Mzayad.Web.Areas.admin.Controllers
         {
             var logs = await _subscriptionService.GetSubscriptionLogsByUserId(id);
             return Json(logs.ToDataSourceResult(request));
+        }
+
+        [Route("{userId}/disable")]
+        public async Task<ActionResult> Disable(string userId)
+        {
+            var user = await _userService.GetUserById(userId);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            return DeleteConfirmation("Disable User", "Are you sure you want to permanently disable this user?");
+        }
+
+        [Route("{userId}/disable")]
+        [HttpPost]
+        public async Task<ActionResult> DisableUser(string userId)
+        {
+            await AuthService.Lock(userId);
+            return RedirectToAction("Details", new { id = userId });
         }
     }
 }

@@ -267,6 +267,15 @@ namespace Mzayad.Web.Core.Services
             await _userManager.RemoveFromRoleAsync(userId, roleName);
         }
 
-       
+        public async Task Lock(string userId)
+        {
+            await _userManager.SetLockoutEndDateAsync(userId, DateTimeOffset.MaxValue);
+        }
+
+        public async Task<bool> IsLocked(string userId)
+        {
+            return await _userManager.IsLockedOutAsync(userId);
+        }
+
     }
 }

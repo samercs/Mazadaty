@@ -9,6 +9,11 @@
     ViewBag.Title = "User Details - " + NameFormatter.GetFullName(Model.FirstName, Model.LastName);
 }
 
+
+<ul class="link-list">
+    <li><a href="@Url.Action("Disable","Users", new {userId = Model.UserId})"><i class="fa fa-ban fa-pad-right"></i>Disable</a></li>
+</ul>
+
 <h2>Summary</h2>
 
 <section class="form-section">
