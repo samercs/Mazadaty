@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Security.Principal;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Mzayad.Data;
 using Mzayad.Models;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Mzayad.Services.Identity
 {
@@ -80,6 +79,7 @@ namespace Mzayad.Services.Identity
             update.AvatarUrl = user.AvatarUrl;
             update.ProfileStatus = user.ProfileStatus;
             update.Gender = user.Gender;
+            update.Birthdate = user.Birthdate;
 
             return await _userManager.UpdateAsync(update);
         }

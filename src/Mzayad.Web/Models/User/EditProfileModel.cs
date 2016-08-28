@@ -4,6 +4,7 @@ using Mzayad.Services;
 using Mzayad.Web.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -17,6 +18,9 @@ namespace Mzayad.Web.Models.User
         public ApplicationUser User { get; set; }
         public IReadOnlyCollection<SelectListItem> PrivacyList { get; set; }
         public IReadOnlyCollection<Avatar> Avatars { get; set; }
+        public int? BirthDay { get; set; }
+        public int? BirthMonth { get; set; }
+        public int? BirthYear { get; set; }
 
         public IEnumerable<SelectListItem> GenderList
         {
@@ -27,6 +31,45 @@ namespace Mzayad.Web.Models.User
                     Text = Global.ResourceManager.GetString(i.ToString()),
                     Value = ((int)i).ToString(),
                     Selected = User.Gender == i
+                }).ToList();
+            }
+        }
+
+        public List<SelectListItem> DayList
+        {
+            get
+            {
+                return Enumerable.Range(1, 31).Select(i => new SelectListItem
+                {
+                    Text = i.ToString(),
+                    Value = i.ToString(),
+                    Selected = User.Birthdate.HasValue && User.Birthdate.Value.Day == i
+                }).ToList();
+            }
+        }
+
+        public List<SelectListItem> MonthList
+        {
+            get
+            {
+                return Enumerable.Range(1, 12).Select(i => new SelectListItem
+                {
+                    Text = CultureInfo.InvariantCulture.DateTimeFormat.GetMonthName(i),
+                    Value = i.ToString(),
+                    Selected = User.Birthdate.HasValue && User.Birthdate.Value.Month == i
+                }).ToList();
+            }
+        }
+
+        public List<SelectListItem> YearList
+        {
+            get
+            {
+                return Enumerable.Range(1940, 70).Select(i => new SelectListItem
+                {
+                    Text = i.ToString(),
+                    Value = i.ToString(),
+                    Selected = User.Birthdate.HasValue && User.Birthdate.Value.Year == i
                 }).ToList();
             }
         }

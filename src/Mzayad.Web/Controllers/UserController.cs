@@ -249,6 +249,13 @@ namespace Mzayad.Web.Controllers
                 user.AvatarUrl = avatar.Url;
             }
 
+            DateTime? birthDate = null;
+            if (model.BirthDay.HasValue && model.BirthMonth.HasValue && model.BirthYear.HasValue)
+            {
+                birthDate = new DateTime(model.BirthYear.Value, model.BirthMonth.Value, model.BirthDay.Value);
+            }
+
+            user.Birthdate = birthDate;
             await _userService.UpdateUser(user);
 
             SetStatusMessage("Your profile has been saved successfully.");

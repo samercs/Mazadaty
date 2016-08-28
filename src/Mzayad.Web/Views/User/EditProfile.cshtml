@@ -26,7 +26,7 @@
 
             <section>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.User.ProfileStatus, Global.Privacy)  
+                    @Html.LabelFor(m => m.User.ProfileStatus, Global.Privacy)
                     @foreach (var item in Model.PrivacyList)
                     {
                         <div class="radio">
@@ -36,12 +36,27 @@
                 </div>
                 <div class="form-group">
                     <label>@Global.ProfileURL</label>
-                    @Html.TextBoxFor(i => i.User.ProfileUrl, new {@class = "form-control", @readonly = true})
+                    @Html.TextBoxFor(i => i.User.ProfileUrl, new { @class = "form-control", @readonly = true })
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(i=>i.User.Gender,Global.Gender)
-                    @Html.RadioButtonList("User.Gender",Model.GenderList)
+                    @Html.LabelFor(i => i.User.Gender, Global.Gender)
+                    @Html.RadioButtonList("User.Gender", Model.GenderList)
+                </div>
+
+                <div class="form-group">
+                    @Html.Label(Global.Birthdate)
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(i => i.BirthDay, Model.DayList, Global.Day, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(i => i.BirthMonth, Model.MonthList, Global.Month, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(i => i.BirthYear, Model.YearList, Global.Year, new { @class = "form-control" })
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -80,9 +95,9 @@
     @Scripts.Render("~/js/validate")
 
     <script>
-        (function($) {
+        (function ($) {
 
-            $(".normalImg").click(function() {
+            $(".normalImg").click(function () {
 
                 var $this = $(this);
                 var id = $this.attr("data-id");
