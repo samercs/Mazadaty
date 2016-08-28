@@ -41,6 +41,9 @@
             <li><a href="@Url.Action("Index", "WishLists")"><i class="fa fa-fw fa-pad-right fa-star"></i>Wishlists</a></li>
             <li><a href="@Url.Action("Index", "Docs")"><i class="fa fa-fw fa-pad-right fa-file-text-o"></i>Development Docs</a></li>
             <li><a disabled href="@Url.Action("Index", "Reports")"><i class="fa fa-fw fa-pad-right fa-bar-chart"></i>Reports</a></li>
+            <li class="sub-menu-item"><a href="@Url.Action("Index", "Products", new { area = "Reports"})"><i class="fa fa-fw fa-pad-right fa-table"></i>Products by Date</a></li>
+            <li class="sub-menu-item"><a href="@Url.Action("Knet", "Transactions", new { area = "Reports"})"><i class="fa fa-fw fa-pad-right fa-table"></i>KNET Transactions</a></li>
+            <li class="sub-menu-item"><a href="@Url.Action("BuyNow", "Transactions", new { area = "Reports"})"><i class="fa fa-fw fa-pad-right fa-table"></i>Buy Now Transactions</a></li>
             <li class="sub-menu-item"><a href="@Url.Action("Logs", "Subscriptions", new { area = "Reports"})"><i class="fa fa-fw fa-pad-right fa-table"></i>Subscription Logs</a></li>
             <li class="sub-menu-item"><a href="@Url.Action("Logs", "Tokens", new { area = "Reports" })"><i class="fa fa-fw fa-pad-right fa-table"></i>Token Logs</a></li>
         </ul>

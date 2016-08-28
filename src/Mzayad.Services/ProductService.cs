@@ -1,4 +1,5 @@
-﻿using Mzayad.Data;
+﻿using System;
+using Mzayad.Data;
 using Mzayad.Models;
 using OrangeJetpack.Localization;
 using System.Collections.Generic;
@@ -125,6 +126,19 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<IReadOnlyCollection<Product>> GetProductsByDate(DateTime startDate, DateTime endDate, string language = "en")
+        {
+            using (var dc = DataContext())
+            {
+                var products = await dc.Products
+                    .Where(i => i.CreatedUtc >= startDate)
+                    .Where(i => i.CreatedUtc <= endDate)
+                    .ToListAsync();
+
+                return products.Localize(language, i => i.Name).ToList();
+            }
+        }
+
         public async Task<ProductImage> AddProductImage(Product product, string imageSmUrl, string imageMdUrl, string imageLgUrl)
         {
             using (var dc = DataContext())
@@ -193,7 +207,6 @@ namespace Mzayad.Services
 
 
         }
-
 
         public async Task<ProductImage> GetProductImage(int id)
         {
