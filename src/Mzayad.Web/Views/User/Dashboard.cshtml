@@ -11,6 +11,11 @@
         #page-title {
             display: none;
         }
+
+        .panel-link {
+            background-color: #33ACE0 !important;
+            margin-right: 5px !important;
+        }
     </style>
 }
 
@@ -26,13 +31,8 @@
                 <div class="col-sm-9">
                     <div id="dashboard-details" class="dashboard-cell">
                         <div id="dashboard-username" class="text-uppercase">@Model.User.UserName</div>
-                        <div id="dashboard-subscription" class="text-uppercase">
-                            <small>
-                                @F(Global.SubscriptionLabelAndStatus, new
-                                {
-                                    StatusText = Html.DisplayFor(m => m.User.SubscriptionUtc, "SubscriptionUtc").ToString()
-                                })
-                            </small>
+                        <div id="dashboard-level" class="text-uppercase">
+                            @Global.Level @Model.User.Level
                         </div>
                         <div id="dashboard-progress">
                             <div class="progress pull-left">
@@ -124,7 +124,9 @@
     <div class="panel dashboard-panel">
         <div class="panel-heading">
             <h3 class="panel-title text-uppercase">@Global.MyWishList</h3>
-            <div class="pull-right"><a class="text-uppercase" href="@Url.Action("Index", "WishList")">@Global.ViewAll</a></div>
+            <div class="pull-right"><a class="text-uppercase" href="@Url.Action("Index", "WishList")">@Global.ViewAll</a>
+            </div>
+            <div class="pull-right"><a class="text-uppercase panel-link" href="@Url.Action("Add", "WishList")">@Global.AddNewItem</a></div>
             <div class="clearfix"></div>
         </div>
         <div class="panel-body">
