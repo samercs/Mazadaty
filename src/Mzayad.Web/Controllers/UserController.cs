@@ -12,10 +12,14 @@ using OrangeJetpack.Base.Web;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Models;
 using System;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Glimpse.AspNet.Tab;
 using Microsoft.AspNet.Identity;
+using Mzayad.Models.Enums;
+using Mzayad.Services.Activity;
 using Mzayad.Services.Identity;
 
 namespace Mzayad.Web.Controllers
@@ -32,6 +36,7 @@ namespace Mzayad.Web.Controllers
         private readonly TrophyService _trophyService;
         private readonly AuctionService _auctionService;
         private readonly WishListService _wishListService;
+        private IActivityQueueService _activityQueueService;
 
         public UserController(IAppServices appServices)
             : base(appServices)
@@ -45,6 +50,7 @@ namespace Mzayad.Web.Controllers
             _trophyService = new TrophyService(DataContextFactory);
             _auctionService = new AuctionService(DataContextFactory);
             _wishListService = new WishListService(DataContextFactory);
+            _activityQueueService = new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
         }
 
         [Route("dashboard")]
@@ -241,6 +247,7 @@ namespace Mzayad.Web.Controllers
         {
             var user = await AuthService.CurrentUser();
             user.ProfileStatus = model.User.ProfileStatus;
+            user.Gender = model.User.Gender;
 
             if (selectedAvatar.HasValue)
             {
@@ -248,7 +255,14 @@ namespace Mzayad.Web.Controllers
                 user.AvatarUrl = avatar.Url;
             }
 
+            if (model.BirthDay.HasValue && model.BirthMonth.HasValue && model.BirthYear.HasValue)
+            {
+                var birthDate = new DateTime(model.BirthYear.Value, model.BirthMonth.Value, model.BirthDay.Value);
+                user.Birthdate = birthDate;
+            }
+
             await _userService.UpdateUser(user);
+            await _activityQueueService.QueueActivityAsync(ActivityType.CompleteProfile, user.Id);
 
             SetStatusMessage("Your profile has been saved successfully.");
 

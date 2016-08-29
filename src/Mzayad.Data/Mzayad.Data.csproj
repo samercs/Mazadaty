@@ -334,6 +334,14 @@
     <Compile Include="Migrations\201608281022427_AddAutoBidStartEmailTemplate.Designer.cs">
       <DependentUpon>201608281022427_AddAutoBidStartEmailTemplate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608281355219_AddUserGenderAndBirthdate.cs" />
+    <Compile Include="Migrations\201608281355219_AddUserGenderAndBirthdate.Designer.cs">
+      <DependentUpon>201608281355219_AddUserGenderAndBirthdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608290757327_AddCompleteProfileTrophy.cs" />
+    <Compile Include="Migrations\201608290757327_AddCompleteProfileTrophy.Designer.cs">
+      <DependentUpon>201608290757327_AddCompleteProfileTrophy.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -542,6 +550,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608281022427_AddAutoBidStartEmailTemplate.resx">
       <DependentUpon>201608281022427_AddAutoBidStartEmailTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608281355219_AddUserGenderAndBirthdate.resx">
+      <DependentUpon>201608281355219_AddUserGenderAndBirthdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608290757327_AddCompleteProfileTrophy.resx">
+      <DependentUpon>201608290757327_AddCompleteProfileTrophy.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

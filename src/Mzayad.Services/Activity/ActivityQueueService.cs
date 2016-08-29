@@ -23,6 +23,7 @@ namespace Mzayad.Services.Activity
         {
             _storageAccount = CloudStorageAccount.Parse(connectionString);
         }
+
         public void QueueActivity(ActivityType activityType, string userId, string language = "en")
         {
             var message = new CloudQueueMessage(JsonConvert.SerializeObject(new ActivityEvent
@@ -34,6 +35,7 @@ namespace Mzayad.Services.Activity
 
             CreateQueue().AddMessageAsync(message);
         }
+
         public async Task QueueActivityAsync(ActivityType activityType, string userId, string language = "en")
         {
             var message = new CloudQueueMessage(JsonConvert.SerializeObject(new ActivityEvent
@@ -45,6 +47,7 @@ namespace Mzayad.Services.Activity
 
             await CreateQueue().AddMessageAsync(message);
         }
+
         public async Task QueueActivityAsync(ActivityType activityType, string userId, int xp, string language = "en")
         {
             var message = new CloudQueueMessage(JsonConvert.SerializeObject(new ActivityEvent
@@ -57,6 +60,7 @@ namespace Mzayad.Services.Activity
 
             await CreateQueue().AddMessageAsync(message);
         }
+
         private CloudQueue CreateQueue()
         {
             var client = _storageAccount.CreateCloudQueueClient();

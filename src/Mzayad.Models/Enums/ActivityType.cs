@@ -10,6 +10,7 @@
         ReferFriend,
         VisitSite,
         PurchaseSubscription,
-        EarnXp
+        EarnXp,
+        CompleteProfile
     }
 }

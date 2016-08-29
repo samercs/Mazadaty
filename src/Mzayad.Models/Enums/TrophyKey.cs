@@ -93,6 +93,7 @@
 
         ReferFriends3 = 65,
 
-        BigWinOnOneBid = 66
+        BigWinOnOneBid = 66,
+        CompleteProfile = 67
     }
 }

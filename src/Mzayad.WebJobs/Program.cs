@@ -23,11 +23,11 @@ namespace Mzayad.WebJobs
     {
         private static void Main()
         {
-            var slotName = Environment.GetEnvironmentVariable("APPSETTING_WEBSITE_SLOT_NAME");
-            if (slotName != "production")
-            {
-                return;
-            }
+            //var slotName = Environment.GetEnvironmentVariable("APPSETTING_WEBSITE_SLOT_NAME");
+            //if (slotName != "production")
+            //{
+            //    return;
+            //}
 
             new JobHost().RunAndBlock();
         }
@@ -111,6 +111,14 @@ namespace Mzayad.WebJobs
 
                     case ActivityType.WinAuction:
                         trophies = trophyEngine.GetEarnedTrophies(user);
+                        trophyService.AwardTrophyToUser(trophies, user.Id);
+                        emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrohpyEarned);
+                        message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, TrophiesHtmlTable(trophies, trophyService));
+                        await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
+                        break;
+
+                    case ActivityType.CompleteProfile:
+                        trophies = trophyEngine.GetEarnedTrophies(user).ToList();
                         trophyService.AwardTrophyToUser(trophies, user.Id);
                         emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrohpyEarned);
                         message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, TrophiesHtmlTable(trophies, trophyService));
