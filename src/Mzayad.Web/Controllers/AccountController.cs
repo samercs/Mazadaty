@@ -26,12 +26,14 @@ namespace Mzayad.Web.Controllers
         private readonly UserService _userService;
         private readonly AddressService _addressService;
         private readonly SessionLogService _sessionLogService;
+        private readonly AvatarService _avatarService;
 
         public AccountController(IAppServices appServices) : base(appServices)
         {
             _userService = new UserService(DataContextFactory);
             _addressService = new AddressService(DataContextFactory);
             _sessionLogService = new SessionLogService(DataContextFactory);
+            _avatarService = new AvatarService(DataContextFactory);
         }
 
         [Route("sign-in")]
@@ -87,11 +89,12 @@ namespace Mzayad.Web.Controllers
             return RedirectToAction("Index", "Home", new { Language });
         }
 
-        public ActionResult Register()
+        public async Task<ActionResult> Register()
         {
             var viewModel = new RegisterViewModel
             {
                 PhoneCountryCode = "+965",
+                Avatars = await _avatarService.GetAll(),
                 Address = new AddressViewModel(new Address
                 {
                     CountryCode = "KW"
@@ -119,11 +122,14 @@ namespace Mzayad.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
+                model.Avatars = await _avatarService.GetAll();
                 return View(model);
             }
 
             model.PhoneCountryCode = "+" + StringFormatter.StripNonDigits(model.PhoneCountryCode);
             model.PhoneNumber = StringFormatter.StripNonDigits(model.PhoneNumber);
+
+            var avatar = await _avatarService.GetById(model.SelectedAvatar);
 
             var user = new ApplicationUser
             {
@@ -133,7 +139,8 @@ namespace Mzayad.Web.Controllers
                 LastName = model.LastName,
                 PhoneCountryCode = model.PhoneCountryCode,
                 PhoneNumber = model.PhoneNumber,
-                ProfileStatus = UserProfileStatus.Private
+                ProfileStatus = UserProfileStatus.Private,
+                AvatarUrl = avatar.Url
             };
 
             var result = await AuthService.CreateUser(user, model.Password);
