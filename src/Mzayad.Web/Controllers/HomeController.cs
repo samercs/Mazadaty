@@ -97,7 +97,6 @@ namespace Mzayad.Web.Controllers
         public ActionResult ChangeLanguage(string language, Uri returnUrl)
         {
             CookieService.Add(CookieKeys.LanguageCode, language, DateTime.Today.AddYears(10));
-
             var redirectUrl = Regex.Replace(returnUrl.ToString(), @"/(en|ar)", "/" + language);
             return Redirect(redirectUrl);
         }

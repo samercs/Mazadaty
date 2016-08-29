@@ -43,7 +43,7 @@ namespace Mzayad.Web.Core.Configuration
 
         public string LanguageCode
         {
-            get { return ViewBag.LanguageCode ?? "en"; }
+            get { return ViewBag.Language ?? "en"; }
         }
 
         /// <summary>
