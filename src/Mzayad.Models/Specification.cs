@@ -1,14 +1,11 @@
-﻿using System;
+﻿using OrangeJetpack.Base.Data;
+using OrangeJetpack.Localization;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OrangeJetpack.Localization;
 
 namespace Mzayad.Models
 {
-    public class Specification : ModelBase, ILocalizable
+    public class Specification : EntityBase, ILocalizable
     {
         public int SpecificationId { get; set; }
 

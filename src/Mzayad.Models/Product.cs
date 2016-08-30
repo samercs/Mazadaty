@@ -1,4 +1,5 @@
-﻿using OrangeJetpack.Localization;
+﻿using OrangeJetpack.Base.Data;
+using OrangeJetpack.Localization;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +7,7 @@ using System.Linq;
 
 namespace Mzayad.Models
 {
-    public class Product : ModelBase , ILocalizable
+    public class Product : EntityBase, ILocalizable
     {
         [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProductId { get; set; }

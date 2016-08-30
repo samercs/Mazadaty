@@ -1,11 +1,10 @@
-﻿using Mzayad.Models.Enum;
+﻿using Mzayad.Models.Enums;
 using OrangeJetpack.Base.Data;
 using OrangeJetpack.Localization;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Mzayad.Models.Enums;
 
 namespace Mzayad.Models
 {

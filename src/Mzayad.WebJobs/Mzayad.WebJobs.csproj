@@ -93,6 +93,10 @@
       <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="OrangeJetpack.Base.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OrangeJetpack.Base.Data.0.1.2\lib\net452\OrangeJetpack.Base.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="OrangeJetpack.Localization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\OrangeJetpack.Localization.1.5.7\lib\OrangeJetpack.Localization.dll</HintPath>
       <Private>True</Private>

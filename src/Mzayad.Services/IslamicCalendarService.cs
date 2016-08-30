@@ -53,7 +53,7 @@ namespace Mzayad.Services
             using (var dc = new DataContext())
             {
                 dc.IslamicCalendars.Attach(entity);
-                dc.SetModified(entity);
+                dc.SetModified();
                 await dc.SaveChangesAsync();
                 return entity;
             }

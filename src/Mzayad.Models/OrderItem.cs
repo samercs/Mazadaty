@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using OrangeJetpack.Base.Data;
 using OrangeJetpack.Localization;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mzayad.Models
 {
-    public class OrderItem : ModelBase, ILocalizable
+    public class OrderItem : EntityBase, ILocalizable
     {
         public int OrderItemId { get; set; }
         public int OrderId { get; set; }

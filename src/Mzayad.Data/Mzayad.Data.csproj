@@ -343,6 +343,10 @@
     <Compile Include="Migrations\201608290757327_AddCompleteProfileTrophy.Designer.cs">
       <DependentUpon>201608290757327_AddCompleteProfileTrophy.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608300840259_ReplaceModelBaseWithEntityBase.cs" />
+    <Compile Include="Migrations\201608300840259_ReplaceModelBaseWithEntityBase.Designer.cs">
+      <DependentUpon>201608300840259_ReplaceModelBaseWithEntityBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -557,6 +561,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608290757327_AddCompleteProfileTrophy.resx">
       <DependentUpon>201608290757327_AddCompleteProfileTrophy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608300840259_ReplaceModelBaseWithEntityBase.resx">
+      <DependentUpon>201608300840259_ReplaceModelBaseWithEntityBase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

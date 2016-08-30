@@ -39,6 +39,6 @@ namespace Mzayad.Data
 
         int SaveChanges();
         Task<int> SaveChangesAsync();
-        void SetModified(object entity);
+        void SetModified();
     }
 }

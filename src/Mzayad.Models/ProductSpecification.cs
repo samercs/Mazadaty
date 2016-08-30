@@ -1,10 +1,11 @@
-﻿using OrangeJetpack.Localization;
+﻿using OrangeJetpack.Base.Data;
+using OrangeJetpack.Localization;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mzayad.Models
 {
-    public class ProductSpecification: ModelBase, ILocalizable
+    public class ProductSpecification: EntityBase, ILocalizable
     {
         [Key,Column(Order = 0)]
         public int ProductId { get; set; }

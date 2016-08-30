@@ -206,8 +206,8 @@ namespace Mzayad.Services
             {
                 dc.Orders.Attach(order);
                 dc.ShippingAddresses.Attach(order.Address);
-                dc.SetModified(order);
-                dc.SetModified(order.Address);
+                dc.SetModified();
+                dc.SetModified();
                 await dc.SaveChangesAsync();
                 return order;
             }

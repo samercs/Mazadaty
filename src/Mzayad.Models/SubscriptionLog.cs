@@ -1,10 +1,11 @@
-﻿using System;
+﻿using OrangeJetpack.Base.Data;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mzayad.Models
 {
-    public class SubscriptionLog : ModelBase
+    public class SubscriptionLog : EntityBase
     {
         public int SubscriptionLogId { get; set; }
         

@@ -216,7 +216,7 @@ namespace Mzayad.Services
                 var product = await dc.Products.SingleOrDefaultAsync(i => i.ProductId == auction.ProductId);
                 auction.Product = product;
                 dc.Auctions.Attach(auction);
-                dc.SetModified(auction);
+                dc.SetModified();
                 await dc.SaveChangesAsync();
 
                 return await GetAuction(dc, auction.AuctionId);

@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using OrangeJetpack.Base.Data;
 
 namespace Mzayad.Models
 {
-    public class Address : ModelBase
+    public class Address : EntityBase
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AddressId { get; set; }

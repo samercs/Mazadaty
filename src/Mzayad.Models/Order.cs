@@ -1,4 +1,5 @@
 ﻿using Mzayad.Models.Enum;
+using OrangeJetpack.Base.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ using System.Linq;
 
 namespace Mzayad.Models
 {
-    public class Order : ModelBase
+    public class Order : EntityBase
     {
         public int OrderId { get; set; }
 

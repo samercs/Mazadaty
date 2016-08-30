@@ -1,4 +1,5 @@
-﻿using OrangeJetpack.Localization;
+﻿using OrangeJetpack.Base.Data;
+using OrangeJetpack.Localization;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Mzayad.Models
 {
     [Serializable]
-    public class Category : ModelBase, ILocalizable
+    public class Category : EntityBase, ILocalizable
     {
         public int CategoryId { get; set; }
 

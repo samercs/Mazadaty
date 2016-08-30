@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using OrangeJetpack.Base.Data;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mzayad.Models
 {
-    public class ProductImage : ModelBase
+    public class ProductImage : EntityBase
     {
         public int ProductImageId { get; set; }
 

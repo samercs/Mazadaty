@@ -99,7 +99,6 @@
     <Compile Include="Enums\TrophyKey.cs" />
     <Compile Include="IslamicCalendar.cs" />
     <Compile Include="Level.cs" />
-    <Compile Include="ModelBase.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderItem.cs" />
     <Compile Include="OrderLog.cs" />

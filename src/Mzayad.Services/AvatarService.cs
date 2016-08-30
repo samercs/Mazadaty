@@ -53,7 +53,7 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                dc.SetModified(avatar);
+                dc.SetModified();
                 await dc.SaveChangesAsync();
                 return avatar;
             }
