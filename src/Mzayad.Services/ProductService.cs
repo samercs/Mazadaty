@@ -20,7 +20,10 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                var products = await dc.Products.Include(i => i.ProductImages).Include(i => i.Categories).ToListAsync();
+                var products = await dc.Products
+                    .Where(i => i.IsDeleted == false)
+                    .Include(i => i.ProductImages)
+                    .Include(i => i.Categories).ToListAsync();
                 return products;
             }
         }
@@ -29,7 +32,12 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                var products = await dc.Products.Include(i => i.ProductImages).Include(i => i.Categories).ToListAsync();
+                var products = await dc.Products
+                    .Where(i => i.IsDeleted == false)
+                    .Include(i => i.ProductImages)
+                    .Include(i => i.Categories)
+                    .ToListAsync();
+
                 return products.Localize(languageCode, i => i.Name, i => i.Description).OrderBy(i => i.Name);
             }
         }
@@ -41,7 +49,10 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                var names = await dc.Products.Select(i => i.Name).ToListAsync();
+                var names = await dc.Products
+                    .Where(i => i.IsDeleted == false)
+                    .Select(i => i.Name).ToListAsync();
+
                 var products = names.Select(i => new Product { Name = i }).ToList();
 
                 var en = products.Localize("en", i => i.Name).Select(i => i.Name);
@@ -55,17 +66,17 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                IEnumerable<Product> products;
+                var query = dc.Products.Where(i => i.IsDeleted == false);
+
                 if (!string.IsNullOrEmpty(search))
                 {
-                    products = await dc.Products.Where(i => i.Name.Contains(search) || i.Description.Contains(search)).ToListAsync();
-                }
-                else
-                {
-                    products = await dc.Products.ToListAsync();
+                    query = query.Where(i => i.Name.Contains(search) || i.Description.Contains(search));
                 }
 
-                return products.Localize(languageCode, i => i.Name, i => i.Description).OrderBy(i => i.Name);
+                var products = await query.ToListAsync();
+
+                return products.Localize(languageCode, i => i.Name, i => i.Description)
+                    .OrderBy(i => i.Name);
             }
         }
 
@@ -81,7 +92,7 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<Product> UpdateProduct(Product product, IEnumerable<int> categoryIds, List<ProductSpecification> productSpecifications)
+        public async Task<Product> UpdateProduct(Product product, IList<int> categoryIds, List<ProductSpecification> productSpecifications)
         {
             using (var dc = DataContext())
             {
@@ -93,11 +104,7 @@ namespace Mzayad.Services
                     product.Categories = dc.Categories.Where(i => categoryIds.Contains(i.CategoryId)).ToList();
                 }
 
-
-
                 product.ProductSpecifications = productSpecifications;
-
-
                 await dc.SaveChangesAsync();
                 return product;
 
@@ -109,6 +116,7 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 var product = await dc.Products
+                    .Where(i => i.IsDeleted == false)
                     .Include(i => i.ProductImages)
                     .Include(i => i.Categories)
                     .Include(i => i.ProductSpecifications.Select(j => j.Specification))
@@ -131,6 +139,7 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 var products = await dc.Products
+                    .Where(i => i.IsDeleted == false)
                     .Where(i => i.CreatedUtc >= startDate)
                     .Where(i => i.CreatedUtc <= endDate)
                     .ToListAsync();
@@ -227,7 +236,7 @@ namespace Mzayad.Services
                         await dc.ProductImages.OrderBy(i => i.SortOrder).Where(i => i.ProductId == image.ProductId).ToListAsync();
                     if (sku.Count > 1 && newIndex < sku.Count)
                     {
-                        double index = 0;
+                        double index;
                         //move to first image
                         if (newIndex == 0)
                         {
@@ -251,6 +260,22 @@ namespace Mzayad.Services
 
                 }
                 return true;
+            }
+        }
+
+        public async Task DeleteProduct(int productId)
+        {
+            using (var dc = DataContext())
+            {
+                var product = await dc.Products.SingleOrDefaultAsync(i => i.ProductId == productId);
+                if (product == null)
+                {
+                    return;
+                }
+
+                product.IsDeleted = true;
+                product.DeletedUtc = DateTime.UtcNow;
+                await dc.SaveChangesAsync();
             }
         }
 

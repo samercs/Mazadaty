@@ -51,6 +51,10 @@
 
     <div class="@Html.Css().FormWide">
 
+        <ul class="link-list">
+            <li><a href="@Url.Action("Delete", "Products", new {id = @Model.Product.ProductId})">Delete Product</a></li>
+        </ul>
+
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
