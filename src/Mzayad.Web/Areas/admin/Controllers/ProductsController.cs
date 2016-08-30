@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Mzayad.Core.Formatting;
+using OrangeJetpack.Base.Web;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
@@ -35,14 +36,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
         public ProductsController(IAppServices appServices, IStorageService storageService) : base(appServices)
         {
-            _productService=new ProductService(appServices.DataContextFactory);
-            _categoryService=new CategoryService(appServices.DataContextFactory);
+            _productService = new ProductService(appServices.DataContextFactory);
+            _categoryService = new CategoryService(appServices.DataContextFactory);
             _storageService = storageService;
-            _specificationService=new SpecificationService(DataContextFactory);
+            _specificationService = new SpecificationService(DataContextFactory);
             _sponsorService = new SponsorService(appServices.DataContextFactory);
         }
 
-        public async Task<ActionResult> Index(string search="")
+        public async Task<ActionResult> Index(string search = "")
         {
             var products = (await _productService.GetProductsWithoutCategory("en", search)).ToList();
             foreach (var product in products)
@@ -59,7 +60,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             return View(model);
         }
 
-        public async Task<JsonResult> GetProducts([DataSourceRequest] DataSourceRequest request,string search=null)
+        public async Task<JsonResult> GetProducts([DataSourceRequest] DataSourceRequest request, string search = null)
         {
             var products = (await _productService.GetProductsWithoutCategory("en", search)).ToList();
             foreach (var product in products)
@@ -68,12 +69,12 @@ namespace Mzayad.Web.Areas.admin.Controllers
             }
             return Json(products.ToDataSourceResult(request));
         }
-            
+
         [Route("add")]
-        public ActionResult Add(bool goToAuction=false)
+        public ActionResult Add(bool goToAuction = false)
         {
             var model = new AddViewModel().Hydrate(_productService);
-            model.Product.CreatedByUserId =  AuthService.CurrentUserId();
+            model.Product.CreatedByUserId = AuthService.CurrentUserId();
             model.GoToAuction = goToAuction;
             return View(model);
         }
@@ -91,12 +92,12 @@ namespace Mzayad.Web.Areas.admin.Controllers
             }
 
             var product = await _productService.AddProduct(model.Product);
-            
+
             var productName = product.Localize("en", i => i.Name).Name;
 
             SetStatusMessage(string.Format("Product {0} successfully added.", productName));
 
-            return RedirectToAction("Edit", new { id = product.ProductId , goToAuction=model.GoToAuction  });
+            return RedirectToAction("Edit", new { id = product.ProductId, goToAuction = model.GoToAuction });
         }
 
         public ActionResult AddErrorView(AddViewModel model, string modelStateKey = null, string errorMessage = null)
@@ -112,7 +113,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         }
 
         [Route("edit/{id:int}")]
-        public async Task<ActionResult> Edit(int id,bool goToAuction=false)
+        public async Task<ActionResult> Edit(int id, bool goToAuction = false)
         {
             var product = await _productService.GetProduct(id);
             if (product == null)
@@ -120,14 +121,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return HttpNotFound();
             }
 
-            var model = await new EditViewModel().Hydrate(_productService, _categoryService,_specificationService,_sponsorService, product, "en");
+            var model = await new EditViewModel().Hydrate(_productService, _categoryService, _specificationService, _sponsorService, product, "en");
             model.GoToAuction = goToAuction;
             return View(model);
         }
 
         [Route("edit/{id:int}")]
         [HttpPost, ValidateAntiForgeryToken, ValidateInput(false)]
-        public async Task<ActionResult> Edit(int id, EditViewModel model, LocalizedContent[] name, LocalizedContent[] description,FormCollection data)
+        public async Task<ActionResult> Edit(int id, EditViewModel model, LocalizedContent[] name, LocalizedContent[] description, FormCollection data)
         {
             var product = await _productService.GetProduct(id);
             if (product == null)
@@ -159,14 +160,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
             var specificationsContent = GetSpecificationsLocalizedContent(data);
             var productSpecifications = GetProductSpecifications(model, product, specificationsContent);
 
-            await _productService.UpdateProduct(product, model.SelectedCategories, productSpecifications);
+            await _productService.UpdateProduct(product, model.SelectedCategories.ToList(), productSpecifications);
 
             var productName = product.Localize("en", i => i.Name).Name;
 
             SetStatusMessage(string.Format("Product {0} successfully updated.", productName));
 
-            return model.GoToAuction 
-                ? RedirectToAction("Create", "Auctions", new { product.ProductId }) 
+            return model.GoToAuction
+                ? RedirectToAction("Create", "Auctions", new { product.ProductId })
                 : RedirectToAction("Index");
         }
 
@@ -205,12 +206,12 @@ namespace Mzayad.Web.Areas.admin.Controllers
             {
                 if (key.Equals("Value[0].Value"))
                 {
-                    var tmp = data[key].Split(new char[] {','}, StringSplitOptions.None);
+                    var tmp = data[key].Split(new[] { ',' }, StringSplitOptions.None);
                     enValue.AddRange(tmp);
                 }
                 else if (key.Equals("Value[1].Value"))
                 {
-                    var tmp = data[key].Split(new char[] {','}, StringSplitOptions.None);
+                    var tmp = data[key].Split(new[] { ',' }, StringSplitOptions.None);
                     arValue.AddRange(tmp);
                 }
             }
@@ -229,7 +230,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
                     Value = arValue[i]
                 };
 
-                values.Add(new[] {en, ar});
+                values.Add(new[] { en, ar });
             }
             return values;
         }
@@ -289,7 +290,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 });
             }
             catch (Exception)
-            {    
+            {
                 return JsonError("Could not upload image.");
             }
         }
@@ -326,5 +327,27 @@ namespace Mzayad.Web.Areas.admin.Controllers
             await _productService.UpdateProductImageOrder(imageId, newIndex);
             return Content("Done");
         }
-	}
+
+        [Route("delete/{productId:int}")]
+        public async Task<ActionResult> Delete(int productId)
+        {
+            var product = await _productService.GetProduct(productId);
+            if (product == null)
+            {
+                SetStatusMessage("Sorry this product not found", StatusMessageType.Warning);
+                return RedirectToAction("Index", "Products");
+            }
+
+            return DeleteConfirmation("Delete Product", "Are you sure you want to permanently delete this product?");
+        }
+
+        [Route("delete/{productId:int}")]
+        [HttpPost]
+        public async Task<ActionResult> DeleteProduct(int productId)
+        {
+            await _productService.DeleteProduct(productId);
+            SetStatusMessage("Product was successfully deleted");
+            return RedirectToAction("Index", "Products");
+        }
+    }
 }
