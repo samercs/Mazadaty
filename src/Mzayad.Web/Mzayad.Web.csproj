@@ -181,7 +181,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Base.Data.0.1.1\lib\net452\OrangeJetpack.Base.Data.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Base.Data.0.1.2\lib\net452\OrangeJetpack.Base.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
