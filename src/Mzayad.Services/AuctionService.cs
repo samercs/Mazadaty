@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Mzayad.Models.Enum;
 using OrangeJetpack.Localization;
 using Mzayad.Core.Extensions;
+using Mzayad.Models.Enums;
 
 namespace Mzayad.Services
 {
