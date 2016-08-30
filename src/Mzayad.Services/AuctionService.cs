@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Mzayad.Core.Extensions;
 using Mzayad.Data;
 using Mzayad.Models;
+using Mzayad.Models.Enums;
+using OrangeJetpack.Localization;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
-using Mzayad.Models.Enum;
-using OrangeJetpack.Localization;
-using Mzayad.Core.Extensions;
-using Mzayad.Models.Enums;
 
 namespace Mzayad.Services
 {
@@ -208,7 +208,6 @@ namespace Mzayad.Services
                 .SingleOrDefaultAsync(i => i.AuctionId == auctionId);
         }
 
-
         public async Task<Auction> Update(Auction auction)
         {
             using (var dc = DataContext())
@@ -283,6 +282,22 @@ namespace Mzayad.Services
                     .ToListAsync();
 
                 return wonAuctionsDates.Consecutive();
+            }
+        }
+
+        public async Task DeleteAuction(int auctionId)
+        {
+            using (var dc = DataContext())
+            {
+                var auction = await dc.Auctions.SingleOrDefaultAsync(i => i.AuctionId == auctionId);
+                if (auction == null)
+                {
+                    return;
+                }
+
+                auction.IsDeleted = true;
+                auction.DeletedUtc = DateTime.UtcNow;
+                await dc.SaveChangesAsync();
             }
         }
     }

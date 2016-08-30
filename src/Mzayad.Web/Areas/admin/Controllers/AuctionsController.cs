@@ -31,7 +31,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         private readonly ProductService _productService;
         private readonly AuctionService _auctionService;
         private readonly NotificationService _notificationService;
-        
+
         public AuctionsController(IAppServices appServices) : base(appServices)
         {
             _productService = new ProductService(DataContextFactory);
@@ -40,7 +40,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         }
 
         [Route("select-product")]
-        public async Task<ActionResult> SelectProduct(string search="")
+        public async Task<ActionResult> SelectProduct(string search = "")
         {
             var products = (await _productService.GetProductsWithoutCategory("en", search)).ToList();
             foreach (var product in products)
@@ -59,17 +59,17 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
         public async Task<ActionResult> Create(int productId)
         {
-            var product =await _productService.GetProduct(productId);
+            var product = await _productService.GetProduct(productId);
             if (product == null)
             {
                 return HttpNotFound();
             }
-            
+
             var model = await new AddEditViewModel().Hydrate(_productService, product);
             model.Auction.Title = product.Name;
             model.Auction.RetailPrice = product.RetailPrice;
             model.Auction.CreatedByUserId = AuthService.CurrentUserId();
-            
+
             return View(model);
         }
 
@@ -80,9 +80,9 @@ namespace Mzayad.Web.Areas.admin.Controllers
             {
                 return View(await model.Hydrate(_productService, productId));
             }
-            
-            model.Auction.StartUtc = model.Auction.StartUtc.AddHours(-3);       
-            
+
+            model.Auction.StartUtc = model.Auction.StartUtc.AddHours(-3);
+
             var auction = await _auctionService.Add(model.Auction);
 
             if (auction.Status == AuctionStatus.Public)
@@ -91,7 +91,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             }
 
             SetStatusMessage("Auction has been added successfully.");
-            
+
             return RedirectToAction("Index");
         }
 
@@ -101,7 +101,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             var emailTemplate = await EmailTemplateService.GetByTemplateType(EmailTemplateType.AuctionCreated, "en");
             var urlHelper = new UrlHelper(ControllerContext.RequestContext);
-            var auctionUrl = urlHelper.Action("Details", "Auctions", new { area = "", id = auction.AuctionId}, "https");
+            var auctionUrl = urlHelper.Action("Details", "Auctions", new { area = "", id = auction.AuctionId }, "https");
             var notificationsUrl = urlHelper.Action("Notifications", "User", new { area = "" }, "https");
             var productName = auction.Product.Localize("en", i => i.Name).Name;
 
@@ -145,14 +145,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
         private async Task<IEnumerable<Auction>> GetAuctions(string search = null)
         {
             var auctions = (await _auctionService.GetAllAuctions(search)).Localize("en", i => i.Title);
-            
+
             foreach (var auction in auctions)
             {
                 auction.Product.Localize("en", i => i.Name);
             }
 
             return auctions;
-        } 
+        }
 
         public async Task<JsonResult> GetAuctions([DataSourceRequest] DataSourceRequest request, string search = null)
         {
@@ -164,7 +164,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         public async Task<ExcelResult> DownloadExcel(string search = null)
         {
             var auctions = await GetAuctions(search);
-            
+
             var results = auctions.Select(i => new
             {
                 i.AuctionId,
@@ -192,7 +192,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             var auction = await _auctionService.GetAuction(id);
             if (auction == null)
             {
-                SetStatusMessage("Sorry this auction not found",StatusMessageType.Warning);
+                SetStatusMessage("Sorry this auction not found", StatusMessageType.Warning);
                 return RedirectToAction("Index", "Auctions");
             }
 
@@ -201,7 +201,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         }
 
         [Route("edit/{id:int}")]
-        [HttpPost,ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, AddEditViewModel model, LocalizedContent[] title, FormCollection fc)
         {
             var auction = await _auctionService.GetAuction(id);
@@ -234,8 +234,30 @@ namespace Mzayad.Web.Areas.admin.Controllers
             var productName = auction.Product.Localize("en", i => i.Name).Name;
 
             SetStatusMessage(string.Format("Auction for <strong>{0}</strong> has been updated successfully.", productName));
-            
-            return RedirectToAction("Index", "Auctions");     
+
+            return RedirectToAction("Index", "Auctions");
+        }
+
+        [Route("delete/{auctionId:int}")]
+        public async Task<ActionResult> Delete(int auctionId)
+        {
+            var auction = await _auctionService.GetAuction(auctionId);
+            if (auction == null)
+            {
+                SetStatusMessage("Sorry this auction not found", StatusMessageType.Warning);
+                return RedirectToAction("Index", "Auctions");
+            }
+
+            return DeleteConfirmation("Delete Auction", "Are you sure you want to permanently delete this cuisine?");
+        }
+
+        [Route("delete/{auctionId:int}")]
+        [HttpPost]
+        public async Task<ActionResult> DeleteAuction(int auctionId)
+        {
+            await _auctionService.DeleteAuction(auctionId);
+            SetStatusMessage("Auction was successfully deleted");
+            return RedirectToAction("Index", "Auctions");
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -252,7 +274,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 auction.Status = AuctionStatus.Public;
 
                 await _auctionService.Update(auction);
-                
+
                 await SendAuctionNotifications(auction);
             }
 
@@ -264,5 +286,5 @@ namespace Mzayad.Web.Areas.admin.Controllers
         }
 
 
-	}
+    }
 }
