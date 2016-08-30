@@ -31,12 +31,16 @@ namespace Mzayad.Web.Areas.admin.Controllers
         private readonly ProductService _productService;
         private readonly AuctionService _auctionService;
         private readonly NotificationService _notificationService;
+        private readonly BidService _bidService;
+        private readonly AutoBidService _autoBidService;
 
         public AuctionsController(IAppServices appServices) : base(appServices)
         {
             _productService = new ProductService(DataContextFactory);
             _auctionService = new AuctionService(DataContextFactory);
             _notificationService = new NotificationService(DataContextFactory);
+            _bidService = new BidService(DataContextFactory);
+            _autoBidService = new AutoBidService(DataContextFactory);
         }
 
         [Route("select-product")]
@@ -196,7 +200,12 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return RedirectToAction("Index", "Auctions");
             }
 
-            var model = await new AddEditViewModel().Hydrate(_productService, auction);
+            var model = await new AddEditViewModel
+            {
+                Bids = await _bidService.GetBidHistoryForAuction(id),
+                AutoBids = await _autoBidService.GetAutoBidsForAuction(id)
+            }
+            .Hydrate(_productService, auction);
             return View(model);
         }
 

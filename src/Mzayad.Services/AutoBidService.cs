@@ -40,6 +40,16 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<IReadOnlyCollection<AutoBid>> GetAutoBidsForAuction(int auctionId)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.AutoBids
+                    .Where(i => i.AuctionId == auctionId)
+                    .ToListAsync();
+            }
+        }
+
         public async Task Save(string userId, int auctionId, decimal maxBid)
         {
             using (var dc = DataContext())

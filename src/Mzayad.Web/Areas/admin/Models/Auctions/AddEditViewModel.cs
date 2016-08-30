@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Mzayad.Models;
+using Mzayad.Models.Enums;
+using Mzayad.Services;
+using Mzayad.Web.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Mzayad.Models;
-using Mzayad.Models.Enum;
-using Mzayad.Models.Enums;
-using Mzayad.Services;
-using Mzayad.Web.Extensions;
 
 namespace Mzayad.Web.Areas.admin.Models.Auctions
 {
@@ -16,6 +15,8 @@ namespace Mzayad.Web.Areas.admin.Models.Auctions
         public IEnumerable<SelectListItem> ProductList { get; set; }
         public Mzayad.Models.Auction Auction { get; set; }
         public IEnumerable<SelectListItem> StatusList { get; set; }
+        public IEnumerable<Bid> Bids { get; set; }
+        public IEnumerable<AutoBid> AutoBids { get; set; }
 
         public async Task<AddEditViewModel> Hydrate(ProductService productService, int productId)
         {
