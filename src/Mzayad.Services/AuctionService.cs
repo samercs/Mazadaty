@@ -107,6 +107,23 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<IReadOnlyCollection<Auction>> GetBuyNowAuctions(string language)
+        {
+            using (var dc = DataContext())
+            {
+                var auctions = await dc.Auctions
+                    .Where(i => i.IsDeleted == false)
+                    .Where(i => i.BuyNowEnabled)
+                    .Where(i => i.BuyNowQuantity > 0)
+                    .Where(i => i.Product.Quantity > 0)
+                    .Include(i => i.Product.ProductImages)
+                    .Include(i => i.Product.Sponsor)
+                    .ToListAsync();
+
+                return LocalizeAuctions(language, auctions);
+            }
+        }
+
         private static IQueryable<Auction> GetAuctionsQuery(IDataContext dc, AuctionStatus auctionStatus)
         {
             return dc.Auctions

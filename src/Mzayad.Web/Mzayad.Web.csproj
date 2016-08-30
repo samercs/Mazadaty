@@ -805,6 +805,7 @@
     <Content Include="Views\Pages\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateRange.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\BuyNowTile.cshtml" />
     <TypeScriptCompile Include="Scripts\auctions.ts" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />

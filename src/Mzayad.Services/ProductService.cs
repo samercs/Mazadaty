@@ -92,7 +92,7 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<Product> UpdateProduct(Product product, IList<int> categoryIds, List<ProductSpecification> productSpecifications)
+        public async Task<Product> UpdateProduct(Product product, IEnumerable<int> categoryIds, List<ProductSpecification> productSpecifications)
         {
             using (var dc = DataContext())
             {

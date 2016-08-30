@@ -75,9 +75,10 @@ namespace Mzayad.Web.Controllers
         }
 
         [Route("~/{language}/buy-now")]
-        public ActionResult BuyNow()
+        public async Task<ActionResult> BuyNow()
         {
-            return View();
+            var auctions = await _auctionService.GetBuyNowAuctions(Language);
+            return View(auctions);
         }
 
         [Route("~/{language}/contact-us")]
