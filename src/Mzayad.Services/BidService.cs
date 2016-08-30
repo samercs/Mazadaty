@@ -86,6 +86,18 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<IReadOnlyCollection<Bid>> GetBidHistoryForAuction(int auctionId)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.Bids
+                    .Include(i => i.User)
+                    .Where(i => i.AuctionId == auctionId)
+                    .OrderByDescending(i => i.CreatedUtc)
+                    .ToListAsync();
+            }
+        }
+
         public async Task<IReadOnlyCollection<Bid>> GetBidHistoryForUser(string userId, string language)
         {
             using (var dc = DataContext())
@@ -112,7 +124,7 @@ namespace Mzayad.Services
                 return await dc.Bids
                     .Where(i => i.UserId == userId && (from.HasValue && i.CreatedUtc.Date >= from.Value.Date || !from.HasValue))
                     .GroupBy(i => i.CreatedUtc.Date)
-                    .Select(g => g.OrderByDescending(i=> i.CreatedUtc).First())
+                    .Select(g => g.OrderByDescending(i => i.CreatedUtc).First())
                     .ToListAsync();
             }
         }
@@ -129,12 +141,12 @@ namespace Mzayad.Services
                     .OrderByDescending(i => i.CreatedUtc)
                     .Select(i => i.CreatedUtc)
                     .ToListAsync();
-                
+
                 return userBidDates.Consecutive();
             }
         }
 
-        public async Task<int> CountUserBids(string userId,DateTime? from = null)
+        public async Task<int> CountUserBids(string userId, DateTime? from = null)
         {
             using (var db = DataContext())
             {

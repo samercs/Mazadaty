@@ -1,4 +1,9 @@
-﻿@model Mzayad.Web.Areas.admin.Models.Auctions.AddEditViewModel
+﻿@using Humanizer
+@using Mzayad.Core.Formatting
+@using Mzayad.Web.Extensions
+@using OrangeJetpack.Base.Core.Formatting
+@using DateTimeFormatter = Mzayad.Core.Formatting.DateTimeFormatter
+@model Mzayad.Web.Areas.admin.Models.Auctions.AddEditViewModel
 @{
     ViewBag.Title = "Edit Auction";
 }
@@ -8,6 +13,45 @@
 </ul>
 
 @Html.Partial("_AddEditAuction")
+
+@if (Model.Bids.Any())
+{
+    <section>
+        <h2>Bids History</h2>
+        <table class="@Html.Css().GridTable">
+            <thead>
+                <tr>
+                    <th>Date\Time</th>
+                    <th>User</th>
+                    <th>Amount</th>
+                    <th>Time Left in Auction</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var bid in Model.Bids)
+                {
+                    <tr>
+                        <td>@DateTimeFormatter.ToLocalTime(bid.CreatedUtc, DateTimeFormatter.Format.Full)</td>
+                        <td>@NameFormatter.GetFullName(bid.User.FirstName, bid.User.LastName)</td>
+                        <td>@CurrencyFormatter.Format(bid.Amount)</td>
+                        <td>@TimeSpan.FromSeconds(bid.SecondsLeft).Humanize(4)</td>
+                        <td>
+                            @if (Model.AutoBids.Any(i => i.UserId == bid.UserId))
+                            {
+                                <span class="label label-success">Auto Bid</span>
+                            }
+                            else
+                            {
+                                <span class="label label-default">Manual</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+}
 
 @section scripts {
     <script>

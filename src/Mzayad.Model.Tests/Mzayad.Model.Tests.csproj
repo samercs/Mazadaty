@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Mzayad.Model.Tests</RootNamespace>
     <AssemblyName>Mzayad.Model.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
@@ -59,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mzayad.Models\Mzayad.Models.csproj">
-      <Project>{71F89204-EBB2-438A-B56F-C0521C0BBE3C}</Project>
+      <Project>{71f89204-ebb2-438a-b56f-c0521c0bbe3c}</Project>
       <Name>Mzayad.Models</Name>
     </ProjectReference>
   </ItemGroup>
