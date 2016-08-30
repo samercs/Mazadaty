@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using OrangeJetpack.Base.Data;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mzayad.Models
 {
-    public class WishList : ModelBase
+    public class WishList : EntityBase
     {
         public int WishListId { get; set; }
         [Required,StringLength(128)]

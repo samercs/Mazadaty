@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using OrangeJetpack.Base.Data;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mzayad.Models
 {
-    public class AutoBid : ModelBase
+    public class AutoBid : EntityBase
     {
         public int AutoBidId { get; set; }
 

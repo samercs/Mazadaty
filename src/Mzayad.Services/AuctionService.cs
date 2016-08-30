@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Mzayad.Core.Extensions;
 using Mzayad.Data;
 using Mzayad.Models;
+using Mzayad.Models.Enums;
+using OrangeJetpack.Localization;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using Mzayad.Models.Enum;
-using OrangeJetpack.Localization;
-using Mzayad.Core.Extensions;
 
 namespace Mzayad.Services
 {
@@ -43,6 +43,7 @@ namespace Mzayad.Services
             {
                 var auctions = await dc.Auctions
                     .Where(i => i.Status != AuctionStatus.Hidden)
+                    .Where(i => i.IsDeleted == false)
                     .Include(i => i.Product.ProductImages)
                     .Include(i => i.Product.ProductSpecifications.Select(j => j.Specification))
                     .Include(i => i.WonByUser)
@@ -110,6 +111,7 @@ namespace Mzayad.Services
         {
             return dc.Auctions
                 .Where(i => i.Status == auctionStatus)
+                .Where(i => i.IsDeleted == false)
                 .Include(i => i.Product.ProductImages)
                 //.Include(i => i.Product.ProductSpecifications.Select(j => j.Specification))
                 .Include(i => i.WonByUser)
@@ -149,13 +151,20 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
+                var auctions = dc.Auctions
+                    .Include(i => i.Product)
+                    .Where(i => i.IsDeleted == false);
+
                 if (!string.IsNullOrEmpty(search))
                 {
-                    return await dc.Auctions.Include(i => i.Product).Where(i => i.Product.Name.Contains(search)).OrderByDescending(i => i.StartUtc).ToListAsync();
 
+                    auctions = auctions
+                        .Where(i => i.Product.Name.Contains(search));
                 }
 
-                return await dc.Auctions.Include(i => i.Product).OrderByDescending(i => i.StartUtc).ToListAsync();
+                return await auctions
+                    .OrderByDescending(i => i.StartUtc)
+                    .ToListAsync();
             }
         }
 
@@ -165,6 +174,7 @@ namespace Mzayad.Services
             {
                 var auctions = await dc.Auctions
                     .Where(i => i.WonByUserId == userId)
+                    .Where(i => i.IsDeleted == false)
                     .Include(i => i.Product.ProductImages)
                     .OrderByDescending(i => i.ClosedUtc)
                     .ToListAsync();
@@ -201,12 +211,12 @@ namespace Mzayad.Services
         private static async Task<Auction> GetAuction(IDataContext dc, int auctionId)
         {
             return await dc.Auctions
+                .Where(i => i.IsDeleted == false)
                 .Include(i => i.Product.Categories)
                 .Include(i => i.Product.ProductImages)
                 .Include(i => i.Product.ProductSpecifications.Select(j => j.Specification))
                 .SingleOrDefaultAsync(i => i.AuctionId == auctionId);
         }
-
 
         public async Task<Auction> Update(Auction auction)
         {
@@ -215,7 +225,7 @@ namespace Mzayad.Services
                 var product = await dc.Products.SingleOrDefaultAsync(i => i.ProductId == auction.ProductId);
                 auction.Product = product;
                 dc.Auctions.Attach(auction);
-                dc.SetModified(auction);
+                dc.SetModified();
                 await dc.SaveChangesAsync();
 
                 return await GetAuction(dc, auction.AuctionId);
@@ -261,6 +271,7 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 return await dc.Auctions
+                    .Where(i => i.IsDeleted == false)
                     .CountAsync(i => i.WonByUserId == userId && (
                                                                 (from.HasValue && i.CreatedUtc >= from.Value)
                                                                 ||
@@ -276,12 +287,29 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 var wonAuctionsDates = await dc.Auctions
+                    .Where(i => i.IsDeleted == false)
                     .Where(i => i.WonByUserId == userId && i.ClosedUtc.HasValue)
                     .OrderByDescending(i => i.ClosedUtc)
                     .Select(i => i.ClosedUtc.Value)
                     .ToListAsync();
 
                 return wonAuctionsDates.Consecutive();
+            }
+        }
+
+        public async Task DeleteAuction(int auctionId)
+        {
+            using (var dc = DataContext())
+            {
+                var auction = await dc.Auctions.SingleOrDefaultAsync(i => i.AuctionId == auctionId);
+                if (auction == null)
+                {
+                    return;
+                }
+
+                auction.IsDeleted = true;
+                auction.DeletedUtc = DateTime.UtcNow;
+                await dc.SaveChangesAsync();
             }
         }
     }

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using OrangeJetpack.Base.Data;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mzayad.Models
 {
-    public class SessionLog : ModelBase
+    public class SessionLog : EntityBase
     {
         public int SessionLogId { get; set; }
 

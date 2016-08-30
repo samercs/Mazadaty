@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OrangeJetpack.Base.Data;
 using OrangeJetpack.Localization;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mzayad.Models
 {
-    public class Sponsor : ModelBase, ILocalizable
+    public class Sponsor : EntityBase, ILocalizable
     {
         public int SponsorId { get; set; }
 

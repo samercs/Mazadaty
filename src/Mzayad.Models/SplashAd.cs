@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using OrangeJetpack.Base.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mzayad.Models
 {
-    public class SplashAd : ModelBase
+    public class SplashAd : EntityBase
     {
         public int SplashAdId { get; set; }
 

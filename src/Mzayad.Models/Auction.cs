@@ -1,14 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Mzayad.Models.Enum;
+﻿using Mzayad.Models.Enums;
+using OrangeJetpack.Base.Data;
+using OrangeJetpack.Localization;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using OrangeJetpack.Localization;
 
 namespace Mzayad.Models
 {
-    public class Auction : ModelBase, ILocalizable
+    public class Auction : EntityBase, ILocalizable
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AuctionId { get; set; }

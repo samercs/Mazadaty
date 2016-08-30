@@ -146,7 +146,7 @@ namespace Mzayad.Services.Payment
         {
             using (var dc = DataContext())
             {
-                dc.SetModified(transaction);
+                dc.SetModified();
                 await dc.SaveChangesAsync();
                 return transaction;
             }

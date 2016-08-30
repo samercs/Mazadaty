@@ -1,8 +1,9 @@
 ﻿using Mzayad.Models.Enums;
+using OrangeJetpack.Base.Data;
 
 namespace Mzayad.Models
 {
-    public class ActivityEvent : ModelBase
+    public class ActivityEvent : EntityBase
     {
         public int ActivityEventId { get; set; }
         public ActivityType Type { get; set; }

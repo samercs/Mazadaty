@@ -48,7 +48,7 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                dc.SetModified(emailTemplate);
+                dc.SetModified();
                 await dc.SaveChangesAsync();
                 return emailTemplate;
             }

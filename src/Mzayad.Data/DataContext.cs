@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
+using OrangeJetpack.Base.Data;
 
 namespace Mzayad.Data
 {
@@ -58,9 +60,17 @@ namespace Mzayad.Data
             base.OnModelCreating(modelBuilder);
         }
 
-        public void SetModified(object entity)
+        public void SetModified()
         {
-            Entry(entity).State = EntityState.Modified;
+            var entities = ChangeTracker
+                .Entries()
+                .Where(i => i.State == EntityState.Modified)
+                .Select(i => i.Entity as EntityBase);
+
+            foreach (var entity in entities.Where(i=>i!=null))
+            {
+                entity.ModifiedUtc=DateTime.UtcNow;
+            }
         }
 
         public override int SaveChanges()

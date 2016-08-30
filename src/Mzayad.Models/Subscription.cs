@@ -1,4 +1,5 @@
 ﻿using Mzayad.Models.Enum;
+using OrangeJetpack.Base.Data;
 using OrangeJetpack.Localization;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Mzayad.Models
 {
     [Serializable]
-    public class Subscription : ModelBase , ILocalizable, IValidatableObject
+    public class Subscription : EntityBase, ILocalizable, IValidatableObject
     {
         public int SubscriptionId { get; set; }
         [Required, Localized]

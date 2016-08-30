@@ -46,7 +46,7 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                dc.SetModified(sponsor);
+                dc.SetModified();
                 await dc.SaveChangesAsync();
                 return sponsor;
             }

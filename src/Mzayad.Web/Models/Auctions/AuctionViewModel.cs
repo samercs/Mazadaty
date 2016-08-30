@@ -3,6 +3,7 @@ using Mzayad.Core.Formatting;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
 using System;
+using Mzayad.Models.Enums;
 using Mzayad.Web.Core.Enums;
 
 namespace Mzayad.Web.Models.Auctions

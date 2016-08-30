@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using OrangeJetpack.Base.Data;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mzayad.Models
 {
-    public class CategoryNotification : ModelBase
+    public class CategoryNotification : EntityBase
     {
         public int CategoryNotificationId { get; set; }
         [StringLength(128)]

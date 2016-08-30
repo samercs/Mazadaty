@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using OrangeJetpack.Base.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mzayad.Models
 {
-    public class Avatar : ModelBase
+    public class Avatar : EntityBase
     {
         public int AvatarId { get; set; }
         [DataType(DataType.Url)]

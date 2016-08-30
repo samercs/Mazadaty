@@ -3,6 +3,10 @@
     ViewBag.Title = "Edit Auction";
 }
 
+<ul class="link-list">
+    <li><a href="@Url.Action("Delete", "Auctions", new {id = @Model.Auction.AuctionId})">Delete Auction</a></li>
+</ul>
+
 @Html.Partial("_AddEditAuction")
 
 @section scripts {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Mzayad.Models.Enum
+namespace Mzayad.Models.Enums
 {
     public enum AuctionStatus
     {

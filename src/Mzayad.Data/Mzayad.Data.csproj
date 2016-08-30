@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Mzayad.Data</RootNamespace>
     <AssemblyName>Mzayad.Data</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -54,11 +54,12 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.8\lib\OrangeJetpack.Base.Core.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.24\lib\net452\OrangeJetpack.Base.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="OrangeJetpack.Base.Data">
-      <HintPath>..\..\packages\OrangeJetpack.Base.Data.0.1.0\lib\OrangeJetpack.Base.Data.dll</HintPath>
+    <Reference Include="OrangeJetpack.Base.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OrangeJetpack.Base.Data.0.1.2\lib\net452\OrangeJetpack.Base.Data.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Localization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\OrangeJetpack.Localization.1.5.7\lib\OrangeJetpack.Localization.dll</HintPath>
@@ -342,6 +343,10 @@
     <Compile Include="Migrations\201608290757327_AddCompleteProfileTrophy.Designer.cs">
       <DependentUpon>201608290757327_AddCompleteProfileTrophy.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608300840259_ReplaceModelBaseWithEntityBase.cs" />
+    <Compile Include="Migrations\201608300840259_ReplaceModelBaseWithEntityBase.Designer.cs">
+      <DependentUpon>201608300840259_ReplaceModelBaseWithEntityBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -556,6 +561,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608290757327_AddCompleteProfileTrophy.resx">
       <DependentUpon>201608290757327_AddCompleteProfileTrophy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608300840259_ReplaceModelBaseWithEntityBase.resx">
+      <DependentUpon>201608300840259_ReplaceModelBaseWithEntityBase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

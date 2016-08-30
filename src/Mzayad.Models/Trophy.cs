@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Mzayad.Models.Enum;
+﻿using Mzayad.Models.Enum;
+using OrangeJetpack.Base.Data;
 using OrangeJetpack.Localization;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mzayad.Models
 {
-    public class Trophy : ModelBase, ILocalizable
+    public class Trophy : EntityBase, ILocalizable
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int TrophyId { get; set; }

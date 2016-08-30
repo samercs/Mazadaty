@@ -1,10 +1,11 @@
 ﻿using Mzayad.Models.Enum;
+using OrangeJetpack.Base.Data;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mzayad.Models
 {
-    public class OrderLog : ModelBase
+    public class OrderLog : EntityBase
     {
         public int OrderLogId { get; set; }
 

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using OrangeJetpack.Base.Data;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mzayad.Models
 {
-    public class IslamicCalendar : ModelBase
+    public class IslamicCalendar : EntityBase
     {
         public int IslamicCalendarId { get; set; }
 

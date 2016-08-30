@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Mzayad.Models.Enum;
+using OrangeJetpack.Base.Data;
+using OrangeJetpack.Localization;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mzayad.Models.Enum;
-using OrangeJetpack.Localization;
 
 namespace Mzayad.Models
 {
-    public class EmailTemplate : ModelBase, ILocalizable
+    public class EmailTemplate : EntityBase, ILocalizable
     {
         public int EmailTemplateId { get; set; }
 
