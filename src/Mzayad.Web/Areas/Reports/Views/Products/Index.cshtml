@@ -52,7 +52,7 @@
             <tr>
                 <td colspan="3" class="td-total">@Html.Label("Total")</td>
                 <td>@Model.Products.Sum(i => i.Quantity)</td>
-                <td>@CurrencyFormatter.Format(Model.Products.Sum(i => i.PurchasePrice))</td>
+                <td>@CurrencyFormatter.Format(Model.Products.Sum(i => i.PurchasePrice*i.Quantity))</td>
             </tr>
         </tbody>
     </table>
