@@ -1060,6 +1060,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Subscription cannot be purchased, user does not have enough available tokens..
+        /// </summary>
+        public static string NoEnoughTokensErrorMessage {
+            get {
+                return ResourceManager.GetString("NoEnoughTokensErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Subscription.
         /// </summary>
         public static string NoSubscription {
@@ -1749,6 +1758,24 @@ namespace Mzayad.Web.Resources {
         public static string SubscriptionLabelAndStatus {
             get {
                 return ResourceManager.GetString("SubscriptionLabelAndStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subscription is not valid for purchase..
+        /// </summary>
+        public static string SubscriptionNotValidForPurchaseErrorMessage {
+            get {
+                return ResourceManager.GetString("SubscriptionNotValidForPurchaseErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subscription is not valid for purchase with tokens..
+        /// </summary>
+        public static string SubscriptionNotValidForPurchaseWithTokensErrorMessage {
+            get {
+                return ResourceManager.GetString("SubscriptionNotValidForPurchaseWithTokensErrorMessage", resourceCulture);
             }
         }
         
