@@ -90,7 +90,7 @@ namespace Mzayad.Services
             {
                 foreach (var item in wishlist)
                 {
-                    dc.SetModified();
+                    dc.SetModified(item);
                 }
                 await dc.SaveChangesAsync();
                 return wishlist;

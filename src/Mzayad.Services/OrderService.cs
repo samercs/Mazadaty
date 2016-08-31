@@ -206,15 +206,15 @@ namespace Mzayad.Services
             {
                 dc.Orders.Attach(order);
                 dc.ShippingAddresses.Attach(order.Address);
-                dc.SetModified();
-                dc.SetModified();
+                dc.SetModified(order);
+                dc.SetModified(order.Address);
                 await dc.SaveChangesAsync();
                 return order;
             }
         }
 
         /// <summary>
-        /// Updates an order status and addes a log of the status change.
+        /// Updates an order status and adds a log of the status change.
         /// </summary>
         public async Task<Order> UpdateStatus(Order order, OrderStatus status, string modifiedUserId)
         {

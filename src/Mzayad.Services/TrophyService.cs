@@ -75,7 +75,7 @@ namespace Mzayad.Services
         {
             using (var dc = new DataContext())
             {
-                dc.SetModified();
+                dc.SetModified(trophy);
                 dc.Entry(trophy).Property(i => i.Key).IsModified = false;
                 await dc.SaveChangesAsync();
                 return trophy;

@@ -2,7 +2,6 @@
 using Mzayad.Models.Payment;
 using System;
 using System.Data.Entity;
-using System.Diagnostics.PerformanceData;
 using System.Threading.Tasks;
 
 namespace Mzayad.Data
@@ -39,6 +38,6 @@ namespace Mzayad.Data
 
         int SaveChanges();
         Task<int> SaveChangesAsync();
-        void SetModified();
+        void SetModified(object entity);
     }
 }

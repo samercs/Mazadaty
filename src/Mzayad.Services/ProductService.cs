@@ -97,7 +97,7 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 dc.Products.Attach(product);
-                dc.SetModified();
+                dc.SetModified(product);
 
                 if (categoryIds != null && categoryIds.Any())
                 {
@@ -205,7 +205,7 @@ namespace Mzayad.Services
                 foreach (var t in product.ProductImages.OrderBy(i => i.CreatedUtc))
                 {
                     t.SortOrder = count;
-                    dc.SetModified();
+                    dc.SetModified(product);
                     ++count;
                 }
                 await dc.SaveChangesAsync();
@@ -254,7 +254,7 @@ namespace Mzayad.Services
                         }
 
                         image.SortOrder = index;
-                        dc.SetModified();
+                        dc.SetModified(image);
                         await dc.SaveChangesAsync();
                     }
 

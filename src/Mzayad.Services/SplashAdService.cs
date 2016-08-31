@@ -58,7 +58,7 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                dc.SetModified();
+                dc.SetModified(splashAd);
                 await dc.SaveChangesAsync();
                 return splashAd;
             }

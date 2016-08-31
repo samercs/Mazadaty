@@ -99,7 +99,7 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 dc.Subscriptions.Attach(subscription);
-                dc.SetModified();
+                dc.SetModified(subscription);
                 await dc.SaveChangesAsync();
                 return subscription;
             }
