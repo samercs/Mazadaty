@@ -18,7 +18,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckProfileComplete(ApplicationUser user)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.CompleteProfile, user.Id).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.CompleteProfile, user.Id).Result;
             if (user.Gender != null && user.Birthdate != null && !string.IsNullOrWhiteSpace(user.AvatarUrl) && lastTime == null)
             {
                 return TrophyKey.CompleteProfile;

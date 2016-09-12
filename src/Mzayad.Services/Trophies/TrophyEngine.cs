@@ -9,11 +9,11 @@ namespace Mzayad.Services.Trophies
 {
     public abstract class TrophyEngine
     {
-        protected readonly TrophyService _trophyService;
+        protected readonly TrophyService TrophyService;
 
-        public TrophyEngine(IDataContextFactory dataContextFactory)
+        protected TrophyEngine(IDataContextFactory dataContextFactory)
         {
-            _trophyService = new TrophyService(dataContextFactory);
+            TrophyService = new TrophyService(dataContextFactory);
         }
 
         public IEnumerable<TrophyKey> GetEarnedTrophies(ApplicationUser user)
@@ -25,16 +25,13 @@ namespace Mzayad.Services.Trophies
 
         protected bool GainTrophyToday(TrophyKey key, string userId)
         {
-            var userTrophy = _trophyService.GetLastEarnedTrophy(key, userId).Result;
+            var userTrophy = TrophyService.GetLastEarnedTrophy(key, userId).Result;
             if (userTrophy == null)
             {
                 return false;
             }
-            if (userTrophy.CreatedUtc.Date == DateTime.Now.Date)
-            {
-                return true;
-            }
-            return false;
+
+            return userTrophy.CreatedUtc.Date == DateTime.Now.Date;
         }
         
         protected abstract IEnumerable<TrophyKey?> TryGetEarnedTrophies(ApplicationUser user);

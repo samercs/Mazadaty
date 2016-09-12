@@ -48,7 +48,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckWinAuction1(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.WinAuction1, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.WinAuction1, userId).Result;
             var auctions = _auctionService.CountAuctionsWon(userId, lastTime?.CreatedUtc).Result;
             if (auctions == 1)
             {
@@ -59,7 +59,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckWinAuction5(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.WinAuction5, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.WinAuction5, userId).Result;
             var auctions = _auctionService.CountAuctionsWon(userId, lastTime?.CreatedUtc).Result;
             if (auctions == 5)
             {
@@ -70,7 +70,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckWinAuction10(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.WinAuction10, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.WinAuction10, userId).Result;
             var auctions = _auctionService.CountAuctionsWon(userId, lastTime?.CreatedUtc).Result;
             if (auctions == 10)
             {
@@ -81,7 +81,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckWinAuction20(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.WinAuction20, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.WinAuction20, userId).Result;
             var auctions = _auctionService.CountAuctionsWon(userId, lastTime?.CreatedUtc).Result;
             if (auctions == 20)
             {
@@ -92,7 +92,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckWinAuction50(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.WinAuction50, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.WinAuction50, userId).Result;
             var auctions = _auctionService.CountAuctionsWon(userId, lastTime?.CreatedUtc).Result;
             if (auctions == 50)
             {
@@ -103,7 +103,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckWinAuction100(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.WinAuction100, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.WinAuction100, userId).Result;
             var auctions = _auctionService.CountAuctionsWon(userId, lastTime?.CreatedUtc).Result;
             if (auctions == 100)
             {

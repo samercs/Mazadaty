@@ -1,21 +1,21 @@
-﻿using System;
-using System.Linq;
-using System.Diagnostics;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs;
+﻿using Microsoft.Azure.WebJobs;
 using Mzayad.Data;
 using Mzayad.Models;
+using Mzayad.Models.Enum;
 using Mzayad.Models.Enums;
 using Mzayad.Services;
 using Mzayad.Services.Activity;
 using Mzayad.Services.Identity;
 using Mzayad.Services.Trophies;
-using Mzayad.Models.Enum;
+using OrangeJetpack.Localization;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
-using OrangeJetpack.Localization;
+using System.Threading.Tasks;
 
 namespace Mzayad.WebJobs
 {
@@ -130,6 +130,7 @@ namespace Mzayad.WebJobs
             catch (Exception ex)
             {
                 LogMessage(log, ex.Message);
+                LogMessage(log, ex.StackTrace);
                 throw;
             }
         }

@@ -85,7 +85,7 @@ namespace Mzayad.Services.Trophies
             {
                 return null;
             }
-            var userTrophy = _trophyService.GetLastEarnedTrophy(TrophyKey.BidOnNewYear, userId).Result;
+            var userTrophy = TrophyService.GetLastEarnedTrophy(TrophyKey.BidOnNewYear, userId).Result;
             if (userTrophy.CreatedUtc.Year == DateTime.Now.Year)
             {
                 return null;
@@ -99,7 +99,7 @@ namespace Mzayad.Services.Trophies
             {
                 return null;
             }
-            var userTrophy = _trophyService.GetLastEarnedTrophy(TrophyKey.BidOnIslamicNewYear, userId).Result;
+            var userTrophy = TrophyService.GetLastEarnedTrophy(TrophyKey.BidOnIslamicNewYear, userId).Result;
             if (userTrophy.CreatedUtc.Subtract(_calendar.NewYear.Date).TotalDays < 354) // 354 is total days in Islamic(Hijri) year
             {
                 return null;
@@ -113,7 +113,7 @@ namespace Mzayad.Services.Trophies
             {
                 return null;
             }
-            var userTrophy = _trophyService.GetLastEarnedTrophy(TrophyKey.BidOnEid, userId).Result;
+            var userTrophy = TrophyService.GetLastEarnedTrophy(TrophyKey.BidOnEid, userId).Result;
             if ((userTrophy.CreatedUtc.Date >= _calendar.EidAdhaFrom.Date && userTrophy.CreatedUtc.Date <= _calendar.EidAdhaTo.Date)
                 || (userTrophy.CreatedUtc.Date >= _calendar.EidFetrFrom.Date && userTrophy.CreatedUtc.Date <= _calendar.EidFetrTo.Date))
             {
@@ -128,7 +128,7 @@ namespace Mzayad.Services.Trophies
             {
                 return null;
             }
-            var userTrophy = _trophyService.GetLastEarnedTrophy(TrophyKey.BidOnAnniversary, user.Id).Result;
+            var userTrophy = TrophyService.GetLastEarnedTrophy(TrophyKey.BidOnAnniversary, user.Id).Result;
             if (userTrophy != null)
             {
                 if (userTrophy.CreatedUtc.Date == DateTime.Now.Date || userTrophy.CreatedUtc.Year == user.CreatedUtc.Date.Year)
@@ -231,7 +231,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckBid10(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.Bid10, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.Bid10, userId).Result;
             var bids = _bidService.CountUserBids(userId, lastTime?.CreatedUtc).Result;
             if (bids == 10)
             {
@@ -242,7 +242,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckBid25(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.Bid25, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.Bid25, userId).Result;
             var bids = _bidService.CountUserBids(userId, lastTime?.CreatedUtc).Result;
             if (bids == 25)
             {
@@ -253,7 +253,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckBid50(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.Bid50, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.Bid50, userId).Result;
             var bids = _bidService.CountUserBids(userId, lastTime?.CreatedUtc).Result;
             if (bids == 50)
             {
@@ -264,7 +264,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckBid100(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.Bid100, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.Bid100, userId).Result;
             var bids = _bidService.CountUserBids(userId, lastTime?.CreatedUtc).Result;
             if (bids == 100)
             {
@@ -275,7 +275,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckBid250(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.Bid250, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.Bid250, userId).Result;
             var bids = _bidService.CountUserBids(userId, lastTime?.CreatedUtc).Result;
             if (bids == 250)
             {
@@ -286,7 +286,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckBid500(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.Bid500,userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.Bid500,userId).Result;
             var bids = _bidService.CountUserBids(userId, lastTime?.CreatedUtc).Result;
             if (bids == 500)
             {
@@ -297,7 +297,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckBid1000(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.Bid1000, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.Bid1000, userId).Result;
             var bids = _bidService.CountUserBids(userId, lastTime?.CreatedUtc).Result;
             if (bids == 1000)
             {
@@ -308,7 +308,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckBid2000(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.Bid2000, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.Bid2000, userId).Result;
             var bids = _bidService.CountUserBids(userId, lastTime?.CreatedUtc).Result;
             if (bids == 2000)
             {
@@ -319,7 +319,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckBid5000(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.Bid5000, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.Bid5000, userId).Result;
             var bids = _bidService.CountUserBids(userId, lastTime?.CreatedUtc).Result;
             if (bids == 5000)
             {

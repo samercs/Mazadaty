@@ -10,29 +10,29 @@ namespace Mzayad.Web
 
             bundles.UseCdn = true;
 
-            var jquery = new ScriptBundle("~/js/jquery", "//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js").Include(
+            var jquery = new ScriptBundle("~/js/jquery", "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js").Include(
                 "~/scripts/jquery-{version}.js");
             jquery.CdnFallbackExpression = "window.jQuery";
             bundles.Add(jquery);
 
-            var jqueryui = new ScriptBundle("~/js/jquery-ui", "//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js").Include(
+            var jqueryui = new ScriptBundle("~/js/jquery-ui", "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js").Include(
                 "~/scripts/jquery-ui-{version}.js");
             jqueryui.CdnFallbackExpression = "window.jQuery.ui";
             bundles.Add(jqueryui);
 
-            var bootstrap = new ScriptBundle("~/js/bootstrap", "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js").Include(
+            var bootstrap = new ScriptBundle("~/js/bootstrap", "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js").Include(
                 "~/scripts/bootstrap.js");
             bootstrap.CdnFallbackExpression = "$.fn.modal";
             bundles.Add(bootstrap);
 
             var knockout = new ScriptBundle("~/js/knockout",
-                "//ajax.aspnetcdn.com/ajax/knockout/knockout-3.3.0.js").Include(
+                "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js").Include(
                 "~/scripts/knockout-{version}.js");
             knockout.CdnFallbackExpression = "window.ko";
             bundles.Add(knockout);
 
             var signalR = new ScriptBundle("~/js/signalr",
-                "//ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.0.min.js").Include(
+                "https://cdnjs.cloudflare.com/ajax/libs/signalr.js/2.2.1/jquery.signalR.min.js").Include(
                 "~/scripts/jquery.signalR-{version}.js");
             signalR.CdnFallbackExpression = "window.signalR";
             bundles.Add(signalR);

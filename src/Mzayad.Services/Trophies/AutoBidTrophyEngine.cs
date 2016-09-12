@@ -51,7 +51,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckAutoBid10(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.AutoBid10, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.AutoBid10, userId).Result;
             var autoBids = _autoBidService.CountUserAutoBids(userId, lastTime?.CreatedUtc).Result;
             if (autoBids == 10)
             {
@@ -62,7 +62,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckAutoBid25(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.AutoBid25, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.AutoBid25, userId).Result;
             var autoBids = _autoBidService.CountUserAutoBids(userId, lastTime?.CreatedUtc).Result;
             if (autoBids == 25)
             {
@@ -73,7 +73,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckAutoBid50(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.AutoBid50, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.AutoBid50, userId).Result;
             var autoBids = _autoBidService.CountUserAutoBids(userId, lastTime?.CreatedUtc).Result;
             if (autoBids == 50)
             {
@@ -84,7 +84,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckAutoBid100(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.AutoBid100, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.AutoBid100, userId).Result;
             var autoBids = _autoBidService.CountUserAutoBids(userId, lastTime?.CreatedUtc).Result;
             if (autoBids == 100)
             {
@@ -95,7 +95,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckAutoBid250(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.AutoBid250, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.AutoBid250, userId).Result;
             var autoBids = _autoBidService.CountUserAutoBids(userId, lastTime?.CreatedUtc).Result;
             if (autoBids == 250)
             {
@@ -106,7 +106,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckAutoBid500(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.AutoBid500, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.AutoBid500, userId).Result;
             var autoBids = _autoBidService.CountUserAutoBids(userId, lastTime?.CreatedUtc).Result;
             if (autoBids == 500)
             {
@@ -117,7 +117,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckAutoBid1000(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.AutoBid1000, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.AutoBid1000, userId).Result;
             var autoBids = _autoBidService.CountUserAutoBids(userId, lastTime?.CreatedUtc).Result;
             if (autoBids == 1000)
             {
@@ -128,7 +128,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckAutoBid2000(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.AutoBid2000, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.AutoBid2000, userId).Result;
             var autoBids = _autoBidService.CountUserAutoBids(userId, lastTime?.CreatedUtc).Result;
             if (autoBids == 2000)
             {
@@ -139,7 +139,7 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckAutoBid5000(string userId)
         {
-            var lastTime = _trophyService.GetLastEarnedTrophy(TrophyKey.AutoBid5000, userId).Result;
+            var lastTime = TrophyService.GetLastEarnedTrophy(TrophyKey.AutoBid5000, userId).Result;
             var autoBids = _autoBidService.CountUserAutoBids(userId, lastTime?.CreatedUtc).Result;
             if (autoBids == 5000)
             {
