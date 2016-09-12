@@ -20,10 +20,18 @@ namespace Mzayad.Web.Areas.admin.Controllers
         private static IReadOnlyCollection<FileInfo> GetMarkdownFiles()
         {
             var home = Environment.GetEnvironmentVariable("HOME");
-            var docs = Path.Combine(home, @"site\wwwdocs");
+            if (home == null)
+            {
+                throw new Exception("Cannot access HOME environmental variable.");
+            }
+
+            var docs = Path.Combine(home, @"site\repository\wiki");
             var dir = new DirectoryInfo(docs);
 
-            return dir.GetFiles("*.md").OrderByDescending(i => i.Name).ToList();
+            return dir.GetFiles("*.md")
+                .Where(i => i.Name != "home.md")
+                .OrderByDescending(i => i.Name)
+                .ToList();
         }
 
         public ActionResult Index()
