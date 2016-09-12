@@ -1,24 +1,25 @@
 ﻿using Mzayad.Services;
+using Mzayad.Services.Identity;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Models.Home;
 using System;
-using System.Diagnostics;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Mzayad.Web.Models.Shared;
 
 namespace Mzayad.Web.Controllers
 {
     [RoutePrefix("{language}")]
     public class HomeController : ApplicationController
     {
+        private readonly UserService _userService;
         private readonly AuctionService _auctionService;
 
         public HomeController(IAppServices appServices) : base(appServices)
         {
+            _userService = new UserService(appServices.DataContextFactory);
             _auctionService = new AuctionService(appServices.DataContextFactory);
         }
 
@@ -38,29 +39,17 @@ namespace Mzayad.Web.Controllers
             return View(viewModel);
         }
 
-        [ChildActionOnly]
+        [ChildActionOnly, OutputCache(Duration = 60, VaryByParam = "*", VaryByCustom = "User")]
         public PartialViewResult SubscriptionStatus()
         {
             DateTime? subscriptionUtc = null;
 
             if (AuthService.IsAuthenticated())
             {
-                Task.Run(async () => { subscriptionUtc = (await GetSubscriptionUtc()).SubscriptionUtc; }).Wait();
+                subscriptionUtc = _userService.GetUserSubscriptionUtc(AuthService.CurrentUserId());
             }
 
             return PartialView("_Layout_SubscriptionStatus", subscriptionUtc);
-        }
-
-        private async Task<SubscriptionExpiration> GetSubscriptionUtc()
-        {
-            var cacheKey = string.Format(CacheKeys.UserSubscriptionUtc, AuthService.CurrentUserId());
-            return await CacheService.TryGetAsync(cacheKey, GetSubscriptionUtcFromUser);
-        }
-
-        private async Task<SubscriptionExpiration> GetSubscriptionUtcFromUser()
-        {
-            var user = await AuthService.CurrentUser();
-            return new SubscriptionExpiration(user.SubscriptionUtc);
         }
 
         public ActionResult SignalR()

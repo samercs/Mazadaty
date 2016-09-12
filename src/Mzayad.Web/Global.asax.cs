@@ -97,5 +97,15 @@ namespace Mzayad.Web
 
             return CultureInfo.CreateSpecificCulture("en");
         }
+
+        public override string GetVaryByCustomString(HttpContext context, string arg)
+        {
+            if (arg == "User")
+            {
+                return "User:" + context.User.Identity.Name;
+            }
+
+            return base.GetVaryByCustomString(context, arg);
+        }
     }
 }

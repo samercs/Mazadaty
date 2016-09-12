@@ -63,6 +63,12 @@ namespace Mzayad.Services.Identity
             return await users.OrderBy(i => i.LastName).ThenBy(i => i.FirstName).ToListAsync();
         }
 
+        public DateTime? GetUserSubscriptionUtc(string userId)
+        {
+            var user = _userManager.FindById(userId);
+            return user?.SubscriptionUtc;
+        }
+
         public async Task<IdentityResult> CreateUser(ApplicationUser user, string password)
         {
             return await _userManager.CreateAsync(user, password);
