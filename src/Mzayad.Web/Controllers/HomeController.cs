@@ -54,7 +54,7 @@ namespace Mzayad.Web.Controllers
         private async Task<SubscriptionExpiration> GetSubscriptionUtc()
         {
             var cacheKey = string.Format(CacheKeys.UserSubscriptionUtc, AuthService.CurrentUserId());
-            return await CacheService.TryGet(cacheKey, GetSubscriptionUtcFromUser);
+            return await CacheService.TryGetAsync(cacheKey, GetSubscriptionUtcFromUser);
         }
 
         private async Task<SubscriptionExpiration> GetSubscriptionUtcFromUser()
