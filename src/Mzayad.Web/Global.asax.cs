@@ -1,7 +1,11 @@
-﻿using System.Data.Entity;
+﻿using Microsoft.AspNet.Identity;
 using Mzayad.Data;
+using Mzayad.Models;
+using Mzayad.Services;
 using Mzayad.Web.Core.Configuration;
+using Mzayad.Web.Core.ModelBinder;
 using System;
+using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -10,11 +14,6 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Mzayad.Web.Core.ModelBinder;
-using Mzayad.Services;
-using Mzayad.Models;
-using System.Diagnostics;
-using Microsoft.AspNet.Identity;
 
 namespace Mzayad.Web
 {
@@ -27,7 +26,9 @@ namespace Mzayad.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutofacConfig.RegisterAll();
-            Database.SetInitializer<DataContext>(null);
+            
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<DataContext, Data.Migrations.Configuration>());
+
 
             ModelBinders.Binders.Add(typeof(DateTime), new DateTimeBinder());
             ModelBinders.Binders.Add(typeof(DateTime?), new NullableDateTimeBinder());
@@ -70,7 +71,6 @@ namespace Mzayad.Web
                     IP = Request.UserHostAddress,
                     UserId = HttpContext.Current.User.Identity.GetUserId()
                  });
-
             }
         }
 
