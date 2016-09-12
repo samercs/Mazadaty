@@ -4,8 +4,7 @@ namespace Mzayad.AutoBidNotifier
 {
     internal class Program
     {
-
-        static void Main()
+        private static void Main()
         {
             new JobHost().CallAsync(typeof(Functions).GetMethod("NotifyAutoBidUsers")).Wait();
         }

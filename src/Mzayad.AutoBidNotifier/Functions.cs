@@ -10,7 +10,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 
-
 namespace Mzayad.AutoBidNotifier
 {
     public class Functions
@@ -56,7 +55,6 @@ namespace Mzayad.AutoBidNotifier
             };
 
             await new EmailClient(email).Send();
-
         }
     }
 }

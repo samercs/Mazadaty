@@ -23,12 +23,6 @@ namespace Mzayad.WebJobs
     {
         private static void Main()
         {
-            //var slotName = Environment.GetEnvironmentVariable("APPSETTING_WEBSITE_SLOT_NAME");
-            //if (slotName != "production")
-            //{
-            //    return;
-            //}
-
             new JobHost().RunAndBlock();
         }
     }
