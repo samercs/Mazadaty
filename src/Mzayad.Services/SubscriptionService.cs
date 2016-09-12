@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Mzayad.Core.Exceptions;
 using Mzayad.Data;
 using Mzayad.Models;
+using Mzayad.Models.Enum;
+using Mzayad.Services.Identity;
+using OrangeJetpack.Localization;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using Mzayad.Models.Enum;
-using Mzayad.Services.Identity;
-using OrangeJetpack.Localization;
 
 namespace Mzayad.Services
 {
@@ -200,17 +201,17 @@ namespace Mzayad.Services
             var result = ValidateSubscription(subscription);
             if (!result.IsValid)
             {
-                throw new Exception("Subscription is not valid for purchase.");
+                throw new SubscriptionInvalidForPurchaseException("Subscription is not valid for purchase.");
             }
 
             if (!subscription.PriceTokensIsValid)
             {
-                throw new Exception("Subscription is not valid for purchase with tokens.");
+                throw new SubscriptionCannotBePurchasesWithTokensException("Subscription is not valid for purchase with tokens.");
             }
 
             if (subscription.PriceTokens > user.Tokens)
             {
-                throw new Exception("Subscription cannot be purchased, user does not have enough available tokens.");
+                throw new InsufficientTokensException("Subscription cannot be purchased, user does not have enough available tokens.");
             }
 
             var order = await orderService.CreateOrderForSubscription(subscription, user, PaymentMethod.Tokens);

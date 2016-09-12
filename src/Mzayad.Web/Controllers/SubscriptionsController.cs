@@ -1,15 +1,16 @@
-﻿using System;
-using Mzayad.Services;
+﻿using Mzayad.Services;
+using Mzayad.Services.Payment;
+using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
+using Mzayad.Web.Models.Shared;
 using Mzayad.Web.Models.Subscriptions;
 using Mzayad.Web.Resources;
 using OrangeJetpack.Base.Core.Formatting;
+using OrangeJetpack.Base.Web;
+using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Mzayad.Services.Payment;
-using Mzayad.Web.Core.Configuration;
-using Mzayad.Web.Models.Shared;
-using OrangeJetpack.Base.Web;
+using Mzayad.Core.Exceptions;
 
 namespace Mzayad.Web.Controllers
 {
@@ -91,30 +92,23 @@ namespace Mzayad.Web.Controllers
             try
             {
                 await _subscriptionService.BuySubscriptionWithTokens(subscription, user, AuthService.UserHostAddress());
+
+                await UpdateCachedSubscription();
+
+                SetStatusMessage(StringFormatter.ObjectFormat(Global.SubscriptionPurchaseAcknowledgement, new { subscription }));
             }
-            catch (Exception exception)
+            catch (SubscriptionInvalidForPurchaseException)
             {
-                if (exception.Message == "Subscription is not valid for purchase.")
-                {
-                    SetStatusMessage(Global.SubscriptionNotValidForPurchaseErrorMessage, StatusMessageType.Error);
-                }
-                else if (exception.Message == "Subscription is not valid for purchase with tokens.")
-                {
-                    SetStatusMessage(Global.SubscriptionNotValidForPurchaseWithTokensErrorMessage, StatusMessageType.Error);
-                }
-                else if (exception.Message ==
-                         "Subscription cannot be purchased, user does not have enough available tokens.")
-                {
-                    SetStatusMessage(Global.NoEnoughTokensErrorMessage, StatusMessageType.Error);
-                }
-
-                return RedirectToAction("Dashboard", "User");
+                SetStatusMessage(Global.SubscriptionNotValidForPurchaseErrorMessage, StatusMessageType.Error);
             }
-
-
-            await UpdateCachedSubscription();
-
-            SetStatusMessage(StringFormatter.ObjectFormat(Global.SubscriptionPurchaseAcknowledgement, new { subscription }));
+            catch (SubscriptionCannotBePurchasesWithTokensException)
+            {
+                SetStatusMessage(Global.SubscriptionNotValidForPurchaseWithTokensErrorMessage, StatusMessageType.Error);
+            }
+            catch (InsufficientTokensException)
+            {
+                SetStatusMessage(Global.NoEnoughTokensErrorMessage, StatusMessageType.Error);
+            }
 
             return RedirectToAction("Dashboard", "User");
         }

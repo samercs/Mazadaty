@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\InsufficientTokensException.cs" />
+    <Compile Include="Exceptions\SubscriptionCannotBePurchasesWithTokensException.cs" />
+    <Compile Include="Exceptions\SubscriptionInvalidForPurchaseException.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\UriExtensions.cs" />
     <Compile Include="Formatting\CurrencyFormatter.cs" />
