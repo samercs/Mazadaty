@@ -34,7 +34,7 @@
     @RenderSection("styles", false)
 </head>
 <body id="@Html.Ojs().PageIdentifier()">
-<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar navbar-inverse">
 
     @{
         var routeValues = new {area = "", language = LanguageCode };
@@ -45,27 +45,24 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
+            @*<i class="fa fa-bars fa-lg"></i>*@
         </button>
-        <a href="@Url.Action("Index", "Home", routeValues)" class="navbar-brand text-uppercase">Zeedli</a>
-        <nav class="navbar-collapse collapse">
-            <ul class="@(Html.IsArabic() ? "nav navbar-nav navbar-left navbar-user" : "nav navbar-nav navbar-right navbar-user")">
-                @Html.Partial("_Layout_UserMyAccount")
-                @Html.Partial("_Layout_LanguageSelector")
-            </ul>
-        </nav>
+        <a href="@Url.Action("Index", "Home", routeValues)" class="navbar-brand"><img src="https://az723232.vo.msecnd.net/assets/zeedli-logo-636092669308502810.svg" alt="Zeedli" style="width: 150px;" /></a>
     </div>
     <div class="container">
         @Html.Action("SubscriptionStatus", "Home", new { area = "" })
         <nav class="navbar-collapse collapse">
-            <ul class="@(Html.IsArabic() ? "nav navbar-nav navbar-right navbar-main" : "nav navbar-nav navbar-left navbar-main")">
+            <ul class="nav navbar-nav @(Html.IsArabic() ? "navbar-right" : "navbar-left")">
                 <li>@Html.ActionLink(Global.Home, "Index", "Home", routeValues, null)</li>
                 <li>@Html.ActionLink(Global.HowItWorks, "Index", "Pages", new { Area = "", Language = LanguageCode, Slug = "how-it-works"}, null)</li>
                 <li>@Html.ActionLink(Global.BuyNow, "BuyNow", "Home", routeValues, null)</li>
-                @*<li>@Html.ActionLink(Global.BuySubscription, "Index", "Subscriptions", routeValues, null)</li>*@
                 <li>@Html.ActionLink(Global.ContactUs, "Index", "Pages", new { Area = "", Language = LanguageCode, Slug = "contact-us" }, null)</li>
             </ul>
+            <ul class="nav navbar-nav @(Html.IsArabic() ? "navbar-left" : "navbar-right")">
+                @Html.Partial("_Layout_UserMyAccount")
+                @Html.Partial("_Layout_LanguageSelector")
+            </ul>
         </nav>
-
     </div>
 </div>
     <div id="main" class="container body-content">

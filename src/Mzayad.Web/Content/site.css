@@ -65,7 +65,6 @@ ol ol {
   color: #b94a48;
 }
 body {
-  padding-top: 135px;
   padding-bottom: 20px;
 }
 .body-content {
@@ -93,6 +92,18 @@ body {
   background-image: none;
   box-shadow: none;
 }
+.navbar-inverse .navbar-toggle {
+  margin-left: 0;
+  margin-right: 0;
+}
+.navbar-inverse .navbar-toggle .icon-bar {
+  background-color: #333;
+}
+.navbar-inverse .navbar-toggle:hover .icon-bar,
+.navbar-inverse .navbar-toggle:focus .icon-bar,
+.navbar-inverse .navbar-toggle:active .icon-bar {
+  background-color: #fff;
+}
 .navbar-left {
   margin-left: -15px;
 }
@@ -100,26 +111,12 @@ body {
   margin-right: -15px;
 }
 .navbar-brand {
+  display: block;
   height: auto;
-  font-size: 3rem;
-  font-weight: bold;
-  line-height: 100%;
-  padding-top: 30px;
-  padding-bottom: 15px;
 }
-.navbar-main > li > a {
-  font-size: 1.5rem;
-  text-shadow: none;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-.navbar-user > li > a,
-.navbar-user .btn-link {
-  text-decoration: none;
-  font-size: 1.4rem !important;
-  text-shadow: none;
-  padding: 30px 15px 15px 15px !important;
-  border: 0;
+.navbar-collapse {
+  margin-left: -15px !important;
+  margin-right: -15px !important;
 }
 .dropdown-menu > li > a:hover,
 .dropdown-menu > li > a:focus {
