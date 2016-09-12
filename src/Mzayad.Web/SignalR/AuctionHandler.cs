@@ -6,11 +6,11 @@ using Mzayad.Models.Enums;
 using Mzayad.Services;
 using Mzayad.Services.Activity;
 using Mzayad.Services.Identity;
-using Mzayad.Web.Core.Caching;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using OrangeJetpack.Base.Web.Caching;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -100,8 +100,9 @@ namespace Mzayad.Web.SignalR
 
         private List<LiveAuctionModel> GetAuctionsFromCache()
         {
-            var auctions = _cacheService.GetList<LiveAuctionModel>(CacheKeys.LiveAuctions) ??
-                           new List<LiveAuctionModel>();
+            var auctions = _cacheService.TryGetList(CacheKeys.LiveAuctions, () => new List<LiveAuctionModel>());
+
+            Trace.TraceInformation($"AuctionHandler.GetAuctionsFromCache(): {Serialize(auctions)}");
 
             return auctions.ToList();
         }

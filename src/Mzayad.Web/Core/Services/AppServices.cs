@@ -1,5 +1,5 @@
 ﻿using Mzayad.Data;
-using Mzayad.Web.Core.Caching;
+using OrangeJetpack.Base.Web.Caching;
 using OrangeJetpack.Cms.Client;
 using OrangeJetpack.Services.Client.Messaging;
 using OrangeJetpack.Services.Client.Storage;

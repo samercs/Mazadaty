@@ -1,19 +1,20 @@
-﻿using System.Configuration;
-using System.Reflection;
-using System.Web.Http;
-using System.Web.Mvc;
-using Autofac;
+﻿using Autofac;
 using Autofac.Integration.Mvc;
-using Autofac.Integration.WebApi;
 using Autofac.Integration.SignalR;
+using Autofac.Integration.WebApi;
 using Microsoft.AspNet.SignalR;
 using Mzayad.Data;
 using Mzayad.Services.Activity;
-using Mzayad.Web.Core.Caching;
 using Mzayad.Web.Core.Services;
+using OrangeJetpack.Base.Web.Caching;
 using OrangeJetpack.Cms.Client;
 using OrangeJetpack.Services.Client.Messaging;
 using OrangeJetpack.Services.Client.Storage;
+using System;
+using System.Configuration;
+using System.Reflection;
+using System.Web.Http;
+using System.Web.Mvc;
 
 namespace Mzayad.Web
 {
@@ -71,15 +72,13 @@ namespace Mzayad.Web
         /// </remarks>
         private static ICacheService GetCacheService(IComponentContext c)
         {
-            //return new HttpCacheService();
+            var hostName = Environment.GetEnvironmentVariable("WEBSITE_HOSTNAME");
+            if (string.IsNullOrEmpty(hostName))
+            {
+                return new HttpCacheService();
+            }
 
-#if DEBUG
-            return new HttpCacheService();
-#else           
-            var connectionString = c.Resolve<IAppSettings>().CacheConnection;
-            var cacheKeyPrefix = "mz";
-            return new RedisCacheService(connectionString, cacheKeyPrefix);
-#endif
+            return new RedisCacheService();
         }
     }
 }

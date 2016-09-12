@@ -1,6 +1,6 @@
 using Microsoft.AspNet.SignalR;
 using Mzayad.Data;
-using Mzayad.Web.Core.Caching;
+using OrangeJetpack.Base.Web.Caching;
 using System.Threading.Tasks;
 
 namespace Mzayad.Web.SignalR
