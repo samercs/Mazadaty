@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Mzayad.Models.Enum;
+using Mzayad.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Mzayad.Models.Enum;
-using Mzayad.Models.Enums;
 
 namespace Mzayad.Models
 {
@@ -46,10 +46,7 @@ namespace Mzayad.Models
         [Required]
         public UserProfileStatus ProfileStatus { get; set; }
 
-        public string ProfileUrl
-        {
-            get { return string.Format("https://www.mzayad.com/profiles/{0}", UserName.ToLowerInvariant()); }
-        }
+        public string ProfileUrl => $"https://www.zeedli.com/profiles/{UserName.ToLowerInvariant()}";
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
