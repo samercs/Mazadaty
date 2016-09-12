@@ -1,6 +1,7 @@
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using Mzayad.Data;
+using Mzayad.Models;
 using Mzayad.Models.Enums;
 using Mzayad.Services;
 using Mzayad.Services.Activity;
@@ -17,13 +18,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Mzayad.Models;
 
 namespace Mzayad.Web.SignalR
 {
     public class AuctionHandler
     {
-        private readonly static Lazy<AuctionHandler> _instance = new Lazy<AuctionHandler>(() => new AuctionHandler(GlobalHost.ConnectionManager.GetHubContext<AuctionHub>().Clients));
+        private static readonly Lazy<AuctionHandler> _instance = new Lazy<AuctionHandler>(() => new AuctionHandler(GlobalHost.ConnectionManager.GetHubContext<AuctionHub>().Clients));
         private readonly object _updateLock = new object();
         private readonly TimeSpan _updateInterval = TimeSpan.FromSeconds(1);
         private volatile bool _updatingAuctions;
@@ -55,6 +55,8 @@ namespace Mzayad.Web.SignalR
 
         public AuctionHandler Setup(IDataContextFactory dataContextFactory, ICacheService cacheService)
         {
+            Trace.TraceInformation("Setup AuctionHandler...");
+
             _cacheService = _cacheService ?? cacheService;
             _auctionService = _auctionService ?? new AuctionService(dataContextFactory);
             _userService = _userService ?? new UserService(dataContextFactory);
@@ -119,7 +121,7 @@ namespace Mzayad.Web.SignalR
                 }
 
                 _updatingAuctions = true;
-
+                
                 var auctions = GetAuctionsFromCache();
                 if (auctions == null)
                 {
@@ -173,7 +175,7 @@ namespace Mzayad.Web.SignalR
 
             Clients.All.closeAuction(auctionId, order.UserId, order.OrderId);
 
-            if(order != null)
+            if(order.UserId != null)
             {
                 _activityQueueService.QueueActivity(ActivityType.WinAuction, order.UserId);
             }

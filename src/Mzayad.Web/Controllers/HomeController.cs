@@ -3,6 +3,7 @@ using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Models.Home;
 using System;
+using System.Diagnostics;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -27,6 +28,8 @@ namespace Mzayad.Web.Controllers
             {
                 return RedirectToAction("Index", new { Language });
             }
+
+            Trace.TraceInformation("HomeController.Index()");
 
             //var auctions = await CacheService.TryGet(CacheKeys.CurrentAuctions, () => _auctionService.GetCurrentAuctions(Language), TimeSpan.FromDays(1));
             var liveAuctions = await _auctionService.GetLiveAuctions(Language);
