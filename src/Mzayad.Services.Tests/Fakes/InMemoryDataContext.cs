@@ -60,7 +60,7 @@ namespace Mzayad.Services.Tests.Fakes
             return Task<int>.Factory.StartNew(() => 1);
         }
         
-        public void SetModified()
+        public void SetModified(object entity)
         {
             // do nothing
         }

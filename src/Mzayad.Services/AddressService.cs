@@ -59,7 +59,7 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                dc.SetModified();
+                dc.SetModified(address);
                 await dc.SaveChangesAsync();
                 return address;
             }

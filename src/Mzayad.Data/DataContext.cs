@@ -60,21 +60,15 @@ namespace Mzayad.Data
             base.OnModelCreating(modelBuilder);
         }
 
-        public void SetModified()
+        public void SetModified(object entity)
         {
-            var entities = ChangeTracker
-                .Entries()
-                .Where(i => i.State == EntityState.Modified)
-                .Select(i => i.Entity as EntityBase);
-
-            foreach (var entity in entities.Where(i=>i!=null))
-            {
-                entity.ModifiedUtc=DateTime.UtcNow;
-            }
+            Entry(entity).State = EntityState.Modified;
         }
 
         public override int SaveChanges()
         {
+            SetModifiedUtc();
+
             try
             {
                 return base.SaveChanges();
@@ -82,7 +76,7 @@ namespace Mzayad.Data
             catch (DbEntityValidationException ex)
             {
                 var errors = TraceValidationErrors(ex);
-                var message = string.Format("EntityValidationErrors - {0}", string.Join(",", errors));
+                var message = $"EntityValidationErrors - {string.Join(",", errors)}";
 
                 throw new Exception(message);
             }
@@ -90,6 +84,8 @@ namespace Mzayad.Data
 
         public override Task<int> SaveChangesAsync()
         {
+            SetModifiedUtc();
+
             try
             {
                 return base.SaveChangesAsync();
@@ -100,6 +96,19 @@ namespace Mzayad.Data
                 var message = string.Format("EntityValidationErrors - {0}", string.Join(",", errors));
 
                 throw new Exception(message);
+            }
+        }
+
+        private void SetModifiedUtc()
+        {
+            var entities = ChangeTracker
+                .Entries()
+                .Where(i => i.State == EntityState.Modified)
+                .Select(i => i.Entity as EntityBase);
+
+            foreach (var entity in entities.Where(i => i != null))
+            {
+                entity.ModifiedUtc = DateTime.UtcNow;
             }
         }
 

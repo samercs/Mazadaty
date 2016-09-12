@@ -160,7 +160,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             var specificationsContent = GetSpecificationsLocalizedContent(data);
             var productSpecifications = GetProductSpecifications(model, product, specificationsContent);
 
-            await _productService.UpdateProduct(product, model.SelectedCategories.ToList(), productSpecifications);
+            await _productService.UpdateProduct(product, model.SelectedCategories, productSpecifications);
 
             var productName = product.Localize("en", i => i.Name).Name;
 

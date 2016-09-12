@@ -1,5 +1,12 @@
-﻿
+﻿@model IReadOnlyCollection<Mzayad.Models.Auction>
+
 @{
     ViewBag.Title = Global.BuyNow;
 }
 
+<ol id="closed-auctions">
+    @foreach (var auction in Model)
+    {
+        <li>@Html.DisplayFor(i => auction, "BuyNowTile")</li>
+    }
+</ol>

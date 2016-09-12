@@ -110,7 +110,7 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                dc.SetModified();
+                dc.SetModified(category);
                 await dc.SaveChangesAsync();
 
                 return category;

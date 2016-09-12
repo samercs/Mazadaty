@@ -1,0 +1,27 @@
+﻿@using OrangeJetpack.Base.Core.Formatting
+@model Mzayad.Models.Auction
+
+<div class="auction-tile">
+    <div class="auction-tile-image">
+        <a href="@Url.Action("Index", "Products", new {productId = Model.ProductId})">
+            <img class="img-responsive" src="@Model.Product.MainImage().ImageMdUrl" alt="@Model.Title"/>
+            @if (Model.Product.Sponsor != null)
+            {
+                <div class="sponsor-ribbon"><span>@Model.Product.Sponsor.Name</span></div>
+            }
+        </a>
+    </div>
+    <div class="auction-tile-details">
+        <a href="@Url.Action("Index", "Products", new {productId = Model.ProductId})">
+            <h3 class="auction-tile-title auction-tile-row">@Model.Title</h3>
+        </a>
+    </div>
+    <div class="auction-tile-buynow auction-tile-row">
+        <a class="btn btn-default btn-rounded text-uppercase" href="@Url.Action("BuyNow", "Orders", new {language = LanguageCode, auctionId = Model.AuctionId})">
+            @StringFormatter.ObjectFormat(Global.BuyNowWithPrice, new {Model.BuyNowPrice})
+        </a>
+    </div>
+    <div class="auction-tile-row">
+        <a class="btn btn-rounded btn-outline btn-unstyled" href="@Url.Action("Add", "WishList", new {item = HttpUtility.UrlEncode(Model.Title)})">@Global.AddToWishList</a>
+    </div>
+</div>
