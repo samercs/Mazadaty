@@ -1,4 +1,5 @@
-﻿using Mzayad.Services;
+﻿using System;
+using Mzayad.Services;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Models.Subscriptions;
 using Mzayad.Web.Resources;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 using Mzayad.Services.Payment;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Models.Shared;
+using OrangeJetpack.Base.Web;
 
 namespace Mzayad.Web.Controllers
 {
@@ -17,7 +19,7 @@ namespace Mzayad.Web.Controllers
         private readonly SubscriptionService _subscriptionService;
         private readonly AddressService _addressService;
         private readonly KnetService _knetService;
-        
+
         public SubscriptionsController(IAppServices appServices) : base(appServices)
         {
             _subscriptionService = new SubscriptionService(DataContextFactory);
@@ -86,7 +88,29 @@ namespace Mzayad.Web.Controllers
             var user = await AuthService.CurrentUser();
             user.Address = await _addressService.GetAddress(user.AddressId);
 
-            await _subscriptionService.BuySubscriptionWithTokens(subscription, user, AuthService.UserHostAddress());
+            try
+            {
+                await _subscriptionService.BuySubscriptionWithTokens(subscription, user, AuthService.UserHostAddress());
+            }
+            catch (Exception exception)
+            {
+                if (exception.Message == "Subscription is not valid for purchase.")
+                {
+                    SetStatusMessage(Global.SubscriptionNotValidForPurchaseErrorMessage, StatusMessageType.Error);
+                }
+                else if (exception.Message == "Subscription is not valid for purchase with tokens.")
+                {
+                    SetStatusMessage(Global.SubscriptionNotValidForPurchaseWithTokensErrorMessage, StatusMessageType.Error);
+                }
+                else if (exception.Message ==
+                         "Subscription cannot be purchased, user does not have enough available tokens.")
+                {
+                    SetStatusMessage(Global.NoEnoughTokensErrorMessage, StatusMessageType.Error);
+                }
+
+                return RedirectToAction("Dashboard", "User");
+            }
+
 
             await UpdateCachedSubscription();
 
