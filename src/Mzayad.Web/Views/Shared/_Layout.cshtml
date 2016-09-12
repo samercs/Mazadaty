@@ -1,4 +1,5 @@
-﻿@using Mzayad.Web.Extensions
+﻿@using Mzayad.Web.Core.Identity
+@using Mzayad.Web.Extensions
 @using OrangeJetpack.Base.Web.Extensions
 <!DOCTYPE html>
 <html lang="@LanguageCode" dir="@(Html.IsArabic() ? "rtl" : "ltr")">
@@ -41,16 +42,16 @@
     }
 
     <div class="container">
+        <a href="@Url.Action("Index", "Home", routeValues)" class="navbar-brand"><img src="https://az723232.vo.msecnd.net/assets/zeedli-logo-636092669308502810.svg" alt="Zeedli" style="width: 150px;" /></a>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-            @*<i class="fa fa-bars fa-lg"></i>*@
         </button>
-        <a href="@Url.Action("Index", "Home", routeValues)" class="navbar-brand"><img src="https://az723232.vo.msecnd.net/assets/zeedli-logo-636092669308502810.svg" alt="Zeedli" style="width: 150px;" /></a>
+        @Html.Action("SubscriptionStatus", "Home", new { area = "" })
     </div>
     <div class="container">
-        @Html.Action("SubscriptionStatus", "Home", new { area = "" })
+     
         <nav class="navbar-collapse collapse">
             <ul class="nav navbar-nav @(Html.IsArabic() ? "navbar-right" : "navbar-left")">
                 <li>@Html.ActionLink(Global.Home, "Index", "Home", routeValues, null)</li>
@@ -61,6 +62,12 @@
             <ul class="nav navbar-nav @(Html.IsArabic() ? "navbar-left" : "navbar-right")">
                 @Html.Partial("_Layout_UserMyAccount")
                 @Html.Partial("_Layout_LanguageSelector")
+                @if (User.IsInRole(Role.Administrator.ToString()))
+                {
+                <li>
+                    <a href="@(Url.Action("Index", "Auctions", new { area = "admin" }))"><i class="fa fa-ellipsis-v fa-pad-right"></i></a>
+                </li>
+                }
             </ul>
         </nav>
     </div>
