@@ -29,9 +29,6 @@ namespace Mzayad.Web.Controllers
                 return RedirectToAction("Index", new { Language });
             }
 
-            Trace.TraceInformation("HomeController.Index()");
-
-            //var auctions = await CacheService.TryGet(CacheKeys.CurrentAuctions, () => _auctionService.GetCurrentAuctions(Language), TimeSpan.FromDays(1));
             var liveAuctions = await _auctionService.GetLiveAuctions(Language);
             var closedAuctions = await _auctionService.GetClosedAuctions(Language, 12);
             var upcomingAuctions = await _auctionService.GetUpcomingAuctions(Language, 12);

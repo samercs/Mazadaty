@@ -55,7 +55,7 @@ namespace Mzayad.Web.SignalR
 
         public AuctionHandler Setup(IDataContextFactory dataContextFactory, ICacheService cacheService)
         {
-            Trace.TraceInformation("Setup AuctionHandler...");
+            Trace.TraceInformation("AuctionHandler.Setup()");
 
             _cacheService = _cacheService ?? cacheService;
             _auctionService = _auctionService ?? new AuctionService(dataContextFactory);
@@ -70,7 +70,7 @@ namespace Mzayad.Web.SignalR
 
         public async Task<string> InitAuctions(int[] auctionIds)
         {
-            Trace.TraceInformation("InitAuctions: " + string.Join(", ", auctionIds));
+            Trace.TraceInformation("AuctionHandler.InitAuctions(): " + string.Join(", ", auctionIds));
 
             try
             {
