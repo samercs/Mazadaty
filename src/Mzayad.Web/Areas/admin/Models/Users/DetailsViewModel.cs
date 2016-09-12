@@ -29,12 +29,11 @@ namespace Mzayad.Web.Areas.admin.Models.Users
         public string Email { get; set; }
 
         public DateTime CreatedUtc { get; set; }
-
         public DateTime? SubscriptionUtc { get; set; }
-
         public string AvatarUrl { get; set; }
-
         public List<SelectListItem> Roles { get; set; }
+
+        public bool IsLocked { get; set; }
 
         public IReadOnlyCollection<SubscriptionLog> SubscriptionLogs { get; set; }
         public IReadOnlyCollection<TokenLog> TokenLogs { get; set; }

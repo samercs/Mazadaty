@@ -103,18 +103,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return HttpNotFound();
             }
 
-            if (await AuthService.IsLocked(id))
-            {
-                SetStatusMessage("This user's account is currently deleted or disabled.", StatusMessageType.Error);
-            }
-
             var model = await new DetailsViewModel
             {
                 SubscriptionLogs = await _subscriptionService.GetSubscriptionLogsByUserId(id),
                 TokenLogs = await _tokenService.GetTokenLogsByUserId(id),
                 Trophies = await _trophyService.GetUsersTrophies(id, Language),
                 Auctions = await _auctionService.GetAuctionsWon(user.Id, Language),
-                Bids = await _bidService.GetRecentBidHistoryForUser(user.Id, Language)
+                Bids = await _bidService.GetRecentBidHistoryForUser(user.Id, Language),
+                IsLocked = await AuthService.IsLocked(id)
             }.Hydrate(user, _userService);
 
             return View(model);
