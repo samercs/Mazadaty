@@ -1,0 +1,15 @@
+﻿$builder = New-Object System.UriBuilder
+$builder.Scheme = 'https'
+$builder.Host = [environment]::GetEnvironmentVariable("WEBSITE_HOSTNAME")
+$builder.Port = -1
+$url = $builder.ToString()
+
+Write-Output "Pinging $url...";
+
+$ProgressPreference = "SilentlyContinue"; #https://www.amido.com/code/powershell-win32-internal-error-the-handle-is-invalid-0x6/
+
+$sw = [Diagnostics.Stopwatch]::StartNew()
+
+$response = Invoke-WebRequest -Uri $url -Method HEAD -UseBasicParsing
+
+Write-Output "StatusCode: {0}, Time: {1}ms" -f $response.StatusCode, $sw.ElapsedMilliseconds
