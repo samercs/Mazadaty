@@ -29,7 +29,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             var dir = new DirectoryInfo(docs);
 
             return dir.GetFiles("*.md")
-                .Where(i => i.Name != "home.md")
+                .Where(i => i.Name != "Home.md")
                 .OrderByDescending(i => i.Name)
                 .ToList();
         }
