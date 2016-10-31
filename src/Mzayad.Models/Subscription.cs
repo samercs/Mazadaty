@@ -23,20 +23,11 @@ namespace Mzayad.Models
 
         public double SortOrder { get; set; }
 
-        public bool PriceCurrencyIsValid
-        {
-            get { return PriceCurrency.HasValue && PriceCurrency.Value > 0; }
-        }
+        public bool PriceCurrencyIsValid => PriceCurrency.HasValue && PriceCurrency.Value > 0;
 
-        public bool PriceTokensIsValid
-        {
-            get { return PriceTokens.HasValue && PriceTokens.Value > 0; }
-        }
+        public bool PriceTokensIsValid => PriceTokens.HasValue && PriceTokens.Value > 0;
 
-        public bool IsSoldOut
-        {
-            get { return Quantity.HasValue && Quantity.Value <= 0; }
-        }
+        public bool IsSoldOut => Quantity.HasValue && Quantity.Value <= 0;
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

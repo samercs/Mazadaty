@@ -217,7 +217,7 @@ namespace Mzayad.Services
             var order = await orderService.CreateOrderForSubscription(subscription, user, PaymentMethod.Tokens);
             await orderService.SubmitOrderForProcessing(order, user.Id);
 
-            await tokenService.RemoveTokensFromUser(user, subscription.PriceTokens, user, userHostAddress);
+            await tokenService.RemoveTokensFromUser(user, subscription.PriceTokens, user, userHostAddress, subscription.Name);
 
             await orderService.CompleteSubscriptionOrder(order, user.Id, userHostAddress);
             

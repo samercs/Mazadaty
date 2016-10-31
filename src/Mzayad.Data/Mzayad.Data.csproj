@@ -355,6 +355,10 @@
     <Compile Include="Migrations\201610311207225_AddAccountantRole.Designer.cs">
       <DependentUpon>201610311207225_AddAccountantRole.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610311300061_AddTokenLogUsage.cs" />
+    <Compile Include="Migrations\201610311300061_AddTokenLogUsage.Designer.cs">
+      <DependentUpon>201610311300061_AddTokenLogUsage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -578,6 +582,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610311207225_AddAccountantRole.resx">
       <DependentUpon>201610311207225_AddAccountantRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610311300061_AddTokenLogUsage.resx">
+      <DependentUpon>201610311300061_AddTokenLogUsage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

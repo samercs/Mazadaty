@@ -17,7 +17,7 @@ namespace Mzayad.Services
             _userManager = new UserManager(dataContextFactory);
         }
 
-        public async Task AddTokensToUser(ApplicationUser user, int? tokens, ApplicationUser modifiedByUser, string userHostAddress)
+        public async Task AddTokensToUser(ApplicationUser user, int? tokens, ApplicationUser modifiedByUser, string userHostAddress,string usage)
         {
             if (!tokens.HasValue)
             {
@@ -39,14 +39,15 @@ namespace Mzayad.Services
                     ModifiedByUserId = modifiedByUser.Id,
                     OriginalTokenAmount = originalTokenAmount,
                     ModifiedTokenAmount = user.Tokens,
-                    UserHostAddress = userHostAddress
+                    UserHostAddress = userHostAddress,
+                    Usage = usage
                 });
 
                 await dc.SaveChangesAsync();
             }
         }
 
-        public async Task RemoveTokensFromUser(ApplicationUser user, int? tokens, ApplicationUser modifiedByUser, string userHostAddress)
+        public async Task RemoveTokensFromUser(ApplicationUser user, int? tokens, ApplicationUser modifiedByUser, string userHostAddress, string usage)
         {
             if (!tokens.HasValue)
             {
@@ -55,7 +56,7 @@ namespace Mzayad.Services
 
             tokens = tokens * -1;
 
-            await AddTokensToUser(user, tokens, modifiedByUser, userHostAddress);
+            await AddTokensToUser(user, tokens, modifiedByUser, userHostAddress, usage);
         }
 
         /// <summary>
