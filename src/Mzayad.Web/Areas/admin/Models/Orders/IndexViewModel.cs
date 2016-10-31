@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Humanizer;
+﻿using Humanizer;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
-using Mzayad.Web.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace Mzayad.Web.Areas.admin.Models.Orders
 {
     public class IndexViewModel
     {
-        public IEnumerable<Order> Orders { get; set; }
+        public IEnumerable<OrderModel> Orders { get; set; }
         public string Search { get; set; }
         public OrderStatus? Status { get; set; }
 
