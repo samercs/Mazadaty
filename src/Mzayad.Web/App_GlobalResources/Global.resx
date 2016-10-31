@@ -801,4 +801,10 @@
   <data name="AutoBidNotificationInstruction" xml:space="preserve">
     <value>Notify me for auto bids</value>
   </data>
+  <data name="FlatNumber" xml:space="preserve">
+    <value>Flat No.</value>
+  </data>
+  <data name="Floor" xml:space="preserve">
+    <value>Floor</value>
+  </data>
 </root>

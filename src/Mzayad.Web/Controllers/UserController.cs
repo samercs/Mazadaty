@@ -118,7 +118,7 @@ namespace Mzayad.Web.Controllers
         public async Task<ActionResult> EditAccount()
         {
             var user = await AuthService.CurrentUser();
-            Address address = null;
+            var address= new Address();
             if (user.AddressId.HasValue)
             {
                 address = await _addressService.GetAddress(user.AddressId.Value);
@@ -169,6 +169,8 @@ namespace Mzayad.Web.Controllers
                 address.CountryCode = model.Address.CountryCode;
                 address.PostalCode = model.Address.PostalCode;
                 address.StateProvince = model.Address.StateProvince;
+                address.Floor = model.Address.Floor;
+                address.FlatNumber = model.Address.FlatNumber;
                 await _addressService.Update(address);
             }
 
