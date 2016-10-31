@@ -48,6 +48,12 @@
                     <a href="@(Url.Action("Index", "Auctions", new { area = "admin" }))"><i class="fa fa-ellipsis-v fa-pad-right"></i></a>
                 </li>
                 }
+                @if (User.IsInRole(Role.Accountant.ToString()))
+                {
+                    <li>
+                        <a href="@(Url.Action("Index", "Products", new { area = "Reports" }))"><i class="fa fa-ellipsis-v fa-pad-right"></i></a>
+                    </li>
+                }
             </ul>
         </nav>
     </div>

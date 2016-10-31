@@ -1,21 +1,19 @@
 ﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Mzayad.Services;
+using Mzayad.Web.Areas.Reports.Models.Tokens;
 using Mzayad.Web.Controllers;
 using Mzayad.Web.Core.ActionResults;
+using Mzayad.Web.Core.Attributes;
+using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
-using OrangeJetpack.Base.Core.Formatting;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Mzayad.Web.Areas.Reports.Models.Subscriptions;
-using Mzayad.Web.Areas.Reports.Models.Tokens;
-using Mzayad.Web.Core.Attributes;
-using Mzayad.Web.Core.Identity;
 
 namespace Mzayad.Web.Areas.Reports.Controllers
 {
-    [RoleAuthorize(Role.Administrator)]
+    [RoleAuthorize(Role.Administrator, Role.Accountant)]
     [RouteArea("reports"), RoutePrefix("tokens")]
     public class TokensController : ApplicationController
     {

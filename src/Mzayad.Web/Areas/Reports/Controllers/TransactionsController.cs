@@ -13,7 +13,7 @@ using Mzayad.Services;
 
 namespace Mzayad.Web.Areas.Reports.Controllers
 {
-    [RoleAuthorize(Role.Administrator)]
+    [RoleAuthorize(Role.Administrator, Role.Accountant)]
     [RouteArea("reports"), RoutePrefix("transactions")]
     public class TransactionsController : ApplicationController
     {
