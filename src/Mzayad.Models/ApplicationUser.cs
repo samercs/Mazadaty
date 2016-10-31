@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using OrangeJetpack.Base.Core.Formatting;
 
 namespace Mzayad.Models
 {
@@ -45,6 +46,8 @@ namespace Mzayad.Models
 
         [Required]
         public UserProfileStatus ProfileStatus { get; set; }
+
+        public string FullName => NameFormatter.GetFullName(FirstName, LastName);
 
         public string ProfileUrl => $"https://www.zeedli.com/profiles/{UserName.ToLowerInvariant()}";
 

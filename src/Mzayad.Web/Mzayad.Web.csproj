@@ -666,6 +666,7 @@
     <Content Include="Areas\Admin\Views\PageManagement\Index.cshtml" />
     <Content Include="Areas\Admin\Views\PageManagement\Add.cshtml" />
     <Content Include="Areas\Admin\Views\PageManagement\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Auctions\AutoBids.cshtml" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>

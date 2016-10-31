@@ -45,7 +45,9 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 return await dc.AutoBids
+                    .Include(i => i.User)
                     .Where(i => i.AuctionId == auctionId)
+                    .OrderByDescending(i => i.MaxBid)
                     .ToListAsync();
             }
         }
