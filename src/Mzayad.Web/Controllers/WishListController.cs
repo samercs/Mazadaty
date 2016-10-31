@@ -3,6 +3,7 @@ using Mzayad.Web.Core.Services;
 using Mzayad.Web.Models.WishList;
 using Mzayad.Web.Resources;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Mzayad.Web.Controllers
@@ -15,14 +16,14 @@ namespace Mzayad.Web.Controllers
 
         public WishListController(IAppServices appServices) : base(appServices)
         {
-            _wishListService=new WishListService(DataContextFactory);
-            _productService=new ProductService(DataContextFactory);
+            _wishListService = new WishListService(DataContextFactory);
+            _productService = new ProductService(DataContextFactory);
         }
 
         public async Task<ActionResult> Index()
         {
             var userId = AuthService.CurrentUserId();
-            var userWishList =await _wishListService.GetByUser(userId);
+            var userWishList = await _wishListService.GetByUser(userId);
             var model = new IndexViewModel()
             {
                 WishList = userWishList
@@ -32,6 +33,11 @@ namespace Mzayad.Web.Controllers
 
         public async Task<ActionResult> Add(string item = "")
         {
+            if (!string.IsNullOrEmpty(item))
+            {
+                item = HttpUtility.UrlDecode(item);
+            }
+
             var model = await new AddViewModel().Hydrate(AuthService, _productService);
             model.WishList.NameEntered = item;
 
