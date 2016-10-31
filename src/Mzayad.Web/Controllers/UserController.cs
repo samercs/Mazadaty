@@ -1,6 +1,10 @@
-﻿using Mzayad.Models;
+﻿using Microsoft.AspNet.Identity;
+using Mzayad.Models;
 using Mzayad.Models.Enum;
+using Mzayad.Models.Enums;
 using Mzayad.Services;
+using Mzayad.Services.Activity;
+using Mzayad.Services.Identity;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Extensions;
@@ -16,11 +20,6 @@ using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Glimpse.AspNet.Tab;
-using Microsoft.AspNet.Identity;
-using Mzayad.Models.Enums;
-using Mzayad.Services.Activity;
-using Mzayad.Services.Identity;
 
 namespace Mzayad.Web.Controllers
 {
@@ -36,7 +35,7 @@ namespace Mzayad.Web.Controllers
         private readonly TrophyService _trophyService;
         private readonly AuctionService _auctionService;
         private readonly WishListService _wishListService;
-        private IActivityQueueService _activityQueueService;
+        private readonly IActivityQueueService _activityQueueService;
 
         public UserController(IAppServices appServices)
             : base(appServices)
@@ -204,7 +203,12 @@ namespace Mzayad.Web.Controllers
         [Route("notifications")]
         public async Task<ActionResult> Notifications()
         {
-            var model = await new NotificationModelView().Hydrate(AuthService, _categoryService, _notificationService, Language);
+            var user = await AuthService.CurrentUser();
+            var model = await new NotificationModelView
+            {
+                AutoBidNotification = user.AutoBidNotification
+            }.Hydrate(AuthService, _categoryService, _notificationService, Language);
+
             return View(model);
         }
 
@@ -212,18 +216,20 @@ namespace Mzayad.Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Notifications(NotificationModelView model)
         {
-            var userId = AuthService.CurrentUserId();
+            var user = await AuthService.CurrentUser();
+            user.AutoBidNotification = model.AutoBidNotification;
 
             // clear all existing notifications for user
-            var notifications = (await _notificationService.GetByUser(userId)).ToList();
+            var notifications = (await _notificationService.GetByUser(user.Id)).ToList();
             await _notificationService.DeleteList(notifications);
+            await _userService.UpdateUser(user);
 
             // add back selected notifications
             if (model.SelectedCategories != null)
             {
                 var newNotifications = model.SelectedCategories.Select(i => new CategoryNotification
                 {
-                    UserId = userId,
+                    UserId = user.Id,
                     CategoryId = i
                 });
 

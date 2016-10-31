@@ -86,6 +86,7 @@ namespace Mzayad.Services.Identity
             update.ProfileStatus = user.ProfileStatus;
             update.Gender = user.Gender;
             update.Birthdate = user.Birthdate;
+            update.AutoBidNotification = user.AutoBidNotification;
 
             return await _userManager.UpdateAsync(update);
         }

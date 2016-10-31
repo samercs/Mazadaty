@@ -2,14 +2,10 @@
 
 @{
     ViewBag.Title = Global.Notifications;
-    
+
 }
 
 <p class="instruction">@Global.NotificationsInstructions</p>
-
-<h2>@Global.NewAuctionsByCategory</h2>
-
-<p>@Global.NewAuctionsByCategoryInstructions</p>
 
 <div class="row">
     <div class="@Html.Css().FormWide">
@@ -17,9 +13,20 @@
         {
             @Html.AntiForgeryToken()
 
+            <h2>@Global.NewAuctionsByCategory</h2>
+            <p>@Global.NewAuctionsByCategoryInstructions</p>
             <section>
                 <div class="form-group">
                     @Html.Partial("ProductCategories", Model)
+                </div>
+            </section>
+
+            <h2>@Global.AutoBid</h2>
+            <section>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>@Html.CheckBoxFor(i => i.AutoBidNotification)@Global.AutoBidNotificationInstruction</label>
+                    </div>
                 </div>
             </section>
 
@@ -33,9 +40,9 @@
 @section scripts {
     <script>
 
-        $(function() {
+        $(function () {
 
-            var onCategoryChange = function() {
+            var onCategoryChange = function () {
 
                 var checkbox = $(this);
                 var checked = checkbox.is(":checked");

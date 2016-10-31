@@ -347,6 +347,10 @@
     <Compile Include="Migrations\201608300840259_ReplaceModelBaseWithEntityBase.Designer.cs">
       <DependentUpon>201608300840259_ReplaceModelBaseWithEntityBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610311118454_AddUserAutoBidNotification.cs" />
+    <Compile Include="Migrations\201610311118454_AddUserAutoBidNotification.Designer.cs">
+      <DependentUpon>201610311118454_AddUserAutoBidNotification.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -564,6 +568,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608300840259_ReplaceModelBaseWithEntityBase.resx">
       <DependentUpon>201608300840259_ReplaceModelBaseWithEntityBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610311118454_AddUserAutoBidNotification.resx">
+      <DependentUpon>201610311118454_AddUserAutoBidNotification.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

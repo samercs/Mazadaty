@@ -798,4 +798,7 @@
   <data name="SubscriptionNotValidForPurchaseWithTokensErrorMessage" xml:space="preserve">
     <value>Subscription is not valid for purchase with tokens.</value>
   </data>
+  <data name="AutoBidNotificationInstruction" xml:space="preserve">
+    <value>Notify me for auto bids</value>
+  </data>
 </root>

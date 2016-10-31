@@ -232,6 +232,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notify me for auto bids.
+        /// </summary>
+        public static string AutoBidNotificationInstruction {
+            get {
+                return ResourceManager.GetString("AutoBidNotificationInstruction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auto bid successfully set..
         /// </summary>
         public static string AutoBidSaveSuccess {

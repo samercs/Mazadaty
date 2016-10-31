@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Mzayad.Models;
+using Mzayad.Services;
+using Mzayad.Web.Core.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
-using Mzayad.Models;
-using Mzayad.Services;
-using Mzayad.Web.Core.Services;
 
 namespace Mzayad.Web.Models.User
 {
@@ -16,6 +14,7 @@ namespace Mzayad.Web.Models.User
         public IEnumerable<CategoryNotification> CategoryNotification { get; set; }
         public string UserId { get; set; }
         public bool CreateNew { get; set; }
+        public  bool AutoBidNotification { get; set; }
 
         public async Task<NotificationModelView> Hydrate(IAuthService authService, CategoryService categoryService,NotificationService notificationService,string languageCode)
         {

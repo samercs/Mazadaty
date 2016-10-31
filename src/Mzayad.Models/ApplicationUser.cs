@@ -47,6 +47,8 @@ namespace Mzayad.Models
         [Required]
         public UserProfileStatus ProfileStatus { get; set; }
 
+        public bool AutoBidNotification { get; set; }
+
         public string FullName => NameFormatter.GetFullName(FirstName, LastName);
 
         public string ProfileUrl => $"https://www.zeedli.com/profiles/{UserName.ToLowerInvariant()}";

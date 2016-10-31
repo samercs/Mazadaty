@@ -36,6 +36,7 @@ namespace Mzayad.Services
                     .Where(i => i.Auction.StartUtc >= DbFunctions.AddMinutes(DateTime.UtcNow, 15))
                     .Where(i => i.Auction.StartUtc <= DbFunctions.AddMinutes(DateTime.UtcNow, 75))
                     .Where(i => i.Auction.Status == AuctionStatus.Public)
+                    .Where(i=>i.User.AutoBidNotification)
                     .ToListAsync();
             }
         }
