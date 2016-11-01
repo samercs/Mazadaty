@@ -205,7 +205,7 @@
     <value>We're sorry, an error occurred registering your account: {0}.</value>
   </data>
   <data name="RegistrationWelcomeMessage" xml:space="preserve">
-    <value>Welcome to zeedli {0}! As soon as you are ready &lt;a class='alert-link' href='#'&gt;check out our upcoming bids&lt;i class='fa fa-pad-left fa-angle-right'&gt;&lt;/i&gt;&lt;/a&gt;</value>
+    <value>Welcome to Zeedli {0}! As soon as you are ready &lt;a class='alert-link' href='{1}'&gt;check out our upcoming auctions&lt;i class='fa fa-pad-left fa-angle-right'&gt;&lt;/i&gt;&lt;/a&gt;</value>
   </data>
   <data name="Required" xml:space="preserve">
     <value>Required</value>

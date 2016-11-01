@@ -156,10 +156,10 @@ namespace Mzayad.Web.Controllers
             user.AddressId = address.AddressId;
             await _userService.UpdateUser(user);
 
-            await SendNewUserWelcomeEmail(user);
+            //await SendNewUserWelcomeEmail(user);
             SetNameAndEmailCookies(user, "");
 
-            SetStatusMessage(string.Format(Global.RegistrationWelcomeMessage, user.FirstName));
+            SetStatusMessage(string.Format(Global.RegistrationWelcomeMessage, user.FirstName, Url.Action("Index", "Home", new { area = "" })));
 
             return RedirectToAction("Dashboard", "User", new { Language });
         }
