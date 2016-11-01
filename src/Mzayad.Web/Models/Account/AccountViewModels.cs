@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web.Mvc;
 using Mzayad.Models;
+using Mzayad.Models.Enums;
+using Mzayad.Web.Resources;
 
 namespace Mzayad.Web.Models.Account
 {
@@ -12,7 +16,7 @@ namespace Mzayad.Web.Models.Account
         [EmailAddress]
         public string Email { get; set; }
     }
-    
+
     public class SignInViewModel
     {
         [Required]
@@ -46,7 +50,7 @@ namespace Mzayad.Web.Models.Account
     public class ResetPasswordViewModel
     {
         [Required]
-        [StringLength(Int32.MaxValue, MinimumLength = 6)]
+        [StringLength(int.MaxValue, MinimumLength = 6)]
         [DataType(DataType.Password)]
         public string NewPassword { get; set; }
     }

@@ -89,6 +89,19 @@ namespace Mzayad.Web.Controllers
             return RedirectToAction("Index", "Home", new { Language });
         }
 
+        public PartialViewResult ChangeCountry(string countryCode)
+        {
+            var viewName = AddressPartialResolver.GetViewName(countryCode);
+            var viewModel = new AddressViewModel();
+
+            ViewData.TemplateInfo = new TemplateInfo
+            {
+                HtmlFieldPrefix = "Address"
+            };
+
+            return PartialView(viewName, viewModel);
+        }
+
         public async Task<ActionResult> Register()
         {
             var viewModel = new RegisterViewModel
@@ -102,19 +115,6 @@ namespace Mzayad.Web.Controllers
             };
 
             return View(viewModel);
-        }
-
-        public PartialViewResult ChangeCountry(string countryCode)
-        {
-            var viewName = AddressPartialResolver.GetViewName(countryCode);
-            var viewModel = new AddressViewModel();
-
-            ViewData.TemplateInfo = new TemplateInfo
-            {
-                HtmlFieldPrefix = "Address"
-            };
-
-            return PartialView(viewName, viewModel);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -140,7 +140,9 @@ namespace Mzayad.Web.Controllers
                 PhoneCountryCode = model.PhoneCountryCode,
                 PhoneNumber = model.PhoneNumber,
                 ProfileStatus = UserProfileStatus.Private,
-                AvatarUrl = avatar.Url
+                AvatarUrl = avatar.Url,
+                Gender = model.Gender,
+                Birthdate = model.Birthdate
             };
 
             var result = await AuthService.CreateUser(user, model.Password);

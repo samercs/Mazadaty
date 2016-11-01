@@ -118,20 +118,22 @@ namespace Mzayad.Web.Controllers
         public async Task<ActionResult> EditAccount()
         {
             var user = await AuthService.CurrentUser();
-            var address= new Address();
+            var address = new Address();
             if (user.AddressId.HasValue)
             {
                 address = await _addressService.GetAddress(user.AddressId.Value);
             }
 
-            var model = new UserAccountViewModel
+            var model = new UserAccountViewModel()
             {
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Address = new AddressViewModel(address).Hydrate(),
                 PhoneCountryCode = user.PhoneCountryCode,
-                PhoneNumber = user.PhoneNumber
+                PhoneNumber = user.PhoneNumber,
+                Gender = user.Gender,
+                Birthdate = user.Birthdate
             };
             return View(model);
         }
@@ -156,6 +158,8 @@ namespace Mzayad.Web.Controllers
             user.Email = model.Email;
             user.PhoneCountryCode = model.PhoneCountryCode;
             user.PhoneNumber = model.PhoneNumber;
+            user.Gender = model.Gender;
+            user.Birthdate = model.Birthdate;
             await _userService.UpdateUser(user);
 
             if (user.AddressId.HasValue)

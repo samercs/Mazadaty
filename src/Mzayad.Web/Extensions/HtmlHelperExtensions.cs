@@ -110,6 +110,24 @@ namespace Mzayad.Web.Extensions
             return new MvcHtmlString(sb.ToString());
         }
 
+        public static MvcHtmlString RadioButtonListHorizontally(this HtmlHelper htmlHelper, string name, IEnumerable<SelectListItem> selectListItems)
+        {
+            var sb = new StringBuilder();
+            sb.Append(@"<div class='radio'>");
+            foreach (var selectListItem in selectListItems)
+            {
+                sb.Append(string.Format(@"
+                        <label>
+                            <input type='radio' value='{0}' name='{1}' {3}> {2}
+                        </label>",
+                    selectListItem.Value, name, selectListItem.Text, selectListItem.Selected ? "checked" : ""));
+            }
+
+            sb.Append(" </ div >");
+
+            return new MvcHtmlString(sb.ToString());
+        }
+
         public static Css Css(this HtmlHelper htmlHelper)
         {
             return new Css(htmlHelper);
