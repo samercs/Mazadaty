@@ -1,8 +1,18 @@
 ﻿@using Mzayad.Core.Formatting
-@model IEnumerable<Mzayad.Models.UserTrophy>
+@model List<Mzayad.Web.Models.User.TrophieViewModel>
 
 @{
     ViewBag.Title = Global.Trophies;
+}
+
+@section styles
+{
+    <style>
+        .gray {
+            -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+            filter: grayscale(100%);
+        }
+    </style>
 }
 
 @if (!Model.Any())
@@ -14,32 +24,40 @@
 
 <table class="@Html.Css().GridTable">
     <thead>
-    <tr>
-        <th></th>
-        <th>
-            @Global.Trophy
-        </th>
-        <th>
-            @Global.XpAward
-        </th>
-        <th>
-            @Global.AwardedOn
-        </th>
-    </tr>
+        <tr>
+            <th></th>
+            <th>
+                @Global.Trophy
+            </th>
+            <th>
+                @Global.XpAward
+            </th>
+            <th>
+                @Global.AwardedOn
+            </th>
+        </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
                 <td class="image-cell">
-                    <img class="img-responsive" src="@item.Trophy.IconUrl" alt="@item.Trophy.Name" />
+                    @{
+                        var styleclass = item.Earned ? "img-responsive gray" : "img-responsive";
+                    }
+                    <img class="@styleclass" src="@item.Trophy.IconUrl" alt="@item.Trophy.Name" />
                 </td>
                 <td>
-                    <p>@item.Trophy.Name</p>
-                    <p><em>@item.Trophy.Description</em></p>
+                    <p>@item.TrophyName</p>
+                    <p><em>@item.TrophyDescription</em>
+                    </p>
                 </td>
-                <td>@Html.DisplayFor(modelItem => item.XpAwarded)</td>
-                <td>@DateTimeFormatter.ToLocalTime(item.CreatedUtc, DateTimeFormatter.Format.Sortable)</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.XpEarned)
+                </td>
+                <td>
+                    @DateTimeFormatter.ToLocalTime(item.AwardDate)
+                </td>
             </tr>
         }
     </tbody>

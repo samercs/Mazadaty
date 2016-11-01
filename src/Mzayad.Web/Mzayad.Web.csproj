@@ -474,6 +474,7 @@
     <Compile Include="Models\User\DashboardViewModel.cs" />
     <Compile Include="Models\User\EditProfileModel.cs" />
     <Compile Include="Models\User\NotificationModelView.cs" />
+    <Compile Include="Models\User\TrophieViewModel.cs" />
     <Compile Include="Models\WishList\AddViewModel.cs" />
     <Compile Include="Models\WishList\IndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

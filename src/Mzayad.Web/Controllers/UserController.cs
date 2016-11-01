@@ -16,6 +16,7 @@ using OrangeJetpack.Base.Web;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Models;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
@@ -285,9 +286,23 @@ namespace Mzayad.Web.Controllers
         public async Task<ActionResult> Trophies()
         {
             var userId = AuthService.CurrentUserId();
-            var trophies = await _trophyService.GetUsersTrophies(userId, Language);
+            var userTophies = (await _trophyService.GetUsersTrophies(userId, Language)).ToList();
+            var trophies = await _trophyService.GetAll(Language);
 
-            return View(trophies);
+            var model = (from trophy in trophies
+                let userTrophy = userTophies.FirstOrDefault(i => i.TrophyId == trophy.TrophyId)
+                select new TrophieViewModel
+                {
+                    TrophyName = trophy.Name,
+                    TrophyDescription = trophy.Description,
+                    IconUrl = trophy.IconUrl,
+                    XpEarned = userTrophy == null ? (int?) null : userTrophy.XpAwarded,
+                    AwardDate = userTrophy == null ? (DateTime?) null : userTrophy.CreatedUtc,
+                    Earned = userTrophy != null
+                }).ToList();
+
+
+            return View(model);
         }
 
         [Route("bid-history")]
