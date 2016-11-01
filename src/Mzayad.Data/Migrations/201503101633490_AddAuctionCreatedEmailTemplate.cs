@@ -22,9 +22,9 @@ namespace Mzayad.Data.Migrations
                 }).Serialize(),
                 Message = (new[]
                 {
-                    new LocalizedContent("en", 
+                    new LocalizedContent("en",
                         @"<h1>Hi {FirstName}</h2>
-                        <p>A new Mzayad auction has just been created for a product category you are subscribed to.</p>
+                        <p>A new Zeedli auction has just been created for a product category you are subscribed to.</p>
                         <p><strong>Auction:</strong> <a href=''{AuctionUrl}''>{ProductName}</a></p>
                         <p>If you would like to review or change your subscription settings please visit <a href=''{NotificationsUrl}''>your notification settings</a>.</p>"),
                     new LocalizedContent("ar", "")

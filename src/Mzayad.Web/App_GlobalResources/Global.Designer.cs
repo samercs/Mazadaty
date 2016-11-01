@@ -1411,7 +1411,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I agree with Mzayad&apos;s &lt;a href=&quot;{0}&quot;&gt;terms and conditions&lt;/a&gt;..
+        ///   Looks up a localized string similar to I agree with zeedli&apos;s &lt;a href=&quot;{0}&quot;&gt;terms and conditions&lt;/a&gt;..
         /// </summary>
         public static string RegistrationAgreementAcknowledgement {
             get {
@@ -1429,7 +1429,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to Mzayad {0}! As soon as you are ready &lt;a class=&apos;alert-link&apos; href=&apos;#&apos;&gt;check out our upcoming bids&lt;i class=&apos;fa fa-pad-left fa-angle-right&apos;&gt;&lt;/i&gt;&lt;/a&gt;.
+        ///   Looks up a localized string similar to Welcome to zeedli {0}! As soon as you are ready &lt;a class=&apos;alert-link&apos; href=&apos;#&apos;&gt;check out our upcoming bids&lt;i class=&apos;fa fa-pad-left fa-angle-right&apos;&gt;&lt;/i&gt;&lt;/a&gt;.
         /// </summary>
         public static string RegistrationWelcomeMessage {
             get {

@@ -15,7 +15,7 @@ namespace Mzayad.Web.Core.ActionResults
         public ExcelResult(DataTable dataTable, string fileName)
         {
             _dataTable = dataTable;
-            _fileName = string.Format("mzayad-{0}-{1:yyyy-MM-dd-HH-mm-ss}.xlsx", fileName, DateTime.UtcNow.AddHours(3)).ToLowerInvariant();
+            _fileName = string.Format("zeedli-{0}-{1:yyyy-MM-dd-HH-mm-ss}.xlsx", fileName, DateTime.UtcNow.AddHours(3)).ToLowerInvariant();
         }
 
         public override void ExecuteResult(ControllerContext context)

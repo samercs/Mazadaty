@@ -21,7 +21,7 @@ namespace Mzayad.Web.Extensions
 
         public static MvcHtmlString PageTitle(this HtmlHelper htmlHelper)
         {
-            var pageTitle = "Mzayad";
+            var pageTitle = "Zeedli";
 
             if (!string.IsNullOrWhiteSpace(htmlHelper.ViewBag.Title))
             {
