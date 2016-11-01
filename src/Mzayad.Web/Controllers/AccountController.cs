@@ -142,7 +142,8 @@ namespace Mzayad.Web.Controllers
                 ProfileStatus = UserProfileStatus.Private,
                 AvatarUrl = avatar.Url,
                 Gender = model.Gender,
-                Birthdate = model.Birthdate
+                Birthdate = model.Birthdate,
+                Level = 1
             };
 
             var result = await AuthService.CreateUser(user, model.Password);
@@ -156,7 +157,7 @@ namespace Mzayad.Web.Controllers
             user.AddressId = address.AddressId;
             await _userService.UpdateUser(user);
 
-            //await SendNewUserWelcomeEmail(user);
+            await SendNewUserWelcomeEmail(user);
             SetNameAndEmailCookies(user, "");
 
             SetStatusMessage(string.Format(Global.RegistrationWelcomeMessage, user.FirstName, Url.Action("Index", "Home", new { area = "" })));
