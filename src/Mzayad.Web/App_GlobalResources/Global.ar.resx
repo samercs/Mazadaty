@@ -750,4 +750,13 @@
   <data name="Yes" xml:space="preserve">
     <value>نعم</value>
   </data>
+  <data name="HowItWorks" xml:space="preserve">
+    <value>كيف يعمل</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>المستوى</value>
+  </data>
+  <data name="NoLiveAuctionsMessage" xml:space="preserve">
+    <value>لا يوجد مزادات متاحه الآن</value>
+  </data>
 </root>

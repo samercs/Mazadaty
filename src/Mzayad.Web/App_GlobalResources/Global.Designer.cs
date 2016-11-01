@@ -1096,6 +1096,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are no live auctions available at this time..
+        /// </summary>
+        public static string NoLiveAuctionsMessage {
+            get {
+                return ResourceManager.GetString("NoLiveAuctionsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Subscription.
         /// </summary>
         public static string NoSubscription {

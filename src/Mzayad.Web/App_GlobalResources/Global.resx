@@ -807,4 +807,7 @@
   <data name="Floor" xml:space="preserve">
     <value>Floor</value>
   </data>
+  <data name="NoLiveAuctionsMessage" xml:space="preserve">
+    <value>There are no live auctions available at this time.</value>
+  </data>
 </root>
