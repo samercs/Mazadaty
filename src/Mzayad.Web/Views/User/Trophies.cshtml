@@ -43,7 +43,7 @@
             <tr>
                 <td class="image-cell">
                     @{
-                        var styleclass = item.Earned ? "img-responsive gray" : "img-responsive";
+                        var styleclass = !item.Earned ? "img-responsive gray" : "img-responsive";
                     }
                     <img class="@styleclass" src="@item.IconUrl" alt="@item.TrophyName" />
                 </td>
