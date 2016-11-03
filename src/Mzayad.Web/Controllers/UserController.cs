@@ -1,6 +1,10 @@
-﻿using Mzayad.Models;
+﻿using Microsoft.AspNet.Identity;
+using Mzayad.Models;
 using Mzayad.Models.Enum;
+using Mzayad.Models.Enums;
 using Mzayad.Services;
+using Mzayad.Services.Activity;
+using Mzayad.Services.Identity;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Extensions;
@@ -12,15 +16,11 @@ using OrangeJetpack.Base.Web;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Models;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Glimpse.AspNet.Tab;
-using Microsoft.AspNet.Identity;
-using Mzayad.Models.Enums;
-using Mzayad.Services.Activity;
-using Mzayad.Services.Identity;
 
 namespace Mzayad.Web.Controllers
 {
@@ -36,7 +36,7 @@ namespace Mzayad.Web.Controllers
         private readonly TrophyService _trophyService;
         private readonly AuctionService _auctionService;
         private readonly WishListService _wishListService;
-        private IActivityQueueService _activityQueueService;
+        private readonly IActivityQueueService _activityQueueService;
 
         public UserController(IAppServices appServices)
             : base(appServices)
@@ -119,20 +119,22 @@ namespace Mzayad.Web.Controllers
         public async Task<ActionResult> EditAccount()
         {
             var user = await AuthService.CurrentUser();
-            Address address = null;
+            var address = new Address();
             if (user.AddressId.HasValue)
             {
                 address = await _addressService.GetAddress(user.AddressId.Value);
             }
 
-            var model = new UserAccountViewModel
+            var model = new UserAccountViewModel()
             {
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Address = new AddressViewModel(address).Hydrate(),
                 PhoneCountryCode = user.PhoneCountryCode,
-                PhoneNumber = user.PhoneNumber
+                PhoneNumber = user.PhoneNumber,
+                Gender = user.Gender,
+                Birthdate = user.Birthdate
             };
             return View(model);
         }
@@ -157,6 +159,8 @@ namespace Mzayad.Web.Controllers
             user.Email = model.Email;
             user.PhoneCountryCode = model.PhoneCountryCode;
             user.PhoneNumber = model.PhoneNumber;
+            user.Gender = model.Gender;
+            user.Birthdate = model.Birthdate;
             await _userService.UpdateUser(user);
 
             if (user.AddressId.HasValue)
@@ -170,6 +174,8 @@ namespace Mzayad.Web.Controllers
                 address.CountryCode = model.Address.CountryCode;
                 address.PostalCode = model.Address.PostalCode;
                 address.StateProvince = model.Address.StateProvince;
+                address.Floor = model.Address.Floor;
+                address.FlatNumber = model.Address.FlatNumber;
                 await _addressService.Update(address);
             }
 
@@ -204,7 +210,12 @@ namespace Mzayad.Web.Controllers
         [Route("notifications")]
         public async Task<ActionResult> Notifications()
         {
-            var model = await new NotificationModelView().Hydrate(AuthService, _categoryService, _notificationService, Language);
+            var user = await AuthService.CurrentUser();
+            var model = await new NotificationModelView
+            {
+                AutoBidNotification = user.AutoBidNotification
+            }.Hydrate(AuthService, _categoryService, _notificationService, Language);
+
             return View(model);
         }
 
@@ -212,18 +223,20 @@ namespace Mzayad.Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Notifications(NotificationModelView model)
         {
-            var userId = AuthService.CurrentUserId();
+            var user = await AuthService.CurrentUser();
+            user.AutoBidNotification = model.AutoBidNotification;
 
             // clear all existing notifications for user
-            var notifications = (await _notificationService.GetByUser(userId)).ToList();
+            var notifications = (await _notificationService.GetByUser(user.Id)).ToList();
             await _notificationService.DeleteList(notifications);
+            await _userService.UpdateUser(user);
 
             // add back selected notifications
             if (model.SelectedCategories != null)
             {
                 var newNotifications = model.SelectedCategories.Select(i => new CategoryNotification
                 {
-                    UserId = userId,
+                    UserId = user.Id,
                     CategoryId = i
                 });
 
@@ -273,9 +286,23 @@ namespace Mzayad.Web.Controllers
         public async Task<ActionResult> Trophies()
         {
             var userId = AuthService.CurrentUserId();
-            var trophies = await _trophyService.GetUsersTrophies(userId, Language);
+            var userTophies = (await _trophyService.GetUsersTrophies(userId, Language)).ToList();
+            var trophies = await _trophyService.GetAll(Language);
 
-            return View(trophies);
+            var model = (from trophy in trophies
+                let userTrophy = userTophies.FirstOrDefault(i => i.TrophyId == trophy.TrophyId)
+                select new TrophieViewModel
+                {
+                    TrophyName = trophy.Name,
+                    TrophyDescription = trophy.Description,
+                    IconUrl = trophy.IconUrl,
+                    XpEarned = userTrophy == null ? (int?) null : userTrophy.XpAwarded,
+                    AwardDate = userTrophy == null ? (DateTime?) null : userTrophy.CreatedUtc,
+                    Earned = userTrophy != null
+                }).ToList();
+
+
+            return View(model);
         }
 
         [Route("bid-history")]

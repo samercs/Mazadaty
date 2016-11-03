@@ -474,6 +474,7 @@
     <Compile Include="Models\User\DashboardViewModel.cs" />
     <Compile Include="Models\User\EditProfileModel.cs" />
     <Compile Include="Models\User\NotificationModelView.cs" />
+    <Compile Include="Models\User\TrophieViewModel.cs" />
     <Compile Include="Models\WishList\AddViewModel.cs" />
     <Compile Include="Models\WishList\IndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -666,6 +667,7 @@
     <Content Include="Areas\Admin\Views\PageManagement\Index.cshtml" />
     <Content Include="Areas\Admin\Views\PageManagement\Add.cshtml" />
     <Content Include="Areas\Admin\Views\PageManagement\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Auctions\AutoBids.cshtml" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
@@ -785,6 +787,7 @@
     <Content Include="Views\Shared\EditorTemplates\DateRange.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\BuyNowTile.cshtml" />
+    <Content Include="Views\Shared\_Layout_AdminMenu.cshtml" />
     <TypeScriptCompile Include="Scripts\auctions.ts" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />

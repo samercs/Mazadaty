@@ -40,5 +40,10 @@ namespace Mzayad.Web.Extensions
         {
             return builder.Format("{0:dd/MM/yyyy hh:mm tt}");
         }
+
+        public static GridBoundColumnBuilder<T> FormatCurrency<T>(this GridBoundColumnBuilder<T> builder) where T : class
+        {
+            return builder.Format("KD {0}");
+        }
     }
 }

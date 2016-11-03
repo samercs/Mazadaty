@@ -18,9 +18,10 @@
     {
         columns.Bound(i => i.Created).FormatDateTime().Title("Date/Time");
         columns.Bound(i => i.UserFullName).ClientTemplate("<a href='/admin/users/details/#= UserId #'>#= UserFullName #</a>").Title("User");
-        columns.Bound(i => i.OriginalTokenAmount).Title("Original Token Amount");
-        columns.Bound(i => i.ModifiedTokenAmount).Title("Updated Token Amount");
+        columns.Bound(i => i.OriginalTokenAmount).Title("Original Amount");
+        columns.Bound(i => i.ModifiedTokenAmount).Title("Updated Amount");
         columns.Bound(i => i.TokensAdded).ClientTemplate("#= TokensAdded # tokens").Title("Tokens Added");
         columns.Bound(i => i.ModifiedByUserFullName).Title("Updated By");
+        columns.Bound(i => i.Usage).Title("Usage");
     })
 )

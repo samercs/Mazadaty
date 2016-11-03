@@ -44,7 +44,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             //orders.ForEach(i => i.RecalculateTotal());
 
             model.Status = model.Status ?? OrderStatus.Processing;
-            model.Orders = orders;
+            model.Orders = orders.Select(OrderModel.Create);
 
             return View(model);
         }

@@ -294,6 +294,20 @@ namespace Mzayad.Web.Areas.admin.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("{auctionId:int}/auto-bids")]
+        public async Task<ActionResult> AutoBids(int auctionId)
+        {
+            var autoBids = await _autoBidService.GetAutoBidsForAuction(auctionId);
+            return View(autoBids);
+        }
+
+        public async Task<JsonResult> GetAutoBids([DataSourceRequest] DataSourceRequest request, int auctionId)
+        {
+            var result = await _autoBidService.GetAutoBidsForAuction(auctionId);
+
+            return Json(result.ToDataSourceResult(request));
+        }
+
 
     }
 }

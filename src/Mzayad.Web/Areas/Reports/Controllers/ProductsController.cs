@@ -12,7 +12,7 @@ using OrangeJetpack.Base.Web;
 
 namespace Mzayad.Web.Areas.Reports.Controllers
 {
-    [RoleAuthorize(Role.Administrator)]
+    [RoleAuthorize(Role.Administrator, Role.Accountant)]
     [RouteArea("reports"), RoutePrefix("products")]
     public class ProductsController : ApplicationController
     {

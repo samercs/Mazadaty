@@ -28,7 +28,9 @@ namespace Mzayad.Services
                         CityArea = address.CityArea,
                         StateProvince = address.StateProvince,
                         CountryCode = address.CountryCode,
-                        PostalCode = address.PostalCode
+                        PostalCode = address.PostalCode,
+                        Floor = address.Floor,
+                        FlatNumber = address.FlatNumber
                     };
 
                     dc.Addresses.Add(newAddress);

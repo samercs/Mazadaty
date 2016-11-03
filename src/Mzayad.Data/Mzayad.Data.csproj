@@ -347,6 +347,22 @@
     <Compile Include="Migrations\201608300840259_ReplaceModelBaseWithEntityBase.Designer.cs">
       <DependentUpon>201608300840259_ReplaceModelBaseWithEntityBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610311118454_AddUserAutoBidNotification.cs" />
+    <Compile Include="Migrations\201610311118454_AddUserAutoBidNotification.Designer.cs">
+      <DependentUpon>201610311118454_AddUserAutoBidNotification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610311207225_AddAccountantRole.cs" />
+    <Compile Include="Migrations\201610311207225_AddAccountantRole.Designer.cs">
+      <DependentUpon>201610311207225_AddAccountantRole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610311300061_AddTokenLogUsage.cs" />
+    <Compile Include="Migrations\201610311300061_AddTokenLogUsage.Designer.cs">
+      <DependentUpon>201610311300061_AddTokenLogUsage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610311352398_AddFloorandFlatToAddress.cs" />
+    <Compile Include="Migrations\201610311352398_AddFloorandFlatToAddress.Designer.cs">
+      <DependentUpon>201610311352398_AddFloorandFlatToAddress.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -564,6 +580,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608300840259_ReplaceModelBaseWithEntityBase.resx">
       <DependentUpon>201608300840259_ReplaceModelBaseWithEntityBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610311118454_AddUserAutoBidNotification.resx">
+      <DependentUpon>201610311118454_AddUserAutoBidNotification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610311207225_AddAccountantRole.resx">
+      <DependentUpon>201610311207225_AddAccountantRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610311300061_AddTokenLogUsage.resx">
+      <DependentUpon>201610311300061_AddTokenLogUsage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610311352398_AddFloorandFlatToAddress.resx">
+      <DependentUpon>201610311352398_AddFloorandFlatToAddress.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

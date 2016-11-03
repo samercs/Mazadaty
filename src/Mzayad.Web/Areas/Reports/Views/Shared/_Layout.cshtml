@@ -19,7 +19,12 @@
     </style>
 }
 
-@RenderBody()
+<div class="row">
+    @Html.Partial("_Layout_AdminMenu")
+    <div class="col-lg-9 col-md-8">
+        @RenderBody()
+    </div>
+</div>
 
 @section scripts {
     @Scripts.Render("~/js/jquery-ui")

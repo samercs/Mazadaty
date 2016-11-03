@@ -38,6 +38,7 @@
         columns.Bound(i => i.StartUtc).Format("{0:dd/MM/yyyy HH:mm}").Title("Start");
         columns.Bound(i => i.Duration).Format("{0} minutes");
         columns.Bound(i => i.BuyNowEnabled).Title("Buy Now").ClientTemplate("#= KendoFormatter.getYesNo(data.BuyNowEnabled) #");
+        columns.LinkColumn("Auto Bids", "auctions/#=AuctionId#/auto-bids");
         columns.LinkColumn("Details", "auctions/edit/#=AuctionId#");
     })
 )

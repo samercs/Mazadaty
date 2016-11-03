@@ -22,6 +22,8 @@ namespace Mzayad.Models
         [Required, StringLength(15)]
         public string UserHostAddress { get; set; }
 
+        public string Usage { get; set; }
+
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
 
@@ -29,12 +31,6 @@ namespace Mzayad.Models
         public virtual ApplicationUser ModifiedByUser { get; set; }
 
         [NotMapped]
-        public int TokensAdded
-        {
-            get
-            {
-                return ModifiedTokenAmount - OriginalTokenAmount.GetValueOrDefault(0);
-            }
-        }
+        public int TokensAdded => ModifiedTokenAmount - OriginalTokenAmount.GetValueOrDefault(0);
     }
 }

@@ -102,6 +102,7 @@
     <Compile Include="Order.cs" />
     <Compile Include="OrderItem.cs" />
     <Compile Include="OrderLog.cs" />
+    <Compile Include="OrderModel.cs" />
     <Compile Include="Payment\InitTransactionResult.cs" />
     <Compile Include="Payment\KnetResponse.cs" />
     <Compile Include="Payment\KnetTransaction.cs" />

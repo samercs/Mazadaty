@@ -20,6 +20,12 @@ namespace Mzayad.Models
         public string StateProvince { get; set; }
         public string PostalCode { get; set; }
 
+        [StringLength(50)]
+        public string Floor { get; set; }
+
+        [StringLength(50)]
+        public string FlatNumber { get; set; }
+
         [Required]
         public string CountryCode { get; set; }
     }

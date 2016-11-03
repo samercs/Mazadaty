@@ -28,8 +28,8 @@ namespace Mzayad.Web.Core.Services
             {
                 ProjectKey = ProjectKey,
                 ProjectToken = ProjectToken,
-                SenderAddress = "noreply@mzayad.com",
-                SenderName = "Mzayad"
+                SenderAddress = "noreply@zeedli.com",
+                SenderName = "Zeedli"
             };
 
             LocalShipping = decimal.Parse(appSettings["LocalShipping"]);

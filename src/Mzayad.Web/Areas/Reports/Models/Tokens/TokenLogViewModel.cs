@@ -23,6 +23,7 @@ namespace Mzayad.Web.Areas.Reports.Models.Tokens
         public int? OriginalTokenAmount { get; set; }
         public int ModifiedTokenAmount { get; set; }
         public int TokensAdded { get; set; }
+        public string Usage { get; set; }
 
         public static TokenLogViewModel Create(TokenLog subscriptionLog)
         {
@@ -44,7 +45,8 @@ namespace Mzayad.Web.Areas.Reports.Models.Tokens
                 ModifiedByUserEmail = subscriptionLog.ModifiedByUser.Email,
                 OriginalTokenAmount = subscriptionLog.OriginalTokenAmount,
                 ModifiedTokenAmount = subscriptionLog.ModifiedTokenAmount,
-                TokensAdded = subscriptionLog.TokensAdded
+                TokensAdded = subscriptionLog.TokensAdded,
+                Usage = subscriptionLog.Usage
             };
         }
     }

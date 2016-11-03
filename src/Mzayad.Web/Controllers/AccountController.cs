@@ -89,6 +89,19 @@ namespace Mzayad.Web.Controllers
             return RedirectToAction("Index", "Home", new { Language });
         }
 
+        public PartialViewResult ChangeCountry(string countryCode)
+        {
+            var viewName = AddressPartialResolver.GetViewName(countryCode);
+            var viewModel = new AddressViewModel();
+
+            ViewData.TemplateInfo = new TemplateInfo
+            {
+                HtmlFieldPrefix = "Address"
+            };
+
+            return PartialView(viewName, viewModel);
+        }
+
         public async Task<ActionResult> Register()
         {
             var viewModel = new RegisterViewModel
@@ -102,19 +115,6 @@ namespace Mzayad.Web.Controllers
             };
 
             return View(viewModel);
-        }
-
-        public PartialViewResult ChangeCountry(string countryCode)
-        {
-            var viewName = AddressPartialResolver.GetViewName(countryCode);
-            var viewModel = new AddressViewModel();
-
-            ViewData.TemplateInfo = new TemplateInfo
-            {
-                HtmlFieldPrefix = "Address"
-            };
-
-            return PartialView(viewName, viewModel);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -140,7 +140,10 @@ namespace Mzayad.Web.Controllers
                 PhoneCountryCode = model.PhoneCountryCode,
                 PhoneNumber = model.PhoneNumber,
                 ProfileStatus = UserProfileStatus.Private,
-                AvatarUrl = avatar.Url
+                AvatarUrl = avatar.Url,
+                Gender = model.Gender,
+                Birthdate = model.Birthdate,
+                Level = 1
             };
 
             var result = await AuthService.CreateUser(user, model.Password);
@@ -157,7 +160,7 @@ namespace Mzayad.Web.Controllers
             await SendNewUserWelcomeEmail(user);
             SetNameAndEmailCookies(user, "");
 
-            SetStatusMessage(string.Format(Global.RegistrationWelcomeMessage, user.FirstName));
+            SetStatusMessage(string.Format(Global.RegistrationWelcomeMessage, user.FirstName, Url.Action("Index", "Home", new { area = "" })));
 
             return RedirectToAction("Dashboard", "User", new { Language });
         }

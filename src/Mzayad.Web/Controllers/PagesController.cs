@@ -18,7 +18,7 @@ namespace Mzayad.Web.Controllers
         public async Task<ActionResult> Index(string slug)
         {
             var cacheKey = string.Format(CacheKeys.SitePage, Language, slug);
-            var page = await CacheService.TryGet(cacheKey, async () => await CmsClient.GetPageBySlug(slug, Language));
+            var page = await CacheService.TryGetAsync(cacheKey, () => CmsClient.GetPageBySlug(slug, Language));
             if (page == null)
             {
                 return HttpNotFound();
