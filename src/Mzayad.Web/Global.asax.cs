@@ -4,6 +4,7 @@ using Mzayad.Models;
 using Mzayad.Services;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.ModelBinder;
+using Newtonsoft.Json;
 using System;
 using System.Data.Entity;
 using System.Globalization;
@@ -14,7 +15,6 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Newtonsoft.Json;
 
 namespace Mzayad.Web
 {
@@ -27,7 +27,7 @@ namespace Mzayad.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutofacConfig.RegisterAll();
-            
+
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<DataContext, Data.Migrations.Configuration>());
 
             ModelBinders.Binders.Add(typeof(DateTime), new DateTimeBinder());
@@ -71,12 +71,21 @@ namespace Mzayad.Web
             if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var sessionLog = new SessionLogService(new DataContextFactory());
-                 sessionLog.Insert(new SessionLog()
+                try
                 {
-                    Browser = Request.UserAgent,
-                    IP = Request.UserHostAddress,
-                    UserId = HttpContext.Current.User.Identity.GetUserId()
-                 });
+                    sessionLog.Insert(new SessionLog()
+                    {
+                        Browser = Request.UserAgent,
+                        IP = Request.UserHostAddress,
+                        UserId = HttpContext.Current.User.Identity.GetUserId()
+                    });
+
+                }
+                catch
+                {
+                    //ToDo handel session insertion falier.
+                }
+
             }
         }
 

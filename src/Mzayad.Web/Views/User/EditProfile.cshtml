@@ -15,6 +15,26 @@
         .normalImg {
             cursor: pointer;
         }
+
+        .avatar-container {
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .avatar-premium {
+            position: absolute;
+            background-color: #33ace0;
+            color: #fff;
+            text-align: center;
+            width: 100%;
+            top: 0px;
+            right: 0px;
+            z-index: 10000;
+            -ms-transform: rotate(30deg) translateX(70px); /* IE 9 */
+            -webkit-transform: rotate(30deg) translateX(70px); /* Chrome, Safari, Opera */
+            transform: rotate(30deg) translateX(25%);
+        }
     </style>
 }
 
@@ -66,14 +86,26 @@
                         {
                             if (Model.User.AvatarUrl == item.Url)
                             {
-                                <div class="col-md-3" style="margin-bottom: 30px;">
-                                    <img data-id="@item.AvatarId" src="@item.Url" alt="@item.Url" class="img-thumbnail img-responsive normalImg selectedImg" />
+                                <div class="col-md-3">
+                                    <div class="avatar-container">
+                                        <img data-id="@item.AvatarId" src="@item.Url" alt="@item.Url" class="img-thumbnail img-responsive normalImg selectedImg" />
+                                        @if (item.IsPremium)
+                                        {
+                                            <div class="avatar-premium">Premium</div>
+                                        }
+                                    </div>
                                 </div>
                             }
                             else
                             {
-                                <div class="col-md-3" style="margin-bottom: 30px;">
-                                    <img data-id="@item.AvatarId" src="@item.Url" title="@Global.ClickToSelect" alt="@item.Url" class="img-thumbnail img-responsive normalImg" />
+                                <div class="col-md-3">
+                                    <div class="avatar-container">
+                                        <img data-id="@item.AvatarId" src="@item.Url" title="@Global.ClickToSelect" alt="@item.Url" class="img-thumbnail img-responsive normalImg" />
+                                        @if (item.IsPremium)
+                                        {
+                                            <div class="avatar-premium">Premium</div>
+                                        }
+                                    </div>
                                 </div>
                             }
 

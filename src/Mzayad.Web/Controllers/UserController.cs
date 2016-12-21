@@ -16,7 +16,6 @@ using OrangeJetpack.Base.Web;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Models;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,6 +36,7 @@ namespace Mzayad.Web.Controllers
         private readonly AuctionService _auctionService;
         private readonly WishListService _wishListService;
         private readonly IActivityQueueService _activityQueueService;
+        private readonly TokenService _tokenService;
 
         public UserController(IAppServices appServices)
             : base(appServices)
@@ -51,6 +51,7 @@ namespace Mzayad.Web.Controllers
             _auctionService = new AuctionService(DataContextFactory);
             _wishListService = new WishListService(DataContextFactory);
             _activityQueueService = new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
+            _tokenService = new TokenService(DataContextFactory);
         }
 
         [Route("dashboard")]
@@ -261,11 +262,32 @@ namespace Mzayad.Web.Controllers
             var user = await AuthService.CurrentUser();
             user.ProfileStatus = model.User.ProfileStatus;
             user.Gender = model.User.Gender;
-
-            if (selectedAvatar.HasValue)
+            bool setWarning = false;
+            Avatar avatar = null;
+            var userAvatarHasChange = selectedAvatar.HasValue && !user.AvatarUrl.Equals(selectedAvatar.Value);
+            if (userAvatarHasChange)
             {
-                var avatar = await _avatarService.GetById(selectedAvatar.Value);
-                user.AvatarUrl = avatar.Url;
+                avatar = await _avatarService.GetById(selectedAvatar.Value);
+                if (avatar.IsPremium)
+                {
+                    if (user.Tokens >= avatar?.Token)
+                    {
+                        user.AvatarUrl = avatar.Url;
+                        await
+                            _tokenService.RemoveTokensFromUser(user, avatar.Token, user, AuthService.UserHostAddress(),
+                                "Change Avatar");
+                    }
+                    else
+                    {
+                        setWarning = true;
+                    }
+
+                }
+                else
+                {
+                    user.AvatarUrl = avatar.Url;
+                }
+
             }
 
             if (model.BirthDay.HasValue && model.BirthMonth.HasValue && model.BirthYear.HasValue)
@@ -275,9 +297,12 @@ namespace Mzayad.Web.Controllers
             }
 
             await _userService.UpdateUser(user);
-            await _activityQueueService.QueueActivityAsync(ActivityType.CompleteProfile, user.Id);
 
-            SetStatusMessage("Your profile has been saved successfully.");
+            await _activityQueueService.QueueActivityAsync(ActivityType.CompleteProfile, user.Id);
+            SetStatusMessage(!setWarning
+                ? "Your profile has been saved successfully."
+                : $"Your profile has been saved successfully. but selected avatar can't be update your token ({user.Tokens}) is less than avatar token ({avatar.Token}) ");
+
 
             return RedirectToAction("Dashboard");
         }
@@ -290,16 +315,16 @@ namespace Mzayad.Web.Controllers
             var trophies = await _trophyService.GetAll(Language);
 
             var model = (from trophy in trophies
-                let userTrophy = userTophies.FirstOrDefault(i => i.TrophyId == trophy.TrophyId)
-                select new TrophieViewModel
-                {
-                    TrophyName = trophy.Name,
-                    TrophyDescription = trophy.Description,
-                    IconUrl = trophy.IconUrl,
-                    XpEarned = userTrophy == null ? (int?) null : userTrophy.XpAwarded,
-                    AwardDate = userTrophy == null ? (DateTime?) null : userTrophy.CreatedUtc,
-                    Earned = userTrophy != null
-                }).ToList();
+                         let userTrophy = userTophies.FirstOrDefault(i => i.TrophyId == trophy.TrophyId)
+                         select new TrophieViewModel
+                         {
+                             TrophyName = trophy.Name,
+                             TrophyDescription = trophy.Description,
+                             IconUrl = trophy.IconUrl,
+                             XpEarned = userTrophy == null ? (int?)null : userTrophy.XpAwarded,
+                             AwardDate = userTrophy == null ? (DateTime?)null : userTrophy.CreatedUtc,
+                             Earned = userTrophy != null
+                         }).ToList();
 
 
             return View(model);

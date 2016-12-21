@@ -15,6 +15,19 @@
                     <label for="file">Avatar Image</label>
                     <input type="file" id="file" name="upload" class="form-control" />
                 </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(i => i.Avatar.IsPremium) Premium?
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        @Html.TextBoxFor(i => i.Avatar.Token, new { @type = "number", @class = "form-control" })
+                        <div class="input-group-addon">Token</div>
+                    </div>
+                </div>
             </section>
             <section class="form-buttons">
                 <button type="submit" class="btn btn-default">Upload</button>
@@ -22,3 +35,25 @@
         }
     </div>
 </div>
+
+@section scripts
+{
+    <script>
+        $(function () {
+
+            var $isPremium = $("#@Html.IdFor(i => i.Avatar.IsPremium)");
+            var $token = $("#@Html.IdFor(i => i.Avatar.Token)");
+
+            $token.attr("disabled", "disabled");
+            $isPremium.change(function() {
+                var $this = $(this);
+                if ($this.is(":checked")) {
+                    $token.removeAttr("disabled");
+                } else {
+                    $token.attr("disabled", "disabled");
+                    $token.val("");
+                }
+            });
+        });
+    </script>
+}

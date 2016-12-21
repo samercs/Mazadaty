@@ -9,5 +9,7 @@ namespace Mzayad.Models
         [DataType(DataType.Url)]
         public string Url { get; set; }
         public double SortOrder { get; set; }
+        public bool IsPremium { get; set; }
+        public int? Token { get; set; }
     }
 }
