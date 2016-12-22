@@ -1,8 +1,8 @@
 ﻿using Mzayad.Models;
-using System.Collections.Generic;
-using System.Linq;
 using Mzayad.Web.Core.Enums;
 using Mzayad.Web.Models.Auctions;
+using System.Collections.Generic;
+using System.Linq;
 using WebGrease.Css.Extensions;
 
 namespace Mzayad.Web.Models.Home
@@ -13,6 +13,7 @@ namespace Mzayad.Web.Models.Home
         public IReadOnlyCollection<AuctionViewModel> UpcomingAuctions { get; set; }
         public IReadOnlyCollection<AuctionViewModel> LiveAuctions { get; set; }
         public IReadOnlyCollection<int> LiveAuctionIds { get; set; }
+        public string UserCountry { get; set; }
 
         public IndexViewModel(IEnumerable<Auction> auctions, IEnumerable<Auction> closedAuctions, IEnumerable<Auction> upcomingAuctions)
         {

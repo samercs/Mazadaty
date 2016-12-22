@@ -16,11 +16,13 @@ namespace Mzayad.Web.Controllers
     {
         private readonly UserService _userService;
         private readonly AuctionService _auctionService;
+        private readonly AddressService _addressService;
 
         public HomeController(IAppServices appServices) : base(appServices)
         {
             _userService = new UserService(appServices.DataContextFactory);
             _auctionService = new AuctionService(appServices.DataContextFactory);
+            _addressService = new AddressService(appServices.DataContextFactory);
         }
 
         public async Task<ActionResult> Index(string language)
@@ -35,6 +37,16 @@ namespace Mzayad.Web.Controllers
             var upcomingAuctions = await _auctionService.GetUpcomingAuctions(Language, 12);
 
             var viewModel = new IndexViewModel(liveAuctions, closedAuctions, upcomingAuctions);
+
+            var user = await AuthService.CurrentUser();
+            viewModel.UserCountry = "-- No Address --";
+            if (user != null)
+            {
+                var userAddress = await _addressService.GetAddress(user.AddressId ?? 0);
+                viewModel.UserCountry = userAddress?.CountryCode ?? "-- No Address --";
+            }
+            
+            
 
             return View(viewModel);
         }
@@ -51,6 +63,7 @@ namespace Mzayad.Web.Controllers
 
             return PartialView("_Layout_SubscriptionStatus", subscriptionUtc);
         }
+
 
         public ActionResult SignalR()
         {

@@ -10,6 +10,7 @@
 
 @section styles {
     @Styles.Render("~/css/nivo")
+    <link rel="stylesheet" href="/content/flags/flags.css" />
 }
 
 @if (!User.Identity.IsAuthenticated)
@@ -36,6 +37,7 @@ else
                 <div class="col-md-6 live-ribbon-container">
                     <img class="auction-image img-responsive" data-bind="attr: { src: imageUrl, alt: title }" alt="">
                     <div class="sponsor-ribbon"><span data-bind="text:sponsorName"></span></div>
+                    <div data-bind="text: countryList "></div>
                 </div>
 
                 <div class="col-md-6">
@@ -176,6 +178,7 @@ else
             var auctions = @Html.Raw(JsonConvert.SerializeObject(Model.LiveAuctions, Formatting.Indented, new JsonSerializerSettings {ContractResolver = new CamelCasePropertyNamesContractResolver()}));
             var auctionIds = @JsonConvert.SerializeObject(Model.LiveAuctionIds);
             var auctionHub = $.connection.auctionHub;
+            var userCountry = "@Model.UserCountry";
 
             var Auction = function(data) {
                 var self = this;
@@ -189,9 +192,11 @@ else
 
                 self.bids = ko.observableArray(data.bids);
                 self.status = ko.observable(data.status);
-                self.isLoaded = ko.observable(true);
+                self.countryList = ko.observable(data.countryList);
+                self.isLoaded = ko.observable(false);
                 self.secondsLeft = ko.observable();
                 self.lastBidAmount = ko.observable(data.lastBidAmount);
+                self.countryQuestion = ko.observable(false);
 
                 self.bidsReversed = ko.computed(function() {
                     return self.bids().sort(function(l, r) {
@@ -236,6 +241,12 @@ else
                 });
 
                 self.submitBid = function() {
+                    if (self.countryList() != "" && self.countryList().indexOf(userCountry)<=-1 && !self.countryQuestion()) {
+                        
+                        alert("Are you sure that you still wants to bid on this auction although it is not available in your country ?");
+                        self.countryQuestion(true);
+                        return;
+                    }
                     auctionHub.server.submitBid(self.auctionId, '@User.Identity.GetUserId()');
                 };
 
@@ -246,6 +257,10 @@ else
                 self.redirectOrder = function(orderId) {
                     location.href = "@LanguageCode/orders/auction/" + orderId;
                 };
+
+                self.countryListArray = ko.computed(function() {
+                    return self.countryList().split(",");
+                });
             };
 
             var AuctionsViewModel = function(data) {

@@ -1,10 +1,9 @@
 using Microsoft.AspNet.Identity;
 using Mzayad.Core.Formatting;
 using Mzayad.Models;
-using Mzayad.Models.Enum;
-using System;
 using Mzayad.Models.Enums;
 using Mzayad.Web.Core.Enums;
+using System;
 
 namespace Mzayad.Web.Models.Auctions
 {
@@ -33,6 +32,8 @@ namespace Mzayad.Web.Models.Auctions
         //public IReadOnlyCollection<AuctionImageViewModel> Images { get; set; }
         //public IReadOnlyCollection<ProductSpecificationViewModel> Specifications { get; set; }
 
+        public string CountryList { get; set; }
+
         public static AuctionViewModel Create(Auction auction)
         {
             var viewModel = new AuctionViewModel
@@ -50,7 +51,9 @@ namespace Mzayad.Web.Models.Auctions
                 //MainImage = AuctionImageViewModel.Create(auction.Product.MainImage()),
                 ImageUrl = auction.Product.MainImage().ImageMdUrl,
                 SponsorName = auction.Product.Sponsor != null ? auction.Product.Sponsor.Name : string.Empty,
-                ProductId = auction.ProductId
+                ProductId = auction.ProductId,
+                CountryList = auction.CountryList
+
                 //Images = GetImages(auction)
                 //Specifications = GetSpecifications(auction.Product.ProductSpecifications)
             };
