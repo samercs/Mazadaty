@@ -43,7 +43,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             {
                 Avatar = new Avatar()
             };
-            return View();
+            return View(model);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -60,6 +60,37 @@ namespace Mzayad.Web.Areas.admin.Controllers
             await _avatarService.Add(avatar);
 
             SetStatusMessage("Avatar successfully uploaded.");
+            return RedirectToAction("Index");
+        }
+
+        [Route("edit/{id:int}")]
+        public async Task<ActionResult> Edit(int id)
+        {
+            var avatar = await _avatarService.GetById(id);
+            if (avatar == null)
+            {
+                return HttpNotFound();
+            }
+            var model = new AvatarAddViewModel
+            {
+                Avatar = avatar
+            };
+            return View(model);
+        }
+
+        [Route("edit/{id:int}")]
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(int id, AvatarAddViewModel model)
+        {
+            var avatar = await _avatarService.GetById(id);
+            if (avatar == null)
+            {
+                return HttpNotFound();
+            }
+            avatar.IsPremium = model.Avatar.IsPremium;
+            avatar.Token = model.Avatar.IsPremium ? model.Avatar.Token : null;
+            await _avatarService.Save(avatar);
+            SetStatusMessage("Avatar information has been updated successfully.");
             return RedirectToAction("Index");
         }
 
@@ -84,6 +115,33 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             SetStatusMessage("Avatar successfully deleted.");
             return RedirectToAction("Index");
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<JsonResult> UploadAvatarImage(HttpPostedFileBase file, int itemId)
+        {
+            //await DeleteImage(itemId.Value);
+            try
+            {
+                var avatar = await _avatarService.GetById(itemId);
+                if (avatar == null)
+                {
+                    throw new Exception("Could not upload image. Avatar not available.");
+                }
+
+                var newUrl = await UploadImage(file);
+                avatar.Url = UrlFormatter.GetCdnUrl(newUrl.Single());
+                await _avatarService.Save(avatar);
+                return Json(new
+                {
+                    itemId = avatar.AvatarId,
+                    url = avatar.Url
+                });
+            }
+            catch (Exception)
+            {
+                return JsonError("Could not upload image.");
+            }
         }
 
         private async Task<Uri[]> UploadImage(HttpPostedFileBase file)

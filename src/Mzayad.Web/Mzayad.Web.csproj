@@ -668,6 +668,8 @@
     <Content Include="Areas\Admin\Views\PageManagement\Add.cshtml" />
     <Content Include="Areas\Admin\Views\PageManagement\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Auctions\AutoBids.cshtml" />
+    <Content Include="Areas\Admin\Views\Avatars\Edit.cshtml" />
+    <Content Include="Views\Shared\_ImageUpload.cshtml" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>

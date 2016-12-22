@@ -41,10 +41,10 @@ namespace Mzayad.Services
                     sortOrder = allAvatars.Last().SortOrder + 1;
                 }
                 avatar.SortOrder = sortOrder;
-                
+
                 dc.Avatars.Add(avatar);
                 await dc.SaveChangesAsync();
-                
+
                 return avatar;
             }
         }
@@ -66,6 +66,16 @@ namespace Mzayad.Services
                 dc.Avatars.Attach(avatar);
                 dc.Avatars.Remove(avatar);
                 await dc.SaveChangesAsync();
+            }
+        }
+
+        public async Task<Avatar> Save(Avatar avatar)
+        {
+            using (var dc = DataContext())
+            {
+                dc.SetModified(avatar);
+                await dc.SaveChangesAsync();
+                return avatar;
             }
         }
     }

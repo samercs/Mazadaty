@@ -29,6 +29,7 @@
         columns.Bound(i => i.Url).Title("URL");
         columns.Bound(i => i.IsPremium).Title("Premium?").ClientTemplate("#=renderIsPremium(data.IsPremium)#");
         columns.Bound(i => i.Token).Title("Token").ClientTemplate("#= renderToken(data.Token) #");
+        columns.LinkColumn("Edit", "Avatars/Edit/#=data.AvatarId#");
         columns.LinkColumn("Delete", "Avatars/Delete/#=data.AvatarId#");
 
     }))

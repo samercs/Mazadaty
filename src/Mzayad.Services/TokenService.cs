@@ -15,8 +15,7 @@ namespace Mzayad.Services
 
         public TokenService(IDataContextFactory dataContextFactory) : base(dataContextFactory)
         {
-            var store = new UserStore<ApplicationUser>((DataContext) DataContextFactory.GetContext());
-            _userManager = new UserManager(store);
+            _userManager = new UserManager(dataContextFactory);
         }
 
         public async Task AddTokensToUser(ApplicationUser user, int? tokens, ApplicationUser modifiedByUser, string userHostAddress, string usage)

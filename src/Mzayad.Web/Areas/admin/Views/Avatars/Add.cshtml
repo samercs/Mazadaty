@@ -24,9 +24,10 @@
                 </div>
                 <div class="form-group">
                     <div class="input-group">
-                        @Html.TextBoxFor(i => i.Avatar.Token, new { @type = "number", @class = "form-control" })
+                        @Html.TextBoxFor(i => i.Avatar.Token, new { @type = "number", @class = "form-control token-validation" })
                         <div class="input-group-addon">Token</div>
                     </div>
+                    @Html.ValidationMessageFor(i => i.Avatar.Token)
                 </div>
             </section>
             <section class="form-buttons">
@@ -38,6 +39,7 @@
 
 @section scripts
 {
+    @Scripts.Render("~/js/validate")
     <script>
         $(function () {
 
@@ -54,6 +56,20 @@
                     $token.val("");
                 }
             });
+
+            //validation setup
+            $.validator.addMethod("validateToken", function () {
+
+                if ($isPremium.is(":checked")) {
+                    return ($token.val().length != 0);
+                }
+
+                return true;
+
+
+            }, 'Please enter avatar token.');
+
+            $.validator.addClassRules("token-validation", { validateToken: true });
         });
     </script>
 }
