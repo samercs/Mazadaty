@@ -18,6 +18,38 @@ namespace Mzayad.Web.Areas.admin.Models.Auctions
         public IEnumerable<Bid> Bids { get; set; }
         public IEnumerable<AutoBid> AutoBids { get; set; }
 
+        public IEnumerable<SelectListItem> GccCountryList => new[] {
+                new SelectListItem
+                {
+                    Text = Resources.Global.Kuwait,
+                    Value = "KW",
+                    Selected = Auction?.CountryList?.Contains("KW") ?? false
+                },
+                new SelectListItem
+                {
+                    Text = Resources.Global.SaudiArabia,
+                    Value = "SA",
+                    Selected = Auction?.CountryList?.Contains("SA") ?? false
+                },
+                new SelectListItem
+                {
+                    Text = Resources.Global.UAE,
+                    Value = "AE",
+                    Selected = Auction?.CountryList?.Contains("AE") ?? false
+                },
+                new SelectListItem
+                {
+                    Text = Resources.Global.Qatar,
+                    Value = "QA",
+                    Selected = Auction?.CountryList?.Contains("QA") ?? false
+                },
+                new SelectListItem
+                {
+                    Text = Resources.Global.Oman,
+                    Value = "OM",
+                    Selected = Auction?.CountryList?.Contains("OM") ?? false
+                }
+            };
         public async Task<AddEditViewModel> Hydrate(ProductService productService, int productId)
         {
             var product = await productService.GetProduct(productId);
@@ -28,7 +60,7 @@ namespace Mzayad.Web.Areas.admin.Models.Auctions
         {
             var minte = DateTime.Now.Minute >= 30 ? 30 : 0;
             var dateNow = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, minte, 0);
-            
+
             Auction = new Mzayad.Models.Auction()
             {
                 ProductId = product.ProductId,
@@ -39,16 +71,18 @@ namespace Mzayad.Web.Areas.admin.Models.Auctions
                 Duration = 15,
                 BuyNowEnabled = false,
                 BuyNowPrice = product.RetailPrice,
-                BuyNowQuantity = 0
+                BuyNowQuantity = 0,
+                CountryList = ""
             };
 
             ProductList = await GetProductList(productService, product);
             StatusList = GetStatusList(AuctionStatus.Hidden);
 
+
             return this;
         }
 
-        private static async Task<IEnumerable<SelectListItem>>  GetProductList(ProductService productService, Product product)
+        private static async Task<IEnumerable<SelectListItem>> GetProductList(ProductService productService, Product product)
         {
             var products = await productService.GetProducts("en");
             products = products.OrderBy(i => i.Name);
@@ -76,11 +110,11 @@ namespace Mzayad.Web.Areas.admin.Models.Auctions
         {
             Auction = auction;
             Auction.StartUtc = auction.StartUtc.AddHours(3); // UTC > AST
-            
+
             ProductList = await GetProductList(productService, auction.Product);
             StatusList = GetStatusList(Auction.Status);
 
             return this;
-        } 
+        }
     }
 }

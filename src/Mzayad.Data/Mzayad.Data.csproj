@@ -367,6 +367,10 @@
     <Compile Include="Migrations\201612210945238_AddAvatarPremiumOptions.Designer.cs">
       <DependentUpon>201612210945238_AddAvatarPremiumOptions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612220901460_AddAuctionCountryList.cs" />
+    <Compile Include="Migrations\201612220901460_AddAuctionCountryList.Designer.cs">
+      <DependentUpon>201612220901460_AddAuctionCountryList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -599,6 +603,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612210945238_AddAvatarPremiumOptions.resx">
       <DependentUpon>201612210945238_AddAvatarPremiumOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612220901460_AddAuctionCountryList.resx">
+      <DependentUpon>201612220901460_AddAuctionCountryList.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

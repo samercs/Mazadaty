@@ -189,7 +189,7 @@ else
 
                 self.bids = ko.observableArray(data.bids);
                 self.status = ko.observable(data.status);
-                self.isLoaded = ko.observable(false);
+                self.isLoaded = ko.observable(true);
                 self.secondsLeft = ko.observable();
                 self.lastBidAmount = ko.observable(data.lastBidAmount);
 
@@ -268,8 +268,9 @@ else
             ko.applyBindings(viewModel);
 
             auctionHub.client.updateAuctions = function(results) {
-                console.log(results);
+                
                 var auctionJson = $.parseJSON(results);
+                console.log('model .... ',results);
                 for (var i = 0, len = auctionJson.length; i < len; ++i) {
                     var auction = auctionJson[i];
                     var model = viewModel.getAuction(auction.auctionId);

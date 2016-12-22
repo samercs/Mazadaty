@@ -8,6 +8,11 @@
     ViewBag.Title = "Edit Auction";
 }
 
+@section styles
+{
+    <link rel="stylesheet" href="/content/flags/flags.css" />
+}
+
 <ul class="link-list">
     <li><a href="@Url.Action("Delete", "Auctions", new {id = @Model.Auction.AuctionId})">Delete Auction</a></li>
 </ul>

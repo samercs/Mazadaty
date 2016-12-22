@@ -3,6 +3,7 @@ using Kendo.Mvc.UI;
 using Mindscape.Raygun4Net;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
+using Mzayad.Models.Enums;
 using Mzayad.Services;
 using Mzayad.Web.Areas.admin.Models.Auction;
 using Mzayad.Web.Areas.admin.Models.Auctions;
@@ -21,7 +22,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Mzayad.Models.Enums;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
@@ -78,7 +78,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(int productId, AddEditViewModel model)
+        public async Task<ActionResult> Create(int productId, AddEditViewModel model, List<string> countryList)
         {
             if (!ModelState.IsValid)
             {
@@ -86,6 +86,8 @@ namespace Mzayad.Web.Areas.admin.Controllers
             }
 
             model.Auction.StartUtc = model.Auction.StartUtc.AddHours(-3);
+
+            model.Auction.CountryList = countryList != null ? string.Join(",", countryList) : string.Empty;
 
             var auction = await _auctionService.Add(model.Auction);
 
@@ -211,7 +213,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
         [Route("edit/{id:int}")]
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, AddEditViewModel model, LocalizedContent[] title, FormCollection fc)
+        public async Task<ActionResult> Edit(int id, AddEditViewModel model, LocalizedContent[] title, List<string> countryList)
         {
             var auction = await _auctionService.GetAuction(id);
             if (auction == null)
@@ -232,6 +234,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             auction.BuyNowEnabled = model.Auction.BuyNowEnabled;
             auction.BuyNowPrice = model.Auction.BuyNowPrice;
             auction.BuyNowQuantity = model.Auction.BuyNowQuantity;
+            auction.CountryList = countryList != null ? string.Join(",", countryList) : string.Empty;
 
             await _auctionService.Update(auction);
 
@@ -242,7 +245,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             var productName = auction.Product.Localize("en", i => i.Name).Name;
 
-            SetStatusMessage(string.Format("Auction for <strong>{0}</strong> has been updated successfully.", productName));
+            SetStatusMessage($"Auction for <strong>{productName}</strong> has been updated successfully.");
 
             return RedirectToAction("Index", "Auctions");
         }

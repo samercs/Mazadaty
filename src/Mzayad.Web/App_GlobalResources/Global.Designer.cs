@@ -1150,6 +1150,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Oman.
+        /// </summary>
+        public static string Oman {
+            get {
+                return ResourceManager.GetString("Oman", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select....
         /// </summary>
         public static string OptionLabel {
@@ -1375,6 +1384,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Qatar.
+        /// </summary>
+        public static string Qatar {
+            get {
+                return ResourceManager.GetString("Qatar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quantity.
         /// </summary>
         public static string Quantity {
@@ -1560,6 +1578,15 @@ namespace Mzayad.Web.Resources {
         public static string RetailPriceWithLabel {
             get {
                 return ResourceManager.GetString("RetailPriceWithLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saudi Arabia.
+        /// </summary>
+        public static string SaudiArabia {
+            get {
+                return ResourceManager.GetString("SaudiArabia", resourceCulture);
             }
         }
         
@@ -1956,6 +1983,15 @@ namespace Mzayad.Web.Resources {
         public static string Trophy {
             get {
                 return ResourceManager.GetString("Trophy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UAE.
+        /// </summary>
+        public static string UAE {
+            get {
+                return ResourceManager.GetString("UAE", resourceCulture);
             }
         }
         

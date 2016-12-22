@@ -810,4 +810,16 @@
   <data name="NoLiveAuctionsMessage" xml:space="preserve">
     <value>There are no live auctions available at this time.</value>
   </data>
+  <data name="Oman" xml:space="preserve">
+    <value>Oman</value>
+  </data>
+  <data name="Qatar" xml:space="preserve">
+    <value>Qatar</value>
+  </data>
+  <data name="SaudiArabia" xml:space="preserve">
+    <value>Saudi Arabia</value>
+  </data>
+  <data name="UAE" xml:space="preserve">
+    <value>UAE</value>
+  </data>
 </root>

@@ -15,7 +15,7 @@ namespace Mzayad.Models
 
         [Required, Localized]
         public string Title { get; set; }
-        
+
         [Required]
         public DateTime StartUtc { get; set; }
         [Required]
@@ -34,12 +34,12 @@ namespace Mzayad.Models
         public decimal? BuyNowPrice { get; set; }
         public int? BuyNowQuantity { get; set; }
         public decimal? ReservePrice { get; set; }
-        
+
         [StringLength(128)]
         public string CreatedByUserId { get; set; }
 
         public DateTime? ClosedUtc { get; set; }
-        
+
         [ForeignKey("CreatedByUserId")]
         public virtual ApplicationUser CreatedByUser { get; set; }
 
@@ -51,7 +51,9 @@ namespace Mzayad.Models
 
         public decimal? WonAmount { get; set; }
         public int? WonByBidId { get; set; }
-        
+
+        public string CountryList { get; set; }
+
         public virtual Product Product { get; set; }
 
         public virtual ICollection<Bid> Bids { get; set; }
