@@ -371,6 +371,10 @@
     <Compile Include="Migrations\201612220901460_AddAuctionCountryList.Designer.cs">
       <DependentUpon>201612220901460_AddAuctionCountryList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612250928298_AddPrize.cs" />
+    <Compile Include="Migrations\201612250928298_AddPrize.Designer.cs">
+      <DependentUpon>201612250928298_AddPrize.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -606,6 +610,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612220901460_AddAuctionCountryList.resx">
       <DependentUpon>201612220901460_AddAuctionCountryList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612250928298_AddPrize.resx">
+      <DependentUpon>201612250928298_AddPrize.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

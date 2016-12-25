@@ -128,6 +128,7 @@
     <Compile Include="NotificationService.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="Payment\KnetService.cs" />
+    <Compile Include="PrizeService.cs" />
     <Compile Include="ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBase.cs" />

@@ -346,6 +346,7 @@
     <Compile Include="Areas\Admin\Controllers\LevelsController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Admin\Controllers\PageManagementController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PrizesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingsController.cs" />
@@ -363,6 +364,8 @@
     <Compile Include="Areas\Admin\Models\Orders\IndexViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Pages\AddEditViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Pages\IndexViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Prizes\AddViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Prizes\IndexViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Products\AddViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Products\EditViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Products\IndexViewModel.cs" />
@@ -670,6 +673,10 @@
     <Content Include="Areas\Admin\Views\Auctions\AutoBids.cshtml" />
     <Content Include="Areas\Admin\Views\Avatars\Edit.cshtml" />
     <Content Include="Views\Shared\_ImageUpload.cshtml" />
+    <Content Include="Areas\Admin\Views\Prizes\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Prizes\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Prizes\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Prizes\_AddEditView.cshtml" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
