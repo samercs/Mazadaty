@@ -1,0 +1,16 @@
+﻿@model Mzayad.Web.Models.Prize.IndexViewModel
+@{
+    ViewBag.Title = "Prize";
+}
+
+@section scripts
+{
+    <script>
+        $(function() {
+            var prizeStr = @Html.Raw(Model.PrizesJson);
+            console.log(prizeStr[0].title);
+        });
+    </script>
+}
+
+

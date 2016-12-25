@@ -1,5 +1,6 @@
 ﻿using Mzayad.Data;
 using Mzayad.Models;
+using Mzayad.Models.Enums;
 using OrangeJetpack.Localization;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -54,6 +55,19 @@ namespace Mzayad.Services
                 dc.SetModified(prize);
                 await dc.SaveChangesAsync();
                 return prize;
+            }
+        }
+
+        public async Task<IEnumerable<Prize>> GetAvaliablePrize(string languageCode = "en")
+        {
+            using (var dc = DataContext())
+            {
+                var query = dc.Prizes
+                    .Where(i => i.Limit > 0 || !i.Limit.HasValue)
+                    .Where(i => i.Status == PrizeStatus.Public)
+                    .OrderByDescending(i => i.Weight);
+                var result = await query.ToListAsync();
+                return result.Localize<Prize>(languageCode, i => i.Title);
             }
         }
     }

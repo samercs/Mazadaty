@@ -405,6 +405,7 @@
     <Compile Include="Controllers\KnetController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
+    <Compile Include="Controllers\PrizeController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\QueueTestController.cs" />
     <Compile Include="Controllers\SubscriptionsController.cs" />
@@ -469,6 +470,7 @@
     <Compile Include="Models\Order\OrderSummaryViewModel.cs" />
     <Compile Include="Models\Order\OrderViewModel.cs" />
     <Compile Include="Models\Order\ShippingAddressViewModel.cs" />
+    <Compile Include="Models\Prize\IndexViewModel.cs" />
     <Compile Include="Models\Shared\AddressViewModel.cs" />
     <Compile Include="Models\Shared\DeleteConfirmationViewModel.cs" />
     <Compile Include="Models\Shared\SubscriptionExpiration.cs" />
@@ -797,6 +799,7 @@
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\BuyNowTile.cshtml" />
     <Content Include="Views\Shared\_Layout_AdminMenu.cshtml" />
+    <Content Include="Views\Prize\Index.cshtml" />
     <TypeScriptCompile Include="Scripts\auctions.ts" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />
