@@ -277,6 +277,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bahrain.
+        /// </summary>
+        public static string Bahrain {
+            get {
+                return ResourceManager.GetString("Bahrain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bid.
         /// </summary>
         public static string Bid {

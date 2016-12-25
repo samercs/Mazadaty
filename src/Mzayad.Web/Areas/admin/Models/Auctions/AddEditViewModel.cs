@@ -39,6 +39,12 @@ namespace Mzayad.Web.Areas.admin.Models.Auctions
                 },
                 new SelectListItem
                 {
+                    Text = Resources.Global.Bahrain,
+                    Value = "BH",
+                    Selected = Auction?.CountryList?.Contains("BH") ?? false
+                },
+                new SelectListItem
+                {
                     Text = Resources.Global.Qatar,
                     Value = "QA",
                     Selected = Auction?.CountryList?.Contains("QA") ?? false

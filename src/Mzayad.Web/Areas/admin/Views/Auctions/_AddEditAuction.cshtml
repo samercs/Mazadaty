@@ -150,12 +150,13 @@
                         <div class="col-md-6">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox"  @(country.Selected ? "checked='checked'" : "") name="countryList" value="@country.Value" /> <i class="flag flag-@country.Value.ToLowerInvariant()"></i> @country.Text
+                                    <input type="checkbox" class="country-list"  @(country.Selected ? "checked='checked'" : "") name="countryList" value="@country.Value" /> <i class="flag flag-@country.Value.ToLowerInvariant()"></i> @country.Text
                                 </label>
                             </div>
                         </div>
                     }
                 </div>
+                @Html.ValidationMessage("countryList")
             </section>
 
             <section class="form-buttons">

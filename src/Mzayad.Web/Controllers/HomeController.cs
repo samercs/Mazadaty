@@ -40,13 +40,14 @@ namespace Mzayad.Web.Controllers
 
             var user = await AuthService.CurrentUser();
             viewModel.UserCountry = "-- No Address --";
+            viewModel.User = user;
             if (user != null)
             {
                 var userAddress = await _addressService.GetAddress(user.AddressId ?? 0);
                 viewModel.UserCountry = userAddress?.CountryCode ?? "-- No Address --";
             }
-            
-            
+
+
 
             return View(viewModel);
         }
@@ -109,5 +110,6 @@ namespace Mzayad.Web.Controllers
         {
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
+
     }
 }

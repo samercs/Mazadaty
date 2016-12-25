@@ -87,7 +87,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             model.Auction.StartUtc = model.Auction.StartUtc.AddHours(-3);
 
-            model.Auction.CountryList = countryList != null ? string.Join(",", countryList) : string.Empty;
+            if (countryList != null && countryList.Count() < model.GccCountryList.Count())
+            {
+                model.Auction.CountryList = string.Join(",", countryList);
+            }
+            else
+            {
+                model.Auction.CountryList = string.Empty;
+            }
 
             var auction = await _auctionService.Add(model.Auction);
 
@@ -234,8 +241,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
             auction.BuyNowEnabled = model.Auction.BuyNowEnabled;
             auction.BuyNowPrice = model.Auction.BuyNowPrice;
             auction.BuyNowQuantity = model.Auction.BuyNowQuantity;
-            auction.CountryList = countryList != null ? string.Join(",", countryList) : string.Empty;
-
+            if (countryList != null && countryList.Count() < model.GccCountryList.Count())
+            {
+                auction.CountryList = string.Join(",", countryList);
+            }
+            else
+            {
+                auction.CountryList = string.Empty;
+            }
             await _auctionService.Update(auction);
 
             if (isActivated)
@@ -248,6 +261,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             SetStatusMessage($"Auction for <strong>{productName}</strong> has been updated successfully.");
 
             return RedirectToAction("Index", "Auctions");
+
         }
 
         [Route("delete/{auctionId:int}")]

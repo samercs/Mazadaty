@@ -14,6 +14,7 @@ namespace Mzayad.Web.Models.Home
         public IReadOnlyCollection<AuctionViewModel> LiveAuctions { get; set; }
         public IReadOnlyCollection<int> LiveAuctionIds { get; set; }
         public string UserCountry { get; set; }
+        public ApplicationUser User { get; set; }
 
         public IndexViewModel(IEnumerable<Auction> auctions, IEnumerable<Auction> closedAuctions, IEnumerable<Auction> upcomingAuctions)
         {

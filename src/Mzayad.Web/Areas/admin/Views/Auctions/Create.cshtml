@@ -32,5 +32,26 @@
             toggleBuyNow();
         });
 
+        jQuery.validator.addMethod("countryList",
+            function() {
+                var count = 0;
+                $("input[name='countryList']")
+                    .each(function() {
+                        if ($(this).is(":checked")) {
+                            ++count;
+                        }
+                    });
+                if (count == @Model.GccCountryList.Count()) {
+                    return false;
+                }
+                return true;
+            },
+            "You can select up to 5 countries only, because selecting all of the 6 countries means that this auction will be available for all users from all countries.");
+
+        jQuery.validator.addClassRules("country-list",
+        {
+            countryList: true
+        });
+
     </script>
 }
