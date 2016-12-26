@@ -1,12 +1,13 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using Mzayad.Core.Formatting;
+﻿using Mzayad.Core.Formatting;
 using Mzayad.Models.Enum;
 using Mzayad.Models.Payment;
 using Mzayad.Services;
 using Mzayad.Services.Payment;
 using Mzayad.Web.Core.Services;
+using OrangeJetpack.Base.Core.Security;
+using System;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Mzayad.Web.Controllers
 {
@@ -14,7 +15,7 @@ namespace Mzayad.Web.Controllers
     {
         private readonly OrderService _orderService;
         private readonly KnetService _knetService;
-        
+
         public KnetController(IAppServices appServices) : base(appServices)
         {
             _orderService = new OrderService(appServices.DataContextFactory);
@@ -73,11 +74,19 @@ namespace Mzayad.Web.Controllers
 
             // TODO: SendNotification(transaction);
 
-            var redirectUrl = Url.Action("Success", "Orders", new { transaction.OrderId, transaction.PaymentId, Language }, RequestService.GetUrlScheme());
+            var redirectUrl = Url.Action("Success", "Orders", new { transaction.OrderId, transaction.PaymentId, Language, redirectUrl = GetSecuryUrl() }, RequestService.GetUrlScheme());
             var redirectResponse = string.Format("REDIRECT={0}", redirectUrl);
             //return Content(redirectResponse);
 
             return Redirect(redirectUrl);
+        }
+
+        private string GetSecuryUrl()
+        {
+            UrlSecurity url = new UrlSecurity();
+            var baseUrl = $"{AppSettings.CanonicalUrl}{Url.Action("Index", "Prize", new { language = Language })}";
+            var securyUrl = url.GenerateSecureUrl(baseUrl, null);
+            return securyUrl.OriginalString;
         }
 
         private static void SendNotification(KnetTransaction transaction)

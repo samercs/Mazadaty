@@ -2,13 +2,129 @@
 @{
     ViewBag.Title = "Prize";
 }
+@section styles
+{
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/bootstrap.min.css" />
+    <style>
+        .well-container {
+            position: relative;
+        }
+
+        .indecator {
+            position: absolute;
+            left: 43%;
+            top: -25px;
+            z-index: 100;
+        }
+
+        canvas {
+            margin-left: 25%;
+        }
+    </style>
+}
+
+@Html.StatusMessage(Global.PrizeMessage)
+
+<div class="well-container">
+    <div class="indecator">
+        <i class="fa fa-3x fa-caret-down"></i>
+    </div>
+    <canvas id="canvas" width="434" height="434">
+        <p align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
+    </canvas>
+</div>
+
+<section class="form-buttons">
+    <button class="btn btn-default js-spin-start">Spin To Get Your Prize</button>
+</section>
 
 @section scripts
 {
+    <script src="//cdn.jsdelivr.net/alertifyjs/1.8.0/alertify.min.js"></script>
+    <script src="~/Scripts/Winwheel.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
     <script>
+        var message = "";
+        var type = 0;
+        var prizeStr = @Html.Raw(Model.PrizesJson);
+        var theWheel = new Winwheel({
+            'numSegments' : 0,
+            'outerRadius': 212, // Set outer radius so wheel fits inside the background.
+            'textFontSize': 18, // Set font size as desired.
+            'animation': // Specify the animation to use.
+            {
+                'type': 'spinToStop',
+                'duration': 7, // Duration in seconds.
+                'spins': prizeStr.length, // Number of complete spins.
+                'callbackFinished': 'alertPrize()'
+            }
+        });
+
+        function addSegment(text, prizeId)
+        {
+            var segment = new Segment({
+                'text' : text,
+                'fillStyle' : '#33ace0',
+                'textFillStyle': '#fff',
+                'strokeStyle': '#fff'
+
+            });
+            segment.prizeId = prizeId;
+            segment.type = 0;
+            segment.message = "";
+            theWheel.addSegment(segment, theWheel.segments.length);
+            theWheel.draw();
+        }
+
+        function initWell(parameters) {
+            for (var i = 0; i < prizeStr.length; i++) {
+                addSegment(prizeStr[i].title, prizeStr[i].prizeId);
+            }
+
+        }
+
+        var alertPrize = function() {
+            var winningSegment = theWheel.getIndicatedSegment();
+            alertify.alert(message, function() {
+                if (type == 3) {
+                    //ToDo Redirect to select avatar page.
+                }
+                //location.href = "prize/get-redirect/" + winningSegment.prizeId;
+            });
+        };
+
         $(function() {
-            var prizeStr = @Html.Raw(Model.PrizesJson);
-            console.log(prizeStr[0].title);
+
+            initWell();
+            var wheelSpinning = false;
+            $(".js-spin-start").click(function() {
+                if (wheelSpinning == false) {
+
+                    $.ajax({
+                        url: "prize/random-prize",
+                        context: document.body,
+                        method: 'POST',
+                        data: { email:"@Model.Token.Email" timestamp: "@Model.Token.Timestamp", token: "@Model.Token.Token" }
+                    }).done(function(prizeStr) {
+                        var index = -1;
+                        var prize = $.parseJSON(prizeStr);
+                        for (var i = 0; i < theWheel.segments.length; i++) {
+                            if (theWheel.segments[i] && theWheel.segments[i].prizeId && theWheel.segments[i].prizeId == prize.prizeId) {
+                                index = i;
+                                message = prize.message;
+                                type = prize.type;
+                            }
+                            
+                        }
+
+                        var stopAt = theWheel.getRandomForSegment(index);
+                        theWheel.animation.stopAngle = stopAt;
+                        theWheel.startAnimation();
+                        wheelSpinning = true;
+                    });
+                }
+            });
         });
     </script>
 }

@@ -54,7 +54,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.24\lib\net452\OrangeJetpack.Base.Core.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.27\lib\net452\OrangeJetpack.Base.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -375,6 +375,10 @@
     <Compile Include="Migrations\201612250928298_AddPrize.Designer.cs">
       <DependentUpon>201612250928298_AddPrize.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612261147475_AddPrizeLog.cs" />
+    <Compile Include="Migrations\201612261147475_AddPrizeLog.Designer.cs">
+      <DependentUpon>201612261147475_AddPrizeLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -613,6 +617,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612250928298_AddPrize.resx">
       <DependentUpon>201612250928298_AddPrize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612261147475_AddPrizeLog.resx">
+      <DependentUpon>201612261147475_AddPrizeLog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

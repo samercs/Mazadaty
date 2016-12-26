@@ -1366,6 +1366,24 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Congratulation ... you win a prize from  Zeedli. &lt;a href=&apos;{0}&apos;&gt;Click here to get your prize&lt;/a&gt;.
+        /// </summary>
+        public static string PrizeChanceMessage {
+            get {
+                return ResourceManager.GetString("PrizeChanceMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Congratulation ... you win a prize from Zeedli click on button &lt;strong&gt;Spin to get your prize&lt;/strong&gt; to view your prize.
+        /// </summary>
+        public static string PrizeMessage {
+            get {
+                return ResourceManager.GetString("PrizeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Product.
         /// </summary>
         public static string Product {
@@ -1879,7 +1897,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Congratulations, you have successfully purchased &lt;strong&gt;{Subscription.Name}&lt;/strong&gt; and we have updated your account..
+        ///   Looks up a localized string similar to Congratulations, you have successfully purchased &lt;strong&gt;{Subscription.Name}&lt;/strong&gt; and we have updated your account. Also you win a prize from Zeedli click on button &quot;Spin to get your prize&quot;..
         /// </summary>
         public static string SubscriptionPurchaseAcknowledgement {
             get {
