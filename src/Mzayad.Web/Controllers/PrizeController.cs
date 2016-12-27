@@ -20,7 +20,7 @@ using System.Web.Mvc;
 
 namespace Mzayad.Web.Controllers
 {
-    [RoutePrefix("{language}/prize")]
+    [System.Web.Mvc.RoutePrefix("{language}/prize")]
     public class PrizeController : ApplicationController
     {
         private readonly PrizeService _prizeService;
@@ -35,7 +35,7 @@ namespace Mzayad.Web.Controllers
         }
 
 
-        [Route(""), Authorize]
+        [System.Web.Mvc.Route(""), System.Web.Mvc.Authorize]
         public async Task<ActionResult> Index(UrlTokenParameters parameters = null)
         {
             if (parameters == null)
@@ -63,8 +63,8 @@ namespace Mzayad.Web.Controllers
             //return Content(parameters.Timestamp.ToString() + " " + parameters.Hash);
         }
 
-        [Route("random-prize"), HttpPost, Authorize]
-        public async Task<ActionResult> GetRandomPrize(UrlTokenParameters token)
+        [Route("random-prize"), Authorize, HttpPost]
+        public async Task<ActionResult> GetRandomPrize(UrlTokenParameters tokenParameters)
         {
             var user = await AuthService.CurrentUser();
             if (user == null)
@@ -72,7 +72,7 @@ namespace Mzayad.Web.Controllers
                 return HttpNotFound();
             }
 
-            if (!await ValidateParameter(token))
+            if (!await ValidateParameter(tokenParameters))
             {
                 return HttpNotFound();
             }
@@ -98,20 +98,22 @@ namespace Mzayad.Web.Controllers
                 return HttpNotFound();
             }
             var message = await ProccessPrize(user, prize);
-            await _prizeService.LogUserPrize(user.Id, prize.PrizeId, token.Token);
+            await _prizeService.LogUserPrize(user.Id, prize.PrizeId, tokenParameters.Token);
             var data = new { prizeId = prize.PrizeId, index, message, type = (int)prize.PrizeType };
 
             return Content(JsonConvert.SerializeObject(data, Formatting.Indented,
                         new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
+
+            //return Content(tokenParameters.Token);
         }
 
-        [Route("test"), Authorize]
+        [System.Web.Mvc.Route("test"), System.Web.Mvc.Authorize]
         public async Task<ActionResult> GetPrizeParameter()
         {
-            UrlSecurity url = new UrlSecurity();
-            var baseUrl = $"{AppSettings.CanonicalUrl}{Url.Action("Index", "Prize")}";
-            var securyUrl = url.GenerateSecureUrl(baseUrl, null);
-            return Redirect(securyUrl.OriginalString);
+            var user = await AuthService.CurrentUser();
+            var baseUrl = $"{AppSettings.CanonicalUrl}{Url.Action("Index", "Prize", new { Language })}";
+            var url = PasswordUtilities.GenerateResetPasswordUrl(baseUrl, user.Email);
+            return Redirect(url);
         }
 
 

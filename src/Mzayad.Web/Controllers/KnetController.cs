@@ -73,20 +73,20 @@ namespace Mzayad.Web.Controllers
             }
 
             // TODO: SendNotification(transaction);
-
-            var redirectUrl = Url.Action("Success", "Orders", new { transaction.OrderId, transaction.PaymentId, Language, redirectUrl = GetSecuryUrl() }, RequestService.GetUrlScheme());
+            var prizeUrl = await GetSecuryUrl();
+            var redirectUrl = Url.Action("Success", "Orders", new { transaction.OrderId, transaction.PaymentId, Language, redirectUrl = prizeUrl }, RequestService.GetUrlScheme());
             var redirectResponse = string.Format("REDIRECT={0}", redirectUrl);
             //return Content(redirectResponse);
 
             return Redirect(redirectUrl);
         }
 
-        private string GetSecuryUrl()
+        private async Task<string> GetSecuryUrl()
         {
-            UrlSecurity url = new UrlSecurity();
-            var baseUrl = $"{AppSettings.CanonicalUrl}{Url.Action("Index", "Prize", new { language = Language })}";
-            var securyUrl = url.GenerateSecureUrl(baseUrl, null);
-            return securyUrl.OriginalString;
+            var user = await AuthService.CurrentUser();
+            var baseUrl = $"{AppSettings.CanonicalUrl}{Url.Action("Index", "Prize", new { Language })}";
+            var url = PasswordUtilities.GenerateResetPasswordUrl(baseUrl, user.Email);
+            return url;
         }
 
         private static void SendNotification(KnetTransaction transaction)

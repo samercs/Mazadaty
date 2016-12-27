@@ -94,7 +94,8 @@ namespace Mzayad.Web.Controllers
                 await _subscriptionService.BuySubscriptionWithTokens(subscription, user, AuthService.UserHostAddress());
                 await UpdateCachedSubscription();
                 SetStatusMessage(StringFormatter.ObjectFormat(Global.SubscriptionPurchaseAcknowledgement, new { subscription }));
-                return Redirect(GetSecuryUrl());
+                var prizeUrl = await GetSecuryUrl();
+                return Redirect(prizeUrl);
             }
             catch (SubscriptionInvalidForPurchaseException)
             {
@@ -140,12 +141,12 @@ namespace Mzayad.Web.Controllers
             CacheService.Set(cacheKey, new SubscriptionExpiration(user.SubscriptionUtc));
         }
 
-        private string GetSecuryUrl()
+        private async Task<string> GetSecuryUrl()
         {
-            UrlSecurity url = new UrlSecurity();
-            var baseUrl = $"{AppSettings.CanonicalUrl}{Url.Action("Index", "Prize", new {Language})}";
-            var securyUrl = url.GenerateSecureUrl(baseUrl, null);
-            return securyUrl.OriginalString;
+            var user = await AuthService.CurrentUser();
+            var baseUrl = $"{AppSettings.CanonicalUrl}{Url.Action("Index", "Prize", new { Language })}";
+            var url = PasswordUtilities.GenerateResetPasswordUrl(baseUrl, user.Email);
+            return url;
         }
     }
 }
