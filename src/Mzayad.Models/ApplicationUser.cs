@@ -2,13 +2,13 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Mzayad.Models.Enum;
 using Mzayad.Models.Enums;
+using OrangeJetpack.Base.Core.Formatting;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using OrangeJetpack.Base.Core.Formatting;
 
 namespace Mzayad.Models
 {
@@ -16,7 +16,7 @@ namespace Mzayad.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-      
+
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedUtc { get; set; }
 
@@ -31,10 +31,12 @@ namespace Mzayad.Models
         public DateTime? SubscriptionUtc { get; set; }
 
         public virtual Address Address { get; set; }
-        
+
         public virtual IEnumerable<CategoryNotification> Notifications { get; set; }
         public virtual IEnumerable<WishList> WishLists { get; set; }
         public virtual ICollection<SessionLog> SessionLogs { get; set; }
+        public virtual ICollection<UserAvatar> Avatars { get; set; }
+        public virtual ICollection<UserPrizeLog> PrizeLogs { get; set; }
 
         [DataType(DataType.Url)]
         public string AvatarUrl { get; set; }

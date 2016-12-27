@@ -1,4 +1,5 @@
-﻿using OrangeJetpack.Base.Data;
+﻿using System.Collections.Generic;
+using OrangeJetpack.Base.Data;
 using System.ComponentModel.DataAnnotations;
 
 namespace Mzayad.Models
@@ -11,5 +12,7 @@ namespace Mzayad.Models
         public double SortOrder { get; set; }
         public bool IsPremium { get; set; }
         public int? Token { get; set; }
+
+        public virtual ICollection<UserAvatar> UserAvatars { get; set; }
     }
 }

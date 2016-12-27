@@ -22,4 +22,5 @@
 /// <reference path="nivo/nivo-lightbox.js" />
 /// <reference path="site.js" />
 /// <reference path="site-kendo.js" />
+/// <reference path="winwheel.js" />
 /// <reference path="wow.js" />

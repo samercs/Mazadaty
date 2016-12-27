@@ -1,0 +1,60 @@
+﻿@using Kendo.Mvc.UI
+@using Mzayad.Web.Extensions
+@using OrangeJetpack.Base.Web
+@model Mzayad.Web.Areas.Admin.Models.Prizes.IndexViewModel
+@{
+    ViewBag.Title = "Prizes";
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "form-inline form-search" }))
+{
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            @Html.TextBoxFor(m => m.Search, new { @class = "form-control", placeholder = "Search prizes" })
+        </div>
+    </div>
+}
+
+<ul class="link-list">
+    <li>@Html.ActionLink("Add New Prize", "Add", "Prizes")</li>
+</ul>
+
+@if (!Model.Prizes.Any())
+{
+    @Html.StatusMessage("No prizes match search criteria.", StatusMessageType.Warning)
+    return;
+}
+
+@(Html.Kendo().Grid(Model.Prizes)
+    .Init(ajax => ajax.Action("GetPrizes", "Prizes", new { search = Model.Search }))
+    .Columns(columns =>
+    {
+        columns.Bound(i => i.Title).Title("Title");
+        columns.Bound(i => i.Weight).Title("Weight").ClientTemplate("#= RenderPrize(data.Weight) #");
+        columns.Bound(i => i.Limit).Title("Limit");
+        columns.Bound(i => i.Status).ClientTemplate("#= getLabel(data) #");
+        columns.LinkColumn("Details", "prizes/edit/#=PrizeId#");
+    })
+      )
+
+@section scripts {
+    <script>
+
+        var getLabel = function (prizeStatus) {
+            if (prizeStatus.Status === 1) {
+                return "<span class='label label-warning'>Hidden</span>";
+            }
+            else if (prizeStatus.Status === 2) {
+                return "<span class='label label-success'>Public</span>";
+            } 
+        }
+
+        var RenderPrize = function(weight) {
+            var per = (weight * 100);
+            return per + "%";
+        }
+
+    </script>
+}
+

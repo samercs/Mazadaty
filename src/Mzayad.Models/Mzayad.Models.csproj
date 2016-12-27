@@ -54,7 +54,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.24\lib\net452\OrangeJetpack.Base.Core.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.27\lib\net452\OrangeJetpack.Base.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -88,13 +88,14 @@
     <Compile Include="EmailTemplate.cs" />
     <Compile Include="Enums\ActivityType.cs" />
     <Compile Include="Enums\AuctionStatus.cs" />
-    <Compile Include="Enums\GccCountry.cs" />
     <Compile Include="Enums\Gender.cs" />
     <Compile Include="Enums\OrderStatus.cs" />
     <Compile Include="Enums\PaymentMethod.cs" />
     <Compile Include="Enums\EmailTemplateType.cs" />
     <Compile Include="Enums\OrderType.cs" />
     <Compile Include="Enums\PaymentStatus.cs" />
+    <Compile Include="Enums\PrizeStatus.cs" />
+    <Compile Include="Enums\PrizeType.cs" />
     <Compile Include="Enums\SubscriptionStatus.cs" />
     <Compile Include="Enums\UserProfileStatus.cs" />
     <Compile Include="Enums\TrophyKey.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="Payment\KnetResponse.cs" />
     <Compile Include="Payment\KnetTransaction.cs" />
     <Compile Include="Payment\PaymentTransaction.cs" />
+    <Compile Include="Prize.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="ProductImage.cs" />
     <Compile Include="ProductSpecification.cs" />
@@ -121,6 +123,8 @@
     <Compile Include="SubscriptionLog.cs" />
     <Compile Include="TokenLog.cs" />
     <Compile Include="Trophy.cs" />
+    <Compile Include="UserAvatar.cs" />
+    <Compile Include="UserPrizeLog.cs" />
     <Compile Include="UserTrophy.cs" />
     <Compile Include="WishList.cs" />
     <Compile Include="WishListAdminModel.cs" />
