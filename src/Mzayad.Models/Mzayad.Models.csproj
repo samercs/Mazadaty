@@ -123,6 +123,7 @@
     <Compile Include="SubscriptionLog.cs" />
     <Compile Include="TokenLog.cs" />
     <Compile Include="Trophy.cs" />
+    <Compile Include="UserAvatar.cs" />
     <Compile Include="UserPrizeLog.cs" />
     <Compile Include="UserTrophy.cs" />
     <Compile Include="WishList.cs" />

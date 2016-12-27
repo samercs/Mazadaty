@@ -50,7 +50,8 @@ namespace Mzayad.Web.Controllers
             _trophyService = new TrophyService(DataContextFactory);
             _auctionService = new AuctionService(DataContextFactory);
             _wishListService = new WishListService(DataContextFactory);
-            _activityQueueService = new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
+            _activityQueueService =
+                new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
             _tokenService = new TokenService(DataContextFactory);
         }
 
@@ -87,7 +88,8 @@ namespace Mzayad.Web.Controllers
                 return View(model);
             }
 
-            var result = await _userService.ChangePassword(User.Identity.GetUserId(), model.CurrentPassword, model.NewPassword);
+            var result =
+                await _userService.ChangePassword(User.Identity.GetUserId(), model.CurrentPassword, model.NewPassword);
             if (!result.Succeeded)
             {
                 SetStatusMessage(Global.PasswordChangeFailureMessage, StatusMessageType.Error);
@@ -201,7 +203,9 @@ namespace Mzayad.Web.Controllers
             {
                 ToAddress = originalEmail,
                 Subject = emailTemplate.Localize(Language, i => i.Subject).Subject,
-                Message = string.Format(emailTemplate.Localize(Language, i => i.Message).Message, user.FirstName, AppSettings.SiteName)
+                Message =
+                    string.Format(emailTemplate.Localize(Language, i => i.Message).Message, user.FirstName,
+                        AppSettings.SiteName)
             };
 
             await MessageService.Send(email.WithTemplate());
@@ -268,24 +272,14 @@ namespace Mzayad.Web.Controllers
             if (userAvatarHasChange)
             {
                 avatar = await _avatarService.GetById(selectedAvatar.Value);
-                if (avatar.IsPremium)
+                try
                 {
-                    if (user.Tokens >= avatar?.Token)
-                    {
-                        user.AvatarUrl = avatar.Url;
-                        await
-                            _tokenService.RemoveTokensFromUser(user, avatar.Token, user, AuthService.UserHostAddress(),
-                                "Change Avatar");
-                    }
-                    else
-                    {
-                        setWarning = true;
-                    }
-
-                }
-                else
-                {
+                    await _avatarService.ChangeAvatar(user, avatar, AuthService.UserHostAddress());
                     user.AvatarUrl = avatar.Url;
+                }
+                catch
+                {
+                    setWarning = true;
                 }
 
             }
@@ -301,7 +295,7 @@ namespace Mzayad.Web.Controllers
             await _activityQueueService.QueueActivityAsync(ActivityType.CompleteProfile, user.Id);
             SetStatusMessage(!setWarning
                 ? "Your profile has been saved successfully."
-                : $"Your profile has been saved successfully. but selected avatar can't be update your token ({user.Tokens}) is less than avatar token ({avatar.Token}) ");
+                : $"Your profile has been saved successfully. <span class='text-danger'> but selected avatar can't be update your token ({user.Tokens}) is less than avatar token ({avatar.Token}) </span>");
 
 
             return RedirectToAction("Dashboard");

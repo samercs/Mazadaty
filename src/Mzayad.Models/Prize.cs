@@ -1,4 +1,5 @@
-﻿using Mzayad.Models.Enums;
+﻿using System.Collections.Generic;
+using Mzayad.Models.Enums;
 using OrangeJetpack.Base.Data;
 using OrangeJetpack.Localization;
 using System.ComponentModel.DataAnnotations;
@@ -22,6 +23,8 @@ namespace Mzayad.Models
 
         [ForeignKey("ProductId")]
         public virtual Product Product { get; set; }
+
+        public virtual ICollection<UserPrizeLog> PrizeLogs { get; set; }
 
     }
 }
