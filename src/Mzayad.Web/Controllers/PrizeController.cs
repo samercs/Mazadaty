@@ -1,4 +1,8 @@
-﻿using Mzayad.Models;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Models.Enums;
 using Mzayad.Services;
@@ -11,17 +15,13 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Base.Core.Security;
+using OrangeJetpack.Base.Web;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Models;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using OrangeJetpack.Base.Web;
 
 namespace Mzayad.Web.Controllers
 {
-    [System.Web.Mvc.RoutePrefix("{language}/prize")]
+    [RoutePrefix("{language}/prize")]
     public class PrizeController : ApplicationController
     {
         private readonly PrizeService _prizeService;
@@ -38,7 +38,7 @@ namespace Mzayad.Web.Controllers
         }
 
 
-        [System.Web.Mvc.Route(""), System.Web.Mvc.Authorize]
+        [Route(""), Authorize]
         public async Task<ActionResult> Index(UrlTokenParameters parameters = null)
         {
             if (parameters == null)
@@ -63,7 +63,6 @@ namespace Mzayad.Web.Controllers
                 Token = parameters
             };
             return View(model);
-            //return Content(parameters.Timestamp.ToString() + " " + parameters.Hash);
         }
 
         [Route("random-prize"), Authorize, HttpPost]
@@ -107,24 +106,22 @@ namespace Mzayad.Web.Controllers
 
             return Content(JsonConvert.SerializeObject(data, Formatting.Indented,
                         new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
-
-            //return Content(tokenParameters.Token);
         }
 
-        [System.Web.Mvc.Route("test"), System.Web.Mvc.Authorize]
+        /*[System.Web.Mvc.Route("test"), System.Web.Mvc.Authorize]
         public async Task<ActionResult> GetPrizeParameter()
         {
             var user = await AuthService.CurrentUser();
             var baseUrl = $"{AppSettings.CanonicalUrl}{Url.Action("Index", "Prize", new { Language })}";
             var url = PasswordUtilities.GenerateResetPasswordUrl(baseUrl, user.Email);
             return Redirect(url);
-        }
+        }*/
 
 
 
         private async Task<string> ProccessPrize(ApplicationUser user, Prize prize)
         {
-            prize = prize.Localize<Prize>(Language, i => i.Title);
+            prize = prize.Localize(Language, i => i.Title);
             if (prize.Limit.HasValue)
             {
                 prize.Limit = prize.Limit - 1;
@@ -195,8 +192,8 @@ namespace Mzayad.Web.Controllers
             await _userService.UpdateUser(user);
             await _prizeService.UpdateUserHasFreeAvatar(user);
             SetStatusMessage("Your avatar image has been set successfully.");
-            return RedirectToAction("Dashboard", "User", new {Language});
-            
+            return RedirectToAction("Dashboard", "User", new { Language });
+
         }
 
         private async Task AddUserSubscription(ApplicationUser user, int? amount)
