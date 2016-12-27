@@ -154,5 +154,31 @@ namespace Mzayad.Services
 
             }
         }
+
+        public async Task<IEnumerable<Avatar>> GetPremiumAvatar(ApplicationUser user = null)
+        {
+            using (var dc = DataContext())
+            {
+                var premiumAvatars = await dc.Avatars.Where(i => i.IsPremium).ToListAsync();
+                if (user != null)
+                {
+                    var userAvatars = await GetUserAvatars(user);
+                    var userAvatarIds = userAvatars.Select(i => i.AvatarId);
+                    premiumAvatars = premiumAvatars.Where(i => !userAvatarIds.Contains(i.AvatarId)).ToList();
+                }
+                return premiumAvatars;
+            }
+        }
+
+        private async Task<IEnumerable<Avatar>> GetUserAvatars(ApplicationUser user)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.UserAvatars
+                    .Include(i => i.Avatar)
+                    .Where(i => i.UserId == user.Id).Select(i => i.Avatar)
+                    .ToListAsync();
+            }
+        }
     }
 }
