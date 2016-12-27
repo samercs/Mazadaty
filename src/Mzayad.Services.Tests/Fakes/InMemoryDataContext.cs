@@ -37,6 +37,7 @@ namespace Mzayad.Services.Tests.Fakes
         public IDbSet<AutoBid> AutoBids { get; set; }
         public IDbSet<Prize> Prizes { get; set; }
         public IDbSet<UserPrizeLog> UserPrizeLogs { get; set; }
+        public IDbSet<UserAvatar> UserAvatars { get; set; }
 
         public InMemoryDataContext()
         {

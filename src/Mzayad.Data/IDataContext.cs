@@ -37,6 +37,7 @@ namespace Mzayad.Data
         IDbSet<AutoBid> AutoBids { get; set; }
         IDbSet<Prize> Prizes { get; set; }
         IDbSet<UserPrizeLog> UserPrizeLogs { get; set; }
+        IDbSet<UserAvatar> UserAvatars { get; set; }
 
         int SaveChanges();
         Task<int> SaveChangesAsync();

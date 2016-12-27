@@ -379,6 +379,10 @@
     <Compile Include="Migrations\201612261147475_AddPrizeLog.Designer.cs">
       <DependentUpon>201612261147475_AddPrizeLog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612270551057_AddUserAvatar.cs" />
+    <Compile Include="Migrations\201612270551057_AddUserAvatar.Designer.cs">
+      <DependentUpon>201612270551057_AddUserAvatar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -620,6 +624,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612261147475_AddPrizeLog.resx">
       <DependentUpon>201612261147475_AddPrizeLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612270551057_AddUserAvatar.resx">
+      <DependentUpon>201612270551057_AddUserAvatar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
