@@ -1,17 +1,17 @@
-﻿using Mzayad.Models.Enum;
+﻿using Mzayad.Models;
+using Mzayad.Models.Enum;
 using Mzayad.Models.Payment;
 using Mzayad.Services;
 using Mzayad.Services.Payment;
+using Mzayad.Web.Core.Attributes;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Models.Order;
 using Mzayad.Web.Models.Shared;
 using Mzayad.Web.Resources;
+using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Base.Web;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Mzayad.Models;
-using Mzayad.Web.Core.Attributes;
-using OrangeJetpack.Base.Core.Formatting;
 using DetailsViewModel = Mzayad.Web.Models.Order.DetailsViewModel;
 
 namespace Mzayad.Web.Controllers
@@ -57,7 +57,7 @@ namespace Mzayad.Web.Controllers
             if (!auction.BuyNowAvailable())
             {
                 SetStatusMessage(Global.OutOfStockErrorMessage, StatusMessageType.Error);
-                return RedirectToAction("BuyNow", new {auction.AuctionId});
+                return RedirectToAction("BuyNow", new { auction.AuctionId });
             }
 
             var user = await AuthService.CurrentUser();
@@ -127,7 +127,7 @@ namespace Mzayad.Web.Controllers
             order.Address.AddressLine2 = model.AddressViewModel.AddressLine2;
             order.Address.AddressLine3 = model.AddressViewModel.AddressLine3;
             order.Address.AddressLine4 = model.AddressViewModel.AddressLine4;
-            order.Address.PostalCode =model.AddressViewModel.PostalCode;
+            order.Address.PostalCode = model.AddressViewModel.PostalCode;
             order.Address.StateProvince = model.AddressViewModel.StateProvince;
 
             // add local shipping charges
@@ -179,7 +179,7 @@ namespace Mzayad.Web.Controllers
         }
 
         [Route("success/{orderId:int}")]
-        public async Task<ActionResult> Success(int orderId, string paymentId = null)
+        public async Task<ActionResult> Success(int orderId, string paymentId = null, string redirectUrl = null)
         {
             var order = await _orderService.GetById(orderId);
             if (order == null)
@@ -197,7 +197,8 @@ namespace Mzayad.Web.Controllers
             var viewModel = new DetailsViewModel
             {
                 Order = OrderViewModel.Create(order),
-                KnetTransaction = knetTransaction
+                KnetTransaction = knetTransaction,
+                RedirectUrl = redirectUrl 
             };
 
             return View(viewModel);

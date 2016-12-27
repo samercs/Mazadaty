@@ -12,6 +12,7 @@ namespace Mzayad.Models.Enum
         OrderShipped = 7,
         TrohpyEarned = 8,
         LevelUp = 9,
-        AutoBidStart = 10
+        AutoBidStart = 10,
+        AdminWinningPrizeNotification = 11
     }
 }

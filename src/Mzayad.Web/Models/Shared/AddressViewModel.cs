@@ -47,6 +47,26 @@ namespace Mzayad.Web.Models.Shared
                 {
                     Text = Resources.Global.Kuwait,
                     Value = "KW"
+                },
+                new SelectListItem
+                {
+                    Text = Resources.Global.SaudiArabia,
+                    Value = "SA"
+                },
+                new SelectListItem
+                {
+                    Text = Resources.Global.UAE,
+                    Value = "AE"
+                },
+                new SelectListItem
+                {
+                    Text = Resources.Global.Qatar,
+                    Value = "QA"
+                },
+                new SelectListItem
+                {
+                    Text = Resources.Global.Oman,
+                    Value = "OM"
                 }
             };
 

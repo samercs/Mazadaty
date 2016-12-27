@@ -142,7 +142,6 @@ namespace Mzayad.Services
         public async Task AddSubscriptionToUser(ApplicationUser user, DateTime subscriptionUtc, string modifiedByUserId, string userHostAddress)
         {
             user = await _userManager.FindByIdAsync(user.Id);
-
             await AddAndLogUserSubscription(user, subscriptionUtc, modifiedByUserId, userHostAddress);
         }
 

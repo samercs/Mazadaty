@@ -10,6 +10,32 @@
 
 @section styles {
     @Styles.Render("~/css/nivo")
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/bootstrap.min.css" />
+    <link rel="stylesheet" href="/content/flags/flags.css" />
+    <style>
+        .img-container {
+            position: relative;
+        }
+
+        .flag-container {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            z-index: 100;
+        }
+
+        .flag-container2 {
+            position: absolute;
+            top: 0px;
+            right: 5px;
+            z-index: 100;
+        }
+
+        .flag {
+            margin-left: 5px !important;
+        }
+    </style>
 }
 
 @if (!User.Identity.IsAuthenticated)
@@ -33,9 +59,11 @@ else
             <!-- /ko -->
 
             <div class="row">
-                <div class="col-md-6 live-ribbon-container">
+                <div class="col-md-6 live-ribbon-container img-container">
                     <img class="auction-image img-responsive" data-bind="attr: { src: imageUrl, alt: title }" alt="">
                     <div class="sponsor-ribbon"><span data-bind="text:sponsorName"></span></div>
+                    <div class="flag-container" data-bind="html: countryListHtml"></div>
+
                 </div>
 
                 <div class="col-md-6">
@@ -85,11 +113,11 @@ else
                                         <span class="input-group-btn">
                                             @if (Request.IsAuthenticated)
                                             {
-                                                <button type="button" class="btn btn-default" data-bind="click: submitBid">@Global.Bid</button>
+                                            <button type="button" class="btn btn-default" data-bind="click: submitBid">@Global.Bid</button>
                                             }
                                             else
                                             {
-                                                <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new {ReturnUrl = "/"})">@Global.Bid</a>
+                                            <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new {ReturnUrl = "/"})">@Global.Bid</a>
                                             }
                                         </span>
                                     </div>
@@ -160,6 +188,7 @@ else
 
     @Scripts.Render("~/js/knockout")
     @Scripts.Render("~/js/signalR")
+    <script src="//cdn.jsdelivr.net/alertifyjs/1.8.0/alertify.min.js"></script>
     @if (Request.IsLocal)
     {
         <script src="/signalr/hubs"></script>
@@ -168,14 +197,17 @@ else
     {
         <script src="https://mzayad.azurewebsites.net/signalr/hubs"></script>
     }
-    
+
     <script>
 
         $(function() {
 
-            var auctions = @Html.Raw(JsonConvert.SerializeObject(Model.LiveAuctions, Formatting.Indented, new JsonSerializerSettings {ContractResolver = new CamelCasePropertyNamesContractResolver()}));
+            var auctions =
+                @Html.Raw(JsonConvert.SerializeObject(Model.LiveAuctions, Formatting.Indented, new JsonSerializerSettings {ContractResolver = new CamelCasePropertyNamesContractResolver()}));
             var auctionIds = @JsonConvert.SerializeObject(Model.LiveAuctionIds);
             var auctionHub = $.connection.auctionHub;
+            var userCountry = "@Model.UserCountry";
+            var userName = "@(Model.User?.UserName ?? "--Not Login")";
 
             var Auction = function(data) {
                 var self = this;
@@ -189,14 +221,17 @@ else
 
                 self.bids = ko.observableArray(data.bids);
                 self.status = ko.observable(data.status);
+                self.countryList = ko.observable(data.countryList);
                 self.isLoaded = ko.observable(false);
                 self.secondsLeft = ko.observable();
                 self.lastBidAmount = ko.observable(data.lastBidAmount);
 
+
                 self.bidsReversed = ko.computed(function() {
-                    return self.bids().sort(function(l, r) {
-                        return l.bidAmount < r.bidAmount ? 1 : -1;
-                    });
+                    return self.bids()
+                        .sort(function(l, r) {
+                            return l.bidAmount < r.bidAmount ? 1 : -1;
+                        });
                 });
 
                 self.timeLeftHours = ko.computed(function() {
@@ -236,7 +271,30 @@ else
                 });
 
                 self.submitBid = function() {
-                    auctionHub.server.submitBid(self.auctionId, '@User.Identity.GetUserId()');
+                    var userInBids = false;
+                    for (var i = 0; i < self.bids().length; i++) {
+                        if (self.bids()[i].userName == userName) {
+                            userInBids = true;
+                        }
+                    }
+                    if (self.countryList() != "" &&
+                        self.countryList().indexOf(userCountry) <= -1 &&
+                        !userInBids) {
+
+
+                        alertify
+                            .confirm("Are you sure that you still wants to bid on this auction although it is not available in your country?",
+                                function() {
+                                    auctionHub.server.submitBid(self.auctionId, '@User.Identity.GetUserId()');
+                                },
+                                function() {
+
+                                })
+                            .set('labels', { ok: 'Yes', cancel: 'No' });
+                    } else {
+                        auctionHub.server.submitBid(self.auctionId, '@User.Identity.GetUserId()');
+                    }
+
                 };
 
                 self.closeAuction = function() {
@@ -246,6 +304,15 @@ else
                 self.redirectOrder = function(orderId) {
                     location.href = "@LanguageCode/orders/auction/" + orderId;
                 };
+
+                self.countryListHtml = ko.computed(function() {
+                    var resultHtml = "";
+                    var countries = self.countryList().split(",");
+                    countries.forEach(function(e) {
+                        resultHtml+="<i class='flag flag-"+e.toLowerCase()+"'></i>";
+                    });
+                    return resultHtml;
+                });
             };
 
             var AuctionsViewModel = function(data) {
@@ -268,8 +335,9 @@ else
             ko.applyBindings(viewModel);
 
             auctionHub.client.updateAuctions = function(results) {
-                console.log(results);
+
                 var auctionJson = $.parseJSON(results);
+                console.log('model .... ', results);
                 for (var i = 0, len = auctionJson.length; i < len; ++i) {
                     var auction = auctionJson[i];
                     var model = viewModel.getAuction(auction.auctionId);
@@ -292,18 +360,20 @@ else
                 }
             }
 
-           $.connection.hub.logging = true;
+            $.connection.hub.logging = true;
 
             @if (!Request.IsLocal)
             {
                 <text>$.connection.hub.url = "https://mzayad.azurewebsites.net/signalr";</text>
             }
 
-            $.connection.hub.start().done(function() {
-                auctionHub.server.initAuctions(auctionIds).done(function(results) {
-                    console.log(results);
+            $.connection.hub.start()
+                .done(function() {
+                    auctionHub.server.initAuctions(auctionIds)
+                        .done(function(results) {
+                            console.log(results);
+                        });
                 });
-            });
         });
 
     </script>

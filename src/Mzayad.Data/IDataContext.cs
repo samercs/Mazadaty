@@ -27,14 +27,16 @@ namespace Mzayad.Data
         IDbSet<WishList> WishLists { get; set; }
         IDbSet<KnetTransaction> KnetTransactions { get; set; }
         IDbSet<SubscriptionLog> SubscriptionLogs { get; set; }
-        IDbSet<TokenLog> TokenLogs { get; set; } 
+        IDbSet<TokenLog> TokenLogs { get; set; }
         IDbSet<SplashAd> SplashAds { get; set; }
-        IDbSet<ActivityEvent> ActivityEvents { get; set; } 
+        IDbSet<ActivityEvent> ActivityEvents { get; set; }
         IDbSet<Trophy> Trophies { get; set; }
         IDbSet<UserTrophy> UsersTrophies { get; set; }
         IDbSet<IslamicCalendar> IslamicCalendars { get; set; }
         IDbSet<SessionLog> SessionLogs { get; set; }
-        IDbSet<AutoBid> AutoBids { get; set; } 
+        IDbSet<AutoBid> AutoBids { get; set; }
+        IDbSet<Prize> Prizes { get; set; }
+        IDbSet<UserPrizeLog> UserPrizeLogs { get; set; }
 
         int SaveChanges();
         Task<int> SaveChangesAsync();

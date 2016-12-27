@@ -589,7 +589,7 @@
     <value>&lt;span class="text-danger"&gt;EXPIRED&lt;/span&gt; on {DateTime}</value>
   </data>
   <data name="SubscriptionPurchaseAcknowledgement" xml:space="preserve">
-    <value>Congratulations, you have successfully purchased &lt;strong&gt;{Subscription.Name}&lt;/strong&gt; and we have updated your account.</value>
+    <value>Congratulations, you have successfully purchased &lt;strong&gt;{Subscription.Name}&lt;/strong&gt; and we have updated your account. Also you win a prize from Zeedli click on button "Spin to get your prize".</value>
   </data>
   <data name="SubscriptionBuyInstructions" xml:space="preserve">
     <value>You are buying the subscription &lt;strong&gt;{Name}&lt;/strong&gt; for &lt;strong&gt;{FormattedPrice}&lt;/strong&gt;, this &lt;strong&gt;{Duration} day&lt;/strong&gt; subscription will give you a valid subscription until &lt;strong&gt;{NewExpiration}&lt;/strong&gt;. Your account will be updated as soon as the purchase is complete.</value>
@@ -809,5 +809,26 @@
   </data>
   <data name="NoLiveAuctionsMessage" xml:space="preserve">
     <value>There are no live auctions available at this time.</value>
+  </data>
+  <data name="Oman" xml:space="preserve">
+    <value>Oman</value>
+  </data>
+  <data name="Qatar" xml:space="preserve">
+    <value>Qatar</value>
+  </data>
+  <data name="SaudiArabia" xml:space="preserve">
+    <value>Saudi Arabia</value>
+  </data>
+  <data name="UAE" xml:space="preserve">
+    <value>UAE</value>
+  </data>
+  <data name="Bahrain" xml:space="preserve">
+    <value>Bahrain</value>
+  </data>
+  <data name="PrizeChanceMessage" xml:space="preserve">
+    <value>Congratulation ... you win a prize from  Zeedli. &lt;a href='{0}'&gt;Click here to get your prize&lt;/a&gt;</value>
+  </data>
+  <data name="PrizeMessage" xml:space="preserve">
+    <value>Congratulation ... you win a prize from Zeedli click on button &lt;strong&gt;Spin to get your prize&lt;/strong&gt; to view your prize</value>
   </data>
 </root>

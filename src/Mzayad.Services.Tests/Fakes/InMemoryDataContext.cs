@@ -1,8 +1,8 @@
-﻿using System.Data.Entity;
-using System.Threading.Tasks;
-using Mzayad.Data;
+﻿using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Payment;
+using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace Mzayad.Services.Tests.Fakes
 {
@@ -35,6 +35,8 @@ namespace Mzayad.Services.Tests.Fakes
         public IDbSet<IslamicCalendar> IslamicCalendars { get; set; }
         public IDbSet<SessionLog> SessionLogs { get; set; }
         public IDbSet<AutoBid> AutoBids { get; set; }
+        public IDbSet<Prize> Prizes { get; set; }
+        public IDbSet<UserPrizeLog> UserPrizeLogs { get; set; }
 
         public InMemoryDataContext()
         {
@@ -47,7 +49,7 @@ namespace Mzayad.Services.Tests.Fakes
         }
 
         public int SaveChangesCount { get; private set; }
-        
+
         public int SaveChanges()
         {
             SaveChangesCount++;
@@ -59,7 +61,7 @@ namespace Mzayad.Services.Tests.Fakes
             SaveChangesCount++;
             return Task<int>.Factory.StartNew(() => 1);
         }
-        
+
         public void SetModified(object entity)
         {
             // do nothing
