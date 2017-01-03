@@ -108,20 +108,10 @@ namespace Mzayad.Services
                 var prizeLog = new UserPrizeLog
                 {
                     PrizeId = prizeId,
-                    UserId = userId,
-                    Hash = hash
+                    UserId = userId
                 };
                 dc.UserPrizeLogs.Add(prizeLog);
                 await dc.SaveChangesAsync();
-            }
-        }
-
-        public async Task<bool> ValidatePrizeHash(string hash)
-        {
-            using (var dc = DataContext())
-            {
-                var prize = await dc.UserPrizeLogs.FirstOrDefaultAsync(i => i.Hash.Equals(hash));
-                return prize == null;
             }
         }
 
@@ -155,6 +145,28 @@ namespace Mzayad.Services
                 userPrize.IsComplete = true;
                 dc.SetModified(userPrize);
                 await dc.SaveChangesAsync();
+            }
+        }
+
+        public async Task<UserPrizeLog> InsertUserPrize(ApplicationUser user)
+        {
+            using (var dc = DataContext())
+            {
+                var prizeLog = new UserPrizeLog
+                {
+                    UserId = user.Id
+                };
+                dc.UserPrizeLogs.Add(prizeLog);
+                await dc.SaveChangesAsync();
+                return prizeLog;
+            }
+        }
+
+        public async Task<UserPrizeLog> GetPrizeLogById(int id)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.UserPrizeLogs.SingleOrDefaultAsync(i => i.UserPrizeLogId == id);
             }
         }
     }

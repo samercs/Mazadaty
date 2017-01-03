@@ -38,14 +38,20 @@ namespace Mzayad.Web.Controllers
         }
 
 
-        [Route(""), Authorize]
-        public async Task<ActionResult> Index(UrlTokenParameters parameters = null)
+        [Route("{id:int}"), Authorize]
+        public async Task<ActionResult> Index(int id)
         {
-            if (parameters == null)
+            var user = await AuthService.CurrentUser();
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            if (!await ValidateParameter(parameters))
+            var prizeLog = await _prizeService.GetPrizeLogById(id);
+            if (prizeLog == null)
+            {
+                return HttpNotFound();
+            }
+            if (!prizeLog.UserId.Equals(user.Id))
             {
                 return HttpNotFound();
             }
@@ -60,13 +66,13 @@ namespace Mzayad.Web.Controllers
                 PrizesJson =
                     JsonConvert.SerializeObject(data, Formatting.Indented,
                         new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }),
-                Token = parameters
+                PrizeId = id
             };
             return View(model);
         }
 
-        [Route("random-prize"), Authorize, HttpPost]
-        public async Task<ActionResult> GetRandomPrize(UrlTokenParameters tokenParameters)
+        [Route("{id:int}/random-prize"), Authorize, HttpPost]
+        public async Task<ActionResult> GetRandomPrize(int id)
         {
             var user = await AuthService.CurrentUser();
             if (user == null)
@@ -74,10 +80,10 @@ namespace Mzayad.Web.Controllers
                 return HttpNotFound();
             }
 
-            if (!await ValidateParameter(tokenParameters))
+            /*if (!await ValidateParameter(tokenParameters))
             {
                 return HttpNotFound();
-            }
+            }*/
 
             Prize prize = null;
             var prizes = await _prizeService.GetAvaliablePrize();
@@ -101,7 +107,7 @@ namespace Mzayad.Web.Controllers
             }
             var message = await ProccessPrize(user, prize);
             var isComplete = prize.PrizeType == PrizeType.Subscription;
-            await _prizeService.LogUserPrize(user.Id, prize.PrizeId, tokenParameters.Token, isComplete);
+            //await _prizeService.LogUserPrize(user.Id, prize.PrizeId, tokenParameters.Token, isComplete);
             var data = new { prizeId = prize.PrizeId, index, message, type = (int)prize.PrizeType };
 
             return Content(JsonConvert.SerializeObject(data, Formatting.Indented,
@@ -229,7 +235,8 @@ namespace Mzayad.Web.Controllers
             try
             {
                 PasswordUtilities.ValidateResetPasswordParameters(token);
-                return await _prizeService.ValidatePrizeHash(token.Token);
+                return true;
+                //return await _prizeService.ValidatePrizeHash(token.Token);
 
             }
             catch (Exception e)

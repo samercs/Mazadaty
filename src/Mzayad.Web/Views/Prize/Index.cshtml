@@ -113,10 +113,10 @@
                 if (wheelSpinning == false) {
 
                     $.ajax({
-                        url: "prize/random-prize",
+                        url: "prize/@Model.PrizeId/random-prize",
                         context: document.body,
                         method: 'POST',
-                        data: { email:"@Model.Token.Email", timestamp: "@Model.Token.Timestamp", token: "@Model.Token.Token" }
+                        data: { id:"@Model.PrizeId" }
                     }).done(function(prizeStr) {
                         var index = -1;
                         var prize = $.parseJSON(prizeStr);
