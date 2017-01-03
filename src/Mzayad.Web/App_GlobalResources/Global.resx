@@ -826,9 +826,12 @@
     <value>Bahrain</value>
   </data>
   <data name="PrizeChanceMessage" xml:space="preserve">
-    <value>Congratulation ... you win a prize from  Zeedli. &lt;a href='{0}'&gt;Click here to get your prize&lt;/a&gt;</value>
+    <value>You won a prize from Zeedli. &lt;a href="{0}"&gt;Click here to get your prize.&lt;/a&gt;</value>
   </data>
   <data name="PrizeMessage" xml:space="preserve">
     <value>Congratulation ... you win a prize from Zeedli click on button &lt;strong&gt;Spin to get your prize&lt;/strong&gt; to view your prize</value>
+  </data>
+  <data name="Congratulations" xml:space="preserve">
+    <value>Congratulations!</value>
   </data>
 </root>

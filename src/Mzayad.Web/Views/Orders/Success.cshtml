@@ -9,6 +9,7 @@
         .alert {
             font-size: 16px;
         }
+        
     </style>
 }
 
@@ -17,7 +18,15 @@
 
 @if (!string.IsNullOrEmpty(Model.RedirectUrl))
 {
-    @Html.StatusMessage(string.Format(Global.PrizeChanceMessage, Model.RedirectUrl))
+    <div class="prize-container">
+        <img src="https://az723232.vo.msecnd.net/assets/prize-icon.svg"/>
+        <h1>
+            @Global.Congratulations
+        </h1>
+        <p>
+            @Html.Raw(string.Format(Global.PrizeChanceMessage, Model.RedirectUrl))
+        </p>
+    </div>
 }
 
 
