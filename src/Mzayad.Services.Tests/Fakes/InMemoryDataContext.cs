@@ -35,6 +35,8 @@ namespace Mzayad.Services.Tests.Fakes
         public IDbSet<IslamicCalendar> IslamicCalendars { get; set; }
         public IDbSet<SessionLog> SessionLogs { get; set; }
         public IDbSet<AutoBid> AutoBids { get; set; }
+        public IDbSet<UserFriend> UsersFriends { get; set; }
+        public IDbSet<FriendRequest> FriendsRequests { get; set; }
 
         public InMemoryDataContext()
         {

@@ -363,6 +363,14 @@
     <Compile Include="Migrations\201610311352398_AddFloorandFlatToAddress.Designer.cs">
       <DependentUpon>201610311352398_AddFloorandFlatToAddress.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701031835012_FriendRequestsAndUsersFriendsTables.cs" />
+    <Compile Include="Migrations\201701031835012_FriendRequestsAndUsersFriendsTables.Designer.cs">
+      <DependentUpon>201701031835012_FriendRequestsAndUsersFriendsTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701031852268_AddFriendToFriendsRequest.cs" />
+    <Compile Include="Migrations\201701031852268_AddFriendToFriendsRequest.Designer.cs">
+      <DependentUpon>201701031852268_AddFriendToFriendsRequest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -592,6 +600,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610311352398_AddFloorandFlatToAddress.resx">
       <DependentUpon>201610311352398_AddFloorandFlatToAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701031835012_FriendRequestsAndUsersFriendsTables.resx">
+      <DependentUpon>201701031835012_FriendRequestsAndUsersFriendsTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701031852268_AddFriendToFriendsRequest.resx">
+      <DependentUpon>201701031852268_AddFriendToFriendsRequest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
