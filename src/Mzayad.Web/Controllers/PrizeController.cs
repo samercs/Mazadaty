@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using Mzayad.Models;
+﻿using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Models.Enums;
 using Mzayad.Services;
@@ -18,6 +14,10 @@ using OrangeJetpack.Base.Core.Security;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Models;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Mzayad.Web.Controllers
 {
@@ -54,7 +54,7 @@ namespace Mzayad.Web.Controllers
             {
                 throw new Exception("No prize found.");
             }
-            var data = prizes.Select(i => new { i.Title, i.Weight, i.PrizeId });
+            var data = prizes.Select(i => new { i.Title, i.Weight, i.PrizeId, i.PrizeType });
             var model = new IndexViewModel
             {
                 PrizesJson =
