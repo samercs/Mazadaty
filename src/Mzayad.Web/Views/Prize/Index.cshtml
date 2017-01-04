@@ -100,7 +100,7 @@
             var winningSegment = theWheel.getIndicatedSegment();
             alertify.alert(message, function() {
                 if (type == 3) {
-                    location.href = "prize//select-avatar";
+                    location.href = "/en/prize/select-avatar";
                 }
             });
         };
@@ -113,7 +113,7 @@
                 if (wheelSpinning == false) {
 
                     $.ajax({
-                        url: "prize/@Model.PrizeId/random-prize",
+                        url: "/en/prize/@Model.PrizeId/random-prize",
                         context: document.body,
                         method: 'POST',
                         data: { id:"@Model.PrizeId" }

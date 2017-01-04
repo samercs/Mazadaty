@@ -804,6 +804,7 @@
     <Content Include="Views\Shared\_Layout_AdminMenu.cshtml" />
     <Content Include="Views\Prize\Index.cshtml" />
     <Content Include="Views\Prize\SelectAvatarPrize.cshtml" />
+    <Content Include="Views\Shared\_UserPrizeNotification.cshtml" />
     <TypeScriptCompile Include="Scripts\auctions.ts" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />

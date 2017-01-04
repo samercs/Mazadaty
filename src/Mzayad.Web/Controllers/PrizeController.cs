@@ -10,7 +10,6 @@ using Mzayad.Web.Models.Prize;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using OrangeJetpack.Base.Core.Formatting;
-using OrangeJetpack.Base.Core.Security;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Models;
@@ -42,19 +41,12 @@ namespace Mzayad.Web.Controllers
         public async Task<ActionResult> Index(int id)
         {
             var user = await AuthService.CurrentUser();
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
             var prizeLog = await _prizeService.GetPrizeLogById(id);
-            if (prizeLog == null)
+            if (!ValidatePrize(user, prizeLog))
             {
                 return HttpNotFound();
             }
-            if (!prizeLog.UserId.Equals(user.Id))
-            {
-                return HttpNotFound();
-            }
+
             var prizes = await _prizeService.GetAvaliablePrize();
             if (!prizes.Any())
             {
@@ -75,15 +67,11 @@ namespace Mzayad.Web.Controllers
         public async Task<ActionResult> GetRandomPrize(int id)
         {
             var user = await AuthService.CurrentUser();
-            if (user == null)
+            var prizeLog = await _prizeService.GetPrizeLogById(id);
+            if (!ValidatePrize(user, prizeLog))
             {
                 return HttpNotFound();
             }
-
-            /*if (!await ValidateParameter(tokenParameters))
-            {
-                return HttpNotFound();
-            }*/
 
             Prize prize = null;
             var prizes = await _prizeService.GetAvaliablePrize();
@@ -107,22 +95,11 @@ namespace Mzayad.Web.Controllers
             }
             var message = await ProccessPrize(user, prize);
             var isComplete = prize.PrizeType == PrizeType.Subscription;
-            //await _prizeService.LogUserPrize(user.Id, prize.PrizeId, tokenParameters.Token, isComplete);
+            await _prizeService.LogUserPrize(prizeLog, prize.PrizeId, isComplete);
             var data = new { prizeId = prize.PrizeId, index, message, type = (int)prize.PrizeType };
-
             return Content(JsonConvert.SerializeObject(data, Formatting.Indented,
                         new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
         }
-
-        /*[System.Web.Mvc.Route("test"), System.Web.Mvc.Authorize]
-        public async Task<ActionResult> GetPrizeParameter()
-        {
-            var user = await AuthService.CurrentUser();
-            var baseUrl = $"{AppSettings.CanonicalUrl}{Url.Action("Index", "Prize", new { Language })}";
-            var url = PasswordUtilities.GenerateResetPasswordUrl(baseUrl, user.Email);
-            return Redirect(url);
-        }*/
-
 
 
         private async Task<string> ProccessPrize(ApplicationUser user, Prize prize)
@@ -230,19 +207,25 @@ namespace Mzayad.Web.Controllers
             await MessageService.Send(email.WithTemplate());
         }
 
-        private async Task<bool> ValidateParameter(UrlTokenParameters token)
+        private bool ValidatePrize(ApplicationUser user, UserPrizeLog userPrizeLog)
         {
-            try
-            {
-                PasswordUtilities.ValidateResetPasswordParameters(token);
-                return true;
-                //return await _prizeService.ValidatePrizeHash(token.Token);
-
-            }
-            catch (Exception e)
+            if (user == null)
             {
                 return false;
             }
+            if (userPrizeLog == null)
+            {
+                return false;
+            }
+            if (userPrizeLog.PrizeId.HasValue)
+            {
+                return false;
+            }
+            if (!userPrizeLog.UserId.Equals(user.Id))
+            {
+                return false;
+            }
+            return true;
         }
 
 

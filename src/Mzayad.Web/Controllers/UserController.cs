@@ -36,7 +36,7 @@ namespace Mzayad.Web.Controllers
         private readonly AuctionService _auctionService;
         private readonly WishListService _wishListService;
         private readonly IActivityQueueService _activityQueueService;
-        private readonly TokenService _tokenService;
+        private readonly PrizeService _prizeService;
 
         public UserController(IAppServices appServices)
             : base(appServices)
@@ -52,20 +52,25 @@ namespace Mzayad.Web.Controllers
             _wishListService = new WishListService(DataContextFactory);
             _activityQueueService =
                 new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
-            _tokenService = new TokenService(DataContextFactory);
+            _prizeService = new PrizeService(DataContextFactory);
         }
 
         [Route("dashboard")]
         public async Task<ActionResult> Dashboard()
         {
             var user = await AuthService.CurrentUser();
+            var userPrize = await _prizeService.GetUserAvilablePrize(user);
+            var prizeUrl = userPrize != null
+                ? Url.Action("Index", "Prize", new { id = userPrize.UserPrizeLogId, Language })
+                : null;
 
             var viewModel = new DashboardViewModel(user)
             {
                 Bids = await _bidService.GetRecentBidHistoryForUser(user.Id, Language),
                 Trophies = await _trophyService.GetTrophies(user.Id, Language),
                 Auctions = await _auctionService.GetAuctionsWon(user.Id, Language),
-                WishLists = await _wishListService.GetByUser(user.Id)
+                WishLists = await _wishListService.GetByUser(user.Id),
+                PrizeUrl = prizeUrl
             };
 
             return View(viewModel);

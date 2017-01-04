@@ -101,17 +101,15 @@ namespace Mzayad.Services
 
         }
 
-        public async Task LogUserPrize(string userId, int prizeId, string hash, bool isComplete)
+        public async Task<UserPrizeLog> LogUserPrize(UserPrizeLog userPrizeLog, int prizeId, bool isComplete)
         {
             using (var dc = DataContext())
             {
-                var prizeLog = new UserPrizeLog
-                {
-                    PrizeId = prizeId,
-                    UserId = userId
-                };
-                dc.UserPrizeLogs.Add(prizeLog);
+                userPrizeLog.PrizeId = prizeId;
+                userPrizeLog.IsComplete = isComplete;
+                dc.SetModified(userPrizeLog);
                 await dc.SaveChangesAsync();
+                return userPrizeLog;
             }
         }
 
@@ -168,6 +166,15 @@ namespace Mzayad.Services
             {
                 return await dc.UserPrizeLogs.SingleOrDefaultAsync(i => i.UserPrizeLogId == id);
             }
+        }
+
+        public async Task<UserPrizeLog> GetUserAvilablePrize(ApplicationUser user)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.UserPrizeLogs.FirstOrDefaultAsync(i => i.UserId == user.Id && !i.PrizeId.HasValue);
+            }
+
         }
     }
 }
