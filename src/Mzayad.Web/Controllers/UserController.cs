@@ -322,5 +322,16 @@ namespace Mzayad.Web.Controllers
 
             return View(auctions);
         }
+
+        [Route("~/profiles/{userName}")]
+        public async Task<ActionResult> UserProfile(string userName)
+        {
+            var user = await _userService.GetUserByName(userName);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
     }
 }

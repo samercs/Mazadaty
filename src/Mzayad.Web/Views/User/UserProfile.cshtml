@@ -1,0 +1,38 @@
+﻿@using OrangeJetpack.Base.Web
+
+@model Mzayad.Models.ApplicationUser
+
+@{
+    ViewBag.Title = Model.UserName;
+}
+@section scripts
+{
+    <script>
+        function friendRequest() {
+            $.ajax({
+                url: '@Url.Content("~/friends/sendrequest")',
+                type: 'POST',
+                data:{'userName':'@Model.UserName'},
+                dataType: 'json',
+                success: function (e) {
+                    if (e == '1') {
+                        alert('your request has been sent successfully');
+                    }
+                    else {
+                        alert('Error: try later!');
+                    }
+                },
+                error: function () {
+                    alert('Error: try later!');
+                }
+            });
+        }
+    </script>
+}
+
+@if (Model.ProfileStatus == Mzayad.Models.Enum.UserProfileStatus.Private)
+{
+    @(Html.StatusMessage("This Profile is private!. " + (Model.UserName != User.Identity.Name ? "Click <span style='cursor:pointer;color:red' onclick='friendRequest()'>here</span> to send friend request" : string.Empty), StatusMessageType.Warning))
+    return;
+}
+

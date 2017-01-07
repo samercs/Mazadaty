@@ -399,6 +399,7 @@
     <Compile Include="Controllers\AuctionsController.cs" />
     <Compile Include="Controllers\AutoBidController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\FriendsController.cs" />
     <Compile Include="Controllers\KnetController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
@@ -788,6 +789,7 @@
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\BuyNowTile.cshtml" />
     <Content Include="Views\Shared\_Layout_AdminMenu.cshtml" />
+    <Content Include="Views\User\UserProfile.cshtml" />
     <TypeScriptCompile Include="Scripts\auctions.ts" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />
@@ -877,6 +879,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Api\Views\Shared\" />
+    <Folder Include="Views\Friends\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mzayad.Core\Mzayad.Core.csproj">
