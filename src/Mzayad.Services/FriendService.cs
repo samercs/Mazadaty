@@ -1,11 +1,13 @@
 ﻿using Mzayad.Data;
 using Mzayad.Models;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mzayad.Services
 {
-    public class FriendService:ServiceBase
+    public class FriendService : ServiceBase
     {
         public FriendService(IDataContextFactory dataContextFactory)
             : base(dataContextFactory)
@@ -15,8 +17,11 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                dc.FriendsRequests.Add(entity);
-                await dc.SaveChangesAsync();
+                if (!dc.FriendsRequests.Any(i => i.UserId == entity.UserId && i.FriendId == entity.FriendId))
+                {
+                    dc.FriendsRequests.Add(entity);
+                    await dc.SaveChangesAsync();
+                }
                 return entity;
             }
         }
@@ -34,7 +39,7 @@ namespace Mzayad.Services
                     UserId = request.UserId,
                     FriendId = request.FriendId,
                 });
-                
+
                 //add friend record(requester as friend and requested as user)
                 dc.UsersFriends.Add(new UserFriend()
                 {
@@ -61,10 +66,45 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                var friends = dc.UsersFriends.Where(i => (i.UserId == userId && i.FriendId == friendId) 
+                var friends = dc.UsersFriends.Where(i => (i.UserId == userId && i.FriendId == friendId)
                                                 || (i.FriendId == userId && i.UserId == friendId));
                 friends.ToList().ForEach(i => dc.UsersFriends.Remove(i));
                 await dc.SaveChangesAsync();
+            }
+        }
+
+        public async Task<IReadOnlyCollection<ApplicationUser>> GetFriends(string userId)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.UsersFriends
+                                    .Include(i => i.User)
+                                    .Where(i => i.UserId == userId)
+                                    .Select(i => i.Friend)
+                                    .OrderBy(i => i.UserName)
+                                    .ToListAsync();
+            }
+        }
+        public async Task<IReadOnlyCollection<FriendRequest>> GetFriendRequests(string userId)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.FriendsRequests
+                                    .Where(i => i.FriendId == userId && i.Status == Models.Enums.FriendRequestStatus.NotDecided)
+                                    .Include(i => i.Friend)
+                                    .OrderBy(i => i.CreatedUtc)
+                                    .ToListAsync();
+            }
+        }
+        public async Task<IReadOnlyCollection<FriendRequest>> GetUserRequests(string userId)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.FriendsRequests
+                                    .Where(i => i.UserId == userId && i.Status == Models.Enums.FriendRequestStatus.NotDecided)
+                                    .Include(i => i.Friend)
+                                    .OrderBy(i => i.CreatedUtc)
+                                    .ToListAsync();
             }
         }
     }

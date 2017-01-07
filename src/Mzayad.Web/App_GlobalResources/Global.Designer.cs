@@ -70,6 +70,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accept.
+        /// </summary>
+        public static string Accept {
+            get {
+                return ResourceManager.GetString("Accept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Added.
         /// </summary>
         public static string Added {
@@ -403,6 +412,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel Request.
+        /// </summary>
+        public static string CancelRequest {
+            get {
+                return ResourceManager.GetString("CancelRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Categories.
         /// </summary>
         public static string Categories {
@@ -592,6 +610,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Decline.
+        /// </summary>
+        public static string Decline {
+            get {
+                return ResourceManager.GetString("Decline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string Description {
@@ -723,6 +750,33 @@ namespace Mzayad.Web.Resources {
         public static string Floor {
             get {
                 return ResourceManager.GetString("Floor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friend Request.
+        /// </summary>
+        public static string FriendRequest {
+            get {
+                return ResourceManager.GetString("FriendRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friend Requests.
+        /// </summary>
+        public static string FriendRequests {
+            get {
+                return ResourceManager.GetString("FriendRequests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friends.
+        /// </summary>
+        public static string Friends {
+            get {
+                return ResourceManager.GetString("Friends", resourceCulture);
             }
         }
         

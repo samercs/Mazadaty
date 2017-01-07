@@ -8,6 +8,7 @@ namespace Mzayad.Web.Models.User
     public class DashboardViewModel
     {
         public ApplicationUser User { get; private set; }
+        public IReadOnlyCollection<FriendRequest> FriendRequests { get; set; }
         public IReadOnlyCollection<Bid> Bids { get; set; }
         public IReadOnlyCollection<Trophy> Trophies { get; set; }
         public IReadOnlyCollection<Auction> Auctions { get; set; } 

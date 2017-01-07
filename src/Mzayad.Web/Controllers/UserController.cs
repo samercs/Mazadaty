@@ -37,6 +37,7 @@ namespace Mzayad.Web.Controllers
         private readonly AuctionService _auctionService;
         private readonly WishListService _wishListService;
         private readonly IActivityQueueService _activityQueueService;
+        private readonly FriendService _friendService;
 
         public UserController(IAppServices appServices)
             : base(appServices)
@@ -51,6 +52,7 @@ namespace Mzayad.Web.Controllers
             _auctionService = new AuctionService(DataContextFactory);
             _wishListService = new WishListService(DataContextFactory);
             _activityQueueService = new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
+            _friendService = new FriendService(appServices.DataContextFactory);
         }
 
         [Route("dashboard")]
@@ -63,7 +65,8 @@ namespace Mzayad.Web.Controllers
                 Bids = await _bidService.GetRecentBidHistoryForUser(user.Id, Language),
                 Trophies = await _trophyService.GetTrophies(user.Id, Language),
                 Auctions = await _auctionService.GetAuctionsWon(user.Id, Language),
-                WishLists = await _wishListService.GetByUser(user.Id)
+                WishLists = await _wishListService.GetByUser(user.Id),
+                FriendRequests = await _friendService.GetFriendRequests(user.Id)
             };
 
             return View(viewModel);
@@ -290,16 +293,16 @@ namespace Mzayad.Web.Controllers
             var trophies = await _trophyService.GetAll(Language);
 
             var model = (from trophy in trophies
-                let userTrophy = userTophies.FirstOrDefault(i => i.TrophyId == trophy.TrophyId)
-                select new TrophieViewModel
-                {
-                    TrophyName = trophy.Name,
-                    TrophyDescription = trophy.Description,
-                    IconUrl = trophy.IconUrl,
-                    XpEarned = userTrophy == null ? (int?) null : userTrophy.XpAwarded,
-                    AwardDate = userTrophy == null ? (DateTime?) null : userTrophy.CreatedUtc,
-                    Earned = userTrophy != null
-                }).ToList();
+                         let userTrophy = userTophies.FirstOrDefault(i => i.TrophyId == trophy.TrophyId)
+                         select new TrophieViewModel
+                         {
+                             TrophyName = trophy.Name,
+                             TrophyDescription = trophy.Description,
+                             IconUrl = trophy.IconUrl,
+                             XpEarned = userTrophy == null ? (int?)null : userTrophy.XpAwarded,
+                             AwardDate = userTrophy == null ? (DateTime?)null : userTrophy.CreatedUtc,
+                             Earned = userTrophy != null
+                         }).ToList();
 
 
             return View(model);
@@ -323,7 +326,7 @@ namespace Mzayad.Web.Controllers
             return View(auctions);
         }
 
-        [Route("~/profiles/{userName}")]
+        [Route("~/{language}/profiles/{userName}")]
         public async Task<ActionResult> UserProfile(string userName)
         {
             var user = await _userService.GetUserByName(userName);
@@ -331,7 +334,30 @@ namespace Mzayad.Web.Controllers
             {
                 return HttpNotFound();
             }
-            return View(user);
+            if (user.Id == AuthService.CurrentUserId())
+            {
+                return RedirectToAction("dashboard", "user", new { area = "", language = Language });
+            }
+            var viewModel = new DashboardViewModel(user)
+            {
+                Bids = await _bidService.GetRecentBidHistoryForUser(user.Id, Language),
+                Trophies = await _trophyService.GetTrophies(user.Id, Language),
+                Auctions = await _auctionService.GetAuctionsWon(user.Id, Language),
+                WishLists = await _wishListService.GetByUser(user.Id)
+            };
+            return View(viewModel);
+        }
+
+        [Route("friends")]
+        public async Task<ActionResult> Friends()
+        {
+            var viewModel = new FriendsViewModel()
+            {
+                UserRequests = await _friendService.GetUserRequests(AuthService.CurrentUserId()),
+                OthersRequests = await _friendService.GetFriendRequests(AuthService.CurrentUserId()),
+                Friends = await _friendService.GetFriends(AuthService.CurrentUserId())
+            };
+            return View(viewModel);
         }
     }
 }

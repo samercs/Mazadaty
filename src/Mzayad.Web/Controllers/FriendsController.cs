@@ -20,10 +20,6 @@ namespace Mzayad.Web.Controllers
             _userService = new UserService(appServices.DataContextFactory);
             _authService = appServices.AuthService;
         }
-        public ActionResult Index()
-        {
-            return View();
-        }
 
         #region Ajax Calls
         [HttpPost]

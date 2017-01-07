@@ -1,9 +1,11 @@
 ﻿@using OrangeJetpack.Base.Web
-
-@model Mzayad.Models.ApplicationUser
+@using Humanizer
+@using Mzayad.Core.Formatting
+@using DateTimeFormatter = Mzayad.Core.Formatting.DateTimeFormatter
+@model Mzayad.Web.Models.User.DashboardViewModel
 
 @{
-    ViewBag.Title = Model.UserName;
+    ViewBag.Title = Model.User.UserName;
 }
 @section scripts
 {
@@ -12,27 +14,204 @@
             $.ajax({
                 url: '@Url.Content("~/friends/sendrequest")',
                 type: 'POST',
-                data:{'userName':'@Model.UserName'},
+                data: { 'userName': '@Model.User.UserName' },
                 dataType: 'json',
                 success: function (e) {
                     if (e == '1') {
-                        alert('your request has been sent successfully');
+                        $('#dvMessage').html('@Html.Raw(Html.StatusMessage("your request has been sent successfully",StatusMessageType.Success).ToString().Replace("'","\""))');
                     }
                     else {
-                        alert('Error: try later!');
+                        $('#dvMessage').html('@Html.Raw(Html.StatusMessage("Error: try later!", StatusMessageType.Error).ToString().Replace("'","\""))');
                     }
                 },
                 error: function () {
-                    alert('Error: try later!');
+                    $('#dvMessage').html('@Html.Raw(Html.StatusMessage("Error: try later!", StatusMessageType.Error).ToString().Replace("'","\""))');
                 }
             });
         }
     </script>
 }
+<div id="dvMessage">
+    @if (Model.User.ProfileStatus == Mzayad.Models.Enum.UserProfileStatus.Private)
+    {
+        @(Html.StatusMessage("This Profile is private!. " + (Model.User.UserName != User.Identity.Name ? "Click <span style='cursor:pointer;color:red' onclick='friendRequest()'>here</span> to send friend request" : string.Empty), StatusMessageType.Warning))
+        return;
+    }
+</div>
 
-@if (Model.ProfileStatus == Mzayad.Models.Enum.UserProfileStatus.Private)
+
+@section styles{
+    <style>
+        #page-title {
+            display: none;
+        }
+
+        .panel-link {
+            background-color: #33ACE0 !important;
+            color: white !important;
+            margin-right: 5px !important;
+        }
+    </style>
+}
+
+<div id="dashboard-header">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div id="dashboard-avatar">
+                        <img class="img-responsive" src="@Model.User.AvatarUrl" alt="@Model.User.UserName" />
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                    <div id="dashboard-details" class="dashboard-cell">
+                        <div id="dashboard-username" class="text-uppercase">@Model.User.UserName</div>
+                        <div id="dashboard-level" class="text-uppercase">
+                            @Global.Level @Model.User.Level
+                        </div>
+                        <div id="dashboard-progress">
+                            <div class="progress pull-left">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="@Model.LevelPercentage" aria-valuemin="0" aria-valuemax="100" style="width: @Model.LevelPercentage%;">
+                                    <span class="sr-only">@Model.LevelPercentage% Complete</span>
+                                </div>
+                            </div>
+                            <small>@(Model.User.Xp)/@(Model.NextLevel.XpRequired)</small>
+                        </div>
+                        <div id="dashboard-level"><span class="btn btn-link" style='color:#33ace0;padding:5px 5px 5px 0px' onclick='friendRequest()'>@Global.FriendRequest</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="dashboard-cell">
+                        <div class="dashboard-number">@Model.User.Xp</div>
+                        <div class="dashboard-label text-uppercase">@Global.Experience</div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <a href="@Url.Action("Index", "Subscriptions")" class="dashboard-cell">
+                        <div class="dashboard-number">@Model.User.Tokens</div>
+                        <div class="dashboard-label text-uppercase">@Global.Tokens</div>
+                    </a>
+                </div>
+                <div class="col-sm-4">
+                    <a href="@Url.Action("Trophies", "User")" class="dashboard-cell">
+                        <div class="dashboard-number">@Model.Trophies.Count</div>
+                        <div class="dashboard-label text-uppercase">@Global.Trophies</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Trophies.Any())
 {
-    @(Html.StatusMessage("This Profile is private!. " + (Model.UserName != User.Identity.Name ? "Click <span style='cursor:pointer;color:red' onclick='friendRequest()'>here</span> to send friend request" : string.Empty), StatusMessageType.Warning))
-    return;
+    <div class="panel dashboard-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title text-uppercase">@Global.TrophiesAchieved</h3>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            <ul class="dashboard-flex-list">
+                @foreach (var trophy in Model.Trophies.Take(10))
+                {
+                    <li>
+                        <div class="dashboard-flex-item">
+                            <img class="img-responsive" src="@trophy.IconUrl" alt="@trophy.Name" />
+                            <div class="dashboard-flex-name text-uppercase">@trophy.Name</div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+}
+
+@if (Model.Auctions.Any())
+{
+    <div class="panel dashboard-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title text-uppercase">@Global.ItemsWon</h3>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            <ul class="dashboard-flex-list">
+                @foreach (var auction in Model.Auctions.Take(10))
+                {
+                    <li>
+                        <div class="dashboard-flex-item">
+                            <img class="img-responsive" src="@auction.Product.MainImage().ImageSmUrl" alt="@auction.Title" />
+                            <div class="dashboard-flex-name text-uppercase">@auction.Title</div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+}
+
+@if (Model.WishLists.Any())
+{
+    <div class="panel dashboard-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title text-uppercase">@Global.MyWishList</h3>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            <table class="@Html.Css().GridTable">
+                <thead>
+                    <tr>
+                        <th>@Global.ItemName</th>
+                        <th>@Global.Added</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.WishLists)
+                    {
+                        <tr>
+                            <td>@item.NameEntered</td>
+                            <td>@DateTimeFormatter.ToLocalTime(item.CreatedUtc)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@if (Model.Bids.Any())
+{
+    <div class="panel dashboard-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title text-uppercase">@Global.BidHistory</h3>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            <table class="@Html.Css().GridTable">
+                <thead>
+                    <tr>
+                        <th>@Global.DateSlashTime</th>
+                        <th>@Global.Auction</th>
+                        <th>@Global.Amount</th>
+                        <th>@Global.TimeLeft</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Bids)
+                    {
+                        <tr>
+                            <td>@DateTimeFormatter.ToLocalTime(item.CreatedUtc, DateTimeFormatter.Format.Full)</td>
+                            <td>@item.Auction.Title</td>
+                            <td>@CurrencyFormatter.Format(item.Amount)</td>
+                            <td>@TimeSpan.FromSeconds(item.SecondsLeft).Humanize(4)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 }
 

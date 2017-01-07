@@ -810,4 +810,22 @@
   <data name="NoLiveAuctionsMessage" xml:space="preserve">
     <value>There are no live auctions available at this time.</value>
   </data>
+  <data name="Accept" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="CancelRequest" xml:space="preserve">
+    <value>Cancel Request</value>
+  </data>
+  <data name="Decline" xml:space="preserve">
+    <value>Decline</value>
+  </data>
+  <data name="FriendRequest" xml:space="preserve">
+    <value>Friend Request</value>
+  </data>
+  <data name="FriendRequests" xml:space="preserve">
+    <value>Friend Requests</value>
+  </data>
+  <data name="Friends" xml:space="preserve">
+    <value>Friends</value>
+  </data>
 </root>

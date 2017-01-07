@@ -1,0 +1,73 @@
+﻿@model Mzayad.Web.Models.User.FriendsViewModel
+
+@{
+    ViewBag.Title = Global.Friends;
+}
+
+@if (Model.UserRequests.Any() || Model.OthersRequests.Any())
+{
+    <div class="panel dashboard-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title text-uppercase">@Global.FriendRequests</h3>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+                @foreach (var request in Model.UserRequests)
+                {
+                    <div class="row" style="border-bottom:1px solid #f1f1f1;margin-bottom:10px;padding-bottom:10px;">
+                        <div class="col-sm-1">
+                            <div class="dashboard-avatar">
+                                <img class="img-responsive" src="@request.Friend.AvatarUrl" alt="@request.Friend.UserName" />
+                            </div>
+                        </div>
+                        <div class="col-sm-9">
+                            <div id="dashboard-details" class="dashboard-cell" style="padding:0px;">
+                                <div id="dashboard-username" class="text-uppercase">@request.Friend.UserName</div>
+                                <button type="button" class="btn btn-link" style="margin-top:20px;padding:0px;">@Global.CancelRequest</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @foreach (var request in Model.OthersRequests)
+                {
+                    <div class="row" style="border-bottom:1px solid #f1f1f1;margin-bottom:10px;padding-bottom:10px;">
+                        <div class="col-sm-1">
+                            <div class="dashboard-avatar">
+                                <img class="img-responsive" src="@request.Friend.AvatarUrl" alt="@request.Friend.UserName" />
+                            </div>
+                        </div>
+                        <div class="col-sm-9">
+                            <div id="dashboard-details" class="dashboard-cell" style="padding:0px;">
+                                <div id="dashboard-username" class="text-uppercase" style="margin-bottom:20px;">@request.Friend.UserName</div>
+                                <button type="button" class="btn btn-link" style="margin-right:20px;padding:0px;">@Global.Accept</button>
+                                <button type="button" class="btn btn-link" style="padding:0px;">@Global.Decline</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+    </div>
+}
+@if (Model.Friends.Any())
+{
+    <div class="panel dashboard-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title text-uppercase">@Global.Friends</h3>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            <ul class="dashboard-flex-list">
+                @foreach (var friend in Model.Friends)
+                {
+                    <li>
+                        <div class="dashboard-flex-item">
+                            <img class="img-responsive" src="@friend.AvatarUrl" alt="@friend.UserName" />
+                            <div class="dashboard-flex-name text-uppercase">@friend.UserName</div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+}
+

@@ -49,22 +49,28 @@
         </div>
         <div class="col-md-6">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <div class="dashboard-cell">
                         <div class="dashboard-number">@Model.User.Xp</div>
                         <div class="dashboard-label text-uppercase">@Global.Experience</div>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <a href="@Url.Action("Index", "Subscriptions")" class="dashboard-cell">
                         <div class="dashboard-number">@Model.User.Tokens</div>
                         <div class="dashboard-label text-uppercase">@Global.Tokens</div>
                     </a>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <a href="@Url.Action("Trophies", "User")" class="dashboard-cell">
                         <div class="dashboard-number">@Model.Trophies.Count</div>
                         <div class="dashboard-label text-uppercase">@Global.Trophies</div>
+                    </a>
+                </div>
+                <div class="col-sm-3">
+                    <a href="@Url.Action("Friends", "User")" class="dashboard-cell">
+                        <div class="dashboard-number">@Model.FriendRequests.Count</div>
+                        <div class="dashboard-label text-uppercase">@Global.FriendRequest</div>
                     </a>
                 </div>
             </div>

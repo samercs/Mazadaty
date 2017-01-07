@@ -759,4 +759,22 @@
   <data name="NoLiveAuctionsMessage" xml:space="preserve">
     <value>لا يوجد مزادات متاحه الآن</value>
   </data>
+  <data name="Accept" xml:space="preserve">
+    <value>قبول</value>
+  </data>
+  <data name="CancelRequest" xml:space="preserve">
+    <value>إلغاء طلب الصداقة</value>
+  </data>
+  <data name="Decline" xml:space="preserve">
+    <value>رفض</value>
+  </data>
+  <data name="FriendRequest" xml:space="preserve">
+    <value>طلب صداقة</value>
+  </data>
+  <data name="FriendRequests" xml:space="preserve">
+    <value>طلبات الصداقة</value>
+  </data>
+  <data name="Friends" xml:space="preserve">
+    <value>أصدقاء</value>
+  </data>
 </root>
