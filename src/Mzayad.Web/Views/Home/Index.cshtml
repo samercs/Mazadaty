@@ -99,7 +99,9 @@ else
                                                 <img data-bind="attr: { src: avatarUrl, alt: userName }" width="32" />
                                             </div>
                                             <div class="auction-recent-username pull-left">
-                                                <span data-bind="text: userName"></span>
+                                                <a data-bind="attr:{href : '@Url.Content("~/"+ LanguageCode+ "/profiles/")'+userName}">
+                                                    <span data-bind="text: userName"></span>
+                                            </a>
                                             </div>
                                             <div class="auction-recent-bidamount pull-right">
                                                 KD <span data-bind="text: bidAmount"></span>

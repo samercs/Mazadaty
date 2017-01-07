@@ -32,7 +32,7 @@ namespace Mzayad.Services
             {
                 var request = dc.FriendsRequests.SingleOrDefault(i => i.FriendRequestId == entity.FriendRequestId);
                 request.Status = Models.Enums.FriendRequestStatus.Accepted;
-
+                dc.SetModified(request);
                 //add friend record(requester as user and requested as friend)
                 dc.UsersFriends.Add(new UserFriend()
                 {
@@ -51,14 +51,14 @@ namespace Mzayad.Services
                 return entity;
             }
         }
-        public async Task<FriendRequest> DeclineRequest(FriendRequest entity)
+        public async Task DeclineRequest(FriendRequest entity)
         {
             using (var dc = DataContext())
             {
                 var request = dc.FriendsRequests.SingleOrDefault(i => i.FriendRequestId == entity.FriendRequestId);
                 request.Status = Models.Enums.FriendRequestStatus.Declined;
+                dc.SetModified(request);
                 await dc.SaveChangesAsync();
-                return entity;
             }
         }
 
@@ -105,6 +105,16 @@ namespace Mzayad.Services
                                     .Include(i => i.Friend)
                                     .OrderBy(i => i.CreatedUtc)
                                     .ToListAsync();
+            }
+        }
+
+        public async Task CancelRequest(int requestId)
+        {
+            using (var dc = DataContext())
+            {
+                var friendRequest = dc.FriendsRequests.SingleOrDefault(i => i.FriendRequestId == requestId);
+                dc.FriendsRequests.Remove(friendRequest);
+                await dc.SaveChangesAsync();
             }
         }
     }

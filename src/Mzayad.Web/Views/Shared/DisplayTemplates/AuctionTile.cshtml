@@ -28,7 +28,7 @@
         {
             <div class="auction-tile-won-by-avater auction-tile-row">
                 <img src="@Model.WonByAvatarUrl" alt="@Model.WonByUserName" width="64" height="64" />
-                <div class="auction-title-username">@Model.WonByUserName</div>
+                <div class="auction-title-username"><a href="@Url.Content("~/"+ LanguageCode+ "/profiles/"+Model.WonByUserName)">@Model.WonByUserName</a></div>
             </div>
         }
         @if (Model.BuyNowEnabled)

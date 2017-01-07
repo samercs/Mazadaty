@@ -1,8 +1,11 @@
-﻿@model Mzayad.Web.Models.User.FriendsViewModel
+﻿@using OrangeJetpack.Base.Web
+
+@model Mzayad.Web.Models.User.FriendsViewModel
 
 @{
     ViewBag.Title = Global.Friends;
 }
+<div id="dvMessage"></div>
 
 @if (Model.UserRequests.Any() || Model.OthersRequests.Any())
 {
@@ -12,40 +15,44 @@
             <div class="clearfix"></div>
         </div>
         <div class="panel-body">
-                @foreach (var request in Model.UserRequests)
-                {
-                    <div class="row" style="border-bottom:1px solid #f1f1f1;margin-bottom:10px;padding-bottom:10px;">
-                        <div class="col-sm-1">
-                            <div class="dashboard-avatar">
-                                <img class="img-responsive" src="@request.Friend.AvatarUrl" alt="@request.Friend.UserName" />
-                            </div>
-                        </div>
-                        <div class="col-sm-9">
-                            <div id="dashboard-details" class="dashboard-cell" style="padding:0px;">
-                                <div id="dashboard-username" class="text-uppercase">@request.Friend.UserName</div>
-                                <button type="button" class="btn btn-link" style="margin-top:20px;padding:0px;">@Global.CancelRequest</button>
-                            </div>
+            @foreach (var request in Model.UserRequests)
+            {
+                <div class="row" style="border-bottom:1px solid #f1f1f1;margin-bottom:10px;padding-bottom:10px;" id="dv_@request.FriendRequestId">
+                    <div class="col-sm-1">
+                        <div class="dashboard-avatar">
+                            <img class="img-responsive" src="@request.Friend.AvatarUrl" alt="@request.Friend.UserName" />
                         </div>
                     </div>
-                }
-                @foreach (var request in Model.OthersRequests)
-                {
-                    <div class="row" style="border-bottom:1px solid #f1f1f1;margin-bottom:10px;padding-bottom:10px;">
-                        <div class="col-sm-1">
-                            <div class="dashboard-avatar">
-                                <img class="img-responsive" src="@request.Friend.AvatarUrl" alt="@request.Friend.UserName" />
+                    <div class="col-sm-9">
+                        <div id="dashboard-details" class="dashboard-cell" style="padding:0px;">
+                            <div id="dashboard-username" class="text-uppercase">
+                                <a href="@Url.Content("~/"+ LanguageCode+ "/profiles/"+request.Friend.UserName)">@request.Friend.UserName</a>
                             </div>
-                        </div>
-                        <div class="col-sm-9">
-                            <div id="dashboard-details" class="dashboard-cell" style="padding:0px;">
-                                <div id="dashboard-username" class="text-uppercase" style="margin-bottom:20px;">@request.Friend.UserName</div>
-                                <button type="button" class="btn btn-link" style="margin-right:20px;padding:0px;">@Global.Accept</button>
-                                <button type="button" class="btn btn-link" style="padding:0px;">@Global.Decline</button>
-                            </div>
+                            <button type="button" class="btn btn-link" style="margin-top:20px;padding:0px;" onclick="cancelRequest(@request.FriendRequestId)">@Global.CancelRequest</button>
                         </div>
                     </div>
-                }
-            </div>
+                </div>
+            }
+            @foreach (var request in Model.OthersRequests)
+            {
+                <div class="row" style="border-bottom:1px solid #f1f1f1;margin-bottom:10px;padding-bottom:10px;" id="dv_@request.FriendRequestId">
+                    <div class="col-sm-1">
+                        <div class="dashboard-avatar">
+                            <img class="img-responsive" src="@request.Friend.AvatarUrl" alt="@request.Friend.UserName" />
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div id="dashboard-details" class="dashboard-cell" style="padding:0px;">
+                            <div id="dashboard-username" class="text-uppercase">
+                                <a href="@Url.Content("~/"+ LanguageCode+ "/profiles/"+request.Friend.UserName)">@request.Friend.UserName</a>
+                            </div>
+                            <button type="button" class="btn btn-link" style="padding:0px;" onclick="decide(@request.FriendRequestId,'@((int)Mzayad.Models.Enums.FriendRequestStatus.Accepted)')">@Global.Accept</button>
+                            <button type="button" class="btn btn-link" style="margin:0px 20px;padding:0px;" onclick="decide(@request.FriendRequestId,'@((int)Mzayad.Models.Enums.FriendRequestStatus.Declined)')">@Global.Decline</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
 }
 @if (Model.Friends.Any())
@@ -56,18 +63,85 @@
             <div class="clearfix"></div>
         </div>
         <div class="panel-body">
-            <ul class="dashboard-flex-list">
-                @foreach (var friend in Model.Friends)
+            @foreach (var friend in Model.Friends)
                 {
-                    <li>
-                        <div class="dashboard-flex-item">
+                <div class="row" style="border-bottom:1px solid #f1f1f1;margin-bottom:10px;padding-bottom:10px;" id="dv_@friend.Id">
+                    <div class="col-sm-1">
+                        <div class="dashboard-avatar">
                             <img class="img-responsive" src="@friend.AvatarUrl" alt="@friend.UserName" />
-                            <div class="dashboard-flex-name text-uppercase">@friend.UserName</div>
                         </div>
-                    </li>
-                }
-            </ul>
+                    </div>
+                    <div class="col-sm-9">
+                        <div id="dashboard-details" class="dashboard-cell" style="padding:0px;">
+                            <div id="dashboard-username" class="text-uppercase">
+                                <a href="@Url.Content("~/"+ LanguageCode+ "/profiles/"+friend.UserName)">@friend.UserName</a>
+                            </div>
+                            <button type="button" class="btn btn-link" style="padding:0px;" onclick="remove('@friend.Id')">@Global.Remove</button>
+                            <a href="@Url.Content("~/"+ LanguageCode+ "/friends/message/"+friend.Id)" class="btn btn-link">@Global.Chat</a>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
+}
+
+@section scripts
+{
+    <script>
+        function cancelRequest(id) {
+            if (confirm('@Global.AreSure')) {
+                $.ajax({
+                    url: '@Url.Content("~/friends/cancelrequest")',
+                    type: 'POST',
+                    data: { 'requestId': id },
+                    dataType: 'json',
+                    success: function () {
+                        $('#dvMessage').html('@Html.Raw(Html.StatusMessage("your request has been cancelled successfully",StatusMessageType.Success).ToString().Replace("'","\""))');
+                        $('#dv_' + id).hide();
+                    },
+                    error: function () {
+                        $('#dvMessage').html('@Html.Raw(Html.StatusMessage("Error: try later!", StatusMessageType.Error).ToString().Replace("'","\""))');
+                    }
+                });
+            }
+        }
+
+        function decide(id, status) {
+            if (confirm('@Global.AreSure')) {
+                $.ajax({
+                    url: '@Url.Content("~/friends/updaterequest")',
+                    type: 'POST',
+                    data: { 'requestId': id, 'status': status },
+                    dataType: 'json',
+                    success: function () {
+                        $('#dvMessage').html('@Html.Raw(Html.StatusMessage("your action has been saved successfully",StatusMessageType.Success).ToString().Replace("'","\""))');
+                        $('#dv_' + id).hide();
+                    },
+                    error: function () {
+                        $('#dvMessage').html('@Html.Raw(Html.StatusMessage("Error: try later!", StatusMessageType.Error).ToString().Replace("'","\""))');
+                    }
+                });
+            }
+        }
+
+        function remove(id) {
+            if (confirm('@Global.AreSure')) {
+                $.ajax({
+                    url: '@Url.Content("~/friends/remove")',
+                    type: 'POST',
+                    data: { 'friendId': id},
+                    dataType: 'json',
+                    success: function () {
+                        $('#dvMessage').html('@Html.Raw(Html.StatusMessage("your friend has been removed successfully",StatusMessageType.Success).ToString().Replace("'","\""))');
+                        $('#dv_' + id).hide();
+                    },
+                    error: function () {
+                        $('#dvMessage').html('@Html.Raw(Html.StatusMessage("Error: try later!", StatusMessageType.Error).ToString().Replace("'","\""))');
+                    }
+                });
+            }
+        }
+    </script>
 }
 

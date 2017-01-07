@@ -813,8 +813,14 @@
   <data name="Accept" xml:space="preserve">
     <value>Accept</value>
   </data>
+  <data name="AreSure" xml:space="preserve">
+    <value>Are you sure?</value>
+  </data>
   <data name="CancelRequest" xml:space="preserve">
     <value>Cancel Request</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>Chat</value>
   </data>
   <data name="Decline" xml:space="preserve">
     <value>Decline</value>

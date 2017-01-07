@@ -169,6 +169,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure?.
+        /// </summary>
+        public static string AreSure {
+            get {
+                return ResourceManager.GetString("AreSure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auction.
         /// </summary>
         public static string Auction {
@@ -453,6 +462,15 @@ namespace Mzayad.Web.Resources {
         public static string ChangePassword {
             get {
                 return ResourceManager.GetString("ChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chat.
+        /// </summary>
+        public static string Chat {
+            get {
+                return ResourceManager.GetString("Chat", resourceCulture);
             }
         }
         

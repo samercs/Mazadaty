@@ -762,8 +762,14 @@
   <data name="Accept" xml:space="preserve">
     <value>قبول</value>
   </data>
+  <data name="AreSure" xml:space="preserve">
+    <value>هل أنت متأكد؟</value>
+  </data>
   <data name="CancelRequest" xml:space="preserve">
     <value>إلغاء طلب الصداقة</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>محادثة</value>
   </data>
   <data name="Decline" xml:space="preserve">
     <value>رفض</value>
