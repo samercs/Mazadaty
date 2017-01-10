@@ -117,5 +117,16 @@ namespace Mzayad.Services
                 await dc.SaveChangesAsync();
             }
         }
+
+        public async Task<bool> AreFriends(string userId, string friendId)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.UsersFriends.AnyAsync( i=> (i.UserId == userId && i.FriendId == friendId)
+                                                            ||
+                                                            (i.UserId == friendId && i.FriendId == userId));
+            }
+        }
     }
+
 }

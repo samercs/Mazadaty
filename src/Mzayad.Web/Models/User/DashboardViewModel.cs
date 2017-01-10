@@ -18,6 +18,8 @@ namespace Mzayad.Web.Models.User
         public Level NextLevel { get; private set; }
         public int LevelPercentage { get; private set; }
 
+        public bool AreFriends { get; set; }
+
         public DashboardViewModel(ApplicationUser user)
         {
             User = user;

@@ -32,7 +32,7 @@
     </script>
 }
 <div id="dvMessage">
-    @if (Model.User.ProfileStatus == Mzayad.Models.Enum.UserProfileStatus.Private)
+    @if (Model.User.ProfileStatus == Mzayad.Models.Enum.UserProfileStatus.Private && !Model.AreFriends)
     {
         @(Html.StatusMessage("This Profile is private!. " + (Model.User.UserName != User.Identity.Name ? "Click <span style='cursor:pointer;color:red' onclick='friendRequest()'>here</span> to send friend request" : string.Empty), StatusMessageType.Warning))
         return;

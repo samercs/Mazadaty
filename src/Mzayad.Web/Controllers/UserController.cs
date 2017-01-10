@@ -16,7 +16,6 @@ using OrangeJetpack.Base.Web;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Models;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
@@ -343,7 +342,8 @@ namespace Mzayad.Web.Controllers
                 Bids = await _bidService.GetRecentBidHistoryForUser(user.Id, Language),
                 Trophies = await _trophyService.GetTrophies(user.Id, Language),
                 Auctions = await _auctionService.GetAuctionsWon(user.Id, Language),
-                WishLists = await _wishListService.GetByUser(user.Id)
+                WishLists = await _wishListService.GetByUser(user.Id),
+                AreFriends = await _friendService.AreFriends(user.Id, AuthService.CurrentUserId())
             };
             return View(viewModel);
         }
