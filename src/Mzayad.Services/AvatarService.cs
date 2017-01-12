@@ -125,7 +125,7 @@ namespace Mzayad.Services
             }
         }
 
-        private async Task<bool> UserHasAvatar(ApplicationUser user, Avatar avatar)
+        public async Task<bool> UserHasAvatar(ApplicationUser user, Avatar avatar)
         {
             using (var dc = DataContext())
             {
@@ -170,7 +170,7 @@ namespace Mzayad.Services
             }
         }
 
-        private async Task<IEnumerable<Avatar>> GetUserAvatars(ApplicationUser user)
+        public async Task<IEnumerable<Avatar>> GetUserAvatars(ApplicationUser user)
         {
             using (var dc = DataContext())
             {

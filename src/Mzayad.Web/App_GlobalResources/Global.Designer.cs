@@ -259,6 +259,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your avatar has been changed successfully..
+        /// </summary>
+        public static string AvatarChangeSuccessfullyMsg {
+            get {
+                return ResourceManager.GetString("AvatarChangeSuccessfullyMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Awarded on.
         /// </summary>
         public static string AwardedOn {
@@ -993,6 +1002,15 @@ namespace Mzayad.Web.Resources {
         public static string MyAccount {
             get {
                 return ResourceManager.GetString("MyAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My Avatars.
+        /// </summary>
+        public static string MyAvatars {
+            get {
+                return ResourceManager.GetString("MyAvatars", resourceCulture);
             }
         }
         
