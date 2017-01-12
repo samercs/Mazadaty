@@ -64,6 +64,13 @@ namespace Mzayad.Web.Controllers
                 ? Url.Action("Index", "Prize", new { id = userPrize.UserPrizeLogId, Language })
                 : null;
 
+            var userHasAvatarPrize = await _prizeService.UserHasFreeAvatar(user);
+            if (userHasAvatarPrize && userPrize == null)
+            {
+                prizeUrl = Url.Action("SelectAvatarPrize", "Prize", new {Language});
+            }
+                
+
             var viewModel = new DashboardViewModel(user)
             {
                 Bids = await _bidService.GetRecentBidHistoryForUser(user.Id, Language),

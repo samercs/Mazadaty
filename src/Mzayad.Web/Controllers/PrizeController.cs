@@ -116,7 +116,6 @@ namespace Mzayad.Web.Controllers
                     await NotifyAdminForWinning(user, prize);
                     return $"Congratulation ... you win {prize.Title}. We will conatct you to get your prize.";
                 case PrizeType.Avatar:
-
                     return $"Congratulation ... you win {prize.Title}. We will redirect you to select your avatar.";
                 case PrizeType.Subscription:
                     await AddUserSubscription(user, prize.SubscriptionDays);
