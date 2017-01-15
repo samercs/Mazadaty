@@ -17,11 +17,11 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                if (!dc.FriendsRequests.Any(i => i.UserId == entity.UserId && i.FriendId == entity.FriendId))
-                {
+                //if (!dc.FriendsRequests.Any(i => i.UserId == entity.UserId && i.FriendId == entity.FriendId))
+                //{
                     dc.FriendsRequests.Add(entity);
                     await dc.SaveChangesAsync();
-                }
+                //}
                 return entity;
             }
         }
@@ -51,6 +51,7 @@ namespace Mzayad.Services
                 return entity;
             }
         }
+
         public async Task DeclineRequest(FriendRequest entity)
         {
             using (var dc = DataContext())
@@ -66,9 +67,16 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
+                //delete friend request record
+                var friendRequests = dc.FriendsRequests.Where(i => (i.UserId == userId && i.FriendId == friendId)
+                                                || (i.FriendId == userId && i.UserId == friendId));
+                friendRequests.ToList().ForEach(i => dc.FriendsRequests.Remove(i));
+
+                //delete friends records
                 var friends = dc.UsersFriends.Where(i => (i.UserId == userId && i.FriendId == friendId)
                                                 || (i.FriendId == userId && i.UserId == friendId));
                 friends.ToList().ForEach(i => dc.UsersFriends.Remove(i));
+
                 await dc.SaveChangesAsync();
             }
         }
@@ -85,28 +93,37 @@ namespace Mzayad.Services
                                     .ToListAsync();
             }
         }
+
         public async Task<IReadOnlyCollection<FriendRequest>> GetFriendRequests(string userId)
         {
             using (var dc = DataContext())
             {
                 return await dc.FriendsRequests
                                     .Where(i => i.FriendId == userId && i.Status == Models.Enums.FriendRequestStatus.NotDecided)
-                                    .Include(i => i.Friend)
+                                    .Include(i => i.User)
                                     .OrderBy(i => i.CreatedUtc)
                                     .ToListAsync();
             }
         }
-        public async Task<IReadOnlyCollection<FriendRequest>> GetUserRequests(string userId)
+        public int CountFriendRequests(string userId)
         {
             using (var dc = DataContext())
             {
-                return await dc.FriendsRequests
-                                    .Where(i => i.UserId == userId && i.Status == Models.Enums.FriendRequestStatus.NotDecided)
-                                    .Include(i => i.Friend)
-                                    .OrderBy(i => i.CreatedUtc)
-                                    .ToListAsync();
+                return dc.FriendsRequests
+                                    .Count(i => i.FriendId == userId && i.Status == Models.Enums.FriendRequestStatus.NotDecided);
             }
         }
+        //public async Task<IReadOnlyCollection<FriendRequest>> GetUserRequests(string userId)
+        //{
+        //    using (var dc = DataContext())
+        //    {
+        //        return await dc.FriendsRequests
+        //                            .Where(i => i.UserId == userId && i.Status == Models.Enums.FriendRequestStatus.NotDecided)
+        //                            .Include(i => i.Friend)
+        //                            .OrderBy(i => i.CreatedUtc)
+        //                            .ToListAsync();
+        //    }
+        //}
 
         public async Task CancelRequest(int requestId)
         {
@@ -122,9 +139,19 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                return await dc.UsersFriends.AnyAsync( i=> (i.UserId == userId && i.FriendId == friendId)
-                                                            ||
-                                                            (i.UserId == friendId && i.FriendId == userId));
+                return await dc.UsersFriends.AnyAsync(i => (i.UserId == userId && i.FriendId == friendId)
+                                                           ||
+                                                           (i.UserId == friendId && i.FriendId == userId));
+            }
+        }
+
+        public async Task<bool> SentBefore(string userId, string friendId)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.FriendsRequests.AnyAsync(i => i.UserId == userId
+                                                            && i.FriendId == friendId
+                                                            && i.Status == Models.Enums.FriendRequestStatus.NotDecided);
             }
         }
     }

@@ -2,6 +2,7 @@
 /// <reference path="address.js" />
 /// <reference path="auctions.js" />
 /// <reference path="bootstrap.min.js" />
+/// <reference path="dialog/jquery-ui.js" />
 /// <reference path="dropzone.js" />
 /// <reference path="image-uploader.js" />
 /// <reference path="jquery.datetimepicker.js" />

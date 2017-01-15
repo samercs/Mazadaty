@@ -371,6 +371,10 @@
     <Compile Include="Migrations\201701031852268_AddFriendToFriendsRequest.Designer.cs">
       <DependentUpon>201701031852268_AddFriendToFriendsRequest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701141032141_UserForeignKeyToFriendRequest.cs" />
+    <Compile Include="Migrations\201701141032141_UserForeignKeyToFriendRequest.Designer.cs">
+      <DependentUpon>201701141032141_UserForeignKeyToFriendRequest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -606,6 +610,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701031852268_AddFriendToFriendsRequest.resx">
       <DependentUpon>201701031852268_AddFriendToFriendsRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701141032141_UserForeignKeyToFriendRequest.resx">
+      <DependentUpon>201701141032141_UserForeignKeyToFriendRequest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

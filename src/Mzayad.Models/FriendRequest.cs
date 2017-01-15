@@ -14,14 +14,14 @@ namespace Mzayad.Models
         public FriendRequestStatus Status { get; set; }
 
         [Required, StringLength(128)]
-        public string UserId { get; set; }
+        [ForeignKey("User")]
+        public string UserId { get; set; }  
 
         [Required, StringLength(128)]
-        [ForeignKey("Friend")]
         public string FriendId { get; set; }
 
 
-        public virtual ApplicationUser Friend { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
     }
 }

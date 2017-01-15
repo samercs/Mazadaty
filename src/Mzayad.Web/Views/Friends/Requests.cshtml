@@ -1,0 +1,112 @@
+﻿@using OrangeJetpack.Base.Web
+
+@model Mzayad.Web.Models.User.FriendRequestsViewModel
+
+@{
+    ViewBag.Title = Global.FriendRequests;
+}
+
+@if (!Model.OthersRequests.Any())
+{
+    @Html.StatusMessage(Global.NoFriendRequests, StatusMessageType.Information)
+    return;
+}
+
+<div id="dvMessage"></div>
+@if (Model.OthersRequests.Any())
+{
+    <div class="panel dashboard-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title text-uppercase">@Global.FriendRequests</h3>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            @*@foreach (var request in Model.UserRequests)
+                    {
+                    <div class="row" style="border-bottom:1px solid #f1f1f1;margin-bottom:10px;padding-bottom:10px;" id="dv_@request.FriendRequestId">
+                        <div class="col-sm-1">
+                            <div class="dashboard-avatar">
+                                <img class="img-responsive" src="@request.Friend.AvatarUrl" alt="@request.Friend.UserName" />
+                            </div>
+                        </div>
+                        <div class="col-sm-9">
+                            <div id="dashboard-details" class="dashboard-cell" style="padding:0px;">
+                                <div id="dashboard-username" class="text-uppercase">
+                                    <a href="@Url.Content("~/"+ LanguageCode+ "/profiles/"+request.Friend.UserName)">@request.Friend.UserName</a>
+                                </div>
+                                <button type="button" class="btn btn-link" style="margin-top:20px;padding:0px;" onclick="cancelRequest(@request.FriendRequestId)">@Global.CancelRequest</button>
+                            </div>
+                        </div>
+                    </div>
+                }*@
+            @foreach (var request in Model.OthersRequests)
+                {
+                <div class="row" style="border-bottom:1px solid #f1f1f1;margin-bottom:10px;padding-bottom:10px;" id="dv_@request.FriendRequestId">
+                    <div class="col-sm-1">
+                        <div class="dashboard-avatar">
+                            <img class="img-responsive" src="@request.User.AvatarUrl" alt="@request.User.UserName" />
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div id="dashboard-details" class="dashboard-cell" style="padding:0px;">
+                            <div id="dashboard-username" class="text-uppercase">
+                                <a href="@Url.Content("~/"+ LanguageCode+ "/profiles/"+request.User.UserName)">@request.User.UserName</a>
+                            </div>
+                            <button type="button" class="btn btn-link" style="padding:0px;" onclick="decide(@request.FriendRequestId,'@((int)Mzayad.Models.Enums.FriendRequestStatus.Accepted)')">@Global.Accept</button>
+                            <button type="button" class="btn btn-link" style="margin:0px 20px;padding:0px;" onclick="decide(@request.FriendRequestId,'@((int)Mzayad.Models.Enums.FriendRequestStatus.Declined)')">@Global.Decline</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+<div id="dialog-confirm" style="display:none" title="">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>@Global.AreSure</p>
+</div>
+
+@section scripts
+{
+    <link href="@Url.Content("~/Scripts/dialog/jquery-ui.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/dialog/jquery-ui.js")"></script>
+    <script>
+        var options = {
+            resizable: false,
+            height: "auto",
+            width: 400,
+            modal: true,
+            title: '',
+            buttons: null
+        };
+
+        function decide(id, status) {
+            var confirmDialog = $('#dialog-confirm');
+            options.title = status == 2 ? '@Global.AcceptFriendRequest' : '@Global.DeclineFriendRequest';
+            options.buttons = {
+                "OK": function () {
+                    $.ajax({
+                        url: '@Url.Content("~/friends/updaterequest")',
+                        type: 'POST',
+                        data: { 'requestId': id, 'status': status },
+                        dataType: 'json',
+                        success: function () {
+                            $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.FriendActionSuccessMessage, StatusMessageType.Success).ToString().Replace("'","\""))');
+                            $('#dv_' + id).hide();
+                        },
+                        error: function () {
+                            $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.FriendActionFailMessage, StatusMessageType.Error).ToString().Replace("'","\""))');
+                        }
+                    });
+                    $(this).dialog("close");
+                },
+                Cancel: function () {
+                    $(this).dialog("close");
+                }
+            }
+
+            confirmDialog.dialog(options);
+        }
+    </script>
+}
+
+

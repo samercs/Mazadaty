@@ -328,11 +328,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Global.ar.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Global.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Global.resx</DependentUpon>
-    </Compile>
+    <Compile Include="App_GlobalResources\Global.Designer.cs" />
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -474,9 +470,11 @@
     <Compile Include="Models\User\ChangePasswordViewModel.cs" />
     <Compile Include="Models\User\DashboardViewModel.cs" />
     <Compile Include="Models\User\EditProfileModel.cs" />
+    <Compile Include="Models\User\FriendRequestsViewModel.cs" />
     <Compile Include="Models\User\FriendsViewModel.cs" />
     <Compile Include="Models\User\NotificationModelView.cs" />
     <Compile Include="Models\User\TrophieViewModel.cs" />
+    <Compile Include="Models\User\UserProfileViewModel.cs" />
     <Compile Include="Models\WishList\AddViewModel.cs" />
     <Compile Include="Models\WishList\IndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -680,6 +678,21 @@
     <Content Include="Scripts\auctions.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\dialog\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Scripts\dialog\images\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="Scripts\dialog\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Scripts\dialog\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="Scripts\dialog\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="Scripts\dialog\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Scripts\dialog\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="Scripts\dialog\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Scripts\dialog\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="Scripts\dialog\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Scripts\dialog\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Scripts\dialog\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Scripts\dialog\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Scripts\dialog\jquery-ui.css" />
+    <Content Include="Scripts\dialog\jquery-ui.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery-ui-1.11.3.js" />
@@ -807,6 +820,7 @@
     <Content Include="Views\Home\ContactUs.cshtml" />
     <Content Include="Views\Auctions\Closed.cshtml" />
     <Content Include="Views\AutoBid\Edit.cshtml" />
+    <Content Include="Views\Friends\Requests.cshtml" />
     <None Include="Views\Home\SignalR.cshtml" />
     <Content Include="404.html" />
     <Content Include="500.html" />
@@ -881,7 +895,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Api\Views\Shared\" />
-    <Folder Include="Views\Friends\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mzayad.Core\Mzayad.Core.csproj">
@@ -909,9 +922,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="App_GlobalResources\Global.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Global.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Mzayad.Web.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+      <LastGenOutput>Global1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

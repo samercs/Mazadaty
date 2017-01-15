@@ -834,4 +834,58 @@
   <data name="Friends" xml:space="preserve">
     <value>Friends</value>
   </data>
+  <data name="AcceptFriendRequest" xml:space="preserve">
+    <value>Accept Friend Request</value>
+  </data>
+  <data name="Click" xml:space="preserve">
+    <value>Click</value>
+  </data>
+  <data name="DeclineFriendRequest" xml:space="preserve">
+    <value>Decline Friend Request</value>
+  </data>
+  <data name="Friend" xml:space="preserve">
+    <value>Friend</value>
+  </data>
+  <data name="FriendActionFailMessage" xml:space="preserve">
+    <value>Oops sorry, you action not saved, please try later.</value>
+  </data>
+  <data name="FriendActionSuccessMessage" xml:space="preserve">
+    <value>Your action has been saved successfully.</value>
+  </data>
+  <data name="FriendRequestFailMessage" xml:space="preserve">
+    <value>Oops sorry, your request not sent, please try later.</value>
+  </data>
+  <data name="FriendRequestSent" xml:space="preserve">
+    <value>Friend Request Sent</value>
+  </data>
+  <data name="FriendRequestSuccessMessage" xml:space="preserve">
+    <value>Your request has been sent successfully.</value>
+  </data>
+  <data name="Here" xml:space="preserve">
+    <value>Here</value>
+  </data>
+  <data name="NoFriendRequests" xml:space="preserve">
+    <value>No friend requests.</value>
+  </data>
+  <data name="NoFriends" xml:space="preserve">
+    <value>You have no friends!</value>
+  </data>
+  <data name="PrivateProfileMessage" xml:space="preserve">
+    <value>This Profile is private!</value>
+  </data>
+  <data name="SendFriendRequest" xml:space="preserve">
+    <value>Send Friend Request</value>
+  </data>
+  <data name="TheFriends" xml:space="preserve">
+    <value>Friends</value>
+  </data>
+  <data name="ToSendFriendRequestMessage" xml:space="preserve">
+    <value>to send friend request.</value>
+  </data>
+  <data name="RemoveFriend" xml:space="preserve">
+    <value>Remove Friend</value>
+  </data>
+  <data name="RemoveFriendSuccessfullyMessage" xml:space="preserve">
+    <value>This user has been removed successfully from your friends list.</value>
+  </data>
 </root>

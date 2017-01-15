@@ -65,7 +65,7 @@ namespace Mzayad.Web.Controllers
                 Trophies = await _trophyService.GetTrophies(user.Id, Language),
                 Auctions = await _auctionService.GetAuctionsWon(user.Id, Language),
                 WishLists = await _wishListService.GetByUser(user.Id),
-                FriendRequests = await _friendService.GetFriendRequests(user.Id)
+                Friends = await _friendService.GetFriends(user.Id)
             };
 
             return View(viewModel);
@@ -337,13 +337,15 @@ namespace Mzayad.Web.Controllers
             {
                 return RedirectToAction("dashboard", "user", new { area = "", language = Language });
             }
-            var viewModel = new DashboardViewModel(user)
+            var viewModel = new UserProfileViewModel(user)
             {
-                Bids = await _bidService.GetRecentBidHistoryForUser(user.Id, Language),
+              //  Bids = await _bidService.GetRecentBidHistoryForUser(user.Id, Language),
                 Trophies = await _trophyService.GetTrophies(user.Id, Language),
-                Auctions = await _auctionService.GetAuctionsWon(user.Id, Language),
-                WishLists = await _wishListService.GetByUser(user.Id),
-                AreFriends = await _friendService.AreFriends(user.Id, AuthService.CurrentUserId())
+               // Auctions = await _auctionService.GetAuctionsWon(user.Id, Language),
+                //WishLists = await _wishListService.GetByUser(user.Id),
+                AreFriends = await _friendService.AreFriends(user.Id, AuthService.CurrentUserId()),
+                SentFriendRequestBefore = await _friendService.SentBefore(AuthService.CurrentUserId(),user.Id),
+                Friends = await _friendService.GetFriends(user.Id)
             };
             return View(viewModel);
         }
@@ -353,8 +355,6 @@ namespace Mzayad.Web.Controllers
         {
             var viewModel = new FriendsViewModel()
             {
-                UserRequests = await _friendService.GetUserRequests(AuthService.CurrentUserId()),
-                OthersRequests = await _friendService.GetFriendRequests(AuthService.CurrentUserId()),
                 Friends = await _friendService.GetFriends(AuthService.CurrentUserId())
             };
             return View(viewModel);

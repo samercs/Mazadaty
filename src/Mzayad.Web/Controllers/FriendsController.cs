@@ -3,6 +3,7 @@ using Mzayad.Models.Enums;
 using Mzayad.Services;
 using Mzayad.Services.Identity;
 using Mzayad.Web.Core.Services;
+using Mzayad.Web.Models.User;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -20,6 +21,24 @@ namespace Mzayad.Web.Controllers
             _friendService = new FriendService(appServices.DataContextFactory); ;
             _userService = new UserService(appServices.DataContextFactory);
             _authService = appServices.AuthService;
+        }
+
+        public MvcHtmlString RequestsCount()
+        {
+            var count = _friendService.CountFriendRequests(AuthService.CurrentUserId());
+
+            return count > 0 ? MvcHtmlString.Create(count.ToString()) : MvcHtmlString.Empty;
+        }
+
+        [Route("requests")]
+        public async Task<ActionResult> Requests()
+        {
+            var viewModel = new FriendRequestsViewModel()
+            {
+                //UserRequests = await _friendService.GetUserRequests(AuthService.CurrentUserId()),
+                OthersRequests = await _friendService.GetFriendRequests(AuthService.CurrentUserId()),
+            };
+            return View(viewModel);
         }
 
         #region Ajax Calls
