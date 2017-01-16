@@ -90,7 +90,7 @@
                 if (type == 3) {
                     location.href = "prize//select-avatar";
                 }
-            });
+            }).setHeader('@Global.Alert');;
         };
 
         $(function() {
@@ -114,7 +114,7 @@
                                 message = prize.message;
                                 type = prize.type;
                             }
-                            
+
                         }
 
                         var stopAt = theWheel.getRandomForSegment(index);

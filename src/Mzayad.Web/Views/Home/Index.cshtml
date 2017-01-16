@@ -283,14 +283,14 @@ else
 
 
                         alertify
-                            .confirm("Are you sure that you still wants to bid on this auction although it is not available in your country?",
+                            .confirm("Are you sure that you still want to bid on this auction although it is not available in your country?",
                                 function() {
                                     auctionHub.server.submitBid(self.auctionId, '@User.Identity.GetUserId()');
                                 },
                                 function() {
 
                                 })
-                            .set('labels', { ok: 'Yes', cancel: 'No' });
+                            .set('labels', { ok: 'Yes', cancel: 'No' }).setHeader('@Global.Alert');;
                     } else {
                         auctionHub.server.submitBid(self.auctionId, '@User.Identity.GetUserId()');
                     }
