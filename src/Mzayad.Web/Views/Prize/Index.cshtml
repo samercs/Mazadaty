@@ -53,8 +53,13 @@
         var message = "";
         var type = 0;
         var prizeStr = @Html.Raw(Model.PrizesJson);
+        var prizeItemTotalWeight = 0;
+        prizeStr.forEach(function(item) {
+            prizeItemTotalWeight += item.weight * 100;
+        });
+        
         var theWheel = new Winwheel({
-            'numSegments' : 0,
+            'numSegments': 0,
             'outerRadius': 212, // Set outer radius so wheel fits inside the background.
             'textFontSize': 18, // Set font size as desired.
             'animation': // Specify the animation to use.
@@ -66,11 +71,13 @@
             }
         });
 
-        function addSegment(text, prizeId, backColor)
-        {
+        function addSegment(text, prizeId, backColor, weight) {
+
+            var size = ((weight * 100) / prizeItemTotalWeight) * 100;
+
             var segment = new Segment({
-                'text' : text,
-                'fillStyle' : backColor,
+                'text': text,
+                'fillStyle': backColor,
                 'textFillStyle': '#fff',
                 'strokeStyle': '#fff'
 
@@ -78,6 +85,7 @@
             segment.prizeId = prizeId;
             segment.type = 0;
             segment.message = "";
+            segment.size = winwheelPercentToDegrees(size),
             theWheel.addSegment(segment, theWheel.segments.length);
             theWheel.draw();
         }
@@ -85,13 +93,13 @@
         function initWell(parameters) {
             for (var i = 0; i < prizeStr.length; i++) {
                 if (prizeStr[i].prizeType == 3) {
-                    addSegment(prizeStr[i].title, prizeStr[i].prizeId, "#df2f2f ");
-                }else if (prizeStr[i].prizeType == 2) {
-                    addSegment(prizeStr[i].title, prizeStr[i].prizeId, "#54a22a  ");
-                }else if (prizeStr[i].prizeType == 1) {
-                    addSegment(prizeStr[i].title, prizeStr[i].prizeId, "#3e63c2   ");
+                    addSegment(prizeStr[i].title, prizeStr[i].prizeId, "#df2f2f", prizeStr[i].weight);
+                } else if (prizeStr[i].prizeType == 2) {
+                    addSegment(prizeStr[i].title, prizeStr[i].prizeId, "#54a22a", prizeStr[i].weight);
+                } else if (prizeStr[i].prizeType == 1) {
+                    addSegment(prizeStr[i].title, prizeStr[i].prizeId, "#3e63c2", prizeStr[i].weight);
                 }
-                
+
             }
 
         }
@@ -109,33 +117,37 @@
 
             initWell();
             var wheelSpinning = false;
-            $(".js-spin-start").click(function() {
-                if (wheelSpinning == false) {
+            $(".js-spin-start")
+                .click(function() {
+                    if (wheelSpinning == false) {
 
-                    $.ajax({
-                        url: "/en/prize/@Model.PrizeId/random-prize",
-                        context: document.body,
-                        method: 'POST',
-                        data: { id:"@Model.PrizeId" }
-                    }).done(function(prizeStr) {
-                        var index = -1;
-                        var prize = $.parseJSON(prizeStr);
-                        for (var i = 0; i < theWheel.segments.length; i++) {
-                            if (theWheel.segments[i] && theWheel.segments[i].prizeId && theWheel.segments[i].prizeId == prize.prizeId) {
-                                index = i;
-                                message = prize.message;
-                                type = prize.type;
-                            }
+                        $.ajax({
+                            url: "/en/prize/@Model.PrizeId/random-prize",
+                            context: document.body,
+                            method: 'POST',
+                            data: { id: "@Model.PrizeId" }
+                            })
+                            .done(function(prizeStr) {
+                                var index = -1;
+                                var prize = $.parseJSON(prizeStr);
+                                for (var i = 0; i < theWheel.segments.length; i++) {
+                                    if (theWheel.segments[i] &&
+                                        theWheel.segments[i].prizeId &&
+                                        theWheel.segments[i].prizeId == prize.prizeId) {
+                                        index = i;
+                                        message = prize.message;
+                                        type = prize.type;
+                                    }
 
-                        }
+                                }
 
-                        var stopAt = theWheel.getRandomForSegment(index);
-                        theWheel.animation.stopAngle = stopAt;
-                        theWheel.startAnimation();
-                        wheelSpinning = true;
-                    });
-                }
-            });
+                                var stopAt = theWheel.getRandomForSegment(index);
+                                theWheel.animation.stopAngle = stopAt;
+                                theWheel.startAnimation();
+                                wheelSpinning = true;
+                            });
+                    }
+                });
         });
     </script>
 }

@@ -236,7 +236,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             auction.MaximumBid = model.Auction.MaximumBid;
             auction.ProductId = model.Auction.ProductId;
             auction.RetailPrice = model.Auction.RetailPrice;
-            auction.StartUtc = model.Auction.StartUtc;
+            auction.StartUtc = model.Auction.StartUtc;// AST >> UTS;
             auction.Status = model.Auction.Status;
             auction.BuyNowEnabled = model.Auction.BuyNowEnabled;
             auction.BuyNowPrice = model.Auction.BuyNowPrice;

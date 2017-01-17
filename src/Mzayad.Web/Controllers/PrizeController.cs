@@ -52,7 +52,9 @@ namespace Mzayad.Web.Controllers
             {
                 throw new Exception("No prize found.");
             }
-            var data = prizes.Select(i => new { i.Title, i.Weight, i.PrizeId, i.PrizeType });
+            Random rnd = new Random();
+            var data = prizes.Select(i => new { i.Title, i.Weight, i.PrizeId, i.PrizeType, SortOrder = rnd.Next(1, 100) });
+            data = data.OrderBy(i => i.SortOrder);
             var model = new IndexViewModel
             {
                 PrizesJson =
@@ -116,7 +118,6 @@ namespace Mzayad.Web.Controllers
                     await NotifyAdminForWinning(user, prize);
                     return $"Congratulation ... you win {prize.Title}. We will conatct you to get your prize.";
                 case PrizeType.Avatar:
-
                     return $"Congratulation ... you win {prize.Title}. We will redirect you to select your avatar.";
                 case PrizeType.Subscription:
                     await AddUserSubscription(user, prize.SubscriptionDays);
