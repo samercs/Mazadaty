@@ -277,6 +277,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bahrain.
+        /// </summary>
+        public static string Bahrain {
+            get {
+                return ResourceManager.GetString("Bahrain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bid.
         /// </summary>
         public static string Bid {
@@ -1150,6 +1159,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Oman.
+        /// </summary>
+        public static string Oman {
+            get {
+                return ResourceManager.GetString("Oman", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select....
         /// </summary>
         public static string OptionLabel {
@@ -1348,6 +1366,24 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Congratulation ... you win a prize from  Zeedli. &lt;a href=&apos;{0}&apos;&gt;Click here to get your prize&lt;/a&gt;.
+        /// </summary>
+        public static string PrizeChanceMessage {
+            get {
+                return ResourceManager.GetString("PrizeChanceMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Congratulation ... you win a prize from Zeedli click on button &lt;strong&gt;Spin to get your prize&lt;/strong&gt; to view your prize.
+        /// </summary>
+        public static string PrizeMessage {
+            get {
+                return ResourceManager.GetString("PrizeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Product.
         /// </summary>
         public static string Product {
@@ -1371,6 +1407,15 @@ namespace Mzayad.Web.Resources {
         public static string ProfileURL {
             get {
                 return ResourceManager.GetString("ProfileURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Qatar.
+        /// </summary>
+        public static string Qatar {
+            get {
+                return ResourceManager.GetString("Qatar", resourceCulture);
             }
         }
         
@@ -1560,6 +1605,15 @@ namespace Mzayad.Web.Resources {
         public static string RetailPriceWithLabel {
             get {
                 return ResourceManager.GetString("RetailPriceWithLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saudi Arabia.
+        /// </summary>
+        public static string SaudiArabia {
+            get {
+                return ResourceManager.GetString("SaudiArabia", resourceCulture);
             }
         }
         
@@ -1843,7 +1897,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Congratulations, you have successfully purchased &lt;strong&gt;{Subscription.Name}&lt;/strong&gt; and we have updated your account..
+        ///   Looks up a localized string similar to Congratulations, you have successfully purchased &lt;strong&gt;{Subscription.Name}&lt;/strong&gt; and we have updated your account. Also you win a prize from Zeedli click on button &quot;Spin to get your prize&quot;..
         /// </summary>
         public static string SubscriptionPurchaseAcknowledgement {
             get {
@@ -1956,6 +2010,15 @@ namespace Mzayad.Web.Resources {
         public static string Trophy {
             get {
                 return ResourceManager.GetString("Trophy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UAE.
+        /// </summary>
+        public static string UAE {
+            get {
+                return ResourceManager.GetString("UAE", resourceCulture);
             }
         }
         

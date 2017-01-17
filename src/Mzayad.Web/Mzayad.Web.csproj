@@ -164,6 +164,7 @@
       <HintPath>..\..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
@@ -185,7 +186,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.24\lib\net452\OrangeJetpack.Base.Core.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.27\lib\net452\OrangeJetpack.Base.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -193,7 +194,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Base.Web.0.0.26\lib\net452\OrangeJetpack.Base.Web.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Base.Web.0.0.28\lib\net452\OrangeJetpack.Base.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Cms.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -346,6 +347,7 @@
     <Compile Include="Areas\Admin\Controllers\LevelsController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Admin\Controllers\PageManagementController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PrizesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingsController.cs" />
@@ -363,6 +365,8 @@
     <Compile Include="Areas\Admin\Models\Orders\IndexViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Pages\AddEditViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Pages\IndexViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Prizes\AddViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Prizes\IndexViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Products\AddViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Products\EditViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Products\IndexViewModel.cs" />
@@ -402,6 +406,7 @@
     <Compile Include="Controllers\KnetController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
+    <Compile Include="Controllers\PrizeController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\QueueTestController.cs" />
     <Compile Include="Controllers\SubscriptionsController.cs" />
@@ -466,6 +471,7 @@
     <Compile Include="Models\Order\OrderSummaryViewModel.cs" />
     <Compile Include="Models\Order\OrderViewModel.cs" />
     <Compile Include="Models\Order\ShippingAddressViewModel.cs" />
+    <Compile Include="Models\Prize\IndexViewModel.cs" />
     <Compile Include="Models\Shared\AddressViewModel.cs" />
     <Compile Include="Models\Shared\DeleteConfirmationViewModel.cs" />
     <Compile Include="Models\Shared\SubscriptionExpiration.cs" />
@@ -668,6 +674,13 @@
     <Content Include="Areas\Admin\Views\PageManagement\Add.cshtml" />
     <Content Include="Areas\Admin\Views\PageManagement\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Auctions\AutoBids.cshtml" />
+    <Content Include="Areas\Admin\Views\Avatars\Edit.cshtml" />
+    <Content Include="Scripts\Winwheel.js" />
+    <Content Include="Views\Shared\_ImageUpload.cshtml" />
+    <Content Include="Areas\Admin\Views\Prizes\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Prizes\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Prizes\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Prizes\_AddEditView.cshtml" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
@@ -788,6 +801,7 @@
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\BuyNowTile.cshtml" />
     <Content Include="Views\Shared\_Layout_AdminMenu.cshtml" />
+    <Content Include="Views\Prize\Index.cshtml" />
     <TypeScriptCompile Include="Scripts\auctions.ts" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />
