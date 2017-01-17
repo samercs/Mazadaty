@@ -480,6 +480,7 @@
     <Compile Include="Models\User\ChangePasswordViewModel.cs" />
     <Compile Include="Models\User\DashboardViewModel.cs" />
     <Compile Include="Models\User\EditProfileModel.cs" />
+    <Compile Include="Models\User\MyAvatarsViewModel.cs" />
     <Compile Include="Models\User\NotificationModelView.cs" />
     <Compile Include="Models\User\TrophieViewModel.cs" />
     <Compile Include="Models\WishList\AddViewModel.cs" />
@@ -805,6 +806,7 @@
     <Content Include="Views\Prize\Index.cshtml" />
     <Content Include="Views\Prize\SelectAvatarPrize.cshtml" />
     <Content Include="Views\Shared\_UserPrizeNotification.cshtml" />
+    <Content Include="Views\User\MyAvatars.cshtml" />
     <TypeScriptCompile Include="Scripts\auctions.ts" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />

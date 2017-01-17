@@ -67,9 +67,9 @@ namespace Mzayad.Web.Controllers
             var userHasAvatarPrize = await _prizeService.UserHasFreeAvatar(user);
             if (userHasAvatarPrize && userPrize == null)
             {
-                prizeUrl = Url.Action("SelectAvatarPrize", "Prize", new {Language});
+                prizeUrl = Url.Action("SelectAvatarPrize", "Prize", new { Language });
             }
-                
+
 
             var viewModel = new DashboardViewModel(user)
             {
@@ -352,6 +352,41 @@ namespace Mzayad.Web.Controllers
             var auctions = await _auctionService.GetAuctionsWon(userId, Language);
 
             return View(auctions);
+        }
+
+        [Route("my-avatars")]
+        public async Task<ActionResult> MyAvatars()
+        {
+            var user = await AuthService.CurrentUser();
+            var model = new MyAvatarsViewModel
+            {
+                Avatars = await _avatarService.GetUserAvatars(user),
+                User = user
+            };
+            return View(model);
+        }
+
+        [Route("my-avatars")]
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> MyAvatars(MyAvatarsViewModel model)
+        {
+            if (model.SelectedAvatar.HasValue)
+            {
+                var user = await AuthService.CurrentUser();
+                var avatar = await _avatarService.GetById(model.SelectedAvatar.Value);
+                if (avatar != null)
+                {
+                    if (await _avatarService.UserHasAvatar(user, avatar))
+                    {
+                        user.AvatarUrl = avatar.Url;
+                        await _userService.UpdateUser(user);
+                        SetStatusMessage(Global.AvatarChangeSuccessfullyMsg);
+                    }
+
+                }
+            }
+            return RedirectToAction("Dashboard");
+
         }
     }
 }

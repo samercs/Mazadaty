@@ -834,6 +834,12 @@
   <data name="Congratulations" xml:space="preserve">
     <value>Congratulations!</value>
   </data>
+  <data name="AvatarChangeSuccessfullyMsg" xml:space="preserve">
+    <value>Your avatar has been changed successfully.</value>
+  </data>
+  <data name="MyAvatars" xml:space="preserve">
+    <value>My Avatars</value>
+  </data>
   <data name="Alert" xml:space="preserve">
     <value>Alert</value>
   </data>
