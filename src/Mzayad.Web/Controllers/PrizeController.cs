@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using Mzayad.Models;
+﻿using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Models.Enums;
 using Mzayad.Services;
@@ -14,10 +10,13 @@ using Mzayad.Web.Models.Prize;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using OrangeJetpack.Base.Core.Formatting;
-using OrangeJetpack.Base.Core.Security;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Models;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Mzayad.Web.Controllers
 {
@@ -38,43 +37,38 @@ namespace Mzayad.Web.Controllers
         }
 
 
-        [Route(""), Authorize]
-        public async Task<ActionResult> Index(UrlTokenParameters parameters = null)
+        [Route("{id:int}"), Authorize]
+        public async Task<ActionResult> Index(int id)
         {
-            if (parameters == null)
+            var user = await AuthService.CurrentUser();
+            var prizeLog = await _prizeService.GetPrizeLogById(id);
+            if (!ValidatePrize(user, prizeLog))
             {
                 return HttpNotFound();
             }
-            if (!await ValidateParameter(parameters))
-            {
-                return HttpNotFound();
-            }
+
             var prizes = await _prizeService.GetAvaliablePrize();
             if (!prizes.Any())
             {
                 throw new Exception("No prize found.");
             }
-            var data = prizes.Select(i => new { i.Title, i.Weight, i.PrizeId });
+            var data = prizes.Select(i => new { i.Title, i.Weight, i.PrizeId, i.PrizeType });
             var model = new IndexViewModel
             {
                 PrizesJson =
                     JsonConvert.SerializeObject(data, Formatting.Indented,
                         new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }),
-                Token = parameters
+                PrizeId = id
             };
             return View(model);
         }
 
-        [Route("random-prize"), Authorize, HttpPost]
-        public async Task<ActionResult> GetRandomPrize(UrlTokenParameters tokenParameters)
+        [Route("{id:int}/random-prize"), Authorize, HttpPost]
+        public async Task<ActionResult> GetRandomPrize(int id)
         {
             var user = await AuthService.CurrentUser();
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-
-            if (!await ValidateParameter(tokenParameters))
+            var prizeLog = await _prizeService.GetPrizeLogById(id);
+            if (!ValidatePrize(user, prizeLog))
             {
                 return HttpNotFound();
             }
@@ -101,22 +95,11 @@ namespace Mzayad.Web.Controllers
             }
             var message = await ProccessPrize(user, prize);
             var isComplete = prize.PrizeType == PrizeType.Subscription;
-            await _prizeService.LogUserPrize(user.Id, prize.PrizeId, tokenParameters.Token, isComplete);
+            await _prizeService.LogUserPrize(prizeLog, prize.PrizeId, isComplete);
             var data = new { prizeId = prize.PrizeId, index, message, type = (int)prize.PrizeType };
-
             return Content(JsonConvert.SerializeObject(data, Formatting.Indented,
                         new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
         }
-
-        /*[System.Web.Mvc.Route("test"), System.Web.Mvc.Authorize]
-        public async Task<ActionResult> GetPrizeParameter()
-        {
-            var user = await AuthService.CurrentUser();
-            var baseUrl = $"{AppSettings.CanonicalUrl}{Url.Action("Index", "Prize", new { Language })}";
-            var url = PasswordUtilities.GenerateResetPasswordUrl(baseUrl, user.Email);
-            return Redirect(url);
-        }*/
-
 
 
         private async Task<string> ProccessPrize(ApplicationUser user, Prize prize)
@@ -224,18 +207,25 @@ namespace Mzayad.Web.Controllers
             await MessageService.Send(email.WithTemplate());
         }
 
-        private async Task<bool> ValidateParameter(UrlTokenParameters token)
+        private bool ValidatePrize(ApplicationUser user, UserPrizeLog userPrizeLog)
         {
-            try
-            {
-                PasswordUtilities.ValidateResetPasswordParameters(token);
-                return await _prizeService.ValidatePrizeHash(token.Token);
-
-            }
-            catch (Exception e)
+            if (user == null)
             {
                 return false;
             }
+            if (userPrizeLog == null)
+            {
+                return false;
+            }
+            if (userPrizeLog.PrizeId.HasValue)
+            {
+                return false;
+            }
+            if (!userPrizeLog.UserId.Equals(user.Id))
+            {
+                return false;
+            }
+            return true;
         }
 
 

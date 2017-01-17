@@ -19,7 +19,6 @@
         }
     </style>
 }
-
 <div id="dashboard-header">
     <div class="row">
         <div class="col-md-6">
@@ -71,6 +70,11 @@
         </div>
     </div>
 </div>
+
+@if (!string.IsNullOrEmpty(Model.PrizeUrl))
+{
+    @Html.Partial("_UserPrizeNotification", Model.PrizeUrl)
+}
 
 @if (Model.Trophies.Any())
 {

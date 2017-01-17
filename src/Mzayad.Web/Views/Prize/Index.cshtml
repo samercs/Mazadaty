@@ -13,18 +13,23 @@
 
         .indecator {
             position: absolute;
-            left: 43%;
-            top: -25px;
+            left: 50%;
+            top: 15px;
             z-index: 100;
         }
 
         canvas {
-            margin-left: 25%;
+            margin-left: 32%;
+            margin-top: 40px;
         }
+        .form-buttons {
+            text-align: center !important;
+        }
+        
     </style>
 }
 
-@Html.StatusMessage(Global.PrizeMessage)
+
 
 <div class="well-container">
     <div class="indecator">
@@ -61,11 +66,11 @@
             }
         });
 
-        function addSegment(text, prizeId)
+        function addSegment(text, prizeId, backColor)
         {
             var segment = new Segment({
                 'text' : text,
-                'fillStyle' : '#33ace0',
+                'fillStyle' : backColor,
                 'textFillStyle': '#fff',
                 'strokeStyle': '#fff'
 
@@ -79,7 +84,14 @@
 
         function initWell(parameters) {
             for (var i = 0; i < prizeStr.length; i++) {
-                addSegment(prizeStr[i].title, prizeStr[i].prizeId);
+                if (prizeStr[i].prizeType == 3) {
+                    addSegment(prizeStr[i].title, prizeStr[i].prizeId, "#df2f2f ");
+                }else if (prizeStr[i].prizeType == 2) {
+                    addSegment(prizeStr[i].title, prizeStr[i].prizeId, "#54a22a  ");
+                }else if (prizeStr[i].prizeType == 1) {
+                    addSegment(prizeStr[i].title, prizeStr[i].prizeId, "#3e63c2   ");
+                }
+                
             }
 
         }
@@ -88,7 +100,7 @@
             var winningSegment = theWheel.getIndicatedSegment();
             alertify.alert(message, function() {
                 if (type == 3) {
-                    location.href = "prize//select-avatar";
+                    location.href = "/en/prize/select-avatar";
                 }
             }).setHeader('@Global.Alert');;
         };
@@ -101,10 +113,10 @@
                 if (wheelSpinning == false) {
 
                     $.ajax({
-                        url: "prize/random-prize",
+                        url: "/en/prize/@Model.PrizeId/random-prize",
                         context: document.body,
                         method: 'POST',
-                        data: { email:"@Model.Token.Email", timestamp: "@Model.Token.Timestamp", token: "@Model.Token.Token" }
+                        data: { id:"@Model.PrizeId" }
                     }).done(function(prizeStr) {
                         var index = -1;
                         var prize = $.parseJSON(prizeStr);

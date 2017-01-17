@@ -511,6 +511,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Congratulations!.
+        /// </summary>
+        public static string Congratulations {
+            get {
+                return ResourceManager.GetString("Congratulations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contact Us.
         /// </summary>
         public static string ContactUs {
@@ -1375,7 +1384,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Congratulation ... you win a prize from  Zeedli. &lt;a href=&apos;{0}&apos;&gt;Click here to get your prize&lt;/a&gt;.
+        ///   Looks up a localized string similar to You won a prize from Zeedli. &lt;a href=&quot;{0}&quot;&gt;Click here to get your prize.&lt;/a&gt;.
         /// </summary>
         public static string PrizeChanceMessage {
             get {

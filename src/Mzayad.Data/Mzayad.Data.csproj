@@ -387,6 +387,14 @@
     <Compile Include="Migrations\201612270654214_AddUserPrizeLog_IsComplete.Designer.cs">
       <DependentUpon>201612270654214_AddUserPrizeLog_IsComplete.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701031222488_UpdateUserPrizeLog.cs" />
+    <Compile Include="Migrations\201701031222488_UpdateUserPrizeLog.Designer.cs">
+      <DependentUpon>201701031222488_UpdateUserPrizeLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701031235279_UpdateUserPrizeLogEntity.cs" />
+    <Compile Include="Migrations\201701031235279_UpdateUserPrizeLogEntity.Designer.cs">
+      <DependentUpon>201701031235279_UpdateUserPrizeLogEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -634,6 +642,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612270654214_AddUserPrizeLog_IsComplete.resx">
       <DependentUpon>201612270654214_AddUserPrizeLog_IsComplete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701031222488_UpdateUserPrizeLog.resx">
+      <DependentUpon>201701031222488_UpdateUserPrizeLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701031235279_UpdateUserPrizeLogEntity.resx">
+      <DependentUpon>201701031235279_UpdateUserPrizeLogEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
