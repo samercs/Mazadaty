@@ -831,4 +831,7 @@
   <data name="PrizeMessage" xml:space="preserve">
     <value>Congratulation ... you win a prize from Zeedli click on button &lt;strong&gt;Spin to get your prize&lt;/strong&gt; to view your prize</value>
   </data>
+  <data name="Alert" xml:space="preserve">
+    <value>Alert</value>
+  </data>
 </root>

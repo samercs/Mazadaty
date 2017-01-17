@@ -472,6 +472,7 @@
     <Compile Include="Models\Order\OrderViewModel.cs" />
     <Compile Include="Models\Order\ShippingAddressViewModel.cs" />
     <Compile Include="Models\Prize\IndexViewModel.cs" />
+    <Compile Include="Models\Prize\SelectAvatarPrizeViewModel.cs" />
     <Compile Include="Models\Shared\AddressViewModel.cs" />
     <Compile Include="Models\Shared\DeleteConfirmationViewModel.cs" />
     <Compile Include="Models\Shared\SubscriptionExpiration.cs" />
@@ -802,6 +803,7 @@
     <Content Include="Views\Shared\DisplayTemplates\BuyNowTile.cshtml" />
     <Content Include="Views\Shared\_Layout_AdminMenu.cshtml" />
     <Content Include="Views\Prize\Index.cshtml" />
+    <Content Include="Views\Prize\SelectAvatarPrize.cshtml" />
     <TypeScriptCompile Include="Scripts\auctions.ts" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />

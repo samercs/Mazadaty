@@ -1,4 +1,5 @@
-﻿using Mzayad.Data;
+﻿using Mzayad.Core.Exceptions;
+using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Enums;
 using OrangeJetpack.Localization;
@@ -100,7 +101,7 @@ namespace Mzayad.Services
 
         }
 
-        public async Task LogUserPrize(string userId, int prizeId, string hash)
+        public async Task LogUserPrize(string userId, int prizeId, string hash, bool isComplete)
         {
             using (var dc = DataContext())
             {
@@ -124,6 +125,37 @@ namespace Mzayad.Services
             }
         }
 
-        
+
+        public async Task<bool> UserHasFreeAvatar(ApplicationUser user)
+        {
+            using (var dc = DataContext())
+            {
+                var userPrize = await dc.UserPrizeLogs
+                    .Where(i => i.IsComplete == false)
+                    .Where(i => i.UserId == user.Id)
+                    .Where(i => i.Prize.PrizeType == PrizeType.Avatar).ToListAsync();
+                return userPrize.Any();
+            }
+        }
+
+        public async Task UpdateUserHasFreeAvatar(ApplicationUser user)
+        {
+            using (var dc = DataContext())
+            {
+                var userPrizes = await dc.UserPrizeLogs
+                    .Where(i => i.IsComplete == false)
+                    .Where(i => i.UserId == user.Id)
+                    .Where(i => i.Prize.PrizeType == PrizeType.Avatar).ToListAsync();
+                var userPrize = userPrizes.FirstOrDefault();
+                if (userPrize == null)
+                {
+                    throw new UserNotHaveAvatarPrize("User does not have avatar prize.");
+                }
+
+                userPrize.IsComplete = true;
+                dc.SetModified(userPrize);
+                await dc.SaveChangesAsync();
+            }
+        }
     }
 }

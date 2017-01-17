@@ -1,4 +1,8 @@
-﻿using Mzayad.Models;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Models.Enums;
 using Mzayad.Services;
@@ -11,31 +15,30 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Base.Core.Security;
+using OrangeJetpack.Base.Web;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Models;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 
 namespace Mzayad.Web.Controllers
 {
-    [System.Web.Mvc.RoutePrefix("{language}/prize")]
+    [RoutePrefix("{language}/prize")]
     public class PrizeController : ApplicationController
     {
         private readonly PrizeService _prizeService;
         private readonly UserService _userService;
         private readonly SubscriptionService _subscriptionService;
+        private readonly AvatarService _avatarService;
 
         public PrizeController(IAppServices appServices) : base(appServices)
         {
             _prizeService = new PrizeService(DataContextFactory);
             _userService = new UserService(DataContextFactory);
             _subscriptionService = new SubscriptionService(DataContextFactory);
+            _avatarService = new AvatarService(DataContextFactory);
         }
 
 
-        [System.Web.Mvc.Route(""), System.Web.Mvc.Authorize]
+        [Route(""), Authorize]
         public async Task<ActionResult> Index(UrlTokenParameters parameters = null)
         {
             if (parameters == null)
@@ -60,7 +63,6 @@ namespace Mzayad.Web.Controllers
                 Token = parameters
             };
             return View(model);
-            //return Content(parameters.Timestamp.ToString() + " " + parameters.Hash);
         }
 
         [Route("random-prize"), Authorize, HttpPost]
@@ -98,29 +100,28 @@ namespace Mzayad.Web.Controllers
                 return HttpNotFound();
             }
             var message = await ProccessPrize(user, prize);
-            await _prizeService.LogUserPrize(user.Id, prize.PrizeId, tokenParameters.Token);
+            var isComplete = prize.PrizeType == PrizeType.Subscription;
+            await _prizeService.LogUserPrize(user.Id, prize.PrizeId, tokenParameters.Token, isComplete);
             var data = new { prizeId = prize.PrizeId, index, message, type = (int)prize.PrizeType };
 
             return Content(JsonConvert.SerializeObject(data, Formatting.Indented,
                         new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
-
-            //return Content(tokenParameters.Token);
         }
 
-        [System.Web.Mvc.Route("test"), System.Web.Mvc.Authorize]
+        /*[System.Web.Mvc.Route("test"), System.Web.Mvc.Authorize]
         public async Task<ActionResult> GetPrizeParameter()
         {
             var user = await AuthService.CurrentUser();
             var baseUrl = $"{AppSettings.CanonicalUrl}{Url.Action("Index", "Prize", new { Language })}";
             var url = PasswordUtilities.GenerateResetPasswordUrl(baseUrl, user.Email);
             return Redirect(url);
-        }
+        }*/
 
 
 
         private async Task<string> ProccessPrize(ApplicationUser user, Prize prize)
         {
-            prize = prize.Localize<Prize>(Language, i => i.Title);
+            prize = prize.Localize(Language, i => i.Title);
             if (prize.Limit.HasValue)
             {
                 prize.Limit = prize.Limit - 1;
@@ -133,7 +134,6 @@ namespace Mzayad.Web.Controllers
                     return $"Congratulation ... you win {prize.Title}. We will conatct you to get your prize.";
                 case PrizeType.Avatar:
 
-                    //ToDo : let user select premium avatar
                     return $"Congratulation ... you win {prize.Title}. We will redirect you to select your avatar.";
                 case PrizeType.Subscription:
                     await AddUserSubscription(user, prize.SubscriptionDays);
@@ -142,6 +142,58 @@ namespace Mzayad.Web.Controllers
                     throw new Exception("Unsupport prize ...");
             }
             return "";
+        }
+
+        [Route("select-avatar")]
+        public async Task<ActionResult> SelectAvatarPrize()
+        {
+            var user = await AuthService.CurrentUser();
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            var userHasPrize = await _prizeService.UserHasFreeAvatar(user);
+            if (!userHasPrize)
+            {
+                return HttpNotFound();
+            }
+            var model = new SelectAvatarPrizeViewModel
+            {
+                PremiumAvatars = await _avatarService.GetPremiumAvatar(user)
+            };
+            return View(model);
+        }
+
+        [Route("select-avatar"), HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> SelectAvatarPrize(SelectAvatarPrizeViewModel model)
+        {
+            var user = await AuthService.CurrentUser();
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            var userHasPrize = await _prizeService.UserHasFreeAvatar(user);
+            if (!userHasPrize)
+            {
+                return HttpNotFound();
+            }
+            if (!model.SelectedAvatarId.HasValue)
+            {
+                SetStatusMessage("Please select your winning avatar.", StatusMessageType.Warning);
+                return RedirectToAction("SelectAvatarPrize");
+            }
+            var avatar = await _avatarService.GetById(model.SelectedAvatarId.Value);
+            if (avatar == null)
+            {
+                return HttpNotFound();
+            }
+            await _avatarService.AddAvatarToUser(user, avatar);
+            user.AvatarUrl = avatar.Url;
+            await _userService.UpdateUser(user);
+            await _prizeService.UpdateUserHasFreeAvatar(user);
+            SetStatusMessage("Your avatar image has been set successfully.");
+            return RedirectToAction("Dashboard", "User", new { Language });
+
         }
 
         private async Task AddUserSubscription(ApplicationUser user, int? amount)

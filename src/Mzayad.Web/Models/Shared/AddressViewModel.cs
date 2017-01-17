@@ -60,6 +60,11 @@ namespace Mzayad.Web.Models.Shared
                 },
                 new SelectListItem
                 {
+                    Text = Resources.Global.Bahrain,
+                    Value = "BH"
+                },
+                new SelectListItem
+                {
                     Text = Resources.Global.Qatar,
                     Value = "QA"
                 },
