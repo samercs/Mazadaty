@@ -106,12 +106,11 @@
 
         var alertPrize = function() {
             var winningSegment = theWheel.getIndicatedSegment();
-            alertify.alert(message,
-                function() {
-                    if (type == 3) {
-                        location.href = "/en/prize/select-avatar";
-                    }
-                });
+            alertify.alert(message, function() {
+                if (type == 3) {
+                    location.href = "/en/prize/select-avatar";
+                }
+            }).setHeader('@Global.Alert');;
         };
 
         $(function() {

@@ -840,4 +840,7 @@
   <data name="MyAvatars" xml:space="preserve">
     <value>My Avatars</value>
   </data>
+  <data name="Alert" xml:space="preserve">
+    <value>Alert</value>
+  </data>
 </root>

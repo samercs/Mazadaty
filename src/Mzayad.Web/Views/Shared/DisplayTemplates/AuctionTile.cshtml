@@ -4,7 +4,7 @@
 @model Mzayad.Web.Models.Auctions.AuctionViewModel
 
 @helper RenderCountry(string countries){
-var countriesArray = Model.CountryList.Split(',');
+var countriesArray =  Model.CountryList?.Split(',') ?? new string[0];
 var resultHtml = "";
 foreach (var country in countriesArray)
 {
