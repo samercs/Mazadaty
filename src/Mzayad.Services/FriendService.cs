@@ -86,7 +86,6 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 return await dc.UsersFriends
-                                    .Include(i => i.User)
                                     .Where(i => i.UserId == userId)
                                     .Select(i => i.Friend)
                                     .OrderBy(i => i.UserName)

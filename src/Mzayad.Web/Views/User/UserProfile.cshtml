@@ -32,16 +32,17 @@
     </script>
 }
 <div id="dvMessage">
-    @if (Model.User.ProfileStatus == Mzayad.Models.Enum.UserProfileStatus.Private)
+    @if (Model.User.ProfileStatus == Mzayad.Models.Enum.UserProfileStatus.Private && !Model.AreFriends)
     {
-        if (!Model.AreFriends && !Model.SentFriendRequestBefore)
-        {
-            @(Html.StatusMessage(Global.PrivateProfileMessage + " " + Global.Click + " <span style='cursor:pointer;color:green' onclick='friendRequest()'> " + Global.Here + "</span> " + Global.ToSendFriendRequestMessage, StatusMessageType.Warning))
-        }
         if (Model.SentFriendRequestBefore)
         {
             @(Html.StatusMessage(Global.FriendRequestSent, StatusMessageType.Information))
         }
+        else
+        {
+            @(Html.StatusMessage(Global.PrivateProfileMessage + " " + Global.Click + " <span style='cursor:pointer;color:green' onclick='friendRequest()'> " + Global.Here + "</span> " + Global.ToSendFriendRequestMessage, StatusMessageType.Warning))
+        }
+        return;
     }
 </div>
 

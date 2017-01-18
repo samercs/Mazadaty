@@ -363,6 +363,10 @@
     <Compile Include="Migrations\201610311352398_AddFloorandFlatToAddress.Designer.cs">
       <DependentUpon>201610311352398_AddFloorandFlatToAddress.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701181809288_FriendsTables.cs" />
+    <Compile Include="Migrations\201701181809288_FriendsTables.Designer.cs">
+      <DependentUpon>201701181809288_FriendsTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -592,6 +596,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610311352398_AddFloorandFlatToAddress.resx">
       <DependentUpon>201610311352398_AddFloorandFlatToAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701181809288_FriendsTables.resx">
+      <DependentUpon>201701181809288_FriendsTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

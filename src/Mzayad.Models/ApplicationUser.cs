@@ -35,10 +35,7 @@ namespace Mzayad.Models
         public virtual IEnumerable<CategoryNotification> Notifications { get; set; }
         public virtual IEnumerable<WishList> WishLists { get; set; }
         public virtual ICollection<SessionLog> SessionLogs { get; set; }
-
-        public virtual ICollection<ApplicationUser> Friends { get; set; }
-
-        public virtual ICollection<FriendRequest> FriendRequests { get; set; }
+        
 
         [DataType(DataType.Url)]
         public string AvatarUrl { get; set; }

@@ -9,7 +9,7 @@ namespace Mzayad.Models
     {
         [Key, Column(Order = 1)]
         [Required, StringLength(128)]
-        [ForeignKey("User")]
+        //[ForeignKey("User")]
         public string UserId { get; set; }
 
         [Key, Column(Order = 2)]
@@ -17,7 +17,7 @@ namespace Mzayad.Models
         [ForeignKey("Friend")]
         public string FriendId { get; set; }
 
-        public virtual ApplicationUser User { get; set; }
+      //  public virtual ApplicationUser User { get; set; }
 
         public virtual ApplicationUser Friend { get; set; }
     }
