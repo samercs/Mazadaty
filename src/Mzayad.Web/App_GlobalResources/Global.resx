@@ -820,7 +820,7 @@
     <value>Cancel Request</value>
   </data>
   <data name="Chat" xml:space="preserve">
-    <value>Chat</value>
+    <value>Send Message</value>
   </data>
   <data name="Decline" xml:space="preserve">
     <value>Decline</value>
@@ -883,7 +883,7 @@
     <value>to send friend request.</value>
   </data>
   <data name="RemoveFriend" xml:space="preserve">
-    <value>Remove Friend</value>
+    <value>unfriend</value>
   </data>
   <data name="RemoveFriendSuccessfullyMessage" xml:space="preserve">
     <value>This user has been removed successfully from your friends list.</value>

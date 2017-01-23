@@ -97,16 +97,16 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div class="dashboard-cell">
-                        <div class="dashboard-number">@Model.Friends.Count</div>
-                        <div class="dashboard-label text-uppercase">@(Model.Friends.Count == 1 ? Global.Friend : Global.Friends)</div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="dashboard-cell">
+                    <a href="@Url.Action("UserTrophies", "User")" class="dashboard-cell">
                         <div class="dashboard-number">@Model.Trophies.Count</div>
                         <div class="dashboard-label text-uppercase">@Global.Trophies</div>
-                    </div>
+                    </a>
+                </div>
+                <div class="col-sm-4">
+                    <a href="@Url.Action("UserFriends", "User",new { userName=Model.User.UserName})" class="dashboard-cell">
+                        <div class="dashboard-number">@Model.Friends.Count</div>
+                        <div class="dashboard-label text-uppercase">@(Model.Friends.Count == 1 ? Global.Friend : Global.Friends)</div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -120,138 +120,3 @@
 {
     <div id="dashboard-level"><span style='color:green;padding:5px 5px 5px 0px'>@Global.FriendRequestSent</span></div>
 }
-
-@if (Model.Trophies.Any())
-{
-    <div class="panel dashboard-panel">
-        <div class="panel-heading">
-            <h3 class="panel-title text-uppercase">@Global.TrophiesAchieved</h3>
-            <div class="clearfix"></div>
-        </div>
-        <div class="panel-body">
-            <ul class="dashboard-flex-list">
-                @foreach (var trophy in Model.Trophies)
-                {
-                    <li>
-                        <div class="dashboard-flex-item">
-                            <img class="img-responsive" src="@trophy.IconUrl" alt="@trophy.Name" />
-                            <div class="dashboard-flex-name text-uppercase">@trophy.Name</div>
-                        </div>
-                    </li>
-                }
-            </ul>
-        </div>
-    </div>
-}
-@if (Model.Friends.Any())
-{
-    <div class="panel dashboard-panel">
-        <div class="panel-heading">
-            <h3 class="panel-title text-uppercase">@Global.Friends</h3>
-            <div class="clearfix"></div>
-        </div>
-        <div class="panel-body">
-            <ul class="dashboard-flex-list">
-                @foreach (var friend in Model.Friends)
-                {
-                    <li>
-                        <div class="dashboard-flex-item">
-                            <img class="img-responsive" src="@friend.AvatarUrl" alt="@friend.UserName" />
-                            <div class="dashboard-flex-name text-uppercase">
-                                <a href="@Url.Content("~/"+ LanguageCode+ "/profiles/"+friend.UserName)">
-                                    @friend.UserName
-                                </a>
-                            </div>
-                        </div>
-                    </li>
-                }
-            </ul>
-        </div>
-    </div>
-}
-
-    @*@if (Model.Auctions.Any())
-        {
-            <div class="panel dashboard-panel">
-                <div class="panel-heading">
-                    <h3 class="panel-title text-uppercase">@Global.ItemsWon</h3>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="panel-body">
-                    <ul class="dashboard-flex-list">
-                        @foreach (var auction in Model.Auctions.Take(10))
-                        {
-                            <li>
-                                <div class="dashboard-flex-item">
-                                    <img class="img-responsive" src="@auction.Product.MainImage().ImageSmUrl" alt="@auction.Title" />
-                                    <div class="dashboard-flex-name text-uppercase">@auction.Title</div>
-                                </div>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
-        }*@
-
-    @*@if (Model.WishLists.Any())
-        {
-            <div class="panel dashboard-panel">
-                <div class="panel-heading">
-                    <h3 class="panel-title text-uppercase">@Global.MyWishList</h3>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="panel-body">
-                    <table class="@Html.Css().GridTable">
-                        <thead>
-                            <tr>
-                                <th>@Global.ItemName</th>
-                                <th>@Global.Added</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.WishLists)
-                            {
-                                <tr>
-                                    <td>@item.NameEntered</td>
-                                    <td>@DateTimeFormatter.ToLocalTime(item.CreatedUtc)</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        }*@
-
-    @*@if (Model.Bids.Any())
-        {
-            <div class="panel dashboard-panel">
-                <div class="panel-heading">
-                    <h3 class="panel-title text-uppercase">@Global.BidHistory</h3>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="panel-body">
-                    <table class="@Html.Css().GridTable">
-                        <thead>
-                            <tr>
-                                <th>@Global.DateSlashTime</th>
-                                <th>@Global.Auction</th>
-                                <th>@Global.Amount</th>
-                                <th>@Global.TimeLeft</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.Bids)
-                            {
-                                <tr>
-                                    <td>@DateTimeFormatter.ToLocalTime(item.CreatedUtc, DateTimeFormatter.Format.Full)</td>
-                                    <td>@item.Auction.Title</td>
-                                    <td>@CurrencyFormatter.Format(item.Amount)</td>
-                                    <td>@TimeSpan.FromSeconds(item.SecondsLeft).Humanize(4)</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        }*@
-

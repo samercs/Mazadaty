@@ -9,10 +9,7 @@ namespace Mzayad.Web.Models.User
     {
         public ApplicationUser User { get; private set; }
         public IReadOnlyCollection<ApplicationUser> Friends { get; set; }
-       // public IReadOnlyCollection<Bid> Bids { get; set; }
         public IReadOnlyCollection<Trophy> Trophies { get; set; }
-        //public IReadOnlyCollection<Auction> Auctions { get; set; }
-       // public IReadOnlyCollection<Mzayad.Models.WishList> WishLists { get; set; }
 
         public Level CurrentLevel { get; private set; }
         public Level NextLevel { get; private set; }

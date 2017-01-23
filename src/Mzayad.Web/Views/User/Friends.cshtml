@@ -1,47 +1,86 @@
 ﻿@using OrangeJetpack.Base.Web
 
-@model Mzayad.Web.Models.User.FriendsViewModel
+@model IEnumerable<Mzayad.Web.Models.User.UserProfileViewModel>
 
 @{
     ViewBag.Title = Global.TheFriends;
 }
 <div id="dvMessage"></div>
 
-@if (!Model.Friends.Any())
+@if (!Model.Any())
 {
     @Html.StatusMessage(Global.NoFriends, StatusMessageType.Information)
+    return;
 }
 
-@if (Model.Friends.Any())
-{
-    <div class="panel dashboard-panel">
-        <div class="panel-heading">
-            <h3 class="panel-title text-uppercase">@Global.TheFriends</h3>
-            <div class="clearfix"></div>
-        </div>
-        <div class="panel-body">
-            @foreach (var friend in Model.Friends)
-                {
-            <div class="row" style="border-bottom:1px solid #f1f1f1;margin-bottom:10px;padding-bottom:10px;" id="dv_@friend.Id">
-                <div class="col-sm-1">
-                    <div class="dashboard-avatar">
-                        <img class="img-responsive" src="@friend.AvatarUrl" alt="@friend.UserName" />
-                    </div>
-                </div>
-                <div class="col-sm-9">
-                    <div id="dashboard-details" class="dashboard-cell" style="padding:0px;">
-                        <div id="dashboard-username" class="text-uppercase">
-                            <a href="@Url.Content("~/"+ LanguageCode+ "/profiles/"+friend.UserName)">@friend.UserName</a>
+<div class="panel dashboard-panel">
+    <div class="panel-body">
+        @foreach (var item in Model)
+            {
+            <div id="dashboard-header">
+                <div class="row" id="dv_@item.User.Id">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div id="dashboard-avatar">
+                                    <img class="img-responsive" src="@item.User.AvatarUrl" alt="@item.User.UserName" />
+                                </div>
+                            </div>
+                            <div class="col-sm-9">
+                                <div id="dashboard-details" class="dashboard-cell">
+                                    <div id="dashboard-username" class="text-uppercase">@item.User.UserName</div>
+                                    <div id="dashboard-level" class="text-uppercase">
+                                        @Global.Level @item.User.Level
+                                    </div>
+                                    <div id="dashboard-progress">
+                                        <div class="progress pull-left">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="@item.LevelPercentage" aria-valuemin="0" aria-valuemax="100" style="width: @item.LevelPercentage%;">
+                                                <span class="sr-only">@item.LevelPercentage% Complete</span>
+                                            </div>
+                                        </div>
+                                        <small>@(item.User.Xp)/@(item.NextLevel.XpRequired)</small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <button type="button" class="btn btn-link" style="padding:0px;" onclick="remove('@friend.Id')">@Global.Remove</button>
-                        <a href="@Url.Content("~/"+ LanguageCode+ "/friends/message/"+friend.Id)" class="btn btn-link">@Global.Chat</a>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div style="margin-left:15px;color:#fff">@Global.Chat</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="dashboard-cell">
+                                    <div class="dashboard-number">@item.User.Xp</div>
+                                    <div class="dashboard-label text-uppercase">@Global.Experience</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <a href="@Url.Action("UserTrophies", "User")" class="dashboard-cell">
+                                    <div class="dashboard-number">@item.Trophies.Count</div>
+                                    <div class="dashboard-label text-uppercase">@Global.Trophies</div>
+                                </a>
+                            </div>
+                            <div class="col-sm-4">
+                                <a href="@Url.Action("UserFriends", "User",new { userName=item.User.UserName})" class="dashboard-cell">
+                                    <div class="dashboard-number">@item.Friends.Count</div>
+                                    <div class="dashboard-label text-uppercase">@(item.Friends.Count == 1 ? Global.Friend : Global.Friends)</div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-link" style="padding:0px;margin-right:15px;margin-bottom:2px;float:right;color:#fff" onclick="remove('@item.User.Id')">@Global.RemoveFriend</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            }
-        </div>
+        }
     </div>
-}
+</div>
 <div id="dialog-confirm" style="display:none" title="">
     <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>@Global.AreSure</p>
 </div>

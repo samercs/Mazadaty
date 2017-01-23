@@ -471,7 +471,6 @@
     <Compile Include="Models\User\DashboardViewModel.cs" />
     <Compile Include="Models\User\EditProfileModel.cs" />
     <Compile Include="Models\User\FriendRequestsViewModel.cs" />
-    <Compile Include="Models\User\FriendsViewModel.cs" />
     <Compile Include="Models\User\NotificationModelView.cs" />
     <Compile Include="Models\User\TrophieViewModel.cs" />
     <Compile Include="Models\User\UserProfileViewModel.cs" />
