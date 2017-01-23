@@ -45,7 +45,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <div style="margin-left:15px;color:#fff">@Global.Chat</div>
+                                <div style="margin-left:15px;float:left;color:#fff">@Global.Chat</div>
                             </div>
                         </div>
                     </div>
@@ -81,50 +81,39 @@
         }
     </div>
 </div>
-<div id="dialog-confirm" style="display:none" title="">
-    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>@Global.AreSure</p>
-</div>
-
+@section styles{
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/bootstrap.min.css" />
+}
 @section scripts
 {
-    <link href="@Url.Content("~/Scripts/dialog/jquery-ui.css")" rel="stylesheet" />
-    <script src="@Url.Content("~/Scripts/dialog/jquery-ui.js")"></script>
+    <script src="//cdn.jsdelivr.net/alertifyjs/1.8.0/alertify.min.js"></script>
     <script>
-        var options = {
-            resizable: false,
-            height: "auto",
-            width: 400,
-            modal: true,
-            title: '',
-            buttons: null,
-            title: '@Global.RemoveFriend'
-        };
         function remove(id) {
-            var confirmDialog = $('#dialog-confirm');
-            options.buttons = {
-                "OK": function () {
-                    $.ajax({
-                        url: '@Url.Content("~/friends/remove")',
-                        type: 'POST',
-                        data: { 'friendId': id },
-                        dataType: 'json',
-                        success: function () {
-                            $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.RemoveFriendSuccessfullyMessage, StatusMessageType.Success).ToString().Replace("'","\""))');
-                            $('#dv_' + id).hide();
-                        },
-                        error: function () {
-                            $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.FriendActionFailMessage, StatusMessageType.Error).ToString().Replace("'","\""))');
-                        }
-                    });
-                    $(this).dialog("close");
+            alertify.confirm("@Global.AreSure",
+                                   function () {
+                                       removeFriend(id);
+                                   },
+                                   function () {
+
+                                   })
+                               .set('labels', { ok: '@Global.Yes', cancel: '@Global.No' }).setHeader('@Global.RemoveFriend');;
+        }
+
+        function removeFriend(id) {
+            $.ajax({
+                url: '@Url.Content("~/friends/remove")',
+                type: 'POST',
+                data: { 'friendId': id },
+                dataType: 'json',
+                success: function () {
+                    $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.RemoveFriendSuccessfullyMessage, StatusMessageType.Success).ToString().Replace("'","\""))');
+                    $('#dv_' + id).hide();
                 },
-                Cancel: function () {
-                    $(this).dialog("close");
+                error: function () {
+                    $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.FriendActionFailMessage, StatusMessageType.Error).ToString().Replace("'","\""))');
                 }
-            }
-
-            confirmDialog.dialog(options);
-
+            });
         }
     </script>
 }
