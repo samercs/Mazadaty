@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Accessibility;
 
 namespace Mzayad.Services
 {
@@ -143,7 +144,7 @@ namespace Mzayad.Services
                 LocalizeProduct(product, language);
             }
 
-            return auctions.Localize(language, i => i.Title).ToList();
+            return auctions.Localize<Auction>(language, i=> i.Title).ToList();
         }
 
         private static void LocalizeProduct(Product product, string language)
