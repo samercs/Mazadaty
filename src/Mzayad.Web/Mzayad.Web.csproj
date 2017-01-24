@@ -205,8 +205,12 @@
       <HintPath>..\..\packages\OrangeJetpack.Cms.Client.0.0.22\lib\net452\OrangeJetpack.Cms.Models.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="OrangeJetpack.Localization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Localization.1.5.7\lib\OrangeJetpack.Localization.dll</HintPath>
+    <Reference Include="OrangeJetpack.Localization, Version=1.7.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OrangeJetpack.Localization.1.7.5\lib\net45\OrangeJetpack.Localization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OrangeJetpack.Localization.Mvc, Version=1.6.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OrangeJetpack.Localization.Mvc.1.6.3\lib\net45\OrangeJetpack.Localization.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Regionalization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
