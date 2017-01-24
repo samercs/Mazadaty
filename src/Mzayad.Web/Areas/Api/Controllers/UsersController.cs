@@ -19,7 +19,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using Mzayad.Services.Identity;
-using Mzayad.Web.Controllers;
 
 namespace Mzayad.Web.Areas.Api.Controllers
 {
@@ -29,15 +28,17 @@ namespace Mzayad.Web.Areas.Api.Controllers
         private readonly UserService _userService;
         private readonly AddressService _addressService;
         private readonly SessionLogService _sessionLogService;
+        private readonly AvatarService _avatarService;
 
         public UsersController(IAppServices appServices) : base(appServices)
         {
             _userService = new UserService(appServices.DataContextFactory);
             _addressService = new AddressService(appServices.DataContextFactory);
             _sessionLogService = new SessionLogService(appServices.DataContextFactory);
+            _avatarService = new AvatarService(appServices.DataContextFactory);
         }
 
-        [Route("{username}")]
+        [HttpGet, Route("{username}")]
         public async Task<IHttpActionResult> Get(string username)
         {
             var applicationUser = await _userService.GetUserByName(username);
@@ -58,6 +59,17 @@ namespace Mzayad.Web.Areas.Api.Controllers
             return Ok(user);
         }
 
+        [HttpGet, Route("action/validate-username")]
+        public async Task<IHttpActionResult> ValidateUserName(string username)
+        {
+            var exists = await AuthService.UserExists(username);
+            var results = new
+            {
+                IsValid = !exists
+            };
+            return Ok(results);
+        }
+
         public async Task<IHttpActionResult> Post(RegisterViewModel model)
         {
             ModelState.Remove("model.Address.CreatedUtc");
@@ -72,6 +84,8 @@ namespace Mzayad.Web.Areas.Api.Controllers
             model.PhoneCountryCode = "+" + StringFormatter.StripNonDigits(model.PhoneCountryCode);
             model.PhoneNumber = StringFormatter.StripNonDigits(model.PhoneNumber);
 
+            var avatar = await _avatarService.GetById(model.SelectedAvatar);
+
             var user = new ApplicationUser
             {
                 UserName = model.UserName,
@@ -79,7 +93,12 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 PhoneCountryCode = model.PhoneCountryCode,
-                PhoneNumber = model.PhoneNumber
+                PhoneNumber = model.PhoneNumber,
+                ProfileStatus = UserProfileStatus.Private,
+                AvatarUrl = avatar.Url,
+                Gender = model.Gender,
+                Birthdate = model.Birthdate,
+                Level = 1
             };
 
             var result = await AuthService.CreateUser(user, model.Password);
@@ -242,7 +261,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
             return PasswordUtilities.GenerateResetPasswordUrl(baseUrl, email);
         }
 
-        [Route("action/password/{id}"), HttpPut]
+        [HttpPut, Route("action/password/{id}")]
         public async Task<IHttpActionResult> ChangePassword(string id, ChangePasswordViewModel model)
         {
             if (!ModelState.IsValid)
@@ -295,7 +314,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpPost,Route("session/log")]
+        [HttpPost, Route("session/log")]
         public void LogSession()
         {
             _sessionLogService .Insert(AuthService.GetSessionLog());
