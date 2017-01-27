@@ -1,0 +1,46 @@
+﻿@model Mzayad.Models.Message
+
+@{
+    ViewBag.Title = Global.Chat;
+}
+
+
+<div class="row">
+    <div class="@Html.Css().FormWide">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Body, Global.Message)
+                    @Html.TextAreaFor(i => i.Body, Model)
+                    @Html.ValidationMessageFor(i => i.Body, Global.EmptyMessageErrorMessage)
+                </div>
+            </section>
+            <section class="form-buttons">
+                <button type="submit" class="btn btn-primary">@Global.Send</button>
+                @Html.ActionLink(Global.Back, "friends", "user", null,new { @class="btn btn-default"})
+            </section>
+        }
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/js/validate")
+    <script src="//cdn.ckeditor.com/4.4.4/basic/ckeditor.js"></script>
+    <script>
+        (function ($) {
+            $(function () {
+                initCkEditor();
+
+            });
+            var initCkEditor = function () {
+                $("textarea").each(function () {
+                    CKEDITOR.replace(this.id, { height: 300 });
+                });
+            };
+        })(jQuery);
+    </script>
+}
+

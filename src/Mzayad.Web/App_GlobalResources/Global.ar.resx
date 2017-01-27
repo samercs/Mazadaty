@@ -837,4 +837,16 @@
   <data name="RemoveFriend" xml:space="preserve">
     <value>حذف صديق</value>
   </data>
+  <data name="EmptyMessageErrorMessage" xml:space="preserve">
+    <value>من فضلك أكتب الرسالة المراد ارسالها.</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>الرسالة</value>
+  </data>
+  <data name="MessageSentSuccessfully" xml:space="preserve">
+    <value>لقد تم ارسال رسالتك بنجاح.</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>إرسال</value>
+  </data>
 </root>

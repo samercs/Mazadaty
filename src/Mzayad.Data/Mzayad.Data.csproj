@@ -395,9 +395,13 @@
     <Compile Include="Migrations\201701031235279_UpdateUserPrizeLogEntity.Designer.cs">
       <DependentUpon>201701031235279_UpdateUserPrizeLogEntity.cs</DependentUpon>
     </Compile>
-	<Compile Include="Migrations\201701181809288_FriendsTables.cs" />
+    <Compile Include="Migrations\201701181809288_FriendsTables.cs" />
     <Compile Include="Migrations\201701181809288_FriendsTables.Designer.cs">
       <DependentUpon>201701181809288_FriendsTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701272210318_MessagesTable.cs" />
+    <Compile Include="Migrations\201701272210318_MessagesTable.Designer.cs">
+      <DependentUpon>201701272210318_MessagesTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -653,8 +657,11 @@
     <EmbeddedResource Include="Migrations\201701031235279_UpdateUserPrizeLogEntity.resx">
       <DependentUpon>201701031235279_UpdateUserPrizeLogEntity.cs</DependentUpon>
     </EmbeddedResource>
-	<EmbeddedResource Include="Migrations\201701181809288_FriendsTables.resx">
+    <EmbeddedResource Include="Migrations\201701181809288_FriendsTables.resx">
       <DependentUpon>201701181809288_FriendsTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701272210318_MessagesTable.resx">
+      <DependentUpon>201701272210318_MessagesTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

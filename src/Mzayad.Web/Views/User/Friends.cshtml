@@ -5,7 +5,12 @@
 @{
     ViewBag.Title = Global.TheFriends;
 }
-<div id="dvMessage"></div>
+<div id="dvMessage">
+    @if (ViewBag.MessageSent != null)
+    {
+        @Html.StatusMessage(Global.MessageSentSuccessfully, StatusMessageType.Success)
+    }
+</div>
 
 @if (!Model.Any())
 {
@@ -105,9 +110,9 @@
                                 <div class="row">
                                     <div class="col-md-12" style="text-align:right;padding-right:45px;">
                                         <a class="btn btn-default btn-rounded text-uppercase" style="padding: 5px 20px;margin-bottom: 10px;"
-                                        href="@Url.Action("SendMessage", "User", new { area = "", userName = item.User.UserName })">
-                                        <i class="fa fa-fw fa-envelope"></i>
-                                        @Global.Chat
+                                           href="@Url.Action("SendMessage", "Friends", new { area = "", userName = item.User.UserName })">
+                                            <i class="fa fa-fw fa-envelope"></i>
+                                            @Global.Chat
                                         </a>
                                     </div>
                                 </div>

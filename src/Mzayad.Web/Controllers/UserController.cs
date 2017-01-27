@@ -405,7 +405,7 @@ namespace Mzayad.Web.Controllers
             var friends = await _friendService.GetFriends(AuthService.CurrentUserId());
 
             var viewModel = await GetFriendsModel(friends);
-
+            ViewBag.MessageSent = TempData["MessageSent"];
             return View(viewModel);
         }
 
