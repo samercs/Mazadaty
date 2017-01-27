@@ -101,6 +101,7 @@
     <Compile Include="Enums\UserProfileStatus.cs" />
     <Compile Include="Enums\TrophyKey.cs" />
     <Compile Include="FriendRequest.cs" />
+    <Compile Include="Message.cs" />
     <Compile Include="UserFriend.cs" />
     <Compile Include="IslamicCalendar.cs" />
     <Compile Include="Level.cs" />

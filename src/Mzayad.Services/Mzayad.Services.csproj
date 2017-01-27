@@ -127,6 +127,7 @@
     <Compile Include="Identity\UserService.cs" />
     <Compile Include="IslamicCalendarService.cs" />
     <Compile Include="LevelService.cs" />
+    <Compile Include="MessageService.cs" />
     <Compile Include="NotificationService.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="Payment\KnetService.cs" />

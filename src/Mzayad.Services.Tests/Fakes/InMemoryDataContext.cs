@@ -40,6 +40,7 @@ namespace Mzayad.Services.Tests.Fakes
         public IDbSet<UserAvatar> UserAvatars { get; set; }
         public IDbSet<UserFriend> UsersFriends { get; set; }
         public IDbSet<FriendRequest> FriendsRequests { get; set; }
+        public IDbSet<Message> Messages { get; set; }
 
         public InMemoryDataContext()
         {
