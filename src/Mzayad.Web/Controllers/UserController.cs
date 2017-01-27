@@ -393,12 +393,14 @@ namespace Mzayad.Web.Controllers
             var viewModel = new List<UserProfileViewModel>();
             foreach (var friend in friends)
             {
+                friend.AvatarUrl = friend.ProfileStatus == UserProfileStatus.Private ? "//az712326.vo.msecnd.net/assets/no-image-512x512-635627099896729695.png" : friend.AvatarUrl;
                 viewModel.Add(new UserProfileViewModel(friend)
                 {
                     Trophies = await _trophyService.GetTrophies(friend.Id, Language),
                     AreFriends = await _friendService.AreFriends(friend.Id, AuthService.CurrentUserId()),
                     SentFriendRequestBefore = await _friendService.SentBefore(AuthService.CurrentUserId(), friend.Id),
-                    Friends = await _friendService.GetFriends(friend.Id)
+                    Friends = await _friendService.GetFriends(friend.Id),
+                    Me = friend.UserName == User.Identity.GetUserName()//  (await AuthService.CurrentUser()).UserName
                 });
             }
             return viewModel;

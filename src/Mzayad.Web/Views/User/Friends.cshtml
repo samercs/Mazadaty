@@ -19,102 +19,129 @@
             {
             <div id="dashboard-header">
                 <div class="row" id="dv_@item.User.Id">
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <div id="dashboard-avatar">
-                                    <img class="img-responsive" src="@item.User.AvatarUrl" alt="@item.User.UserName" />
-                                </div>
-                            </div>
-                            <div class="col-sm-9">
-                                <div id="dashboard-details" class="dashboard-cell">
-                                    <div id="dashboard-username" class="text-uppercase">@item.User.UserName</div>
-                                    <div id="dashboard-level" class="text-uppercase">
-                                        @Global.Level @item.User.Level
+                    @if (item.User.ProfileStatus == Mzayad.Models.Enum.UserProfileStatus.Private && !item.AreFriends && !item.Me)
+                    {
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div id="dashboard-avatar">
+                                        <img class="img-responsive" src="@item.User.AvatarUrl" alt="@item.User.UserName" />
                                     </div>
-                                    <div id="dashboard-progress">
-                                        <div class="progress pull-left">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="@item.LevelPercentage" aria-valuemin="0" aria-valuemax="100" style="width: @item.LevelPercentage%;">
-                                                <span class="sr-only">@item.LevelPercentage% Complete</span>
-                                            </div>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div id="dashboard-details" class="dashboard-cell">
+                                        <div id="dashboard-username" class="text-uppercase">
+                                            <a href="@Url.Action("UserProfile", "User", new { area = "", userName = item.User.UserName })" style="color:#33ace0">@item.User.UserName</a>
                                         </div>
-                                        <small>@(item.User.Xp)/@(item.NextLevel.XpRequired)</small>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div style="margin-left:15px;float:left;color:#fff">@Global.Chat</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="dashboard-cell">
-                                    <div class="dashboard-number">@item.User.Xp</div>
-                                    <div class="dashboard-label text-uppercase">@Global.Experience</div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="dashboard-cell">
+                                        <div class="dashboard-label" style="font-size:large">
+                                            @(Global.PrivateProfileMessage + " " + Global.Click) <span style="cursor:pointer;color:green" onclick="friendRequest('@item.User.UserName')">@Global.Here</span> @Global.ToSendFriendRequestMessage
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
-                                <a href="@Url.Action("UserTrophies", "User")" class="dashboard-cell">
-                                    <div class="dashboard-number">@item.Trophies.Count</div>
-                                    <div class="dashboard-label text-uppercase">@Global.Trophies</div>
-                                </a>
-                            </div>
-                            <div class="col-sm-4">
-                                <a href="@Url.Action("UserFriends", "User",new { userName=item.User.UserName})" class="dashboard-cell">
-                                    <div class="dashboard-number">@item.Friends.Count</div>
-                                    <div class="dashboard-label text-uppercase">@(item.Friends.Count == 1 ? Global.Friend : Global.Friends)</div>
-                                </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div id="dashboard-avatar">
+                                        <img class="img-responsive" src="@item.User.AvatarUrl" alt="@item.User.UserName" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div id="dashboard-details" class="dashboard-cell">
+                                        <div id="dashboard-username" class="text-uppercase">
+                                            <a href="@Url.Action("UserProfile", "User", new { area = "",  userName = item.User.UserName })" style="color:#33ace0">@item.User.UserName</a>
+                                        </div>
+                                        <div id="dashboard-level" class="text-uppercase">
+                                            @Global.Level @item.User.Level
+                                        </div>
+                                        <div id="dashboard-progress">
+                                            <div class="progress pull-left">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="@item.LevelPercentage" aria-valuemin="0" aria-valuemax="100" style="width: @item.LevelPercentage%;">
+                                                    <span class="sr-only">@item.LevelPercentage% Complete</span>
+                                                </div>
+                                            </div>
+                                            <small>@(item.User.Xp)/@(item.NextLevel.XpRequired)</small>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <button type="button" class="btn btn-link" style="padding:0px;margin-right:15px;margin-bottom:2px;float:right;color:#fff" onclick="remove('@item.User.Id')">@Global.RemoveFriend</button>
+                        <div class="col-md-6">
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="dashboard-cell">
+                                        <div class="dashboard-number">@item.User.Xp</div>
+                                        <div class="dashboard-label text-uppercase">@Global.Experience</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a href="@Url.Action("UserTrophies", "User")" class="dashboard-cell">
+                                        <div class="dashboard-number">@item.Trophies.Count</div>
+                                        <div class="dashboard-label text-uppercase">@Global.Trophies</div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a href="@Url.Action("UserFriends", "User", new { userName = item.User.UserName })" class="dashboard-cell">
+                                        <div class="dashboard-number">@item.Friends.Count</div>
+                                        <div class="dashboard-label text-uppercase">@(item.Friends.Count == 1 ? Global.Friend : Global.Friends)</div>
+                                    </a>
+                                </div>
                             </div>
+                            @if (item.AreFriends && !item.Me)
+                            {
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align:right;padding-right:45px;">
+                                        <a class="btn btn-default btn-rounded text-uppercase" style="padding: 5px 20px;margin-bottom: 10px;"
+                                        href="@Url.Action("SendMessage", "User", new { area = "", userName = item.User.UserName })">
+                                        <i class="fa fa-fw fa-envelope"></i>
+                                        @Global.Chat
+                                        </a>
+                                    </div>
+                                </div>
+                            }
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
         }
     </div>
 </div>
-@section styles{
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css" />
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/bootstrap.min.css" />
-}
 @section scripts
 {
-    <script src="//cdn.jsdelivr.net/alertifyjs/1.8.0/alertify.min.js"></script>
     <script>
-        function remove(id) {
-            alertify.confirm("@Global.AreSure",
-                                   function () {
-                                       removeFriend(id);
-                                   },
-                                   function () {
-
-                                   })
-                               .set('labels', { ok: '@Global.Yes', cancel: '@Global.No' }).setHeader('@Global.RemoveFriend');;
-        }
-
-        function removeFriend(id) {
+        function friendRequest(username) {
             $.ajax({
-                url: '@Url.Content("~/friends/remove")',
+                url: '@Url.Content("~/friends/sendrequest")',
                 type: 'POST',
-                data: { 'friendId': id },
+                data: { 'userName': username },
                 dataType: 'json',
-                success: function () {
-                    $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.RemoveFriendSuccessfullyMessage, StatusMessageType.Success).ToString().Replace("'","\""))');
-                    $('#dv_' + id).hide();
+                success: function (e) {
+                    if (e == '1') {
+                        $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.FriendRequestSuccessMessage,StatusMessageType.Success).ToString().Replace("'","\""))');
+                    }
+                    else {
+                        $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.FriendRequestFailMessage, StatusMessageType.Error).ToString().Replace("'","\""))');
+                    }
                 },
                 error: function () {
-                    $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.FriendActionFailMessage, StatusMessageType.Error).ToString().Replace("'","\""))');
+                    $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.FriendRequestFailMessage, StatusMessageType.Error).ToString().Replace("'","\""))');
                 }
             });
         }
+
     </script>
 }
 

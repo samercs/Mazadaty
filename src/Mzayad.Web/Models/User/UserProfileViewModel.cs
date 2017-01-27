@@ -18,6 +18,8 @@ namespace Mzayad.Web.Models.User
         public bool AreFriends { get; set; }
         public bool SentFriendRequestBefore { get; set; }
 
+        public bool Me { get; set; }
+
         public UserProfileViewModel(ApplicationUser user)
         {
             User = user;
