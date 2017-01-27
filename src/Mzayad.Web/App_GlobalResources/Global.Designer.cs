@@ -158,6 +158,15 @@ namespace Mzayad.Web.Resources
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Alert.
+        /// </summary>
+        public static string Alert {
+            get {
+                return ResourceManager.GetString("Alert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alias or Username.
         /// </summary>
         public static string AliasOrUsername
@@ -345,6 +354,15 @@ namespace Mzayad.Web.Resources
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Your avatar has been changed successfully..
+        /// </summary>
+        public static string AvatarChangeSuccessfullyMsg {
+            get {
+                return ResourceManager.GetString("AvatarChangeSuccessfullyMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Awarded on.
         /// </summary>
         public static string AwardedOn
@@ -366,6 +384,15 @@ namespace Mzayad.Web.Resources
             }
         }
 
+        /// <summary>
+        ///   Looks up a localized string similar to Bahrain.
+        /// </summary>
+        public static string Bahrain {
+            get {
+                return ResourceManager.GetString("Bahrain", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Bid.
         /// </summary>
@@ -663,6 +690,15 @@ namespace Mzayad.Web.Resources
             }
         }
 
+        /// <summary>
+        ///   Looks up a localized string similar to Congratulations!.
+        /// </summary>
+        public static string Congratulations {
+            get {
+                return ResourceManager.GetString("Congratulations", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Contact Us.
         /// </summary>
@@ -1390,6 +1426,15 @@ namespace Mzayad.Web.Resources
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to My Avatars.
+        /// </summary>
+        public static string MyAvatars {
+            get {
+                return ResourceManager.GetString("MyAvatars", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to My Wishlist.
         /// </summary>
         public static string MyWishList
@@ -1620,6 +1665,15 @@ namespace Mzayad.Web.Resources
             }
         }
 
+        /// <summary>
+        ///   Looks up a localized string similar to Oman.
+        /// </summary>
+        public static string Oman {
+            get {
+                return ResourceManager.GetString("Oman", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to select....
         /// </summary>
@@ -1874,6 +1928,24 @@ namespace Mzayad.Web.Resources
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to You won a prize from Zeedli. &lt;a href=&quot;{0}&quot;&gt;Click here to get your prize.&lt;/a&gt;.
+        /// </summary>
+        public static string PrizeChanceMessage {
+            get {
+                return ResourceManager.GetString("PrizeChanceMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Congratulation ... you win a prize from Zeedli click on button &lt;strong&gt;Spin to get your prize&lt;/strong&gt; to view your prize.
+        /// </summary>
+        public static string PrizeMessage {
+            get {
+                return ResourceManager.GetString("PrizeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Product.
         /// </summary>
         public static string Product
@@ -1906,6 +1978,15 @@ namespace Mzayad.Web.Resources
             }
         }
 
+        /// <summary>
+        ///   Looks up a localized string similar to Qatar.
+        /// </summary>
+        public static string Qatar {
+            get {
+                return ResourceManager.GetString("Qatar", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Quantity.
         /// </summary>
@@ -2159,6 +2240,15 @@ namespace Mzayad.Web.Resources
             }
         }
 
+        /// <summary>
+        ///   Looks up a localized string similar to Saudi Arabia.
+        /// </summary>
+        public static string SaudiArabia {
+            get {
+                return ResourceManager.GetString("SaudiArabia", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
@@ -2512,7 +2602,7 @@ namespace Mzayad.Web.Resources
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Congratulations, you have successfully purchased &lt;strong&gt;{Subscription.Name}&lt;/strong&gt; and we have updated your account..
+        ///   Looks up a localized string similar to Congratulations, you have successfully purchased &lt;strong&gt;{Subscription.Name}&lt;/strong&gt; and we have updated your account. Also you win a prize from Zeedli click on button &quot;Spin to get your prize&quot;..
         /// </summary>
         public static string SubscriptionPurchaseAcknowledgement
         {
@@ -2676,6 +2766,15 @@ namespace Mzayad.Web.Resources
             }
         }
 
+        /// <summary>
+        ///   Looks up a localized string similar to UAE.
+        /// </summary>
+        public static string UAE {
+            get {
+                return ResourceManager.GetString("UAE", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Upcoming Auctions.
         /// </summary>

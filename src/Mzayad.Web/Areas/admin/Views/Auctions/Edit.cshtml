@@ -8,6 +8,11 @@
     ViewBag.Title = "Edit Auction";
 }
 
+@section styles
+{
+    <link rel="stylesheet" href="/content/flags/flags.css" />
+}
+
 <ul class="link-list">
     <li><a href="@Url.Action("Delete", "Auctions", new {id = @Model.Auction.AuctionId})">Delete Auction</a></li>
 </ul>
@@ -56,7 +61,7 @@
 @section scripts {
     <script>
 
-        var toggleBuyNow = function () {
+        var toggleBuyNow = function() {
             var checkbox = $("#Auction_BuyNowEnabled");
             var section = checkbox.parents("section");
             var formGroups = section.find(".form-group-disableable");
@@ -71,9 +76,30 @@
             }
         }
 
-        $(function () {
+        $(function() {
             $("#Auction_BuyNowEnabled").on("change", toggleBuyNow);
             toggleBuyNow();
+        });
+
+        jQuery.validator.addMethod("countryList",
+            function() {
+                var count = 0;
+                $("input[name='countryList']")
+                    .each(function() {
+                        if ($(this).is(":checked")) {
+                            ++count;
+                        }
+                    });
+                if (count == @Model.GccCountryList.Count()) {
+                    return false;
+                }
+                return true;
+            },
+            "You can select up to 5 countries only, because selecting all of the 6 countries means that this auction will be available for all users from all countries.");
+
+        jQuery.validator.addClassRules("country-list",
+        {
+            countryList: true
         });
 
     </script>

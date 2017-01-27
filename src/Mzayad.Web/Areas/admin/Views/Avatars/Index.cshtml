@@ -19,22 +19,20 @@
 
 <p>HINT: You can drag the avatar rows to re-order the order they appear in to users.</p>
 
+
+
 @(Html.Kendo().Grid(Model)
                 .Init(ajax => ajax.Action("GetAvatar", "Avatar"))
     .Columns(columns =>
     {
-        columns.Bound(i => i.Url).Title("Avatar");
+        columns.Bound(i => i.Url).Title("Avatar").ClientTemplate("<img class='imgThum img-thumbnail img-responsive' src='#=data.Url#'  />");
         columns.Bound(i => i.Url).Title("URL");
-        columns.Bound(i=>i.AvatarId).Title("");
-    })
-        .ClientRowTemplate(
-            "<tr>" +
-                "<td><img class='imgThum img-thumbnail img-responsive' src='#:data.Url#'  /></td>" +
-                "<td class='infoP'> #: data.Url# </td>" +
-                "<td class='link-cell'><a href='" + Url.Action("Delete", "Avatars") + "/#: data.AvatarId#'>Delete</td>" +
-             "</tr>"
-        )
-      )
+        columns.Bound(i => i.IsPremium).Title("Premium?").ClientTemplate("#=renderIsPremium(data.IsPremium)#");
+        columns.Bound(i => i.Token).Title("Token").ClientTemplate("#= renderToken(data.Token) #");
+        columns.LinkColumn("Edit", "Avatars/Edit/#=data.AvatarId#");
+        columns.LinkColumn("Delete", "Avatars/Delete/#=data.AvatarId#");
+
+    }))
 
 @(Html.Kendo().Sortable()
         .For("div[id^='Grid_']")
@@ -64,6 +62,20 @@
             });
 
             //alert("old index : " + oldIndex + " " + " New Index : " + newIndex);
+        }
+
+        var renderToken = function(token) {
+            if (token) {
+                return token;
+            }
+            return "";
+        }
+
+        var renderIsPremium = function (isPremium) {
+            if (isPremium) {
+                return "<span class='label label-success'>Premium</span>";
+            }
+            return "";
         }
 </script>
 

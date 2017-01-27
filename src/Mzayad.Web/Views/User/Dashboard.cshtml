@@ -17,9 +17,15 @@
             color: white !important;
             margin-right: 5px !important;
         }
+        .text-wight {
+            margin-top: 5px;
+        }
+        .text-wight a {
+            color: #fff;
+            text-decoration: underline;
+        }
     </style>
 }
-
 <div id="dashboard-header">
     <div class="row">
         <div class="col-md-6">
@@ -27,6 +33,9 @@
                 <div class="col-sm-3">
                     <div id="dashboard-avatar">
                         <img class="img-responsive" src="@Model.User.AvatarUrl" alt="@Model.User.UserName" />
+                        @*<div class="text-center text-wight">
+                            <a href="@Url.Action("MyAvatars", "User")">@Global.MyAvatars</a>
+                        </div>*@
                     </div>
                 </div>
                 <div class="col-sm-9">
@@ -77,6 +86,11 @@
         </div>
     </div>
 </div>
+
+@if (!string.IsNullOrEmpty(Model.PrizeUrl))
+{
+    @Html.Partial("_UserPrizeNotification", Model.PrizeUrl)
+}
 
 @if (Model.Trophies.Any())
 {

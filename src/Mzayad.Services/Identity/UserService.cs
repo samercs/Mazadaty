@@ -88,7 +88,6 @@ namespace Mzayad.Services.Identity
             update.Birthdate = user.Birthdate;
             update.AutoBidNotification = user.AutoBidNotification;
             update.AddressId = user.AddressId;
-
             return await _userManager.UpdateAsync(update);
         }
 

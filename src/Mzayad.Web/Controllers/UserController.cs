@@ -37,6 +37,7 @@ namespace Mzayad.Web.Controllers
         private readonly AuctionService _auctionService;
         private readonly WishListService _wishListService;
         private readonly IActivityQueueService _activityQueueService;
+        private readonly PrizeService _prizeService;
         private readonly FriendService _friendService;
 
         public UserController(IAppServices appServices)
@@ -51,7 +52,9 @@ namespace Mzayad.Web.Controllers
             _trophyService = new TrophyService(DataContextFactory);
             _auctionService = new AuctionService(DataContextFactory);
             _wishListService = new WishListService(DataContextFactory);
-            _activityQueueService = new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
+            _activityQueueService =
+                new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
+            _prizeService = new PrizeService(DataContextFactory);
             _friendService = new FriendService(appServices.DataContextFactory);
         }
 
@@ -59,6 +62,17 @@ namespace Mzayad.Web.Controllers
         public async Task<ActionResult> Dashboard()
         {
             var user = await AuthService.CurrentUser();
+            var userPrize = await _prizeService.GetUserAvilablePrize(user);
+            var prizeUrl = userPrize != null
+                ? Url.Action("Index", "Prize", new { id = userPrize.UserPrizeLogId, Language })
+                : null;
+
+            var userHasAvatarPrize = await _prizeService.UserHasFreeAvatar(user);
+            if (userHasAvatarPrize && userPrize == null)
+            {
+                prizeUrl = Url.Action("SelectAvatarPrize", "Prize", new { Language });
+            }
+
 
             var viewModel = new DashboardViewModel(user)
             {
@@ -66,6 +80,7 @@ namespace Mzayad.Web.Controllers
                 Trophies = await _trophyService.GetTrophies(user.Id, Language),
                 Auctions = await _auctionService.GetAuctionsWon(user.Id, Language),
                 WishLists = await _wishListService.GetByUser(user.Id),
+                PrizeUrl = prizeUrl,
                 Friends = await _friendService.GetFriends(user.Id)
             };
 
@@ -89,7 +104,8 @@ namespace Mzayad.Web.Controllers
                 return View(model);
             }
 
-            var result = await _userService.ChangePassword(User.Identity.GetUserId(), model.CurrentPassword, model.NewPassword);
+            var result =
+                await _userService.ChangePassword(User.Identity.GetUserId(), model.CurrentPassword, model.NewPassword);
             if (!result.Succeeded)
             {
                 SetStatusMessage(Global.PasswordChangeFailureMessage, StatusMessageType.Error);
@@ -203,7 +219,9 @@ namespace Mzayad.Web.Controllers
             {
                 ToAddress = originalEmail,
                 Subject = emailTemplate.Localize(Language, i => i.Subject).Subject,
-                Message = string.Format(emailTemplate.Localize(Language, i => i.Message).Message, user.FirstName, AppSettings.SiteName)
+                Message =
+                    string.Format(emailTemplate.Localize(Language, i => i.Message).Message, user.FirstName,
+                        AppSettings.SiteName)
             };
 
             await MessageService.Send(email.WithTemplate());
@@ -264,11 +282,22 @@ namespace Mzayad.Web.Controllers
             var user = await AuthService.CurrentUser();
             user.ProfileStatus = model.User.ProfileStatus;
             user.Gender = model.User.Gender;
-
-            if (selectedAvatar.HasValue)
+            bool setWarning = false;
+            Avatar avatar = null;
+            var userAvatarHasChange = selectedAvatar.HasValue && !user.AvatarUrl.Equals(selectedAvatar.Value);
+            if (userAvatarHasChange)
             {
-                var avatar = await _avatarService.GetById(selectedAvatar.Value);
-                user.AvatarUrl = avatar.Url;
+                avatar = await _avatarService.GetById(selectedAvatar.Value);
+                try
+                {
+                    await _avatarService.ChangeAvatar(user, avatar, AuthService.UserHostAddress());
+                    user.AvatarUrl = avatar.Url;
+                }
+                catch
+                {
+                    setWarning = true;
+                }
+
             }
 
             if (model.BirthDay.HasValue && model.BirthMonth.HasValue && model.BirthYear.HasValue)
@@ -278,9 +307,12 @@ namespace Mzayad.Web.Controllers
             }
 
             await _userService.UpdateUser(user);
-            await _activityQueueService.QueueActivityAsync(ActivityType.CompleteProfile, user.Id);
 
-            SetStatusMessage("Your profile has been saved successfully.");
+            await _activityQueueService.QueueActivityAsync(ActivityType.CompleteProfile, user.Id);
+            SetStatusMessage(!setWarning
+                ? "Your profile has been saved successfully."
+                : $"Your profile has been saved successfully. <span class='text-danger'> but selected avatar can't be update your token ({user.Tokens}) is less than avatar token ({avatar.Token}) </span>");
+
 
             return RedirectToAction("Dashboard");
         }
@@ -311,6 +343,40 @@ namespace Mzayad.Web.Controllers
             return View(auctions);
         }
 
+        [Route("my-avatars")]
+        public async Task<ActionResult> MyAvatars()
+        {
+            var user = await AuthService.CurrentUser();
+            var model = new MyAvatarsViewModel
+            {
+                Avatars = await _avatarService.GetUserAvatars(user),
+                User = user
+            };
+            return View(model);
+        }
+
+        [Route("my-avatars")]
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> MyAvatars(MyAvatarsViewModel model)
+        {
+            if (model.SelectedAvatar.HasValue)
+            {
+                var user = await AuthService.CurrentUser();
+                var avatar = await _avatarService.GetById(model.SelectedAvatar.Value);
+                if (avatar != null)
+                {
+                    if (await _avatarService.UserHasAvatar(user, avatar))
+                    {
+                        user.AvatarUrl = avatar.Url;
+                        await _userService.UpdateUser(user);
+                        SetStatusMessage(Global.AvatarChangeSuccessfullyMsg);
+                    }
+
+                }
+            }
+            return RedirectToAction("Dashboard");
+
+        }
         [Route("~/{language}/profiles/{userName}")]
         public async Task<ActionResult> UserProfile(string userName)
         {

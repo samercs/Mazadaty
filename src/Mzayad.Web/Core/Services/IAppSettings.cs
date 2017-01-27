@@ -12,5 +12,6 @@ namespace Mzayad.Web.Core.Services
         string AzureCdnUrlHost { get; }
         string ProjectKey { get; }
         string ProjectToken { get; }
+        string CanonicalUrl { get; }
     }
 }

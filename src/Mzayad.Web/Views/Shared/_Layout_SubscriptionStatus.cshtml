@@ -8,10 +8,10 @@
 <div id="header-subscription" class="pull-right">
     <a href="@Url.Action("Index", "Subscriptions", new {area = "", language = LanguageCode })">
         <small>
-        @F(Global.SubscriptionLabelAndStatus, new
-        {
-            StatusText = Html.DisplayFor(m => m, "SubscriptionUtc").ToString()
-        })
+            @F(Global.SubscriptionLabelAndStatus, new
+            {
+                StatusText = Html.DisplayFor(m => m, "SubscriptionUtc").ToString()
+            })
         </small>
     </a>
 </div>
