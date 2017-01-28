@@ -23,7 +23,7 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<Message> Update(Message entity)
+        public async Task<Message> SetAsRead(Message entity)
         {
             using (var dc = DataContext())
             {
@@ -41,13 +41,19 @@ namespace Mzayad.Services
                 return await dc.Messages.Where(i => i.UserId == userId).ToListAsync();
             }
         }
+
         public async Task<IReadOnlyCollection<Message>> GetByReceiver(string userId)
         {
             using (var dc = DataContext())
             {
-                return await dc.Messages.Where(i => i.ReceiverId == userId).ToListAsync();
+                return await dc.Messages
+                    .Include(i => i.User)
+                    .Where(i => i.ReceiverId == userId)
+                    .OrderByDescending(i => i.CreatedUtc)
+                    .ToListAsync();
             }
         }
+
         public async Task Delete(Message entity)
         {
             using (var dc = DataContext())
@@ -55,6 +61,14 @@ namespace Mzayad.Services
                 dc.Messages.Attach(entity);
                 dc.Messages.Remove(entity);
                 await dc.SaveChangesAsync();
+            }
+        }
+
+        public async Task<Message> Get(int messageId)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.Messages.SingleAsync(i => i.MessageId == messageId);
             }
         }
     }

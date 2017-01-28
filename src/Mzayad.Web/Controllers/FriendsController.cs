@@ -126,6 +126,13 @@ namespace Mzayad.Web.Controllers
             await _friendService.RemoveFriend(AuthService.CurrentUserId(), friendId);
             return Json("1", JsonRequestBehavior.AllowGet);
         }
+
+        public async Task<MvcHtmlString> Message(int id)
+        {
+            var message = await _messageService.Get(id);
+            await _messageService.SetAsRead(message);
+            return MvcHtmlString.Create(message.Body);
+        }
         #endregion
     }
 }

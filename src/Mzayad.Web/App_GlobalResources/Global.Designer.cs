@@ -547,6 +547,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Closed Auctions.
         /// </summary>
         public static string ClosedAuctions {
@@ -979,6 +988,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inbox.
+        /// </summary>
+        public static string Inbox {
+            get {
+                return ResourceManager.GetString("Inbox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to We&apos;re sorry, but the email address or password you have entered is incorrect..
         /// </summary>
         public static string InvalidUserNameOrPassword {
@@ -1191,6 +1209,15 @@ namespace Mzayad.Web.Resources {
         public static string Month {
             get {
                 return ResourceManager.GetString("Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to more....
+        /// </summary>
+        public static string More {
+            get {
+                return ResourceManager.GetString("More", resourceCulture);
             }
         }
         

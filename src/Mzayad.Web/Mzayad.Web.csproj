@@ -816,6 +816,7 @@
     <Content Include="Views\User\MyAvatars.cshtml" />
     <Content Include="Views\User\UserProfile.cshtml" />
     <Content Include="Views\User\Friends.cshtml" />
+    <Content Include="Views\User\Inbox.cshtml" />
     <TypeScriptCompile Include="Scripts\auctions.ts" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />

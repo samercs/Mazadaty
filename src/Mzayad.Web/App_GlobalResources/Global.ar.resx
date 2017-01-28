@@ -837,14 +837,23 @@
   <data name="RemoveFriend" xml:space="preserve">
     <value>حذف صديق</value>
   </data>
+  <data name="Close" xml:space="preserve">
+    <value>إغلاق</value>
+  </data>
   <data name="EmptyMessageErrorMessage" xml:space="preserve">
     <value>من فضلك أكتب الرسالة المراد ارسالها.</value>
+  </data>
+  <data name="Inbox" xml:space="preserve">
+    <value>صندوق الوارد</value>
   </data>
   <data name="Message" xml:space="preserve">
     <value>الرسالة</value>
   </data>
   <data name="MessageSentSuccessfully" xml:space="preserve">
     <value>لقد تم ارسال رسالتك بنجاح.</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>المزيد...</value>
   </data>
   <data name="Send" xml:space="preserve">
     <value>إرسال</value>

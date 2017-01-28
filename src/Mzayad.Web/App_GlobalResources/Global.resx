@@ -921,14 +921,23 @@
   <data name="RemoveFriendSuccessfullyMessage" xml:space="preserve">
     <value>This user has been removed successfully from your friends list.</value>
   </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="EmptyMessageErrorMessage" xml:space="preserve">
     <value>Please type your message.</value>
+  </data>
+  <data name="Inbox" xml:space="preserve">
+    <value>Inbox</value>
   </data>
   <data name="Message" xml:space="preserve">
     <value>Message</value>
   </data>
   <data name="MessageSentSuccessfully" xml:space="preserve">
     <value>Your message gas been sent successfully</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>more...</value>
   </data>
   <data name="Send" xml:space="preserve">
     <value>Send</value>

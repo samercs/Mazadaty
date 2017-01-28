@@ -39,6 +39,7 @@ namespace Mzayad.Web.Controllers
         private readonly IActivityQueueService _activityQueueService;
         private readonly PrizeService _prizeService;
         private readonly FriendService _friendService;
+        private readonly MessageService _messageService;
 
         public UserController(IAppServices appServices)
             : base(appServices)
@@ -56,6 +57,7 @@ namespace Mzayad.Web.Controllers
                 new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
             _prizeService = new PrizeService(DataContextFactory);
             _friendService = new FriendService(appServices.DataContextFactory);
+            _messageService = new MessageService(appServices.DataContextFactory);
         }
 
         [Route("dashboard")]
@@ -436,6 +438,14 @@ namespace Mzayad.Web.Controllers
             return View("friends", viewModel);
         }
 
+        [Route("inbox")]
+        public async Task<ActionResult> Inbox()
+        {
+            var viewModel = await _messageService.GetByReceiver(AuthService.CurrentUserId());
+            return View(viewModel);
+        }
+
+        #region Private Methods
         private async Task<List<TrophieViewModel>> GetTrophies(string userId)
         {
             var userTophies = (await _trophyService.GetUsersTrophies(userId, Language)).ToList();
@@ -471,5 +481,6 @@ namespace Mzayad.Web.Controllers
             }
             return viewModel;
         }
+        #endregion
     }
 }
