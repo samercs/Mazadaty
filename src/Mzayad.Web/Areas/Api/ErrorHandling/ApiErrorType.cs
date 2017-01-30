@@ -2,6 +2,7 @@
 {
     public enum ApiErrorType
     {
+        ModelStateError,
         InsufficientTokensError
     }
 }

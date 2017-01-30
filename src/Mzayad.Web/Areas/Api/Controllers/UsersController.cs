@@ -24,7 +24,6 @@ using Mzayad.Models.Enums;
 using Mzayad.Services.Activity;
 using Mzayad.Services.Identity;
 using Mzayad.Web.Areas.Api.Models.Users;
-using Mzayad.Web.Controllers;
 
 namespace Mzayad.Web.Areas.Api.Controllers
 {
@@ -123,21 +122,20 @@ namespace Mzayad.Web.Areas.Api.Controllers
             return Ok("Password has been send");
         }
 
-        [Route("edit-account")]
-        public async Task<IHttpActionResult> Put(string id, UserAccountViewModel model)
+        [Route("current")]
+        [Authorize]
+        public async Task<IHttpActionResult> Put(UserAccountViewModel model)
         {
-            ModelState.Remove("model.Address.CreatedUtc");
+            ModelState.Remove("model.Address");
+
             if (!ModelState.IsValid)
             {
-                string messages = string.Join("; ", ModelState.Values
-                    .SelectMany(x => x.Errors)
-                    .Select(x => x.ErrorMessage));
-                return BadRequest(messages);
+                return ModelStateError(ModelState);
             }
 
-            var user = await _userService.GetUserById(id);
+            var user = await AuthService.CurrentUser();
             var originalEmail = user.Email;
-            bool emailChanged = false;
+            var emailChanged = false;
 
             user.FirstName = string.IsNullOrEmpty(model.FirstName) ? user.FirstName : model.FirstName;
             user.LastName = string.IsNullOrEmpty(model.LastName) ? user.LastName : model.LastName;
@@ -179,6 +177,12 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 address.StateProvince = string.IsNullOrEmpty(model.Address.StateProvince)
                     ? address.StateProvince
                     : model.Address.StateProvince;
+                address.Floor = string.IsNullOrEmpty(model.Address.Floor)
+                     ? address.Floor
+                     : model.Address.Floor;
+                address.FlatNumber = string.IsNullOrEmpty(model.Address.FlatNumber)
+                     ? address.FlatNumber
+                     : model.Address.FlatNumber;
                 await _addressService.Update(address);
             }
             if (emailChanged)
@@ -188,7 +192,6 @@ namespace Mzayad.Web.Areas.Api.Controllers
 
             return Ok();
         }
-
 
         [Route("current/update-profile")]
         [HttpPut, Authorize]
