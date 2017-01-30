@@ -843,4 +843,7 @@
   <data name="Alert" xml:space="preserve">
     <value>Alert</value>
   </data>
+  <data name="BuyAvatar" xml:space="preserve">
+    <value>Buy Avatar</value>
+  </data>
 </root>

@@ -313,6 +313,50 @@ namespace Mzayad.Web.Controllers
             return RedirectToAction("Dashboard");
         }
 
+        [Route("buy-premium-avatar/{avatarId:int}")]
+        public async Task<ActionResult> BuyPremiumAvatar(int avatarId)
+        {
+            var avatar = await _avatarService.GetById(avatarId);
+            if (avatar == null)
+            {
+                return RedirectToAction("EditProfile");
+            }
+            var model = new BuyPremiumAvatarViewModel
+            {
+                Avatar = avatar
+            };
+            return View(model);
+        }
+
+        [Route("buy-premium-avatar/{avatarId:int}"), HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> BuyPremiumAvatar(BuyPremiumAvatarViewModel model, string action)
+        {
+            var avatar = await _avatarService.GetById(model.Avatar.AvatarId);
+            if (avatar == null)
+            {
+                return RedirectToAction("EditProfile");
+            }
+            if (action.Equals("no"))
+            {
+                return RedirectToAction("EditProfile");
+            }
+
+            try
+            {
+                var user = await AuthService.CurrentUser();
+                await _avatarService.BuyAvatar(user, avatar, AuthService.UserHostAddress());
+                user.AvatarUrl = avatar.Url;
+                await _userService.UpdateUser(user);
+                SetStatusMessage("Avatar has been purchased successfully.");
+                return RedirectToAction("Dashboard");
+            }
+            catch (Exception e)
+            {
+                SetStatusMessage(e.Message, StatusMessageType.Error);
+                return RedirectToAction("EditProfile");
+            }
+        }
+
         [Route("trophies")]
         public async Task<ActionResult> Trophies()
         {
@@ -352,41 +396,6 @@ namespace Mzayad.Web.Controllers
             var auctions = await _auctionService.GetAuctionsWon(userId, Language);
 
             return View(auctions);
-        }
-
-        [Route("my-avatars")]
-        public async Task<ActionResult> MyAvatars()
-        {
-            var user = await AuthService.CurrentUser();
-            var model = new MyAvatarsViewModel
-            {
-                Avatars = await _avatarService.GetUserAvatars(user),
-                User = user
-            };
-            return View(model);
-        }
-
-        [Route("my-avatars")]
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> MyAvatars(MyAvatarsViewModel model)
-        {
-            if (model.SelectedAvatar.HasValue)
-            {
-                var user = await AuthService.CurrentUser();
-                var avatar = await _avatarService.GetById(model.SelectedAvatar.Value);
-                if (avatar != null)
-                {
-                    if (await _avatarService.UserHasAvatar(user, avatar))
-                    {
-                        user.AvatarUrl = avatar.Url;
-                        await _userService.UpdateUser(user);
-                        SetStatusMessage(Global.AvatarChangeSuccessfullyMsg);
-                    }
-
-                }
-            }
-            return RedirectToAction("Dashboard");
-
         }
     }
 }
