@@ -38,16 +38,8 @@
                                         <div id="dashboard-username" class="text-uppercase">
                                             <a href="@Url.Action("UserProfile", "User", new { area = "", userName = item.User.UserName })" style="color:#33ace0">@item.User.UserName</a>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="dashboard-cell">
-                                        <div class="dashboard-label" style="font-size:large">
-                                            @(Global.PrivateProfileMessage + " " + Global.Click) <span style="cursor:pointer;color:green" onclick="friendRequest('@item.User.UserName')">@Global.Here</span> @Global.ToSendFriendRequestMessage
+                                        <div class="dashboard-label" style="font-size:1.05em;margin-top:5px;">
+                                            @(Global.PrivateProfileMessage + " " + Global.Click) <span style="cursor:pointer;text-decoration:underline" onclick="friendRequest('@item.User.UserName')">@Global.Here</span> @Global.ToSendFriendRequestMessage
                                         </div>
                                     </div>
                                 </div>
@@ -84,7 +76,6 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="dashboard-cell">
