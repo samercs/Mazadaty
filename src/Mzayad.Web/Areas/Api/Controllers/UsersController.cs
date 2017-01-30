@@ -313,18 +313,16 @@ namespace Mzayad.Web.Areas.Api.Controllers
             return PasswordUtilities.GenerateResetPasswordUrl(baseUrl, email);
         }
 
-        [Route("action/password/{id}"), HttpPut]
-        public async Task<IHttpActionResult> ChangePassword(string id, ChangePasswordViewModel model)
+        [Route("current/password")]
+        [HttpPut, Authorize]
+        public async Task<IHttpActionResult> ChangePassword(ChangePasswordViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                string messages = string.Join("; ", ModelState.Values
-                                        .SelectMany(x => x.Errors)
-                                        .Select(x => x.ErrorMessage));
-                return BadRequest(messages);
+                return ModelStateError(ModelState);
             }
 
-            var user = await _userService.GetUserById(id);
+            var user = await AuthService.CurrentUser();
             if (user == null)
             {
                 return BadRequest("user not found");
