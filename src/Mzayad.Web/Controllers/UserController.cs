@@ -400,7 +400,7 @@ namespace Mzayad.Web.Controllers
                     AreFriends = await _friendService.AreFriends(friend.Id, AuthService.CurrentUserId()),
                     SentFriendRequestBefore = await _friendService.SentBefore(AuthService.CurrentUserId(), friend.Id),
                     Friends = await _friendService.GetFriends(friend.Id),
-                    Me = friend.UserName == User.Identity.GetUserName()//  (await AuthService.CurrentUser()).UserName
+                    Me = friend.UserName == (await AuthService.CurrentUser()).UserName
                 });
             }
             return viewModel;
