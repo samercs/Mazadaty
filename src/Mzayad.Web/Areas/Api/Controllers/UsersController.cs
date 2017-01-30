@@ -14,11 +14,16 @@ using OrangeJetpack.Base.Core.Security;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Models;
 using System;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using Mzayad.Core.Exceptions;
+using Mzayad.Models.Enums;
+using Mzayad.Services.Activity;
 using Mzayad.Services.Identity;
+using Mzayad.Web.Areas.Api.Models.Users;
 using Mzayad.Web.Controllers;
 
 namespace Mzayad.Web.Areas.Api.Controllers
@@ -29,12 +34,17 @@ namespace Mzayad.Web.Areas.Api.Controllers
         private readonly UserService _userService;
         private readonly AddressService _addressService;
         private readonly SessionLogService _sessionLogService;
+        private readonly AvatarService _avatarService;
+        private readonly IActivityQueueService _activityQueueService;
 
         public UsersController(IAppServices appServices) : base(appServices)
         {
-            _userService = new UserService(appServices.DataContextFactory);
-            _addressService = new AddressService(appServices.DataContextFactory);
-            _sessionLogService = new SessionLogService(appServices.DataContextFactory);
+            _userService = new UserService(DataContextFactory);
+            _addressService = new AddressService(DataContextFactory);
+            _sessionLogService = new SessionLogService(DataContextFactory);
+            _avatarService = new AvatarService(DataContextFactory);
+            _activityQueueService =
+                new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
         }
 
         [Route("{username}")]
@@ -58,14 +68,15 @@ namespace Mzayad.Web.Areas.Api.Controllers
             return Ok(user);
         }
 
+        [Route("register")]
         public async Task<IHttpActionResult> Post(RegisterViewModel model)
         {
             ModelState.Remove("model.Address.CreatedUtc");
             if (!ModelState.IsValid)
             {
                 string messages = string.Join("; ", ModelState.Values
-                                        .SelectMany(x => x.Errors)
-                                        .Select(x => x.ErrorMessage));
+                    .SelectMany(x => x.Errors)
+                    .Select(x => x.ErrorMessage));
                 return BadRequest("Invalid user information : " + messages);
             }
 
@@ -102,8 +113,8 @@ namespace Mzayad.Web.Areas.Api.Controllers
             if (!ModelState.IsValid)
             {
                 string messages = string.Join("; ", ModelState.Values
-                                        .SelectMany(x => x.Errors)
-                                        .Select(x => x.ErrorMessage));
+                    .SelectMany(x => x.Errors)
+                    .Select(x => x.ErrorMessage));
 
                 return BadRequest(messages);
             }
@@ -112,14 +123,15 @@ namespace Mzayad.Web.Areas.Api.Controllers
             return Ok("Password has been send");
         }
 
+        [Route("edit-account")]
         public async Task<IHttpActionResult> Put(string id, UserAccountViewModel model)
         {
             ModelState.Remove("model.Address.CreatedUtc");
             if (!ModelState.IsValid)
             {
                 string messages = string.Join("; ", ModelState.Values
-                                        .SelectMany(x => x.Errors)
-                                        .Select(x => x.ErrorMessage));
+                    .SelectMany(x => x.Errors)
+                    .Select(x => x.ErrorMessage));
                 return BadRequest(messages);
             }
 
@@ -134,21 +146,39 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 user.Email = model.Email;
                 emailChanged = originalEmail != model.Email;
             }
-            user.PhoneCountryCode = string.IsNullOrEmpty(model.PhoneCountryCode) ? user.PhoneCountryCode : model.PhoneCountryCode;
+            user.PhoneCountryCode = string.IsNullOrEmpty(model.PhoneCountryCode)
+                ? user.PhoneCountryCode
+                : model.PhoneCountryCode;
             user.PhoneNumber = string.IsNullOrEmpty(model.PhoneNumber) ? user.PhoneNumber : model.PhoneNumber;
             await _userService.UpdateUser(user);
 
             if (user.AddressId.HasValue && model.Address != null)
             {
                 var address = await _addressService.GetAddress(user.AddressId.Value);
-                address.AddressLine1 = string.IsNullOrEmpty(model.Address.AddressLine1) ? address.AddressLine1 : model.Address.AddressLine1;
-                address.AddressLine2 = string.IsNullOrEmpty(model.Address.AddressLine2) ? address.AddressLine2 : model.Address.AddressLine2;
-                address.AddressLine3 = string.IsNullOrEmpty(model.Address.AddressLine3) ? address.AddressLine3 : model.Address.AddressLine3;
-                address.AddressLine4 = string.IsNullOrEmpty(model.Address.AddressLine4) ? address.AddressLine4 : model.Address.AddressLine4;
-                address.CityArea = string.IsNullOrEmpty(model.Address.CityArea) ? address.CityArea : model.Address.CityArea;
-                address.CountryCode = string.IsNullOrEmpty(model.Address.CountryCode) ? address.CountryCode : model.Address.CountryCode;
-                address.PostalCode = string.IsNullOrEmpty(model.Address.PostalCode) ? address.PostalCode : model.Address.PostalCode;
-                address.StateProvince = string.IsNullOrEmpty(model.Address.StateProvince) ? address.StateProvince : model.Address.StateProvince;
+                address.AddressLine1 = string.IsNullOrEmpty(model.Address.AddressLine1)
+                    ? address.AddressLine1
+                    : model.Address.AddressLine1;
+                address.AddressLine2 = string.IsNullOrEmpty(model.Address.AddressLine2)
+                    ? address.AddressLine2
+                    : model.Address.AddressLine2;
+                address.AddressLine3 = string.IsNullOrEmpty(model.Address.AddressLine3)
+                    ? address.AddressLine3
+                    : model.Address.AddressLine3;
+                address.AddressLine4 = string.IsNullOrEmpty(model.Address.AddressLine4)
+                    ? address.AddressLine4
+                    : model.Address.AddressLine4;
+                address.CityArea = string.IsNullOrEmpty(model.Address.CityArea)
+                    ? address.CityArea
+                    : model.Address.CityArea;
+                address.CountryCode = string.IsNullOrEmpty(model.Address.CountryCode)
+                    ? address.CountryCode
+                    : model.Address.CountryCode;
+                address.PostalCode = string.IsNullOrEmpty(model.Address.PostalCode)
+                    ? address.PostalCode
+                    : model.Address.PostalCode;
+                address.StateProvince = string.IsNullOrEmpty(model.Address.StateProvince)
+                    ? address.StateProvince
+                    : model.Address.StateProvince;
                 await _addressService.Update(address);
             }
             if (emailChanged)
@@ -156,6 +186,44 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 await SendEmailChangedEmail(user, originalEmail);
             }
 
+            return Ok();
+        }
+
+
+        [Route("current/update-profile")]
+        [HttpPut, Authorize]
+        public async Task<IHttpActionResult> UpdateProfile(UserProfileModel model)
+        {
+            var user = await AuthService.CurrentUser();
+            var hostAddress = AuthService.UserHostAddress();
+
+            user.ProfileStatus = model.ProfileStatus;
+            user.Gender = model.Gender;
+            user.Birthdate = model.Birthdate;
+
+            var avatar = model.AvatarId.HasValue ? await _avatarService.GetById(model.AvatarId.Value) : new Avatar();
+            var avatarChanged = model.AvatarId.HasValue && !user.AvatarUrl.Equals(avatar.Url);
+            if (avatarChanged)
+            {
+                var userOwnAvatar = await _avatarService.UserHasAvatar(user, avatar);
+                if (avatar.IsPremium && !userOwnAvatar)
+                {
+                    try
+                    {
+                        await _avatarService.BuyAvatar(user, avatar, hostAddress);
+                    }
+                    catch (InsufficientTokensException)
+                    {
+                        return InsufficientTokensError();
+                    }
+                }
+
+                await _avatarService.ChangeAvatar(user, avatar, hostAddress);
+                user.AvatarUrl = avatar.Url;
+            }
+
+            await _userService.UpdateUser(user);
+            await _activityQueueService.QueueActivityAsync(ActivityType.CompleteProfile, user.Id);
             return Ok();
         }
 
@@ -295,10 +363,10 @@ namespace Mzayad.Web.Areas.Api.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpPost,Route("session/log")]
+        [HttpPost, Route("session/log")]
         public void LogSession()
         {
-            _sessionLogService .Insert(AuthService.GetSessionLog());
+            _sessionLogService.Insert(AuthService.GetSessionLog());
         }
     }
 }

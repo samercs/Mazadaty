@@ -15,6 +15,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Mzayad.Web.Extensions;
 
 namespace Mzayad.Web
 {
@@ -52,7 +53,27 @@ namespace Mzayad.Web
             if (Request.Headers.AllKeys.Contains("Origin") && Request.HttpMethod == "OPTIONS")
             {
                 Response.Flush();
+                Response.End();
             }
+
+            if (Request.IsLocal || Request.IsSecureOrTerminatedSecureConnection())
+            {
+                return;
+            }
+
+            RedirectToCanonicalUrl(Request.Url);
+        }
+
+        private void RedirectToCanonicalUrl(Uri uri)
+        {
+            var uriBuilder = new UriBuilder(uri)
+            {
+                //Host = AppSettings.CanonicalUrl,
+                Scheme = "https",
+                Port = -1
+            };
+
+            Response.Redirect(uriBuilder.ToString());
         }
 
         protected void Application_AcquireRequestState(object sender, EventArgs e)

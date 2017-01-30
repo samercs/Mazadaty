@@ -68,8 +68,8 @@
       <HintPath>..\..\packages\Autofac.SignalR.3.0.2\lib\net40\Autofac.Integration.SignalR.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Autofac.Integration.WebApi, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+    <Reference Include="Autofac.Integration.WebApi, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.WebApi2.4.0.1\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -284,8 +284,8 @@
       <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Http.WebHost, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -390,10 +390,14 @@
     <Compile Include="Areas\Api\Controllers\AuctionsController.cs" />
     <Compile Include="Areas\Api\Controllers\MessagesController.cs" />
     <Compile Include="Areas\Api\Controllers\UsersController.cs" />
+    <Compile Include="Areas\Api\ErrorHandling\ApiError.cs" />
+    <Compile Include="Areas\Api\ErrorHandling\ApiErrorResult.cs" />
+    <Compile Include="Areas\Api\ErrorHandling\ApiErrorType.cs" />
     <Compile Include="Areas\Api\Filters\LanguageFilter.cs" />
     <Compile Include="Areas\Api\Models\Auctions\AuctionModel.cs" />
     <Compile Include="Areas\Api\Models\Users\UserModel.cs" />
     <Compile Include="Areas\Api\Models\Users\UserPostModel.cs" />
+    <Compile Include="Areas\Api\Models\Users\UserProfileModel.cs" />
     <Compile Include="Areas\Reports\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Reports\Controllers\TokensController.cs" />
     <Compile Include="Areas\Reports\Controllers\SubscriptionsController.cs" />
@@ -453,6 +457,7 @@
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Extensions\KendoExtensions.cs" />
     <Compile Include="Extensions\MvcHtmlStringExtensions.cs" />
+    <Compile Include="Extensions\RequestExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\SubscriptionExtensions.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
@@ -811,7 +816,7 @@
     <Content Include="Views\Prize\Index.cshtml" />
     <Content Include="Views\Prize\SelectAvatarPrize.cshtml" />
     <Content Include="Views\Shared\_UserPrizeNotification.cshtml" />
-    <Content Include="Views\User\BuyPremiumAvatar.cshtml" />
+    <Content Include="Views\User\MyAvatars.cshtml" />
     <TypeScriptCompile Include="Scripts\auctions.ts" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />
