@@ -1,12 +1,18 @@
 ﻿using Microsoft.AspNet.Identity;
 using Mindscape.Raygun4Net;
+using Mzayad.Core.Exceptions;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
+using Mzayad.Models.Enums;
 using Mzayad.Services;
+using Mzayad.Services.Activity;
+using Mzayad.Services.Identity;
 using Mzayad.Web.Areas.Api.Models.User;
+using Mzayad.Web.Areas.Api.Models.Users;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Extensions;
 using Mzayad.Web.Models.Account;
+using Mzayad.Web.Models.Shared;
 using Mzayad.Web.Models.User;
 using Mzayad.Web.Resources;
 using OrangeJetpack.Base.Core.Formatting;
@@ -14,16 +20,13 @@ using OrangeJetpack.Base.Core.Security;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Models;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using Mzayad.Core.Exceptions;
-using Mzayad.Models.Enums;
-using Mzayad.Services.Activity;
-using Mzayad.Services.Identity;
-using Mzayad.Web.Areas.Api.Models.Users;
+using WebGrease.Css.Extensions;
 
 namespace Mzayad.Web.Areas.Api.Controllers
 {
@@ -141,6 +144,43 @@ namespace Mzayad.Web.Areas.Api.Controllers
 
         [Route("current")]
         [Authorize]
+        public async Task<IHttpActionResult> Get()
+        {
+            var user = await AuthService.CurrentUser();
+            if (user == null)
+            {
+                return BadRequest("User not found.");
+            }
+
+            var address = await _addressService.GetAddress(user.AddressId);
+            var model = new UserAccountViewModel
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneCountryCode = user.PhoneCountryCode,
+                PhoneNumber = user.PhoneNumber,
+                Address = new AddressViewModel
+                {
+                    AddressId = address.AddressId,
+                    AddressLine1 = address.AddressLine1,
+                    AddressLine2 = address.AddressLine1,
+                    AddressLine3 = address.AddressLine3,
+                    AddressLine4 = address.AddressLine4,
+                    CityArea = address.CityArea,
+                    CountryCode = address.CountryCode,
+                    PostalCode = address.PostalCode,
+                    StateProvince = address.StateProvince,
+                    Floor = address.Floor,
+                    FlatNumber = address.FlatNumber
+                }
+            };
+
+            return Ok(model);
+        }
+
+        [Route("current")]
+        [Authorize]
         public async Task<IHttpActionResult> Put(UserAccountViewModel model)
         {
             ModelState.Remove("model.Address");
@@ -210,7 +250,37 @@ namespace Mzayad.Web.Areas.Api.Controllers
             return Ok();
         }
 
-        [Route("current/update-profile")]
+        [Route("current/profile")]
+        [HttpGet, Authorize]
+        public async Task<IHttpActionResult> GetProfile()
+        {
+            var user = await AuthService.CurrentUser();
+            if (user == null)
+            {
+                return BadRequest("User not found.");
+            }
+
+            var profileUrl = $"https://www.zeedli.com/profiles/{user.UserName.ToLowerInvariant()}";
+            var avatars = (await GetAvatars(user)).Select(i => new
+            {
+                i.AvatarId,
+                i.Url,
+                i.IsPremium,
+                Selected=i.Url.Equals(user.AvatarUrl)
+            });
+
+            return Ok(new
+            {
+                user.ProfileStatus,
+                profileUrl,
+                user.Gender,
+                user.Birthdate,
+                user.AvatarUrl,
+                avatars
+            });
+        }
+
+        [Route("current/profile")]
         [HttpPut, Authorize]
         public async Task<IHttpActionResult> UpdateProfile(UserProfileModel model)
         {
@@ -328,6 +398,17 @@ namespace Mzayad.Web.Areas.Api.Controllers
             var baseUrl = GetBaseUrl("resetpassword");
 
             return PasswordUtilities.GenerateResetPasswordUrl(baseUrl, email);
+        }
+
+        private async Task<IReadOnlyCollection<Avatar>> GetAvatars(ApplicationUser user)
+        {
+            var allAvatars = await _avatarService.GetAll();
+            var userAvatars = (await _avatarService.GetUserAvatars(user))
+                .OrderByDescending(i => i.IsPremium);
+            var unOwnedAvatars = allAvatars.Where(i => !userAvatars.Select(j => j.AvatarId).Contains(i.AvatarId))
+            .OrderByDescending(i => i.IsPremium);
+
+            return userAvatars.Concat(unOwnedAvatars).ToSafeReadOnlyCollection();
         }
 
         [Route("current/password")]
