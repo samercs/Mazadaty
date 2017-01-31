@@ -122,7 +122,7 @@ namespace Mzayad.Web.SignalR
                 }
 
                 _updatingAuctions = true;
-                
+
                 var auctions = GetAuctionsFromCache();
                 if (auctions == null)
                 {
@@ -176,7 +176,7 @@ namespace Mzayad.Web.SignalR
 
             Clients.All.closeAuction(auctionId, order.UserId, order.OrderId);
 
-            if(order.UserId != null)
+            if (order.UserId != null)
             {
                 _activityQueueService.QueueActivity(ActivityType.WinAuction, order.UserId);
             }

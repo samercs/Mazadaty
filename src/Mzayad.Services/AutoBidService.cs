@@ -98,6 +98,7 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 var autoBids = dc.AutoBids
+                    .Include(i=>i.User)
                     .Where(i => i.AuctionId == auctionId)
                     .Where(i => i.MaxBid > lastBidAmount)
                     .OrderBy(c => Guid.NewGuid())
