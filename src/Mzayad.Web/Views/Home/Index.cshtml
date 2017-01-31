@@ -356,6 +356,8 @@ else
                     auction.closeAuction();
                     if (userId === "@User.Identity.GetUserId()") {
                         auction.redirectOrder(orderId);
+                    } else {
+                        location.reload();
                     }
                 }
             }
