@@ -1,15 +1,18 @@
 ﻿@model DateTime?
 @{
     var date = "";
-    const string dateTime = "";
+    var dateTime = "";
     int? hour = null;
     int? minute = null;
 
     if (Model.HasValue)
     {
-        date = Model.Value.ToString("dd/MM/yyyy");
-        hour = Model.Value.Hour;
-        minute = Model.Value.Minute;
+        var astDate = Model.Value;
+        astDate = astDate.AddHours(-3);
+        date = astDate.ToString("dd/MM/yyyy");
+        dateTime = astDate.AddHours(-3).ToString("u"); // AST -> UTC
+        hour = astDate.Hour;
+        minute = astDate.Minute;
     }
 }
 
