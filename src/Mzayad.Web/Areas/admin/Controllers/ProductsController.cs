@@ -14,6 +14,7 @@ using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Client.Storage;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -85,6 +86,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
         {
             model.Product.Name = name.Serialize();
             model.Product.CreatedByUserId = AuthService.CurrentUserId();
+            ModelState["Product.Name"].Errors.Clear();
 
             if (!ModelState.IsValid)
             {
@@ -95,7 +97,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             var productName = product.Localize("en", i => i.Name).Name;
 
-            SetStatusMessage(string.Format("Product {0} successfully added.", productName));
+            SetStatusMessage($"Product {productName} successfully added.");
 
             return RedirectToAction("Edit", new { id = product.ProductId, goToAuction = model.GoToAuction });
         }
