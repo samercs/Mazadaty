@@ -31,6 +31,10 @@ namespace Mzayad.Web
 
             app.UseOAuthBearerTokens(new OAuthAuthorizationServerOptions
             {
+#if DEBUG
+                AllowInsecureHttp = true,
+#endif
+
                 TokenEndpointPath = new PathString("/api/token"),
                 Provider = new ApplicationOAuthProvider("self"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(365)

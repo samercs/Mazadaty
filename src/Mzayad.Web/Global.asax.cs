@@ -15,6 +15,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Mzayad.Web.Extensions;
 
 namespace Mzayad.Web
 {
@@ -32,12 +33,7 @@ namespace Mzayad.Web
 
             ModelBinders.Binders.Add(typeof(DateTime), new DateTimeBinder());
             ModelBinders.Binders.Add(typeof(DateTime?), new NullableDateTimeBinder());
-
-            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
-            {
-                Formatting = Formatting.Indented,
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            };
+            JsonConfig.Configure();
         }
 
         protected void Application_PreSendRequestHeaders()
@@ -49,10 +45,31 @@ namespace Mzayad.Web
 
         protected void Application_BeginRequest()
         {
-            if (Request.Headers.AllKeys.Contains("Origin") && Request.HttpMethod == "OPTIONS")
+            // to prevent preflight OPTION request sent by AngularJS from returning error
+            if (Request.Headers.AllKeys.Contains("Origin", StringComparer.OrdinalIgnoreCase) && Request.HttpMethod.Equals("OPTIONS"))
             {
                 Response.Flush();
+                Response.End();
             }
+
+            if (Request.IsLocal || Request.IsSecureOrTerminatedSecureConnection())
+            {
+                return;
+            }
+
+            RedirectToCanonicalUrl(Request.Url);
+        }
+
+        private void RedirectToCanonicalUrl(Uri uri)
+        {
+            var uriBuilder = new UriBuilder(uri)
+            {
+                //Host = AppSettings.CanonicalUrl,
+                Scheme = "https",
+                Port = -1
+            };
+
+            Response.Redirect(uriBuilder.ToString());
         }
 
         protected void Application_AcquireRequestState(object sender, EventArgs e)

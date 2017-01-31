@@ -1,15 +1,16 @@
 ﻿using Mzayad.Models;
 using Mzayad.Models.Enum;
+using Mzayad.Models.Enums;
 using Mzayad.Services;
 using Mzayad.Web.Extensions;
+using Mzayad.Web.Resources;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Mzayad.Models.Enums;
-using Mzayad.Web.Resources;
+using WebGrease.Css.Extensions;
 
 namespace Mzayad.Web.Models.User
 {
@@ -18,6 +19,7 @@ namespace Mzayad.Web.Models.User
         public ApplicationUser User { get; set; }
         public IReadOnlyCollection<SelectListItem> PrivacyList { get; set; }
         public IReadOnlyCollection<Avatar> Avatars { get; set; }
+        public IEnumerable<int> UserAvatarIds { get; set; }
         public int? BirthDay { get; set; }
         public int? BirthMonth { get; set; }
         public int? BirthYear { get; set; }
@@ -76,6 +78,13 @@ namespace Mzayad.Web.Models.User
 
         public async Task<EditProfileModel> Hydrate(AvatarService avatarService, ApplicationUser user)
         {
+            var allAvatar = await avatarService.GetAll();
+            var userAvatar = await avatarService.GetUserAvatars(user);
+            userAvatar = userAvatar.OrderByDescending(i => i.IsPremium);
+            var userAvatarIds = userAvatar.Select(i => i.AvatarId);
+            var unOwenedUserAvatar = allAvatar.Where(i => !userAvatarIds.Contains(i.AvatarId));
+            unOwenedUserAvatar = unOwenedUserAvatar.OrderBy(i => i.IsPremium);
+
             User = user;
             PrivacyList = Enum.GetValues(typeof(UserProfileStatus))
                         .Cast<UserProfileStatus>()
@@ -87,8 +96,8 @@ namespace Mzayad.Web.Models.User
                         })
                         .ToList();
 
-            Avatars = await avatarService.GetAll();
-
+            Avatars = userAvatar.Concat(unOwenedUserAvatar).ToSafeReadOnlyCollection();
+            UserAvatarIds = userAvatarIds;
             return this;
         }
     }

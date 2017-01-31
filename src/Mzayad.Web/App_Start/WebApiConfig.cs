@@ -14,24 +14,24 @@ namespace Mzayad.Web
 
             config.MapHttpAttributeRoutes();
 
-            config.Routes.MapHttpRoute(
-                name: "ActionApi",
-                routeTemplate: "api/{controller}/action/{action}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+            //config.Routes.MapHttpRoute(
+            //    name: "ActionApi",
+            //    routeTemplate: "api/{controller}/action/{action}/{id}",
+            //    defaults: new { id = RouteParameter.Optional }
+            //);
             
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+            //config.Routes.MapHttpRoute(
+            //    name: "DefaultApi",
+            //    routeTemplate: "api/{controller}/{id}",
+            //    defaults: new { id = RouteParameter.Optional }
+            //);
 
-            // enforce HTTPS
-            config.Filters.Add(new RequireHttpsAttribute());
+            //// enforce HTTPS
+            //config.Filters.Add(new RequireHttpsAttribute());
 
-            // set JSON serialization settings
-            var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
-            json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            //// set JSON serialization settings
+            //var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            //json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 }

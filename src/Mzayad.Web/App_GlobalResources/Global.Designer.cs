@@ -367,6 +367,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Buy Avatar.
+        /// </summary>
+        public static string BuyAvatar {
+            get {
+                return ResourceManager.GetString("BuyAvatar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Buy for {FormattedPrice}.
         /// </summary>
         public static string BuyForPriceKd {
