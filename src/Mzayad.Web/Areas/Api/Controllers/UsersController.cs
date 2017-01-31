@@ -46,7 +46,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
         }
 
-        [Route("{username}")]
+        [HttpGet, Route("{username}")]
         public async Task<IHttpActionResult> Get(string username)
         {
             var applicationUser = await _userService.GetUserByName(username);
@@ -67,7 +67,17 @@ namespace Mzayad.Web.Areas.Api.Controllers
             return Ok(user);
         }
 
-        [Route("register")]
+        [HttpGet, Route("action/validate-username")]
+        public async Task<IHttpActionResult> ValidateUserName(string username)
+        {
+            var exists = await AuthService.UserExists(username);
+            var results = new
+            {
+                IsValid = !exists
+            };
+            return Ok(results);
+        }
+
         public async Task<IHttpActionResult> Post(RegisterViewModel model)
         {
             ModelState.Remove("model.Address.CreatedUtc");
@@ -82,6 +92,8 @@ namespace Mzayad.Web.Areas.Api.Controllers
             model.PhoneCountryCode = "+" + StringFormatter.StripNonDigits(model.PhoneCountryCode);
             model.PhoneNumber = StringFormatter.StripNonDigits(model.PhoneNumber);
 
+            var avatar = await _avatarService.GetById(model.SelectedAvatar);
+
             var user = new ApplicationUser
             {
                 UserName = model.UserName,
@@ -89,7 +101,12 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 PhoneCountryCode = model.PhoneCountryCode,
-                PhoneNumber = model.PhoneNumber
+                PhoneNumber = model.PhoneNumber,
+                ProfileStatus = UserProfileStatus.Private,
+                AvatarUrl = avatar.Url,
+                Gender = model.Gender,
+                Birthdate = model.Birthdate,
+                Level = 1
             };
 
             var result = await AuthService.CreateUser(user, model.Password);

@@ -389,6 +389,7 @@
     <Compile Include="Areas\Api\Controllers\ApplicationApiController.cs" />
     <Compile Include="Areas\Api\Controllers\AuctionsController.cs" />
     <Compile Include="Areas\Api\Controllers\MessagesController.cs" />
+    <Compile Include="Areas\Api\Controllers\AvatarsController.cs" />
     <Compile Include="Areas\Api\Controllers\UsersController.cs" />
     <Compile Include="Areas\Api\ErrorHandling\ApiError.cs" />
     <Compile Include="Areas\Api\ErrorHandling\ApiErrorResult.cs" />

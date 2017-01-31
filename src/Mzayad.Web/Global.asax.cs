@@ -50,7 +50,8 @@ namespace Mzayad.Web
 
         protected void Application_BeginRequest()
         {
-            if (Request.Headers.AllKeys.Contains("Origin") && Request.HttpMethod == "OPTIONS")
+            // to prevent preflight OPTION request sent by AngularJS from returning error
+            if (Request.Headers.AllKeys.Contains("Origin", StringComparer.OrdinalIgnoreCase) && Request.HttpMethod.Equals("OPTIONS"))
             {
                 Response.Flush();
                 Response.End();
