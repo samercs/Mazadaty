@@ -19,10 +19,10 @@ namespace Mzayad.Web.Models.Home
         public IndexViewModel(IEnumerable<Auction> auctions, IEnumerable<Auction> closedAuctions, IEnumerable<Auction> upcomingAuctions)
         {
             ClosedAuctions = closedAuctions.Select(AuctionViewModel.Create).ToList();
-            ClosedAuctions.ForEach(i => i.Type = AuctionType.Closedauction);
+            ClosedAuctions.ForEach(i => i.Type = AuctionType.Closed);
 
             UpcomingAuctions = upcomingAuctions.Select(AuctionViewModel.Create).ToList();
-            UpcomingAuctions.ForEach(i => i.Type = AuctionType.UpcomingAuction);
+            UpcomingAuctions.ForEach(i => i.Type = AuctionType.Upcoming);
 
             LiveAuctions = auctions.Where(i => i.IsLive())
                 .Select(AuctionViewModel.Create)

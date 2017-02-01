@@ -54,9 +54,7 @@ namespace Mzayad.Web.Models.Auctions
                 ImageUrl = auction.Product.MainImage().ImageMdUrl,
                 SponsorName = auction.Product.Sponsor != null ? auction.Product.Sponsor.Name : string.Empty,
                 ProductId = auction.ProductId,
-                CountryList = auction.CountryList,
                 MaximumBid = auction.MaximumBid,
-                BidIncrement = auction.BidIncrement
                 //Images = GetImages(auction)
                 //Specifications = GetSpecifications(auction.Product.ProductSpecifications)
             };
@@ -89,12 +87,12 @@ namespace Mzayad.Web.Models.Auctions
         {
             if (auction.Status == AuctionStatus.Closed)
             {
-                return RenderStatus.Closed.ToString();
+                return AuctionType.Closed.ToString();
             }
 
             return auction.IsLive()
-                ? RenderStatus.Live.ToString()
-                : RenderStatus.Upcoming.ToString();
+                ? AuctionType.Live.ToString()
+                : AuctionType.Upcoming.ToString();
         }
 
         //private static IReadOnlyCollection<AuctionImageViewModel> GetImages(Auction auction)
@@ -115,6 +113,6 @@ namespace Mzayad.Web.Models.Auctions
         //    return auction.Product.ProductImages.Select(AuctionImageViewModel.Create).ToList();
         //}
 
-        private enum RenderStatus { Live, Closed, Upcoming }
+       // private enum RenderStatus { Live, Closed, Upcoming }
     }
 }
