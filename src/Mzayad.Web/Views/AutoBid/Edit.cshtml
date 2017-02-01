@@ -1,0 +1,50 @@
+﻿@model Mzayad.Web.Models.EditAutoBidViewModel
+
+@{
+    ViewBag.Title = Global.AutoBid;
+}
+
+<p class="lead">@Global.AutoBidInstructions</p>
+
+<div class="row">
+    <div class="@Html.Css().FormNarrow">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+                <div class="form-group">
+                    <label>@Global.Auction</label>
+                    <p class="form-control-static">@Model.Auction.Title</p>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AutoBid.MaxBid, Global.MaxBid)
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            KD
+                        </div>
+                        @Html.TextBoxFor(m => m.AutoBid.MaxBid, new
+                           {
+                               @class = "form-control",
+                               autofocus = "autofocus",
+                               @type = "number",
+                               min = "1",
+                               max = Model.Auction.MaximumBid.GetValueOrDefault(int.MaxValue),
+                               step = Model.Auction.BidIncrement
+                           })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.AutoBid.MaxBid)
+                </div>
+            </section>
+
+            <section class="form-buttons">
+                <button type="submit" class="btn btn-default">@Global.SetAutoBid</button>
+                <a class="btn btn-danger" href="@Url.Action("Delete", "AutoBid", new { auctionId = Model.Auction.AuctionId })">Delete</a>
+            </section>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("/js/validate")
+}
