@@ -11,9 +11,9 @@
 
 @section styles {
     @Styles.Render("~/css/nivo")
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css" />
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/bootstrap.min.css" />
-    <link rel="stylesheet" href="/content/flags/flags.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/content/flags/flags.css"/>
     <style>
         .img-container {
             position: relative;
@@ -36,6 +36,11 @@
         .flag {
             margin-left: 5px !important;
         }
+
+        .auction-bid-form {
+            direction: ltr !important;
+        }
+        
     </style>
 }
 
@@ -114,7 +119,7 @@ else
                                         <span class="input-group-btn">
                                             @if (Request.IsAuthenticated)
                                             {
-                                                <button type="button" class="btn btn-default" data-bind="click: submitBid">@Global.Bid</button>
+                                                <button type="button" class="btn btn-default btn-bid" data-bind="click: submitBid">@Global.Bid</button>
                                             }
                                             else
                                             {
@@ -144,7 +149,6 @@ else
                                     <a class="btn btn-default btn-rounded" data-bind="attr: { href: buyNowUrl }">@Global.BuyNow</a>
                                 </li>
                                 <li>
-                                    @*<a class="btn btn-unstyled btn-rounded" data-bind="attr: { href: autoBidUrl }">@Global.AutoBid</a>*@
                                     <a class="btn btn-unstyled btn-rounded" data-bind="click:openAutoBidModal ">@Global.AutoBid</a>
                                 </li>
                                 <li>

@@ -1004,3 +1004,6 @@ input[type="checkbox"].input-validation-error {
 :lang(ar) #header-subscription {
   float: left !important;
 }
+:lang(ar) .btn-bid {
+  padding-bottom: 6px;
+}
