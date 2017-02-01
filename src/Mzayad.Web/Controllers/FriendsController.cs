@@ -51,7 +51,7 @@ namespace Mzayad.Web.Controllers
             {
                 return HttpNotFound();
             }
-            return View(new Message());
+            return View(new Message() { User = user});
         }
 
         [HttpPost, ValidateAntiForgeryToken, ValidateInput(false)]

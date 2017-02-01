@@ -1186,7 +1186,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your message gas been sent successfully.
+        ///   Looks up a localized string similar to Your message has been sent successfully.
         /// </summary>
         public static string MessageSentSuccessfully {
             get {
@@ -1812,6 +1812,15 @@ namespace Mzayad.Web.Resources {
         public static string RemoveItem {
             get {
                 return ResourceManager.GetString("RemoveItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reply.
+        /// </summary>
+        public static string Reply {
+            get {
+                return ResourceManager.GetString("Reply", resourceCulture);
             }
         }
         

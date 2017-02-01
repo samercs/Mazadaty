@@ -858,4 +858,7 @@
   <data name="Send" xml:space="preserve">
     <value>إرسال</value>
   </data>
+  <data name="Reply" xml:space="preserve">
+    <value>الرد</value>
+  </data>
 </root>

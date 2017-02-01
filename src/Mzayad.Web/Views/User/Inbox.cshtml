@@ -27,7 +27,7 @@
                                         @Html.Raw(item.Summary)
                                     </div>
                                     <div id="dashboard-level">
-                                        <a href="@Url.Action("message", "friends", new { id = item.MessageId })" data-remote="false" data-toggle="modal" data-target="#myModal">
+                                        <a href="@Url.Action("message", "friends", new { id = item.MessageId })" data-id="@item.User.UserName" data-remote="false" data-toggle="modal" data-target="#myModal">
                                             @Global.More
                                         </a>
                                     </div>
@@ -58,7 +58,11 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">@Global.Close</button>
+                <a class="btn btn-unstyled btn-rounded" data-dismiss="modal">@Global.Close</a>
+                <a class="btn btn-default btn-rounded text-uppercase" id="lnkReply" href="">
+                    <i class="fa fa-fw fa-envelope"></i>
+                    @Global.Reply
+                </a>
             </div>
         </div>
     </div>
@@ -71,6 +75,7 @@
         $("#myModal").on("show.bs.modal", function (e) {
             var link = $(e.relatedTarget);
             $(this).find(".modal-body").load(link.attr("href"));
+            $('#lnkReply').attr('href', '@Url.Content("~/"+LanguageCode+"/friend/")' + link.data('id') + '/message')
         });
     </script>
 }

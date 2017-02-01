@@ -1,7 +1,7 @@
 ﻿@model Mzayad.Models.Message
 
 @{
-    ViewBag.Title = Global.Chat;
+    ViewBag.Title = Global.Chat+ " - " + Model.User.UserName;
 }
 
 
@@ -14,13 +14,13 @@
             <section>
                 <div class="form-group">
                     @Html.LabelFor(i => i.Body, Global.Message)
-                    @Html.TextAreaFor(i => i.Body, Model)
+                    @Html.TextAreaFor(i => i.Body)
                     @Html.ValidationMessageFor(i => i.Body, Global.EmptyMessageErrorMessage)
                 </div>
             </section>
             <section class="form-buttons">
-                <button type="submit" class="btn btn-primary">@Global.Send</button>
-                @Html.ActionLink(Global.Back, "friends", "user", null,new { @class="btn btn-default"})
+                <a class="btn btn-unstyled btn-rounded" href="@Request.UrlReferrer">@Global.Back</a>
+                <button type="submit" onclick="updateEditor();" class="btn btn-default">@Global.Send</button>
             </section>
         }
     </div>
@@ -41,6 +41,13 @@
                 });
             };
         })(jQuery);
+
+        function updateEditor()
+        {
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+        }
     </script>
 }
 
