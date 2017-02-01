@@ -846,4 +846,7 @@
   <data name="BuyAvatar" xml:space="preserve">
     <value>Buy Avatar</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
 </root>

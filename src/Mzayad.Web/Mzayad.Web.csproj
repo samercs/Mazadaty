@@ -389,6 +389,7 @@
     <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
     <Compile Include="Areas\Api\Controllers\ApplicationApiController.cs" />
     <Compile Include="Areas\Api\Controllers\AuctionsController.cs" />
+    <Compile Include="Areas\Api\Controllers\AutoBidsController.cs" />
     <Compile Include="Areas\Api\Controllers\MessagesController.cs" />
     <Compile Include="Areas\Api\Controllers\AvatarsController.cs" />
     <Compile Include="Areas\Api\Controllers\UsersController.cs" />
@@ -435,6 +436,7 @@
     <Compile Include="Areas\Admin\Controllers\DocsController.cs" />
     <Compile Include="Core\Configuration\CustomViewPage.cs" />
     <Compile Include="Core\Enums\AuctionType.cs" />
+    <Compile Include="Core\Identity\IdentityToken.cs" />
     <Compile Include="Core\ModelBinder\DateTimeModelBinder.cs" />
     <Compile Include="Core\Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Core\Services\IRequestService.cs" />

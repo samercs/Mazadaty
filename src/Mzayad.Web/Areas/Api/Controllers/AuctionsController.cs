@@ -1,10 +1,10 @@
-﻿using System.Linq;
-using Mzayad.Services;
+﻿using Mzayad.Services;
+using Mzayad.Web.Areas.Api.Models.Auctions;
 using Mzayad.Web.Core.Services;
+using Mzayad.Web.Models;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Mzayad.Web.Areas.Api.Models.Auctions;
-using Mzayad.Web.Models;
 
 namespace Mzayad.Web.Areas.Api.Controllers
 {
@@ -12,10 +12,12 @@ namespace Mzayad.Web.Areas.Api.Controllers
     public class AuctionsController : ApplicationApiController
     {
         private readonly AuctionService _auctionService;
-        
+
+
         public AuctionsController(IAppServices appServices) : base(appServices)
         {
-            _auctionService = new AuctionService(appServices.DataContextFactory);
+            _auctionService = new AuctionService(DataContextFactory);
+
         }
 
         [HttpGet]
@@ -37,10 +39,12 @@ namespace Mzayad.Web.Areas.Api.Controllers
             {
                 return NotFound();
             }
-            
+
             var viewModel = AuctionModel.Create(auction);
 
             return Ok(viewModel);
         }
+
+
     }
 }
