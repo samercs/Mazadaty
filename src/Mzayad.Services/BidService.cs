@@ -16,10 +16,15 @@ namespace Mzayad.Services
         {
         }
 
-        public void AddBid(int auctionId, string userId, decimal amount, int secondsLeft, string hostAddress)
+        public bool AddBid(int auctionId, string userId, decimal amount, int secondsLeft, string hostAddress)
         {
             using (var dc = DataContext())
             {
+                if (!ValidateDoubleBid(dc, auctionId, userId).Result)
+                {
+                    return false;
+                }
+
                 dc.Bids.Add(new Bid
                 {
                     AuctionId = auctionId,
@@ -30,13 +35,20 @@ namespace Mzayad.Services
                 });
 
                 dc.SaveChanges();
+                return true;
             }
         }
 
-        public async Task AddBidAsync(int auctionId, string userId, decimal amount, int secondsLeft, string hostAddress)
+        public async Task<bool> AddBidAsync(int auctionId, string userId, decimal amount, int secondsLeft, string hostAddress)
         {
             using (var dc = DataContext())
             {
+
+                if (!await ValidateDoubleBid(dc, auctionId, userId))
+                {
+                    return false;
+                }
+
                 dc.Bids.Add(new Bid
                 {
                     AuctionId = auctionId,
@@ -47,7 +59,18 @@ namespace Mzayad.Services
                 });
 
                 await dc.SaveChangesAsync();
+                return true;
             }
+        }
+
+        private async Task<bool> ValidateDoubleBid(IDataContext dc, int auctionId, string userId)
+        {
+            var lastBid = await dc.Bids
+                .Where(i => i.AuctionId == auctionId)
+                .OrderByDescending(i => i.BidId)
+                .FirstOrDefaultAsync();
+
+            return lastBid == null || lastBid.UserId != userId;
         }
 
         /// <summary>

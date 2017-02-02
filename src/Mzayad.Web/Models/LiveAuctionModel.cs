@@ -56,7 +56,7 @@ namespace Mzayad.Web.Models
 
         public BidModel AddBid(ApplicationUser user)
         {
-            LastBidAmount = LastBidAmount.GetValueOrDefault(0) + BidIncrement;
+            LastBidAmount = GetNewBidAmount();
             
             var bid = new BidModel
             {
@@ -79,5 +79,11 @@ namespace Mzayad.Web.Models
 
             return bid;
         }
+
+        public decimal GetNewBidAmount()
+        {
+            return LastBidAmount.GetValueOrDefault(0) + BidIncrement;
+        }
+             
     }
 }
