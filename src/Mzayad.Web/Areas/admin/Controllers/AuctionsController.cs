@@ -78,16 +78,18 @@ namespace Mzayad.Web.Areas.admin.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(int productId, AddEditViewModel model, List<string> countryList)
+        public async Task<ActionResult> Create(int productId, AddEditViewModel model, LocalizedContent[] title, List<string> countryList)
         {
+            ModelState["Auction.Title"].Errors.Clear();
             if (!ModelState.IsValid)
             {
                 return View(await model.Hydrate(_productService, productId));
             }
 
+            model.Auction.Title = title.Serialize();
             model.Auction.StartUtc = model.Auction.StartUtc.AddHours(-3);
 
-            if (countryList != null && countryList.Count() < model.GccCountryList.Count())
+            if (countryList != null && countryList.Count < model.GccCountryList.Count())
             {
                 model.Auction.CountryList = string.Join(",", countryList);
             }
@@ -241,7 +243,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             auction.BuyNowEnabled = model.Auction.BuyNowEnabled;
             auction.BuyNowPrice = model.Auction.BuyNowPrice;
             auction.BuyNowQuantity = model.Auction.BuyNowQuantity;
-            if (countryList != null && countryList.Count() < model.GccCountryList.Count())
+            if (countryList != null && countryList.Count < model.GccCountryList.Count())
             {
                 auction.CountryList = string.Join(",", countryList);
             }
