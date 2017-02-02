@@ -1007,3 +1007,6 @@ input[type="checkbox"].input-validation-error {
 :lang(ar) .btn-bid {
   padding-bottom: 6px;
 }
+:lang(ar) input[type="tel"] {
+  direction: rtl !important;
+}

@@ -30,6 +30,10 @@
         .radio label:last-child {
             margin-left: 100px;
         }
+
+        #phoneNumber {
+            direction: ltr !important;
+        }
     </style>
 }
 
@@ -95,15 +99,12 @@
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.PhoneNumber, "Phone Number").Required()
-                    <div class="row">
-                        <div class="col-md-3">
-                            @Html.TextBoxFor(m => m.PhoneCountryCode, new { @class = "form-control", @type = "tel", maxlength = 4 })
+                        <div id="phoneNumber" class="input-group">
+                            <div class="input-group-addon">
+                                <span>@Model.PhoneCountryCode</span>
+                            </div>
+                            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", type = "tel" })
                         </div>
-                        <div class="col-md-9">
-                            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @type = "tel" })
-                        </div>
-
-                    </div>
                     @Html.ValidationMessageFor(m => m.PhoneNumber, "Please enter a valid phone number.")
                 </div>
             </section>
