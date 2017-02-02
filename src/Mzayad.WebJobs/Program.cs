@@ -51,7 +51,7 @@ namespace Mzayad.WebJobs
             var dataContextFactory = new DataContextFactory();
             var userService = new UserService(dataContextFactory);
             var trophyService = new TrophyService(dataContextFactory);
-            var trophyEngine = TrophyEngineFactory.CreateInstance(activityEvent.Type, dataContextFactory);
+            var trophyEngine = TrophyEngineFactory.CreateInstance(activityEvent.Type, dataContextFactory);            
             var emailTemplateService = new EmailTemplateService(dataContextFactory);
 
             try
@@ -70,7 +70,7 @@ namespace Mzayad.WebJobs
                 switch (activityEvent.Type)
                 {
                     case ActivityType.SubmitBid:
-                        trophies = trophyEngine.GetEarnedTrophies(user);
+                        trophies = trophyEngine.GetEarnedTrophies(user).ToList();
                         trophyService.AwardTrophyToUser(trophies, user.Id);
                         emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrohpyEarned);
                         message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, TrophiesHtmlTable(trophies, trophyService));
@@ -96,7 +96,7 @@ namespace Mzayad.WebJobs
                         break;
 
                     case ActivityType.AutoBid:
-                        trophies = trophyEngine.GetEarnedTrophies(user);
+                        trophies = trophyEngine.GetEarnedTrophies(user).ToList();
                         trophyService.AwardTrophyToUser(trophies, user.Id);
                         emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrohpyEarned);
                         message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, TrophiesHtmlTable(trophies, trophyService));

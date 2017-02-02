@@ -23,6 +23,8 @@ namespace Mzayad.Web.SignalR
 {
     public class AuctionHandler
     {
+        private const int NormalBidXpPoints = 2;
+        private const int AutoBidXpPoints = 1;
         private static readonly Lazy<AuctionHandler> _instance = new Lazy<AuctionHandler>(() => new AuctionHandler(GlobalHost.ConnectionManager.GetHubContext<AuctionHub>().Clients));
         private readonly object _updateLock = new object();
         private readonly TimeSpan _updateInterval = TimeSpan.FromSeconds(1);
@@ -202,7 +204,7 @@ namespace Mzayad.Web.SignalR
                 var user = await _userService.GetUserById(userId);
                 auction.AddBid(user);
                 await _activityQueueService.QueueActivityAsync(ActivityType.SubmitBid, userId);
-                await _activityQueueService.QueueActivityAsync(ActivityType.EarnXp, userId, 5);
+                await _activityQueueService.QueueActivityAsync(ActivityType.EarnXp, userId, NormalBidXpPoints);
 
                 SaveAuctionsToCache(auctions);
             }
@@ -215,6 +217,7 @@ namespace Mzayad.Web.SignalR
                 var bid = auction.AddBid(user);
                 _bidService.AddBid(auction.AuctionId, user.Id, bid.BidAmount, auction.SecondsLeft, "0.0.0.0");
                 _activityQueueService.QueueActivity(ActivityType.AutoBid, user.Id);
+                _activityQueueService.QueueActivityAsync(ActivityType.EarnXp, user.Id, AutoBidXpPoints).ContinueWith(result => { });
             }
         }
 
