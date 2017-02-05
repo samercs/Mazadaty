@@ -194,7 +194,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Base.Web.0.0.28\lib\net452\OrangeJetpack.Base.Web.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Base.Web.0.0.29\lib\net452\OrangeJetpack.Base.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Cms.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -214,15 +214,15 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Regionalization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Regionalization.0.0.11\lib\net452\OrangeJetpack.Regionalization.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Regionalization.0.0.15\lib\net452\OrangeJetpack.Regionalization.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Services.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.41\lib\net452\OrangeJetpack.Services.Client.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.43\lib\net452\OrangeJetpack.Services.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Services.Models, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.41\lib\net452\OrangeJetpack.Services.Models.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Services.Client.0.0.43\lib\net452\OrangeJetpack.Services.Models.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
