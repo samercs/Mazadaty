@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Mzayad.Models;
 using Mzayad.Models.Enums;
+using Mzayad.Web.Models.Shared;
 using Mzayad.Web.Resources;
 
 namespace Mzayad.Web.Models.Account

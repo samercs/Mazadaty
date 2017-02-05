@@ -487,6 +487,7 @@
     <Compile Include="Models\Prize\IndexViewModel.cs" />
     <Compile Include="Models\Prize\SelectAvatarPrizeViewModel.cs" />
     <Compile Include="Models\Shared\AddressViewModel.cs" />
+    <Compile Include="Models\Shared\PhoneNumberViewModel.cs" />
     <Compile Include="Models\Shared\DeleteConfirmationViewModel.cs" />
     <Compile Include="Models\Shared\SubscriptionExpiration.cs" />
     <Compile Include="Models\Subscriptions\BuyNowViewModel.cs" />
@@ -821,6 +822,7 @@
     <Content Include="Views\Prize\SelectAvatarPrize.cshtml" />
     <Content Include="Views\Shared\_UserPrizeNotification.cshtml" />
     <Content Include="Views\User\MyAvatars.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\PhoneNumber.cshtml" />
     <TypeScriptCompile Include="Scripts\auctions.ts" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />

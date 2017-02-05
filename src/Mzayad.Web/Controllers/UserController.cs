@@ -119,12 +119,12 @@ namespace Mzayad.Web.Controllers
         private async Task SendPasswordChangedEmail()
         {
             var user = await AuthService.CurrentUser();
-            var emailTeamplet = await EmailTemplateService.GetByTemplateType(EmailTemplateType.PasswordChanged,Language);
+            var emailTeamplet = await EmailTemplateService.GetByTemplateType(EmailTemplateType.PasswordChanged, Language);
             var email = new Email
             {
                 ToAddress = user.Email,
                 Subject = emailTeamplet.Subject,
-                Message = string.Format(emailTeamplet.Message, user.FirstName,AppSettings.SiteName)
+                Message = string.Format(emailTeamplet.Message, user.FirstName, AppSettings.SiteName)
             };
 
             await MessageService.Send(email.WithTemplate());
@@ -140,16 +140,24 @@ namespace Mzayad.Web.Controllers
                 address = await _addressService.GetAddress(user.AddressId.Value);
             }
 
+            var addressViewModel = new AddressViewModel(address).Hydrate();
             var model = new UserAccountViewModel()
             {
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Address = new AddressViewModel(address).Hydrate(),
+                Address = addressViewModel,
                 PhoneCountryCode = user.PhoneCountryCode,
                 PhoneNumber = user.PhoneNumber,
                 Gender = user.Gender,
-                Birthdate = user.Birthdate
+                Birthdate = user.Birthdate,
+                PhoneNumberViewModel = new PhoneNumberViewModel
+                {
+                    CountriesList = addressViewModel.CountriesList,
+                    PhoneCountryCode = user.PhoneCountryCode,
+                    PhoneLocalNumber = user.PhoneNumber,
+                    CountryCode = addressViewModel.CountryCode
+                }
             };
             return View(model);
         }
@@ -172,8 +180,8 @@ namespace Mzayad.Web.Controllers
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
             user.Email = model.Email;
-            user.PhoneCountryCode = model.PhoneCountryCode;
-            user.PhoneNumber = model.PhoneNumber;
+            user.PhoneCountryCode = model.PhoneNumberViewModel.PhoneCountryCode;
+            user.PhoneNumber = model.PhoneNumberViewModel.PhoneLocalNumber;
             user.Gender = model.Gender;
             user.Birthdate = model.Birthdate;
             await _userService.UpdateUser(user);
