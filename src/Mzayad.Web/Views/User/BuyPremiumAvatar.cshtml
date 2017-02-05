@@ -1,0 +1,24 @@
+﻿@model Mzayad.Web.Models.User.BuyPremiumAvatarViewModel
+@{
+    ViewBag.Title = Global.BuyAvatar;
+}
+
+
+@Html.StatusMessage($"This is a premium avatar would you like to buy it for {Model.Avatar.Token} tokens?")
+<div class="row">
+    <div class="@Html.Css().FormWide">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(i => i.Avatar.AvatarId)
+            <section class="form-buttons">
+                <button name="action" value="yes" id="btnSubmit" type="submit" class="btn btn-default">@Global.Yes</button>
+                <button name="action" value="no" id="btnSubmit" type="submit" class="btn btn-danger">@Global.No</button>
+            </section>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/js/validate")
+}

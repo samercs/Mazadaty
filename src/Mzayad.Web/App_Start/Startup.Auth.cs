@@ -8,11 +8,19 @@ using Mzayad.Models;
 using Mzayad.Web.Core.Providers;
 using Owin;
 using System;
+using System.Web.Http;
 
 namespace Mzayad.Web
 {
     public partial class Startup
-    {      
+    {
+        public static OAuthBearerAuthenticationOptions OAuthBearerOptions { get; private set; }
+
+        public Startup()
+        {
+            OAuthBearerOptions = new OAuthBearerAuthenticationOptions();
+        }
+
         public void ConfigureAuth(IAppBuilder app)
         {
             app.CreatePerOwinContext(DataContext.Create);
@@ -29,12 +37,22 @@ namespace Mzayad.Web
                 }
             });
 
-            app.UseOAuthBearerTokens(new OAuthAuthorizationServerOptions
+            var config = GlobalConfiguration.Configuration;
+            config.Filters.Add(new HostAuthenticationFilter(OAuthBearerOptions.AuthenticationType));
+
+            app.UseOAuthAuthorizationServer(new OAuthAuthorizationServerOptions
             {
+#if DEBUG
+                AllowInsecureHttp = true,
+#endif
+
                 TokenEndpointPath = new PathString("/api/token"),
                 Provider = new ApplicationOAuthProvider("self"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(365)
             });
+
+            app.UseOAuthBearerAuthentication(OAuthBearerOptions);
+
         }
     }
 }

@@ -90,6 +90,7 @@ namespace Mzayad.Services
                 if (user.Tokens >= avatar?.Token)
                 {
                     await _tokenService.RemoveTokensFromUser(user, avatar.Token, user, userHostAddress, "Buy Premium Avatar");
+                    await AddAvatarToUser(user, avatar);
                 }
                 else
                 {
@@ -106,7 +107,7 @@ namespace Mzayad.Services
                 {
                     if (!await UserHasAvatar(user, avatar))
                     {
-                        await BuyAvatar(user, avatar, userHostAddress);
+                        throw new Exception("Premium avatar unowned by user");
                     }
 
                 }

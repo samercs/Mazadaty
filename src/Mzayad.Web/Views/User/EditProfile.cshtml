@@ -4,6 +4,16 @@
     ViewBag.Title = Global.EditProfile;
 }
 
+@section styles
+{
+    <style>
+        .premium-unowned {
+            -ms-opacity: 0.75;
+            opacity: 0.75;
+        }
+    </style>
+}
+
 <div class="row">
     <div class="@Html.Css().FormWide">
         @using (Html.BeginForm())
@@ -65,13 +75,28 @@
                             else
                             {
                                 <div class="col-md-3">
-                                    <div class="avatar-container">
-                                        <img data-id="@item.AvatarId" src="@item.Url" title="@Global.ClickToSelect" alt="@item.Url" class="img-thumbnail img-responsive normalImg" />
-                                        @if (item.IsPremium)
-                                        {
-                                            <div class="avatar-premium">Premium</div>
-                                        }
-                                    </div>
+                                    @if (item.IsPremium && !Model.UserAvatarIds.Contains(item.AvatarId))
+                                    {
+                                        <a href="@Url.Action("BuyPremiumAvatar", "User", new {avatarId = item.AvatarId})">
+                                            <div class="avatar-container premium-unowned">
+                                                <img data-id="@item.AvatarId" src="@item.Url" title="@Global.ClickToSelect" alt="@item.Url" class="img-thumbnail img-responsive normalImg" />
+                                                @if (item.IsPremium)
+                                                {
+                                                    <div class="avatar-premium">Premium</div>
+                                                }
+                                            </div>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <div class="avatar-container">
+                                            <img data-id="@item.AvatarId" src="@item.Url" title="@Global.ClickToSelect" alt="@item.Url" class="img-thumbnail img-responsive normalImg" />
+                                            @if (item.IsPremium)
+                                            {
+                                                <div class="avatar-premium">Premium</div>
+                                            }
+                                        </div>
+                                    }
                                 </div>
                             }
 

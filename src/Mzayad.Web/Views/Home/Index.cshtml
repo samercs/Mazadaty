@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
+@using Mzayad.Web.Core.Identity
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
 @using OrangeJetpack.Base.Web
@@ -113,11 +114,11 @@ else
                                         <span class="input-group-btn">
                                             @if (Request.IsAuthenticated)
                                             {
-                                            <button type="button" class="btn btn-default" data-bind="click: submitBid">@Global.Bid</button>
+                                                <button type="button" class="btn btn-default" data-bind="click: submitBid">@Global.Bid</button>
                                             }
                                             else
                                             {
-                                            <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new {ReturnUrl = "/"})">@Global.Bid</a>
+                                                <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new {ReturnUrl = "/"})">@Global.Bid</a>
                                             }
                                         </span>
                                     </div>
@@ -143,7 +144,8 @@ else
                                     <a class="btn btn-default btn-rounded" data-bind="attr: { href: buyNowUrl }">@Global.BuyNow</a>
                                 </li>
                                 <li>
-                                    <a class="btn btn-unstyled btn-rounded" data-bind="attr: { href: autoBidUrl }">@Global.AutoBid</a>
+                                    @*<a class="btn btn-unstyled btn-rounded" data-bind="attr: { href: autoBidUrl }">@Global.AutoBid</a>*@
+                                    <a class="btn btn-unstyled btn-rounded" data-bind="click:openAutoBidModal ">@Global.AutoBid</a>
                                 </li>
                                 <li>
                                     <a class="btn btn-unstyled btn-rounded" data-bind="attr: { href: wishListUrl }">@Global.AddToWishList</a>
@@ -156,6 +158,40 @@ else
         </li>
     </ol>
 }
+
+<div id="autoBid" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">@Global.AutoBid</h4>
+            </div>
+            <div class="modal-body">
+                <p class="lead">@Global.AutoBidInstructions</p>
+                <form>
+                    <section>
+                        <label>@Global.Auction</label>
+                        <p id="auctionTitle" class="form-control-static"></p>
+                        <div class="form-group">
+                            <label>@Global.MaxBid</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">KD</span>
+                                <input id="maxBidAmount" type="number" min="1" max="" class="form-control" step="" />
+                                <input id="auctionId" type="hidden" />
+                            </div>
+
+                        </div>
+                    </section>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="setAutoBid" type="submit" class="btn btn-default">@Global.SetAutoBid</button>
+                <button id="deleteAutoBid" class="btn btn-danger">@Global.Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @if (Model.UpcomingAuctions.Any())
 {
@@ -218,6 +254,8 @@ else
                 self.buyNowEnabled = data.buyNowEnabled;
                 self.imageUrl = data.imageUrl;
                 self.sponsorName = data.sponsorName;
+                self.maximumBid = data.maximumBid;
+                self.bidIncrement = data.bidIncrement;
 
                 self.bids = ko.observableArray(data.bids);
                 self.status = ko.observable(data.status);
@@ -225,6 +263,7 @@ else
                 self.isLoaded = ko.observable(false);
                 self.secondsLeft = ko.observable();
                 self.lastBidAmount = ko.observable(data.lastBidAmount);
+
 
 
                 self.bidsReversed = ko.computed(function() {
@@ -290,7 +329,7 @@ else
                                 function() {
 
                                 })
-                            .set('labels', { ok: 'Yes', cancel: 'No' }).setHeader('@Global.Alert');;
+                            .set('labels', { ok: 'Yes', cancel: 'No' }).setHeader('@Global.Alert');
                     } else {
                         auctionHub.server.submitBid(self.auctionId, '@User.Identity.GetUserId()');
                     }
@@ -313,6 +352,35 @@ else
                     });
                     return resultHtml;
                 });
+
+
+                self.openAutoBidModal = function () {
+
+                    @if (!Request.IsAuthenticated)
+                    {
+                        <text>
+                    window.location.href = "@($"{LanguageCode}/account/sign-in?returnUrl=~/")";
+                    </text>
+                    }
+
+                    $("#auctionTitle").html(self.title);
+                    $("#maxBidAmount").attr("max", self.maximumBid);
+                    $("#maxBidAmount").attr("step", self.bidIncrement);
+                    $("#auctionId").val(self.auctionId);
+
+                    $.ajax({
+                        url: '/api/auctions/'+data.auctionId+'/auto-bid',
+                        type: 'GET',
+                        headers: {
+                            "Authorization": "Bearer @IdentityToken.GetToken(Model.User)"
+                        },
+                        success:function(result) {
+                            $("#maxBidAmount").val(result);
+                            $("#autoBid").modal("show");
+                        }
+                    });
+                }
+
             };
 
             var AuctionsViewModel = function(data) {
@@ -337,7 +405,7 @@ else
             auctionHub.client.updateAuctions = function(results) {
 
                 var auctionJson = $.parseJSON(results);
-                console.log('model .... ', results);
+                //console.log('model .... ', results);
                 for (var i = 0, len = auctionJson.length; i < len; ++i) {
                     var auction = auctionJson[i];
                     var model = viewModel.getAuction(auction.auctionId);
@@ -373,9 +441,50 @@ else
                 .done(function() {
                     auctionHub.server.initAuctions(auctionIds)
                         .done(function(results) {
-                            console.log(results);
+                            //console.log(results);
                         });
                 });
+
+
+            $("#setAutoBid").on("click",function() {
+                if ($("#maxBidAmount").val() === "") {
+                    return;
+                }
+
+                var data = {
+                    auctionId: $("#auctionId").val(),
+                    maximumBid: $("#maxBidAmount").val()
+                };
+
+                $.ajax({
+                    url: '/api/auctions/'+data.auctionId+'/auto-bid',
+                    type: 'POST',
+                    data: data,
+                    headers: {
+                        "Authorization": "Bearer @IdentityToken.GetToken(Model.User)"
+                    },
+                    success:function() {
+                        $("#autoBid").modal("toggle");
+                    }
+                });
+            });
+
+            $("#deleteAutoBid").on("click", function() {
+                alertify.confirm('@Global.AutoBidDeleteConfirmation', function() {
+                    $.ajax({
+                        url: '/api/auctions/'+$("#auctionId").val()+'/auto-bid',
+                        type: 'DELETE',
+                        headers: {
+                            "Authorization": "Bearer @IdentityToken.GetToken(Model.User)"
+                        },
+                        success:function() {
+                            $("#maxBidAmount").val("");
+                            $("#autoBid").modal("toggle");
+                        }
+                    });
+                }).setHeader('@Global.AutoBidDeleteTitle');
+            });
+
         });
 
     </script>

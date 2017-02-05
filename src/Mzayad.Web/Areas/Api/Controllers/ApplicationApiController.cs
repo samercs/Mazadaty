@@ -1,3 +1,4 @@
+using System.Linq;
 using Mzayad.Data;
 using Mzayad.Services;
 using Mzayad.Web.Areas.Api.Filters;
@@ -6,6 +7,8 @@ using OrangeJetpack.Base.Web.Caching;
 using OrangeJetpack.Services.Client.Messaging;
 using OrangeJetpack.Services.Client.Storage;
 using System.Web.Http;
+using System.Web.Http.ModelBinding;
+using Mzayad.Web.Areas.Api.ErrorHandling;
 
 namespace Mzayad.Web.Areas.Api.Controllers
 {
@@ -36,6 +39,32 @@ namespace Mzayad.Web.Areas.Api.Controllers
             StorageService = appServices.StorageService;
 
             EmailTemplateService = new EmailTemplateService(appServices.DataContextFactory);
+        }
+
+        public IHttpActionResult ModelStateError(ModelStateDictionary modelState)
+        {
+            return new ApiErrorResult(new ApiError
+            {
+                Type = ApiErrorType.ModelStateError,
+                Message = "Model state is invalid.",
+                Metadata = new
+                {
+                    fields = modelState.Keys.ToArray()
+                }
+            });
+        }
+
+        protected IHttpActionResult InsufficientTokensError(object paramater = null)
+        {
+            return new ApiErrorResult(new ApiError
+            {
+                Type = ApiErrorType.InsufficientTokensError,
+                Message = "Insufficient Tokens",
+                Metadata = new
+                {
+                    paramater
+                }
+            });
         }
     }
 }
