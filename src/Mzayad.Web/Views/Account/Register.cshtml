@@ -194,6 +194,10 @@
                     return;
                 }
 
+                if ($(this).hasClass("input-validation-error")) {
+                    return;
+                }
+
                 $("#username-validate").show().children("div").hide();
                 $("#username-checking").show();
 
