@@ -820,6 +820,7 @@
     <Content Include="Views\Prize\Index.cshtml" />
     <Content Include="Views\Prize\SelectAvatarPrize.cshtml" />
     <Content Include="Views\Shared\_UserPrizeNotification.cshtml" />
+    <Content Include="Views\User\MyAvatars.cshtml" />
     <TypeScriptCompile Include="Scripts\auctions.ts" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />
@@ -973,7 +974,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>15189</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
