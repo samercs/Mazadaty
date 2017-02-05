@@ -174,9 +174,9 @@ namespace Mzayad.Web.SignalR
         {
             var order = _auctionService.CloseAuction(auctionId).Result;
 
-            Clients.All.closeAuction(auctionId, order.UserId, order.OrderId);
+            Clients.All.closeAuction(auctionId, order?.UserId, order?.OrderId);
 
-            if (order.UserId != null)
+            if (order != null)
             {
                 _activityQueueService.QueueActivity(ActivityType.WinAuction, order.UserId);
             }
