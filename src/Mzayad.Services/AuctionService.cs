@@ -61,9 +61,9 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 var auctions = await GetAuctionsQuery(dc, AuctionStatus.Public)
-                    .OrderBy(i => i.StartUtc)
                     .ToListAsync();
 
+                auctions = auctions.OrderBy(i => i.StartUtc.AddMinutes(i.Duration)).ToList();
                 return LocalizeAuctions(language, auctions);
             }
         }
@@ -101,9 +101,9 @@ namespace Mzayad.Services
                 var auctions = await GetAuctionsQuery(dc, AuctionStatus.Public)
                     .Where(i => i.StartUtc > DateTime.UtcNow)
                     .Take(count)
-                    .OrderByDescending(i => i.StartUtc)
                     .ToListAsync();
 
+                auctions = auctions.OrderBy(i => i.StartUtc.AddMinutes(i.Duration)).ToList();
                 return LocalizeAuctions(language, auctions);
             }
         }
