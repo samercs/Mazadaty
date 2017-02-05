@@ -2,8 +2,8 @@
 {
     public enum AuctionType
     {
-        UpcomingAuction,
-        LiveAuction,
-        Closedauction
+        Live,
+        Closed,
+        Upcoming
     }
 }

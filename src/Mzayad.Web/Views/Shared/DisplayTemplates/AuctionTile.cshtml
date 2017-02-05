@@ -59,7 +59,7 @@ foreach (var country in countriesArray)
             <a class="btn btn-rounded btn-outline btn-unstyled" href="@Url.Action("Add", "WishList", new {item = HttpUtility.UrlEncode(Model.Title)})">@Global.AddToWishList</a>
         </div>
 
-        @if (Model.Type == AuctionType.UpcomingAuction)
+        @if (Model.Status == AuctionType.Upcoming.ToString())
         {
             <div class="auction-tile-row">
                 <a class="btn btn-rounded btn-outline btn-unstyled" href="@Url.Action("Edit", "AutoBid", new { auctionId = Model.AuctionId})">@Global.SetAutoBid</a>
