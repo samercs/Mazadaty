@@ -119,12 +119,12 @@ namespace Mzayad.Web.Controllers
         private async Task SendPasswordChangedEmail()
         {
             var user = await AuthService.CurrentUser();
-            var emailTeamplet = await EmailTemplateService.GetByTemplateType(EmailTemplateType.PasswordChanged);
+            var emailTeamplet = await EmailTemplateService.GetByTemplateType(EmailTemplateType.PasswordChanged,Language);
             var email = new Email
             {
                 ToAddress = user.Email,
-                Subject = emailTeamplet.Localize(Language, i => i.Subject).Subject,
-                Message = string.Format(emailTeamplet.Localize(Language, i => i.Message).Message, user.FirstName)
+                Subject = emailTeamplet.Subject,
+                Message = string.Format(emailTeamplet.Message, user.FirstName,AppSettings.SiteName)
             };
 
             await MessageService.Send(email.WithTemplate());

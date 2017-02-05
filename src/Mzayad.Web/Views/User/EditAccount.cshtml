@@ -12,6 +12,10 @@
         .radio label:last-child {
             margin-left: 100px;
         }
+
+        #phoneNumber {
+            direction: ltr !important;
+        }
     </style>
 }
 
@@ -20,6 +24,7 @@
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
+            @Html.HiddenFor(i => i.PhoneCountryCode)
 
             <section>
                 <div class="form-group">
@@ -42,9 +47,11 @@
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.PhoneNumber, "Phone Number").Required()
-                    <div class="form-inline">
-                        @Html.TextBoxFor(m => m.PhoneCountryCode, new { @class = "form-control form-control-sm", @type = "tel", maxlength = 4 })
-                        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @type = "tel" })
+                    <div id="phoneNumber" class="input-group">
+                        <div class="input-group-addon">
+                            <span>@Model.PhoneCountryCode</span>
+                        </div>
+                        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", type = "tel" })
                     </div>
                     @Html.ValidationMessageFor(m => m.PhoneNumber, "Please enter a valid phone number.")
                 </div>

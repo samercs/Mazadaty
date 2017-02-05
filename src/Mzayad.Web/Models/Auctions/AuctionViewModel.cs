@@ -54,7 +54,9 @@ namespace Mzayad.Web.Models.Auctions
                 ImageUrl = auction.Product.MainImage().ImageMdUrl,
                 SponsorName = auction.Product.Sponsor != null ? auction.Product.Sponsor.Name : string.Empty,
                 ProductId = auction.ProductId,
+                CountryList = auction.CountryList,
                 MaximumBid = auction.MaximumBid,
+                BidIncrement = auction.BidIncrement
                 //Images = GetImages(auction)
                 //Specifications = GetSpecifications(auction.Product.ProductSpecifications)
             };

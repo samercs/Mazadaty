@@ -13,11 +13,17 @@ namespace Mzayad.Services.Trophies
             { ActivityType.VisitSite , d => new VisitSiteTrophyEngine(d)},
             { ActivityType.AutoBid , d => new AutoBidTrophyEngine(d) },
             { ActivityType.WinAuction , d => new WinAuctionTrophyEngine(d) },
-            {ActivityType.CompleteProfile, d => new CompleteProfileTrophyEngine(d)  }
+            { ActivityType.CompleteProfile, d => new CompleteProfileTrophyEngine(d)  }
+
         };
 
         public static TrophyEngine CreateInstance(ActivityType activityType, IDataContextFactory dataContextFactor)
         {
+            if (activityType == ActivityType.EarnXp)
+            {
+                return null;
+            }
+
             var engine = Dictionary[activityType];
             if (engine != null)
             {

@@ -75,7 +75,12 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                return await GetAuctionsQuery(dc, AuctionStatus.Public)
+                return await dc.Auctions
+                    .Include(i => i.Product.ProductImages)
+                    .Include(i => i.Product.Sponsor)
+                    .Include(i => i.Bids.Select(j => j.User))
+                    .Where(i => i.Status == AuctionStatus.Public)
+                    .Where(i => i.IsDeleted == false)
                     .Where(i => auctionIds.Contains(i.AuctionId))
                     .ToListAsync();
             }
@@ -133,8 +138,8 @@ namespace Mzayad.Services
                 .Include(i => i.Product.ProductImages)
                 //.Include(i => i.Product.ProductSpecifications.Select(j => j.Specification))
                 .Include(i => i.WonByUser)
-                .Include(i => i.Product.Sponsor)
-                .Include(i => i.Bids.Select(j => j.User));
+                .Include(i => i.Product.Sponsor);
+            //.Include(i => i.Bids.Select(j => j.User));
         }
 
         private static IReadOnlyCollection<Auction> LocalizeAuctions(string language, List<Auction> auctions)
@@ -144,7 +149,7 @@ namespace Mzayad.Services
                 LocalizeProduct(product, language);
             }
 
-            return auctions.Localize<Auction>(language, i=> i.Title).ToList();
+            return auctions.Localize<Auction>(language, i => i.Title).ToList();
         }
 
         private static void LocalizeProduct(Product product, string language)

@@ -124,7 +124,7 @@ namespace Mzayad.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                model.Avatars = await _avatarService.GetAll();
+                await SetRegisterViewModel(model);
                 return View(model);
             }
 
@@ -151,7 +151,8 @@ namespace Mzayad.Web.Controllers
             var result = await AuthService.CreateUser(user, model.Password);
             if (!result.Succeeded)
             {
-                SetStatusMessage(string.Format(Global.RegistrationErrorMessage));
+                SetStatusMessage(string.Format(Global.RegistrationErrorMessage, string.Join(", ", result.Errors)), StatusMessageType.Error);
+                await SetRegisterViewModel(model);
                 return View(model);
             }
 
@@ -165,6 +166,17 @@ namespace Mzayad.Web.Controllers
             SetStatusMessage(string.Format(Global.RegistrationWelcomeMessage, user.FirstName, Url.Action("Index", "Home", new { area = "" })));
 
             return RedirectToAction("Dashboard", "User", new { Language });
+        }
+
+        private async Task<RegisterViewModel> SetRegisterViewModel(RegisterViewModel model)
+        {
+            model.Avatars = await _avatarService.GetAll();
+            model.Address = new AddressViewModel(new Address
+            {
+                CountryCode = "KW"
+            }).Hydrate();
+
+            return model;
         }
 
         private async Task SendNewUserWelcomeEmail(ApplicationUser user)
