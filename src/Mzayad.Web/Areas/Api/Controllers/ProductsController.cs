@@ -4,6 +4,7 @@ using Mzayad.Web.Areas.Api.Models.Products;
 using Mzayad.Web.Core.Services;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Mzayad.Models;
 using OrangeJetpack.Localization;
 
 namespace Mzayad.Web.Areas.Api.Controllers
@@ -25,6 +26,13 @@ namespace Mzayad.Web.Areas.Api.Controllers
         {
             var product = await _productService.GetProduct(productId);
             product.Localize(Language, LocalizationDepth.OneLevel);
+            if (product.ProductSpecifications != null)
+            {
+                product.ProductSpecifications = product.ProductSpecifications
+                    .Localize<ProductSpecification>(Language, LocalizationDepth.OneLevel)
+                    .ToList();
+            }
+
             return Ok(ProductModel.Create(product));
         }
 
