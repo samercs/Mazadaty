@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mzayad.Models;
 using Mzayad.Models.Enums;
+using Mzayad.Web.Areas.Api.Models.Products;
 
 namespace Mzayad.Web.Areas.Api.Models.Auctions
 {
@@ -55,25 +56,6 @@ namespace Mzayad.Web.Areas.Api.Models.Auctions
             };
         }
     }
-
-    public class ProductModel
-    {
-        public int ProductId { get; set; }
-        public string Name { get; set; }
-        public string ImageUrl { get; set; }
-        public string SponsorName { get; set; }
-
-        public static ProductModel Create(Product product)
-        {
-            return new ProductModel
-            {
-                ProductId = product.ProductId,
-                Name = product.Name,
-                ImageUrl = product.MainImage().ImageMdUrl,
-                SponsorName = product.SponsorId.HasValue ? product.Sponsor.Name : string.Empty
-            };
-        }
-}
 
 public class BidModel
 {
