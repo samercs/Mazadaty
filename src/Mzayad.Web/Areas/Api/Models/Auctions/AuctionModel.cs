@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mzayad.Models;
+using Mzayad.Models.Enums;
 
 namespace Mzayad.Web.Areas.Api.Models.Auctions
 {
@@ -9,9 +10,21 @@ namespace Mzayad.Web.Areas.Api.Models.Auctions
     {
         public int AuctionId { get; set; }
         public string Title { get; set; }
-        public DateTime StartUtc { get; set; }
         public decimal RetailPrice { get; set; }
+        public string CountryList { get; set; }
+        public AuctionStatus Status { get; set; }
+        public DateTime StartUtc { get; set; }
+        public decimal BidIncrement { get; set; }
+        public int Duration { get; set; }
+        public decimal? MaximumBid { get; set; }
+        public bool BuyNowEnabled { get; set; }
+        public decimal? BuyNowPrice { get; set; }
+        public int? BuyNowQuantity { get; set; }
+        public decimal? WonAmount { get; set; }
+        public DateTime? ClosedUtc { get; set; }
         public ProductModel Product { get; set; }
+        public UserModel WonByUser { get; set; }
+        public IEnumerable<BidModel> RecentBids { get; set; }
 
         public static AuctionModel Create(Auction auction)
         {
@@ -19,9 +32,26 @@ namespace Mzayad.Web.Areas.Api.Models.Auctions
             {
                 AuctionId = auction.AuctionId,
                 Title = auction.Title,
-                StartUtc = auction.StartUtc,
                 RetailPrice = auction.RetailPrice,
-                Product = ProductModel.Create(auction.Product)
+                CountryList = auction.CountryList,
+                Status = auction.Status,
+                StartUtc = auction.StartUtc,
+                BidIncrement = auction.BidIncrement,
+                Duration = auction.Duration,
+                MaximumBid = auction.MaximumBid,
+                BuyNowEnabled = auction.BuyNowEnabled,
+                BuyNowPrice = auction.BuyNowPrice,
+                BuyNowQuantity = auction.BuyNowQuantity,
+                WonAmount = auction.WonAmount,
+                ClosedUtc = auction.ClosedUtc,
+                Product = ProductModel.Create(auction.Product),
+                WonByUser = string.IsNullOrWhiteSpace(auction.WonByUserId) ? null : UserModel.Create(auction.WonByUser),
+                RecentBids = auction.Bids != null && auction.Bids.Any()
+                    ? auction.Bids
+                        .OrderByDescending(i => i.BidId)
+                        .Take(3)
+                        .Select(BidModel.Create)
+                    : null
             };
         }
     }
@@ -30,8 +60,8 @@ namespace Mzayad.Web.Areas.Api.Models.Auctions
     {
         public int ProductId { get; set; }
         public string Name { get; set; }
-        public ProductImageModel MainImage { get; set; }
-        public IReadOnlyCollection<ProductImageModel> Images { get; set; } 
+        public string ImageUrl { get; set; }
+        public string SponsorName { get; set; }
 
         public static ProductModel Create(Product product)
         {
@@ -39,26 +69,50 @@ namespace Mzayad.Web.Areas.Api.Models.Auctions
             {
                 ProductId = product.ProductId,
                 Name = product.Name,
-                MainImage = ProductImageModel.Create(product.MainImage()),
-                Images = product.ProductImages.Select(ProductImageModel.Create).ToList()
+                ImageUrl = product.MainImage().ImageMdUrl,
+                SponsorName = product.SponsorId.HasValue ? product.Sponsor.Name : string.Empty
             };
         }
-    }
+}
 
-    public class ProductImageModel
+public class BidModel
+{
+    public int BidId { get; set; }
+
+    public int AuctionId { get; set; }
+
+    public decimal Amount { get; set; }
+
+    public UserModel User { get; set; }
+
+    public static BidModel Create(Bid bid)
     {
-        public string ImageSmUrl { get; set; }
-        public string ImageMdUrl { get; set; }
-        public string ImageLgUrl { get; set; }
-
-        public static ProductImageModel Create(ProductImage image)
+        return new BidModel
         {
-            return new ProductImageModel
-            {
-                ImageSmUrl = image.ImageSmUrl,
-                ImageMdUrl = image.ImageMdUrl,
-                ImageLgUrl = image.ImageLgUrl
-            };
-        }
+            BidId = bid.BidId,
+            AuctionId = bid.AuctionId,
+            Amount = bid.Amount,
+            User = UserModel.Create(bid.User)
+        };
     }
+}
+
+public class UserModel
+{
+    public string Id { get; set; }
+
+    public string Username { get; set; }
+
+    public string AvatarUrl { get; set; }
+
+    public static UserModel Create(ApplicationUser user)
+    {
+        return new UserModel
+        {
+            Id = user.Id,
+            Username = user.UserName,
+            AvatarUrl = user.AvatarUrl
+        };
+    }
+}
 }

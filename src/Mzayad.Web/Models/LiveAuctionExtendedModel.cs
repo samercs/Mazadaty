@@ -13,17 +13,17 @@ namespace Mzayad.Web.Models
         {
             var model = new LiveAuctionExtendedModel
             {
-                AuctionId = auction.AuctionId,         
+                AuctionId = auction.AuctionId,
                 Title = auction.Title,
                 ImageUrl = auction.Product.MainImage().ImageMdUrl,
                 RetailPrice = auction.RetailPrice,
                 StartUtc = auction.StartUtc,
                 Duration = auction.Duration,
                 BidIncrement = auction.BidIncrement,
-                Bids = BidModel.Create(auction.Bids),  
+                Bids = auction.Bids != null ? BidModel.Create(auction.Bids) : null
             };
 
-            model.LastBidAmount = model.Bids.Any() ? model.Bids.Max(i => i.BidAmount) : 0;
+            model.LastBidAmount = model.Bids != null && model.Bids.Any() ? model.Bids.Max(i => i.BidAmount) : 0;
             model.UpdateSecondsLeft();
 
             return model;

@@ -11,6 +11,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
     [RoutePrefix("api/auctions")]
     public class AuctionsController : ApplicationApiController
     {
+        private const int AuctionsCount = 12;
         private readonly AuctionService _auctionService;
 
 
@@ -20,7 +21,20 @@ namespace Mzayad.Web.Areas.Api.Controllers
 
         }
 
-        [HttpGet]
+        [Route("")]
+        public async Task<IHttpActionResult> GetLatestAuctions()
+        {
+            var liveAuctions = await _auctionService.GetLiveAuctions(Language);
+            var closedAuctions = await _auctionService.GetClosedAuctions(Language, AuctionsCount);
+            var upcomingAuctions = await _auctionService.GetUpcomingAuctions(Language, AuctionsCount);
+            return Ok(new
+            {
+                live = liveAuctions.Select(AuctionModel.Create),
+                closed = closedAuctions.Select(AuctionModel.Create),
+                upcoming = upcomingAuctions.Select(AuctionModel.Create)
+            });
+        }
+
         [Route("live")]
         public async Task<IHttpActionResult> GetLiveAuctions()
         {
@@ -30,7 +44,13 @@ namespace Mzayad.Web.Areas.Api.Controllers
             return Ok(viewModel);
         }
 
-        [HttpGet]
+        [Route("closed")]
+        public async Task<IHttpActionResult> GetClosedAuctions()
+        {
+            var closedAuctions = await _auctionService.GetClosedAuctions(Language, 100);
+            return Ok(closedAuctions.Select(AuctionModel.Create));
+        }
+
         [Route("{auctionId:int}")]
         public async Task<IHttpActionResult> GetAuction(int auctionId)
         {
