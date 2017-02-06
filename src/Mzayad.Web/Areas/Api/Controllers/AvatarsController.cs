@@ -15,6 +15,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
             _avatarService = new AvatarService(appServices.DataContextFactory);
         }
 
+        [Route("")]
         public async Task<IHttpActionResult> Get()
         {
             var freeAvatars = await _avatarService.GetFreeAvatar();
