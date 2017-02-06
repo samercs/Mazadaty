@@ -31,5 +31,17 @@ namespace Mzayad.Web.Areas.Api.Models.Products
                 Description = product.Description
             };
         }
+
+        public static ProductModel Create(Auction auction)
+        {
+            return new ProductModel
+            {
+                ProductId = auction.ProductId,
+                Name = auction.Title,
+                Price = auction.BuyNowPrice ?? decimal.Zero,
+                SponsorName = auction.Product.SponsorId.HasValue ? auction.Product.Sponsor.Name : null,
+                MainImageUrl = auction.Product.MainImage().ImageMdUrl
+            };
+        }
     }
 }
