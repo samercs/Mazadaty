@@ -33,7 +33,14 @@ namespace Mzayad.Services
                 return message;
             }
         }
-
+        public int CountNewMesssages(string userId)
+        {
+            using (var dc = DataContext())
+            {
+                return dc.Messages
+                    .Count(i => i.ReceiverId == userId && i.IsNew);
+            }
+        }
         public async Task<IReadOnlyCollection<Message>> GetBySender(string userId)
         {
             using (var dc = DataContext())

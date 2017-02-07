@@ -26,11 +26,13 @@ namespace Mzayad.Web.Controllers
             _messageService = new MessageService(appServices.DataContextFactory);
         }
 
-        public MvcHtmlString RequestsCount()
+        public int RequestsCount()
         {
-            var count = _friendService.CountFriendRequests(AuthService.CurrentUserId());
-
-            return count > 0 ? MvcHtmlString.Create(count.ToString()) : MvcHtmlString.Empty;
+            return _friendService.CountFriendRequests(AuthService.CurrentUserId());
+        }
+        public int MessagesCount()
+        {
+            return _messageService.CountNewMesssages(AuthService.CurrentUserId());
         }
 
         [Route("requests")]
