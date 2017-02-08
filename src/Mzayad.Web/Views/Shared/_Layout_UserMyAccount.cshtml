@@ -27,5 +27,6 @@
 }
 else
 {
-    <li><a href="@Url.Action("SignIn", "Account", new { area = "", language = Html.Language() }, null)">@Global.MyAccount</a></li>
+    <li><a href="@Url.Action("SignIn", "Account", new { area = "", language = Html.Language() }, null)">@Global.SignIn</a></li>
+    <li><a href="@Url.Action("Register", "Account", new { area = "", language = Html.Language() }, null)">@Global.Register</a></li>
 }
