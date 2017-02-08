@@ -25,7 +25,7 @@
                 .Init(ajax => ajax.Action("GetAvatar", "Avatar"))
     .Columns(columns =>
     {
-        columns.Bound(i => i.Url).Title("Avatar").ClientTemplate("<img class='imgThum img-thumbnail img-responsive' src='#=data.Url#'  />");
+        columns.Bound(i => i.Url).Title("Avatar").ClientTemplate("<img class='imgThum img-thumbnail img-responsive' src='#=data.Url#'  />").ImageCell();
         columns.Bound(i => i.Url).Title("URL");
         columns.Bound(i => i.IsPremium).Title("Premium?").ClientTemplate("#=renderIsPremium(data.IsPremium)#");
         columns.Bound(i => i.Token).Title("Token").ClientTemplate("#= renderToken(data.Token) #");
