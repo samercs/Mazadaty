@@ -91,8 +91,8 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 var auctions = await GetAuctionsQuery(dc, AuctionStatus.Closed)
-                    .Take(count)
                     .OrderByDescending(i => i.ClosedUtc)
+                    .Take(count)
                     .ToListAsync();
 
                 return LocalizeAuctions(language, auctions);
