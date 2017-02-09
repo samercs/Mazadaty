@@ -7,6 +7,7 @@ namespace Mzayad.Web.Areas.Api.Models.Products
     public class ProductModel
     {
         public int ProductId { get; set; }
+        public int AuctioId { get; set; }
         public string Name { get; set; }
         public decimal RetailPrice { get; set; }
         public decimal? BuyNowPrice { get; set; }
@@ -40,7 +41,8 @@ namespace Mzayad.Web.Areas.Api.Models.Products
                 RetailPrice = auction.Product.RetailPrice,
                 BuyNowPrice = auction.BuyNowPrice,
                 SponsorName = auction.Product.SponsorId.HasValue ? auction.Product.Sponsor.Name : null,
-                MainImageUrl = auction.Product.MainImage().ImageMdUrl
+                MainImageUrl = auction.Product.MainImage().ImageMdUrl,
+                AuctioId = auction.AuctionId
             };
         }
     }

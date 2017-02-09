@@ -1,4 +1,4 @@
-﻿namespace Mzayad.Models.Enum
+﻿namespace Mzayad.Models.Enums
 {
     public enum OrderType
     {
