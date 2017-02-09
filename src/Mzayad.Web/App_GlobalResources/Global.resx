@@ -849,4 +849,7 @@
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="BidTwiceErrorMessage" xml:space="preserve">
+    <value>You cannot bid twice in a row</value>
+  </data>
 </root>
