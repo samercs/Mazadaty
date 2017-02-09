@@ -34,6 +34,10 @@
         #phoneNumber {
             direction: ltr !important;
         }
+
+        #addressCountryCode {
+            display: none;
+        }
     </style>
 }
 
@@ -42,7 +46,7 @@
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-            @Html.HiddenFor(i=>i.PhoneCountryCode)
+            @Html.HiddenFor(i => i.PhoneCountryCode)
 
             <section>
                 <div class="form-group">
@@ -57,7 +61,7 @@
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(i => i.Gender, Global.Gender)
-                    @Html.RadioButtonListHorizontally(Html.IdFor(i=>i.Gender).ToString(), Model.GenderList)
+                    @Html.RadioButtonListHorizontally(Html.IdFor(i => i.Gender).ToString(), Model.GenderList)
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(i => i.Birthdate, Global.Birthdate)
@@ -98,16 +102,9 @@
                     </div>
                     @Html.ValidationMessageFor(m => m.Password, Global.PasswordInvalidErrorMessage)
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.PhoneNumber, "Phone Number").Required()
-                        <div id="phoneNumber" class="input-group">
-                            <div class="input-group-addon">
-                                <span>@Model.PhoneCountryCode</span>
-                            </div>
-                            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", type = "tel" })
-                        </div>
-                    @Html.ValidationMessageFor(m => m.PhoneNumber, "Please enter a valid phone number.")
-                </div>
+
+                @Html.EditorFor(i => i.PhoneNumberViewModel, "PhoneNumber", Model.PhoneNumberViewModel)
+
             </section>
 
             @Html.EditorFor(m => m.Address)
@@ -148,6 +145,7 @@
     @Scripts.Render("~/js/validate")
     <script src="~/scripts/address.js"></script>
     <script>
+
         (function($) {
 
             $(function() {
@@ -228,6 +226,7 @@
 
                 return true;
             });
+
 
         })(jQuery);
     </script>
