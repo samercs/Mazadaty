@@ -275,7 +275,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return RedirectToAction("Index", "Auctions");
             }
 
-            return DeleteConfirmation("Delete Auction", "Are you sure you want to permanently delete this cuisine?");
+            return DeleteConfirmation("Delete Auction", "Are you sure you want to permanently delete this auction?");
         }
 
         [Route("delete/{auctionId:int}")]
