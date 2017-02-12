@@ -104,6 +104,15 @@ body {
 .navbar-inverse .navbar-toggle:active .icon-bar {
   background-color: #fff;
 }
+.navbar-inverse #register-link {
+  background-color: #33ACE0;
+  color: #fff !important;
+  border-radius: 3px;
+  transition: opacity ease-in 0.3s;
+}
+.navbar-inverse #register-link:hover {
+  opacity: 0.7;
+}
 .navbar-left {
   margin-left: -15px;
 }
