@@ -56,17 +56,12 @@ namespace Mzayad.Services
                 .OrderByDescending(i => i.BidId)
                 .FirstOrDefaultAsync();
 
-            if (lastBid == null || lastBid.UserId == userId)
+            if (lastBid != null && lastBid.UserId == userId)
             {
                 return false;
             }
 
-            if (lastBid.Auction.Status != AuctionStatus.Public || lastBid.Auction.WonByBidId.HasValue)
-            {
-                return false;
-            }
-
-            return true;
+            return lastBid == null || (lastBid.Auction.Status == AuctionStatus.Public && !lastBid.Auction.WonByBidId.HasValue);
         }
 
 

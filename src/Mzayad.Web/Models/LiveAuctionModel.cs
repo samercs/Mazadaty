@@ -58,7 +58,8 @@ namespace Mzayad.Web.Models
                 Bids.Dequeue();
             }
 
-            if (SecondsLeft < 12)
+            var secondsLeft = (int)Math.Floor(StartUtc.AddMinutes(Duration).Subtract(DateTime.UtcNow).TotalSeconds);
+            if (secondsLeft < 12)
             {
                 StartUtc = StartUtc.AddSeconds(12);
             }
