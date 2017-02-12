@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Mzayad.Core.Extensions;
 using Mzayad.Data;
 using Mzayad.Models;
 using OrangeJetpack.Localization;
 using System;
-using Mzayad.Core.Extensions;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Mzayad.Services
 {
@@ -16,48 +16,32 @@ namespace Mzayad.Services
         {
         }
 
-        public bool AddBid(int auctionId, string userId, decimal amount, int secondsLeft, string hostAddress)
+        public bool AddBid(Bid bid)
         {
             using (var dc = DataContext())
             {
-                if (!ValidateDoubleBid(dc, auctionId, userId).Result)
+                if (!ValidateDoubleBid(dc, bid.AuctionId, bid.UserId).Result)
                 {
                     return false;
                 }
 
-                dc.Bids.Add(new Bid
-                {
-                    AuctionId = auctionId,
-                    UserId = userId,
-                    Amount = amount,
-                    SecondsLeft = secondsLeft,
-                    UserHostAddress = hostAddress
-                });
-
+                dc.Bids.Add(bid);
                 dc.SaveChanges();
                 return true;
             }
         }
 
-        public async Task<bool> AddBidAsync(int auctionId, string userId, decimal amount, int secondsLeft, string hostAddress)
+        public async Task<bool> AddBidAsync(Bid bid)
         {
             using (var dc = DataContext())
             {
 
-                if (!await ValidateDoubleBid(dc, auctionId, userId))
+                if (!await ValidateDoubleBid(dc, bid.AuctionId, bid.UserId))
                 {
                     return false;
                 }
 
-                dc.Bids.Add(new Bid
-                {
-                    AuctionId = auctionId,
-                    UserId = userId,
-                    Amount = amount,
-                    SecondsLeft = secondsLeft,
-                    UserHostAddress = hostAddress
-                });
-
+                dc.Bids.Add(bid);
                 await dc.SaveChangesAsync();
                 return true;
             }

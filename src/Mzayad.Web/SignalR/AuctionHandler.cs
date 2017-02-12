@@ -181,7 +181,17 @@ namespace Mzayad.Web.SignalR
                 return;
             }
 
-            if (await _bidService.AddBidAsync(auctionId, userId, auction.GetNewBidAmount(), auction.SecondsLeft, hostAddress))
+            var bid = new Bid
+            {
+                AuctionId = auctionId,
+                UserId = userId,
+                Amount = auction.GetNewBidAmount(),
+                SecondsLeft = auction.SecondsLeft,
+                UserHostAddress = hostAddress,
+                Type = BidType.Manual
+            };
+
+            if (await _bidService.AddBidAsync(bid))
             {
                 var user = await _userService.GetUserById(userId);
                 auction.AddBid(user);
@@ -194,10 +204,19 @@ namespace Mzayad.Web.SignalR
 
         private void SubmitAutoBid(LiveAuctionModel auction, ApplicationUser user)
         {
-            if (_bidService.AddBid(auction.AuctionId, user.Id, auction.GetNewBidAmount(), auction.SecondsLeft, "0.0.0.0"))
+            var bid = new Bid
             {
-                var bid = auction.AddBid(user);
-                _bidService.AddBid(auction.AuctionId, user.Id, bid.BidAmount, auction.SecondsLeft, "0.0.0.0");
+                AuctionId = auction.AuctionId,
+                UserId = user.Id,
+                Amount = auction.GetNewBidAmount(),
+                SecondsLeft = auction.SecondsLeft,
+                UserHostAddress = "0.0.0.0",
+                Type = BidType.Auto
+            };
+
+            if (_bidService.AddBid(bid))
+            {
+                auction.AddBid(user);
                 _activityQueueService.QueueActivity(ActivityType.AutoBid, user.Id);
                 _activityQueueService.QueueActivityAsync(ActivityType.EarnXp, user.Id, AutoBidXpPoints).ContinueWith(result => { });
             }

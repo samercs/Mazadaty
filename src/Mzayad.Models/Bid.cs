@@ -1,6 +1,7 @@
 ﻿using OrangeJetpack.Base.Data;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Mzayad.Models.Enums;
 
 namespace Mzayad.Models
 {
@@ -13,10 +14,15 @@ namespace Mzayad.Models
 
         [Required]
         public int AuctionId { get; set; }
+
         public decimal Amount { get; set; }
+
         public int SecondsLeft { get; set; }
+
         [Required, StringLength(15)]
         public string UserHostAddress { get; set; }
+
+        public  BidType Type { get; set; }
 
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
