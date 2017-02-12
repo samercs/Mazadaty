@@ -231,6 +231,16 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<Auction> GetAuctionById(int auctionId)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.Auctions
+                     .Include(i => i.Product)
+                     .SingleOrDefaultAsync(i => i.AuctionId == auctionId);
+            }
+        }
+
         private static async Task<Auction> GetAuction(IDataContext dc, int auctionId)
         {
             return await dc.Auctions

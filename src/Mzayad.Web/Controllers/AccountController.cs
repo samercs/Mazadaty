@@ -106,14 +106,23 @@ namespace Mzayad.Web.Controllers
         public async Task<ActionResult> Register()
         {
             var freeAvatar = await _avatarService.GetFreeAvatar();
+
+            var addressViewModel = new AddressViewModel(new Address
+            {
+                CountryCode = "KW"
+            }).Hydrate();
+
             var viewModel = new RegisterViewModel
             {
                 PhoneCountryCode = "+965",
                 Avatars = freeAvatar.ToList(),
-                Address = new AddressViewModel(new Address
+                Address = addressViewModel,
+                PhoneNumberViewModel = new PhoneNumberViewModel
                 {
+                    CountriesList = addressViewModel.CountriesList,
+                    PhoneCountryCode = "+965",
                     CountryCode = "KW"
-                }).Hydrate()
+                }
             };
 
             return View(viewModel);
@@ -122,14 +131,15 @@ namespace Mzayad.Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            ModelState["PhoneNumber"].Errors.Clear();
             if (!ModelState.IsValid)
             {
                 await SetRegisterViewModel(model);
                 return View(model);
             }
 
-            model.PhoneCountryCode = "+" + StringFormatter.StripNonDigits(model.PhoneCountryCode);
-            model.PhoneNumber = StringFormatter.StripNonDigits(model.PhoneNumber);
+            model.PhoneCountryCode = "+" + StringFormatter.StripNonDigits(model.PhoneNumberViewModel.PhoneCountryCode);
+            model.PhoneNumber = StringFormatter.StripNonDigits(model.PhoneNumberViewModel.PhoneLocalNumber);
 
             var avatar = await _avatarService.GetById(model.SelectedAvatar);
 

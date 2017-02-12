@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Mzayad.Models.Enums;
 
 namespace Mzayad.Services
 {
@@ -136,6 +137,17 @@ namespace Mzayad.Services
                 dc.Orders.Add(order);
                 dc.Subscriptions.Attach(subscription);
 
+                await dc.SaveChangesAsync();
+                return order;
+            }
+        }
+
+        public async Task<Order> CreateOrder(Order order)
+        {
+            using (var dc= DataContext())
+            {
+                dc.Orders.Add(order);
+                SetStatus(order, OrderStatus.PendingPayment, order.UserId);
                 await dc.SaveChangesAsync();
                 return order;
             }

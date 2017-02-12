@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
+using Mzayad.Models.Enums;
 using Mzayad.Services.Tests.Fakes;
 using NUnit.Framework;
 

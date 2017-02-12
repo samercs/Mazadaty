@@ -16,6 +16,10 @@
         #phoneNumber {
             direction: ltr !important;
         }
+
+         #addressCountryCode {
+            display: none;
+        }
     </style>
 }
 
@@ -24,7 +28,8 @@
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-            @Html.HiddenFor(i => i.PhoneCountryCode)
+            @Html.HiddenFor(i=>i.PhoneCountryCode)
+            @Html.HiddenFor(i=>i.PhoneNumber)
 
             <section>
                 <div class="form-group">
@@ -45,16 +50,7 @@
                     </div>
                     @Html.ValidationMessageFor(m => m.Email, Global.EmailRequiredErrorMessage)
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.PhoneNumber, "Phone Number").Required()
-                    <div id="phoneNumber" class="input-group">
-                        <div class="input-group-addon">
-                            <span>@Model.PhoneCountryCode</span>
-                        </div>
-                        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", type = "tel" })
-                    </div>
-                    @Html.ValidationMessageFor(m => m.PhoneNumber, "Please enter a valid phone number.")
-                </div>
+                @Html.EditorFor(i => i.PhoneNumberViewModel, "PhoneNumber", Model.PhoneNumberViewModel)
             </section>
 
             @Html.EditorFor(m => m.Address)
@@ -62,6 +58,7 @@
             <section class="form-buttons">
                 <button type="submit" class="btn btn-default">@Global.Save</button>
             </section>
+            @Html.ValidationSummary()
         }
     </div>
 </div>
