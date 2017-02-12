@@ -6,6 +6,11 @@
     ViewBag.Title = Global.FriendRequests;
 }
 
+@section styles{
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/bootstrap.min.css" />
+}
+
 @if (!Model.OthersRequests.Any())
 {
     @Html.StatusMessage(Global.NoFriendRequests, StatusMessageType.Information)
@@ -30,12 +35,12 @@
                         </div>
                     </div>
                     <div class="col-sm-9">
-                        <div id="dashboard-details" class="dashboard-cell" style="padding:0px;">
+                        <div id="dashboard-details" class="dashboard-cell" style="padding:0;">
                             <div id="dashboard-username" class="text-uppercase">
                                 <a href="@Url.Content("~/"+ LanguageCode+ "/profiles/"+request.User.UserName)">@request.User.UserName</a>
                             </div>
-                            <button type="button" class="btn btn-link" style="padding:0px;" onclick="decide(@request.FriendRequestId,'@((int)Mzayad.Models.Enums.FriendRequestStatus.Accepted)')">@Global.Accept</button>
-                            <button type="button" class="btn btn-link" style="margin:0px 20px;padding:0px;" onclick="decide(@request.FriendRequestId,'@((int)Mzayad.Models.Enums.FriendRequestStatus.Declined)')">@Global.Decline</button>
+                            <button type="button" class="btn btn-link" style="padding:0;" onclick="decide(@request.FriendRequestId,'@((int)Mzayad.Models.Enums.FriendRequestStatus.Accepted)')">@Global.Accept</button>
+                            <button type="button" class="btn btn-link" style="margin:0 20px;padding:0;" onclick="decide(@request.FriendRequestId,'@((int)Mzayad.Models.Enums.FriendRequestStatus.Declined)')">@Global.Decline</button>
                         </div>
                     </div>
                 </div>
@@ -43,10 +48,7 @@
         </div>
     </div>
 }
-@section styles{
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css" />
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/bootstrap.min.css" />
-}
+
 @section scripts
 {
     <script src="//cdn.jsdelivr.net/alertifyjs/1.8.0/alertify.min.js"></script>
@@ -54,13 +56,14 @@
     <script>
         function decide(id, status) {
             alertify.confirm("@Global.AreSure",
-                                   function () {
-                                       save(id, status);
-                                   },
-                                   function () {
+                    function () {
+                        save(id, status);
+                    },
+                    function () {
 
-                                   })
-                               .set('labels', { ok: '@Global.Yes', cancel: '@Global.No' }).setHeader(status == 2 ? '@Global.AcceptFriendRequest' : '@Global.DeclineFriendRequest');;
+                    })
+                .set('labels', { ok: '@Global.Yes', cancel: '@Global.No' })
+                .setHeader(status == 2 ? '@Global.AcceptFriendRequest' : '@Global.DeclineFriendRequest');;
         }
 
 
@@ -71,13 +74,29 @@
                 data: { 'requestId': id, 'status': status },
                 dataType: 'json',
                 success: function () {
-                    $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.FriendActionSuccessMessage, StatusMessageType.Success).ToString().Replace("'","\""))');
+                    $('#dvMessage')
+                        .html('@Html.Raw(Html.StatusMessage(Global.FriendActionSuccessMessage).ToString().Replace("'", "\""))');
                     $('#dv_' + id).hide();
+                    updateRequestBadge();
                 },
                 error: function () {
-                    $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.FriendActionFailMessage, StatusMessageType.Error).ToString().Replace("'","\""))');
+                    $('#dvMessage')
+                        .html('@Html.Raw(Html.StatusMessage(Global.FriendActionFailMessage, StatusMessageType.Error).ToString().Replace("'", "\""))');
                 }
             });
+        }
+
+        function updateRequestBadge() {
+            var requestsCount = parseInt($(".badge-notify").first().text());
+            requestsCount = requestsCount - 1;
+
+            if (requestsCount > 0) {
+                $(".badge-notify").text(requestsCount);
+            } else {
+                $(".badge-notify").text("");
+            }
+
+
         }
     </script>
 }
