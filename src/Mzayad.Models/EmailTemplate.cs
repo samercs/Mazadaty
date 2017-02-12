@@ -3,6 +3,7 @@ using OrangeJetpack.Base.Data;
 using OrangeJetpack.Localization;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Mzayad.Models.Enums;
 
 namespace Mzayad.Models
 {

@@ -1,5 +1,5 @@
 ﻿
-namespace Mzayad.Models.Enum
+namespace Mzayad.Models.Enums
 {
     public enum EmailTemplateType
     {
@@ -10,7 +10,7 @@ namespace Mzayad.Models.Enum
         NoAccount = 5,
         AuctionCreated = 6,
         OrderShipped = 7,
-        TrohpyEarned = 8,
+        TrophyEarned = 8,
         LevelUp = 9,
         AutoBidStart = 10,
         AdminWinningPrizeNotification = 11

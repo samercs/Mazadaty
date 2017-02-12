@@ -9,6 +9,7 @@ using OrangeJetpack.Services.Models;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using Mzayad.Models.Enums;
 
 namespace Mzayad.AutoBidNotifier
 {

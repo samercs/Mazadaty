@@ -18,6 +18,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Mzayad.Models.Enums;
 
 namespace Mzayad.Web.Controllers
 {

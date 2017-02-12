@@ -14,6 +14,7 @@ using OrangeJetpack.Services.Client.Messaging;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Mzayad.Models.Enums;
 using Mzayad.Web.Extensions;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Models;

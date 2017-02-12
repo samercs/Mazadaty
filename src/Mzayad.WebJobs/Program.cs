@@ -77,9 +77,9 @@ namespace Mzayad.WebJobs
                     case ActivityType.SubmitBid:
                         trophies = trophyEngine.GetEarnedTrophies(user).ToList();
                         trophyService.AwardTrophyToUser(trophies, user.Id);
-                        emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrohpyEarned);
-                        message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, TrophiesHtmlTable(trophies, trophyService));
-                        await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
+                        //emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrophyEarned);
+                        //message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, TrophiesHtmlTable(trophies, trophyService));
+                        //await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
                         break;
 
                     case ActivityType.VisitSite:
@@ -93,9 +93,9 @@ namespace Mzayad.WebJobs
                         if (newLevel > user.Level)
                         {
                             user.Level = newLevel;
-                            emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.LevelUp);
-                            message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, user.Level);
-                            await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
+                            //emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.LevelUp);
+                            //message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, user.Level);
+                            //await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
                         }
                         await userService.UpdateUser(user);
                         break;
@@ -103,25 +103,25 @@ namespace Mzayad.WebJobs
                     case ActivityType.AutoBid:
                         trophies = trophyEngine.GetEarnedTrophies(user).ToList();
                         trophyService.AwardTrophyToUser(trophies, user.Id);
-                        emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrohpyEarned);
-                        message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, TrophiesHtmlTable(trophies, trophyService));
-                        await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
+                        //emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrophyEarned);
+                        //message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, TrophiesHtmlTable(trophies, trophyService));
+                        //await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
                         break;
 
                     case ActivityType.WinAuction:
                         trophies = trophyEngine.GetEarnedTrophies(user);
                         trophyService.AwardTrophyToUser(trophies, user.Id);
-                        emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrohpyEarned);
-                        message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, TrophiesHtmlTable(trophies, trophyService));
-                        await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
+                        //emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrophyEarned);
+                        //message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, TrophiesHtmlTable(trophies, trophyService));
+                        //await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
                         break;
 
                     case ActivityType.CompleteProfile:
                         trophies = trophyEngine.GetEarnedTrophies(user).ToList();
                         trophyService.AwardTrophyToUser(trophies, user.Id);
-                        emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrohpyEarned);
-                        message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, TrophiesHtmlTable(trophies, trophyService));
-                        await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
+                        //emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrophyEarned);
+                        //message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, TrophiesHtmlTable(trophies, trophyService));
+                        //await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
                         break;
 
                     default:

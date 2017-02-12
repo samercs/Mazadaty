@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
+using Mzayad.Models.Enums;
 using OrangeJetpack.Localization;
 
 namespace Mzayad.Data.Migrations
@@ -78,8 +79,8 @@ namespace Mzayad.Data.Migrations
                 },
                 new EmailTemplate
                 {
-                    TemplateType = EmailTemplateType.TrohpyEarned,
-                    Description = "Send as a confirmation that a trophies have been earned",
+                    TemplateType = EmailTemplateType.TrophyEarned,
+                    Description = "Send as a confirmation that a trophies have been earned.",
                     Subject = (new[]
                     {
                         new LocalizedContent("en", "Trophy"),
@@ -104,8 +105,6 @@ namespace Mzayad.Data.Migrations
                         new LocalizedContent("ar",@"{0}, مبروك انت الأن فى المستوى {1}")
                     }).Serialize()
                 }
-
-
             };
 
             foreach (var emailTemplate in emailTemplates)
