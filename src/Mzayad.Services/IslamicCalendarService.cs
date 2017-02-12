@@ -41,10 +41,12 @@ namespace Mzayad.Services
         {
             using (var dc = new DataContext())
             {
+                var d = date.Date;
+
                 return await dc.IslamicCalendars
-                            .FirstOrDefaultAsync(i => i.NewYear.Date == date.Date
-                                                || (date.Date >= i.EidFetrFrom.Date && date.Date <= i.EidFetrTo)
-                                                || (date.Date >= i.EidAdhaFrom.Date && date.Date <= i.EidAdhaTo));
+                            .FirstOrDefaultAsync(i => DbFunctions.TruncateTime(i.NewYear) == d
+                                                || d >= DbFunctions.TruncateTime(i.EidFetrFrom) && d <= DbFunctions.TruncateTime(i.EidFetrTo)
+                                                || d >= DbFunctions.TruncateTime(i.EidAdhaFrom) && d <= DbFunctions.TruncateTime(i.EidAdhaTo));
             }
         }
 
