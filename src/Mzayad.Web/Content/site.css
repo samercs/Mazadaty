@@ -236,6 +236,13 @@ body {
 .image-cell {
   width: 144px;
 }
+.image-cell img {
+  background-color: #ccc;
+  padding: 0;
+  margin: auto;
+  width: 100%;
+  display: inline-block;
+}
 .fa-pad-left {
   padding-left: 4px;
 }
