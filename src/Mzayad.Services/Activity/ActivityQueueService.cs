@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Mzayad.Models;
@@ -16,12 +17,17 @@ namespace Mzayad.Services.Activity
 
     public class ActivityQueueService : IActivityQueueService
     {
-        private const string QueueName = "activities";
+        private readonly string _queueName = "activities";
         private readonly CloudStorageAccount _storageAccount;
 
         public ActivityQueueService(string connectionString)
         {
             _storageAccount = CloudStorageAccount.Parse(connectionString);
+
+            if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME")))
+            {
+                _queueName = $"{_queueName}-{Environment.MachineName}".ToLowerInvariant();
+            }
         }
 
         public void QueueActivity(ActivityType activityType, string userId, string language = "en")
@@ -64,7 +70,7 @@ namespace Mzayad.Services.Activity
         private CloudQueue CreateQueue()
         {
             var client = _storageAccount.CreateCloudQueueClient();
-            var queue = client.GetQueueReference(QueueName);
+            var queue = client.GetQueueReference(_queueName);
             queue.CreateIfNotExists();
             return queue;
         }

@@ -23,7 +23,11 @@ namespace Mzayad.WebJobs
     {
         private static void Main()
         {
-            new JobHost().RunAndBlock();
+            var host = new JobHost(new JobHostConfiguration
+            {
+                NameResolver = new QueueNameResolver()
+            });
+            host.RunAndBlock();
         }
     }
 
@@ -43,7 +47,7 @@ namespace Mzayad.WebJobs
             Trace.TraceInformation(message);
         }
 
-        public static async Task ProcessActivity([QueueTrigger("activities")] ActivityEvent activityEvent, TextWriter log)
+        public static async Task ProcessActivity([QueueTrigger("%activities%")] ActivityEvent activityEvent, TextWriter log)
         {
             var message = string.Format("Processing activity {0} for user ID {1}...", activityEvent.Type, activityEvent.UserId);
             await LogMessageAsync(log, message);
