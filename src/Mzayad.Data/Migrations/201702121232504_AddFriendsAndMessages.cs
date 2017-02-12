@@ -3,7 +3,7 @@ namespace Mzayad.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class FriendsTables : DbMigration
+    public partial class AddFriendsAndMessages : DbMigration
     {
         public override void Up()
         {
@@ -26,6 +26,25 @@ namespace Mzayad.Data.Migrations
                         RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
                     })
                 .PrimaryKey(t => t.FriendRequestId)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.UserId);
+            
+            CreateTable(
+                "dbo.Messages",
+                c => new
+                    {
+                        MessageId = c.Int(nullable: false, identity: true),
+                        UserId = c.String(nullable: false, maxLength: 128),
+                        Body = c.String(nullable: false),
+                        ReceiverId = c.String(nullable: false, maxLength: 128),
+                        IsNew = c.Boolean(nullable: false),
+                        IsDeleted = c.Boolean(nullable: false),
+                        CreatedUtc = c.DateTime(nullable: false),
+                        ModifiedUtc = c.DateTime(),
+                        DeletedUtc = c.DateTime(),
+                        RowVersion = c.Binary(nullable: false, fixedLength: true, timestamp: true, storeType: "rowversion"),
+                    })
+                .PrimaryKey(t => t.MessageId)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
             
@@ -54,12 +73,15 @@ namespace Mzayad.Data.Migrations
         {
             DropForeignKey("dbo.UsersTrophies", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.UsersFriends", "FriendId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Messages", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.FriendRequests", "UserId", "dbo.AspNetUsers");
             DropIndex("dbo.UsersTrophies", new[] { "UserId" });
             DropIndex("dbo.UsersFriends", new[] { "FriendId" });
+            DropIndex("dbo.Messages", new[] { "UserId" });
             DropIndex("dbo.FriendRequests", new[] { "UserId" });
             AlterColumn("dbo.UsersTrophies", "UserId", c => c.String(maxLength: 128));
             DropTable("dbo.UsersFriends");
+            DropTable("dbo.Messages");
             DropTable("dbo.FriendRequests");
             RenameColumn(table: "dbo.UsersTrophies", name: "UserId", newName: "Users_Id");
             AddColumn("dbo.UsersTrophies", "UserId", c => c.String(nullable: false, maxLength: 128));

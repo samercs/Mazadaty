@@ -7,13 +7,13 @@ namespace Mzayad.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Donothing : IMigrationMetadata
+    public sealed partial class AddFriendsAndMessages : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Donothing));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddFriendsAndMessages));
         
         string IMigrationMetadata.Id
         {
-            get { return "201702121159427_Donothing"; }
+            get { return "201702121232504_AddFriendsAndMessages"; }
         }
         
         string IMigrationMetadata.Source
