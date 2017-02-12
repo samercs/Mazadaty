@@ -16,6 +16,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Mindscape.Raygun4Net;
 
 namespace Mzayad.WebJobs
 {
@@ -52,14 +53,14 @@ namespace Mzayad.WebJobs
             var message = string.Format("Processing activity {0} for user ID {1}...", activityEvent.Type, activityEvent.UserId);
             await LogMessageAsync(log, message);
 
-            var dataContextFactory = new DataContextFactory();
-            var userService = new UserService(dataContextFactory);
-            var trophyService = new TrophyService(dataContextFactory);
-            var trophyEngine = TrophyEngineFactory.CreateInstance(activityEvent.Type, dataContextFactory);            
-            var emailTemplateService = new EmailTemplateService(dataContextFactory);
-
             try
             {
+                var dataContextFactory = new DataContextFactory();
+                var userService = new UserService(dataContextFactory);
+                var trophyService = new TrophyService(dataContextFactory);
+                var trophyEngine = TrophyEngineFactory.CreateInstance(activityEvent.Type, dataContextFactory);
+                var emailTemplateService = new EmailTemplateService(dataContextFactory);
+
                 var user = await userService.GetUserById(activityEvent.UserId);
                 if (user == null)
                 {
@@ -133,6 +134,8 @@ namespace Mzayad.WebJobs
             }
             catch (Exception ex)
             {
+                new RaygunClient().SendInBackground(ex);
+
                 LogMessage(log, ex.Message);
                 LogMessage(log, ex.StackTrace);
                 throw;

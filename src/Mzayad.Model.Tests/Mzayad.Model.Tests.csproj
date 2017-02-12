@@ -41,8 +41,8 @@
       <HintPath>..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="OrangeJetpack.Localization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Localization.1.5.7\lib\OrangeJetpack.Localization.dll</HintPath>
+    <Reference Include="OrangeJetpack.Localization, Version=1.7.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OrangeJetpack.Localization.1.7.5\lib\net45\OrangeJetpack.Localization.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
