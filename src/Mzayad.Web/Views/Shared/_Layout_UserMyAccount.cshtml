@@ -8,8 +8,8 @@
     }
 </style>
 @{
-    var requests = Convert.ToInt32(Html.Action("RequestsCount", "friends").ToString());
-    var messages = Convert.ToInt32(Html.Action("MessagesCount", "friends").ToString());
+    var requests = Convert.ToInt32(Html.Action("RequestsCount", "Friends", new { Area = "", LanguageCode }).ToString());
+    var messages = Convert.ToInt32(Html.Action("MessagesCount", "Friends", new { Area = "", LanguageCode }).ToString());
 }
 
 @if (Request.IsAuthenticated)
