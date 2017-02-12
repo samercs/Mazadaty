@@ -214,9 +214,8 @@ namespace Mzayad.Web.Areas.admin.Controllers
             var model = await new AddEditViewModel
             {
                 Bids = await _bidService.GetBidHistoryForAuction(id),
-                AutoBids = await _autoBidService.GetAutoBidsForAuction(id)
-            }
-            .Hydrate(_productService, auction);
+            }.Hydrate(_productService, auction);
+
             return View(model);
         }
 

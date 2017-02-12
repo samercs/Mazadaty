@@ -16,7 +16,6 @@ namespace Mzayad.Web.Areas.admin.Models.Auctions
         public Mzayad.Models.Auction Auction { get; set; }
         public IEnumerable<SelectListItem> StatusList { get; set; }
         public IEnumerable<Bid> Bids { get; set; }
-        public IEnumerable<AutoBid> AutoBids { get; set; }
 
         public IEnumerable<SelectListItem> GccCountryList => new[] {
                 new SelectListItem

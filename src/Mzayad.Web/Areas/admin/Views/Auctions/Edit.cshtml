@@ -1,5 +1,6 @@
 ﻿@using Humanizer
 @using Mzayad.Core.Formatting
+@using Mzayad.Models.Enums
 @using Mzayad.Web.Extensions
 @using OrangeJetpack.Base.Core.Formatting
 @using DateTimeFormatter = Mzayad.Core.Formatting.DateTimeFormatter
@@ -42,7 +43,7 @@
                         <td>@CurrencyFormatter.Format(bid.Amount)</td>
                         <td>@TimeSpan.FromSeconds(bid.SecondsLeft).Humanize(4)</td>
                         <td>
-                            @if (Model.AutoBids.Any(i => i.UserId == bid.UserId))
+                            @if (bid.Type == BidType.Auto)
                             {
                                 <span class="label label-success">Auto Bid</span>
                             }
@@ -92,10 +93,10 @@
                     });
                 if (count == @Model.GccCountryList.Count()) {
                     return false;
-                }
+            }
                 return true;
-            },
-            "You can select up to 5 countries only, because selecting all of the 6 countries means that this auction will be available for all users from all countries.");
+        },
+        "You can select up to 5 countries only, because selecting all of the 6 countries means that this auction will be available for all users from all countries.");
 
         jQuery.validator.addClassRules("country-list",
         {

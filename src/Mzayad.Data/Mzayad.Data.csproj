@@ -395,6 +395,10 @@
     <Compile Include="Migrations\201701031235279_UpdateUserPrizeLogEntity.Designer.cs">
       <DependentUpon>201701031235279_UpdateUserPrizeLogEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702120829386_AddBidType.cs" />
+    <Compile Include="Migrations\201702120829386_AddBidType.Designer.cs">
+      <DependentUpon>201702120829386_AddBidType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -648,6 +652,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701031235279_UpdateUserPrizeLogEntity.resx">
       <DependentUpon>201701031235279_UpdateUserPrizeLogEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702120829386_AddBidType.resx">
+      <DependentUpon>201702120829386_AddBidType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
