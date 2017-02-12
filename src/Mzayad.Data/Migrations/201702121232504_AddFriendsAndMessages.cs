@@ -7,6 +7,8 @@ namespace Mzayad.Data.Migrations
     {
         public override void Up()
         {
+            Sql("delete from dbo.UsersTrophies");
+
             DropForeignKey("dbo.UsersTrophies", "Users_Id", "dbo.AspNetUsers");
             DropIndex("dbo.UsersTrophies", new[] { "Users_Id" });
             DropColumn("dbo.UsersTrophies", "UserId");
