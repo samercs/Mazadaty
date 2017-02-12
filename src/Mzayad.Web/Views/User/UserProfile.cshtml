@@ -7,45 +7,6 @@
 @{
     ViewBag.Title = Model.User.UserName;
 }
-@section scripts
-{
-    <script>
-        function friendRequest() {
-            $.ajax({
-                url: '@Url.Content("~/friends/sendrequest")',
-                type: 'POST',
-                data: { 'userName': '@Model.User.UserName' },
-                dataType: 'json',
-                success: function (e) {
-                    if (e == '1') {
-                        $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.FriendRequestSuccessMessage,StatusMessageType.Success).ToString().Replace("'","\""))');
-                    }
-                    else {
-                        $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.FriendRequestFailMessage, StatusMessageType.Error).ToString().Replace("'","\""))');
-                    }
-                },
-                error: function () {
-                    $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.FriendRequestFailMessage, StatusMessageType.Error).ToString().Replace("'","\""))');
-                }
-            });
-        }
-    </script>
-}
-<div id="dvMessage">
-    @if (Model.User.ProfileStatus == Mzayad.Models.Enum.UserProfileStatus.Private && !Model.AreFriends)
-    {
-        if (Model.SentFriendRequestBefore)
-        {
-            @(Html.StatusMessage(Global.FriendRequestSent, StatusMessageType.Information))
-        }
-        else
-        {
-            @(Html.StatusMessage(Global.PrivateProfileMessage + " " + Global.Click + " <span style='cursor:pointer;color:green' onclick='friendRequest()'> " + Global.Here + "</span> " + Global.ToSendFriendRequestMessage, StatusMessageType.Warning))
-        }
-        return;
-    }
-</div>
-
 
 @section styles{
     <style>
@@ -58,8 +19,23 @@
             color: white !important;
             margin-right: 5px !important;
         }
+
+        #dashboard-level span {
+            color:green;
+            padding:5px 5px 5px 0
+        }
     </style>
 }
+
+<div id="dvMessage">
+    @if (Model.User.ProfileStatus == Mzayad.Models.Enum.UserProfileStatus.Private && !Model.AreFriends)
+    {
+        @(Model.SentFriendRequestBefore
+            ? Html.StatusMessage(Global.FriendRequestSent, StatusMessageType.Information)
+            : Html.StatusMessage(Global.PrivateProfileMessage + " " + Global.Click + " <span style='cursor:pointer;color:green' onclick='friendRequest()'> " + Global.Here + "</span> " + Global.ToSendFriendRequestMessage, StatusMessageType.Warning))
+        return;
+    }
+</div>
 
 <div id="dashboard-header">
     <div class="row">
@@ -126,9 +102,35 @@
 </div>
 @if (!Model.AreFriends && !Model.SentFriendRequestBefore)
 {
-    <div id="dashboard-level"><span class="btn btn-link" style='color:green;padding:5px 5px 5px 0px' onclick='friendRequest()'>@Global.SendFriendRequest</span></div>
+    <div id="dashboard-level"><span class="btn btn-link" onclick='friendRequest()'>@Global.SendFriendRequest</span></div>
 }
 @if (Model.SentFriendRequestBefore)
 {
-    <div id="dashboard-level"><span style='color:green;padding:5px 5px 5px 0px'>@Global.FriendRequestSent</span></div>
+    <div id="dashboard-level"><span >@Global.FriendRequestSent</span></div>
+}
+
+@section scripts
+{
+    <script>
+        function friendRequest() {
+            $.ajax({
+                url: '@Url.Content("~/friends/sendrequest")',
+                type: 'POST',
+                data: { 'userName': '@Model.User.UserName' },
+                dataType: 'json',
+                success: function (e) {
+                    if (e == '1') {
+                        $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.FriendRequestSuccessMessage).ToString().Replace("'","\""))');
+                        $("#dashboard-level span").text('@Global.FriendRequestSent');
+                    }
+                    else {
+                        $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.FriendRequestFailMessage, StatusMessageType.Error).ToString().Replace("'","\""))');
+                    }
+                },
+                error: function () {
+                    $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.FriendRequestFailMessage, StatusMessageType.Error).ToString().Replace("'","\""))');
+                }
+            });
+        }
+    </script>
 }

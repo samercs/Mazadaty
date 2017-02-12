@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Mzayad.Models.Enums;
 
 namespace Mzayad.Services
 {
@@ -17,11 +18,18 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                //if (!dc.FriendsRequests.Any(i => i.UserId == entity.UserId && i.FriendId == entity.FriendId))
-                //{
+                var currentRequests = await dc.FriendsRequests
+                    .Where(i => i.UserId == entity.UserId)
+                    .Where(i => i.FriendId == entity.FriendId)
+                    .Where(i => i.Status == FriendRequestStatus.NotDecided)
+                    .ToArrayAsync();
+
+                if (!currentRequests.Any())
+                {
                     dc.FriendsRequests.Add(entity);
                     await dc.SaveChangesAsync();
-                //}
+                }
+
                 return entity;
             }
         }
@@ -31,6 +39,11 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 var request = dc.FriendsRequests.SingleOrDefault(i => i.FriendRequestId == entity.FriendRequestId);
+                if (request == null)
+                {
+                    return null;
+                }
+
                 request.Status = Models.Enums.FriendRequestStatus.Accepted;
                 dc.SetModified(request);
                 //add friend record(requester as user and requested as friend)
@@ -57,6 +70,11 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 var request = dc.FriendsRequests.SingleOrDefault(i => i.FriendRequestId == entity.FriendRequestId);
+                if (request == null)
+                {
+                    return;
+                }
+
                 request.Status = Models.Enums.FriendRequestStatus.Declined;
                 dc.SetModified(request);
                 await dc.SaveChangesAsync();
@@ -68,7 +86,8 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 //delete friend request record
-                var friendRequests = dc.FriendsRequests.Where(i => (i.UserId == userId && i.FriendId == friendId)
+                var friendRequests = dc.FriendsRequests
+                    .Where(i => (i.UserId == userId && i.FriendId == friendId)
                                                 || (i.FriendId == userId && i.UserId == friendId));
                 friendRequests.ToList().ForEach(i => dc.FriendsRequests.Remove(i));
 

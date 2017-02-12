@@ -55,7 +55,7 @@ namespace Mzayad.Web.Controllers
             {
                 UserId = _authService.CurrentUserId(),
                 FriendId = user.Id,
-                Status = Mzayad.Models.Enums.FriendRequestStatus.NotDecided
+                Status = FriendRequestStatus.NotDecided
             });
             return Json("1", JsonRequestBehavior.AllowGet);
         }
