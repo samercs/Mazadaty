@@ -164,7 +164,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 {
                     AddressId = address.AddressId,
                     AddressLine1 = address.AddressLine1,
-                    AddressLine2 = address.AddressLine1,
+                    AddressLine2 = address.AddressLine2,
                     AddressLine3 = address.AddressLine3,
                     AddressLine4 = address.AddressLine4,
                     CityArea = address.CityArea,

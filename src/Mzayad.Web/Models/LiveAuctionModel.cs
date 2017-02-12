@@ -43,7 +43,7 @@ namespace Mzayad.Web.Models
         public BidModel AddBid(ApplicationUser user)
         {
             LastBidAmount = GetNewBidAmount();
-            
+
             var bid = new BidModel
             {
                 AvatarUrl = user.AvatarUrl,
@@ -60,7 +60,7 @@ namespace Mzayad.Web.Models
 
             if (SecondsLeft < 12)
             {
-                SecondsLeft = 12;
+                StartUtc = StartUtc.AddSeconds(12);
             }
 
             return bid;
@@ -70,6 +70,6 @@ namespace Mzayad.Web.Models
         {
             return LastBidAmount.GetValueOrDefault(0) + BidIncrement;
         }
-             
+
     }
 }

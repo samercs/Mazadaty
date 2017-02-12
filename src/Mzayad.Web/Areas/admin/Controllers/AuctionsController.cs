@@ -87,7 +87,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             }
 
             model.Auction.Title = title.Serialize();
-            model.Auction.StartUtc = model.Auction.StartUtc.AddHours(-3);
+            model.Auction.StartUtc = model.Auction.StartUtc;
 
             if (countryList != null && countryList.Count < model.GccCountryList.Count())
             {
