@@ -849,6 +849,9 @@
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="OrderItemsValidationErrorMessage" xml:space="preserve">
+    <value>We're sorry, but there was one or more problems with the items in your shopping cart and we've adjusted it to correct the problem. Prices may have changed since items were added to your cart or items aren't available at the quantity requested.]</value>
+  </data>
   <data name="BidTwiceErrorMessage" xml:space="preserve">
     <value>You cannot bid twice in a row</value>
   </data>

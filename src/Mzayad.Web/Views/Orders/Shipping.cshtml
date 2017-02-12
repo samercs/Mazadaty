@@ -8,6 +8,16 @@
 @section styles {
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
     <link rel="stylesheet" href="/content/flags/flags.css" />
+
+    <style>
+        #phoneNumber {
+            direction: ltr !important;
+        }
+
+        #addressCountryCode {
+            display: none;
+        }
+    </style>
 }
 <div class="row">
     <div class="@Html.Css().FormNormal">
@@ -23,15 +33,7 @@
                     @Html.ValidationMessageFor(m => m.ShippingAddress.Name, Global.FirstNameRequiredErrorMessage)
                 </div>
 
-                <div class="form-group">
-                    @Html.Label(Global.PhoneNumber).Required()
-                    <div class="form-inline">
-                        @Html.TextBoxFor(m => m.ShippingAddress.PhoneCountryCode, new { @class = "form-control form-control-sm", @type = "tel", maxlength = 4 })
-                        @Html.TextBoxFor(m => m.ShippingAddress.PhoneLocalNumber, new { @class = "form-control", @type = "tel" })
-                    </div>
-                    @Html.ValidationMessageFor(m => m.ShippingAddress.PhoneCountryCode, Global.PhoneNumberRequiredErrorMessage)
-                    @Html.ValidationMessageFor(m => m.ShippingAddress.PhoneLocalNumber, Global.PhoneNumberRequiredErrorMessage)
-                </div>
+               @Html.EditorFor(i => i.PhoneNumberViewModel, "PhoneNumber", Model.PhoneNumberViewModel)
             </section>
 
             @Html.EditorFor(m => m.AddressViewModel)

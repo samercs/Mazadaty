@@ -1,5 +1,5 @@
-﻿using System;
-using Kendo.Mvc.UI.Fluent;
+﻿using Kendo.Mvc.UI.Fluent;
+using System;
 
 namespace Mzayad.Web.Extensions
 {
@@ -15,7 +15,7 @@ namespace Mzayad.Web.Extensions
 
             return gridBuilder
                 .Name(gridName)
-                .TableHtmlAttributes(new {@class = new Css().GridTable})
+                .TableHtmlAttributes(new { @class = new Css().GridTable })
                 .Pageable()
                 .Sortable()
                 .DataSource(dataSource => dataSource
@@ -44,6 +44,11 @@ namespace Mzayad.Web.Extensions
         public static GridBoundColumnBuilder<T> FormatCurrency<T>(this GridBoundColumnBuilder<T> builder) where T : class
         {
             return builder.Format("KD {0}");
+        }
+
+        public static GridBoundColumnBuilder<T> ImageCell<T>(this GridBoundColumnBuilder<T> column) where T : class
+        {
+            return column.HtmlAttributes(new { @class = "image-cell" });
         }
     }
 }

@@ -1267,6 +1267,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to We&apos;re sorry, but there was one or more problems with the items in your shopping cart and we&apos;ve adjusted it to correct the problem. Prices may have changed since items were added to your cart or items aren&apos;t available at the quantity requested.].
+        /// </summary>
+        public static string OrderItemsValidationErrorMessage {
+            get {
+                return ResourceManager.GetString("OrderItemsValidationErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Order Received.
         /// </summary>
         public static string OrderReceived {

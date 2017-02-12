@@ -34,6 +34,8 @@ namespace Mzayad.Web.Models.Account
 
         public DateTime? Birthdate { get; set; }
 
+        public PhoneNumberViewModel PhoneNumberViewModel { get; set; }
+
         public IList<SelectListItem> GenderList
         {
             get

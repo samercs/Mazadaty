@@ -18,20 +18,6 @@ namespace Mzayad.Web.Models
 
         public Queue<BidModel> Bids { get; set; }
 
-        //[JsonProperty("bids")]
-        //public BidModel[] BidsReversed
-        //{
-        //    get
-        //    {
-        //        if (Bids == null || !Bids.Any())
-        //        {
-        //            return new BidModel[0];
-        //        }
-
-        //        return Bids.OrderByDescending(i => i.BidAmount).ToArray();
-        //    }
-        //}
-
         public static LiveAuctionModel Create(Auction auction)
         {
             var model = new LiveAuctionModel

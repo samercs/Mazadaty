@@ -103,7 +103,7 @@ namespace Mzayad.Web.Controllers
                 Order = order,
                 AddressViewModel = new AddressViewModel(order.Address).Hydrate(),
                 ShippingAddress = order.Address,
-            };
+            }.Hydrate();
 
             return View("Shipping", model);
         }
@@ -119,8 +119,8 @@ namespace Mzayad.Web.Controllers
             }
 
             order.Address.Name = model.ShippingAddress.Name;
-            order.Address.PhoneCountryCode = model.ShippingAddress.PhoneCountryCode;
-            order.Address.PhoneLocalNumber = model.ShippingAddress.PhoneLocalNumber;
+            order.Address.PhoneCountryCode = model.PhoneNumberViewModel.PhoneCountryCode;
+            order.Address.PhoneLocalNumber = model.PhoneNumberViewModel.PhoneLocalNumber;
             order.Address.CountryCode = model.AddressViewModel.CountryCode;
             order.Address.CityArea = model.AddressViewModel.CityArea;
             order.Address.AddressLine1 = model.AddressViewModel.AddressLine1;

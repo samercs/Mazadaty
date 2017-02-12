@@ -318,7 +318,7 @@ else
 
                 self.lastBidFormatted = ko.computed(function() {
                     if (!self.lastBidAmount()) {
-                        return "";
+                        return "KD 0";
                     }
 
                     return "KD " + self.lastBidAmount();
