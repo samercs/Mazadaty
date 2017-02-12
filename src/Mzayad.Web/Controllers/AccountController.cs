@@ -15,6 +15,7 @@ using OrangeJetpack.Base.Core.Security;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Services.Models;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -104,10 +105,11 @@ namespace Mzayad.Web.Controllers
 
         public async Task<ActionResult> Register()
         {
+            var freeAvatar = await _avatarService.GetFreeAvatar();
             var viewModel = new RegisterViewModel
             {
                 PhoneCountryCode = "+965",
-                Avatars = await _avatarService.GetAll(),
+                Avatars = freeAvatar.ToList(),
                 Address = new AddressViewModel(new Address
                 {
                     CountryCode = "KW"

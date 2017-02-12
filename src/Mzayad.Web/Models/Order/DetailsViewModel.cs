@@ -6,5 +6,6 @@ namespace Mzayad.Web.Models.Order
     {
         public OrderViewModel Order { get; set; }
         public KnetTransaction KnetTransaction { get; set; }
+        public string RedirectUrl { get; set; }
     }
 }

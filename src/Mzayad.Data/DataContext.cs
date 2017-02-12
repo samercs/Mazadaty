@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using Mzayad.Models;
 using Mzayad.Models.Payment;
+using OrangeJetpack.Base.Data;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,7 +9,6 @@ using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using OrangeJetpack.Base.Data;
 
 namespace Mzayad.Data
 {
@@ -36,15 +36,19 @@ namespace Mzayad.Data
         public IDbSet<TokenLog> TokenLogs { get; set; }
         public IDbSet<SplashAd> SplashAds { get; set; }
         public IDbSet<ActivityEvent> ActivityEvents { get; set; }
-        public IDbSet<Trophy> Trophies{ get; set; }
+        public IDbSet<Trophy> Trophies { get; set; }
         public IDbSet<UserTrophy> UsersTrophies { get; set; }
         public IDbSet<IslamicCalendar> IslamicCalendars { get; set; }
         public IDbSet<SessionLog> SessionLogs { get; set; }
         public IDbSet<AutoBid> AutoBids { get; set; }
+        public IDbSet<Prize> Prizes { get; set; }
+        public IDbSet<UserPrizeLog> UserPrizeLogs { get; set; }
+        public IDbSet<UserAvatar> UserAvatars { get; set; }
         public IDbSet<UserFriend> UsersFriends { get; set; }
         public IDbSet<FriendRequest> FriendsRequests { get; set; }
+        public IDbSet<Message> Messages { get; set; }
 
-        public DataContext(): base("DefaultConnection")
+        public DataContext() : base("DefaultConnection")
         {
             Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = false;

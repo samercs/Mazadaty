@@ -1,4 +1,5 @@
-﻿using Mzayad.Services;
+﻿using Mzayad.Core.Exceptions;
+using Mzayad.Services;
 using Mzayad.Services.Payment;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
@@ -7,10 +8,8 @@ using Mzayad.Web.Models.Subscriptions;
 using Mzayad.Web.Resources;
 using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Base.Web;
-using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Mzayad.Core.Exceptions;
 
 namespace Mzayad.Web.Controllers
 {
@@ -20,12 +19,14 @@ namespace Mzayad.Web.Controllers
         private readonly SubscriptionService _subscriptionService;
         private readonly AddressService _addressService;
         private readonly KnetService _knetService;
+        private readonly PrizeService _prizeService;
 
         public SubscriptionsController(IAppServices appServices) : base(appServices)
         {
             _subscriptionService = new SubscriptionService(DataContextFactory);
             _addressService = new AddressService(DataContextFactory);
             _knetService = new KnetService(DataContextFactory);
+            _prizeService = new PrizeService(DataContextFactory);
         }
 
         [Route("")]
@@ -92,10 +93,10 @@ namespace Mzayad.Web.Controllers
             try
             {
                 await _subscriptionService.BuySubscriptionWithTokens(subscription, user, AuthService.UserHostAddress());
-
                 await UpdateCachedSubscription();
-
                 SetStatusMessage(StringFormatter.ObjectFormat(Global.SubscriptionPurchaseAcknowledgement, new { subscription }));
+                var prizeUrl = await InsertUserPrize();
+                return Redirect(prizeUrl);
             }
             catch (SubscriptionInvalidForPurchaseException)
             {
@@ -139,6 +140,14 @@ namespace Mzayad.Web.Controllers
             var user = await AuthService.CurrentUser();
             var cacheKey = string.Format(CacheKeys.UserSubscriptionUtc, user.Id);
             CacheService.Set(cacheKey, new SubscriptionExpiration(user.SubscriptionUtc));
+        }
+
+        private async Task<string> InsertUserPrize()
+        {
+            var user = await AuthService.CurrentUser();
+            var prize = await _prizeService.InsertUserPrize(user);
+            var url = $"{AppSettings.CanonicalUrl}{Url.Action("Index", "Prize", new { id = prize.UserPrizeLogId, Language })}";
+            return url;
         }
     }
 }

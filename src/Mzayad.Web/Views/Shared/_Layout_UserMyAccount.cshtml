@@ -8,7 +8,8 @@
     }
 </style>
 @{
-    var count = Html.Action("RequestsCount", "friends");
+    var requests = Convert.ToInt32(Html.Action("RequestsCount", "friends").ToString());
+    var messages = Convert.ToInt32(Html.Action("MessagesCount", "friends").ToString());
 }
 
 @if (Request.IsAuthenticated)
@@ -16,7 +17,7 @@
     var routeValues = new { area = "", language = Html.Language() };
 
     <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@string.Format(Global.HelloFirstName, User.Identity.GetDisplayName())<i class="fa fa-caret-down fa-pad-left"></i><span class="badge badge-notify">@count</span></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@string.Format(Global.HelloFirstName, User.Identity.GetDisplayName())<i class="fa fa-caret-down fa-pad-left"></i><span class="badge badge-notify">@(requests + messages > 0 ? (requests + messages).ToString() : "")</span></a>
         <ul class="dropdown-menu">
             <li><a href="@Url.Action("Dashboard","User", routeValues)"><i class="fa fa-fw fa-pad-right fa-tachometer"></i>@Global.Dashboard</a></li>
             <li><a href="@Url.Action("EditAccount","User", routeValues)"><i class="fa fa-fw fa-pad-right fa-user"></i>@Global.EditAccount</a></li>
@@ -26,7 +27,8 @@
             <li><a href="@Url.Action("Notifications", "User", routeValues)"><i class="fa fa-fw fa-pad-right fa-bullhorn"></i>@Global.Notifications</a></li>
             <li><a href="@Url.Action("Trophies", "User", routeValues)"><i class="fa fa-fw fa-pad-right fa-trophy"></i>@Global.Trophies</a></li>
             <li><a href="@Url.Action("Index","WishList", routeValues)"><i class="fa fa-fw fa-pad-right fa-star"></i>@Global.MyWishList</a></li>
-            <li><a href="@Url.Action("Requests","Friends", routeValues)"><i class="fa fa-fw fa-pad-right fa-users"></i>@Global.FriendRequests<span class="badge badge-notify">@count</span></a></li>
+            <li><a href="@Url.Action("Requests","Friends", routeValues)"><i class="fa fa-fw fa-pad-right fa-users"></i>@Global.FriendRequests<span class="badge badge-notify">@(requests > 0 ? requests.ToString() : "")</span></a></li>
+            <li><a href="@Url.Action("Inbox","User", routeValues)"><i class="fa fa-fw fa-pad-right fa-envelope"></i>@Global.Inbox<span class="badge badge-notify">@(messages > 0 ? messages.ToString() : "")</span></a></li>
             <li>
                 <a href="javascript:document.getElementById('signout').submit();"><i class="fa fa-fw fa-pad-right fa-sign-out"></i>@Global.SignOut</a>
                 @using (Html.BeginForm("SignOut", "Account", new { area = "", language = Html.Language() }, FormMethod.Post, new { id = "signout" }))

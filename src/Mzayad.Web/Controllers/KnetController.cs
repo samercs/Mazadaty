@@ -1,12 +1,13 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using Mzayad.Core.Formatting;
+﻿using Mzayad.Core.Formatting;
+using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Models.Payment;
 using Mzayad.Services;
 using Mzayad.Services.Payment;
 using Mzayad.Web.Core.Services;
+using System;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Mzayad.Web.Controllers
 {
@@ -14,11 +15,13 @@ namespace Mzayad.Web.Controllers
     {
         private readonly OrderService _orderService;
         private readonly KnetService _knetService;
-        
+        private readonly PrizeService _prizeService;
+
         public KnetController(IAppServices appServices) : base(appServices)
         {
             _orderService = new OrderService(appServices.DataContextFactory);
             _knetService = new KnetService(appServices.DataContextFactory);
+            _prizeService = new PrizeService(DataContextFactory);
         }
 
         public ActionResult Test(string paymentId)
@@ -72,12 +75,20 @@ namespace Mzayad.Web.Controllers
             }
 
             // TODO: SendNotification(transaction);
-
-            var redirectUrl = Url.Action("Success", "Orders", new { transaction.OrderId, transaction.PaymentId, Language }, RequestService.GetUrlScheme());
+            var prizeUrl = await InsertUserPrize();
+            var redirectUrl = Url.Action("Success", "Orders", new { transaction.OrderId, transaction.PaymentId, Language, redirectUrl = prizeUrl }, RequestService.GetUrlScheme());
             var redirectResponse = string.Format("REDIRECT={0}", redirectUrl);
             //return Content(redirectResponse);
 
             return Redirect(redirectUrl);
+        }
+
+        private async Task<string> InsertUserPrize()
+        {
+            var user = await AuthService.CurrentUser();
+            var prize = await _prizeService.InsertUserPrize(user);
+            var url = $"{AppSettings.CanonicalUrl}{Url.Action("Index", "Prize", new { id=prize.UserPrizeLogId, Language })}";
+            return url;
         }
 
         private static void SendNotification(KnetTransaction transaction)

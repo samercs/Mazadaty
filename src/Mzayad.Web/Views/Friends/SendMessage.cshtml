@@ -1,0 +1,53 @@
+﻿@model Mzayad.Models.Message
+
+@{
+    ViewBag.Title = Global.Chat+ " - " + Model.User.UserName;
+}
+
+
+<div class="row">
+    <div class="@Html.Css().FormWide">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Body, Global.Message)
+                    @Html.TextAreaFor(i => i.Body)
+                    @Html.ValidationMessageFor(i => i.Body, Global.EmptyMessageErrorMessage)
+                </div>
+            </section>
+            <section class="form-buttons">
+                <a class="btn btn-unstyled btn-rounded" href="@Request.UrlReferrer">@Global.Back</a>
+                <button type="submit" onclick="updateEditor();" class="btn btn-default btn-rounded">@Global.Send</button>
+            </section>
+        }
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/js/validate")
+    <script src="//cdn.ckeditor.com/4.4.4/basic/ckeditor.js"></script>
+    <script>
+        (function ($) {
+            $(function () {
+                initCkEditor();
+
+            });
+            var initCkEditor = function () {
+                $("textarea").each(function () {
+                    CKEDITOR.replace(this.id, { height: 300 });
+                });
+            };
+        })(jQuery);
+
+        function updateEditor()
+        {
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+        }
+    </script>
+}
+

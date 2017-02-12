@@ -4,6 +4,7 @@ using Mzayad.Services;
 using Mzayad.Services.Identity;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Models.User;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -15,19 +16,23 @@ namespace Mzayad.Web.Controllers
         private readonly FriendService _friendService;
         private readonly UserService _userService;
         private readonly IAuthService _authService;
+        private readonly MessageService _messageService;
         public FriendsController(IAppServices appServices)
             : base(appServices)
         {
             _friendService = new FriendService(appServices.DataContextFactory); ;
             _userService = new UserService(appServices.DataContextFactory);
             _authService = appServices.AuthService;
+            _messageService = new MessageService(appServices.DataContextFactory);
         }
 
-        public MvcHtmlString RequestsCount()
+        public int RequestsCount()
         {
-            var count = _friendService.CountFriendRequests(AuthService.CurrentUserId());
-
-            return count > 0 ? MvcHtmlString.Create(count.ToString()) : MvcHtmlString.Empty;
+            return _friendService.CountFriendRequests(AuthService.CurrentUserId());
+        }
+        public int MessagesCount()
+        {
+            return _messageService.CountNewMesssages(AuthService.CurrentUserId());
         }
 
         [Route("requests")]
@@ -35,10 +40,38 @@ namespace Mzayad.Web.Controllers
         {
             var viewModel = new FriendRequestsViewModel()
             {
-                //UserRequests = await _friendService.GetUserRequests(AuthService.CurrentUserId()),
                 OthersRequests = await _friendService.GetFriendRequests(AuthService.CurrentUserId()),
             };
             return View(viewModel);
+        }
+
+        [Route("friend/{userName}/message")]
+        public async Task<ActionResult> SendMessage(string userName)
+        {
+            var user = await _userService.GetUserByName(userName);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(new Message() { User = user});
+        }
+
+        [HttpPost, ValidateAntiForgeryToken, ValidateInput(false)]
+        [Route("friend/{userName}/message")]
+        public async Task<ActionResult> SendMessage(string userName, Message model)
+        {
+            var reciever = await _userService.GetUserByName(userName);
+            if (reciever == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            model.IsNew = true;
+            model.UserId = AuthService.CurrentUserId();
+            model.ReceiverId = reciever.Id;
+
+            var message = await _messageService.Insert(model);
+            TempData["MessageSent"] = true;
+            return RedirectToAction("friends", "user");
         }
 
         #region Ajax Calls
@@ -94,6 +127,13 @@ namespace Mzayad.Web.Controllers
         {
             await _friendService.RemoveFriend(AuthService.CurrentUserId(), friendId);
             return Json("1", JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<MvcHtmlString> Message(int id)
+        {
+            var message = await _messageService.Get(id);
+            await _messageService.SetAsRead(message);
+            return MvcHtmlString.Create(message.Body);
         }
         #endregion
     }

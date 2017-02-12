@@ -164,6 +164,7 @@
       <HintPath>..\..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
@@ -185,7 +186,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.24\lib\net452\OrangeJetpack.Base.Core.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.27\lib\net452\OrangeJetpack.Base.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -193,7 +194,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Base.Web.0.0.26\lib\net452\OrangeJetpack.Base.Web.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Base.Web.0.0.28\lib\net452\OrangeJetpack.Base.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Cms.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -204,8 +205,12 @@
       <HintPath>..\..\packages\OrangeJetpack.Cms.Client.0.0.22\lib\net452\OrangeJetpack.Cms.Models.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="OrangeJetpack.Localization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Localization.1.5.7\lib\OrangeJetpack.Localization.dll</HintPath>
+    <Reference Include="OrangeJetpack.Localization, Version=1.7.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OrangeJetpack.Localization.1.7.5\lib\net45\OrangeJetpack.Localization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OrangeJetpack.Localization.Mvc, Version=1.6.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OrangeJetpack.Localization.Mvc.1.6.3\lib\net45\OrangeJetpack.Localization.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Regionalization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -328,7 +333,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Global.ar.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Global.Designer.cs" />
+    <Compile Include="App_GlobalResources\Global.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Global.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -342,6 +351,7 @@
     <Compile Include="Areas\Admin\Controllers\LevelsController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Admin\Controllers\PageManagementController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PrizesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingsController.cs" />
@@ -359,6 +369,8 @@
     <Compile Include="Areas\Admin\Models\Orders\IndexViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Pages\AddEditViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Pages\IndexViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Prizes\AddViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Prizes\IndexViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Products\AddViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Products\EditViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Products\IndexViewModel.cs" />
@@ -399,6 +411,7 @@
     <Compile Include="Controllers\KnetController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
+    <Compile Include="Controllers\PrizeController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\QueueTestController.cs" />
     <Compile Include="Controllers\SubscriptionsController.cs" />
@@ -463,6 +476,8 @@
     <Compile Include="Models\Order\OrderSummaryViewModel.cs" />
     <Compile Include="Models\Order\OrderViewModel.cs" />
     <Compile Include="Models\Order\ShippingAddressViewModel.cs" />
+    <Compile Include="Models\Prize\IndexViewModel.cs" />
+    <Compile Include="Models\Prize\SelectAvatarPrizeViewModel.cs" />
     <Compile Include="Models\Shared\AddressViewModel.cs" />
     <Compile Include="Models\Shared\DeleteConfirmationViewModel.cs" />
     <Compile Include="Models\Shared\SubscriptionExpiration.cs" />
@@ -470,10 +485,11 @@
     <Compile Include="Models\User\ChangePasswordViewModel.cs" />
     <Compile Include="Models\User\DashboardViewModel.cs" />
     <Compile Include="Models\User\EditProfileModel.cs" />
-    <Compile Include="Models\User\FriendRequestsViewModel.cs" />
+    <Compile Include="Models\User\MyAvatarsViewModel.cs" />
     <Compile Include="Models\User\NotificationModelView.cs" />
     <Compile Include="Models\User\TrophieViewModel.cs" />
     <Compile Include="Models\User\UserProfileViewModel.cs" />
+    <Compile Include="Models\User\FriendRequestsViewModel.cs" />
     <Compile Include="Models\WishList\AddViewModel.cs" />
     <Compile Include="Models\WishList\IndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -667,6 +683,13 @@
     <Content Include="Areas\Admin\Views\PageManagement\Add.cshtml" />
     <Content Include="Areas\Admin\Views\PageManagement\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Auctions\AutoBids.cshtml" />
+    <Content Include="Areas\Admin\Views\Avatars\Edit.cshtml" />
+    <Content Include="Scripts\Winwheel.js" />
+    <Content Include="Views\Shared\_ImageUpload.cshtml" />
+    <Content Include="Areas\Admin\Views\Prizes\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Prizes\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Prizes\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Prizes\_AddEditView.cshtml" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
@@ -787,8 +810,13 @@
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\BuyNowTile.cshtml" />
     <Content Include="Views\Shared\_Layout_AdminMenu.cshtml" />
+    <Content Include="Views\Prize\Index.cshtml" />
+    <Content Include="Views\Prize\SelectAvatarPrize.cshtml" />
+    <Content Include="Views\Shared\_UserPrizeNotification.cshtml" />
+    <Content Include="Views\User\MyAvatars.cshtml" />
     <Content Include="Views\User\UserProfile.cshtml" />
     <Content Include="Views\User\Friends.cshtml" />
+    <Content Include="Views\User\Inbox.cshtml" />
     <TypeScriptCompile Include="Scripts\auctions.ts" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />
@@ -805,6 +833,7 @@
     <Content Include="Views\Auctions\Closed.cshtml" />
     <Content Include="Views\AutoBid\Edit.cshtml" />
     <Content Include="Views\Friends\Requests.cshtml" />
+    <Content Include="Views\Friends\SendMessage.cshtml" />
     <None Include="Views\Home\SignalR.cshtml" />
     <Content Include="404.html" />
     <Content Include="500.html" />
@@ -906,9 +935,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="App_GlobalResources\Global.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Global.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Mzayad.Web.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
-      <LastGenOutput>Global1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

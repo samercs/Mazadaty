@@ -1,11 +1,22 @@
-﻿@using OrangeJetpack.Localization;
+﻿@using System.Globalization
+@using System.Text.RegularExpressions
+@using OrangeJetpack.Localization
 
 @{
+    if (string.IsNullOrWhiteSpace(Model))
+    {
+        ViewData.Model = LocalizedContent.Init();
+    }
+
     var localizedContents = new LocalizedContent[] { };
     LocalizedContent.TryDeserialize(Model, out localizedContents);
-    var isRequired = ViewData.ModelMetadata.IsRequired;
-    var templateHint = ViewData.ModelMetadata.TemplateHint;
-    var propertyName = ViewData.ModelMetadata.PropertyName;
+    var modelMetaData = ViewData.ModelMetadata;
+    var templateHint = modelMetaData.TemplateHint;
+    var propertyId = $"LocalizedContent-{Guid.NewGuid().ToString("n")}";
+    var propertyName = modelMetaData.PropertyName;
+    var friendlyName = Regex.Replace(
+        Regex.Replace(propertyName, @"(\P{Ll})(\P{Ll}\p{Ll})", "$1 $2"), @"(\p{Ll})(\P{Ll})", "$1 $2")
+        .ToLowerInvariant();
 }
 
 @functions
@@ -16,7 +27,7 @@
         {
             return GetTextArea(value);
         }
-        
+
         return GetTextInput(value);
     }
 
@@ -34,48 +45,110 @@
         tagBuilder.MergeAttribute("value", value);
         return tagBuilder;
     }
+
 }
 
-<ul class="localized-content list-unstyled" style="margin-bottom: 0">
+<style>
+    
+    .localized-content {
+        margin-bottom: 0;
+    }
+
+    .localized-content > li {
+        margin-bottom: 5px;   
+    }
+
+    .localized-content > li:last-child {
+        margin-bottom: 0;   
+    }
+
+    .localized-content .localized-input {
+        max-width: 100%;
+    }
+
+    .localized-content .input-group-addon {
+        font-size: 10px;
+        text-transform: uppercase;
+    }
+
+</style>
+
+<ul id="@propertyId" class="localized-content list-unstyled">
     @for (var i = 0; i < localizedContents.Length; i++)
     {
-        var isPrimary = i == 0;
         var localizedKey = localizedContents[i].Key;
         var localizedValue = localizedContents[i].Value;
-        var inputIdPrefix = string.Format("{0}_{1}", propertyName, i);
-        var inputNamePrefix = string.Format("{0}[{1}]", propertyName, i);
-        <li>
-            <input type="hidden" name="@(inputNamePrefix).Key" value="@localizedKey" />
+        var inputId = $"{propertyName}_{i}_Value";
+        var inputName = $"{propertyName}[{i}].Value";
+        var inputKey = $"{propertyName}[{i}].Key";
+        var cultureInfo = CultureInfo.GetCultureInfo(localizedKey);
+        var languageDirection = cultureInfo.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+        var isRequired = modelMetaData.IsRequired && LocalizedContent.RequiredLanguages.Contains(localizedKey);
+
+        <li data-for="@inputId">
+            <input type="hidden" name="@inputKey" value="@localizedKey"/>
+
             <div class="input-group">
 
-                @if (isPrimary) // add hidden input for "primary" aka first language
+                @if (!cultureInfo.TextInfo.IsRightToLeft)
                 {
-                    <input type="hidden" name="@Html.NameForModel()" value="@localizedValue" @(isRequired ? "data-val=true data-val-required=true" : "") />
+                    <span lang="@localizedKey" class="input-group-addon">@cultureInfo.NativeName</span>
                 }
 
                 @{
                     var tagBuilder = GetTextTag(templateHint, localizedValue);
                     tagBuilder.AddCssClass("form-control localized-input");
-                    tagBuilder.MergeAttribute("id", inputIdPrefix + "_Value");
-                    tagBuilder.MergeAttribute("name", inputNamePrefix + ".Value");
-                    tagBuilder.MergeAttribute("data-language", localizedKey);
+                    tagBuilder.MergeAttribute("id", inputId);
+                    tagBuilder.MergeAttribute("name", inputName);
+                    tagBuilder.MergeAttribute("lang", localizedKey);
+                    tagBuilder.MergeAttribute("dir", languageDirection);
 
-                    if (isPrimary)
+                    if (isRequired)
                     {
-                        tagBuilder.MergeAttribute("data-primary", "true");
-
-                        if (isRequired)
-                        {
-                            tagBuilder.MergeAttribute("data-val", "true");
-                            tagBuilder.MergeAttribute("data-val-required", "true");
-                        }
+                        tagBuilder.MergeAttribute("data-val", "true");
+                        tagBuilder.MergeAttribute("data-val-required", "true");
                     }
                 }
 
                 @Html.Raw(tagBuilder.ToString())
 
-                <span class="input-group-addon">@localizedKey</span>
+                @if (cultureInfo.TextInfo.IsRightToLeft)
+                {
+                    <span lang="@localizedKey" class="input-group-addon">@cultureInfo.NativeName</span>
+                }
+
             </div>
+            @if (isRequired)
+            {
+                <span class="field-validation-valid" data-valmsg-for="@inputName" data-valmsg-replace="false">Please enter text or content for @friendlyName.</span>
+            }
         </li>
     }
 </ul>
+
+<script>
+
+    (function () {
+
+        var getMaxWidth = function(elements) {
+            var width = 0;
+            for (var i = 0; i < elements.length; i++) {
+                width = Math.max(width, elements[i].offsetWidth);
+            }
+            return width;
+        }
+
+        var setMinWidth = function (elements, width) {
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].style.minWidth = `${width}px`;
+            }
+        }
+
+        var parent = document.getElementById('@propertyId');
+        var labels = parent.getElementsByClassName('input-group-addon');
+        var maxWidth = getMaxWidth(labels);
+        setMinWidth(labels, maxWidth);
+
+    })();
+    
+</script>

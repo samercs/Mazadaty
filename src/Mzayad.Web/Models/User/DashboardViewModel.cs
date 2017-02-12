@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Mzayad.Models;
+﻿using Mzayad.Models;
 using Mzayad.Services;
+using System;
+using System.Collections.Generic;
 
 namespace Mzayad.Web.Models.User
 {
@@ -11,8 +11,9 @@ namespace Mzayad.Web.Models.User
         public IReadOnlyCollection<ApplicationUser> Friends { get; set; }
         public IReadOnlyCollection<Bid> Bids { get; set; }
         public IReadOnlyCollection<Trophy> Trophies { get; set; }
-        public IReadOnlyCollection<Auction> Auctions { get; set; } 
-        public IReadOnlyCollection<Mzayad.Models.WishList> WishLists { get; set; } 
+        public IReadOnlyCollection<Auction> Auctions { get; set; }
+        public IReadOnlyCollection<Mzayad.Models.WishList> WishLists { get; set; }
+        public string PrizeUrl { get; set; }
 
         public Level CurrentLevel { get; private set; }
         public Level NextLevel { get; private set; }

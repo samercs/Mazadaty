@@ -1,32 +1,33 @@
-﻿using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using Mzayad.Data;
+﻿using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Services.Identity;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Mzayad.Services
 {
     public class TokenService : ServiceBase
     {
         private readonly UserManager _userManager;
-        
+
         public TokenService(IDataContextFactory dataContextFactory) : base(dataContextFactory)
         {
             _userManager = new UserManager(dataContextFactory);
         }
 
-        public async Task AddTokensToUser(ApplicationUser user, int? tokens, ApplicationUser modifiedByUser, string userHostAddress,string usage)
+        public async Task AddTokensToUser(ApplicationUser user, int? tokens, ApplicationUser modifiedByUser, string userHostAddress, string usage)
         {
             if (!tokens.HasValue)
             {
                 return;
             }
- 
+
             user = await _userManager.FindByIdAsync(user.Id);
 
-            var originalTokenAmount = user.Tokens;   
+            var originalTokenAmount = user.Tokens;
             user.Tokens += tokens.Value;
 
             await _userManager.UpdateAsync(user);

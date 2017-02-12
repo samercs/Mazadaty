@@ -54,15 +54,15 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.24\lib\net452\OrangeJetpack.Base.Core.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.27\lib\net452\OrangeJetpack.Base.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\OrangeJetpack.Base.Data.0.1.2\lib\net452\OrangeJetpack.Base.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="OrangeJetpack.Localization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Localization.1.5.7\lib\OrangeJetpack.Localization.dll</HintPath>
+    <Reference Include="OrangeJetpack.Localization, Version=1.7.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OrangeJetpack.Localization.1.7.5\lib\net45\OrangeJetpack.Localization.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -363,9 +363,45 @@
     <Compile Include="Migrations\201610311352398_AddFloorandFlatToAddress.Designer.cs">
       <DependentUpon>201610311352398_AddFloorandFlatToAddress.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612210945238_AddAvatarPremiumOptions.cs" />
+    <Compile Include="Migrations\201612210945238_AddAvatarPremiumOptions.Designer.cs">
+      <DependentUpon>201612210945238_AddAvatarPremiumOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612220901460_AddAuctionCountryList.cs" />
+    <Compile Include="Migrations\201612220901460_AddAuctionCountryList.Designer.cs">
+      <DependentUpon>201612220901460_AddAuctionCountryList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612250928298_AddPrize.cs" />
+    <Compile Include="Migrations\201612250928298_AddPrize.Designer.cs">
+      <DependentUpon>201612250928298_AddPrize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612261147475_AddPrizeLog.cs" />
+    <Compile Include="Migrations\201612261147475_AddPrizeLog.Designer.cs">
+      <DependentUpon>201612261147475_AddPrizeLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612270551057_AddUserAvatar.cs" />
+    <Compile Include="Migrations\201612270551057_AddUserAvatar.Designer.cs">
+      <DependentUpon>201612270551057_AddUserAvatar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612270654214_AddUserPrizeLog_IsComplete.cs" />
+    <Compile Include="Migrations\201612270654214_AddUserPrizeLog_IsComplete.Designer.cs">
+      <DependentUpon>201612270654214_AddUserPrizeLog_IsComplete.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701031222488_UpdateUserPrizeLog.cs" />
+    <Compile Include="Migrations\201701031222488_UpdateUserPrizeLog.Designer.cs">
+      <DependentUpon>201701031222488_UpdateUserPrizeLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701031235279_UpdateUserPrizeLogEntity.cs" />
+    <Compile Include="Migrations\201701031235279_UpdateUserPrizeLogEntity.Designer.cs">
+      <DependentUpon>201701031235279_UpdateUserPrizeLogEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201701181809288_FriendsTables.cs" />
     <Compile Include="Migrations\201701181809288_FriendsTables.Designer.cs">
       <DependentUpon>201701181809288_FriendsTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701272210318_MessagesTable.cs" />
+    <Compile Include="Migrations\201701272210318_MessagesTable.Designer.cs">
+      <DependentUpon>201701272210318_MessagesTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -597,8 +633,35 @@
     <EmbeddedResource Include="Migrations\201610311352398_AddFloorandFlatToAddress.resx">
       <DependentUpon>201610311352398_AddFloorandFlatToAddress.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612210945238_AddAvatarPremiumOptions.resx">
+      <DependentUpon>201612210945238_AddAvatarPremiumOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612220901460_AddAuctionCountryList.resx">
+      <DependentUpon>201612220901460_AddAuctionCountryList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612250928298_AddPrize.resx">
+      <DependentUpon>201612250928298_AddPrize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612261147475_AddPrizeLog.resx">
+      <DependentUpon>201612261147475_AddPrizeLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612270551057_AddUserAvatar.resx">
+      <DependentUpon>201612270551057_AddUserAvatar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612270654214_AddUserPrizeLog_IsComplete.resx">
+      <DependentUpon>201612270654214_AddUserPrizeLog_IsComplete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701031222488_UpdateUserPrizeLog.resx">
+      <DependentUpon>201701031222488_UpdateUserPrizeLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701031235279_UpdateUserPrizeLogEntity.resx">
+      <DependentUpon>201701031235279_UpdateUserPrizeLogEntity.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701181809288_FriendsTables.resx">
       <DependentUpon>201701181809288_FriendsTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701272210318_MessagesTable.resx">
+      <DependentUpon>201701272210318_MessagesTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

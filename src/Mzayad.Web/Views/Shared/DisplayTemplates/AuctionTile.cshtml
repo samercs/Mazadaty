@@ -1,12 +1,27 @@
 ﻿@using Mzayad.Web.Core.Enums
+@using Mzayad.Web.Models.Auctions
 @using OrangeJetpack.Base.Core.Formatting
 @model Mzayad.Web.Models.Auctions.AuctionViewModel
+
+@helper RenderCountry(string countries){
+var countriesArray =  Model.CountryList?.Split(',') ?? new string[0];
+var resultHtml = "";
+foreach (var country in countriesArray)
+{
+    resultHtml += "<i class='flag flag-" + country.ToLowerInvariant() + "'></i>";
+}
+    <div class="flag-container2">
+        @Html.Raw(resultHtml)
+    </div>
+
+}
 
 <div class="auction-tile">
     <div class="auction-tile-image">
         <a href="@Url.Action("Index", "Products", new { productId = Model.ProductId })">
             <img class="img-responsive" src="@Model.ImageUrl" alt="@Model.Title" />
             <div class="sponsor-ribbon"><span>@Model.SponsorName</span></div>
+            @RenderCountry(Model.CountryList)
         </a>
     </div>
     <div class="auction-tile-details">
