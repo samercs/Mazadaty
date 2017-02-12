@@ -67,5 +67,30 @@ namespace Mzayad.Models
             // Add custom user claims here
             return userIdentity;
         }
+        [NotMapped]
+        public UserSubscriptionStatus Subscription
+        {
+            get
+            {
+                if (!SubscriptionUtc.HasValue)
+                {
+                    return UserSubscriptionStatus.NoSubscription;
+                }
+                return SubscriptionUtc.Value >= DateTime.Today ? UserSubscriptionStatus.Active : UserSubscriptionStatus.Expire;
+            }
+        }
+
+        [NotMapped]
+        public int SubscriptionExpire
+        {
+            get
+            {
+                if (!SubscriptionUtc.HasValue)
+                {
+                    return 0;
+                }
+                return SubscriptionUtc.Value >= DateTime.Today ? SubscriptionUtc.Value.Subtract(DateTime.Today).Days : 0;
+            }
+        }
     }
 }
