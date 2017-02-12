@@ -40,13 +40,7 @@ namespace Mzayad.Web.SignalR
             _timer = new Timer(UpdateAuctions, null, _updateInterval, _updateInterval);
         }
 
-        public static AuctionHandler Instance
-        {
-            get
-            {
-                return _instance.Value;
-            }
-        }
+        public static AuctionHandler Instance => _instance.Value;
 
         private ICacheService _cacheService;
         private IActivityQueueService _activityQueueService;

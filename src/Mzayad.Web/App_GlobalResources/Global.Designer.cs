@@ -322,6 +322,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You cannot bid twice in a row.
+        /// </summary>
+        public static string BidTwiceErrorMessage {
+            get {
+                return ResourceManager.GetString("BidTwiceErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Birthdate.
         /// </summary>
         public static string Birthdate {

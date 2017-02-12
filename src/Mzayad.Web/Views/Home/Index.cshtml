@@ -127,6 +127,7 @@ else
                                             }
                                         </span>
                                     </div>
+                                    <span id="bidErr" class="text-danger hidden" data-bind="css: {hidden: showBidErr() == false}">@Global.BidTwiceErrorMessage</span>
                                     <ol class="auction-recent-bids" data-bind="foreach: bidsReversed">
                                         <li>
                                             <div class="pull-left">
@@ -267,8 +268,18 @@ else
                 self.isLoaded = ko.observable(false);
                 self.secondsLeft = ko.observable();
                 self.lastBidAmount = ko.observable(data.lastBidAmount);
+                self.showBidErr = ko.observable(false);
 
+                self.showBidErr = ko.computed(function() {
+                    console.log(self.bids().length > 0 && self.bids()[0].userName === userName);
+                    var lastBidder = self.bids().length > 0 && self.bids()[0].userName === userName;
+                    
+                    if (lastBidder && !$("#bidErr").hasClass("hidden")) {
+                        return true;
+                    }
 
+                    return false;
+                });
 
                 self.bidsReversed = ko.computed(function() {
                     return self.bids()
@@ -315,11 +326,22 @@ else
 
                 self.submitBid = function() {
                     var userInBids = false;
+                    var lastBidder = false;
                     for (var i = 0; i < self.bids().length; i++) {
+                        if (self.bids()[0].userName === userName) {
+                            lastBidder = true;
+                        }
+
                         if (self.bids()[i].userName == userName) {
                             userInBids = true;
                         }
                     }
+
+                    if (lastBidder) {
+                        $("#bidErr").removeClass("hidden");
+                        return false;
+                    }
+
                     if (self.countryList() != "" &&
                         self.countryList().indexOf(userCountry) <= -1 &&
                         !userInBids) {
