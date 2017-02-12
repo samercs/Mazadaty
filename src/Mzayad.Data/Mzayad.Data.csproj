@@ -399,6 +399,18 @@
     <Compile Include="Migrations\201702120829386_AddBidType.Designer.cs">
       <DependentUpon>201702120829386_AddBidType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701181809288_FriendsTables.cs" />
+    <Compile Include="Migrations\201701181809288_FriendsTables.Designer.cs">
+      <DependentUpon>201701181809288_FriendsTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701272210318_MessagesTable.cs" />
+    <Compile Include="Migrations\201701272210318_MessagesTable.Designer.cs">
+      <DependentUpon>201701272210318_MessagesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702121159427_Donothing.cs" />
+    <Compile Include="Migrations\201702121159427_Donothing.Designer.cs">
+      <DependentUpon>201702121159427_Donothing.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -655,6 +667,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702120829386_AddBidType.resx">
       <DependentUpon>201702120829386_AddBidType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701181809288_FriendsTables.resx">
+      <DependentUpon>201701181809288_FriendsTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701272210318_MessagesTable.resx">
+      <DependentUpon>201701272210318_MessagesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702121159427_Donothing.resx">
+      <DependentUpon>201702121159427_Donothing.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

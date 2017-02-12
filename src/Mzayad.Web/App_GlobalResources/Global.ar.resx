@@ -759,4 +759,106 @@
   <data name="NoLiveAuctionsMessage" xml:space="preserve">
     <value>لا يوجد مزادات متاحه الآن</value>
   </data>
+  <data name="Accept" xml:space="preserve">
+    <value>قبول</value>
+  </data>
+  <data name="AreSure" xml:space="preserve">
+    <value>هل أنت متأكد؟</value>
+  </data>
+  <data name="CancelRequest" xml:space="preserve">
+    <value>إلغاء طلب الصداقة</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>محادثة</value>
+  </data>
+  <data name="Decline" xml:space="preserve">
+    <value>رفض</value>
+  </data>
+  <data name="FriendRequest" xml:space="preserve">
+    <value>طلب صداقة</value>
+  </data>
+  <data name="FriendRequests" xml:space="preserve">
+    <value>طلبات الصداقة</value>
+  </data>
+  <data name="Friends" xml:space="preserve">
+    <value>أصدقاء</value>
+  </data>
+  <data name="AcceptFriendRequest" xml:space="preserve">
+    <value>قبول طلب الصداقة</value>
+  </data>
+  <data name="Click" xml:space="preserve">
+    <value>أضغط</value>
+  </data>
+  <data name="DeclineFriendRequest" xml:space="preserve">
+    <value>رفض طلب الصداقة</value>
+  </data>
+  <data name="Friend" xml:space="preserve">
+    <value>صديق</value>
+  </data>
+  <data name="FriendActionFailMessage" xml:space="preserve">
+    <value>نأسف! لقد حدث خطأ أثناء حفظ أختيارك</value>
+  </data>
+  <data name="FriendActionSuccessMessage" xml:space="preserve">
+    <value>لقد تم حفظ أختيارك بنجاح.</value>
+  </data>
+  <data name="FriendRequestFailMessage" xml:space="preserve">
+    <value>نأسف! لقد حدث خطأ أثناء إرسال طلبك</value>
+  </data>
+  <data name="FriendRequestSent" xml:space="preserve">
+    <value>تم إرسال طلب صداقة</value>
+  </data>
+  <data name="FriendRequestSuccessMessage" xml:space="preserve">
+    <value>لقد تم إرسال طلب الصداقة بنجاح</value>
+  </data>
+  <data name="Here" xml:space="preserve">
+    <value>هنا</value>
+  </data>
+  <data name="NoFriendRequests" xml:space="preserve">
+    <value>لا يوجد طلبات صداقة.</value>
+  </data>
+  <data name="NoFriends" xml:space="preserve">
+    <value>ليس لديك أصدقاء!</value>
+  </data>
+  <data name="PrivateProfileMessage" xml:space="preserve">
+    <value>هذا الملف الشخصى خاص!</value>
+  </data>
+  <data name="RemoveFriendSuccessfullyMessage" xml:space="preserve">
+    <value>هذا المستخدم قد تم حذفه من قائمة أصدقائك بنجاح.</value>
+  </data>
+  <data name="SendFriendRequest" xml:space="preserve">
+    <value>أرسل طلب صداقة</value>
+  </data>
+  <data name="TheFriends" xml:space="preserve">
+    <value>الأصدقاء</value>
+  </data>
+  <data name="ToSendFriendRequestMessage" xml:space="preserve">
+    <value>لإرسال طلب صداقة.</value>
+  </data>
+  <data name="RemoveFriend" xml:space="preserve">
+    <value>حذف صديق</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>إغلاق</value>
+  </data>
+  <data name="EmptyMessageErrorMessage" xml:space="preserve">
+    <value>من فضلك أكتب الرسالة المراد ارسالها.</value>
+  </data>
+  <data name="Inbox" xml:space="preserve">
+    <value>صندوق الوارد</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>الرسالة</value>
+  </data>
+  <data name="MessageSentSuccessfully" xml:space="preserve">
+    <value>لقد تم ارسال رسالتك بنجاح.</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>المزيد...</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>إرسال</value>
+  </data>
+  <data name="Reply" xml:space="preserve">
+    <value>الرد</value>
+  </data>
 </root>

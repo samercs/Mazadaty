@@ -98,7 +98,7 @@ namespace Mzayad.Data.Migrations
                 new Trophy(){TrophyId = (int)TrophyKey.Bid10, Key=TrophyKey.Bid10, Name = "[{''k'':''en'',''v'':''Bid 10''}]",Description = "[{''k'':''en'',''v'':''Bid 10''}]",IconUrl = "",XpAward = 0},
                 new Trophy(){TrophyId = (int)TrophyKey.Bid50, Key=TrophyKey.Bid50, Name = "[{''k'':''en'',''v'':''Bid 50''}]",Description = "[{''k'':''en'',''v'':''Bid 50''}]",IconUrl = "",XpAward = 0},
                 new Trophy(){TrophyId = (int)TrophyKey.Bid100, Key=TrophyKey.Bid100, Name = "[{''k'':''en'',''v'':''Bid 100''}]",Description = "[{''k'':''en'',''v'':''Bid 100''}]",IconUrl = "",XpAward = 0},
-                new Trophy(){TrophyId = (int)TrophyKey.Bid250, Key=TrophyKey.Bid250, Name = "[{''k'':''en'',''v'':250''Bid ''}]",Description = "[{''k'':''en'',''v'':''Bid 250''}]",IconUrl = "",XpAward = 0},
+                new Trophy(){TrophyId = (int)TrophyKey.Bid250, Key=TrophyKey.Bid250, Name = "[{''k'':''en'',''v'':''Bid 250''}]",Description = "[{''k'':''en'',''v'':''Bid 250''}]",IconUrl = "",XpAward = 0},
                 new Trophy(){TrophyId = (int)TrophyKey.Bid500, Key=TrophyKey.Bid500, Name = "[{''k'':''en'',''v'':''Bid 500''}]",Description = "[{''k'':''en'',''v'':''Bid 500''}]",IconUrl = "",XpAward = 0},
                 new Trophy(){TrophyId = (int)TrophyKey.Bid1000, Key=TrophyKey.Bid1000, Name = "[{''k'':''en'',''v'':''Bid 1000''}]",Description = "[{''k'':''en'',''v'':''Bid 1000''}]",IconUrl = "",XpAward = 0},
                 new Trophy(){TrophyId = (int)TrophyKey.Bid2000, Key=TrophyKey.Bid2000, Name = "[{''k'':''en'',''v'':''Bid 2000''}]",Description = "[{''k'':''en'',''v'':''Bid 2000''}]",IconUrl = "",XpAward = 0},

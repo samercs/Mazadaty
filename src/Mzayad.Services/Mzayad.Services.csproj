@@ -122,10 +122,12 @@
     <Compile Include="BidService.cs" />
     <Compile Include="CategoryService.cs" />
     <Compile Include="EmailTemplateService.cs" />
+    <Compile Include="FriendService.cs" />
     <Compile Include="Identity\RoleManager.cs" />
     <Compile Include="Identity\UserService.cs" />
     <Compile Include="IslamicCalendarService.cs" />
     <Compile Include="LevelService.cs" />
+    <Compile Include="MessageService.cs" />
     <Compile Include="NotificationService.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="Payment\KnetService.cs" />

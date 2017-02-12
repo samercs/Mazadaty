@@ -58,22 +58,28 @@
         </div>
         <div class="col-md-6">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <div class="dashboard-cell">
                         <div class="dashboard-number">@Model.User.Xp</div>
                         <div class="dashboard-label text-uppercase">@Global.Experience</div>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <a href="@Url.Action("Index", "Subscriptions")" class="dashboard-cell">
                         <div class="dashboard-number">@Model.User.Tokens</div>
                         <div class="dashboard-label text-uppercase">@Global.Tokens</div>
                     </a>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <a href="@Url.Action("Trophies", "User")" class="dashboard-cell">
                         <div class="dashboard-number">@Model.Trophies.Count</div>
                         <div class="dashboard-label text-uppercase">@Global.Trophies</div>
+                    </a>
+                </div>
+                <div class="col-sm-3">
+                    <a href="@Url.Action("Friends", "User")" class="dashboard-cell">
+                        <div class="dashboard-number">@Model.Friends.Count</div>
+                        <div class="dashboard-label text-uppercase">@(Model.Friends.Count == 1 ? Global.Friend : Global.Friends)</div>
                     </a>
                 </div>
             </div>
@@ -139,7 +145,8 @@
     <div class="panel dashboard-panel">
         <div class="panel-heading">
             <h3 class="panel-title text-uppercase">@Global.MyWishList</h3>
-            <div class="pull-right"><a class="text-uppercase" href="@Url.Action("Index", "WishList")">@Global.ViewAll</a>
+            <div class="pull-right">
+                <a class="text-uppercase" href="@Url.Action("Index", "WishList")">@Global.ViewAll</a>
             </div>
             <div class="pull-right"><a class="text-uppercase panel-link" href="@Url.Action("Add", "WishList")">@Global.AddNewItem</a></div>
             <div class="clearfix"></div>

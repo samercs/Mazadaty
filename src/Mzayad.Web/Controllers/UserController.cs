@@ -16,6 +16,7 @@ using OrangeJetpack.Base.Web;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Models;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,6 +38,8 @@ namespace Mzayad.Web.Controllers
         private readonly WishListService _wishListService;
         private readonly IActivityQueueService _activityQueueService;
         private readonly PrizeService _prizeService;
+        private readonly FriendService _friendService;
+        private readonly MessageService _messageService;
 
         public UserController(IAppServices appServices)
             : base(appServices)
@@ -53,6 +56,8 @@ namespace Mzayad.Web.Controllers
             _activityQueueService =
                 new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
             _prizeService = new PrizeService(DataContextFactory);
+            _friendService = new FriendService(appServices.DataContextFactory);
+            _messageService = new MessageService(appServices.DataContextFactory);
         }
 
         [Route("dashboard")]
@@ -77,7 +82,8 @@ namespace Mzayad.Web.Controllers
                 Trophies = await _trophyService.GetTrophies(user.Id, Language),
                 Auctions = await _auctionService.GetAuctionsWon(user.Id, Language),
                 WishLists = await _wishListService.GetByUser(user.Id),
-                PrizeUrl = prizeUrl
+                PrizeUrl = prizeUrl,
+                Friends = await _friendService.GetFriends(user.Id)
             };
 
             return View(viewModel);
@@ -368,22 +374,7 @@ namespace Mzayad.Web.Controllers
         [Route("trophies")]
         public async Task<ActionResult> Trophies()
         {
-            var userId = AuthService.CurrentUserId();
-            var userTophies = (await _trophyService.GetUsersTrophies(userId, Language)).ToList();
-            var trophies = await _trophyService.GetAll(Language);
-
-            var model = (from trophy in trophies
-                         let userTrophy = userTophies.FirstOrDefault(i => i.TrophyId == trophy.TrophyId)
-                         select new TrophieViewModel
-                         {
-                             TrophyName = trophy.Name,
-                             TrophyDescription = trophy.Description,
-                             IconUrl = trophy.IconUrl,
-                             XpEarned = userTrophy == null ? (int?)null : userTrophy.XpAwarded,
-                             AwardDate = userTrophy == null ? (DateTime?)null : userTrophy.CreatedUtc,
-                             Earned = userTrophy != null
-                         }).ToList();
-
+            var model = await GetTrophies(AuthService.CurrentUserId());
 
             return View(model);
         }
@@ -405,5 +396,143 @@ namespace Mzayad.Web.Controllers
 
             return View(auctions);
         }
+
+        [Route("my-avatars")]
+        public async Task<ActionResult> MyAvatars()
+        {
+            var user = await AuthService.CurrentUser();
+            var model = new MyAvatarsViewModel
+            {
+                Avatars = await _avatarService.GetUserAvatars(user),
+                User = user
+            };
+            return View(model);
+        }
+
+        [Route("my-avatars")]
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> MyAvatars(MyAvatarsViewModel model)
+        {
+            if (model.SelectedAvatar.HasValue)
+            {
+                var user = await AuthService.CurrentUser();
+                var avatar = await _avatarService.GetById(model.SelectedAvatar.Value);
+                if (avatar != null)
+                {
+                    if (await _avatarService.UserHasAvatar(user, avatar))
+                    {
+                        user.AvatarUrl = avatar.Url;
+                        await _userService.UpdateUser(user);
+                        SetStatusMessage(Global.AvatarChangeSuccessfullyMsg);
+                    }
+
+                }
+            }
+            return RedirectToAction("Dashboard");
+
+        }
+        [Route("~/{language}/profiles/{userName}")]
+        public async Task<ActionResult> UserProfile(string userName)
+        {
+            var user = await _userService.GetUserByName(userName);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            if (user.Id == AuthService.CurrentUserId())
+            {
+                return RedirectToAction("dashboard", "user", new { area = "", language = Language });
+            }
+            var viewModel = new UserProfileViewModel(user)
+            {
+                Trophies = await _trophyService.GetTrophies(user.Id, Language),
+                AreFriends = await _friendService.AreFriends(user.Id, AuthService.CurrentUserId()),
+                SentFriendRequestBefore = await _friendService.SentBefore(AuthService.CurrentUserId(), user.Id),
+                Friends = await _friendService.GetFriends(user.Id)
+            };
+            return View(viewModel);
+        }
+
+        [Route("friends")]
+        public async Task<ActionResult> Friends()
+        {
+            var friends = await _friendService.GetFriends(AuthService.CurrentUserId());
+
+            var viewModel = await GetFriendsModel(friends);
+            ViewBag.MessageSent = TempData["MessageSent"];
+            return View(viewModel);
+        }
+
+        [Route("~/{language}/profiles/{userName}/trophies")]
+        public async Task<ActionResult> UserTrophies(string userName)
+        {
+            var user = await _userService.GetUserByName(userName);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            var model = await GetTrophies(user.Id);
+            return View("Trophies", model);
+        }
+
+        [Route("~/{language}/profiles/{userName}/friends")]
+        public async Task<ActionResult> UserFriends(string userName)
+        {
+            var user = await _userService.GetUserByName(userName);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            var friends = await _friendService.GetFriends(user.Id);
+
+            var viewModel = await GetFriendsModel(friends);
+
+            return View("friends", viewModel);
+        }
+
+        [Route("inbox")]
+        public async Task<ActionResult> Inbox()
+        {
+            var viewModel = await _messageService.GetByReceiver(AuthService.CurrentUserId());
+            return View(viewModel);
+        }
+
+        #region Private Methods
+        private async Task<List<TrophieViewModel>> GetTrophies(string userId)
+        {
+            var userTophies = (await _trophyService.GetUsersTrophies(userId, Language)).ToList();
+            var trophies = await _trophyService.GetAll(Language);
+
+            return (from trophy in trophies
+                    let userTrophy = userTophies.FirstOrDefault(i => i.TrophyId == trophy.TrophyId)
+                    select new TrophieViewModel
+                    {
+                        TrophyName = trophy.Name,
+                        TrophyDescription = trophy.Description,
+                        IconUrl = trophy.IconUrl,
+                        XpEarned = userTrophy == null ? (int?)null : userTrophy.XpAwarded,
+                        AwardDate = userTrophy == null ? (DateTime?)null : userTrophy.CreatedUtc,
+                        Earned = userTrophy != null
+                    }).ToList();
+        }
+
+        private async Task<List<UserProfileViewModel>> GetFriendsModel(IReadOnlyCollection<ApplicationUser> friends)
+        {
+            var viewModel = new List<UserProfileViewModel>();
+            foreach (var friend in friends)
+            {
+                friend.AvatarUrl = friend.ProfileStatus == UserProfileStatus.Private ? "//az712326.vo.msecnd.net/assets/no-image-512x512-635627099896729695.png" : friend.AvatarUrl;
+                viewModel.Add(new UserProfileViewModel(friend)
+                {
+                    Trophies = await _trophyService.GetTrophies(friend.Id, Language),
+                    AreFriends = await _friendService.AreFriends(friend.Id, AuthService.CurrentUserId()),
+                    SentFriendRequestBefore = await _friendService.SentBefore(AuthService.CurrentUserId(), friend.Id),
+                    Friends = await _friendService.GetFriends(friend.Id),
+                    Me = friend.UserName == (await AuthService.CurrentUser()).UserName
+                });
+            }
+            return viewModel;
+        }
+        #endregion
     }
 }

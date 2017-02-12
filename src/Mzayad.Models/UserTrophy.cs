@@ -23,6 +23,6 @@ namespace Mzayad.Models
 
         public virtual Trophy Trophy { get; set; }
 
-        public virtual ApplicationUser Users { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }
