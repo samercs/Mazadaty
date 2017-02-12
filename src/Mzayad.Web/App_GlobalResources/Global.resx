@@ -855,4 +855,106 @@
   <data name="BidTwiceErrorMessage" xml:space="preserve">
     <value>You cannot bid twice in a row</value>
   </data>
+  <data name="Accept" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="AreSure" xml:space="preserve">
+    <value>Are you sure?</value>
+  </data>
+  <data name="CancelRequest" xml:space="preserve">
+    <value>Cancel Request</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>Send Message</value>
+  </data>
+  <data name="Decline" xml:space="preserve">
+    <value>Decline</value>
+  </data>
+  <data name="FriendRequest" xml:space="preserve">
+    <value>Friend Request</value>
+  </data>
+  <data name="FriendRequests" xml:space="preserve">
+    <value>Friend Requests</value>
+  </data>
+  <data name="Friends" xml:space="preserve">
+    <value>Friends</value>
+  </data>
+  <data name="AcceptFriendRequest" xml:space="preserve">
+    <value>Accept Friend Request</value>
+  </data>
+  <data name="Click" xml:space="preserve">
+    <value>Click</value>
+  </data>
+  <data name="DeclineFriendRequest" xml:space="preserve">
+    <value>Decline Friend Request</value>
+  </data>
+  <data name="Friend" xml:space="preserve">
+    <value>Friend</value>
+  </data>
+  <data name="FriendActionFailMessage" xml:space="preserve">
+    <value>Oops sorry, you action not saved, please try later.</value>
+  </data>
+  <data name="FriendActionSuccessMessage" xml:space="preserve">
+    <value>Your action has been saved successfully.</value>
+  </data>
+  <data name="FriendRequestFailMessage" xml:space="preserve">
+    <value>Oops sorry, your request not sent, please try later.</value>
+  </data>
+  <data name="FriendRequestSent" xml:space="preserve">
+    <value>Friend Request Sent</value>
+  </data>
+  <data name="FriendRequestSuccessMessage" xml:space="preserve">
+    <value>Your request has been sent successfully.</value>
+  </data>
+  <data name="Here" xml:space="preserve">
+    <value>Here</value>
+  </data>
+  <data name="NoFriendRequests" xml:space="preserve">
+    <value>No friend requests.</value>
+  </data>
+  <data name="NoFriends" xml:space="preserve">
+    <value>You have no friends!</value>
+  </data>
+  <data name="PrivateProfileMessage" xml:space="preserve">
+    <value>This Profile is private!</value>
+  </data>
+  <data name="SendFriendRequest" xml:space="preserve">
+    <value>Send Friend Request</value>
+  </data>
+  <data name="TheFriends" xml:space="preserve">
+    <value>Friends</value>
+  </data>
+  <data name="ToSendFriendRequestMessage" xml:space="preserve">
+    <value>to send friend request.</value>
+  </data>
+  <data name="RemoveFriend" xml:space="preserve">
+    <value>unfriend</value>
+  </data>
+  <data name="RemoveFriendSuccessfullyMessage" xml:space="preserve">
+    <value>This user has been removed successfully from your friends list.</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="EmptyMessageErrorMessage" xml:space="preserve">
+    <value>Please type your message.</value>
+  </data>
+  <data name="Inbox" xml:space="preserve">
+    <value>Inbox</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="MessageSentSuccessfully" xml:space="preserve">
+    <value>Your message has been sent successfully</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>more...</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="Reply" xml:space="preserve">
+    <value>Reply</value>
+  </data>
 </root>

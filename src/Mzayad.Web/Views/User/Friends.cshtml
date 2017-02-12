@@ -1,0 +1,143 @@
+﻿@using OrangeJetpack.Base.Web
+
+@model IEnumerable<Mzayad.Web.Models.User.UserProfileViewModel>
+
+@{
+    ViewBag.Title = Global.TheFriends;
+}
+<div id="dvMessage">
+    @if (ViewBag.MessageSent != null)
+    {
+        @Html.StatusMessage(Global.MessageSentSuccessfully, StatusMessageType.Success)
+    }
+</div>
+
+@if (!Model.Any())
+{
+    @Html.StatusMessage(Global.NoFriends, StatusMessageType.Information)
+    return;
+}
+
+<div class="panel dashboard-panel">
+    <div class="panel-body">
+        @foreach (var item in Model)
+            {
+            <div id="dashboard-header">
+                <div class="row" id="dv_@item.User.Id">
+                    @if (item.User.ProfileStatus == Mzayad.Models.Enum.UserProfileStatus.Private && !item.AreFriends && !item.Me)
+                    {
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div id="dashboard-avatar">
+                                        <img class="img-responsive" src="@item.User.AvatarUrl" alt="@item.User.UserName" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div id="dashboard-details" class="dashboard-cell">
+                                        <div id="dashboard-username" class="text-uppercase">
+                                            <a href="@Url.Action("UserProfile", "User", new { area = "", userName = item.User.UserName })" style="color:#33ace0">@item.User.UserName</a>
+                                        </div>
+                                        <div class="dashboard-label" style="font-size:1.05em;margin-top:5px;">
+                                            @(Global.PrivateProfileMessage + " " + Global.Click) <span style="cursor:pointer;text-decoration:underline" onclick="friendRequest('@item.User.UserName')">@Global.Here</span> @Global.ToSendFriendRequestMessage
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div id="dashboard-avatar">
+                                        <img class="img-responsive" src="@item.User.AvatarUrl" alt="@item.User.UserName" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div id="dashboard-details" class="dashboard-cell">
+                                        <div id="dashboard-username" class="text-uppercase">
+                                            <a href="@Url.Action("UserProfile", "User", new { area = "",  userName = item.User.UserName })" style="color:#33ace0">@item.User.UserName</a>
+                                        </div>
+                                        <div id="dashboard-level" class="text-uppercase">
+                                            @Global.Level @item.User.Level
+                                        </div>
+                                        <div id="dashboard-progress">
+                                            <div class="progress pull-left">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="@item.LevelPercentage" aria-valuemin="0" aria-valuemax="100" style="width: @item.LevelPercentage%;">
+                                                    <span class="sr-only">@item.LevelPercentage% Complete</span>
+                                                </div>
+                                            </div>
+                                            <small>@(item.User.Xp)/@(item.NextLevel.XpRequired)</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="dashboard-cell">
+                                        <div class="dashboard-number">@item.User.Xp</div>
+                                        <div class="dashboard-label text-uppercase">@Global.Experience</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a href="@Url.Action("UserTrophies", "User")" class="dashboard-cell">
+                                        <div class="dashboard-number">@item.Trophies.Count</div>
+                                        <div class="dashboard-label text-uppercase">@Global.Trophies</div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a href="@Url.Action("UserFriends", "User", new { userName = item.User.UserName })" class="dashboard-cell">
+                                        <div class="dashboard-number">@item.Friends.Count</div>
+                                        <div class="dashboard-label text-uppercase">@(item.Friends.Count == 1 ? Global.Friend : Global.Friends)</div>
+                                    </a>
+                                </div>
+                            </div>
+                            @if (item.AreFriends && !item.Me)
+                            {
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align:right;padding-right:45px;">
+                                        <a class="btn btn-default btn-rounded text-uppercase" style="padding: 5px 20px;margin-bottom: 10px;"
+                                           href="@Url.Action("SendMessage", "Friends", new { area = "", userName = item.User.UserName })">
+                                            <i class="fa fa-fw fa-envelope"></i>
+                                            @Global.Chat
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        function friendRequest(username) {
+            $.ajax({
+                url: '@Url.Content("~/friends/sendrequest")',
+                type: 'POST',
+                data: { 'userName': username },
+                dataType: 'json',
+                success: function (e) {
+                    if (e == '1') {
+                        $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.FriendRequestSuccessMessage,StatusMessageType.Success).ToString().Replace("'","\""))');
+                    }
+                    else {
+                        $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.FriendRequestFailMessage, StatusMessageType.Error).ToString().Replace("'","\""))');
+                    }
+                },
+                error: function () {
+                    $('#dvMessage').html('@Html.Raw(Html.StatusMessage(Global.FriendRequestFailMessage, StatusMessageType.Error).ToString().Replace("'","\""))');
+                }
+            });
+        }
+
+    </script>
+}
+

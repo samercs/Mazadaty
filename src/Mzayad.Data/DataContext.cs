@@ -44,6 +44,9 @@ namespace Mzayad.Data
         public IDbSet<Prize> Prizes { get; set; }
         public IDbSet<UserPrizeLog> UserPrizeLogs { get; set; }
         public IDbSet<UserAvatar> UserAvatars { get; set; }
+        public IDbSet<UserFriend> UsersFriends { get; set; }
+        public IDbSet<FriendRequest> FriendsRequests { get; set; }
+        public IDbSet<Message> Messages { get; set; }
 
         public DataContext() : base("DefaultConnection")
         {

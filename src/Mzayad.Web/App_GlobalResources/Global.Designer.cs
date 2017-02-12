@@ -70,6 +70,24 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accept.
+        /// </summary>
+        public static string Accept {
+            get {
+                return ResourceManager.GetString("Accept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accept Friend Request.
+        /// </summary>
+        public static string AcceptFriendRequest {
+            get {
+                return ResourceManager.GetString("AcceptFriendRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Added.
         /// </summary>
         public static string Added {
@@ -165,6 +183,15 @@ namespace Mzayad.Web.Resources {
         public static string AreaRequiredErrorMessage {
             get {
                 return ResourceManager.GetString("AreaRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure?.
+        /// </summary>
+        public static string AreSure {
+            get {
+                return ResourceManager.GetString("AreSure", resourceCulture);
             }
         }
         
@@ -448,6 +475,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel Request.
+        /// </summary>
+        public static string CancelRequest {
+            get {
+                return ResourceManager.GetString("CancelRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Categories.
         /// </summary>
         public static string Categories {
@@ -484,6 +520,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Send Message.
+        /// </summary>
+        public static string Chat {
+            get {
+                return ResourceManager.GetString("Chat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to City.
         /// </summary>
         public static string City {
@@ -502,11 +547,29 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click.
+        /// </summary>
+        public static string Click {
+            get {
+                return ResourceManager.GetString("Click", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Click To Select.
         /// </summary>
         public static string ClickToSelect {
             get {
                 return ResourceManager.GetString("ClickToSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
             }
         }
         
@@ -655,6 +718,24 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Decline.
+        /// </summary>
+        public static string Decline {
+            get {
+                return ResourceManager.GetString("Decline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decline Friend Request.
+        /// </summary>
+        public static string DeclineFriendRequest {
+            get {
+                return ResourceManager.GetString("DeclineFriendRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string Description {
@@ -714,6 +795,15 @@ namespace Mzayad.Web.Resources {
         public static string EmailRequiredErrorMessage {
             get {
                 return ResourceManager.GetString("EmailRequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please type your message..
+        /// </summary>
+        public static string EmptyMessageErrorMessage {
+            get {
+                return ResourceManager.GetString("EmptyMessageErrorMessage", resourceCulture);
             }
         }
         
@@ -790,6 +880,87 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Friend.
+        /// </summary>
+        public static string Friend {
+            get {
+                return ResourceManager.GetString("Friend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops sorry, you action not saved, please try later..
+        /// </summary>
+        public static string FriendActionFailMessage {
+            get {
+                return ResourceManager.GetString("FriendActionFailMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your action has been saved successfully..
+        /// </summary>
+        public static string FriendActionSuccessMessage {
+            get {
+                return ResourceManager.GetString("FriendActionSuccessMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friend Request.
+        /// </summary>
+        public static string FriendRequest {
+            get {
+                return ResourceManager.GetString("FriendRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops sorry, your request not sent, please try later..
+        /// </summary>
+        public static string FriendRequestFailMessage {
+            get {
+                return ResourceManager.GetString("FriendRequestFailMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friend Requests.
+        /// </summary>
+        public static string FriendRequests {
+            get {
+                return ResourceManager.GetString("FriendRequests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friend Request Sent.
+        /// </summary>
+        public static string FriendRequestSent {
+            get {
+                return ResourceManager.GetString("FriendRequestSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your request has been sent successfully..
+        /// </summary>
+        public static string FriendRequestSuccessMessage {
+            get {
+                return ResourceManager.GetString("FriendRequestSuccessMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friends.
+        /// </summary>
+        public static string Friends {
+            get {
+                return ResourceManager.GetString("Friends", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gender.
         /// </summary>
         public static string Gender {
@@ -804,6 +975,15 @@ namespace Mzayad.Web.Resources {
         public static string HelloFirstName {
             get {
                 return ResourceManager.GetString("HelloFirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Here.
+        /// </summary>
+        public static string Here {
+            get {
+                return ResourceManager.GetString("Here", resourceCulture);
             }
         }
         
@@ -831,6 +1011,15 @@ namespace Mzayad.Web.Resources {
         public static string HowItWorks {
             get {
                 return ResourceManager.GetString("HowItWorks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inbox.
+        /// </summary>
+        public static string Inbox {
+            get {
+                return ResourceManager.GetString("Inbox", resourceCulture);
             }
         }
         
@@ -1015,6 +1204,24 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Message.
+        /// </summary>
+        public static string Message {
+            get {
+                return ResourceManager.GetString("Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your message has been sent successfully.
+        /// </summary>
+        public static string MessageSentSuccessfully {
+            get {
+                return ResourceManager.GetString("MessageSentSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Minutes.
         /// </summary>
         public static string Minutes {
@@ -1029,6 +1236,15 @@ namespace Mzayad.Web.Resources {
         public static string Month {
             get {
                 return ResourceManager.GetString("Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to more....
+        /// </summary>
+        public static string More {
+            get {
+                return ResourceManager.GetString("More", resourceCulture);
             }
         }
         
@@ -1164,6 +1380,24 @@ namespace Mzayad.Web.Resources {
         public static string NoEnoughTokensErrorMessage {
             get {
                 return ResourceManager.GetString("NoEnoughTokensErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No friend requests..
+        /// </summary>
+        public static string NoFriendRequests {
+            get {
+                return ResourceManager.GetString("NoFriendRequests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have no friends!.
+        /// </summary>
+        public static string NoFriends {
+            get {
+                return ResourceManager.GetString("NoFriends", resourceCulture);
             }
         }
         
@@ -1438,6 +1672,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This Profile is private!.
+        /// </summary>
+        public static string PrivateProfileMessage {
+            get {
+                return ResourceManager.GetString("PrivateProfileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You won a prize from Zeedli. &lt;a href=&quot;{0}&quot;&gt;Click here to get your prize.&lt;/a&gt;.
         /// </summary>
         public static string PrizeChanceMessage {
@@ -1582,11 +1825,38 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to unfriend.
+        /// </summary>
+        public static string RemoveFriend {
+            get {
+                return ResourceManager.GetString("RemoveFriend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This user has been removed successfully from your friends list..
+        /// </summary>
+        public static string RemoveFriendSuccessfullyMessage {
+            get {
+                return ResourceManager.GetString("RemoveFriendSuccessfullyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove Item.
         /// </summary>
         public static string RemoveItem {
             get {
                 return ResourceManager.GetString("RemoveItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reply.
+        /// </summary>
+        public static string Reply {
+            get {
+                return ResourceManager.GetString("Reply", resourceCulture);
             }
         }
         
@@ -1722,6 +1992,24 @@ namespace Mzayad.Web.Resources {
         public static string SelectAvatarErrorMessage {
             get {
                 return ResourceManager.GetString("SelectAvatarErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send.
+        /// </summary>
+        public static string Send {
+            get {
+                return ResourceManager.GetString("Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send Friend Request.
+        /// </summary>
+        public static string SendFriendRequest {
+            get {
+                return ResourceManager.GetString("SendFriendRequest", resourceCulture);
             }
         }
         
@@ -2032,6 +2320,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Friends.
+        /// </summary>
+        public static string TheFriends {
+            get {
+                return ResourceManager.GetString("TheFriends", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Time Left in Auction.
         /// </summary>
         public static string TimeLeft {
@@ -2046,6 +2343,15 @@ namespace Mzayad.Web.Resources {
         public static string Tokens {
             get {
                 return ResourceManager.GetString("Tokens", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to to send friend request..
+        /// </summary>
+        public static string ToSendFriendRequestMessage {
+            get {
+                return ResourceManager.GetString("ToSendFriendRequestMessage", resourceCulture);
             }
         }
         

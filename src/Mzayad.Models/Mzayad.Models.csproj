@@ -89,6 +89,7 @@
     <Compile Include="Enums\ActivityType.cs" />
     <Compile Include="Enums\AuctionStatus.cs" />
     <Compile Include="Enums\BidType.cs" />
+    <Compile Include="Enums\FriendRequestStatus.cs" />
     <Compile Include="Enums\Gender.cs" />
     <Compile Include="Enums\OrderStatus.cs" />
     <Compile Include="Enums\PaymentMethod.cs" />
@@ -101,6 +102,9 @@
     <Compile Include="Enums\UserProfileStatus.cs" />
     <Compile Include="Enums\TrophyKey.cs" />
     <Compile Include="Enums\UserSubscriptionStatus.cs" />
+    <Compile Include="FriendRequest.cs" />
+    <Compile Include="Message.cs" />
+    <Compile Include="UserFriend.cs" />
     <Compile Include="IslamicCalendar.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Order.cs" />

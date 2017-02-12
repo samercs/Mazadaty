@@ -418,6 +418,7 @@
     <Compile Include="Controllers\AuctionsController.cs" />
     <Compile Include="Controllers\AutoBidController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\FriendsController.cs" />
     <Compile Include="Controllers\KnetController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
@@ -502,6 +503,8 @@
     <Compile Include="Models\User\MyAvatarsViewModel.cs" />
     <Compile Include="Models\User\NotificationModelView.cs" />
     <Compile Include="Models\User\TrophieViewModel.cs" />
+    <Compile Include="Models\User\UserProfileViewModel.cs" />
+    <Compile Include="Models\User\FriendRequestsViewModel.cs" />
     <Compile Include="Models\WishList\AddViewModel.cs" />
     <Compile Include="Models\WishList\IndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -827,6 +830,9 @@
     <Content Include="Views\Shared\_UserPrizeNotification.cshtml" />
     <Content Include="Views\User\MyAvatars.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\PhoneNumber.cshtml" />
+    <Content Include="Views\User\UserProfile.cshtml" />
+    <Content Include="Views\User\Friends.cshtml" />
+    <Content Include="Views\User\Inbox.cshtml" />
     <TypeScriptCompile Include="Scripts\auctions.ts" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />
@@ -842,6 +848,8 @@
     <Content Include="Views\Home\ContactUs.cshtml" />
     <Content Include="Views\Auctions\Closed.cshtml" />
     <Content Include="Views\AutoBid\Edit.cshtml" />
+    <Content Include="Views\Friends\Requests.cshtml" />
+    <Content Include="Views\Friends\SendMessage.cshtml" />
     <None Include="Views\Home\SignalR.cshtml" />
     <Content Include="404.html" />
     <Content Include="500.html" />
