@@ -53,27 +53,24 @@
         var renderSubscription = function(subscription) {
             switch (subscription) {
             case 1:
-                return '<div class="label label-default">No Subscription</div>';
-                break;
+                return '<div class="label label-default">None</div>';
             case 2:
-                return '<div class="label label-danger">Expired Subscription</div>';
-                break;
+                return '<div class="label label-danger">Expired</div>';
             case 3:
-                return '<div class="label label-success">Active Subscription</div>';
-                break;
+                return '<div class="label label-success">Active</div>';
             default:
             }
 
         };
 
         var renderExpiration = function(expire) {
-            if (expire == 0) {
+            if (expire === 0) {
                 return '';
             }
             if (expire > 1) {
-                return expire + ' Days';
+                return expire + ' days';
             } else {
-                return '1 Day';
+                return '1 day';
             }
         }
     </script>
