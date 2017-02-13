@@ -21,7 +21,7 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                if (!ValidateBid(dc, bid.AuctionId, bid.UserId).Result)
+                if (!ValidateBid(dc, bid).Result)
                 {
                     return false;
                 }
@@ -37,7 +37,7 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
 
-                if (!await ValidateBid(dc, bid.AuctionId, bid.UserId))
+                if (!await ValidateBid(dc, bid))
                 {
                     return false;
                 }
@@ -48,20 +48,25 @@ namespace Mzayad.Services
             }
         }
 
-        private static async Task<bool> ValidateBid(IDataContext dc, int auctionId, string userId)
+        private static async Task<bool> ValidateBid(IDataContext dc, Bid bid)
         {
-            var lastBid = await dc.Bids
-                .Include(i => i.Auction)
-                .Where(i => i.AuctionId == auctionId)
-                .OrderByDescending(i => i.BidId)
-                .FirstOrDefaultAsync();
+            var auction = await dc.Auctions
+            .Where(i => i.AuctionId == bid.AuctionId)
+            .Where(i => i.Status == AuctionStatus.Public)
+            .Select(i => new
+            {
+                i.AuctionId,
+                LastBidUserId = i.Bids.OrderByDescending(j => j.BidId)
+                    .Select(j => j.UserId)
+                    .FirstOrDefault()
+            }).SingleOrDefaultAsync();
 
-            if (lastBid != null && lastBid.UserId == userId)
+            if (auction == null)
             {
                 return false;
             }
 
-            return lastBid == null || (lastBid.Auction.Status == AuctionStatus.Public && !lastBid.Auction.WonByBidId.HasValue);
+            return auction.LastBidUserId == null || auction.LastBidUserId != bid.UserId;
         }
 
 
