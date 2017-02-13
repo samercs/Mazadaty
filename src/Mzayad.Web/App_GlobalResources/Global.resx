@@ -957,4 +957,10 @@
   <data name="Reply" xml:space="preserve">
     <value>Reply</value>
   </data>
+  <data name="Duration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="MinuteAbbreviation" xml:space="preserve">
+    <value>min</value>
+  </data>
 </root>
