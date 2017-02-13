@@ -825,6 +825,17 @@ input[type="checkbox"].input-validation-error {
   text-overflow: ellipsis;
   text-align: left;
 }
+.auction-bid-form {
+  direction: ltr !important;
+}
+.auction-coming-header {
+  background-color: #33ace0;
+  color: #fff;
+  padding: 5px;
+}
+.auction-coming-header .duration {
+  font-size: 13px;
+}
 #dashboard-header {
   background-color: #262626;
   margin-bottom: 20px;

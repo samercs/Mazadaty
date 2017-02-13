@@ -130,7 +130,7 @@ namespace Mzayad.Web.SignalR
                 {
                     auction.UpdateSecondsLeft();
 
-                    if (auction.SecondsLeft <= 0)
+                    if (auction.SecondsLeft < 0)
                     {
                         CloseAuction(auction.AuctionId);
 

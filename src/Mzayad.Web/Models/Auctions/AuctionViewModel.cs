@@ -31,6 +31,7 @@ namespace Mzayad.Web.Models.Auctions
         public AuctionType Type { get; set; }
         public decimal? MaximumBid { get; set; }
         public decimal BidIncrement { get; set; }
+        public  int Duration { get; set; }
         //public IReadOnlyCollection<AuctionImageViewModel> Images { get; set; }
         //public IReadOnlyCollection<ProductSpecificationViewModel> Specifications { get; set; }
 
@@ -56,7 +57,8 @@ namespace Mzayad.Web.Models.Auctions
                 ProductId = auction.ProductId,
                 CountryList = auction.CountryList,
                 MaximumBid = auction.MaximumBid,
-                BidIncrement = auction.BidIncrement
+                BidIncrement = auction.BidIncrement,
+                Duration = auction.Duration
                 //Images = GetImages(auction)
                 //Specifications = GetSpecifications(auction.Product.ProductSpecifications)
             };

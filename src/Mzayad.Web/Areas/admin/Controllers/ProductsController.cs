@@ -146,9 +146,13 @@ namespace Mzayad.Web.Areas.admin.Controllers
             }
 
             model.Product.Description = description.Serialize();
+            ModelState["Product.Name"].Errors.Clear();
+            ModelState["Product.Description"].Errors.Clear();
 
             if (!TryUpdateModel(product, "Product"))
             {
+                model = await model.Hydrate(_productService, _categoryService, _specificationService, _sponsorService, product,
+                    Language);
                 return View(model);
             }
 

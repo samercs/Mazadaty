@@ -11,7 +11,7 @@
                 <div class="form-group">
                     @Html.LabelFor(i => i.Subscription.Name, "Name").Required("Required")
                     @Html.EditorFor(i => i.Subscription.Name, Model)
-                    @Html.ValidationMessageFor(i => i.Subscription.Name, "Please enter a product name.")
+                    @Html.ValidationMessageFor(i => i.Subscription.Name, "Please enter a subscription name.")
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(i => i.Subscription.Status, "Status").Required()

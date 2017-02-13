@@ -1,10 +1,11 @@
 ﻿@using Mzayad.Web.Core.Enums
 @using Mzayad.Web.Models.Auctions
 @using OrangeJetpack.Base.Core.Formatting
-@model Mzayad.Web.Models.Auctions.AuctionViewModel
+@model AuctionViewModel
 
-@helper RenderCountry(string countries){
-var countriesArray =  Model.CountryList?.Split(',') ?? new string[0];
+@helper RenderCountry(string countries)
+{
+var countriesArray = Model.CountryList?.Split(',') ?? new string[0];
 var resultHtml = "";
 foreach (var country in countriesArray)
 {
@@ -17,15 +18,34 @@ foreach (var country in countriesArray)
 }
 
 <div class="auction-tile">
+    @if (Model.StartUtc > DateTime.UtcNow)
+    {
+        <div class="auction-coming-header">
+            <div class="row">
+                <div class="col-md-4 pull-left">
+                    <span>@Model.StartUtc.ToString("dd/MM/yyyy")</span>
+                </div>
+                <div class="col-md-8 pull-right text-right">
+                    <div>
+                        <span>@Model.StartUtc.AddHours(3).ToString("hh:mm")</span>    
+                    </div>
+                    
+                    <div class="duration">
+                        @Global.Duration @Model.Duration @Global.MinuteAbbreviation
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
     <div class="auction-tile-image">
-        <a href="@Url.Action("Index", "Products", new { productId = Model.ProductId })">
+        <a href="@Url.Action("Index", "Products", new {productId = Model.ProductId})">
             <img class="img-responsive" src="@Model.ImageUrl" alt="@Model.Title" />
             <div class="sponsor-ribbon"><span>@Model.SponsorName</span></div>
             @RenderCountry(Model.CountryList)
         </a>
     </div>
     <div class="auction-tile-details">
-        <a href="@Url.Action("Index", "Products", new { productId = Model.ProductId })">
+        <a href="@Url.Action("Index", "Products", new {productId = Model.ProductId})">
             <h3 class="auction-tile-title auction-tile-row">@Model.Title</h3>
         </a>
         <div class="auction-tile-prices auction-tile-row">
@@ -43,7 +63,9 @@ foreach (var country in countriesArray)
         {
             <div class="auction-tile-won-by-avater auction-tile-row">
                 <img src="@Model.WonByAvatarUrl" alt="@Model.WonByUserName" width="64" height="64" />
-                <div class="auction-title-username"><a href="@Url.Action("UserProfile", "User", new { language = LanguageCode, userName = Model.WonByUserName })">@Model.WonByUserName</a></div>
+                <div class="auction-title-username">
+                    <a href="@Url.Action("UserProfile", "User", new {language = LanguageCode, userName = Model.WonByUserName})">@Model.WonByUserName</a>
+                </div>
             </div>
         }
         @if (Model.BuyNowEnabled)
@@ -62,7 +84,7 @@ foreach (var country in countriesArray)
         @if (Model.Status == AuctionType.Upcoming.ToString())
         {
             <div class="auction-tile-row">
-                <a class="btn btn-rounded btn-outline btn-unstyled" href="@Url.Action("Edit", "AutoBid", new { auctionId = Model.AuctionId})">@Global.SetAutoBid</a>
+                <a class="btn btn-rounded btn-outline btn-unstyled" href="@Url.Action("Edit", "AutoBid", new {auctionId = Model.AuctionId})">@Global.SetAutoBid</a>
             </div>
         }
 

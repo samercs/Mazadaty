@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Mzayad.Models.Enums;
 
 namespace Mzayad.Services
 {
@@ -20,7 +21,7 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                if (!ValidateDoubleBid(dc, bid.AuctionId, bid.UserId).Result)
+                if (!ValidateBid(dc, bid).Result)
                 {
                     return false;
                 }
@@ -36,7 +37,7 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
 
-                if (!await ValidateDoubleBid(dc, bid.AuctionId, bid.UserId))
+                if (!await ValidateBid(dc, bid))
                 {
                     return false;
                 }
@@ -47,15 +48,27 @@ namespace Mzayad.Services
             }
         }
 
-        private async Task<bool> ValidateDoubleBid(IDataContext dc, int auctionId, string userId)
+        private static async Task<bool> ValidateBid(IDataContext dc, Bid bid)
         {
-            var lastBid = await dc.Bids
-                .Where(i => i.AuctionId == auctionId)
-                .OrderByDescending(i => i.BidId)
-                .FirstOrDefaultAsync();
+            var auction = await dc.Auctions
+            .Where(i => i.AuctionId == bid.AuctionId)
+            .Where(i => i.Status == AuctionStatus.Public)
+            .Select(i => new
+            {
+                i.AuctionId,
+                LastBidUserId = i.Bids.OrderByDescending(j => j.BidId)
+                    .Select(j => j.UserId)
+                    .FirstOrDefault()
+            }).SingleOrDefaultAsync();
 
-            return lastBid == null || lastBid.UserId != userId;
+            if (auction == null)
+            {
+                return false;
+            }
+
+            return auction.LastBidUserId == null || auction.LastBidUserId != bid.UserId;
         }
+
 
         /// <summary>
         /// Gets an auction's bid with the highest amount.
