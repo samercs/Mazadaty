@@ -61,7 +61,7 @@ namespace Mzayad.Web.Models
             var secondsLeft = (int)Math.Floor(StartUtc.AddMinutes(Duration).Subtract(DateTime.UtcNow).TotalSeconds);
             if (secondsLeft < 12)
             {
-                StartUtc = StartUtc.AddSeconds(12);
+                StartUtc = StartUtc.AddSeconds(12 - secondsLeft);
             }
 
             return bid;
