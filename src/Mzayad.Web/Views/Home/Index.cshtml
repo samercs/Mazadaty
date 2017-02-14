@@ -11,9 +11,9 @@
 
 @section styles {
     @Styles.Render("~/css/nivo")
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css"/>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/content/flags/flags.css"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/bootstrap.min.css" />
+    <link rel="stylesheet" href="/content/flags/flags.css" />
     <style>
         .img-container {
             position: relative;
@@ -36,7 +36,6 @@
         .flag {
             margin-left: 5px !important;
         }
-   
     </style>
 }
 
@@ -123,7 +122,7 @@ else
                                             }
                                         </span>
                                     </div>
-                                    <span id="bidErr" class="text-danger hidden" data-bind="css: {hidden: showBidErr() == false}">@Global.BidTwiceErrorMessage</span>
+                                    <span class="text-danger hidden" data-bind="css: {hidden: showBidErr() == false}">@Global.BidTwiceErrorMessage</span>
                                     <ol class="auction-recent-bids" data-bind="foreach: bidsReversed">
                                         <li>
                                             <div class="pull-left">
@@ -132,7 +131,7 @@ else
                                             <div class="auction-recent-username pull-left">
                                                 <a data-bind="attr:{href : '@Url.Content("~/"+ LanguageCode+ "/profiles/")'+userName}">
                                                     <span data-bind="text: userName"></span>
-                                            </a>
+                                                </a>
                                             </div>
                                             <div class="auction-recent-bidamount pull-right">
                                                 KD <span data-bind="text: bidAmount"></span>
@@ -259,6 +258,7 @@ else
                 self.sponsorName = data.sponsorName;
                 self.maximumBid = data.maximumBid;
                 self.bidIncrement = data.bidIncrement;
+                self.trySetBid = false;
 
                 self.bids = ko.observableArray(data.bids);
                 self.status = ko.observable(data.status);
@@ -269,14 +269,8 @@ else
                 self.showBidErr = ko.observable(false);
 
                 self.showBidErr = ko.computed(function() {
-                    console.log(self.bids().length > 0 && self.bids()[0].userName === userName);
-                    var lastBidder = self.bids().length > 0 && self.bids()[0].userName === userName;
-                    
-                    if (lastBidder && !$("#bidErr").hasClass("hidden")) {
-                        return true;
-                    }
-
-                    return false;
+                    var isLastBidder = self.bids().length > 0 && self.bids()[0].userName === userName;
+                    return isLastBidder && self.trySetBid;
                 });
 
                 self.bidsReversed = ko.computed(function() {
@@ -324,20 +318,17 @@ else
 
                 self.submitBid = function() {
                     var userInBids = false;
-                    var lastBidder = false;
                     for (var i = 0; i < self.bids().length; i++) {
-                        if (self.bids()[0].userName === userName) {
-                            lastBidder = true;
-                        }
-
                         if (self.bids()[i].userName == userName) {
                             userInBids = true;
                         }
                     }
 
-                    if (lastBidder) {
-                        $("#bidErr").removeClass("hidden");
+                    if (self.bids().length > 0 && self.bids()[0].userName === userName) {
+                        self.trySetBid = true;
                         return false;
+                    } else {
+                        self.trySetBid = false;
                     }
 
                     if (self.countryList() != "" &&
