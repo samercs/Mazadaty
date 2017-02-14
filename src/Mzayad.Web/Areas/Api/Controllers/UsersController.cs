@@ -58,13 +58,15 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 return NotFound();
             }
 
+            var address = await _addressService.GetAddress(applicationUser.AddressId);
             var user = new UserModel
             {
                 UserId = applicationUser.Id,
                 FullName = NameFormatter.GetFullName(applicationUser.FirstName, applicationUser.LastName),
                 UserName = applicationUser.UserName,
                 Email = applicationUser.Email,
-                AvatarUrl = applicationUser.AvatarUrl
+                AvatarUrl = applicationUser.AvatarUrl,
+                CountryCode = address.CountryCode
             };
 
             return Ok(user);
