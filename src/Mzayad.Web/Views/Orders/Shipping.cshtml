@@ -22,7 +22,7 @@
 <div class="row">
     <div class="@Html.Css().FormNormal">
 
-        @using (Html.BeginForm())
+        @using (Html.BeginForm("Shipping", "Orders", new { orderId = Model.Order.OrderId }))
         {
             @Html.AntiForgeryToken()
 
@@ -33,7 +33,7 @@
                     @Html.ValidationMessageFor(m => m.ShippingAddress.Name, Global.FirstNameRequiredErrorMessage)
                 </div>
 
-               @Html.EditorFor(i => i.PhoneNumberViewModel, "PhoneNumber", Model.PhoneNumberViewModel)
+                @Html.EditorFor(i => i.PhoneNumberViewModel, "PhoneNumber", Model.PhoneNumberViewModel)
             </section>
 
             @Html.EditorFor(m => m.AddressViewModel)
