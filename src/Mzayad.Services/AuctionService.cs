@@ -63,7 +63,9 @@ namespace Mzayad.Services
                 var auctions = await GetAuctionsQuery(dc, AuctionStatus.Public)
                     .ToListAsync();
 
-                auctions = auctions.OrderBy(i => i.StartUtc.AddMinutes(i.Duration)).ToList();
+                auctions = auctions
+                    .Where(i=>i.IsLive())
+                    .OrderBy(i => i.StartUtc.AddMinutes(i.Duration)).ToList();
                 return LocalizeAuctions(language, auctions);
             }
         }
