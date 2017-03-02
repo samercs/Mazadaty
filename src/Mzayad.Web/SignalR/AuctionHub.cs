@@ -24,9 +24,9 @@ namespace Mzayad.Web.SignalR
             return await _auctionHandler.InitAuctions(auctionIds);
         }
 
-        public async Task SubmitBid(int auctionId, string userId)
+        public void SubmitBid(int auctionId, string userId)
         {
-            await _auctionHandler.SubmitBid(auctionId, userId, GetIpAddress());
+            _auctionHandler.SubmitBid(auctionId, userId, GetIpAddress());
         }
 
         protected string GetIpAddress()

@@ -1,13 +1,13 @@
 ﻿using Mzayad.Core.Extensions;
 using Mzayad.Data;
 using Mzayad.Models;
+using Mzayad.Models.Enums;
 using OrangeJetpack.Localization;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using Mzayad.Models.Enums;
 
 namespace Mzayad.Services
 {
@@ -17,34 +17,21 @@ namespace Mzayad.Services
         {
         }
 
-        public bool AddBid(Bid bid)
+        public Bid AddBid(Bid bid)
         {
             using (var dc = DataContext())
             {
-                if (!ValidateBid(dc, bid).Result)
+                if (!dc.Auctions.Any(i => i.AuctionId == bid.AuctionId && i.Status == AuctionStatus.Public))
                 {
-                    return false;
+                    return null;
                 }
 
                 dc.Bids.Add(bid);
                 dc.SaveChanges();
-                return true;
-            }
-        }
 
-        public async Task<bool> AddBidAsync(Bid bid)
-        {
-            using (var dc = DataContext())
-            {
-
-                if (!await ValidateBid(dc, bid))
-                {
-                    return false;
-                }
-
-                dc.Bids.Add(bid);
-                await dc.SaveChangesAsync();
-                return true;
+                return dc.Bids
+                    .Include(i => i.User)
+                    .SingleOrDefault(i => i.BidId == bid.BidId);
             }
         }
 

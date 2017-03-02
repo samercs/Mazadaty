@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Mzayad.Data;
+using Mzayad.Models;
+using Mzayad.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using Mzayad.Data;
-using Mzayad.Models;
 using System.Threading.Tasks;
-using Mzayad.Models.Enum;
-using Mzayad.Models.Enums;
 
 namespace Mzayad.Services
 {

@@ -9,6 +9,7 @@ namespace Mzayad.Web.Models
     internal class BidModel
     {
         public string AvatarUrl { get; set; }
+        public string UserId { get; set; }
         public string UserName { get; set; }
         public decimal BidAmount { get; set; }
 
@@ -17,17 +18,17 @@ namespace Mzayad.Web.Models
             return new BidModel
             {
                 AvatarUrl = bid.User.AvatarUrl,
+                UserId = bid.User.Id,
                 UserName = bid.User.UserName,
                 BidAmount = bid.Amount
             };
         }
 
-        internal static Queue<BidModel> Create(IEnumerable<Bid> bids)
+        internal static LinkedList<BidModel> Create(IEnumerable<Bid> bids)
         {
-            return new Queue<BidModel>(bids
+            return new LinkedList<BidModel>(bids
                 .OrderByDescending(i => i.BidId)
                 .Take(3)
-                .OrderBy(i => i.BidId)
                 .Select(Create));
         }
     }

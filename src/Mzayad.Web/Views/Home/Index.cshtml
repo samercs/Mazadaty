@@ -420,7 +420,8 @@ else
             auctionHub.client.updateAuctions = function(results) {
 
                 var auctionJson = $.parseJSON(results);
-                //console.log('model .... ', results);
+                console.log("auctionHub.client.updateAuctions", results);
+                
                 for (var i = 0, len = auctionJson.length; i < len; ++i) {
                     var auction = auctionJson[i];
                     var model = viewModel.getAuction(auction.auctionId);

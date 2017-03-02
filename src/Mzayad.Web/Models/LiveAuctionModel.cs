@@ -10,13 +10,14 @@ namespace Mzayad.Web.Models
     {
         public int AuctionId { get; set; }
         public int SecondsLeft { get; set; }
-        public decimal? LastBidAmount { get; set; }
+        public decimal LastBidAmount { get; set; }
+        public string LastBidUserId { get; set; }
 
         public DateTime StartUtc;
         public int Duration;
         public decimal BidIncrement;
 
-        public Queue<BidModel> Bids { get; set; }
+        public LinkedList<BidModel> Bids { get; set; }
 
         public static LiveAuctionModel Create(Auction auction)
         {
@@ -29,48 +30,61 @@ namespace Mzayad.Web.Models
                 Bids = BidModel.Create(auction.Bids)
             };
 
-            model.LastBidAmount = model.Bids.Any() ? model.Bids.Max(i => i.BidAmount) : 0;
+            var lastBid = model.Bids.FirstOrDefault();
+            if (lastBid != null)
+            {
+                model.LastBidAmount = lastBid.BidAmount;
+                model.LastBidUserId = lastBid.UserName;
+            }
+
             model.UpdateSecondsLeft();
 
             return model;
         }
 
-        internal void UpdateSecondsLeft()
+        internal int GetSecondsList()
         {
-            SecondsLeft = (int)Math.Floor(StartUtc.AddMinutes(Duration).Subtract(DateTime.UtcNow).TotalSeconds);
+           return (int)Math.Floor(StartUtc.AddMinutes(Duration).Subtract(DateTime.UtcNow).TotalSeconds);
         }
 
-        public BidModel AddBid(ApplicationUser user)
+        internal void UpdateSecondsLeft()
         {
-            LastBidAmount = GetNewBidAmount();
+            SecondsLeft = GetSecondsList();
+        }
 
-            var bid = new BidModel
+        public BidModel AddBid(Bid bid)
+        {
+            LastBidAmount = bid.Amount;
+            LastBidUserId = bid.UserId;
+
+            var bidModel = new BidModel
             {
-                AvatarUrl = user.AvatarUrl,
-                UserName = user.UserName,
-                BidAmount = LastBidAmount.Value
+                AvatarUrl = bid.User.AvatarUrl,
+                UserId = bid.UserId,
+                UserName = bid.User.UserName,
+                BidAmount = bid.Amount
             };
 
-            Bids.Enqueue(bid);
+            Bids.AddFirst(bidModel);
 
             while (Bids.Count > 3)
             {
-                Bids.Dequeue();
+                Bids.RemoveLast();
             }
 
-            var secondsLeft = (int)Math.Floor(StartUtc.AddMinutes(Duration).Subtract(DateTime.UtcNow).TotalSeconds);
+            var secondsLeft = GetSecondsList();
             if (secondsLeft < 12)
             {
-                StartUtc = StartUtc.AddSeconds(12 - secondsLeft);
+                StartUtc = DateTime.UtcNow.AddSeconds(12);
+                //StartUtc = StartUtc.AddSeconds(12 - secondsLeft);
             }
 
-            return bid;
+            return bidModel;
         }
 
         public decimal GetNewBidAmount()
         {
-            return LastBidAmount.GetValueOrDefault(0) + BidIncrement;
+            return LastBidAmount + BidIncrement;
         }
-
     }
 }

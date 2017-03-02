@@ -18,6 +18,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Mzayad.Core.Extensions;
+using StackExchange.Redis;
 
 namespace Mzayad.Web.SignalR
 {
@@ -25,13 +27,13 @@ namespace Mzayad.Web.SignalR
     {
         private const int NormalBidXpPoints = 2;
         private const int AutoBidXpPoints = 1;
-        private static readonly Lazy<AuctionHandler> _instance = new Lazy<AuctionHandler>(() => new AuctionHandler(GlobalHost.ConnectionManager.GetHubContext<AuctionHub>().Clients));
+        private static readonly Lazy<AuctionHandler> LazyInstance = new Lazy<AuctionHandler>(() => new AuctionHandler(GlobalHost.ConnectionManager.GetHubContext<AuctionHub>().Clients));
         private readonly object _updateLock = new object();
         private readonly TimeSpan _updateInterval = TimeSpan.FromSeconds(1);
         private volatile bool _updatingAuctions;
         private Timer _timer;
 
-        private IHubConnectionContext<dynamic> Clients { get; set; }
+        private IHubConnectionContext<dynamic> Clients { get; }
 
         private AuctionHandler(IHubConnectionContext<dynamic> clients)
         {
@@ -40,26 +42,28 @@ namespace Mzayad.Web.SignalR
             _timer = new Timer(UpdateAuctions, null, _updateInterval, _updateInterval);
         }
 
-        public static AuctionHandler Instance => _instance.Value;
+        public static AuctionHandler Instance => LazyInstance.Value;
 
-        private ICacheService _cacheService;
-        private IActivityQueueService _activityQueueService;
+        //private ICacheService _cacheService;
+        //private IActivityQueueService _activityQueueService;
         private AuctionService _auctionService;
         private UserService _userService;
         private BidService _bidService;
         private AutoBidService _autoBidService;
+        private IDatabase _cache;
 
         public AuctionHandler Setup(IDataContextFactory dataContextFactory, ICacheService cacheService)
         {
             Trace.TraceInformation("AuctionHandler.Setup()");
 
-            _cacheService = _cacheService ?? cacheService;
+            //_cacheService = _cacheService ?? cacheService;
             _auctionService = _auctionService ?? new AuctionService(dataContextFactory);
             _userService = _userService ?? new UserService(dataContextFactory);
             _bidService = _bidService ?? new BidService(dataContextFactory);
             _autoBidService = _autoBidService ?? new AutoBidService(dataContextFactory);
-            _activityQueueService = _activityQueueService ??
-                new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
+            //_activityQueueService = _activityQueueService ?? new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
+
+            _cache = _cache ?? ConnectionMultiplexer.Connect("localhost").GetDatabase();
 
             return this;
         }
@@ -96,16 +100,28 @@ namespace Mzayad.Web.SignalR
 
         private List<LiveAuctionModel> GetAuctionsFromCache()
         {
-            var auctions = _cacheService.TryGetList(CacheKeys.LiveAuctions, () => new List<LiveAuctionModel>());
+            //var auctions = _cacheService.TryGetList(CacheKeys.LiveAuctions, () => new List<LiveAuctionModel>());
+            var redisValue = _cache.StringGet(CacheKeys.LiveAuctions);
+            if (string.IsNullOrEmpty(redisValue))
+            {
+                return Enumerable.Empty<LiveAuctionModel>().ToList();
+            }
 
-            Trace.TraceInformation($"AuctionHandler.GetAuctionsFromCache(): {Serialize(auctions)}");
+            var auctions = JsonConvert.DeserializeObject<List<LiveAuctionModel>>(redisValue);
 
-            return auctions.ToList();
+            return auctions;
         }
 
         private void SaveAuctionsToCache(IEnumerable<LiveAuctionModel> auctions)
         {
-            _cacheService.SetList(CacheKeys.LiveAuctions, auctions);
+            if (auctions.IsNullOrEmpty())
+            {
+                _cache.KeyDelete(CacheKeys.LiveAuctions);
+                return;
+            }
+
+            _cache.StringSet(CacheKeys.LiveAuctions, JsonConvert.SerializeObject(auctions));
+            //_cacheService.SetList(CacheKeys.LiveAuctions, auctions);
         }
 
         private void UpdateAuctions(object state)
@@ -139,11 +155,11 @@ namespace Mzayad.Web.SignalR
                         continue;
                     }
 
-                    var user = _autoBidService.TryGetAutoBid(auction.AuctionId, auction.SecondsLeft, auction.LastBidAmount);
-                    if (user != null)
-                    {
-                        SubmitAutoBid(auction, user);
-                    }
+                    //var user = _autoBidService.TryGetAutoBid(auction.AuctionId, auction.SecondsLeft, auction.LastBidAmount);
+                    //if (user != null)
+                    //{
+                    //    SubmitAutoBid(auction, user);
+                    //}
                 }
 
                 SaveAuctionsToCache(auctions);
@@ -162,11 +178,11 @@ namespace Mzayad.Web.SignalR
 
             if (order != null)
             {
-                _activityQueueService.QueueActivity(ActivityType.WinAuction, order.UserId);
+                //_activityQueueService.QueueActivity(ActivityType.WinAuction, order.UserId);
             }
         }
 
-        public async Task SubmitBid(int auctionId, string userId, string hostAddress)
+        public void SubmitBid(int auctionId, string userId, string hostAddress)
         {
             if (string.IsNullOrEmpty(userId))
             {
@@ -181,7 +197,12 @@ namespace Mzayad.Web.SignalR
                 return;
             }
 
-            var bid = new Bid
+            if (auction.LastBidUserId == userId)
+            {
+                return;
+            }
+
+            var bid = _bidService.AddBid(new Bid
             {
                 AuctionId = auctionId,
                 UserId = userId,
@@ -189,14 +210,13 @@ namespace Mzayad.Web.SignalR
                 SecondsLeft = auction.SecondsLeft,
                 UserHostAddress = hostAddress,
                 Type = BidType.Manual
-            };
+            });
 
-            if (await _bidService.AddBidAsync(bid))
+            if (bid != null)
             {
-                var user = await _userService.GetUserById(userId);
-                auction.AddBid(user);
-                await _activityQueueService.QueueActivityAsync(ActivityType.SubmitBid, userId);
-                await _activityQueueService.QueueActivityAsync(ActivityType.EarnXp, userId, NormalBidXpPoints);
+                auction.AddBid(bid);
+                //await _activityQueueService.QueueActivityAsync(ActivityType.SubmitBid, userId);
+                //await _activityQueueService.QueueActivityAsync(ActivityType.EarnXp, userId, NormalBidXpPoints);
 
                 SaveAuctionsToCache(auctions);
             }
@@ -214,12 +234,12 @@ namespace Mzayad.Web.SignalR
                 Type = BidType.Auto
             };
 
-            if (_bidService.AddBid(bid))
-            {
-                auction.AddBid(user);
-                _activityQueueService.QueueActivity(ActivityType.AutoBid, user.Id);
-                _activityQueueService.QueueActivityAsync(ActivityType.EarnXp, user.Id, AutoBidXpPoints).ContinueWith(result => { });
-            }
+            //if (_bidService.AddBid(bid))
+            //{
+            //    auction.AddBid(user);
+            //    //_activityQueueService.QueueActivity(ActivityType.AutoBid, user.Id);
+            //    //_activityQueueService.QueueActivityAsync(ActivityType.EarnXp, user.Id, AutoBidXpPoints).ContinueWith(result => { });
+            //}
         }
 
         private static string Serialize(object value)
