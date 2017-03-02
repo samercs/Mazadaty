@@ -11,34 +11,8 @@ namespace Mzayad.Services.Tests
     [TestFixture]
     public class AutoBidServiceTests
     {
-        [TestCase(0, false)]
-        [TestCase(1, true)]
-        [TestCase(2, true)]
-        [TestCase(3, true)]
-        [TestCase(4, true)]
-        [TestCase(5, true)]
-        [TestCase(6, true)]
-        [TestCase(7, true)]
-        [TestCase(8, true)]
-        [TestCase(9, true)]
-        [TestCase(10, true)]
-        [TestCase(11, true)]
-        [TestCase(12, true)]
-        [TestCase(13, false)]
-        [TestCase(14, true)]
-        [TestCase(15, false)]
-        [TestCase(16, true)]
-        [TestCase(48, true)]
-        [TestCase(49, false)]
-        [TestCase(50, false)]
-        [TestCase(51, false)]
-        [TestCase(56, true)]
-        [TestCase(96, true)]
-        [TestCase(192, true)]
-        [TestCase(208, false)]
-        [TestCase(224, true)]
-        [TestCase(1280, true)]
-        public void TryGetAutoBid_UserWithMaxBid_ReturnsExpected(int secondsLeft, bool expectedNotNull)
+        [Test]
+        public void TryGetAutoBid_UserWithMaxBid_ReturnsExpected()
         {
             var dc = new InMemoryDataContext();
             dc.AutoBids.Add(new AutoBid
@@ -53,9 +27,9 @@ namespace Mzayad.Services.Tests
             });
 
             var service = new AutoBidService(new InMemoryDataContextFactory(dc));
-            var user = service.TryGetAutoBid(Constants.AnyInt, secondsLeft, 0);
+            var userId = service.TryGetAutoBid(Constants.AnyInt, "", 0);
 
-            Assert.AreEqual(user != null, expectedNotNull);
+            Assert.AreEqual(userId, Constants.AnyUserId);
         }
 
         [Test]
@@ -76,7 +50,7 @@ namespace Mzayad.Services.Tests
             });
 
             var service = new AutoBidService(new InMemoryDataContextFactory(dc));
-            var user = service.TryGetAutoBid(Constants.AnyInt, 1, lastBidAmount);
+            var user = service.TryGetAutoBid(Constants.AnyInt, "", lastBidAmount);
 
             Assert.IsNull(user);
         }

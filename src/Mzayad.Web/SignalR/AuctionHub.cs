@@ -2,6 +2,7 @@ using Microsoft.AspNet.SignalR;
 using Mzayad.Data;
 using OrangeJetpack.Base.Web.Caching;
 using System.Threading.Tasks;
+using Mzayad.Models.Enums;
 
 namespace Mzayad.Web.SignalR
 {
@@ -26,7 +27,7 @@ namespace Mzayad.Web.SignalR
 
         public void SubmitBid(int auctionId, string userId)
         {
-            _auctionHandler.SubmitBid(auctionId, userId, GetIpAddress());
+            _auctionHandler.SubmitBid(auctionId, userId, BidType.Manual, GetIpAddress());
         }
 
         protected string GetIpAddress()

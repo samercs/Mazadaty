@@ -35,7 +35,7 @@ namespace Mzayad.Services
                     .Where(i => i.Auction.StartUtc >= DbFunctions.AddMinutes(DateTime.UtcNow, 15))
                     .Where(i => i.Auction.StartUtc <= DbFunctions.AddMinutes(DateTime.UtcNow, 75))
                     .Where(i => i.Auction.Status == AuctionStatus.Public)
-                    .Where(i=>i.User.AutoBidNotification)
+                    .Where(i => i.User.AutoBidNotification)
                     .ToListAsync();
             }
         }
@@ -85,25 +85,30 @@ namespace Mzayad.Services
             }
         }
 
-        public ApplicationUser TryGetAutoBid(int auctionId, int secondsLeft, decimal? lastBidAmount)
+        /// <summary>
+        /// Gets whether or not an autobid should be attempted based on the time left in an auction.
+        /// /// </summary>
+        public bool ShouldAutoBid(int secondsLeft)
         {
-            if (secondsLeft <= 0 || !FallsOnAutoBidSecond(secondsLeft))
-            {
-                return null;
-            }
+            var autoBidSeconds = new[] { 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192 };
+            
+            return autoBidSeconds.Contains(secondsLeft);
+        }
 
-            lastBidAmount = lastBidAmount ?? 0;
-
+        /// <summary>
+        /// Gets a user with valid autobid configurations for current auction.
+        /// </summary>
+        public string TryGetAutoBid(int auctionId, string lastBidUserId, decimal lastBidAmount)
+        {
             using (var dc = DataContext())
             {
-                var autoBids = dc.AutoBids
-                    .Include(i=>i.User)
+                return dc.AutoBids
                     .Where(i => i.AuctionId == auctionId)
+                    .Where(i => i.UserId != lastBidUserId)
                     .Where(i => i.MaxBid > lastBidAmount)
                     .OrderBy(c => Guid.NewGuid())
+                    .Select(i => i.UserId)
                     .FirstOrDefault();
-
-                return autoBids?.User;
             }
         }
 

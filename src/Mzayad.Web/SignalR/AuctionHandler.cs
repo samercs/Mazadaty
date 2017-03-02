@@ -155,11 +155,13 @@ namespace Mzayad.Web.SignalR
                         continue;
                     }
 
-                    //var user = _autoBidService.TryGetAutoBid(auction.AuctionId, auction.SecondsLeft, auction.LastBidAmount);
-                    //if (user != null)
-                    //{
-                    //    SubmitAutoBid(auction, user);
-                    //}
+                    if (!_autoBidService.ShouldAutoBid(auction.SecondsLeft))
+                    {
+                        continue;
+                    }
+
+                    var userId = _autoBidService.TryGetAutoBid(auction.AuctionId, auction.LastBidUserId, auction.LastBidAmount);
+                    SubmitBid(auction, userId, BidType.Auto);          
                 }
 
                 SaveAuctionsToCache(auctions);
@@ -182,16 +184,8 @@ namespace Mzayad.Web.SignalR
             }
         }
 
-        public void SubmitBid(int auctionId, string userId, string hostAddress)
+        private void SubmitBid(LiveAuctionModel auction, string userId, BidType bidType, string hostAddress = "0.0.0.0")
         {
-            if (string.IsNullOrEmpty(userId))
-            {
-                return;
-            }
-
-            var auctions = GetAuctionsFromCache();
-
-            var auction = auctions.SingleOrDefault(i => i.AuctionId == auctionId);
             if (auction == null)
             {
                 return;
@@ -204,43 +198,59 @@ namespace Mzayad.Web.SignalR
 
             var bid = _bidService.AddBid(new Bid
             {
-                AuctionId = auctionId,
+                AuctionId = auction.AuctionId,
                 UserId = userId,
                 Amount = auction.GetNewBidAmount(),
                 SecondsLeft = auction.SecondsLeft,
                 UserHostAddress = hostAddress,
-                Type = BidType.Manual
+                Type = bidType
             });
 
-            if (bid != null)
+            if (bid == null)
             {
-                auction.AddBid(bid);
-                //await _activityQueueService.QueueActivityAsync(ActivityType.SubmitBid, userId);
-                //await _activityQueueService.QueueActivityAsync(ActivityType.EarnXp, userId, NormalBidXpPoints);
-
-                SaveAuctionsToCache(auctions);
+                return;
             }
+
+            auction.AddBid(bid);
+            //await _activityQueueService.QueueActivityAsync(ActivityType.SubmitBid, userId);
+            //await _activityQueueService.QueueActivityAsync(ActivityType.EarnXp, userId, NormalBidXpPoints);
         }
 
-        private void SubmitAutoBid(LiveAuctionModel auction, ApplicationUser user)
+        public void SubmitBid(int auctionId, string userId, BidType bidType, string hostAddress)
         {
-            var bid = new Bid
+            if (string.IsNullOrEmpty(userId))
             {
-                AuctionId = auction.AuctionId,
-                UserId = user.Id,
-                Amount = auction.GetNewBidAmount(),
-                SecondsLeft = auction.SecondsLeft,
-                UserHostAddress = "0.0.0.0",
-                Type = BidType.Auto
-            };
+                return;
+            }
 
-            //if (_bidService.AddBid(bid))
-            //{
-            //    auction.AddBid(user);
-            //    //_activityQueueService.QueueActivity(ActivityType.AutoBid, user.Id);
-            //    //_activityQueueService.QueueActivityAsync(ActivityType.EarnXp, user.Id, AutoBidXpPoints).ContinueWith(result => { });
-            //}
+            var auctions = GetAuctionsFromCache();
+
+            var auction = auctions.SingleOrDefault(i => i.AuctionId == auctionId);
+
+            SubmitBid(auction, userId, bidType, hostAddress);
+
+            SaveAuctionsToCache(auctions);
         }
+
+        //private void SubmitAutoBid(LiveAuctionModel auction, ApplicationUser user)
+        //{
+        //    var bid = new Bid
+        //    {
+        //        AuctionId = auction.AuctionId,
+        //        UserId = user.Id,
+        //        Amount = auction.GetNewBidAmount(),
+        //        SecondsLeft = auction.SecondsLeft,
+        //        UserHostAddress = "0.0.0.0",
+        //        Type = BidType.Auto
+        //    };
+
+        //    //if (_bidService.AddBid(bid))
+        //    //{
+        //    //    auction.AddBid(user);
+        //    //    //_activityQueueService.QueueActivity(ActivityType.AutoBid, user.Id);
+        //    //    //_activityQueueService.QueueActivityAsync(ActivityType.EarnXp, user.Id, AutoBidXpPoints).ContinueWith(result => { });
+        //    //}
+        //}
 
         private static string Serialize(object value)
         {
