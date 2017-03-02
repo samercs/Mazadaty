@@ -99,7 +99,7 @@ namespace Mzayad.Data
             catch (DbEntityValidationException ex)
             {
                 var errors = TraceValidationErrors(ex);
-                var message = string.Format("EntityValidationErrors - {0}", string.Join(",", errors));
+                var message = $"EntityValidationErrors - {string.Join(",", errors)}";
 
                 throw new Exception(message);
             }

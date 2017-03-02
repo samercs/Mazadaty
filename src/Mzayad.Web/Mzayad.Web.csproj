@@ -194,7 +194,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Base.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OrangeJetpack.Base.Web.0.0.29\lib\net452\OrangeJetpack.Base.Web.dll</HintPath>
+      <HintPath>..\..\packages\OrangeJetpack.Base.Web.0.0.30\lib\net452\OrangeJetpack.Base.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OrangeJetpack.Cms.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -233,8 +233,8 @@
       <HintPath>..\..\packages\RestSharp.105.0.0\lib\net4\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="StackExchange.Redis, Version=1.1.605.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\StackExchange.Redis.1.1.605\lib\net46\StackExchange.Redis.dll</HintPath>
+    <Reference Include="StackExchange.Redis, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\StackExchange.Redis.1.2.1\lib\net46\StackExchange.Redis.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -430,6 +430,7 @@
     <Compile Include="Core\ActionResults\ExcelResult.cs" />
     <Compile Include="Core\Attributes\LanguageRoutePrefix.cs" />
     <Compile Include="Core\Attributes\RequireHttpsAttribute.cs" />
+    <Compile Include="Core\Caching\LocalRedisCacheService.cs" />
     <Compile Include="Core\Configuration\AddressPartialResolver.cs" />
     <Compile Include="Core\Attributes\RoleAuthorizeAttribute.cs" />
     <Compile Include="Areas\Admin\Models\Categories\AddViewModel.cs" />

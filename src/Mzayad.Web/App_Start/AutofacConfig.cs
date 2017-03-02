@@ -15,6 +15,7 @@ using System.Configuration;
 using System.Reflection;
 using System.Web.Http;
 using System.Web.Mvc;
+using Mzayad.Web.Core.Caching;
 
 namespace Mzayad.Web
 {
@@ -75,7 +76,8 @@ namespace Mzayad.Web
             var hostName = Environment.GetEnvironmentVariable("WEBSITE_HOSTNAME");
             if (string.IsNullOrEmpty(hostName))
             {
-                return new HttpCacheService();
+                return new LocalRedisCacheService();
+                //return new HttpCacheService();
             }
 
             return new RedisCacheService();

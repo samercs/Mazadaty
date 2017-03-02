@@ -44,26 +44,26 @@ namespace Mzayad.Web.SignalR
 
         public static AuctionHandler Instance => LazyInstance.Value;
 
-        //private ICacheService _cacheService;
+        private ICacheService _cacheService;
         //private IActivityQueueService _activityQueueService;
         private AuctionService _auctionService;
         private UserService _userService;
         private BidService _bidService;
         private AutoBidService _autoBidService;
-        private IDatabase _cache;
+        //private IDatabase _cache;
 
         public AuctionHandler Setup(IDataContextFactory dataContextFactory, ICacheService cacheService)
         {
             Trace.TraceInformation("AuctionHandler.Setup()");
 
-            //_cacheService = _cacheService ?? cacheService;
+            _cacheService = _cacheService ?? cacheService;
             _auctionService = _auctionService ?? new AuctionService(dataContextFactory);
             _userService = _userService ?? new UserService(dataContextFactory);
             _bidService = _bidService ?? new BidService(dataContextFactory);
             _autoBidService = _autoBidService ?? new AutoBidService(dataContextFactory);
             //_activityQueueService = _activityQueueService ?? new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
 
-            _cache = _cache ?? ConnectionMultiplexer.Connect("localhost").GetDatabase();
+            //_cache = _cache ?? ConnectionMultiplexer.Connect("localhost").GetDatabase();
 
             return this;
         }
@@ -101,27 +101,26 @@ namespace Mzayad.Web.SignalR
         private List<LiveAuctionModel> GetAuctionsFromCache()
         {
             //var auctions = _cacheService.TryGetList(CacheKeys.LiveAuctions, () => new List<LiveAuctionModel>());
-            var redisValue = _cache.StringGet(CacheKeys.LiveAuctions);
-            if (string.IsNullOrEmpty(redisValue))
-            {
-                return Enumerable.Empty<LiveAuctionModel>().ToList();
-            }
+            //var redisValue = _cache.StringGet(CacheKeys.LiveAuctions);
+            //if (string.IsNullOrEmpty(redisValue))
+            //{
+            //    return Enumerable.Empty<LiveAuctionModel>().ToList();
+            //}
 
-            var auctions = JsonConvert.DeserializeObject<List<LiveAuctionModel>>(redisValue);
+            //var auctions = JsonConvert.DeserializeObject<List<LiveAuctionModel>>(redisValue);
 
-            return auctions;
+            return _cacheService.TryGetList(CacheKeys.LiveAuctions, () => Enumerable.Empty<LiveAuctionModel>().ToList()).ToList();
         }
 
         private void SaveAuctionsToCache(IEnumerable<LiveAuctionModel> auctions)
         {
             if (auctions.IsNullOrEmpty())
             {
-                _cache.KeyDelete(CacheKeys.LiveAuctions);
+                _cacheService.Delete(CacheKeys.LiveAuctions);
                 return;
             }
 
-            _cache.StringSet(CacheKeys.LiveAuctions, JsonConvert.SerializeObject(auctions));
-            //_cacheService.SetList(CacheKeys.LiveAuctions, auctions);
+            _cacheService.SetList(CacheKeys.LiveAuctions, auctions);
         }
 
         private void UpdateAuctions(object state)
@@ -186,7 +185,7 @@ namespace Mzayad.Web.SignalR
 
         private void SubmitBid(LiveAuctionModel auction, string userId, BidType bidType, string hostAddress = "0.0.0.0")
         {
-            if (auction == null)
+            if (auction == null || string.IsNullOrEmpty(userId))
             {
                 return;
             }
