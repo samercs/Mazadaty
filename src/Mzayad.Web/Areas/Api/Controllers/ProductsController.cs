@@ -18,7 +18,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
         public ProductsController(IAppServices appServices) : base(appServices)
         {
             _productService = new ProductService(DataContextFactory);
-            _auctionService = new AuctionService(DataContextFactory);
+            _auctionService = new AuctionService(DataContextFactory, appServices.QueueService);
         }
 
         [Route("{productId:int}")]

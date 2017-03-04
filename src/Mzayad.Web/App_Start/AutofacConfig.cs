@@ -51,7 +51,7 @@ namespace Mzayad.Web
             });
 
             builder.Register<IMessageService>(c => new MessageService(c.Resolve<IAppSettings>().EmailSettings));
-            builder.Register<IActivityQueueService>(c => new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString));
+            builder.Register<IQueueService>(c => new QueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString));
 
             builder.Register(GetCacheService).SingleInstance();
 

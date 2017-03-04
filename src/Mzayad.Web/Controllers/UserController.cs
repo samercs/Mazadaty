@@ -36,25 +36,24 @@ namespace Mzayad.Web.Controllers
         private readonly TrophyService _trophyService;
         private readonly AuctionService _auctionService;
         private readonly WishListService _wishListService;
-        private readonly IActivityQueueService _activityQueueService;
+        private readonly IQueueService _queueService;
         private readonly PrizeService _prizeService;
         private readonly FriendService _friendService;
         private readonly MessageService _messageService;
 
-        public UserController(IAppServices appServices)
-            : base(appServices)
+        public UserController(IAppServices appServices) : base(appServices)
         {
             _userService = new UserService(DataContextFactory);
             _addressService = new AddressService(DataContextFactory);
             _categoryService = new CategoryService(DataContextFactory);
             _notificationService = new NotificationService(DataContextFactory);
             _avatarService = new AvatarService(DataContextFactory);
-            _bidService = new BidService(DataContextFactory);
+            _bidService = new BidService(DataContextFactory, appServices.QueueService);
             _trophyService = new TrophyService(DataContextFactory);
-            _auctionService = new AuctionService(DataContextFactory);
+            _auctionService = new AuctionService(DataContextFactory, appServices.QueueService);
             _wishListService = new WishListService(DataContextFactory);
-            _activityQueueService =
-                new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
+            _queueService =
+                new QueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
             _prizeService = new PrizeService(DataContextFactory);
             _friendService = new FriendService(appServices.DataContextFactory);
             _messageService = new MessageService(appServices.DataContextFactory);
@@ -318,7 +317,7 @@ namespace Mzayad.Web.Controllers
 
             await _userService.UpdateUser(user);
 
-            await _activityQueueService.QueueActivityAsync(ActivityType.CompleteProfile, user.Id);
+            await _queueService.QueueActivityAsync(ActivityType.CompleteProfile, user.Id);
             SetStatusMessage(!setWarning
                 ? "Your profile has been saved successfully."
                 : $"Your profile has been saved successfully. <span class='text-danger'> but selected avatar can't be update your token ({user.Tokens}) is less than avatar token ({avatar.Token}) </span>");

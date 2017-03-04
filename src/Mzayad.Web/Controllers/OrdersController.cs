@@ -26,7 +26,7 @@ namespace Mzayad.Web.Controllers
 
         public OrdersController(IAppServices appServices) : base(appServices)
         {
-            _auctionService = new AuctionService(DataContextFactory);
+            _auctionService = new AuctionService(DataContextFactory, appServices.QueueService);
             _orderService = new OrderService(DataContextFactory);
             _knetService = new KnetService(DataContextFactory);
             _addressService = new AddressService(DataContextFactory);

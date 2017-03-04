@@ -14,7 +14,7 @@ namespace Mzayad.Web.Controllers
 
         public AuctionsController(IAppServices appServices) : base(appServices)
         {
-            _auctionService = new AuctionService(appServices.DataContextFactory);
+            _auctionService = new AuctionService(appServices.DataContextFactory, appServices.QueueService);
         }
 
         [Route("details")]

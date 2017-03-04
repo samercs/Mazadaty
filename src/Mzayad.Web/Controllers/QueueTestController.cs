@@ -10,12 +10,12 @@ namespace Mzayad.Web.Controllers
     public class QueueTestController : Controller
     {
         private readonly IAuthService _authService;
-        private readonly IActivityQueueService _activityQueueService;
+        private readonly IQueueService _queueService;
 
-        public QueueTestController(IAuthService authService, IActivityQueueService activityQueueService)
+        public QueueTestController(IAuthService authService, IQueueService queueService)
         {
             _authService = authService;
-            _activityQueueService = activityQueueService;
+            _queueService = queueService;
         }
 
         [Route("test")]
@@ -28,7 +28,7 @@ namespace Mzayad.Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Test(FormCollection formCollection)
         {
-            _activityQueueService.QueueActivity(ActivityType.TestActivity, _authService.CurrentUserId());
+            _queueService.QueueActivity(ActivityType.TestActivity, _authService.CurrentUserId());
 
             return View();
         }
@@ -37,7 +37,7 @@ namespace Mzayad.Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult TestEarnXp(FormCollection formCollection)
         {
-            _activityQueueService.QueueActivityAsync(ActivityType.TestActivity, _authService.CurrentUserId(), 5);
+            _queueService.QueueActivityAsync(ActivityType.TestActivity, _authService.CurrentUserId(), 5);
 
             return View();
         }

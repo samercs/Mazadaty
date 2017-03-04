@@ -37,7 +37,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
         private readonly AddressService _addressService;
         private readonly SessionLogService _sessionLogService;
         private readonly AvatarService _avatarService;
-        private readonly IActivityQueueService _activityQueueService;
+        private readonly IQueueService _queueService;
 
         public UsersController(IAppServices appServices) : base(appServices)
         {
@@ -45,8 +45,8 @@ namespace Mzayad.Web.Areas.Api.Controllers
             _addressService = new AddressService(DataContextFactory);
             _sessionLogService = new SessionLogService(DataContextFactory);
             _avatarService = new AvatarService(DataContextFactory);
-            _activityQueueService =
-                new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
+            _queueService =
+                new QueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
         }
 
         [HttpGet, Route("{username}")]
@@ -315,7 +315,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
             }
 
             await _userService.UpdateUser(user);
-            await _activityQueueService.QueueActivityAsync(ActivityType.CompleteProfile, user.Id);
+            await _queueService.QueueActivityAsync(ActivityType.CompleteProfile, user.Id);
             return Ok();
         }
 

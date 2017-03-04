@@ -8,26 +8,37 @@ using Newtonsoft.Json;
 
 namespace Mzayad.Services.Activity
 {
-    public interface IActivityQueueService
+    public interface IQueueService
     {
+        void LogBid(Bid bid);
+
         void QueueActivity(ActivityType activityType, string userId, string language = "en");
         Task QueueActivityAsync(ActivityType activityType, string userId, string language = "en");
         Task QueueActivityAsync(ActivityType activityType, string userId, int xp, string language = "en");
     }
 
-    public class ActivityQueueService : IActivityQueueService
+    public class QueueService : IQueueService
     {
-        private readonly string _queueName = "activities";
-        private readonly CloudStorageAccount _storageAccount;
+        private readonly CloudQueueClient _cloudQueueClient;
+        private readonly string _environmentName;
 
-        public ActivityQueueService(string connectionString)
+        public QueueService(string connectionString)
         {
-            _storageAccount = CloudStorageAccount.Parse(connectionString);
+            var storageAccount = CloudStorageAccount.Parse(connectionString);
+            _cloudQueueClient = storageAccount.CreateCloudQueueClient();
+            _environmentName = Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME") ?? "local";
+        }
 
-            if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME")))
+        public void LogBid(Bid bid)
+        {
+            var message = new CloudQueueMessage(JsonConvert.SerializeObject(new Bid
             {
-                _queueName = $"{_queueName}-{Environment.MachineName}".ToLowerInvariant();
-            }
+                BidId = bid.BidId,
+                AuctionId = bid.AuctionId,
+                UserId = bid.UserId
+            }));
+
+            CreateQueue("bids").AddMessage(message);
         }
 
         public void QueueActivity(ActivityType activityType, string userId, string language = "en")
@@ -39,7 +50,7 @@ namespace Mzayad.Services.Activity
                 Language = language
             }));
 
-            CreateQueue().AddMessageAsync(message);
+            CreateQueue("activities").AddMessage(message);
         }
 
         public async Task QueueActivityAsync(ActivityType activityType, string userId, string language = "en")
@@ -51,7 +62,7 @@ namespace Mzayad.Services.Activity
                 Language = language
             }));
 
-            await CreateQueue().AddMessageAsync(message);
+            await CreateQueue("activities").AddMessageAsync(message);
         }
 
         public async Task QueueActivityAsync(ActivityType activityType, string userId, int xp, string language = "en")
@@ -64,15 +75,15 @@ namespace Mzayad.Services.Activity
                 Language = language
             }));
 
-            await CreateQueue().AddMessageAsync(message);
+            await CreateQueue("activities").AddMessageAsync(message);
         }
 
-        private CloudQueue CreateQueue()
+        private CloudQueue CreateQueue(string name)
         {
-            var client = _storageAccount.CreateCloudQueueClient();
-            var queue = client.GetQueueReference(_queueName);
-            queue.CreateIfNotExists();
-            return queue;
+            var queueName = $"{name}-{_environmentName}".ToLowerInvariant();
+            var cloudQueue = _cloudQueueClient.GetQueueReference(queueName);
+            cloudQueue.CreateIfNotExists();
+            return cloudQueue;
         }
     }
 }

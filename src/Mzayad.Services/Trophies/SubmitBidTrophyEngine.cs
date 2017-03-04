@@ -1,16 +1,13 @@
-﻿using System;
-using System.Linq;
-using Mzayad.Data;
+﻿using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
-using Mzayad.Services.Identity;
+using System;
 using System.Collections.Generic;
 
 namespace Mzayad.Services.Trophies
 {
     public class SubmitBidTrophyEngine : TrophyEngine
     {
-        private readonly UserService _userService;
         private readonly BidService _bidService;
 
         private readonly IslamicCalendar _calendar;
@@ -18,10 +15,8 @@ namespace Mzayad.Services.Trophies
         public SubmitBidTrophyEngine(IDataContextFactory dataContextFactory)
             : base(dataContextFactory)
         {
-            _userService = new UserService(dataContextFactory);
-
             var islamicCalendarService = new IslamicCalendarService(dataContextFactory);
-            _bidService = new BidService(dataContextFactory);
+            _bidService = new BidService(dataContextFactory, null);
 
             _calendar = islamicCalendarService.GetByDate(DateTime.UtcNow.Date).Result;
         }

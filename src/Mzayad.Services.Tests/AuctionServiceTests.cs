@@ -1,12 +1,11 @@
 ﻿using Mzayad.Models;
-using Mzayad.Models.Enum;
+using Mzayad.Models.Enums;
 using Mzayad.Services.Tests.Fakes;
 using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Mzayad.Models.Enums;
 
 namespace Mzayad.Services.Tests
 {
@@ -36,7 +35,7 @@ namespace Mzayad.Services.Tests
         [Test]
         public async Task GetCurrentAuctions_NoAuctions_ReturnsEmptyList()
         {
-            var auctionService = new AuctionService(new InMemoryDataContextFactory());
+            var auctionService = new AuctionService(new InMemoryDataContextFactory(), null);
 
             var results = await auctionService.GetCurrentAuctions();
 
@@ -51,7 +50,7 @@ namespace Mzayad.Services.Tests
             dc.Auctions.Add(new Auction {Status = AuctionStatus.Hidden});
             dc.Auctions.Add(new Auction {Status = AuctionStatus.Hidden});
             
-            var auctionService = new AuctionService(new InMemoryDataContextFactory(dc));
+            var auctionService = new AuctionService(new InMemoryDataContextFactory(dc), null);
 
             var results = await auctionService.GetCurrentAuctions();
 
@@ -67,7 +66,7 @@ namespace Mzayad.Services.Tests
             dc.Auctions.Add(new Auction { Status = AuctionStatus.Hidden });
             dc.Auctions.Add(new Auction { Status = AuctionStatus.Hidden });
 
-            var auctionService = new AuctionService(new InMemoryDataContextFactory(dc));
+            var auctionService = new AuctionService(new InMemoryDataContextFactory(dc), null);
 
             var results = await auctionService.GetCurrentAuctions();
 
@@ -93,7 +92,7 @@ namespace Mzayad.Services.Tests
                 CreatedUtc = DateTime.UtcNow.AddDays(-4)
             });
 
-            var service = new AuctionService(new InMemoryDataContextFactory(dc));
+            var service = new AuctionService(new InMemoryDataContextFactory(dc), null);
             var result = service.CountAuctionsWon(Constants.AnyUserId, DateTime.UtcNow.AddDays(-7)).Result;
 
             Assert.AreEqual(2, result);

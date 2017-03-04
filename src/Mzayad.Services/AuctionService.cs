@@ -2,13 +2,13 @@
 using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Enums;
+using Mzayad.Services.Activity;
 using OrangeJetpack.Localization;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using Accessibility;
 
 namespace Mzayad.Services
 {
@@ -17,10 +17,9 @@ namespace Mzayad.Services
         private readonly BidService _bidService;
         private readonly OrderService _orderService;
 
-        public AuctionService(IDataContextFactory dataContextFactory)
-            : base(dataContextFactory)
+        public AuctionService(IDataContextFactory dataContextFactory, IQueueService queueService) : base(dataContextFactory)
         {
-            _bidService = new BidService(dataContextFactory);
+            _bidService = new BidService(dataContextFactory, queueService);
             _orderService = new OrderService(dataContextFactory);
         }
 

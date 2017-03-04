@@ -1,4 +1,5 @@
 ﻿using Mzayad.Data;
+using Mzayad.Services.Activity;
 using OrangeJetpack.Base.Web.Caching;
 using OrangeJetpack.Cms.Client;
 using OrangeJetpack.Services.Client.Messaging;
@@ -8,15 +9,16 @@ namespace Mzayad.Web.Core.Services
 {
     public class AppServices : IAppServices
     {
-        public IDataContextFactory DataContextFactory { get; private set; }
-        public IAppSettings AppSettings { get; private set; }
-        public IAuthService AuthService { get; private set; }
-        public ICookieService CookieService { get; private set; }
-        public IMessageService MessageService { get; private set; }
-        public ICacheService CacheService { get; private set; }
-        public IRequestService RequestService { get; private set; }
-        public IStorageService StorageService { get; private set; }
-        public ICmsClient CmsClient { get; private set; }
+        public IDataContextFactory DataContextFactory { get; }
+        public IAppSettings AppSettings { get; }
+        public IAuthService AuthService { get; }
+        public ICookieService CookieService { get; }
+        public IMessageService MessageService { get; }
+        public ICacheService CacheService { get; }
+        public IRequestService RequestService { get; }
+        public IStorageService StorageService { get; }
+        public ICmsClient CmsClient { get; }
+        public IQueueService QueueService { get; }
 
         public AppServices(
             IDataContextFactory dataContextFactory,
@@ -27,7 +29,8 @@ namespace Mzayad.Web.Core.Services
             ICacheService caceService,
             IRequestService requestService,
             IStorageService storageService,
-            ICmsClient cmsClient)
+            ICmsClient cmsClient,
+            IQueueService queueService)
         {
             DataContextFactory = dataContextFactory;
             AppSettings = appSettings;
@@ -38,6 +41,7 @@ namespace Mzayad.Web.Core.Services
             RequestService = requestService;
             StorageService = storageService;
             CmsClient = cmsClient;
+            QueueService = queueService;
         }
     }
 }

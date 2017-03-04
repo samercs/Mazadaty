@@ -1,5 +1,6 @@
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using Mzayad.Core.Extensions;
 using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Enums;
@@ -18,8 +19,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Mzayad.Core.Extensions;
-using StackExchange.Redis;
 
 namespace Mzayad.Web.SignalR
 {
@@ -45,26 +44,23 @@ namespace Mzayad.Web.SignalR
         public static AuctionHandler Instance => LazyInstance.Value;
 
         private ICacheService _cacheService;
-        //private IActivityQueueService _activityQueueService;
+        private IQueueService _queueService;
         private AuctionService _auctionService;
         private UserService _userService;
         private BidService _bidService;
         private AutoBidService _autoBidService;
-        //private IDatabase _cache;
-
+        
         public AuctionHandler Setup(IDataContextFactory dataContextFactory, ICacheService cacheService)
         {
             Trace.TraceInformation("AuctionHandler.Setup()");
 
             _cacheService = _cacheService ?? cacheService;
-            _auctionService = _auctionService ?? new AuctionService(dataContextFactory);
+            _queueService = _queueService ?? new QueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
+            _auctionService = _auctionService ?? new AuctionService(dataContextFactory, _queueService);
             _userService = _userService ?? new UserService(dataContextFactory);
-            _bidService = _bidService ?? new BidService(dataContextFactory);
+            _bidService = _bidService ?? new BidService(dataContextFactory, _queueService);
             _autoBidService = _autoBidService ?? new AutoBidService(dataContextFactory);
-            //_activityQueueService = _activityQueueService ?? new ActivityQueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
-
-            //_cache = _cache ?? ConnectionMultiplexer.Connect("localhost").GetDatabase();
-
+            
             return this;
         }
 
@@ -100,15 +96,6 @@ namespace Mzayad.Web.SignalR
 
         private List<LiveAuctionModel> GetAuctionsFromCache()
         {
-            //var auctions = _cacheService.TryGetList(CacheKeys.LiveAuctions, () => new List<LiveAuctionModel>());
-            //var redisValue = _cache.StringGet(CacheKeys.LiveAuctions);
-            //if (string.IsNullOrEmpty(redisValue))
-            //{
-            //    return Enumerable.Empty<LiveAuctionModel>().ToList();
-            //}
-
-            //var auctions = JsonConvert.DeserializeObject<List<LiveAuctionModel>>(redisValue);
-
             return _cacheService.TryGetList(CacheKeys.LiveAuctions, () => Enumerable.Empty<LiveAuctionModel>().ToList()).ToList();
         }
 

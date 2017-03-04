@@ -9,14 +9,12 @@ namespace Mzayad.Services.Trophies
 {
     public class WinAuctionTrophyEngine : TrophyEngine
     {
-        private readonly UserService _userService;
         private readonly AuctionService _auctionService;
 
         public WinAuctionTrophyEngine(IDataContextFactory dataContextFactory)
             : base(dataContextFactory)
         {
-            _userService = new UserService(dataContextFactory);
-            _auctionService = new AuctionService(dataContextFactory);
+            _auctionService = new AuctionService(dataContextFactory, null);
         }
 
         protected override IEnumerable<TrophyKey?> TryGetEarnedTrophies(ApplicationUser user)

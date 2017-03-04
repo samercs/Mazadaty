@@ -9,7 +9,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-
 namespace Mzayad.Web.Controllers
 {
     [RoutePrefix("{language}")]
@@ -22,7 +21,7 @@ namespace Mzayad.Web.Controllers
         public HomeController(IAppServices appServices) : base(appServices)
         {
             _userService = new UserService(appServices.DataContextFactory);
-            _auctionService = new AuctionService(appServices.DataContextFactory);
+            _auctionService = new AuctionService(appServices.DataContextFactory, appServices.QueueService);
             _addressService = new AddressService(appServices.DataContextFactory);
         }
 

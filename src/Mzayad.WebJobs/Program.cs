@@ -50,7 +50,7 @@ namespace Mzayad.WebJobs
 
         public static async Task ProcessActivity([QueueTrigger("%activities%")] ActivityEvent activityEvent, TextWriter log)
         {
-            var message = string.Format("Processing activity {0} for user ID {1}...", activityEvent.Type, activityEvent.UserId);
+            var message = $"Processing activity {activityEvent.Type} for user ID {activityEvent.UserId}...";
             await LogMessageAsync(log, message);
 
             try

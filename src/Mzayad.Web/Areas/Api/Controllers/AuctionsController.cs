@@ -14,11 +14,9 @@ namespace Mzayad.Web.Areas.Api.Controllers
         private const int AuctionsCount = 12;
         private readonly AuctionService _auctionService;
 
-
         public AuctionsController(IAppServices appServices) : base(appServices)
         {
-            _auctionService = new AuctionService(DataContextFactory);
-
+            _auctionService = new AuctionService(DataContextFactory, appServices.QueueService);
         }
 
         [Route("")]
@@ -27,6 +25,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
             var liveAuctions = await _auctionService.GetLiveAuctions(Language);
             var closedAuctions = await _auctionService.GetClosedAuctions(Language, AuctionsCount);
             var upcomingAuctions = await _auctionService.GetUpcomingAuctions(Language, AuctionsCount);
+
             return Ok(new
             {
                 live = liveAuctions.Select(AuctionModel.Create),

@@ -2,6 +2,7 @@
 using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Enums;
+using Mzayad.Services.Activity;
 using OrangeJetpack.Localization;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,11 @@ namespace Mzayad.Services
 {
     public class BidService : ServiceBase
     {
-        public BidService(IDataContextFactory dataContextFactory) : base(dataContextFactory)
+        private readonly IQueueService _queueService;
+
+        public BidService(IDataContextFactory dataContextFactory, IQueueService queueService) : base(dataContextFactory)
         {
+            _queueService = queueService;
         }
 
         public Bid AddBid(Bid bid)
@@ -28,6 +32,8 @@ namespace Mzayad.Services
 
                 dc.Bids.Add(bid);
                 dc.SaveChanges();
+
+                _queueService.LogBid(bid);
 
                 return dc.Bids
                     .Include(i => i.User)

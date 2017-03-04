@@ -37,9 +37,9 @@ namespace Mzayad.Web.Areas.admin.Controllers
         public AuctionsController(IAppServices appServices) : base(appServices)
         {
             _productService = new ProductService(DataContextFactory);
-            _auctionService = new AuctionService(DataContextFactory);
+            _auctionService = new AuctionService(DataContextFactory, appServices.QueueService);
             _notificationService = new NotificationService(DataContextFactory);
-            _bidService = new BidService(DataContextFactory);
+            _bidService = new BidService(DataContextFactory, appServices.QueueService);
             _autoBidService = new AutoBidService(DataContextFactory);
         }
 

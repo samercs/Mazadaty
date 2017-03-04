@@ -29,15 +29,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
         private readonly AuctionService _auctionService;
         private readonly BidService _bidService;
 
-        public UsersController(IAppServices appServices)
-            : base(appServices)
+        public UsersController(IAppServices appServices) : base(appServices)
         {
             _userService = new UserService(DataContextFactory);
             _subscriptionService = new SubscriptionService(DataContextFactory);
             _tokenService = new TokenService(DataContextFactory);
             _trophyService = new TrophyService(DataContextFactory);
-            _auctionService = new AuctionService(DataContextFactory);
-            _bidService = new BidService(DataContextFactory);
+            _auctionService = new AuctionService(DataContextFactory, appServices.QueueService);
+            _bidService = new BidService(DataContextFactory, appServices.QueueService);
         }
 
         public async Task<ActionResult> Index(string search = "", Role? role = null)

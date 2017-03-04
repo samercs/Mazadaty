@@ -16,7 +16,7 @@ namespace Mzayad.Web.Controllers
 
         public AutoBidController(IAppServices appServices) : base(appServices)
         {
-            _auctionService = new AuctionService(DataContextFactory);
+            _auctionService = new AuctionService(DataContextFactory, appServices.QueueService);
             _autoBidService = new AutoBidService(DataContextFactory);
         }
 

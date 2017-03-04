@@ -14,7 +14,6 @@ namespace Mzayad.Services.Trophies
             { ActivityType.AutoBid , d => new AutoBidTrophyEngine(d) },
             { ActivityType.WinAuction , d => new WinAuctionTrophyEngine(d) },
             { ActivityType.CompleteProfile, d => new CompleteProfileTrophyEngine(d)  }
-
         };
 
         public static TrophyEngine CreateInstance(ActivityType activityType, IDataContextFactory dataContextFactor)

@@ -21,8 +21,7 @@ namespace Mzayad.Services.Tests
                 dc.Bids.Add(bid);
             }
 
-            var bidService = new BidService(new InMemoryDataContextFactory(dc));
-            return bidService;
+            return new BidService(new InMemoryDataContextFactory(dc), null);
         }
 
         [Test]
