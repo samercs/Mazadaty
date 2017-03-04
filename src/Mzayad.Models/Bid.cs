@@ -29,5 +29,8 @@ namespace Mzayad.Models
         
         [ForeignKey("AuctionId")]
         public virtual Auction Auction { get; set; }
+
+        public const int ManualBidXp = 2;
+        public const int AutoBidXp = 1;
     }
 }

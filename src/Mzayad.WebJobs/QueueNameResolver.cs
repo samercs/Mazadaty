@@ -7,12 +7,8 @@ namespace Mzayad.WebJobs
     {
         public string Resolve(string name)
         {
-            if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME")))
-            {
-                name = $"{name}-{Environment.MachineName}".ToLowerInvariant();
-            }
-
-            return name;
+            var environment = Environment.GetEnvironmentVariable("WEBSITE_SLOT_NAME") ?? Environment.MachineName;
+            return $"{name}-{environment}".ToLowerInvariant();
         }
     }
 }

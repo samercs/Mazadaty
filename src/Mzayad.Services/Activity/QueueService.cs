@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.WindowsAzure.Storage;
+﻿using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Mzayad.Models;
 using Mzayad.Models.Enums;
 using Newtonsoft.Json;
+using System;
+using System.Threading.Tasks;
 
 namespace Mzayad.Services.Activity
 {
@@ -26,16 +26,17 @@ namespace Mzayad.Services.Activity
         {
             var storageAccount = CloudStorageAccount.Parse(connectionString);
             _cloudQueueClient = storageAccount.CreateCloudQueueClient();
-            _environmentName = Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME") ?? "local";
+            _environmentName = Environment.GetEnvironmentVariable("WEBSITE_SLOT_NAME") ?? Environment.MachineName;
         }
 
         public void LogBid(Bid bid)
         {
-            var message = new CloudQueueMessage(JsonConvert.SerializeObject(new Bid
+            var message = new CloudQueueMessage(JsonConvert.SerializeObject(new 
             {
-                BidId = bid.BidId,
-                AuctionId = bid.AuctionId,
-                UserId = bid.UserId
+                bid.BidId,
+                bid.AuctionId,
+                bid.UserId,
+                bid.Type
             }));
 
             CreateQueue("bids").AddMessage(message);

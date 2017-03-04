@@ -24,8 +24,6 @@ namespace Mzayad.Web.SignalR
 {
     public class AuctionHandler
     {
-        private const int NormalBidXpPoints = 2;
-        private const int AutoBidXpPoints = 1;
         private static readonly Lazy<AuctionHandler> LazyInstance = new Lazy<AuctionHandler>(() => new AuctionHandler(GlobalHost.ConnectionManager.GetHubContext<AuctionHub>().Clients));
         private readonly object _updateLock = new object();
         private readonly TimeSpan _updateInterval = TimeSpan.FromSeconds(1);

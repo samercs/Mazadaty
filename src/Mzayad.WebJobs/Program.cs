@@ -1,4 +1,5 @@
 ﻿using Microsoft.Azure.WebJobs;
+using Mindscape.Raygun4Net;
 using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
@@ -7,7 +8,6 @@ using Mzayad.Services;
 using Mzayad.Services.Activity;
 using Mzayad.Services.Identity;
 using Mzayad.Services.Trophies;
-using OrangeJetpack.Localization;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,7 +16,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Mindscape.Raygun4Net;
+using Newtonsoft.Json;
 
 namespace Mzayad.WebJobs
 {
@@ -34,6 +34,14 @@ namespace Mzayad.WebJobs
 
     public class Functions
     {
+        private readonly UserService _userService;
+
+        public Functions()
+        {
+            var dataContextFactory = new DataContextFactory();
+            _userService = new UserService(dataContextFactory);
+        }
+
         private static void LogMessage(TextWriter log, string message)
         {
             log.WriteLine(message);
@@ -46,6 +54,42 @@ namespace Mzayad.WebJobs
             await log.WriteLineAsync(message);
             Console.WriteLine(message);
             Trace.TraceInformation(message);
+        }
+
+        public async Task HandleBid([QueueTrigger("%bids%")] Bid bid, TextWriter log)
+        {
+            var b = JsonConvert.SerializeObject(new
+            {
+                bid.BidId,
+                bid.AuctionId,
+                bid.UserId,
+                bid.Type
+            });
+
+            await log.WriteLineAsync($"Handling bid: {b}...");
+
+            var user = await _userService.GetUserById(bid.UserId);
+            if (user == null)
+            {
+                await log.WriteLineAsync($"No user exists for user ID {bid.UserId}.");
+                return;
+            }
+
+            await AddBidXp(user, bid);
+        }
+
+        private async Task AddBidXp(ApplicationUser user, Bid bid)
+        {
+            var xp = bid.Type == BidType.Manual ? Bid.ManualBidXp : Bid.AutoBidXp;
+            user.Xp += xp;
+
+            var newLevel = LevelService.GetLevelByXp(user.Xp).Index;
+            if (newLevel > user.Level)
+            {
+                user.Level = newLevel;
+            }
+
+            await _userService.UpdateUser(user);
         }
 
         public static async Task ProcessActivity([QueueTrigger("%activities%")] ActivityEvent activityEvent, TextWriter log)
@@ -64,7 +108,7 @@ namespace Mzayad.WebJobs
                 var user = await userService.GetUserById(activityEvent.UserId);
                 if (user == null)
                 {
-                    await LogMessageAsync(log, string.Format("No user exists for user ID {0}.", activityEvent.UserId));
+                    await LogMessageAsync(log, $"No user exists for user ID {activityEvent.UserId}.");
                     return;
                 }
 
