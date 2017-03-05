@@ -61,7 +61,9 @@ else
 
             <div class="row">
                 <div class="col-md-6 live-ribbon-container img-container">
-                    <img class="auction-image img-responsive" data-bind="attr: { src: imageUrl, alt: title }" alt="">
+                    <a data-bind="attr: {href: productUrl}" href="#">
+                        <img class="auction-image img-responsive" data-bind="attr: { src: imageUrl, alt: title }" alt="">
+                    </a>
                     <div class="sponsor-ribbon"><span data-bind="text:sponsorName"></span></div>
                     <div class="flag-container" data-bind="html: countryListHtml"></div>
 
@@ -267,6 +269,7 @@ else
                 self.secondsLeft = ko.observable();
                 self.lastBidAmount = ko.observable(data.lastBidAmount);
                 self.showBidErr = ko.observable(false);
+                self.productUrl = '@LanguageCode/products/'+ data.productId;
 
                 self.showBidErr = ko.computed(function() {
                     var isLastBidder = self.bids().length > 0 && self.bids()[0].userName === userName;
