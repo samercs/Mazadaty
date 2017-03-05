@@ -4,12 +4,12 @@ namespace Mzayad.Models.Queues
 {
     public class UserTrophyMessage : QueueMessageBase
     {
-        public ApplicationUser User { get; set; }
+        public string UserId { get; set; }
         public TrophyKey TrophyKey { get; set; }
 
-        public UserTrophyMessage(ApplicationUser user, TrophyKey trophyKey)
+        public UserTrophyMessage(string userId, TrophyKey trophyKey)
         {
-            User = user;
+            UserId = userId;
             TrophyKey = trophyKey;
         }
     }
