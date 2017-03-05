@@ -104,6 +104,10 @@
     <Compile Include="Enums\UserSubscriptionStatus.cs" />
     <Compile Include="FriendRequest.cs" />
     <Compile Include="Message.cs" />
+    <Compile Include="Queues\BidMessage.cs" />
+    <Compile Include="Queues\QueueKeys.cs" />
+    <Compile Include="Queues\QueueMessageBase.cs" />
+    <Compile Include="Queues\UserTrophyMessage.cs" />
     <Compile Include="UserFriend.cs" />
     <Compile Include="IslamicCalendar.cs" />
     <Compile Include="Level.cs" />

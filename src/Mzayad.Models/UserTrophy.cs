@@ -8,10 +8,10 @@ namespace Mzayad.Models
     [Table("UsersTrophies")]
     public class UserTrophy : EntityBase, ILocalizable
     {
-        [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserTrohyId { get; set; }
 
-        [Required,StringLength(128)]
+        [Required, StringLength(128)]
         public string UserId { get; set; }
 
         [Required]
@@ -19,7 +19,6 @@ namespace Mzayad.Models
 
         [Required]
         public int XpAwarded { get; set; }
-
 
         public virtual Trophy Trophy { get; set; }
 

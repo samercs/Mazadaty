@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
-using Mzayad.Services.Identity;
-using Mzayad.Data;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Mzayad.Services.Trophies
 {
@@ -17,31 +16,33 @@ namespace Mzayad.Services.Trophies
             _auctionService = new AuctionService(dataContextFactory, null);
         }
 
-        protected override IEnumerable<TrophyKey?> TryGetEarnedTrophies(ApplicationUser user)
+        protected async Task<IReadOnlyCollection<TrophyKey>>  TryGetEarnedTrophies(ApplicationUser user)
         {
-            //check win auction one time
-            yield return CheckWinAuction1(user.Id);
+            return new List<TrophyKey>();
 
-            //check win 5 auctions
-            yield return CheckWinAuction5(user.Id);
+            ////check win auction one time
+            //yield return CheckWinAuction1(user.Id);
 
-            //check win 10 auctions
-            yield return CheckWinAuction10(user.Id);
+            ////check win 5 auctions
+            //yield return CheckWinAuction5(user.Id);
 
-            //check win 20 auctions
-            yield return CheckWinAuction20(user.Id);
+            ////check win 10 auctions
+            //yield return CheckWinAuction10(user.Id);
 
-            //check win 50 auctions
-            yield return CheckWinAuction50(user.Id);
+            ////check win 20 auctions
+            //yield return CheckWinAuction20(user.Id);
 
-            //check win 100 auctions
-            yield return CheckWinAuction100(user.Id);
+            ////check win 50 auctions
+            //yield return CheckWinAuction50(user.Id);
 
-            //check win auctions 3 days in row
-            yield return CheckWinAuction3DaysInRow(user.Id);
+            ////check win 100 auctions
+            //yield return CheckWinAuction100(user.Id);
 
-            //check win auctions 7 days in row
-            yield return CheckWinAuction7DaysInRow(user.Id);
+            ////check win auctions 3 days in row
+            //yield return CheckWinAuction3DaysInRow(user.Id);
+
+            ////check win auctions 7 days in row
+            //yield return CheckWinAuction7DaysInRow(user.Id);
         }
 
         private TrophyKey? CheckWinAuction1(string userId)

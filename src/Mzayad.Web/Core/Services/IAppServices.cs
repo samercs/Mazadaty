@@ -1,5 +1,6 @@
 ﻿using Mzayad.Data;
 using Mzayad.Services.Activity;
+using Mzayad.Services.Queues;
 using OrangeJetpack.Base.Web.Caching;
 using OrangeJetpack.Cms.Client;
 using OrangeJetpack.Services.Client.Messaging;

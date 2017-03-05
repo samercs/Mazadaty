@@ -113,8 +113,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Activity\ActivityEventService.cs" />
-    <Compile Include="Activity\QueueService.cs" />
+    <Compile Include="Queues\ActivityEventService.cs" />
+    <Compile Include="Queues\IQueueService.cs" />
+    <Compile Include="Queues\QueueService.cs" />
     <Compile Include="AddressService.cs" />
     <Compile Include="AuctionService.cs" />
     <Compile Include="AutoBidService.cs" />

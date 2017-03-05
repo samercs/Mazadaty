@@ -21,6 +21,7 @@ using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Mzayad.Services.Queues;
 
 namespace Mzayad.Web.Controllers
 {
@@ -499,7 +500,7 @@ namespace Mzayad.Web.Controllers
         #region Private Methods
         private async Task<List<TrophieViewModel>> GetTrophies(string userId)
         {
-            var userTophies = (await _trophyService.GetUsersTrophies(userId, Language)).ToList();
+            var userTophies = (await _trophyService.GetUserTrophies(userId, Language)).ToList();
             var trophies = await _trophyService.GetAll(Language);
 
             return (from trophy in trophies

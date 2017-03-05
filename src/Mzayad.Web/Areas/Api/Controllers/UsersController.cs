@@ -26,6 +26,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using Mzayad.Services.Queues;
 using WebGrease.Css.Extensions;
 
 namespace Mzayad.Web.Areas.Api.Controllers

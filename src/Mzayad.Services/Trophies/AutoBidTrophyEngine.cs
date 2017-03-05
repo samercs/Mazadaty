@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Services.Identity;
@@ -19,34 +21,36 @@ namespace Mzayad.Services.Trophies
             _autoBidService = new AutoBidService(dataContextFactory);
         }
 
-        protected override IEnumerable<TrophyKey?> TryGetEarnedTrophies(ApplicationUser user)
+        protected async Task<IReadOnlyCollection<TrophyKey>> TryGetEarnedTrophies(ApplicationUser user)
         {
-            //check auto bid 10 times
-            yield return CheckAutoBid10(user.Id);
+            return new List<TrophyKey>();
 
-            //check auto bid 25 times
-            yield return CheckAutoBid25(user.Id);
+            ////check auto bid 10 times
+            //yield return CheckAutoBid10(user.Id);
 
-            //check auto bid 50 times
-            yield return CheckAutoBid50(user.Id);
+            ////check auto bid 25 times
+            //yield return CheckAutoBid25(user.Id);
 
-            //check auto bid 100 times
-            yield return CheckAutoBid100(user.Id);
+            ////check auto bid 50 times
+            //yield return CheckAutoBid50(user.Id);
 
-            //check auto bid 250 times
-            yield return CheckAutoBid250(user.Id);
+            ////check auto bid 100 times
+            //yield return CheckAutoBid100(user.Id);
 
-            //check auto bid 500 times
-            yield return CheckAutoBid500(user.Id);
+            ////check auto bid 250 times
+            //yield return CheckAutoBid250(user.Id);
 
-            //check auto bid 1000 times
-            yield return CheckAutoBid1000(user.Id);
+            ////check auto bid 500 times
+            //yield return CheckAutoBid500(user.Id);
 
-            //check auto bid 2000 times
-            yield return CheckAutoBid2000(user.Id);
+            ////check auto bid 1000 times
+            //yield return CheckAutoBid1000(user.Id);
 
-            //check auto bid 5000 times
-            yield return CheckAutoBid5000(user.Id);
+            ////check auto bid 2000 times
+            //yield return CheckAutoBid2000(user.Id);
+
+            ////check auto bid 5000 times
+            //yield return CheckAutoBid5000(user.Id);
         }
 
         private TrophyKey? CheckAutoBid10(string userId)

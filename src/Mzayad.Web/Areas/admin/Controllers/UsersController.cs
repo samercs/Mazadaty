@@ -106,7 +106,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             {
                 SubscriptionLogs = await _subscriptionService.GetSubscriptionLogsByUserId(id),
                 TokenLogs = await _tokenService.GetTokenLogsByUserId(id),
-                Trophies = await _trophyService.GetUsersTrophies(id, Language),
+                Trophies = await _trophyService.GetUserTrophies(id, Language),
                 Auctions = await _auctionService.GetAuctionsWon(user.Id, Language),
                 Bids = await _bidService.GetRecentBidHistoryForUser(user.Id, Language),
                 IsLocked = await AuthService.IsLocked(id)
@@ -128,7 +128,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             {
                 model.SubscriptionLogs = await _subscriptionService.GetSubscriptionLogsByUserId(id);
                 model.TokenLogs = await _tokenService.GetTokenLogsByUserId(id);
-                model.Trophies = await _trophyService.GetUsersTrophies(id, Language);
+                model.Trophies = await _trophyService.GetUserTrophies(id, Language);
                 model.Auctions = await _auctionService.GetAuctionsWon(user.Id, Language);
                 model.Bids = await _bidService.GetRecentBidHistoryForUser(user.Id, Language);
                 await model.Hydrate(user, _userService);

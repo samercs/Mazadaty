@@ -15,6 +15,7 @@ using System.Configuration;
 using System.Reflection;
 using System.Web.Http;
 using System.Web.Mvc;
+using Mzayad.Services.Queues;
 using Mzayad.Web.Core.Caching;
 
 namespace Mzayad.Web

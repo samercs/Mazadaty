@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Mzayad.Models.Enums;
 using Mzayad.Services.Activity;
+using Mzayad.Services.Queues;
 using Mzayad.Web.Core.Services;
 
 namespace Mzayad.Web.Controllers

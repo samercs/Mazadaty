@@ -3,17 +3,21 @@ using Mzayad.Models;
 using Mzayad.Models.Enum;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Mzayad.Services.Trophies
 {
-    public class SubmitBidTrophyEngine : TrophyEngine
+    public interface ITrophyEngine
+    {
+        Task<IEnumerable<TrophyKey>> TryGetEarnedTrophies(ApplicationUser user);
+    }
+
+    public class SubmitBidTrophyEngine : TrophyEngine, ITrophyEngine
     {
         private readonly BidService _bidService;
-
         private readonly IslamicCalendar _calendar;
 
-        public SubmitBidTrophyEngine(IDataContextFactory dataContextFactory)
-            : base(dataContextFactory)
+        public SubmitBidTrophyEngine(IDataContextFactory dataContextFactory) : base(dataContextFactory)
         {
             var islamicCalendarService = new IslamicCalendarService(dataContextFactory);
             _bidService = new BidService(dataContextFactory, null);
@@ -21,70 +25,92 @@ namespace Mzayad.Services.Trophies
             _calendar = islamicCalendarService.GetByDate(DateTime.UtcNow.Date).Result;
         }
 
-        protected override IEnumerable<TrophyKey?> TryGetEarnedTrophies(ApplicationUser user)
+        public async Task<IEnumerable<TrophyKey>> TryGetEarnedTrophies(ApplicationUser user)
         {
-            yield return CheckBidOnNewYear(user.Id);
-            yield return CheckBidOnIslamicNewYear(user.Id);
-            yield return CheckBidOnEid(user.Id);
-            yield return CheckBidOnAnniversary(user);
+            var userTrophies = await TrophyService.GetUserTrophies(user.Id);
+            var trophyKeys = new List<TrophyKey>();
 
-            //Bid 3 days in a row
-            yield return CheckBid3DaysInRow(user.Id);
+            var key = CheckBidOnNewYear(user.Id, userTrophies);
+            if (key.HasValue)
+            {
+                trophyKeys.Add(key.Value);
+            }
+            
 
-            //Bid 7 days in a row
-            yield return CheckBid7DaysInRow(user.Id);
 
-            //Bid 30 days in a row
-            yield return CheckBid30DaysInRow(user.Id);
 
-            //Bid 90 days in a row
-            yield return CheckBid90DaysInRow(user.Id);
+            return trophyKeys;
 
-            //Bid 180 days in a row
-            yield return CheckBid180DaysInRow(user.Id);
+            //yield return CheckBidOnNewYear(user.Id);
 
-            //Bid 365 days in a row
-            yield return CheckBid365DaysInRow(user.Id);
 
-            //Bid 10 Times
-            yield return CheckBid10(user.Id);
 
-            //Bid 25 Times
-            yield return CheckBid25(user.Id);
+            // TODO re-implement the below
 
-            //Bid 50 Times
-            yield return CheckBid50(user.Id);
 
-            //Bid 100 Times
-            yield return CheckBid100(user.Id);
+            //yield return CheckBidOnIslamicNewYear(user.Id);
+            //yield return CheckBidOnEid(user.Id);
+            //yield return CheckBidOnAnniversary(user);
 
-            //Bid 250 Times
-            yield return CheckBid250(user.Id);
+            ////Bid 3 days in a row
+            //yield return CheckBid3DaysInRow(user.Id);
 
-            //Bid 500 Times
-            yield return CheckBid500(user.Id);
+            ////Bid 7 days in a row
+            //yield return CheckBid7DaysInRow(user.Id);
 
-            //Bid 1000 Times
-            yield return CheckBid1000(user.Id);
+            ////Bid 30 days in a row
+            //yield return CheckBid30DaysInRow(user.Id);
 
-            //Bid 2000 Times
-            yield return CheckBid2000(user.Id);
+            ////Bid 90 days in a row
+            //yield return CheckBid90DaysInRow(user.Id);
 
-            //Bid 5000 Times
-            yield return CheckBid5000(user.Id);
+            ////Bid 180 days in a row
+            //yield return CheckBid180DaysInRow(user.Id);
+
+            ////Bid 365 days in a row
+            //yield return CheckBid365DaysInRow(user.Id);
+
+            ////Bid 10 Times
+            //yield return CheckBid10(user.Id);
+
+            ////Bid 25 Times
+            //yield return CheckBid25(user.Id);
+
+            ////Bid 50 Times
+            //yield return CheckBid50(user.Id);
+
+            ////Bid 100 Times
+            //yield return CheckBid100(user.Id);
+
+            ////Bid 250 Times
+            //yield return CheckBid250(user.Id);
+
+            ////Bid 500 Times
+            //yield return CheckBid500(user.Id);
+
+            ////Bid 1000 Times
+            //yield return CheckBid1000(user.Id);
+
+            ////Bid 2000 Times
+            //yield return CheckBid2000(user.Id);
+
+            ////Bid 5000 Times
+            //yield return CheckBid5000(user.Id);
         }
 
-        private TrophyKey? CheckBidOnNewYear(string userId)
+        private TrophyKey? CheckBidOnNewYear(string userId, IEnumerable<UserTrophy> userTrophies)
         {
             if (DateTime.Now.Month != 1 || DateTime.Now.Day != 1)
             {
                 return null;
             }
+
             var userTrophy = TrophyService.GetLastEarnedTrophy(TrophyKey.BidOnNewYear, userId).Result;
             if (userTrophy.CreatedUtc.Year == DateTime.Now.Year)
             {
                 return null;
             }
+
             return TrophyKey.BidOnNewYear;
         }
 

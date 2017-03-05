@@ -1,22 +1,15 @@
-﻿using Microsoft.WindowsAzure.Storage;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Mzayad.Models;
+using Mzayad.Models.Enum;
 using Mzayad.Models.Enums;
+using Mzayad.Models.Queues;
 using Newtonsoft.Json;
-using System;
-using System.Threading.Tasks;
 
-namespace Mzayad.Services.Activity
+namespace Mzayad.Services.Queues
 {
-    public interface IQueueService
-    {
-        void LogBid(Bid bid);
-
-        void QueueActivity(ActivityType activityType, string userId, string language = "en");
-        Task QueueActivityAsync(ActivityType activityType, string userId, string language = "en");
-        Task QueueActivityAsync(ActivityType activityType, string userId, int xp, string language = "en");
-    }
-
     public class QueueService : IQueueService
     {
         private readonly CloudQueueClient _cloudQueueClient;
@@ -39,7 +32,15 @@ namespace Mzayad.Services.Activity
                 bid.Type
             }));
 
-            CreateQueue("bids").AddMessage(message);
+            CreateQueue(QueueKeys.Bids).AddMessage(message);
+        }
+
+        public async Task LogTrophy(ApplicationUser user, TrophyKey trophyKey)
+        {
+            var userTrophy = new UserTrophyMessage(user, trophyKey);
+            var message = new CloudQueueMessage(userTrophy.ToJson());
+
+            await CreateQueue(QueueKeys.Trophies).AddMessageAsync(message);
         }
 
         public void QueueActivity(ActivityType activityType, string userId, string language = "en")
