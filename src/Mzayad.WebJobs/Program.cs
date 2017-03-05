@@ -45,13 +45,11 @@ namespace Mzayad.WebJobs
             _dataContextFactory = new DataContextFactory();
             _userService = new UserService(_dataContextFactory);
             _trophyService = new TrophyService(_dataContextFactory);
-            _queueService = new QueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
+            _queueService = new QueueService("DefaultEndpointsProtocol=https;AccountName=mzayad;AccountKey=dwZYAeSDA4lz8qixfZGdjNrohWnY59DtyTBHrnSOFoPgC4w/ueV232lq6H9n6WoieJDu+GNHUd1QuCT7Xa/5mw==");
         }
 
         public async Task HandleBid([QueueTrigger("%bids%")] BidMessage bid, TextWriter log)
         {
-            await log.WriteLineAsync((bid == null).ToString());
-
             await log.WriteLineAsync($"Handling bid: {bid.ToJson()}...");
 
             var user = await _userService.GetUserById(bid.UserId);
