@@ -24,3 +24,4 @@
 /// <reference path="site-kendo.js" />
 /// <reference path="winwheel.js" />
 /// <reference path="wow.js" />
+/// <reference path="zoom/jquery.elevatezoom.js" />

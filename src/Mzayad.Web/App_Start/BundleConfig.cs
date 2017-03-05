@@ -60,6 +60,8 @@ namespace Mzayad.Web
             bundles.Add(new StyleBundle("~/css/nivo").Include(
                 "~/content/nivo/nivo-lightbox.css",
                 "~/content/nivo/default/default.css"));
+
+            bundles.Add(new ScriptBundle("~/js/zoom").Include("~/scripts/zoom/jquery.elevateZoom.js"));
         }
     }
 }

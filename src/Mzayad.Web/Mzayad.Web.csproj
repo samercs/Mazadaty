@@ -701,6 +701,7 @@
     <Content Include="Areas\Admin\Views\Auctions\AutoBids.cshtml" />
     <Content Include="Areas\Admin\Views\Avatars\Edit.cshtml" />
     <Content Include="Scripts\Winwheel.js" />
+    <Content Include="Scripts\zoom\jquery.elevatezoom.js" />
     <Content Include="Views\Shared\_ImageUpload.cshtml" />
     <Content Include="Areas\Admin\Views\Prizes\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Prizes\Add.cshtml" />
