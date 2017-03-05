@@ -8,7 +8,7 @@
 @section styles
 {
     <style>
-        dd,dt {
+        dd, dt {
             line-height: 2.5;
         }
 
@@ -20,12 +20,40 @@
             color: #999;
             padding-left: 5px;
         }
+        
+        .btn-image-selector {
+            border: 1px solid transparent !important;
+            padding: 0px !important;
+        }
+
+            .btn-image-selector:hover {
+                border-color: #777 !important;
+            }
+
+            .selected {
+                border-color: #333 !important;
+                cursor: default !important;
+            }
+            #product-images {
+                margin-top: 15px;
+            }
     </style>
 }
 
 <div class="row">
     <div class="col-md-4">
-        <img class="img-responsive" src="@Model.MainImage().ImageMdUrl" title="@Model.Name" alt="@Model.Name" />
+        <img id="product-image" class="img-responsive" data-zoom-image="@Model.MainImage().ImageLgUrl" />
+        <ul id="product-images" class="list-inline">
+            @foreach (var image in Model.ProductImages)
+            {
+                <li>
+                    <button class="btn btn-link btn-image-selector @(Model.MainImage().ImageLgUrl == image.ImageLgUrl ? "selected" : "")" data-lg-img="@image.ImageLgUrl">
+                        <img class="img-responsive" src="@image.ImageSmUrl"  alt="" width="72" height="72" />
+                    </button>
+                </li>
+            }
+            
+        </ul>
     </div>
     <div class="col-md-8">
         <dl class="dl-horizontal">
@@ -40,11 +68,9 @@
             }
             @if (!string.IsNullOrWhiteSpace(Model.VideoUrl))
             {
-                <dt ></dt>
-                <dd class="vido-link">
-                    <a href="@Model.VideoUrl" target="blank">
-                        <span><i class="fa fa-2x fa-pad-right fa-youtube" aria-hidden="true"></i> @Global.WatchVideo</span>
-                    </a>
+                <dt></dt>
+                <dd>
+                    <iframe width="100%" height="315" src="@Model.VideoUrl" frameborder="0" allowfullscreen></iframe>
                 </dd>
 
             }
@@ -57,22 +83,68 @@
                 @Html.Raw(Model.Description)
             </div>
         </section>
-        <hr/>
+        <hr />
         @if (Model.ProductSpecifications.Any())
         {
             <section>
                 @Html.Label(Global.Specifications)
-                <br/>
+                <br />
                 @foreach (var specification in Model.ProductSpecifications)
                 {
-                        <span>@specification.Specification.Name:</span>    
-                        <span class="spec-span">@specification.Value</span>    
-                        <br/>
+                    <span>@specification.Specification.Name:</span>
+                    <span class="spec-span">@specification.Value</span>
+                    <br />
                 }
             </section>
         }
     </div>
-    
+
 </div>
+@section scripts
+{
+    @Scripts.Render("~/js/zoom");
+    <script>
+        $(function() {
+
+            var animateSetSrc = function(element, valueAccessor, loadingUrl, callback) {
+                var url = valueAccessor;
+                var img = $(element);
+                img.prop("src", loadingUrl);
+                window.setTimeout(function() {
+                        img.prop("src", url);
+                        if (callback !== undefined) {
+                            callback();
+                        }
+                    },
+                    500);
+            };
+
+            var setZoom = function(element, valueAccessor) {
+                animateSetSrc(element,
+                    valueAccessor,
+                    "//az712326.vo.msecnd.net/assets/loading-555x555-635640109174794029.gif",
+                    function() {
+                        var $element = $(element);
+                        $element.data("zoomImage", $element.attr("data-zoom-image"));
+                        $element.elevateZoom({ zoomType: "inner", cursor: "crosshair" });
+                    });
+            };
+
+
+            $(function() {
+                $(".btn-image-selector").click(function () {
+                    var $this = $(this);
+                    var largImage = $this.data("lg-img");
+                    $("#product-image").data("zoom-image", largImage);
+                    setZoom("#product-image", largImage);
+                    $(".btn-image-selector").removeClass("selected");
+                    $this.addClass("selected");
+                });
+                
+                setZoom("#product-image", "@Model.MainImage().ImageLgUrl");
+            });
+        });
+    </script>
+}
 
 

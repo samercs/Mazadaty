@@ -77,8 +77,8 @@ namespace Mzayad.Web
             var hostName = Environment.GetEnvironmentVariable("WEBSITE_HOSTNAME");
             if (string.IsNullOrEmpty(hostName))
             {
-                return new LocalRedisCacheService();
-                //return new HttpCacheService();
+                //return new LocalRedisCacheService();
+                return new HttpCacheService();
             }
 
             return new RedisCacheService();
