@@ -963,4 +963,7 @@
   <data name="MinuteAbbreviation" xml:space="preserve">
     <value>min</value>
   </data>
+  <data name="ConverstionWith" xml:space="preserve">
+    <value>Converstion with</value>
+  </data>
 </root>

@@ -49,6 +49,19 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<IReadOnlyCollection<Message>> GetHistory(string senderId, string reciverId)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.Messages
+                    .Include(i => i.User)
+                    .Where(i => (i.UserId.Equals(senderId) && i.ReceiverId.Equals(reciverId)) ||
+                    i.ReceiverId.Equals(senderId) && i.UserId.Equals(reciverId))
+                    .OrderBy(i => i.CreatedUtc)
+                    .ToListAsync();
+            }
+        }
+
         public async Task<IReadOnlyCollection<Message>> GetByReceiver(string userId)
         {
             using (var dc = DataContext())

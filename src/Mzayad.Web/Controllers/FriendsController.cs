@@ -3,6 +3,7 @@ using Mzayad.Models.Enums;
 using Mzayad.Services;
 using Mzayad.Services.Identity;
 using Mzayad.Web.Core.Services;
+using Mzayad.Web.Models.Friends;
 using Mzayad.Web.Models.User;
 using System.Net;
 using System.Threading.Tasks;
@@ -48,28 +49,38 @@ namespace Mzayad.Web.Controllers
         [Route("friend/{userName}/message")]
         public async Task<ActionResult> SendMessage(string userName)
         {
+            var currentUser = await AuthService.CurrentUser();
             var user = await _userService.GetUserByName(userName);
             if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(new Message() { User = user});
+            var history = await _messageService.GetHistory(currentUser.Id, user.Id);
+
+
+            var model = new SendMessageViewModel
+            {
+                Message = new Message() { User = user },
+                History = history,
+                User = currentUser
+            };
+            return View(model);
         }
 
         [HttpPost, ValidateAntiForgeryToken, ValidateInput(false)]
         [Route("friend/{userName}/message")]
-        public async Task<ActionResult> SendMessage(string userName, Message model)
+        public async Task<ActionResult> SendMessage(string userName, SendMessageViewModel model)
         {
             var reciever = await _userService.GetUserByName(userName);
             if (reciever == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            model.IsNew = true;
-            model.UserId = AuthService.CurrentUserId();
-            model.ReceiverId = reciever.Id;
+            model.Message.IsNew = true;
+            model.Message.UserId = AuthService.CurrentUserId();
+            model.Message.ReceiverId = reciever.Id;
 
-            var message = await _messageService.Insert(model);
+            var message = await _messageService.Insert(model.Message);
             TempData["MessageSent"] = true;
             return RedirectToAction("friends", "user");
         }
