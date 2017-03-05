@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
 using Mzayad.Models;
-using Mzayad.Models.Enum;
 using Mzayad.Models.Enums;
 using Mzayad.Services;
 using Mzayad.Services.Activity;
@@ -521,7 +520,7 @@ namespace Mzayad.Web.Controllers
             var viewModel = new List<UserProfileViewModel>();
             foreach (var friend in friends)
             {
-                friend.AvatarUrl = friend.ProfileStatus == UserProfileStatus.Private ? "//az712326.vo.msecnd.net/assets/no-image-512x512-635627099896729695.png" : friend.AvatarUrl;
+                friend.AvatarUrl = friend.AvatarUrl;
                 viewModel.Add(new UserProfileViewModel(friend)
                 {
                     Trophies = await _trophyService.GetTrophies(friend.Id, Language),
