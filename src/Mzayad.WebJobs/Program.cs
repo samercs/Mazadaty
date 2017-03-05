@@ -1,23 +1,5 @@
 ﻿using Microsoft.Azure.WebJobs;
-using Mindscape.Raygun4Net;
-using Mzayad.Data;
-using Mzayad.Models;
-using Mzayad.Models.Enum;
-using Mzayad.Models.Enums;
-using Mzayad.Models.Queues;
-using Mzayad.Services;
-using Mzayad.Services.Activity;
-using Mzayad.Services.Identity;
-using Mzayad.Services.Queues;
-using Mzayad.Services.Trophies;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+using Mzayad.WebJobs.Configuration;
 
 namespace Mzayad.WebJobs
 {

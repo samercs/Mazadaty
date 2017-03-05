@@ -7,11 +7,6 @@ using System.Threading.Tasks;
 
 namespace Mzayad.Services.Trophies
 {
-    public interface ITrophyEngine
-    {
-        Task<IEnumerable<TrophyKey>> TryGetEarnedTrophies(ApplicationUser user);
-    }
-
     public class SubmitBidTrophyEngine : TrophyEngine, ITrophyEngine
     {
         private readonly BidService _bidService;
@@ -30,13 +25,7 @@ namespace Mzayad.Services.Trophies
             var userTrophies = await TrophyService.GetUserTrophies(user.Id);
             var trophyKeys = new List<TrophyKey>();
 
-            var key = CheckBidOnNewYear(user.Id, userTrophies);
-            if (key.HasValue)
-            {
-                trophyKeys.Add(key.Value);
-            }
-            
-
+            TryAddTrophy(trophyKeys, CheckBidOnNewYear(user.Id, userTrophies));
 
 
             return trophyKeys;
@@ -98,10 +87,20 @@ namespace Mzayad.Services.Trophies
             //yield return CheckBid5000(user.Id);
         }
 
+        private static bool TryAddTrophy(ICollection<TrophyKey> trophyKeys, TrophyKey? key)
+        {
+            if (!key.HasValue)
+            {
+                return false;
+            }
+
+            trophyKeys.Add(key.Value);
+
+            return true;
+        }
+
         private TrophyKey? CheckBidOnNewYear(string userId, IEnumerable<UserTrophy> userTrophies)
         {
-            return TrophyKey.BidOnNewYear;
-
             if (DateTime.Now.Month != 1 || DateTime.Now.Day != 1)
             {
                 return null;
