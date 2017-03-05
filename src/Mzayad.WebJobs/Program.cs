@@ -50,6 +50,8 @@ namespace Mzayad.WebJobs
 
         public async Task HandleBid([QueueTrigger("%bids%")] BidMessage bid, TextWriter log)
         {
+            await log.WriteLineAsync((bid == null).ToString());
+
             await log.WriteLineAsync($"Handling bid: {bid.ToJson()}...");
 
             var user = await _userService.GetUserById(bid.UserId);
