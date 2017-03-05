@@ -100,6 +100,8 @@ namespace Mzayad.Services.Trophies
 
         private TrophyKey? CheckBidOnNewYear(string userId, IEnumerable<UserTrophy> userTrophies)
         {
+            return TrophyKey.BidOnNewYear;
+
             if (DateTime.Now.Month != 1 || DateTime.Now.Day != 1)
             {
                 return null;
