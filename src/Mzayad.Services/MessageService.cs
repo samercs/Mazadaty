@@ -33,6 +33,21 @@ namespace Mzayad.Services
                 return message;
             }
         }
+        public async Task SetAllAsRead(string reciverId, string senderId)
+        {
+            using (var dc = DataContext())
+            {
+                var messages = dc.Messages
+                    .Where(i => i.ReceiverId.Equals(reciverId))
+                    .Where(i => i.UserId.Equals(senderId)).ToList();
+                messages.ForEach(i =>
+                {
+                    i.IsNew = false;
+                    dc.SetModified(i);
+                });
+                await dc.SaveChangesAsync();
+            }
+        }
         public int CountNewMesssages(string userId)
         {
             using (var dc = DataContext())

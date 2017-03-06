@@ -55,9 +55,8 @@ namespace Mzayad.Web.Controllers
             {
                 return HttpNotFound();
             }
+            await _messageService.SetAllAsRead(currentUser.Id, user.Id);
             var history = await _messageService.GetHistory(currentUser.Id, user.Id);
-
-
             var model = new SendMessageViewModel
             {
                 Message = new Message() { User = user },
@@ -82,7 +81,7 @@ namespace Mzayad.Web.Controllers
 
             var message = await _messageService.Insert(model.Message);
             TempData["MessageSent"] = true;
-            return RedirectToAction("friends", "user");
+            return RedirectToAction("SendMessage", "Friends", new {userName});
         }
 
         #region Ajax Calls
