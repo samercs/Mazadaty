@@ -4,6 +4,7 @@ using Mzayad.Models.Enum;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Mzayad.Models.Extensions;
 
 namespace Mzayad.Services.Trophies
 {
@@ -25,39 +26,22 @@ namespace Mzayad.Services.Trophies
             var userTrophies = await TrophyService.GetUserTrophies(user.Id);
             var trophyKeys = new List<TrophyKey>();
 
-            TryAddTrophy(trophyKeys, CheckBidOnNewYear(user.Id, userTrophies));
-
-
-            return trophyKeys;
-
-            //yield return CheckBidOnNewYear(user.Id);
-
-
+            trophyKeys.TryAdd(CheckBidOnNewYear(userTrophies));
 
             // TODO re-implement the below
-
-
             //yield return CheckBidOnIslamicNewYear(user.Id);
             //yield return CheckBidOnEid(user.Id);
             //yield return CheckBidOnAnniversary(user);
 
-            ////Bid 3 days in a row
-            //yield return CheckBid3DaysInRow(user.Id);
+            var bidStreak = await _bidService.GetConsecutiveBidDays(user.Id);
+            trophyKeys.TryAdd(CheckBidStreak(userTrophies, bidStreak, 3, TrophyKey.BidDayStreak3));
+            trophyKeys.TryAdd(CheckBidStreak(userTrophies, bidStreak, 7, TrophyKey.BidDayStreak7));
+            trophyKeys.TryAdd(CheckBidStreak(userTrophies, bidStreak, 30, TrophyKey.BidDayStreak30));
+            trophyKeys.TryAdd(CheckBidStreak(userTrophies, bidStreak, 90, TrophyKey.BidDayStreak90));
+            trophyKeys.TryAdd(CheckBidStreak(userTrophies, bidStreak, 180, TrophyKey.BidDayStreak180));
+            trophyKeys.TryAdd(CheckBidStreak(userTrophies, bidStreak, 3365, TrophyKey.BidDayStreak365));
 
-            ////Bid 7 days in a row
-            //yield return CheckBid7DaysInRow(user.Id);
-
-            ////Bid 30 days in a row
-            //yield return CheckBid30DaysInRow(user.Id);
-
-            ////Bid 90 days in a row
-            //yield return CheckBid90DaysInRow(user.Id);
-
-            ////Bid 180 days in a row
-            //yield return CheckBid180DaysInRow(user.Id);
-
-            ////Bid 365 days in a row
-            //yield return CheckBid365DaysInRow(user.Id);
+            return trophyKeys;
 
             ////Bid 10 Times
             //yield return CheckBid10(user.Id);
@@ -87,27 +71,15 @@ namespace Mzayad.Services.Trophies
             //yield return CheckBid5000(user.Id);
         }
 
-        private static bool TryAddTrophy(ICollection<TrophyKey> trophyKeys, TrophyKey? key)
-        {
-            if (!key.HasValue)
-            {
-                return false;
-            }
-
-            trophyKeys.Add(key.Value);
-
-            return true;
-        }
-
-        private TrophyKey? CheckBidOnNewYear(string userId, IEnumerable<UserTrophy> userTrophies)
+        private static TrophyKey? CheckBidOnNewYear(IEnumerable<UserTrophy> userTrophies)
         {
             if (DateTime.Now.Month != 1 || DateTime.Now.Day != 1)
             {
                 return null;
             }
 
-            var userTrophy = TrophyService.GetLastEarnedTrophy(TrophyKey.BidOnNewYear, userId).Result;
-            if (userTrophy.CreatedUtc.Year == DateTime.Now.Year)
+            var userTrophy = userTrophies.GetLastEarned(TrophyKey.BidOnNewYear);
+            if (userTrophy.CreatedUtc.Year == DateTime.Today.Year)
             {
                 return null;
             }
@@ -161,94 +133,20 @@ namespace Mzayad.Services.Trophies
             return TrophyKey.BidOnAnniversary;
         }
 
-        private TrophyKey? CheckBid3DaysInRow(string userId)
+        private static TrophyKey? CheckBidStreak(IEnumerable<UserTrophy> userTrophies, int actualBidStreak, int expectedBidStreak, TrophyKey trophyKey)
         {
-            var streak = _bidService.GetConsecutiveBidDays(userId).Result;
-            if (streak < 3)
+            if (actualBidStreak < expectedBidStreak)
             {
                 return null;
             }
 
-            if (!GainTrophyToday(TrophyKey.BidDayStreak3, userId))
-            {
-                return TrophyKey.BidDayStreak3;
-            }
-            return null;
-        }
-
-        private TrophyKey? CheckBid7DaysInRow(string userId)
-        {
-            var streak = _bidService.GetConsecutiveBidDays(userId).Result;
-            if (streak < 7)
+            var lastEarned = userTrophies.GetLastEarned(trophyKey);
+            if (lastEarned != null && lastEarned.WasEarnedToday())
             {
                 return null;
             }
 
-            if (!GainTrophyToday(TrophyKey.BidDayStreak7, userId))
-            {
-                return TrophyKey.BidDayStreak7;
-            }
-            return null;
-        }
-
-        private TrophyKey? CheckBid30DaysInRow(string userId)
-        {
-            var streak = _bidService.GetConsecutiveBidDays(userId).Result;
-            if (streak < 30)
-            {
-                return null;
-            }
-
-            if (!GainTrophyToday(TrophyKey.BidDayStreak30, userId))
-            {
-                return TrophyKey.BidDayStreak30;
-            }
-            return null;
-        }
-
-        private TrophyKey? CheckBid90DaysInRow(string userId)
-        {
-            var streak = _bidService.GetConsecutiveBidDays(userId).Result;
-            if (streak < 90)
-            {
-                return null;
-            }
-
-            if (!GainTrophyToday(TrophyKey.BidDayStreak90, userId))
-            {
-                return TrophyKey.BidDayStreak90;
-            }
-            return null;
-        }
-
-        private TrophyKey? CheckBid180DaysInRow(string userId)
-        {
-            var streak = _bidService.GetConsecutiveBidDays(userId).Result;
-            if (streak < 180)
-            {
-                return null;
-            }
-
-            if (!GainTrophyToday(TrophyKey.BidDayStreak180, userId))
-            {
-                return TrophyKey.BidDayStreak180;
-            }
-            return null;
-        }
-
-        private TrophyKey? CheckBid365DaysInRow(string userId)
-        {
-            var streak = _bidService.GetConsecutiveBidDays(userId).Result;
-            if (streak < 365)
-            {
-                return null;
-            }
-
-            if (!GainTrophyToday(TrophyKey.BidDayStreak365, userId))
-            {
-                return TrophyKey.BidDayStreak365;
-            }
-            return null;
+            return trophyKey;
         }
 
         private TrophyKey? CheckBid10(string userId)

@@ -12,8 +12,6 @@ namespace Mzayad.WebJobs.Functions
     {
         public async Task ProcessMessage([QueueTrigger("%bids%")] BidMessage message, TextWriter log)
         {
-            await log.WriteLineAsync($"Handling bid: {message.ToJson()}...");
-
             var user = await UserService.GetUserById(message.UserId);
             if (user == null)
             {

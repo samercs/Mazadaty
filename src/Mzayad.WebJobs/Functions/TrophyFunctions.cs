@@ -9,8 +9,6 @@ namespace Mzayad.WebJobs.Functions
     {
         public async Task ProcessMessage([QueueTrigger("%trophies%")] UserTrophyMessage message, TextWriter log)
         {
-            await log.WriteLineAsync($"Handling messing: {message.ToJson()}...");
-
             var user = await UserService.GetUserById(message.UserId);
             if (user == null)
             {

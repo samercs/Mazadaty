@@ -13,12 +13,7 @@ namespace Mzayad.Core.Extensions
 
         public static DateTime? ToLocalTime(this DateTime? dateTime)
         {
-            if (!dateTime.HasValue)
-            {
-                return null;
-            }
-
-            return dateTime.Value.AddHours(3); // UTC => AST
+            return dateTime?.AddHours(3); // UTC => AST
         }
 
         ///<summary>

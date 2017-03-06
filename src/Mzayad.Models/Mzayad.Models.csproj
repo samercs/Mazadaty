@@ -102,6 +102,7 @@
     <Compile Include="Enums\UserProfileStatus.cs" />
     <Compile Include="Enums\TrophyKey.cs" />
     <Compile Include="Enums\UserSubscriptionStatus.cs" />
+    <Compile Include="Extensions\TrophyKeyExtensions.cs" />
     <Compile Include="Extensions\UserTrophyExtensions.cs" />
     <Compile Include="FriendRequest.cs" />
     <Compile Include="Message.cs" />

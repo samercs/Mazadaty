@@ -1,4 +1,5 @@
-﻿using Mzayad.Models.Enum;
+﻿using System;
+using Mzayad.Models.Enum;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,6 +12,11 @@ namespace Mzayad.Models.Extensions
             return userTrophies
                 .OrderBy(i => i.CreatedUtc)
                 .LastOrDefault(i => i.Trophy.Key == trophyKey);
+        }
+
+        public static bool WasEarnedToday(this UserTrophy userTrophy)
+        {
+            return userTrophy.CreatedUtc.Date == DateTime.Today.Date;
         }
     }
 }
