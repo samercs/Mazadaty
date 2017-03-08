@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Azure.WebJobs;
 
-namespace Mzayad.WebJobs
+namespace Mzayad.WebJobs.Configuration
 {
     public class QueueNameResolver : INameResolver
     {

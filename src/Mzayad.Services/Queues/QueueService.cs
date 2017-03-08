@@ -37,7 +37,7 @@ namespace Mzayad.Services.Queues
 
         public async Task LogTrophy(ApplicationUser user, TrophyKey trophyKey)
         {
-            var userTrophy = new UserTrophyMessage(user, trophyKey);
+            var userTrophy = new UserTrophyMessage(user.Id, trophyKey);
             var message = new CloudQueueMessage(userTrophy.ToJson());
 
             await CreateQueue(QueueKeys.Trophies).AddMessageAsync(message);
