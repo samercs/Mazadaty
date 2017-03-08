@@ -2284,6 +2284,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Congratulations, you have successfully purchased &lt;strong&gt;Basic&lt;/strong&gt; and we have updated your account. Also you win a prize from Zeedli..
+        /// </summary>
+        public static string SubscriptionPurchaseAcknowledgementApi {
+            get {
+                return ResourceManager.GetString("SubscriptionPurchaseAcknowledgementApi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;strong&gt;Quantity:&lt;/strong&gt; {Quantity}.
         /// </summary>
         public static string SubscriptionQuantityDetailsLabel {
