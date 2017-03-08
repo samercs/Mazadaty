@@ -1,30 +1,104 @@
-﻿@model Mzayad.Models.Message
+﻿@using Mzayad.Core.Formatting
+@model Mzayad.Web.Models.Friends.SendMessageViewModel
 
-@{
-    ViewBag.Title = Global.Chat+ " - " + Model.User.UserName;
+@section styles
+{
+    <style>
+        
+         .date {
+             color: #4D4D4D;
+             font-size: 12px;
+             padding-left: 10px;
+             font-weight: normal !important;
+         }
+
+        .msg-user {
+            margin-top: 10px;
+        }
+        h2 {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .msg-border {
+            border-bottom: solid 1px #bbb;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+        }
+
+        .form-begin {
+            margin-top: 30px;
+        }
+        .no-padding {
+            padding: 0px !important;
+        }
+        .btn-default {
+            width: 100%;
+            height: 50px;
+        }
+        textarea {
+            height: 50px !important;
+            width: 95% !important;
+        }
+    </style>
 }
 
+@{
+    ViewBag.Title = Global.ConverstionWith + " " + Model.Message.User.UserName;
+}
 
 <div class="row">
-    <div class="@Html.Css().FormWide">
-        @using (Html.BeginForm())
+    <div class="@Html.Css().FormNormal">
+        @foreach (var message in Model.History)
         {
-            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-xs-12 msg-border">
+                    <div class="row">
+                        <div class="col-xs-1 no-padding">
+                            <img class="img-responsive img-thumbnail img-circle" src="@message.User.AvatarUrl" />
+                        </div>
+                        <div class="col-xs-11">
+                            <div class="msg-user">
+                                <h2>
+                                    @message.User.FullName <span class="date">@DateTimeFormatter.ToLocalTime(message.CreatedUtc)</span>
+                                </h2>
+                            </div>
+                            <div>
+                                @Html.Raw(message.Body)
+                            </div>
+                        </div>
+                    </div>
 
-            <section>
-                <div class="form-group">
-                    @Html.LabelFor(i => i.Body, Global.Message)
-                    @Html.TextAreaFor(i => i.Body)
-                    @Html.ValidationMessageFor(i => i.Body, Global.EmptyMessageErrorMessage)
                 </div>
-            </section>
-            <section class="form-buttons">
-                <a class="btn btn-unstyled btn-rounded" href="@Request.UrlReferrer">@Global.Back</a>
-                <button type="submit" onclick="updateEditor();" class="btn btn-default btn-rounded">@Global.Send</button>
-            </section>
+            </div>
         }
+        <div class="row form-begin">
+            <div class="@Html.Css().FormWide">
+                @using (Html.BeginForm())
+            {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-10 no-padding">
+                                @Html.TextAreaFor(i => i.Message.Body, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(i => i.Message.Body, Global.EmptyMessageErrorMessage)
+                            </div>
+                            <div class="col-xs-2 no-padding">
+                                <button type="submit" onclick="updateEditor();" class="btn btn-default">@Global.Send</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                }
+            </div>
+        </div>
+
     </div>
 </div>
+
+
 
 @section scripts {
     @Scripts.Render("~/js/validate")
@@ -32,7 +106,7 @@
     <script>
         (function ($) {
             $(function () {
-                initCkEditor();
+                //initCkEditor();
 
             });
             var initCkEditor = function () {
@@ -42,8 +116,7 @@
             };
         })(jQuery);
 
-        function updateEditor()
-        {
+        function updateEditor() {
             for (instance in CKEDITOR.instances) {
                 CKEDITOR.instances[instance].updateElement();
             }

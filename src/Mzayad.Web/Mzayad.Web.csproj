@@ -486,6 +486,7 @@
     <Compile Include="Models\BidModel.cs" />
     <Compile Include="Models\DateRangeModel.cs" />
     <Compile Include="Models\EditAutoBidViewModel.cs" />
+    <Compile Include="Models\Friends\SendMessageViewModel.cs" />
     <Compile Include="Models\Home\IndexViewModel.cs" />
     <Compile Include="Models\LiveAuctionExtendedModel.cs" />
     <Compile Include="Models\LiveAuctionModel.cs" />
