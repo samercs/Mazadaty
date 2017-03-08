@@ -1,14 +1,14 @@
-using System.Linq;
 using Mzayad.Data;
 using Mzayad.Services;
+using Mzayad.Web.Areas.Api.ErrorHandling;
 using Mzayad.Web.Areas.Api.Filters;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Base.Web.Caching;
 using OrangeJetpack.Services.Client.Messaging;
 using OrangeJetpack.Services.Client.Storage;
+using System.Linq;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
-using Mzayad.Web.Areas.Api.ErrorHandling;
 
 namespace Mzayad.Web.Areas.Api.Controllers
 {
@@ -64,6 +64,15 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 {
                     paramater
                 }
+            });
+        }
+
+        protected IHttpActionResult ApiErroResult(string message, ApiErrorType type)
+        {
+            return new ApiErrorResult(new ApiError
+            {
+                Type = type,
+                Message = message
             });
         }
     }

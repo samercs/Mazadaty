@@ -4,21 +4,23 @@ namespace Mzayad.Web.Areas.Api.Models.Subscriptions
 {
     public class SubscriptionViewModel
     {
-        public int Id { get; set; }
+        public int SubscriptionId { get; set; }
         public string Name { get; set; }
-        public int? Token { get; set; }
-        public decimal? Prices { get; set; }
+        public int? PriceTokens { get; set; }
+        public decimal? PriceCurrency { get; set; }
         public int Duration { get; set; }
+        public int? Quantity { get; set; }
 
         public static SubscriptionViewModel Create(Subscription subscription)
         {
             return new SubscriptionViewModel
             {
-                Id = subscription.SubscriptionId,
-                Token = subscription.PriceTokens,
+                SubscriptionId = subscription.SubscriptionId,
+                PriceTokens = subscription.PriceTokens,
                 Name = subscription.Name,
-                Prices = subscription.PriceCurrency,
-                Duration = subscription.Duration
+                PriceCurrency = subscription.PriceCurrency,
+                Duration = subscription.Duration,
+                Quantity = subscription.Quantity
             };
         }
     }

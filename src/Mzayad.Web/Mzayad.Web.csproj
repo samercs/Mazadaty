@@ -406,6 +406,7 @@
     <Compile Include="Areas\Api\Models\Orders\OrderModel.cs" />
     <Compile Include="Areas\Api\Models\Payment\PaymentViewModel.cs" />
     <Compile Include="Areas\Api\Models\Products\ProductModel.cs" />
+    <Compile Include="Areas\Api\Models\Subscriptions\BuySbscriptionResultViewModel.cs" />
     <Compile Include="Areas\Api\Models\Subscriptions\SubscriptionViewModel.cs" />
     <Compile Include="Areas\Api\Models\Users\UserModel.cs" />
     <Compile Include="Areas\Api\Models\Users\UserPostModel.cs" />

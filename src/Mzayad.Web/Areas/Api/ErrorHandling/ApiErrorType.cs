@@ -3,6 +3,8 @@
     public enum ApiErrorType
     {
         ModelStateError,
-        InsufficientTokensError
+        InsufficientTokensError,
+        SubscriptionNotValidForPurchase,
+        SubscriptionNotValidForPurchaseWithTokens
     }
 }
