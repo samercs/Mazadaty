@@ -395,6 +395,7 @@
     <Compile Include="Areas\Api\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Api\Controllers\PaymentController.cs" />
     <Compile Include="Areas\Api\Controllers\ProductsController.cs" />
+    <Compile Include="Areas\Api\Controllers\SubscriptionsController.cs" />
     <Compile Include="Areas\Api\Controllers\UsersController.cs" />
     <Compile Include="Areas\Api\ErrorHandling\ApiError.cs" />
     <Compile Include="Areas\Api\ErrorHandling\ApiErrorResult.cs" />
@@ -405,6 +406,7 @@
     <Compile Include="Areas\Api\Models\Orders\OrderModel.cs" />
     <Compile Include="Areas\Api\Models\Payment\PaymentViewModel.cs" />
     <Compile Include="Areas\Api\Models\Products\ProductModel.cs" />
+    <Compile Include="Areas\Api\Models\Subscriptions\SubscriptionViewModel.cs" />
     <Compile Include="Areas\Api\Models\Users\UserModel.cs" />
     <Compile Include="Areas\Api\Models\Users\UserPostModel.cs" />
     <Compile Include="Areas\Api\Models\Users\UserProfileModel.cs" />
