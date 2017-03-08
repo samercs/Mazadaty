@@ -10,6 +10,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Mzayad.Web.Areas.Api.Models.Orders;
 
 namespace Mzayad.Web.Areas.Api.Controllers
 {
@@ -57,7 +58,8 @@ namespace Mzayad.Web.Areas.Api.Controllers
             var order = CreateOrderFromModel(model);
             await _orderService.CreateOrder(order);
             var result = await _knetService.InitTransaction(order, AuthService.CurrentUserId(), AuthService.UserHostAddress());
-            return Ok(result);
+            var transaction = await _knetService.GetTransactionByOrderId(order.OrderId);
+            return Ok(OrderCreateResult.Create(transaction, result));
         }
 
         private async Task<bool> ValidateOrderItems(int auctionId, OrderItem orderItem)
