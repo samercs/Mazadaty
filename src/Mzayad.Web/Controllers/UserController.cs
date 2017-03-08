@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Mzayad.Services.Queues;
@@ -492,8 +493,17 @@ namespace Mzayad.Web.Controllers
         [Route("inbox")]
         public async Task<ActionResult> Inbox()
         {
-            var viewModel = await _messageService.GetByReceiver(AuthService.CurrentUserId());
-            return View(viewModel);
+            var allMessages = await _messageService.GetByReceiver(AuthService.CurrentUserId());
+            var messageGroup = allMessages.GroupBy(i => i.User, i => i, (key, g) => new
+            {
+                From = key,
+                Message = g.ToList().FirstOrDefault()
+            });
+            var model = new InboxViewModel
+            {
+                Messages = messageGroup.ToDictionary(i => i.From, i => i.Message)
+            };
+            return View(model);
         }
 
         #region Private Methods
@@ -533,5 +543,10 @@ namespace Mzayad.Web.Controllers
             return viewModel;
         }
         #endregion
+    }
+
+    public class InboxViewModel
+    {
+        public IDictionary<ApplicationUser, Message> Messages { get; set; }
     }
 }

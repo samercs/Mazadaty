@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Mzayad.Models.Message>
+﻿@model Mzayad.Web.Controllers.InboxViewModel
 
 @{
     ViewBag.Title = Global.Inbox;
@@ -6,28 +6,28 @@
 
 <div class="panel dashboard-panel">
     <div class="panel-body">
-        @foreach (var item in Model)
+        @foreach (var item in Model.Messages)
         {
             <div id="dashboard-header">
-                <div class="row" id="dv_@item.User.Id">
+                <div class="row" id="dv_@item.Key.Id">
 
                     <div class="col-md-9">
                         <div class="row">
                             <div class="col-sm-2">
                                 <div id="dashboard-avatar">
-                                    <img class="img-responsive" src="@item.User.AvatarUrl" alt="@item.User.UserName" />
+                                    <img class="img-responsive" src="@item.Key.AvatarUrl" alt="@item.Key.UserName" />
                                 </div>
                             </div>
                             <div class="col-sm-9">
                                 <div id="dashboard-details" class="dashboard-cell">
                                     <div id="dashboard-username" class="text-uppercase">
-                                        <a href="@Url.Action("UserProfile", "User", new { area = "", userName = item.User.UserName })" style="color:#33ace0">@item.User.UserName</a>
+                                        <a href="@Url.Action("UserProfile", "User", new { area = "", userName = item.Key.UserName })" style="color:#33ace0">@item.Key.UserName</a>
                                     </div>
                                     <div class="dashboard-label" style="word-wrap:break-word">
-                                        @Html.Raw(item.Summary)
+                                        @Html.Raw(item.Value.Summary)
                                     </div>
                                     <div id="dashboard-level">
-                                        <a href="@Url.Action("message", "friends", new { id = item.MessageId })" data-id="@item.User.UserName" data-remote="false" data-toggle="modal" data-target="#myModal">
+                                        <a href="@Url.Action("SendMessage", "friends", new { userName = item.Key.UserName })">
                                             @Global.More
                                         </a>
                                     </div>
@@ -40,7 +40,7 @@
                             <div class="col-sm-12">
                                 <div id="dashboard-details" class="dashboard-cell">
                                     <div class="dashboard-label">
-                                        @item.CreatedUtc
+                                        @item.Value.CreatedUtc
                                     </div>
                                 </div>
                             </div>
@@ -51,31 +51,3 @@
         }
     </div>
 </div>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-unstyled btn-rounded" data-dismiss="modal">@Global.Close</a>
-                <a class="btn btn-default btn-rounded text-uppercase" id="lnkReply" href="">
-                    <i class="fa fa-fw fa-envelope"></i>
-                    @Global.Reply
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-@section scripts
-{
-    <script>
-        $("#myModal").on("show.bs.modal", function (e) {
-            var link = $(e.relatedTarget);
-            $(this).find(".modal-body").load(link.attr("href"));
-            $('#lnkReply').attr('href', '@Url.Content("~/"+LanguageCode+"/friend/")' + link.data('id') + '/message')
-        });
-    </script>
-}

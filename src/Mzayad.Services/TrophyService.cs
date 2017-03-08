@@ -5,15 +5,19 @@ using System.Threading.Tasks;
 using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
+using Mzayad.Services.Identity;
 using OrangeJetpack.Localization;
 
 namespace Mzayad.Services
 {
     public class TrophyService : ServiceBase
     {
-        public TrophyService(IDataContextFactory dataContextFactory)
-            : base(dataContextFactory)
-        { }
+        private readonly UserService _userService;
+
+        public TrophyService(IDataContextFactory dataContextFactory) : base(dataContextFactory)
+        {
+            _userService = new UserService(DataContextFactory);
+        }
 
         public async Task<IEnumerable<Trophy>> GetAll(string languageCode = "en")
         {
@@ -93,7 +97,7 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task AwardTrophyToUser(TrophyKey trophyKey, string userId)
+        public async Task AwardTrophyToUser(string userId, TrophyKey trophyKey)
         {
             using (var dc = new DataContext())
             {
@@ -106,18 +110,9 @@ namespace Mzayad.Services
                     XpAwarded = trophy.XpAward
                 });
 
-                var user = await dc.Users.SingleOrDefaultAsync(i => i.Id == userId);
-                user.Xp += trophy.XpAward;
-
                 await dc.SaveChangesAsync();
-            }
-        }
 
-        public async void AwardTrophyToUser(IEnumerable<TrophyKey> trophyKeys, string userId)
-        {
-            foreach (var trophy in trophyKeys)
-            {
-                await AwardTrophyToUser(trophy, userId);
+                await _userService.AddXp(userId, trophy.XpAward);
             }
         }
 

@@ -53,7 +53,7 @@ namespace Mzayad.Models
 
         public string FullName => NameFormatter.GetFullName(FirstName, LastName);
 
-        public string ProfileUrl => $"https://www.zeedli.com/profiles/{UserName.ToLowerInvariant()}";
+        public string ProfileUrl => $"https://www.zeedli.com/en/profiles/{UserName.ToLowerInvariant()}";
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

@@ -966,4 +966,7 @@
   <data name="SubscriptionPurchaseAcknowledgementApi" xml:space="preserve">
     <value>Congratulations, you have successfully purchased &lt;strong&gt;Basic&lt;/strong&gt; and we have updated your account. Also you win a prize from Zeedli.</value>
   </data>
+  <data name="ConverstionWith" xml:space="preserve">
+    <value>Converstion with</value>
+  </data>
 </root>

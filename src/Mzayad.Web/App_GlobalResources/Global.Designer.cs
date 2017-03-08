@@ -637,6 +637,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Converstion with.
+        /// </summary>
+        public static string ConverstionWith {
+            get {
+                return ResourceManager.GetString("ConverstionWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Country.
         /// </summary>
         public static string Country {

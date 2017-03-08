@@ -134,10 +134,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Functions\BidFunctions.cs" />
+    <Compile Include="Functions\FunctionsBase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueueNameResolver.cs" />
-    <Compile Include="TrophyFunctions.cs" />
+    <Compile Include="Configuration\QueueNameResolver.cs" />
+    <Compile Include="Functions\TrophyFunctions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

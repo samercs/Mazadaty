@@ -133,5 +133,24 @@ namespace Mzayad.Services.Identity
         {
             await _userManager.RemoveFromRoleAsync(userId, roleName);
         }
+
+        public async Task AddXp(string userId, int xp)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return;
+            }
+
+            user.Xp += xp;
+
+            var newLevel = LevelService.GetLevelByXp(user.Xp).Index;
+            if (newLevel > user.Level)
+            {
+                user.Level = newLevel;
+            }
+
+            await _userManager.UpdateAsync(user);
+        }
     }
 }
