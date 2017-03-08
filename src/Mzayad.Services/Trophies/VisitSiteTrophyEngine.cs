@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Data;
@@ -16,28 +17,30 @@ namespace Mzayad.Services.Trophies
             _sessionLogService = new SessionLogService(dataContextFactory);
         }
 
-        protected override IEnumerable<TrophyKey?> TryGetEarnedTrophies(ApplicationUser user)
+        protected async Task<IReadOnlyCollection<TrophyKey>> TryGetEarnedTrophies(ApplicationUser user)
         {
-            //Check Return to Mzayad after 30 days of inactivity;
-            yield return CheckReturnAfterInactivity(user);
+            return new List<TrophyKey>();
 
-            //Check visit site 3 days in row
-            yield return CheckVisit3ConsecutiveDays(user.Id);
+            ////Check Return to Mzayad after 30 days of inactivity;
+            //yield return CheckReturnAfterInactivity(user);
 
-            //Check visit site 7 days in row
-            yield return CheckVisit7ConsecutiveDays(user.Id);
+            ////Check visit site 3 days in row
+            //yield return CheckVisit3ConsecutiveDays(user.Id);
 
-            //Check visit site 30 days in row
-            yield return CheckVisit30ConsecutiveDays(user.Id);
+            ////Check visit site 7 days in row
+            //yield return CheckVisit7ConsecutiveDays(user.Id);
 
-            //Check visit site 90 days in row
-            yield return CheckVisit90ConsecutiveDays(user.Id);
+            ////Check visit site 30 days in row
+            //yield return CheckVisit30ConsecutiveDays(user.Id);
 
-            //Check visit site 180 days in row
-            yield return CheckVisit180ConsecutiveDays(user.Id);
+            ////Check visit site 90 days in row
+            //yield return CheckVisit90ConsecutiveDays(user.Id);
 
-            //Check visit site 365 days in row
-            yield return CheckVisit365ConsecutiveDays(user.Id);
+            ////Check visit site 180 days in row
+            //yield return CheckVisit180ConsecutiveDays(user.Id);
+
+            ////Check visit site 365 days in row
+            //yield return CheckVisit365ConsecutiveDays(user.Id);
         }
 
         private TrophyKey? CheckReturnAfterInactivity(ApplicationUser user)

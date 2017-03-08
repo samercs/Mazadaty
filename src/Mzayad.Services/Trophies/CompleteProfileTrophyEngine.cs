@@ -2,6 +2,7 @@
 using Mzayad.Models;
 using Mzayad.Models.Enum;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Mzayad.Services.Trophies
 {
@@ -11,9 +12,11 @@ namespace Mzayad.Services.Trophies
         {
         }
 
-        protected override IEnumerable<TrophyKey?> TryGetEarnedTrophies(ApplicationUser user)
+        protected async Task<IReadOnlyCollection<TrophyKey>> TryGetEarnedTrophies(ApplicationUser user)
         {
-            yield return CheckProfileComplete(user);
+            return new List<TrophyKey>();
+
+            //yield return CheckProfileComplete(user);
         }
 
         private TrophyKey? CheckProfileComplete(ApplicationUser user)

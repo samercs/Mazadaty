@@ -4,19 +4,20 @@ using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Models.Enums;
+using Mzayad.Models.Queues;
 using Mzayad.Services;
 using Mzayad.Services.Activity;
 using Mzayad.Services.Identity;
+using Mzayad.Services.Queues;
 using Mzayad.Services.Trophies;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace Mzayad.WebJobs
 {
@@ -34,39 +35,22 @@ namespace Mzayad.WebJobs
 
     public class Functions
     {
+        private readonly IDataContextFactory _dataContextFactory;
         private readonly UserService _userService;
+        private readonly TrophyService _trophyService;
+        private readonly IQueueService _queueService;
 
         public Functions()
         {
-            var dataContextFactory = new DataContextFactory();
-            _userService = new UserService(dataContextFactory);
+            _dataContextFactory = new DataContextFactory();
+            _userService = new UserService(_dataContextFactory);
+            _trophyService = new TrophyService(_dataContextFactory);
+            _queueService = new QueueService("DefaultEndpointsProtocol=https;AccountName=mzayad;AccountKey=dwZYAeSDA4lz8qixfZGdjNrohWnY59DtyTBHrnSOFoPgC4w/ueV232lq6H9n6WoieJDu+GNHUd1QuCT7Xa/5mw==");
         }
 
-        private static void LogMessage(TextWriter log, string message)
+        public async Task HandleBid([QueueTrigger("%bids%")] BidMessage bid, TextWriter log)
         {
-            log.WriteLine(message);
-            Console.WriteLine(message);
-            Trace.TraceInformation(message);
-        }
-
-        private static async Task LogMessageAsync(TextWriter log, string message)
-        {
-            await log.WriteLineAsync(message);
-            Console.WriteLine(message);
-            Trace.TraceInformation(message);
-        }
-
-        public async Task HandleBid([QueueTrigger("%bids%")] Bid bid, TextWriter log)
-        {
-            var b = JsonConvert.SerializeObject(new
-            {
-                bid.BidId,
-                bid.AuctionId,
-                bid.UserId,
-                bid.Type
-            });
-
-            await log.WriteLineAsync($"Handling bid: {b}...");
+            await log.WriteLineAsync($"Handling bid: {bid.ToJson()}...");
 
             var user = await _userService.GetUserById(bid.UserId);
             if (user == null)
@@ -76,9 +60,19 @@ namespace Mzayad.WebJobs
             }
 
             await AddBidXp(user, bid);
+
+            if (bid.Type == BidType.Manual)
+            {
+                var trophyEngine = new SubmitBidTrophyEngine(_dataContextFactory);
+                var earnedTrophyKeys = await trophyEngine.TryGetEarnedTrophies(user);
+                foreach (var trophyKey in earnedTrophyKeys)
+                {
+                    await _queueService.LogTrophy(user, trophyKey);
+                }
+            }
         }
 
-        private async Task AddBidXp(ApplicationUser user, Bid bid)
+        private async Task AddBidXp(ApplicationUser user, BidMessage bid)
         {
             var xp = bid.Type == BidType.Manual ? Bid.ManualBidXp : Bid.AutoBidXp;
             user.Xp += xp;
@@ -95,7 +89,7 @@ namespace Mzayad.WebJobs
         public static async Task ProcessActivity([QueueTrigger("%activities%")] ActivityEvent activityEvent, TextWriter log)
         {
             var message = $"Processing activity {activityEvent.Type} for user ID {activityEvent.UserId}...";
-            await LogMessageAsync(log, message);
+            await log.WriteLineAsync(message);
 
             try
             {
@@ -108,7 +102,7 @@ namespace Mzayad.WebJobs
                 var user = await userService.GetUserById(activityEvent.UserId);
                 if (user == null)
                 {
-                    await LogMessageAsync(log, $"No user exists for user ID {activityEvent.UserId}.");
+                    await log.WriteLineAsync($"No user exists for user ID {activityEvent.UserId}.");
                     return;
                 }
 
@@ -119,16 +113,16 @@ namespace Mzayad.WebJobs
                 switch (activityEvent.Type)
                 {
                     case ActivityType.SubmitBid:
-                        trophies = trophyEngine.GetEarnedTrophies(user).ToList();
-                        trophyService.AwardTrophyToUser(trophies, user.Id);
+                        //trophies = trophyEngine.GetEarnedTrophies(user).ToList();
+                        //trophyService.AwardTrophyToUser(trophies, user.Id);
                         //emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrophyEarned);
                         //message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, TrophiesHtmlTable(trophies, trophyService));
                         //await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
                         break;
 
                     case ActivityType.VisitSite:
-                        trophies = trophyEngine.GetEarnedTrophies(user);
-                        trophyService.AwardTrophyToUser(trophies, user.Id);
+                        //trophies = trophyEngine.GetEarnedTrophies(user);
+                        //trophyService.AwardTrophyToUser(trophies, user.Id);
                         break;
 
                     case ActivityType.EarnXp:
@@ -145,31 +139,31 @@ namespace Mzayad.WebJobs
                         break;
 
                     case ActivityType.AutoBid:
-                        trophies = trophyEngine.GetEarnedTrophies(user).ToList();
-                        trophyService.AwardTrophyToUser(trophies, user.Id);
+                        //trophies = trophyEngine.GetEarnedTrophies(user).ToList();
+                        //trophyService.AwardTrophyToUser(trophies, user.Id);
                         //emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrophyEarned);
                         //message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, TrophiesHtmlTable(trophies, trophyService));
                         //await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
                         break;
 
                     case ActivityType.WinAuction:
-                        trophies = trophyEngine.GetEarnedTrophies(user);
-                        trophyService.AwardTrophyToUser(trophies, user.Id);
+                        //trophies = trophyEngine.GetEarnedTrophies(user);
+                        //trophyService.AwardTrophyToUser(trophies, user.Id);
                         //emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrophyEarned);
                         //message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, TrophiesHtmlTable(trophies, trophyService));
                         //await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
                         break;
 
                     case ActivityType.CompleteProfile:
-                        trophies = trophyEngine.GetEarnedTrophies(user).ToList();
-                        trophyService.AwardTrophyToUser(trophies, user.Id);
+                        //trophies = trophyEngine.GetEarnedTrophies(user).ToList();
+                        //trophyService.AwardTrophyToUser(trophies, user.Id);
                         //emailTemplate = await emailTemplateService.GetByTemplateType(EmailTemplateType.TrophyEarned);
                         //message = string.Format(emailTemplate.Localize(activityEvent.Language, i => i.Message).Message, user.FirstName, TrophiesHtmlTable(trophies, trophyService));
                         //await SendEmail(user, emailTemplate.Localize(activityEvent.Language, i => i.Subject).Subject, message);
                         break;
 
                     default:
-                        await LogMessageAsync(log, string.Format("No event handling for activity {0}.", activityEvent.Type));
+                        await log.WriteLineAsync($"No event handling for activity {activityEvent.Type}.");
                         break;
                 }
 
@@ -180,8 +174,8 @@ namespace Mzayad.WebJobs
             {
                 new RaygunClient().SendInBackground(ex);
 
-                LogMessage(log, ex.Message);
-                LogMessage(log, ex.StackTrace);
+                await log.WriteLineAsync(ex.Message);
+                await log.WriteLineAsync(ex.StackTrace);
                 throw;
             }
         }

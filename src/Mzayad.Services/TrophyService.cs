@@ -24,6 +24,14 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<Trophy> GetTrophy(int trophyId)
+        {
+            using (var dc = new DataContext())
+            {
+                return await dc.Trophies.SingleOrDefaultAsync(i => i.TrophyId == trophyId);
+            }
+        }
+
         public async Task<Trophy> GetTrophy(TrophyKey key)
         {
             using (var dc = new DataContext())
@@ -32,11 +40,11 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<Trophy> GetTrophy(int trophyId)
+        public async Task<IReadOnlyCollection<Trophy>> GetTrophiesByKeys(IEnumerable<TrophyKey> keys)
         {
             using (var dc = new DataContext())
             {
-                return await dc.Trophies.SingleOrDefaultAsync(i => i.TrophyId == trophyId);
+                return await dc.Trophies.Where(i => keys.Contains(i.Key)).ToListAsync();
             }
         }
 
@@ -55,7 +63,7 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<IReadOnlyCollection<UserTrophy>> GetUsersTrophies(string userId, string languageCode)
+        public async Task<IReadOnlyCollection<UserTrophy>> GetUserTrophies(string userId, string languageCode = null)
         {
             using (var dc = new DataContext())
             {
@@ -65,7 +73,10 @@ namespace Mzayad.Services
                     .OrderByDescending(i => i.CreatedUtc)
                     .ToListAsync();
 
-                trophies.ForEach(i => i.Trophy.Localize(languageCode, t => t.Name, t => t.Description));
+                if (languageCode != null)
+                {
+                    trophies.ForEach(i => i.Trophy.Localize(languageCode, t => t.Name, t => t.Description));
+                }
 
                 return trophies.ToList();
             }

@@ -10,10 +10,10 @@ namespace Mzayad.Services.Trophies
         private static readonly Dictionary<ActivityType, Func<IDataContextFactory, TrophyEngine>> Dictionary = new Dictionary<ActivityType, Func<IDataContextFactory, TrophyEngine>>
         {
             { ActivityType.SubmitBid, d => new SubmitBidTrophyEngine(d) },
-            { ActivityType.VisitSite , d => new VisitSiteTrophyEngine(d)},
+            { ActivityType.VisitSite , d => new VisitSiteTrophyEngine(d) },
             { ActivityType.AutoBid , d => new AutoBidTrophyEngine(d) },
             { ActivityType.WinAuction , d => new WinAuctionTrophyEngine(d) },
-            { ActivityType.CompleteProfile, d => new CompleteProfileTrophyEngine(d)  }
+            { ActivityType.CompleteProfile, d => new CompleteProfileTrophyEngine(d) }
         };
 
         public static TrophyEngine CreateInstance(ActivityType activityType, IDataContextFactory dataContextFactor)

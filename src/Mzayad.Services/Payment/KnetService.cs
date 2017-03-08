@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Mzayad.Data;
+﻿using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Models.Payment;
-using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Mzayad.Services.Payment
 {
@@ -149,6 +147,14 @@ namespace Mzayad.Services.Payment
                 dc.SetModified(transaction);
                 await dc.SaveChangesAsync();
                 return transaction;
+            }
+        }
+
+        public async Task<KnetTransaction> GetTransactionByOrderId(int orderId)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.KnetTransactions.FirstOrDefaultAsync(i => i.OrderId == orderId);
             }
         }
     }

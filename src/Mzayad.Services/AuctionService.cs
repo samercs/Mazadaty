@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Mzayad.Services.Queues;
 
 namespace Mzayad.Services
 {

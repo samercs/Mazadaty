@@ -393,6 +393,7 @@
     <Compile Include="Areas\Api\Controllers\MessagesController.cs" />
     <Compile Include="Areas\Api\Controllers\AvatarsController.cs" />
     <Compile Include="Areas\Api\Controllers\OrdersController.cs" />
+    <Compile Include="Areas\Api\Controllers\PaymentController.cs" />
     <Compile Include="Areas\Api\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Api\Controllers\UsersController.cs" />
     <Compile Include="Areas\Api\ErrorHandling\ApiError.cs" />
@@ -400,7 +401,9 @@
     <Compile Include="Areas\Api\ErrorHandling\ApiErrorType.cs" />
     <Compile Include="Areas\Api\Filters\LanguageFilter.cs" />
     <Compile Include="Areas\Api\Models\Auctions\AuctionModel.cs" />
+    <Compile Include="Areas\Api\Models\Orders\OrderCreateResult.cs" />
     <Compile Include="Areas\Api\Models\Orders\OrderModel.cs" />
+    <Compile Include="Areas\Api\Models\Payment\PaymentViewModel.cs" />
     <Compile Include="Areas\Api\Models\Products\ProductModel.cs" />
     <Compile Include="Areas\Api\Models\Users\UserModel.cs" />
     <Compile Include="Areas\Api\Models\Users\UserPostModel.cs" />
