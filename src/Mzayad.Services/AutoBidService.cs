@@ -4,6 +4,7 @@ using Mzayad.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -84,57 +85,7 @@ namespace Mzayad.Services
                 await dc.SaveChangesAsync();
             }
         }
-
-        /// <summary>
-        /// Gets whether or not an autobid should be attempted based on the time left in an auction.
-        /// /// </summary>
-        public bool ShouldAutoBid(int secondsLeft)
-        {
-            var autoBidSeconds = new[] { 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192 };
-            
-            return autoBidSeconds.Contains(secondsLeft);
-        }
-
-        /// <summary>
-        /// Gets a user with valid autobid configurations for current auction.
-        /// </summary>
-        public string TryGetAutoBid(int auctionId, string lastBidUserId, decimal lastBidAmount)
-        {
-            using (var dc = DataContext())
-            {
-                return dc.AutoBids
-                    .Where(i => i.AuctionId == auctionId)
-                    .Where(i => i.UserId != lastBidUserId)
-                    .Where(i => i.MaxBid > lastBidAmount)
-                    .OrderBy(c => Guid.NewGuid())
-                    .Select(i => i.UserId)
-                    .FirstOrDefault();
-            }
-        }
-
-        private static bool FallsOnAutoBidSecond(int secondsLeft)
-        {
-            var factor = GetTimeZoneFactor(secondsLeft);
-            var frequency = factor / 12;
-
-            return secondsLeft % frequency == 0;
-        }
-
-        private static int GetTimeZoneFactor(int secondsLeft)
-        {
-            var x = 12;
-
-            while (true)
-            {
-                if (x >= secondsLeft)
-                {
-                    return x;
-                }
-
-                x = x * 2;
-            }
-        }
-
+     
         public async Task<int> CountUserAutoBids(string userId, DateTime? from = null)
         {
             using (var db = DataContext())

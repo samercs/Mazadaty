@@ -1,15 +1,14 @@
 ﻿using Mzayad.Core.Extensions;
 using Mzayad.Data;
 using Mzayad.Models;
-using Mzayad.Models.Enums;
-using Mzayad.Services.Activity;
+using Mzayad.Services.Queues;
 using OrangeJetpack.Localization;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Mzayad.Services.Queues;
 
 namespace Mzayad.Services
 {
@@ -22,47 +21,58 @@ namespace Mzayad.Services
             _queueService = queueService;
         }
 
-        public Bid AddBid(Bid bid)
+        public Bid SubmitUserBid(int auctionId, int secondsLeft, string userId)
         {
             using (var dc = DataContext())
             {
-                if (!dc.Auctions.Any(i => i.AuctionId == bid.AuctionId && i.Status == AuctionStatus.Public))
+                var bid = dc.SubmitUserBid(auctionId, secondsLeft, userId);
+
+                if (bid != null)
                 {
-                    return null;
+                    _queueService.LogBid(bid);
                 }
 
-                dc.Bids.Add(bid);
-                dc.SaveChanges();
-
-                _queueService.LogBid(bid);
-
-                return dc.Bids
-                    .Include(i => i.User)
-                    .SingleOrDefault(i => i.BidId == bid.BidId);
+                return bid;
             }
         }
 
-        private static async Task<bool> ValidateBid(IDataContext dc, Bid bid)
+        /// <summary>
+        /// Gets a user with valid autobid configurations for current auction.
+        /// </summary>
+        public Bid TrySubmitAutoBid(int auctionId, int secondsLeft)
         {
-            var auction = await dc.Auctions
-            .Where(i => i.AuctionId == bid.AuctionId)
-            .Where(i => i.Status == AuctionStatus.Public)
-            .Select(i => new
+            if (!ShouldAutoBid(secondsLeft))
             {
-                i.AuctionId,
-                LastBidUserId = i.Bids.OrderByDescending(j => j.BidId)
-                    .Select(j => j.UserId)
-                    .FirstOrDefault()
-            }).SingleOrDefaultAsync();
-
-            if (auction == null)
-            {
-                return false;
+                return null;
             }
 
-            return auction.LastBidUserId == null || auction.LastBidUserId != bid.UserId;
+            using (var dc = DataContext())
+            {
+                var bid = dc.SubmitAutoBid(auctionId, secondsLeft);
+
+                if (bid != null)
+                {
+                    _queueService.LogBid(bid);
+                }
+
+                return bid;
+            }
         }
 
+        /// <summary>
+        /// Gets whether or not an autobid should be attempted based on the time left in an auction.
+        /// /// </summary>
+        private static bool ShouldAutoBid(int secondsLeft)
+        {
+            var percentage = 100d / secondsLeft;
+            var random = new Random();
+            var probability = random.Next(1000) / 10d;
+            var shouldBid = probability <= percentage;
+
+            Trace.TraceInformation($"ShouldAutoBid: secondsLeft: {secondsLeft}, percentage: {percentage}, probability: {probability}, shouldBid: {shouldBid}");
+
+            return shouldBid;
+        }
 
         /// <summary>
         /// Gets an auction's bid with the highest amount.

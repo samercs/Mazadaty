@@ -293,8 +293,7 @@ namespace Mzayad.Services
 
                 if (winningBid != null)
                 {
-                    var order = await _orderService.CreateOrderForAuction(auction, winningBid);
-                    return order;
+                    return  await _orderService.CreateOrderForAuction(auction, winningBid);
                 }
 
                 return null;

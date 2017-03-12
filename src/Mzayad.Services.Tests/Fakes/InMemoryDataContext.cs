@@ -75,5 +75,15 @@ namespace Mzayad.Services.Tests.Fakes
         {
             // do nothing
         }
+
+        public Bid SubmitUserBid(int auctionId, int secondsLeft, string userId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Bid SubmitAutoBid(int auctionId, int secondsLeft)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

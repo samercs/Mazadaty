@@ -45,5 +45,8 @@ namespace Mzayad.Data
         int SaveChanges();
         Task<int> SaveChangesAsync();
         void SetModified(object entity);
+
+        Bid SubmitUserBid(int auctionId, int secondsLeft, string userId);
+        Bid SubmitAutoBid(int auctionId, int secondsLeft);
     }
 }

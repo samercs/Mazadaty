@@ -4,8 +4,10 @@ using Mzayad.Models.Payment;
 using OrangeJetpack.Base.Data;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -124,13 +126,101 @@ namespace Mzayad.Data
             {
                 foreach (var validationError in validationErrors.ValidationErrors)
                 {
-                    var errorMessage = string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                    var errorMessage = $"Property: {validationError.PropertyName} Error: {validationError.ErrorMessage}";
 
                     Trace.TraceError(errorMessage);
 
                     yield return errorMessage;
                 }
             }
+        }
+
+        public Bid SubmitUserBid(int auctionId, int secondsLeft, string userId)
+        {
+            var userIdParam = GetParam("@UserId", SqlDbType.NVarChar);
+            userIdParam.Direction = ParameterDirection.InputOutput;
+            userIdParam.Value = userId;
+
+            var bidIdParam = GetParam("@BidId", SqlDbType.Int);
+            var amountParam = GetParam("@Amount", SqlDbType.Float);
+            var userNameParam = GetParam("@UserName", SqlDbType.NVarChar);
+            var avatarUrlParam = GetParam("@AvatarUrl", SqlDbType.NVarChar);
+
+            Database.ExecuteSqlCommand("SubmitUserBid @AuctionId, @SecondsLeft, @UserId out, @BidId out, @Amount out, @UserName out, @AvatarUrl out",
+                new SqlParameter("@AuctionId", auctionId),
+                new SqlParameter("@SecondsLeft", secondsLeft),
+                userIdParam, bidIdParam, amountParam, userNameParam, avatarUrlParam);
+
+            Trace.TraceWarning($"SubmitUserBid, BidId: {bidIdParam.Value}");
+
+            if (bidIdParam.Value == DBNull.Value)
+            {
+                return null;
+            }
+
+            return new Bid
+            {
+                BidId = Convert.ToInt32(bidIdParam.Value),
+                Amount = Convert.ToDecimal(amountParam.Value),
+                UserId = Convert.ToString(userIdParam.Value),
+                User = new ApplicationUser
+                {
+                    Id = Convert.ToString(userIdParam),
+                    UserName = Convert.ToString(userNameParam.Value),
+                    AvatarUrl = Convert.ToString(avatarUrlParam.Value)
+                }
+            };
+        }
+
+        public Bid SubmitAutoBid(int auctionId, int secondsLeft)
+        {
+            var userIdParam = GetParam("@UserId", SqlDbType.NVarChar);
+            var bidIdParam = GetParam("@BidId", SqlDbType.Int);
+            var amountParam = GetParam("@Amount", SqlDbType.Float);
+            var userNameParam = GetParam("@UserName", SqlDbType.NVarChar); 
+            var avatarUrlParam = GetParam("@AvatarUrl", SqlDbType.NVarChar);
+
+            Database.ExecuteSqlCommand("SubmitAutoBid @AuctionId, @SecondsLeft, @UserId out, @BidId out, @Amount out, @UserName out, @AvatarUrl out",
+                new SqlParameter("@AuctionId", auctionId),
+                new SqlParameter("@SecondsLeft", secondsLeft),
+                userIdParam, bidIdParam, amountParam, userNameParam, avatarUrlParam);
+
+            Trace.TraceWarning($"SubmitAutoBid, BidId: {bidIdParam.Value}");
+
+            if (bidIdParam.Value == DBNull.Value)
+            {
+                return null;
+            }
+
+            return new Bid
+            {
+                BidId = Convert.ToInt32(bidIdParam.Value),
+                Amount = Convert.ToDecimal(amountParam.Value),
+                UserId = Convert.ToString(userIdParam.Value),
+                User = new ApplicationUser
+                {
+                    Id = Convert.ToString(userIdParam),
+                    UserName = Convert.ToString(userNameParam.Value),
+                    AvatarUrl = Convert.ToString(avatarUrlParam.Value)
+                }
+            };
+        }
+
+        private static SqlParameter GetParam(string name, SqlDbType type)
+        {
+            var sqlParameter = new SqlParameter
+            {
+                ParameterName = name,
+                Direction = ParameterDirection.Output,
+                SqlDbType = type
+            };
+
+            if (type == SqlDbType.NVarChar)
+            {
+                sqlParameter.Size = -1;
+            }
+
+            return sqlParameter;
         }
     }
 }
