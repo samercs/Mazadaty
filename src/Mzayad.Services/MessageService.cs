@@ -33,6 +33,21 @@ namespace Mzayad.Services
                 return message;
             }
         }
+        public async Task SetAllAsRead(string reciverId, string senderId)
+        {
+            using (var dc = DataContext())
+            {
+                var messages = dc.Messages
+                    .Where(i => i.ReceiverId.Equals(reciverId))
+                    .Where(i => i.UserId.Equals(senderId)).ToList();
+                messages.ForEach(i =>
+                {
+                    i.IsNew = false;
+                    dc.SetModified(i);
+                });
+                await dc.SaveChangesAsync();
+            }
+        }
         public int CountNewMesssages(string userId)
         {
             using (var dc = DataContext())
@@ -46,6 +61,19 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 return await dc.Messages.Where(i => i.UserId == userId).ToListAsync();
+            }
+        }
+
+        public async Task<IReadOnlyCollection<Message>> GetHistory(string senderId, string reciverId)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.Messages
+                    .Include(i => i.User)
+                    .Where(i => (i.UserId.Equals(senderId) && i.ReceiverId.Equals(reciverId)) ||
+                    i.ReceiverId.Equals(senderId) && i.UserId.Equals(reciverId))
+                    .OrderBy(i => i.CreatedUtc)
+                    .ToListAsync();
             }
         }
 

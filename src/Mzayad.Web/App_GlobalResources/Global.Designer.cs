@@ -637,6 +637,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Converstion with.
+        /// </summary>
+        public static string ConverstionWith {
+            get {
+                return ResourceManager.GetString("ConverstionWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Country.
         /// </summary>
         public static string Country {
@@ -2280,6 +2289,15 @@ namespace Mzayad.Web.Resources {
         public static string SubscriptionPurchaseAcknowledgement {
             get {
                 return ResourceManager.GetString("SubscriptionPurchaseAcknowledgement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Congratulations, you have successfully purchased &lt;strong&gt;Basic&lt;/strong&gt; and we have updated your account. Also you win a prize from Zeedli..
+        /// </summary>
+        public static string SubscriptionPurchaseAcknowledgementApi {
+            get {
+                return ResourceManager.GetString("SubscriptionPurchaseAcknowledgementApi", resourceCulture);
             }
         }
         

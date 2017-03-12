@@ -5,9 +5,8 @@ using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Models.Enums;
 using Mzayad.Services;
-using Mzayad.Services.Activity;
 using Mzayad.Services.Identity;
-using Mzayad.Web.Areas.Api.Models.User;
+using Mzayad.Services.Queues;
 using Mzayad.Web.Areas.Api.Models.Users;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Extensions;
@@ -26,7 +25,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using Mzayad.Services.Queues;
 using WebGrease.Css.Extensions;
 
 namespace Mzayad.Web.Areas.Api.Controllers
@@ -269,7 +267,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 i.AvatarId,
                 i.Url,
                 i.IsPremium,
-                Selected=i.Url.Equals(user.AvatarUrl)
+                Selected = i.Url.Equals(user.AvatarUrl)
             });
 
             return Ok(new
@@ -279,7 +277,12 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 user.Gender,
                 user.Birthdate,
                 user.AvatarUrl,
-                avatars
+                user.SubscriptionUtc,
+                user.SubscriptionExpire,
+                user.Tokens,
+                user.Xp,
+                user.Level,
+                avatars,
             });
         }
 
