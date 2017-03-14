@@ -37,6 +37,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
         private readonly SessionLogService _sessionLogService;
         private readonly AvatarService _avatarService;
         private readonly IQueueService _queueService;
+        private readonly PrizeService _prizeService;
 
         public UsersController(IAppServices appServices) : base(appServices)
         {
@@ -46,6 +47,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
             _avatarService = new AvatarService(DataContextFactory);
             _queueService =
                 new QueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
+            _prizeService = new PrizeService(DataContextFactory);
         }
 
         [HttpGet, Route("{username}")]
@@ -321,6 +323,18 @@ namespace Mzayad.Web.Areas.Api.Controllers
             await _userService.UpdateUser(user);
             await _queueService.QueueActivityAsync(ActivityType.CompleteProfile, user.Id);
             return Ok();
+        }
+
+        [Route("current/prize")]
+        public async Task<IHttpActionResult> GetPrize()
+        {
+            var user = await AuthService.CurrentUser();
+            var userPrize = await _prizeService.GetUserAvilablePrize(user);
+            if (userPrize == null)
+            {
+                return NotFound();
+            }
+            return Ok(userPrize.UserPrizeLogId);
         }
 
         private async Task SendEmailChangedEmail(ApplicationUser user, string originalEmail)
