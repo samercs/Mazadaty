@@ -25,6 +25,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using Humanizer;
 using WebGrease.Css.Extensions;
 
 namespace Mzayad.Web.Areas.Api.Controllers
@@ -41,6 +42,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
         private readonly FriendService _friendService;
         private readonly TrophyService _trophyService;
         private readonly AuctionService _auctionService;
+        private readonly BidService _bidService;
 
         public UsersController(IAppServices appServices) : base(appServices)
         {
@@ -54,6 +56,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
             _friendService = new FriendService(DataContextFactory);
             _trophyService = new TrophyService(DataContextFactory);
             _auctionService = new AuctionService(DataContextFactory, _queueService);
+            _bidService = new BidService(DataContextFactory, _queueService);
         }
 
         [HttpGet, Route("{username}")]
@@ -370,6 +373,24 @@ namespace Mzayad.Web.Areas.Api.Controllers
             var userId = AuthService.CurrentUserId();
             var auctions = await _auctionService.GetAuctionsWon(userId, Language);
             return Ok(auctions);
+        }
+        [Route("current/bid-history")]
+        public async Task<IHttpActionResult> GetBidHistory()
+        {
+            var userId = AuthService.CurrentUserId();
+            var bids = await _bidService.GetBidHistoryForUser(userId, Language);
+            var model = bids.Select(i => new
+            {
+                i.Auction.Title,
+                i.CreatedUtc,
+                i.Amount,
+                i.SecondsLeft,
+                i.BidId,
+                i.AuctionId,
+                Type = i.Type.Humanize(),
+                i.UserHostAddress
+            });
+            return Ok(model);
         }
 
         private async Task<List<TrophieViewModel>> GetTrophies(string userId)
