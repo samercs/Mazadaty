@@ -2,133 +2,92 @@
 using Mzayad.Models.Enums;
 using Mzayad.Services;
 using Mzayad.Services.Identity;
+using Mzayad.Web.Areas.Api.Models.Prizes;
 using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Extensions;
-using Mzayad.Web.Models.Prize;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using OrangeJetpack.Base.Core.Formatting;
-using OrangeJetpack.Base.Web;
-using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Mvc;
+using System.Web.Http;
 
-namespace Mzayad.Web.Controllers
+namespace Mzayad.Web.Areas.Api.Controllers
 {
-    [RoutePrefix("{language}/prize")]
-    public class PrizeController : ApplicationController
+    [RoutePrefix("api/prizes")]
+    public class PrizesController : ApplicationApiController
     {
         private readonly PrizeService _prizeService;
-        private readonly UserService _userService;
         private readonly SubscriptionService _subscriptionService;
+        private readonly UserService _userService;
         private readonly AvatarService _avatarService;
-
-        public PrizeController(IAppServices appServices) : base(appServices)
+        public PrizesController(IAppServices appServices) : base(appServices)
         {
             _prizeService = new PrizeService(DataContextFactory);
-            _userService = new UserService(DataContextFactory);
             _subscriptionService = new SubscriptionService(DataContextFactory);
+            _userService = new UserService(DataContextFactory);
             _avatarService = new AvatarService(DataContextFactory);
         }
-
-
-        [Route("{id:int}"), Authorize]
-        public async Task<ActionResult> Index(int id)
+        [Route("")]
+        public async Task<IHttpActionResult> Get()
         {
-            var user = await AuthService.CurrentUser();
-            var prizeLog = await _prizeService.GetPrizeLogById(id);
-            if (!_prizeService.ValidatePrize(user, prizeLog))
-            {
-                return HttpNotFound();
-            }
-
-            var prizes = await _prizeService.GetAvaliablePrize();
-            if (!prizes.Any())
-            {
-                throw new Exception("No prize found.");
-            }
-            Random rnd = new Random();
-            var data = prizes.Select(i => new { i.Title, i.Weight, i.PrizeId, i.PrizeType, SortOrder = rnd.Next(1, 100) });
-            data = data.OrderBy(i => i.SortOrder);
-            var model = new IndexViewModel
-            {
-                PrizesJson =
-                    JsonConvert.SerializeObject(data, Formatting.Indented,
-                        new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }),
-                PrizeId = id
-            };
-            return View(model);
+            var prizes = await _prizeService.GetAvaliablePrize(Language);
+            return Ok(prizes.Select(PrizeViewModel.Create));
         }
 
-        [Route("{id:int}/random-prize"), Authorize, HttpPost]
-        public async Task<ActionResult> GetRandomPrize(int id)
+        [Route("{prizeLogId:int}/random-prize")]
+        [Authorize]
+        public async Task<IHttpActionResult> RandomPrize(int prizeLogId)
         {
             var user = await AuthService.CurrentUser();
-            var result = await _prizeService.GetRandomPrize(id, user, Language, NotifyAdminForWinning,
+            var result = await _prizeService.GetRandomPrize(prizeLogId, user, Language, NotifyAdminForWinning,
                 AddUserSubscription);
             if (string.IsNullOrEmpty(result))
             {
-                return HttpNotFound();
+                return NotFound();
             }
-            return Content(result);
+            return Ok(JsonConvert.DeserializeObject(result));
         }
-        
 
-        [Route("select-avatar")]
-        public async Task<ActionResult> SelectAvatarPrize()
+        [Route("select-avatar"), HttpGet]
+        [Authorize]
+        public async Task<IHttpActionResult> SelectAvatar()
         {
             var user = await AuthService.CurrentUser();
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
             var userHasPrize = await _prizeService.UserHasFreeAvatar(user);
             if (!userHasPrize)
             {
-                return HttpNotFound();
+                return NotFound();
             }
-            var model = new SelectAvatarPrizeViewModel
-            {
-                PremiumAvatars = await _avatarService.GetPremiumAvatar(user)
-            };
-            return View(model);
+            var avatars = await _avatarService.GetPremiumAvatar(user);
+            return Ok(avatars.Select(AvatarViewModel.Create));
         }
 
-        [Route("select-avatar"), HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> SelectAvatarPrize(SelectAvatarPrizeViewModel model)
+        [Route("{avatarId:int}/select-avatar"), HttpPost]
+        [Authorize]
+        public async Task<IHttpActionResult> SelectAvatar(int avatarId)
         {
             var user = await AuthService.CurrentUser();
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
             var userHasPrize = await _prizeService.UserHasFreeAvatar(user);
             if (!userHasPrize)
             {
-                return HttpNotFound();
+                return NotFound();
             }
-            if (!model.SelectedAvatarId.HasValue)
-            {
-                SetStatusMessage("Please select your winning avatar.", StatusMessageType.Warning);
-                return RedirectToAction("SelectAvatarPrize");
-            }
-            var avatar = await _avatarService.GetById(model.SelectedAvatarId.Value);
+            
+            var avatar = await _avatarService.GetById(avatarId);
             if (avatar == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
             await _avatarService.AddAvatarToUser(user, avatar);
             user.AvatarUrl = avatar.Url;
             await _userService.UpdateUser(user);
             await _prizeService.UpdateUserHasFreeAvatar(user);
-            SetStatusMessage("Your avatar image has been set successfully.");
-            return RedirectToAction("Dashboard", "User", new { Language });
-
+            return Ok(new { message = "Your avatar image has been set successfully." });
         }
+
 
         private async Task AddUserSubscription(ApplicationUser user, int? amount)
         {
@@ -157,7 +116,5 @@ namespace Mzayad.Web.Controllers
             email.Message = string.Format(template.Message, AppSettings.SiteName, NameFormatter.GetFullName(user.FirstName, user.LastName), user.Email, user.PhoneNumber, prize.Title);
             await MessageService.Send(email.WithTemplate());
         }
-
-
     }
 }
