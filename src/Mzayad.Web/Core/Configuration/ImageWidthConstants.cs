@@ -6,5 +6,9 @@ namespace Mzayad.Web.Core.Configuration
         public static int ProductImageSm = 128;
         public static int ProductImageMd = 512;
         public static int ProductImageLg = 1024;
+
+        public static int BannerImageSm = 128;
+        public static int BannerImageMd = 512;
+        public static int BannerImageLg = 1024;
     }
 }

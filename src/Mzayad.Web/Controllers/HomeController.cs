@@ -4,10 +4,13 @@ using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Models.Home;
 using System;
+using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Mzayad.Models;
+using OrangeJetpack.Localization;
 
 namespace Mzayad.Web.Controllers
 {
@@ -17,12 +20,14 @@ namespace Mzayad.Web.Controllers
         private readonly UserService _userService;
         private readonly AuctionService _auctionService;
         private readonly AddressService _addressService;
+        private readonly BannerService _bannerService;
 
         public HomeController(IAppServices appServices) : base(appServices)
         {
             _userService = new UserService(appServices.DataContextFactory);
             _auctionService = new AuctionService(appServices.DataContextFactory, appServices.QueueService);
             _addressService = new AddressService(appServices.DataContextFactory);
+            _bannerService = new BannerService(DataContextFactory);
         }
 
         public async Task<ActionResult> Index(string language)
@@ -35,8 +40,10 @@ namespace Mzayad.Web.Controllers
             var liveAuctions = await _auctionService.GetLiveAuctions(Language);
             var closedAuctions = await _auctionService.GetClosedAuctions(Language, 12);
             var upcomingAuctions = await _auctionService.GetUpcomingAuctions(Language, 12);
-
+            var banners = (await _bannerService.GetAll()).ToList();
+            banners = banners.Localize<Banner>(Language, LocalizationDepth.OneLevel).ToList();
             var viewModel = new IndexViewModel(liveAuctions, closedAuctions, upcomingAuctions);
+            viewModel.Banners = banners;
 
             var user = await AuthService.CurrentUser();
             viewModel.UserCountry = "-- No Address --";

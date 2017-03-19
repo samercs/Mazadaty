@@ -119,6 +119,16 @@ module App {
             // ReSharper restore SuspiciousThisUsage
         }
     }
+
+    export class Images {
+        public static lazyLoad(): void {
+            const images = document.getElementsByClassName("lazy-load");
+            for (let i = images.length; i--;) {
+                const image = images[i] as HTMLImageElement;
+                image.src = image.dataset["src"];
+            }
+        }
+    }
 }
 
 

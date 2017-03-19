@@ -13,6 +13,7 @@ namespace Mzayad.Web.Models.Home
         public IReadOnlyCollection<AuctionViewModel> UpcomingAuctions { get; set; }
         public IReadOnlyCollection<AuctionViewModel> LiveAuctions { get; set; }
         public IReadOnlyCollection<int> LiveAuctionIds { get; set; }
+        public IReadOnlyCollection<Banner> Banners { get; set; }
         public string UserCountry { get; set; }
         public ApplicationUser User { get; set; }
 

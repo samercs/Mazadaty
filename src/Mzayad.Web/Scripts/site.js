@@ -101,6 +101,19 @@ var App;
         return CkEditor;
     }());
     App.CkEditor = CkEditor;
+    var Images = (function () {
+        function Images() {
+        }
+        Images.lazyLoad = function () {
+            var images = document.getElementsByClassName("lazy-load");
+            for (var i = images.length; i--;) {
+                var image = images[i];
+                image.src = image.dataset["src"];
+            }
+        };
+        return Images;
+    }());
+    App.Images = Images;
 })(App || (App = {}));
 var TimeUtilities = {
     getDays: function (days) {

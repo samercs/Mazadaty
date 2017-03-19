@@ -367,6 +367,8 @@
     <Compile Include="Areas\Admin\Models\Auctions\AddEditViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Auctions\IndexViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Avatar\AvatarAddViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Banners\AddViewModel.cs" />
+    <Compile Include="Areas\Admin\Controllers\BannersController.cs" />
     <Compile Include="Areas\Admin\Models\Orders\IndexViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Pages\AddEditViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Pages\IndexViewModel.cs" />
@@ -720,6 +722,10 @@
     <Content Include="Areas\Admin\Views\Prizes\Add.cshtml" />
     <Content Include="Areas\Admin\Views\Prizes\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Prizes\_AddEditView.cshtml" />
+    <Content Include="Areas\Admin\Views\Banners\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Banners\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Banners\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Banners\_AddEditView.cshtml" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
