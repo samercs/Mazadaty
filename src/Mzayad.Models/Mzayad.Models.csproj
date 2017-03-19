@@ -81,6 +81,7 @@
     <Compile Include="Auction.cs" />
     <Compile Include="AutoBid.cs" />
     <Compile Include="Avatar.cs" />
+    <Compile Include="Banner.cs" />
     <Compile Include="Bid.cs" />
     <Compile Include="BuyNowTransactionModel.cs" />
     <Compile Include="Category.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="EmailTemplate.cs" />
     <Compile Include="Enums\ActivityType.cs" />
     <Compile Include="Enums\AuctionStatus.cs" />
+    <Compile Include="Enums\BannerStatus.cs" />
     <Compile Include="Enums\BidType.cs" />
     <Compile Include="Enums\FriendRequestStatus.cs" />
     <Compile Include="Enums\Gender.cs" />

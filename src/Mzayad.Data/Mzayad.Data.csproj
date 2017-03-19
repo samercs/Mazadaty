@@ -407,6 +407,10 @@
     <Compile Include="Migrations\201703121052413_CreateBidStoredProcs.Designer.cs">
       <DependentUpon>201703121052413_CreateBidStoredProcs.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703190651490_AddBanner.cs" />
+    <Compile Include="Migrations\201703190651490_AddBanner.Designer.cs">
+      <DependentUpon>201703190651490_AddBanner.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -669,6 +673,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703121052413_CreateBidStoredProcs.resx">
       <DependentUpon>201703121052413_CreateBidStoredProcs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703190651490_AddBanner.resx">
+      <DependentUpon>201703190651490_AddBanner.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

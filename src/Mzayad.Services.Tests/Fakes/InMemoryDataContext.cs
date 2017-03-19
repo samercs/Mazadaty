@@ -41,7 +41,7 @@ namespace Mzayad.Services.Tests.Fakes
         public IDbSet<UserFriend> UsersFriends { get; set; }
         public IDbSet<FriendRequest> FriendsRequests { get; set; }
         public IDbSet<Message> Messages { get; set; }
-
+        public IDbSet<Banner> Banners { get; set; }
         public InMemoryDataContext()
         {
             Auctions = new TestDbSet<Auction>();
