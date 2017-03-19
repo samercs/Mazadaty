@@ -66,14 +66,7 @@
                 <dt>@Global.Sponsor</dt>
                 <dd>@Model.Sponsor.Name</dd>
             }
-            @if (!string.IsNullOrWhiteSpace(Model.VideoUrl))
-            {
-                <dt></dt>
-                <dd>
-                    <iframe width="100%" height="315" src="@Model.VideoUrl" frameborder="0" allowfullscreen></iframe>
-                </dd>
-
-            }
+            
         </dl>
     </div>
     <div class="col-md-12">
@@ -96,6 +89,10 @@
                     <br />
                 }
             </section>
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.VideoUrl))
+        {
+            <iframe width="50%" height="315" src="@Model.VideoUrl" frameborder="0" allowfullscreen></iframe>
         }
     </div>
 
