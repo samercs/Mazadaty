@@ -13,27 +13,8 @@
         @Html.ValidationMessageFor(i => i.Banner.SecondaryTitle, "Please enter a banner secondary title.")
     </div>
     <div class="form-group">
-        @Html.LabelFor(i => i.Banner.OldPrices, "Old Prices")
-        <div class="input-group">
-            @Html.TextBoxFor(i => i.Banner.OldPrices, new { @class = "form-control", @type = "number" })
-            <span class="input-group-addon">KD</span>
-        </div>
-        @Html.ValidationMessageFor(i => i.Banner.OldPrices, "Please enter a valid prices.")
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(i => i.Banner.Prices, "Current Prices")
-        <div class="input-group">
-            @Html.TextBoxFor(i => i.Banner.Prices, new { @class = "form-control", @type = "number" })
-            <span class="input-group-addon">KD</span>
-        </div>
-        @Html.ValidationMessageFor(i => i.Banner.OldPrices, "Please enter a valid prices.")
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(i => i.Banner.Prices, "Banner Link")
-        <div class="input-group">
-            <span class="input-group-addon">http</span>
-            @Html.TextBoxFor(i => i.Banner.Url, new { @class = "form-control", @type="url" })
-        </div>
+        @Html.LabelFor(i => i.Banner.Url, "Banner Link")
+        @Html.TextBoxFor(i => i.Banner.Url, new { @class = "form-control", @type = "url" })
         @Html.ValidationMessageFor(i => i.Banner.Url, "Please enter a url.")
     </div>
     @if (string.IsNullOrEmpty(Model.Banner.ImgSmUrl))
