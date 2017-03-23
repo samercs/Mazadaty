@@ -5,8 +5,8 @@ using Mzayad.Data;
 using Mzayad.Services.Identity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
-using Mzayad.Models;
 
 namespace Mzayad.Web.Core.Providers
 {
@@ -18,7 +18,7 @@ namespace Mzayad.Web.Core.Providers
         {
             if (publicClientId == null)
             {
-                throw new ArgumentNullException("publicClientId");
+                throw new ArgumentNullException(nameof(publicClientId));
             }
 
             _publicClientId = publicClientId;
@@ -26,6 +26,8 @@ namespace Mzayad.Web.Core.Providers
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
+            Trace.TraceInformation($"Token sign in: '{context.UserName}':'{context.Password}'.");
+
             var userManager = new UserManager(new DataContextFactory());
 
             var userName = context.UserName;
