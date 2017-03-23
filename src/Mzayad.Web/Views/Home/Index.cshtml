@@ -13,6 +13,9 @@
     @Styles.Render("~/css/nivo")
     <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css" />
     <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.0/css/swiper.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nivoslider/3.2/nivo-slider.min.css" />
+
     <link rel="stylesheet" href="/content/flags/flags.css" />
     <style>
         .img-container {
@@ -36,8 +39,71 @@
         .flag {
             margin-left: 5px !important;
         }
+
+        .theme-default .nivoSlider {
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+        }
+        .slider-wrapper {
+            margin-bottom: 30px !important;
+        }
+        .paging-container {
+            background-color: #fcfcfc;
+            margin: 0px;
+            border: solid 1px #ccc;
+        }
+        .pagging {
+            text-align: center;
+            border-right: solid 1px #ccc;
+        }
+        .pagging:last-child {
+            border-right: none !important;
+        }
+            .pagging:hover {
+                background-color: #33ace0;
+                color: #fff;
+                cursor: pointer;
+            }
+        .active {
+            background-color: #33ace0;
+            color: #fff;
+            cursor: pointer;
+        } .title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+        .secondary-title {
+            margin-bottom: 10px;
+        }
     </style>
 }
+
+<section class="slider-wrapper theme-default">
+    <div id="slider" class="nivoSlider">
+        @for (int i=0;i< Model.Banners.Count; i++)
+        {
+            var banner = Model.Banners.ElementAt(i);
+            <a href="@banner.Url" class="img-container" data-id="@i">
+                <img class="img-responsive" src="@banner.ImgLgUrl" alt="" data-id="@i" />
+            </a>
+        }
+    </div>
+    <div class="paging-container row">
+        @for(int i=0; i<Model.Banners.Count;i++)
+        {
+            var banner = Model.Banners.ElementAt(i);
+            <div class="col-xs-2 pagging @(i ==0 ? "active" : "")" data-id="@i">
+                <div class="title">@banner.Title</div>
+                <div class="secondary-title">
+                    @banner.SecondaryTitle
+                </div>
+            </div>
+        }
+    </div>
+</section>
 
 @if (!User.Identity.IsAuthenticated)
 {
@@ -229,6 +295,74 @@ else
     @Scripts.Render("~/js/knockout")
     @Scripts.Render("~/js/signalR")
     <script src="//cdn.jsdelivr.net/alertifyjs/1.8.0/alertify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nivoslider/3.2/jquery.nivo.slider.min.js" integrity="sha256-66ApDNLFhIKyILJVmsbuCCSQAsj/j1cETZLc4FD9hGM=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.0/js/swiper.min.js"></script>
+    <script>
+        (function(app, $) {
+
+            var bindEvents = function() {
+                $("#slider-image-1").on("load", app.Images.lazyLoad());
+                $(".swiper-slide a").click(function() { window.location.href = $(this).attr("href"); });
+            };
+
+            $(window)
+                .on('load',
+                    function() {
+                        var slider = $("#slider");
+                        slider.nivoSlider({
+                            //effect: 'sliceDownLeft',
+                            pauseTime: 5000,
+                            controlNav: false,
+                            prevText: '',
+                            nextText: '',
+                            afterChange: function() {
+                                var index = jQuery('#slider').data('nivo:vars').currentImage.data('id');
+                                $(".pagging").removeClass("active");
+                                $(".pagging:nth-child(" + (index+1)+ ")").addClass("active");
+                                console.log(index);
+                            }
+                        });
+                    });
+
+            $(function() {
+                bindEvents();
+            });
+
+            var getSlideCount = function() {
+                var w = window.innerWidth;
+                var d = w / 200;
+                var r = Math.round(d);
+                return Math.min(r, 5);
+            };
+
+            var swipers = new Swiper('.swiper-container',
+            {
+                paginationClickable: true,
+                nextButton: '.swiper-button-next',
+                prevButton: '.swiper-button-prev',
+                slidesPerView: getSlideCount(),
+                spaceBetween: 15
+            });
+
+            $(window)
+                .resize(function() {
+                    for (var i = 0; i < swipers.length; i++) {
+                        swipers[i].params.slidesPerView = getSlideCount();
+                        swipers[i].update();
+                    }
+                });
+
+            $(".pagging").click(function() {
+                var id = $(this).data("id");
+                $('#slider').data('nivo:vars').currentSlide = id-1;
+                $("#slider a.nivo-nextNav").trigger('click'); 
+            });
+
+        }(App, jQuery));
+    </script>
+
+
+
     @if (Request.IsLocal)
     {
         <script src="/signalr/hubs"></script>
@@ -269,7 +403,7 @@ else
                 self.secondsLeft = ko.observable();
                 self.lastBidAmount = ko.observable(data.lastBidAmount);
                 self.showBidErr = ko.observable(false);
-                self.productUrl = '@LanguageCode/products/'+ data.productId;
+                self.productUrl = '@LanguageCode/products/' + data.productId;
 
                 self.showBidErr = ko.computed(function() {
                     var isLastBidder = self.bids().length > 0 && self.bids()[0].userName === userName;
@@ -366,19 +500,19 @@ else
                     var resultHtml = "";
                     var countries = self.countryList().split(",");
                     countries.forEach(function(e) {
-                        resultHtml+="<i class='flag flag-"+e.toLowerCase()+"'></i>";
+                        resultHtml += "<i class='flag flag-" + e.toLowerCase() + "'></i>";
                     });
                     return resultHtml;
                 });
 
 
-                self.openAutoBidModal = function () {
+                self.openAutoBidModal = function() {
 
                     @if (!Request.IsAuthenticated)
                     {
                         <text>
-                    window.location.href = "@($"{LanguageCode}/account/sign-in?returnUrl=~/")";
-                    </text>
+                            window.location.href = "@($"{LanguageCode}/account/sign-in?returnUrl=~/")";
+                        </text>
                     }
 
                     $("#auctionTitle").html(self.title);
@@ -387,12 +521,12 @@ else
                     $("#auctionId").val(self.auctionId);
 
                     $.ajax({
-                        url: '/api/auctions/'+data.auctionId+'/auto-bid',
+                        url: '/api/auctions/' + data.auctionId + '/auto-bid',
                         type: 'GET',
                         headers: {
                             "Authorization": "Bearer @IdentityToken.GetToken(Model.User)"
                         },
-                        success:function(result) {
+                        success: function(result) {
                             $("#maxBidAmount").val(result);
                             $("#autoBid").modal("show");
                         }
@@ -424,7 +558,7 @@ else
 
                 var auctionJson = $.parseJSON(results);
                 console.log("auctionHub.client.updateAuctions", results);
-                
+
                 for (var i = 0, len = auctionJson.length; i < len; ++i) {
                     var auction = auctionJson[i];
                     var model = viewModel.getAuction(auction.auctionId);
@@ -465,44 +599,47 @@ else
                 });
 
 
-            $("#setAutoBid").on("click",function() {
-                if ($("#maxBidAmount").val() === "") {
-                    return;
-                }
-
-                var data = {
-                    auctionId: $("#auctionId").val(),
-                    maximumBid: $("#maxBidAmount").val()
-                };
-
-                $.ajax({
-                    url: '/api/auctions/'+data.auctionId+'/auto-bid',
-                    type: 'POST',
-                    data: data,
-                    headers: {
-                        "Authorization": "Bearer @IdentityToken.GetToken(Model.User)"
-                    },
-                    success:function() {
-                        $("#autoBid").modal("toggle");
+            $("#setAutoBid").on("click",
+                function() {
+                    if ($("#maxBidAmount").val() === "") {
+                        return;
                     }
-                });
-            });
 
-            $("#deleteAutoBid").on("click", function() {
-                alertify.confirm('@Global.AutoBidDeleteConfirmation', function() {
+                    var data = {
+                        auctionId: $("#auctionId").val(),
+                        maximumBid: $("#maxBidAmount").val()
+                    };
+
                     $.ajax({
-                        url: '/api/auctions/'+$("#auctionId").val()+'/auto-bid',
-                        type: 'DELETE',
+                        url: '/api/auctions/' + data.auctionId + '/auto-bid',
+                        type: 'POST',
+                        data: data,
                         headers: {
                             "Authorization": "Bearer @IdentityToken.GetToken(Model.User)"
                         },
-                        success:function() {
-                            $("#maxBidAmount").val("");
+                        success: function() {
                             $("#autoBid").modal("toggle");
                         }
                     });
-                }).setHeader('@Global.AutoBidDeleteTitle');
-            });
+                });
+
+            $("#deleteAutoBid").on("click",
+                function() {
+                    alertify.confirm('@Global.AutoBidDeleteConfirmation',
+                        function() {
+                            $.ajax({
+                                url: '/api/auctions/' + $("#auctionId").val() + '/auto-bid',
+                                type: 'DELETE',
+                                headers: {
+                                    "Authorization": "Bearer @IdentityToken.GetToken(Model.User)"
+                                },
+                                success: function() {
+                                    $("#maxBidAmount").val("");
+                                    $("#autoBid").modal("toggle");
+                                }
+                            });
+                        }).setHeader('@Global.AutoBidDeleteTitle');
+                });
 
         });
 

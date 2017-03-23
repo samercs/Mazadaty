@@ -4,13 +4,15 @@ using Mzayad.Models.Enums;
 using Mzayad.Services;
 using Mzayad.Services.Payment;
 using Mzayad.Web.Areas.Api.ErrorHandling;
+using Mzayad.Web.Areas.Api.Models.Orders;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Resources;
+using OrangeJetpack.Localization;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Mzayad.Web.Areas.Api.Models.Orders;
 
 namespace Mzayad.Web.Areas.Api.Controllers
 {
@@ -60,6 +62,18 @@ namespace Mzayad.Web.Areas.Api.Controllers
             var result = await _knetService.InitTransaction(order, AuthService.CurrentUserId(), AuthService.UserHostAddress());
             var transaction = await _knetService.GetTransactionByOrderId(order.OrderId);
             return Ok(OrderCreateResult.Create(transaction, result));
+        }
+
+        [Route("{orderId:int}")]
+        public async Task<IHttpActionResult> Get(int orderId)
+        {
+            var order = await _orderService.GetById(orderId);
+            if (order.Items.Any())
+            {
+                order.Items = order.Items.Localize<OrderItem>(Language, LocalizationDepth.OneLevel).ToList();
+            }
+            var knetTransaction = await _knetService.GetTransactionByOrderId(orderId);
+            return Ok(new { Order = OrderDetailModel.Create(order), KnetTransaction = KnetTransactionModel.Create(knetTransaction) });
         }
 
         private async Task<bool> ValidateOrderItems(int auctionId, OrderItem orderItem)

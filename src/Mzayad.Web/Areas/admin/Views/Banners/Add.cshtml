@@ -1,0 +1,39 @@
+﻿@using Mzayad.Web.Extensions
+@model Mzayad.Web.Areas.Admin.Models.Banners.AddViewModel
+@{
+    ViewBag.Title = "Add Banner";
+}
+@section styles
+{
+    @Styles.Render("~/css/image-uploader")
+}
+<div class="row">
+    <div class="@Html.Css().FormWide">
+        @using (Html.BeginForm("Add", "Banners", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.Partial("_AddEditView", Model)
+        }
+    </div>
+</div>
+@section scripts
+{
+    @Scripts.Render("~/js/image-uploader")
+    <script>
+        (function($) {
+            var bindEvents = function() {
+                
+                $("#image1").fileUpload({
+                    itemId: "@Model.Banner.BannerId",
+                    imageUrl: "@Model.Banner.ImgSmUrl",
+                    uploadUrl: "/admin/banners/UploadImage",
+                    deleteUrl: "/admin/banners/DeleteImage"
+                });
+            };
+
+            $(function() {
+                bindEvents();
+            });
+
+        });
+    </script>
+}

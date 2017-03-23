@@ -41,7 +41,7 @@ namespace Mzayad.Services.Tests.Fakes
         public IDbSet<UserFriend> UsersFriends { get; set; }
         public IDbSet<FriendRequest> FriendsRequests { get; set; }
         public IDbSet<Message> Messages { get; set; }
-
+        public IDbSet<Banner> Banners { get; set; }
         public InMemoryDataContext()
         {
             Auctions = new TestDbSet<Auction>();
@@ -74,6 +74,16 @@ namespace Mzayad.Services.Tests.Fakes
         public void Dispose()
         {
             // do nothing
+        }
+
+        public Bid SubmitUserBid(int auctionId, int secondsLeft, string userId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Bid SubmitAutoBid(int auctionId, int secondsLeft)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

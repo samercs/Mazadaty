@@ -41,9 +41,13 @@ namespace Mzayad.Data
         IDbSet<UserFriend> UsersFriends { get; set; }
         IDbSet<FriendRequest> FriendsRequests { get; set; }
         IDbSet<Message> Messages { get; set; }
+        IDbSet<Banner> Banners { get; set; }
 
         int SaveChanges();
         Task<int> SaveChangesAsync();
         void SetModified(object entity);
+
+        Bid SubmitUserBid(int auctionId, int secondsLeft, string userId);
+        Bid SubmitAutoBid(int auctionId, int secondsLeft);
     }
 }

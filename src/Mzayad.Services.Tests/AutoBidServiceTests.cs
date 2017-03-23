@@ -10,51 +10,7 @@ namespace Mzayad.Services.Tests
 
     [TestFixture]
     public class AutoBidServiceTests
-    {
-        [Test]
-        public void TryGetAutoBid_UserWithMaxBid_ReturnsExpected()
-        {
-            var dc = new InMemoryDataContext();
-            dc.AutoBids.Add(new AutoBid
-            {
-                AuctionId = Constants.AnyInt,
-                UserId = Constants.AnyUserId,
-                User = new ApplicationUser
-                {
-                    Id = Constants.AnyUserId
-                },
-                MaxBid = decimal.MaxValue
-            });
-
-            var service = new AutoBidService(new InMemoryDataContextFactory(dc));
-            var userId = service.TryGetAutoBid(Constants.AnyInt, "", 0);
-
-            Assert.AreEqual(userId, Constants.AnyUserId);
-        }
-
-        [Test]
-        public void TryGetAutoBid_OneAutoBidWithMaxLessThanLastBidAmount_ReturnsNull()
-        {
-            const int lastBidAmount = 10;
-
-            var dc = new InMemoryDataContext();
-            dc.AutoBids.Add(new AutoBid
-            {
-                AuctionId = Constants.AnyInt,
-                UserId = Constants.AnyUserId,
-                User = new ApplicationUser
-                {
-                    Id = Constants.AnyUserId
-                },
-                MaxBid = lastBidAmount
-            });
-
-            var service = new AutoBidService(new InMemoryDataContextFactory(dc));
-            var user = service.TryGetAutoBid(Constants.AnyInt, "", lastBidAmount);
-
-            Assert.IsNull(user);
-        }
-        
+    {      
         [Test]
         public void CountUserAutoBids_FromDate_Returns2()
         {

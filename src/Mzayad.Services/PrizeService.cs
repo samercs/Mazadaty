@@ -2,6 +2,9 @@
 using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Enums;
+using Mzayad.Services.Identity;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using OrangeJetpack.Localization;
 using System;
 using System.Collections.Generic;
@@ -13,8 +16,10 @@ namespace Mzayad.Services
 {
     public class PrizeService : ServiceBase
     {
+        private readonly UserService _userService;
         public PrizeService(IDataContextFactory dataContextFactory) : base(dataContextFactory)
         {
+            _userService = new UserService(DataContextFactory);
         }
 
         public async Task<IEnumerable<Prize>> GetAll(string languageCode = "en", string search = "")
@@ -176,5 +181,87 @@ namespace Mzayad.Services
             }
 
         }
+
+        public async Task<string> GetRandomPrize(int prizeLogId, ApplicationUser user, string languageCode, Func<ApplicationUser, Prize, Task> notifyAdminForWinning, Func<ApplicationUser, int?, Task> addUserSubscription)
+        {
+            var prizeLog = await GetPrizeLogById(prizeLogId);
+            if (!ValidatePrize(user, prizeLog))
+            {
+                return "";
+            }
+
+            Prize prize = null;
+            var prizes = await GetAvaliablePrize();
+            while (prize == null)
+            {
+                prize = await GetRandomPrize();
+            }
+            var index = -1;
+            for (int i = 0; i < prizes.Count(); i++)
+            {
+                if (prize.PrizeId == prizes.ElementAt(i).PrizeId)
+                {
+                    index = i + 1;
+                    break;
+                }
+            }
+
+            if (index == -1)
+            {
+                return "";
+            }
+            var message = await ProccessPrize(user, prize, languageCode, notifyAdminForWinning, addUserSubscription);
+            var isComplete = prize.PrizeType == PrizeType.Subscription;
+            await LogUserPrize(prizeLog, prize.PrizeId, isComplete);
+            var data = new { prizeId = prize.PrizeId, index, message, type = (int)prize.PrizeType };
+            return JsonConvert.SerializeObject(data, Formatting.Indented,
+                        new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+        }
+
+
+        private async Task<string> ProccessPrize(ApplicationUser user, Prize prize, string languageCode, Func<ApplicationUser, Prize, Task> notifyAdminForWinning, Func<ApplicationUser, int?, Task> addUserSubscription)
+        {
+            prize = prize.Localize(languageCode, i => i.Title);
+            if (prize.Limit.HasValue)
+            {
+                prize.Limit = prize.Limit - 1;
+                await Save(prize);
+            }
+            switch (prize.PrizeType)
+            {
+                case PrizeType.Product:
+                    await notifyAdminForWinning(user, prize);
+                    return $"Congratulation ... you win {prize.Title}. We will conatct you to get your prize.";
+                case PrizeType.Avatar:
+                    return $"Congratulation ... you win {prize.Title}. We will redirect you to select your avatar.";
+                case PrizeType.Subscription:
+                    await addUserSubscription(user, prize.SubscriptionDays);
+                    return $"Congratulation ... you win {prize.Title}. The subscription has been added to your account.";
+                default:
+                    throw new Exception("Unsupport prize ...");
+            }
+        }
+
+        public bool ValidatePrize(ApplicationUser user, UserPrizeLog userPrizeLog)
+        {
+            if (user == null)
+            {
+                return false;
+            }
+            if (userPrizeLog == null)
+            {
+                return false;
+            }
+            if (userPrizeLog.PrizeId.HasValue)
+            {
+                return false;
+            }
+            if (!userPrizeLog.UserId.Equals(user.Id))
+            {
+                return false;
+            }
+            return true;
+        }
+
     }
 }

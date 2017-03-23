@@ -377,6 +377,9 @@ body {
   color: #fff !important;
   text-decoration: underline;
 }
+.hidden {
+  display: none;
+}
 form section,
 section.form-section {
   background: #f5f5f5;

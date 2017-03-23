@@ -1,0 +1,62 @@
+﻿@using Mzayad.Web.Extensions
+@model Mzayad.Web.Areas.Admin.Models.Banners.AddViewModel
+@Html.AntiForgeryToken()
+<section>
+    <div class="form-group">
+        @Html.LabelFor(i => i.Banner.Title, "Title").Required()
+        @Html.EditorFor(i => i.Banner.Title, Model)
+        @Html.ValidationMessageFor(i => i.Banner.Title, "Please enter a banner title.")
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(i => i.Banner.SecondaryTitle, "Secondary Title").Required()
+        @Html.EditorFor(i => i.Banner.SecondaryTitle, Model)
+        @Html.ValidationMessageFor(i => i.Banner.SecondaryTitle, "Please enter a banner secondary title.")
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(i => i.Banner.Url, "Banner Link")
+        @Html.TextBoxFor(i => i.Banner.Url, new { @class = "form-control", @type = "url" })
+        @Html.ValidationMessageFor(i => i.Banner.Url, "Please enter a url.")
+    </div>
+    @if (string.IsNullOrEmpty(Model.Banner.ImgSmUrl))
+    {
+        <div class="form-group">
+            @Html.Label("Banner Image").Required()
+            <input required="required" type="file" name="bannerImage" id="bannerImage" class="form-control" />
+            @Html.ValidationMessage("bannerImage")
+        </div>
+    }
+    else
+    {
+        <div class="form-group">
+            @Html.Label("Banner Image")
+            <ul class="multipleUploadContainer">
+                <li id="image0">@Html.Partial("ImageUploader")</li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+    }
+    <div class="form-group">
+        <label>Status</label>
+        @foreach (var item in Model.StatusList)
+        {
+            <div class="radio">
+                <label>
+                    @if (item.Selected)
+                    {
+                        @Html.RadioButtonFor(i => i.Banner.Status, item.Value, new { @checked = "checked" })
+                        <b>@Html.Raw(item.Text)</b>
+                    }
+                    else
+                    {
+                        @Html.RadioButtonFor(i => i.Banner.Status, item.Value)
+                        <b>@Html.Raw(item.Text)</b>
+                    }
+                </label>
+            </div>
+        }
+    </div>
+
+</section>
+<section class="form-buttons">
+    <button type="submit" class="btn btn-default">Save</button>
+</section>

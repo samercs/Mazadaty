@@ -25,6 +25,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using Humanizer;
 using WebGrease.Css.Extensions;
 
 namespace Mzayad.Web.Areas.Api.Controllers
@@ -37,6 +38,11 @@ namespace Mzayad.Web.Areas.Api.Controllers
         private readonly SessionLogService _sessionLogService;
         private readonly AvatarService _avatarService;
         private readonly IQueueService _queueService;
+        private readonly PrizeService _prizeService;
+        private readonly FriendService _friendService;
+        private readonly TrophyService _trophyService;
+        private readonly AuctionService _auctionService;
+        private readonly BidService _bidService;
 
         public UsersController(IAppServices appServices) : base(appServices)
         {
@@ -46,6 +52,11 @@ namespace Mzayad.Web.Areas.Api.Controllers
             _avatarService = new AvatarService(DataContextFactory);
             _queueService =
                 new QueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString);
+            _prizeService = new PrizeService(DataContextFactory);
+            _friendService = new FriendService(DataContextFactory);
+            _trophyService = new TrophyService(DataContextFactory);
+            _auctionService = new AuctionService(DataContextFactory, _queueService);
+            _bidService = new BidService(DataContextFactory, _queueService);
         }
 
         [HttpGet, Route("{username}")]
@@ -270,6 +281,16 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 Selected = i.Url.Equals(user.AvatarUrl)
             });
 
+            var friends = await _friendService.GetFriends(user.Id);
+            var friendsModel = friends.Select(i => new { i.FullName, i.UserName, i.Id, i.Gender });
+
+            var trophies = await _trophyService.GetUserTrophies(user.Id);
+            var trophiesModel =
+                trophies.Select(
+                    i => new { i.Trophy.Description, i.Trophy.IconUrl, i.Trophy.Name, i.Trophy.XpAward, i.Trophy.Key });
+
+            var userPrizeLog = await _prizeService.GetUserAvilablePrize(user);
+
             return Ok(new
             {
                 user.ProfileStatus,
@@ -283,6 +304,11 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 user.Xp,
                 user.Level,
                 avatars,
+                user.UserName,
+                userPrizeLogId = userPrizeLog?.UserPrizeLogId,
+                frinds = friendsModel,
+                trophies = trophiesModel,
+                XpNextLevel = LevelService.GetLevel(user.Level + 1).XpRequired
             });
         }
 
@@ -321,6 +347,68 @@ namespace Mzayad.Web.Areas.Api.Controllers
             await _userService.UpdateUser(user);
             await _queueService.QueueActivityAsync(ActivityType.CompleteProfile, user.Id);
             return Ok();
+        }
+
+        [Route("current/prize")]
+        public async Task<IHttpActionResult> GetPrize()
+        {
+            var user = await AuthService.CurrentUser();
+            var userPrize = await _prizeService.GetUserAvilablePrize(user);
+            if (userPrize == null)
+            {
+                return NotFound();
+            }
+            return Ok(userPrize.UserPrizeLogId);
+        }
+        [Route("current/trophies")]
+        public async Task<IHttpActionResult> GetTrophies()
+        {
+            var model = await GetTrophies(AuthService.CurrentUserId());
+            return Ok(model);
+        }
+
+        [Route("current/auction-history")]
+        public async Task<IHttpActionResult> GetAuctionHistory()
+        {
+            var userId = AuthService.CurrentUserId();
+            var auctions = await _auctionService.GetAuctionsWon(userId, Language);
+            return Ok(auctions);
+        }
+        [Route("current/bid-history")]
+        public async Task<IHttpActionResult> GetBidHistory()
+        {
+            var userId = AuthService.CurrentUserId();
+            var bids = await _bidService.GetBidHistoryForUser(userId, Language);
+            var model = bids.Select(i => new
+            {
+                i.Auction.Title,
+                i.CreatedUtc,
+                i.Amount,
+                i.SecondsLeft,
+                i.BidId,
+                i.AuctionId,
+                Type = i.Type.Humanize(),
+                i.UserHostAddress
+            });
+            return Ok(model);
+        }
+
+        private async Task<List<TrophieViewModel>> GetTrophies(string userId)
+        {
+            var userTophies = (await _trophyService.GetUserTrophies(userId, Language)).ToList();
+            var trophies = await _trophyService.GetAll(Language);
+
+            return (from trophy in trophies
+                    let userTrophy = userTophies.FirstOrDefault(i => i.TrophyId == trophy.TrophyId)
+                    select new TrophieViewModel
+                    {
+                        TrophyName = trophy.Name,
+                        TrophyDescription = trophy.Description,
+                        IconUrl = trophy.IconUrl,
+                        XpEarned = userTrophy == null ? (int?)null : userTrophy.XpAwarded,
+                        AwardDate = userTrophy == null ? (DateTime?)null : userTrophy.CreatedUtc,
+                        Earned = userTrophy != null
+                    }).ToList();
         }
 
         private async Task SendEmailChangedEmail(ApplicationUser user, string originalEmail)

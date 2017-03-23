@@ -367,6 +367,8 @@
     <Compile Include="Areas\Admin\Models\Auctions\AddEditViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Auctions\IndexViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Avatar\AvatarAddViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Banners\AddViewModel.cs" />
+    <Compile Include="Areas\Admin\Controllers\BannersController.cs" />
     <Compile Include="Areas\Admin\Models\Orders\IndexViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Pages\AddEditViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Pages\IndexViewModel.cs" />
@@ -394,6 +396,7 @@
     <Compile Include="Areas\Api\Controllers\AvatarsController.cs" />
     <Compile Include="Areas\Api\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Api\Controllers\PaymentController.cs" />
+    <Compile Include="Areas\Api\Controllers\PrizesController.cs" />
     <Compile Include="Areas\Api\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Api\Controllers\SubscriptionsController.cs" />
     <Compile Include="Areas\Api\Controllers\UsersController.cs" />
@@ -402,9 +405,14 @@
     <Compile Include="Areas\Api\ErrorHandling\ApiErrorType.cs" />
     <Compile Include="Areas\Api\Filters\LanguageFilter.cs" />
     <Compile Include="Areas\Api\Models\Auctions\AuctionModel.cs" />
+    <Compile Include="Areas\Api\Models\Orders\KnetTransactionModel.cs" />
     <Compile Include="Areas\Api\Models\Orders\OrderCreateResult.cs" />
+    <Compile Include="Areas\Api\Models\Orders\OrderDetailModel.cs" />
+    <Compile Include="Areas\Api\Models\Orders\OrderItemModel.cs" />
     <Compile Include="Areas\Api\Models\Orders\OrderModel.cs" />
     <Compile Include="Areas\Api\Models\Payment\PaymentViewModel.cs" />
+    <Compile Include="Areas\Api\Models\Prizes\AvatarViewModel.cs" />
+    <Compile Include="Areas\Api\Models\Prizes\PrizeViewModel.cs" />
     <Compile Include="Areas\Api\Models\Products\ProductModel.cs" />
     <Compile Include="Areas\Api\Models\Subscriptions\BuySbscriptionResultViewModel.cs" />
     <Compile Include="Areas\Api\Models\Subscriptions\SubscriptionViewModel.cs" />
@@ -714,6 +722,10 @@
     <Content Include="Areas\Admin\Views\Prizes\Add.cshtml" />
     <Content Include="Areas\Admin\Views\Prizes\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Prizes\_AddEditView.cshtml" />
+    <Content Include="Areas\Admin\Views\Banners\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Banners\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Banners\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Banners\_AddEditView.cshtml" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>

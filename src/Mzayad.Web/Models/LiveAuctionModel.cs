@@ -75,7 +75,7 @@ namespace Mzayad.Web.Models
             var secondsLeft = GetSecondsList();
             if (secondsLeft < 12)
             {
-                StartUtc = StartUtc.AddSeconds(13 - secondsLeft);
+                StartUtc = StartUtc.AddSeconds(12 - secondsLeft);
             }
 
             return bidModel;
