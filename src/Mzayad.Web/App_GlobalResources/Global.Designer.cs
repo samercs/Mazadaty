@@ -1969,6 +1969,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Retail Price.
+        /// </summary>
+        public static string RetailPriceLabel {
+            get {
+                return ResourceManager.GetString("RetailPriceLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Retail Price: {RetailPrice}.
         /// </summary>
         public static string RetailPriceWithLabel {
