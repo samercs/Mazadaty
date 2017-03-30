@@ -969,4 +969,7 @@
   <data name="ConverstionWith" xml:space="preserve">
     <value>Converstion with</value>
   </data>
+  <data name="RetailPriceLabel" xml:space="preserve">
+    <value>Retail Price</value>
+  </data>
 </root>

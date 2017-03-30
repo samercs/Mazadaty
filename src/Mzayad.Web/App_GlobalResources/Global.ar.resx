@@ -861,4 +861,7 @@
   <data name="Reply" xml:space="preserve">
     <value>الرد</value>
   </data>
+  <data name="RetailPriceLabel" xml:space="preserve">
+    <value>سعر السوق</value>
+  </data>
 </root>

@@ -2,7 +2,7 @@
 @model Mzayad.Models.Product
 
 @{
-    ViewBag.Title = @Model.Name;
+    ViewBag.Title = Model.Name;
 }
 
 @section styles
@@ -42,7 +42,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <img id="product-image" class="img-responsive" data-zoom-image="@Model.MainImage().ImageLgUrl" />
+        <img id="product-image" class="img-responsive" data-zoom-image="@Model.MainImage().ImageLgUrl" alt="@Model.Name" />
         <ul id="product-images" class="list-inline">
             @foreach (var image in Model.ProductImages)
             {
@@ -59,8 +59,8 @@
         <dl class="dl-horizontal">
             <dt>@Global.Name</dt>
             <dd>@Model.Name</dd>
-            <dt>@Global.Price</dt>
-            <dd>@CurrencyFormatter.Format(Model.PurchasePrice)</dd>
+            <dt>@Global.RetailPriceLabel</dt>
+            <dd>@CurrencyFormatter.Format(Model.RetailPrice)</dd>
             @if (Model.SponsorId.HasValue)
             {
                 <dt>@Global.Sponsor</dt>

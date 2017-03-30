@@ -2,11 +2,12 @@
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Mzayad.Data;
+using Mzayad.Models;
 using Mzayad.Services.Identity;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Mzayad.Models;
+using Mzayad.Services;
 
 namespace Mzayad.Web.Core.Providers
 {
@@ -18,7 +19,7 @@ namespace Mzayad.Web.Core.Providers
         {
             if (publicClientId == null)
             {
-                throw new ArgumentNullException("publicClientId");
+                throw new ArgumentNullException(nameof(publicClientId));
             }
 
             _publicClientId = publicClientId;
@@ -26,7 +27,9 @@ namespace Mzayad.Web.Core.Providers
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            var userManager = new UserManager(new DataContextFactory());
+            var dataContextFactory = new DataContextFactory();
+            var userManager = new UserManager(dataContextFactory);
+            var addressService = new AddressService(dataContextFactory);
 
             var userName = context.UserName;
             if (userName.Contains("@"))
@@ -45,11 +48,18 @@ namespace Mzayad.Web.Core.Providers
                 return;
             }
 
+            var address = await addressService.GetAddress(user.AddressId);
+            if (address != null)
+            {
+                user.Address = address;
+            }
+
             var oAuthIdentity = await user.GenerateUserIdentityAsync(userManager, OAuthDefaults.AuthenticationType);
             var cookiesIdentity = await user.GenerateUserIdentityAsync(userManager, CookieAuthenticationDefaults.AuthenticationType);
 
-            var properties = CreateProperties(user.UserName);
+            var properties = CreateProperties(user);
             var ticket = new AuthenticationTicket(oAuthIdentity, properties);
+
             context.Validated(ticket);
             context.Request.Context.Authentication.SignIn(cookiesIdentity);
         }
@@ -79,8 +89,7 @@ namespace Mzayad.Web.Core.Providers
         {
             if (context.ClientId == _publicClientId)
             {
-                Uri expectedRootUri = new Uri(context.Request.Uri, "/");
-
+                var expectedRootUri = new Uri(context.Request.Uri, "/");
                 if (expectedRootUri.AbsoluteUri == context.RedirectUri)
                 {
                     context.Validated();
@@ -90,12 +99,18 @@ namespace Mzayad.Web.Core.Providers
             return Task.FromResult<object>(null);
         }
 
-        public static AuthenticationProperties CreateProperties(string userName)
+        public static AuthenticationProperties CreateProperties(ApplicationUser user)
         {
             IDictionary<string, string> data = new Dictionary<string, string>
             {
-                { "userName", userName }
+                { "userId", user.Id },
+                { "userName", user.UserName },
+                { "fullName", user.FullName },
+                { "email", user.Email },
+                { "countryCode", user.Address?.CountryCode ?? "KW" },
+                { "avatarUrl", user.AvatarUrl }
             };
+
             return new AuthenticationProperties(data);
         }
     }

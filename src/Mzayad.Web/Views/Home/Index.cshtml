@@ -11,8 +11,8 @@
 
 @section styles {
     @Styles.Render("~/css/nivo")
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css" />
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.0/css/swiper.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nivoslider/3.2/nivo-slider.min.css" />
 
@@ -211,9 +211,9 @@ else
                             </div>
 
                             <ul class="auction-action-buttons">
-                                <li data-bind="visible: buyNowEnabled">
+                                @*<li data-bind="visible: buyNowEnabled">
                                     <a class="btn btn-default btn-rounded" data-bind="attr: { href: buyNowUrl }">@Global.BuyNow</a>
-                                </li>
+                                </li>*@
                                 <li>
                                     <a class="btn btn-unstyled btn-rounded" data-bind="click:openAutoBidModal ">@Global.AutoBid</a>
                                 </li>

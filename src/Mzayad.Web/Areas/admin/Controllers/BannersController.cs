@@ -1,15 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
-using Mzayad.Core.Extensions;
 using Mzayad.Core.Formatting;
 using Mzayad.Models;
 using Mzayad.Models.Enums;
@@ -22,6 +12,15 @@ using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Client.Storage;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace Mzayad.Web.Areas.Admin.Controllers
 {
@@ -37,7 +36,7 @@ namespace Mzayad.Web.Areas.Admin.Controllers
             _storageService = appServices.StorageService;
         }
         [Route("")]
-        public async Task<ActionResult> Index(string search = null)
+        public ActionResult Index(string search = null)
         {
             return View();
         }
@@ -80,12 +79,15 @@ namespace Mzayad.Web.Areas.Admin.Controllers
                 model.Banner.SecondaryTitle = secondaryTitle.Serialize();
                 var orginalImageUri = await _storageService.SaveFile("banners", bannerImage);
                 model.Banner.OrginalImgUrl = orginalImageUri.AbsoluteUri;
+
                 var imagesUrl = await UploadImage(bannerImage,
                     new[]
                     {
-                        ImageWidthConstants.BannerImageSm, ImageWidthConstants.BannerImageMd,
-                        ImageWidthConstants.BannerImageMd
+                        ImageWidthConstants.BannerImageSm,
+                        ImageWidthConstants.BannerImageMd,
+                        ImageWidthConstants.BannerImageLg
                     });
+
                 model.Banner.ImgSmUrl = imagesUrl[0].AbsoluteUri;
                 model.Banner.ImgMdUrl = imagesUrl[1].AbsoluteUri;
                 model.Banner.ImgLgUrl = imagesUrl[2].AbsoluteUri;
@@ -125,7 +127,7 @@ namespace Mzayad.Web.Areas.Admin.Controllers
             banner.SecondaryTitle = secondaryTitle.Serialize();
             banner.Status = model.Banner.Status;
             banner.Url = model.Banner.Url;
-            
+
             await _bannerService.Update(banner);
             SetStatusMessage("Banner has been updated successfully.");
             return RedirectToAction("Index");
@@ -137,7 +139,7 @@ namespace Mzayad.Web.Areas.Admin.Controllers
         {
             if (itemId == null)
             {
-                return Json(new {itemId = 0, url = "" });
+                return Json(new { itemId = 0, url = "" });
             }
 
             try
@@ -148,7 +150,7 @@ namespace Mzayad.Web.Areas.Admin.Controllers
                     throw new Exception("Could not upload image. banner not available.");
                 }
                 var orginalImageUri = await _storageService.SaveFile("banners", file);
-               banner.OrginalImgUrl = orginalImageUri.AbsoluteUri;
+                banner.OrginalImgUrl = orginalImageUri.AbsoluteUri;
                 var widths = new[] { ImageWidthConstants.BannerImageSm, ImageWidthConstants.BannerImageMd, ImageWidthConstants.BannerImageLg };
                 var uris = await UploadImage(file, widths);
 
