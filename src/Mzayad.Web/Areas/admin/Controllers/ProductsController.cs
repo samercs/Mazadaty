@@ -1,6 +1,6 @@
-﻿using System.Drawing;
-using Kendo.Mvc.Extensions;
+﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using Mzayad.Core.Formatting;
 using Mzayad.Models;
 using Mzayad.Services;
 using Mzayad.Web.Areas.admin.Models.Products;
@@ -10,19 +10,18 @@ using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Base.Core.Formatting;
+using OrangeJetpack.Base.Web;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Client.Storage;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Mzayad.Core.Formatting;
-using OrangeJetpack.Base.Web;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {

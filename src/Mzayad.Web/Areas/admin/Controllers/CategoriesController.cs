@@ -42,19 +42,18 @@ namespace Mzayad.Web.Areas.admin.Controllers
         public async Task<ActionResult> Add(AddViewModel model, LocalizedContent[] name)
         {
             model.Category.Name = name.Serialize();
+            ModelState["Category.Name"].Errors.Clear();
 
             if (!ModelState.IsValid)
             {
+                await model.Hydrate(_categoryService);
                 return View(model);
             }
 
-            Category category = null;
-
-            category = await _categoryService.AddCategory(model.Category);
-             
+            var category = await _categoryService.AddCategory(model.Category);          
             var categoryName = category.Localize("en", i => i.Name).Name;
 
-            SetStatusMessage(string.Format("Category {0} successfully added.", categoryName));
+            SetStatusMessage($"Category {categoryName} successfully added.");
 
             return RedirectToAction("Index");
         }
