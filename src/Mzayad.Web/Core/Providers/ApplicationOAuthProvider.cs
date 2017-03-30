@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Mzayad.Web.Core.Providers
 {
@@ -40,9 +41,13 @@ namespace Mzayad.Web.Core.Providers
                 }
             }
 
+            Trace.TraceInformation($"Finding user: '{userName}':'{context.Password}'.");
+
             var user = await userManager.FindAsync(userName, context.Password);
             if (user == null)
             {
+                Trace.TraceError("User is null.");
+
                 context.SetError("invalid_grant", "The user name or password is incorrect.");
                 return;
             }
@@ -50,8 +55,11 @@ namespace Mzayad.Web.Core.Providers
             var oAuthIdentity = await user.GenerateUserIdentityAsync(userManager, OAuthDefaults.AuthenticationType);
             var cookiesIdentity = await user.GenerateUserIdentityAsync(userManager, CookieAuthenticationDefaults.AuthenticationType);
 
-            var properties = CreateProperties(user.UserName);
+            var properties = CreateProperties(user.UserName, user.Email);
             var ticket = new AuthenticationTicket(oAuthIdentity, properties);
+
+            Trace.TraceInformation($"Auth ticket: {JsonConvert.SerializeObject(ticket)}");
+
             context.Validated(ticket);
             context.Request.Context.Authentication.SignIn(cookiesIdentity);
         }
@@ -81,8 +89,7 @@ namespace Mzayad.Web.Core.Providers
         {
             if (context.ClientId == _publicClientId)
             {
-                Uri expectedRootUri = new Uri(context.Request.Uri, "/");
-
+                var expectedRootUri = new Uri(context.Request.Uri, "/");
                 if (expectedRootUri.AbsoluteUri == context.RedirectUri)
                 {
                     context.Validated();
@@ -92,12 +99,14 @@ namespace Mzayad.Web.Core.Providers
             return Task.FromResult<object>(null);
         }
 
-        public static AuthenticationProperties CreateProperties(string userName)
+        public static AuthenticationProperties CreateProperties(string userName, string email)
         {
             IDictionary<string, string> data = new Dictionary<string, string>
             {
-                { "userName", userName }
+                { "userName", userName },
+                { "email", email }
             };
+
             return new AuthenticationProperties(data);
         }
     }
