@@ -5,7 +5,6 @@ using Mzayad.Web.Controllers;
 using Mzayad.Web.Core.Attributes;
 using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
-using OrangeJetpack.Base.Web;
 using OrangeJetpack.Localization;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -40,7 +39,8 @@ namespace Mzayad.Web.Areas.admin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Add(AddViewModel model, LocalizedContent[] name)
         {
-            model.Specification.Name = name.Serialize();
+            model.Specification = new Specification { Name = name.Serialize() };
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -48,7 +48,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             var specification = await _specificationService.Add(model.Specification);
             specification.Localize("en", i => i.Name);
-            SetStatusMessage(string.Format("Specification <strong>{0}</strong> successfully added.", specification.Name));
+            SetStatusMessage($"Specification <strong>{specification.Name}</strong> successfully added.");
             return RedirectToAction("Index");
         }
 
@@ -57,8 +57,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             var specification = await _specificationService.GetById(id);
             if (specification == null)
             {
-                SetStatusMessage("sory specification not found.", StatusMessageType.Error);
-                return RedirectToAction("Index");
+                return HttpNotFound();
             }
             specification = specification.Localize("en", i => i.Name);
             return View(specification);
@@ -75,7 +74,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             var name = specification.Localize("en", i => i.Name).Name;
             await _specificationService.Delete(specification);
-            SetStatusMessage(string.Format("Specification <strong>{0}</strong> successfully deleted.", name));
+            SetStatusMessage($"Specification <strong>{name}</strong> successfully deleted.");
             return RedirectToAction("Index");
         }
 
@@ -115,7 +114,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
             var specificationName = specification.Localize("en", i => i.Name).Name;
 
-            SetStatusMessage(string.Format("Specification <strong>{0}</strong> successfully updated.", specificationName));
+            SetStatusMessage($"Specification <strong>{specificationName}</strong> successfully updated.");
 
             return RedirectToAction("Index");
         }
