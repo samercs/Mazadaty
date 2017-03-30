@@ -73,7 +73,7 @@ if (@AutoBidUserId is null) begin
 
 end
 
-declare @BidAmount decimal = @LastBidAmount + @BidIncrement;
+declare @BidAmount float = @LastBidAmount + @BidIncrement;
 
 insert into Bids (UserId, AuctionId, Amount, SecondsLeft, UserHostAddress, Type) values  (@AutoBidUserId, @AuctionId, @BidAmount, @SecondsLeft, '', 0);
 
@@ -144,7 +144,7 @@ if (@LastBidUserId = @UserId) begin
 
 end
 
-declare @BidAmount decimal = isnull(@LastBidAmount, 0) + @BidIncrement;
+declare @BidAmount float = isnull(@LastBidAmount, 0) + @BidIncrement;
 
 insert into Bids (UserId, AuctionId, Amount, SecondsLeft, UserHostAddress, Type) values  (@UserId, @AuctionId, @BidAmount, @SecondsLeft, '', 1);
 
