@@ -1,4 +1,12 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
+using Humanizer;
+using Microsoft.AspNet.Identity;
 using Mindscape.Raygun4Net;
 using Mzayad.Core.Exceptions;
 using Mzayad.Models;
@@ -18,14 +26,6 @@ using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Base.Core.Security;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Models;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
-using Humanizer;
 using WebGrease.Css.Extensions;
 
 namespace Mzayad.Web.Areas.Api.Controllers
@@ -43,6 +43,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
         private readonly TrophyService _trophyService;
         private readonly AuctionService _auctionService;
         private readonly BidService _bidService;
+        private readonly MessageService _messageService;
         private readonly WishListService _wishListService;
         private readonly CategoryService _categoryService;
         private readonly NotificationService _notificationService;
@@ -60,6 +61,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
             _trophyService = new TrophyService(DataContextFactory);
             _auctionService = new AuctionService(DataContextFactory, _queueService);
             _bidService = new BidService(DataContextFactory, _queueService);
+            _messageService = new MessageService(DataContextFactory);
             _wishListService = new WishListService(DataContextFactory);
             _categoryService = new CategoryService(DataContextFactory);
             _notificationService = new NotificationService(DataContextFactory);
@@ -533,6 +535,184 @@ namespace Mzayad.Web.Areas.Api.Controllers
             }
 
             return Ok();
+        }
+
+        [Route("profiles/{userName}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> UserProfile(string userName)
+        {
+            var user = await _userService.GetUserByName(userName);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            var nextLevel = LevelService.GetLevel(user.Level + 1);
+            var frinds = await _friendService.GetFriends(user.Id);
+            var result =
+                new
+                {
+                    user.FirstName,
+                    user.LastName,
+                    user.Email,
+                    ProfileStatus = user.ProfileStatus.Humanize(),
+                    user.AvatarUrl,
+                    user.Xp,
+                    user.Level,
+                    user.UserName,
+                    user.Gender,
+                    user.Birthdate,
+                    nextLevel,
+                    Trophies = await _trophyService.GetTrophies(user.Id, Language),
+                    AreFriends = await _friendService.AreFriends(user.Id, AuthService.CurrentUserId()),
+                    SentFriendRequestBefore = await _friendService.SentBefore(AuthService.CurrentUserId(), user.Id),
+                    Friends = frinds.Select(i => new
+                    {
+                        i.FirstName,
+                        i.LastName,
+                        i.Email,
+                        i.UserName,
+                        i.AvatarUrl,
+                        ProfileStatus = i.ProfileStatus.Humanize(),
+                        i.Gender,
+                        i.ProfileUrl,
+                        i.Birthdate
+                    }),
+                    Me = user.UserName == (await AuthService.CurrentUser()).UserName
+                };
+            return Ok(result);
+        }
+
+        [Route("current/friends")]
+        [HttpGet, Authorize]
+        public async Task<IHttpActionResult> GetFriends()
+        {
+            var friends = await _friendService.GetFriends(AuthService.CurrentUserId());
+
+            var model = await GetFriendsModel(friends);
+            var result = model.Select(i => new
+            {
+                i.User.FirstName,
+                i.User.LastName,
+                i.User.Email,
+                ProfileStatus = i.User.ProfileStatus.Humanize(),
+                i.User.AvatarUrl,
+                i.User.Xp,
+                i.User.Level,
+                i.User.UserName,
+                i.User.Gender,
+                i.User.Birthdate,
+                i.NextLevel,
+                i.Trophies,
+                i.AreFriends,
+                i.SentFriendRequestBefore,
+                Friends = i.Friends.Select(j => new
+                {
+                    j.FirstName,
+                    j.LastName,
+                    j.Email,
+                    j.UserName,
+                    j.AvatarUrl,
+                    ProfileStatus = j.ProfileStatus.Humanize(),
+                    j.Gender,
+                    j.ProfileUrl,
+                    j.Birthdate
+                })
+            });
+            return Ok(result);
+        }
+
+        [Route("profiles/{userName}/trophies")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetUserTrophies(string userName)
+        {
+            var user = await _userService.GetUserByName(userName);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            var model = await GetTrophies(user.Id);
+            return Ok(model);
+        }
+
+        [Route("profiles/{userName}/friends")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetUserFriends(string userName)
+        {
+            var user = await _userService.GetUserByName(userName);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            var friends = await _friendService.GetFriends(user.Id);
+
+            var viewModel = await GetFriendsModel(friends);
+            var result = viewModel.Select(i => new
+            {
+                i.User.FirstName,
+                i.User.LastName,
+                i.User.Xp,
+                i.User.AvatarUrl,
+                i.User.Level,
+                i.User.UserName,
+                i.User.Email,
+                i.User.Birthdate,
+                i.User.Gender,
+                i.Trophies,
+                i.NextLevel
+            });
+
+            return Ok(result);
+        }
+
+        [Route("current/inbox")]
+        [HttpGet, Authorize]
+        public async Task<IHttpActionResult> GetUserInbox()
+        {
+            var allMessages = await _messageService.GetByReceiver(AuthService.CurrentUserId());
+            var messageGroup = allMessages.GroupBy(i => i.User, i => i, (key, g) => new
+            {
+                From = key,
+                Message = g.ToList().FirstOrDefault()
+            });
+
+            var result = messageGroup.Select(i => new
+            {
+                From = new
+                {
+                    i.From.UserName,
+                    i.From.FirstName,
+                    i.From.LastName,
+                    i.From.AvatarUrl
+                },
+                Message = new
+                {
+                    i.Message.Body,
+                    i.Message.Summary,
+                    i.Message.IsNew,
+                    i.Message.MessageId,
+                    i.Message.ReceiverId,
+                    i.Message.UserId,
+                    i.Message.CreatedUtc
+                }
+            });
+            return Ok(result);
+        }
+        private async Task<List<UserProfileViewModel>> GetFriendsModel(IReadOnlyCollection<ApplicationUser> friends)
+        {
+            var viewModel = new List<UserProfileViewModel>();
+            foreach (var friend in friends)
+            {
+                friend.AvatarUrl = friend.AvatarUrl;
+                viewModel.Add(new UserProfileViewModel(friend)
+                {
+                    Trophies = await _trophyService.GetTrophies(friend.Id, Language),
+                    AreFriends = await _friendService.AreFriends(friend.Id, AuthService.CurrentUserId()),
+                    SentFriendRequestBefore = await _friendService.SentBefore(AuthService.CurrentUserId(), friend.Id),
+                    Friends = await _friendService.GetFriends(friend.Id),
+                    Me = friend.UserName == (await AuthService.CurrentUser()).UserName
+                });
+            }
+            return viewModel;
         }
 
         [Route("current/wishlist")]

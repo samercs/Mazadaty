@@ -16,6 +16,12 @@ namespace Mzayad.Web
             AreaRegistration.RegisterAllAreas();
 
             routes.MapRoute(
+                "UserProfile",
+                "{language}/profiles/{userName}",
+                new { controller = "User", action = "UserProfile" }
+            );
+
+            routes.MapRoute(
                 "Localization",
                 "{language}/{controller}/{action}/{id}",
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional },
@@ -27,6 +33,8 @@ namespace Mzayad.Web
                 "{controller}/{action}/{id}",
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            
         }
     }
 }
