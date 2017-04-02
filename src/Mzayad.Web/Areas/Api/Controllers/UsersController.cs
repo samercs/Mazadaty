@@ -43,6 +43,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
         private readonly TrophyService _trophyService;
         private readonly AuctionService _auctionService;
         private readonly BidService _bidService;
+        private readonly WishListService _wishListService;
 
         public UsersController(IAppServices appServices) : base(appServices)
         {
@@ -57,6 +58,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
             _trophyService = new TrophyService(DataContextFactory);
             _auctionService = new AuctionService(DataContextFactory, _queueService);
             _bidService = new BidService(DataContextFactory, _queueService);
+            _wishListService = new WishListService(DataContextFactory);
         }
 
         [HttpGet, Route("{username}")]
@@ -527,6 +529,51 @@ namespace Mzayad.Web.Areas.Api.Controllers
 
             return Ok();
         }
+
+        [Route("current/wishlist")]
+        [HttpGet, Authorize]
+        public async Task<IHttpActionResult> Wishlist()
+        {
+            var user = await AuthService.CurrentUser();
+            var userWishlist = await _wishListService.GetByUser(user.Id);
+            var result = userWishlist.Select(i => new
+            {
+                i.NameEntered,
+                i.NameNormalized,
+                i.WishListId,
+                i.CreatedUtc
+            });
+            return Ok(result);
+        }
+
+        [Route("current/wishlist")]
+        [HttpPost, Authorize]
+        public async Task<IHttpActionResult> AddWishlist(WishList wishList)
+        {
+            var user = await AuthService.CurrentUser();
+            wishList.UserId = user.Id;
+            if (ModelState.IsValid)
+            {
+                return ModelStateError(ModelState);
+            }
+            await _wishListService.Add(wishList);
+            return Ok(new {message  = "Wishlist has been added successfully."});
+        }
+
+        [Route("current/wishlist/{wishlistId:int}")]
+        [HttpDelete, Authorize]
+        public async Task<IHttpActionResult> DeleteWishlist(int wishlistId)
+        {
+            var wishlist = await _wishListService.GetById(wishlistId);
+            if (wishlist == null)
+            {
+                return NotFound();
+            }
+            await _wishListService.Delete(wishlist);
+            return Ok(new { message = "Wishlist has been removed successfully." });
+        }
+
+
 
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {
