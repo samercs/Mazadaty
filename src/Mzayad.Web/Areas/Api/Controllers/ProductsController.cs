@@ -42,5 +42,13 @@ namespace Mzayad.Web.Areas.Api.Controllers
             var buyNowAuctions = await _auctionService.GetBuyNowAuctions(Language);
             return Ok(buyNowAuctions.Select(ProductModel.Create));
         }
+
+        [Route("name")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetProductsName()
+        {
+            var names = await _productService.GetProductNames();
+            return Ok(names);
+        }
     }
 }

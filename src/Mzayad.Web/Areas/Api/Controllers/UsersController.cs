@@ -43,6 +43,9 @@ namespace Mzayad.Web.Areas.Api.Controllers
         private readonly TrophyService _trophyService;
         private readonly AuctionService _auctionService;
         private readonly BidService _bidService;
+        private readonly WishListService _wishListService;
+        private readonly CategoryService _categoryService;
+        private readonly NotificationService _notificationService;
 
         public UsersController(IAppServices appServices) : base(appServices)
         {
@@ -57,6 +60,10 @@ namespace Mzayad.Web.Areas.Api.Controllers
             _trophyService = new TrophyService(DataContextFactory);
             _auctionService = new AuctionService(DataContextFactory, _queueService);
             _bidService = new BidService(DataContextFactory, _queueService);
+            _wishListService = new WishListService(DataContextFactory);
+            _categoryService = new CategoryService(DataContextFactory);
+            _notificationService = new NotificationService(DataContextFactory);
+
         }
 
         [HttpGet, Route("{username}")]
@@ -527,6 +534,90 @@ namespace Mzayad.Web.Areas.Api.Controllers
 
             return Ok();
         }
+
+        [Route("current/wishlist")]
+        [HttpGet, Authorize]
+        public async Task<IHttpActionResult> Wishlist()
+        {
+            var user = await AuthService.CurrentUser();
+            var userWishlist = await _wishListService.GetByUser(user.Id);
+            var result = userWishlist.Select(i => new
+            {
+                i.NameEntered,
+                i.NameNormalized,
+                i.WishListId,
+                i.CreatedUtc
+            });
+            return Ok(result);
+        }
+
+        [Route("current/wishlist")]
+        [HttpPost, Authorize]
+        public async Task<IHttpActionResult> AddWishlist(WishList wishList)
+        {
+            var user = await AuthService.CurrentUser();
+            wishList.UserId = user.Id;
+            if (ModelState.IsValid)
+            {
+                return ModelStateError(ModelState);
+            }
+            await _wishListService.Add(wishList);
+            return Ok(new {message  = "Wishlist has been added successfully."});
+        }
+
+        [Route("current/wishlist/{wishlistId:int}")]
+        [HttpDelete, Authorize]
+        public async Task<IHttpActionResult> DeleteWishlist(int wishlistId)
+        {
+            var wishlist = await _wishListService.GetById(wishlistId);
+            if (wishlist == null)
+            {
+                return NotFound();
+            }
+            await _wishListService.Delete(wishlist);
+            return Ok(new { message = "Wishlist has been removed successfully." });
+        }
+
+        [Route("current/notifications")]
+        [HttpGet, Authorize]
+        public async Task<IHttpActionResult> GetNotifications()
+        {
+            var user = await AuthService.CurrentUser();
+            var model = await new NotificationModelView
+            {
+                AutoBidNotification = user.AutoBidNotification
+            }.Hydrate(AuthService, _categoryService, _notificationService, Language);
+
+            return Ok(model);
+        }
+
+        [Route("current/notifications")]
+        [HttpPost, Authorize]
+        public async Task<IHttpActionResult> UpdateNotifications(NotificationModelView model)
+        {
+            var user = await AuthService.CurrentUser();
+            user.AutoBidNotification = model.AutoBidNotification;
+
+            // clear all existing notifications for user
+            var notifications = (await _notificationService.GetByUser(user.Id)).ToList();
+            await _notificationService.DeleteList(notifications);
+            await _userService.UpdateUser(user);
+
+            // add back selected notifications
+            if (model.SelectedCategories != null)
+            {
+                var newNotifications = model.SelectedCategories.Select(i => new CategoryNotification
+                {
+                    UserId = user.Id,
+                    CategoryId = i
+                });
+
+                await _notificationService.AddList(newNotifications);
+            }
+            return Ok(new {message = "notifications has been updated successfully"});
+        }
+
+
 
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {
