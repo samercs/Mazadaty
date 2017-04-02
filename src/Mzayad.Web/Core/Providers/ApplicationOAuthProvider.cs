@@ -6,7 +6,6 @@ using Mzayad.Services.Identity;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Mzayad.Models;
 
 namespace Mzayad.Web.Core.Providers
 {
@@ -18,7 +17,7 @@ namespace Mzayad.Web.Core.Providers
         {
             if (publicClientId == null)
             {
-                throw new ArgumentNullException("publicClientId");
+                throw new ArgumentNullException(nameof(publicClientId));
             }
 
             _publicClientId = publicClientId;
@@ -66,7 +65,6 @@ namespace Mzayad.Web.Core.Providers
 
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
-            // Resource owner password credentials does not provide a client ID.
             if (context.ClientId == null)
             {
                 context.Validated();
@@ -77,14 +75,15 @@ namespace Mzayad.Web.Core.Providers
 
         public override Task ValidateClientRedirectUri(OAuthValidateClientRedirectUriContext context)
         {
-            if (context.ClientId == _publicClientId)
+            if (context.ClientId != _publicClientId)
             {
-                Uri expectedRootUri = new Uri(context.Request.Uri, "/");
+                return Task.FromResult<object>(null);
+            }
 
-                if (expectedRootUri.AbsoluteUri == context.RedirectUri)
-                {
-                    context.Validated();
-                }
+            var expectedRootUri = new Uri(context.Request.Uri, "/");
+            if (expectedRootUri.AbsoluteUri == context.RedirectUri)
+            {
+                context.Validated();
             }
 
             return Task.FromResult<object>(null);
