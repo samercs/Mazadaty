@@ -332,10 +332,10 @@ else
                             afterChange: function () {
                                 var index = jQuery('#slider').data('nivo:vars').currentImage.data('id');
                                 $(".pagging").removeClass("active");
-                                if ((index+1) == @Model.Banners.Count) {
+                                if ((index) == @Model.Banners.Count) {
                                     $(".pagging:nth-child(1)").addClass("active");
                                 } else {
-                                    $(".pagging:nth-child(" + (index + 1) + ")").addClass("active");
+                                    $(".pagging:nth-child(" + (index+1) + ")").addClass("active");
                                 }
                             }
                         });
