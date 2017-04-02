@@ -44,6 +44,8 @@ namespace Mzayad.Web.Areas.Api.Controllers
         private readonly AuctionService _auctionService;
         private readonly BidService _bidService;
         private readonly WishListService _wishListService;
+        private readonly CategoryService _categoryService;
+        private readonly NotificationService _notificationService;
 
         public UsersController(IAppServices appServices) : base(appServices)
         {
@@ -59,6 +61,9 @@ namespace Mzayad.Web.Areas.Api.Controllers
             _auctionService = new AuctionService(DataContextFactory, _queueService);
             _bidService = new BidService(DataContextFactory, _queueService);
             _wishListService = new WishListService(DataContextFactory);
+            _categoryService = new CategoryService(DataContextFactory);
+            _notificationService = new NotificationService(DataContextFactory);
+
         }
 
         [HttpGet, Route("{username}")]
@@ -571,6 +576,45 @@ namespace Mzayad.Web.Areas.Api.Controllers
             }
             await _wishListService.Delete(wishlist);
             return Ok(new { message = "Wishlist has been removed successfully." });
+        }
+
+        [Route("current/notifications")]
+        [HttpGet, Authorize]
+        public async Task<IHttpActionResult> GetNotifications()
+        {
+            var user = await AuthService.CurrentUser();
+            var model = await new NotificationModelView
+            {
+                AutoBidNotification = user.AutoBidNotification
+            }.Hydrate(AuthService, _categoryService, _notificationService, Language);
+
+            return Ok(model);
+        }
+
+        [Route("current/notifications")]
+        [HttpPost, Authorize]
+        public async Task<IHttpActionResult> UpdateNotifications(NotificationModelView model)
+        {
+            var user = await AuthService.CurrentUser();
+            user.AutoBidNotification = model.AutoBidNotification;
+
+            // clear all existing notifications for user
+            var notifications = (await _notificationService.GetByUser(user.Id)).ToList();
+            await _notificationService.DeleteList(notifications);
+            await _userService.UpdateUser(user);
+
+            // add back selected notifications
+            if (model.SelectedCategories != null)
+            {
+                var newNotifications = model.SelectedCategories.Select(i => new CategoryNotification
+                {
+                    UserId = user.Id,
+                    CategoryId = i
+                });
+
+                await _notificationService.AddList(newNotifications);
+            }
+            return Ok(new {message = "notifications has been updated successfully"});
         }
 
 
