@@ -16,5 +16,9 @@ namespace Mzayad.Web.Models.Shared
 
         public IEnumerable<SelectListItem> CountriesList { get; set; }
 
+        public PhoneNumberViewModel()
+        {
+            CountriesList = AddressViewModel.AllCountries;
+        }
     }
 }
