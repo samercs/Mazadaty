@@ -1,7 +1,7 @@
 ﻿using Mindscape.Raygun4Net;
-using Mzayad.Data;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
+using Mzayad.Models.Enums;
 using Mzayad.Services;
 using Mzayad.Services.Identity;
 using Mzayad.Web.Core.Configuration;
@@ -18,7 +18,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Mzayad.Models.Enums;
 
 namespace Mzayad.Web.Controllers
 {
@@ -106,21 +105,14 @@ namespace Mzayad.Web.Controllers
 
         public async Task<ActionResult> Register()
         {
-            var freeAvatar = await _avatarService.GetFreeAvatar();
-
-            var addressViewModel = new AddressViewModel(new Address
-            {
-                CountryCode = "KW"
-            }).Hydrate();
-
             var viewModel = new RegisterViewModel
             {
                 PhoneCountryCode = "+965",
-                Avatars = freeAvatar.ToList(),
-                Address = addressViewModel,
+                Address = new AddressViewModel(),
+                Avatars = await _avatarService.GetFreeAvatars(),
                 PhoneNumberViewModel = new PhoneNumberViewModel
                 {
-                    CountriesList = addressViewModel.CountriesList,
+                    CountriesList = AddressViewModel.AllCountries,
                     PhoneCountryCode = "+965",
                     CountryCode = "KW"
                 }
@@ -181,11 +173,11 @@ namespace Mzayad.Web.Controllers
 
         private async Task<RegisterViewModel> SetRegisterViewModel(RegisterViewModel model)
         {
-            model.Avatars = await _avatarService.GetAll();
+            model.Avatars = await _avatarService.GetFreeAvatars();
             model.Address = new AddressViewModel(new Address
             {
                 CountryCode = "KW"
-            }).Hydrate();
+            });
 
             return model;
         }

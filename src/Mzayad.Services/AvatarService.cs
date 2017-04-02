@@ -179,9 +179,14 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<IEnumerable<Avatar>> GetFreeAvatar()
+        public async Task<IReadOnlyCollection<Avatar>> GetFreeAvatars()
         {
-            return await GetAvatarByType(false);
+            using (var dc = DataContext())
+            {
+                return await dc.Avatars
+                    .Where(i => !i.IsPremium)
+                    .ToListAsync();
+            }
         }
 
         private async Task<IEnumerable<Avatar>> GetAvatarByType(bool isPremium)

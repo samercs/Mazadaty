@@ -101,7 +101,7 @@ namespace Mzayad.Web.Controllers
             var model = new ShippingAddressViewModel
             {
                 Order = order,
-                AddressViewModel = new AddressViewModel(order.Address).Hydrate(),
+                AddressViewModel = new AddressViewModel(order.Address),
                 ShippingAddress = order.Address,
             }.Hydrate();
 

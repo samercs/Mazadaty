@@ -2,8 +2,8 @@
 using Mzayad.Models;
 using Mzayad.Models.Enums;
 using Mzayad.Services;
-using Mzayad.Services.Activity;
 using Mzayad.Services.Identity;
+using Mzayad.Services.Queues;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Extensions;
@@ -18,10 +18,8 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Mzayad.Services.Queues;
 
 namespace Mzayad.Web.Controllers
 {
@@ -146,8 +144,8 @@ namespace Mzayad.Web.Controllers
                 address = await _addressService.GetAddress(user.AddressId.Value);
             }
 
-            var addressViewModel = new AddressViewModel(address).Hydrate();
-            var model = new UserAccountViewModel()
+            var addressViewModel = new AddressViewModel(address);
+            var model = new UserAccountViewModel
             {
                 Email = user.Email,
                 FirstName = user.FirstName,
@@ -159,7 +157,7 @@ namespace Mzayad.Web.Controllers
                 Birthdate = user.Birthdate,
                 PhoneNumberViewModel = new PhoneNumberViewModel
                 {
-                    CountriesList = addressViewModel.CountriesList,
+                    CountriesList = AddressViewModel.AllCountries,
                     PhoneCountryCode = user.PhoneCountryCode,
                     PhoneLocalNumber = user.PhoneNumber,
                     CountryCode = addressViewModel.CountryCode
@@ -174,8 +172,6 @@ namespace Mzayad.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                model.Address.Hydrate();
-
                 return View(model);
             }
 
@@ -207,7 +203,6 @@ namespace Mzayad.Web.Controllers
                 address.FlatNumber = model.Address.FlatNumber;
                 await _addressService.Update(address);
             }
-
 
             CookieService.Add(CookieKeys.DisplayName, user.FirstName, DateTime.MaxValue);
             CookieService.Add(CookieKeys.LastSignInEmail, user.Email, DateTime.MaxValue);

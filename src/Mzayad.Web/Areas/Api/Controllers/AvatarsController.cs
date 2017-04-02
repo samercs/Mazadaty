@@ -18,7 +18,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
         [Route("")]
         public async Task<IHttpActionResult> Get()
         {
-            var freeAvatars = await _avatarService.GetFreeAvatar();
+            var freeAvatars = await _avatarService.GetFreeAvatars();
             return Ok(freeAvatars);
         }
     }
