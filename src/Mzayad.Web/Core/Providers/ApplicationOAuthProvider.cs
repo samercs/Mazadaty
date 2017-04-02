@@ -76,7 +76,6 @@ namespace Mzayad.Web.Core.Providers
 
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
-            // Resource owner password credentials does not provide a client ID.
             if (context.ClientId == null)
             {
                 context.Validated();
@@ -87,7 +86,7 @@ namespace Mzayad.Web.Core.Providers
 
         public override Task ValidateClientRedirectUri(OAuthValidateClientRedirectUriContext context)
         {
-            if (context.ClientId == _publicClientId)
+            if (context.ClientId != _publicClientId)
             {
                 var expectedRootUri = new Uri(context.Request.Uri, "/");
                 if (expectedRootUri.AbsoluteUri == context.RedirectUri)
