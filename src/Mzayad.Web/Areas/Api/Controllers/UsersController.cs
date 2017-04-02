@@ -1,4 +1,12 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
+using Humanizer;
+using Microsoft.AspNet.Identity;
 using Mindscape.Raygun4Net;
 using Mzayad.Core.Exceptions;
 using Mzayad.Models;
@@ -18,14 +26,6 @@ using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Base.Core.Security;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Models;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
-using Humanizer;
 using WebGrease.Css.Extensions;
 
 namespace Mzayad.Web.Areas.Api.Controllers
@@ -43,6 +43,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
         private readonly TrophyService _trophyService;
         private readonly AuctionService _auctionService;
         private readonly BidService _bidService;
+        private readonly MessageService _messageService;
 
         public UsersController(IAppServices appServices) : base(appServices)
         {
@@ -57,6 +58,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
             _trophyService = new TrophyService(DataContextFactory);
             _auctionService = new AuctionService(DataContextFactory, _queueService);
             _bidService = new BidService(DataContextFactory, _queueService);
+            _messageService = new MessageService(DataContextFactory);
         }
 
         [HttpGet, Route("{username}")]
@@ -655,6 +657,39 @@ namespace Mzayad.Web.Areas.Api.Controllers
             return Ok(result);
         }
 
+        [Route("current/inbox")]
+        [HttpGet, Authorize]
+        public async Task<IHttpActionResult> GetUserInbox()
+        {
+            var allMessages = await _messageService.GetByReceiver(AuthService.CurrentUserId());
+            var messageGroup = allMessages.GroupBy(i => i.User, i => i, (key, g) => new
+            {
+                From = key,
+                Message = g.ToList().FirstOrDefault()
+            });
+
+            var result = messageGroup.Select(i => new
+            {
+                From = new
+                {
+                    i.From.UserName,
+                    i.From.FirstName,
+                    i.From.LastName,
+                    i.From.AvatarUrl
+                },
+                Message = new
+                {
+                    i.Message.Body,
+                    i.Message.Summary,
+                    i.Message.IsNew,
+                    i.Message.MessageId,
+                    i.Message.ReceiverId,
+                    i.Message.UserId,
+                    i.Message.CreatedUtc
+                }
+            });
+            return Ok(result);
+        }
         private async Task<List<UserProfileViewModel>> GetFriendsModel(IReadOnlyCollection<ApplicationUser> friends)
         {
             var viewModel = new List<UserProfileViewModel>();

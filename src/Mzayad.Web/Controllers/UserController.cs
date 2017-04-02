@@ -544,9 +544,4 @@ namespace Mzayad.Web.Controllers
         }
         #endregion
     }
-
-    public class InboxViewModel
-    {
-        public IDictionary<ApplicationUser, Message> Messages { get; set; }
-    }
 }

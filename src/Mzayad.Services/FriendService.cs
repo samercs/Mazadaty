@@ -44,7 +44,7 @@ namespace Mzayad.Services
                     return null;
                 }
 
-                request.Status = Models.Enums.FriendRequestStatus.Accepted;
+                request.Status = FriendRequestStatus.Accepted;
                 dc.SetModified(request);
                 //add friend record(requester as user and requested as friend)
                 dc.UsersFriends.Add(new UserFriend()

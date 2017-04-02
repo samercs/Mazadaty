@@ -392,6 +392,7 @@
     <Compile Include="Areas\Api\Controllers\ApplicationApiController.cs" />
     <Compile Include="Areas\Api\Controllers\AuctionsController.cs" />
     <Compile Include="Areas\Api\Controllers\AutoBidsController.cs" />
+    <Compile Include="Areas\Api\Controllers\FriendsController.cs" />
     <Compile Include="Areas\Api\Controllers\MessagesController.cs" />
     <Compile Include="Areas\Api\Controllers\AvatarsController.cs" />
     <Compile Include="Areas\Api\Controllers\OrdersController.cs" />
@@ -405,6 +406,8 @@
     <Compile Include="Areas\Api\ErrorHandling\ApiErrorType.cs" />
     <Compile Include="Areas\Api\Filters\LanguageFilter.cs" />
     <Compile Include="Areas\Api\Models\Auctions\AuctionModel.cs" />
+    <Compile Include="Areas\Api\Models\Friends\FriendRequestModel.cs" />
+    <Compile Include="Areas\Api\Models\Friends\UpdateFriendRequestModel.cs" />
     <Compile Include="Areas\Api\Models\Orders\KnetTransactionModel.cs" />
     <Compile Include="Areas\Api\Models\Orders\OrderCreateResult.cs" />
     <Compile Include="Areas\Api\Models\Orders\OrderDetailModel.cs" />
@@ -516,6 +519,7 @@
     <Compile Include="Models\User\ChangePasswordViewModel.cs" />
     <Compile Include="Models\User\DashboardViewModel.cs" />
     <Compile Include="Models\User\EditProfileModel.cs" />
+    <Compile Include="Models\User\InboxViewModel.cs" />
     <Compile Include="Models\User\MyAvatarsViewModel.cs" />
     <Compile Include="Models\User\NotificationModelView.cs" />
     <Compile Include="Models\User\TrophieViewModel.cs" />
