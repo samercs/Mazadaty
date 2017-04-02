@@ -431,7 +431,7 @@ namespace Mzayad.Web.Controllers
             return RedirectToAction("Dashboard");
 
         }
-        [Route("~/{language}/profiles/{userName}")]
+        //[Route("~/{language}/profiles/{userName:regex(^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$)}")]
         public async Task<ActionResult> UserProfile(string userName)
         {
             var user = await _userService.GetUserByName(userName);
