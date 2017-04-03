@@ -554,7 +554,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
                     user.FirstName,
                     user.LastName,
                     user.Email,
-                    ProfileStatus = user.ProfileStatus.Humanize(),
+                    user.ProfileStatus,
                     user.AvatarUrl,
                     user.Xp,
                     user.Level,
@@ -562,7 +562,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
                     user.Gender,
                     user.Birthdate,
                     nextLevel,
-                    Trophies = await _trophyService.GetTrophies(user.Id, Language),
+                    Trophies = (await _trophyService.GetTrophies(user.Id, Language)).Count,
                     AreFriends = await _friendService.AreFriends(user.Id, AuthService.CurrentUserId()),
                     SentFriendRequestBefore = await _friendService.SentBefore(AuthService.CurrentUserId(), user.Id),
                     Friends = frinds.Select(i => new
@@ -572,7 +572,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
                         i.Email,
                         i.UserName,
                         i.AvatarUrl,
-                        ProfileStatus = i.ProfileStatus.Humanize(),
+                        i.ProfileStatus,
                         i.Gender,
                         i.ProfileUrl,
                         i.Birthdate
@@ -594,7 +594,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 i.User.FirstName,
                 i.User.LastName,
                 i.User.Email,
-                ProfileStatus = i.User.ProfileStatus.Humanize(),
+                i.User.ProfileStatus,
                 i.User.AvatarUrl,
                 i.User.Xp,
                 i.User.Level,
@@ -602,21 +602,11 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 i.User.Gender,
                 i.User.Birthdate,
                 i.NextLevel,
-                i.Trophies,
+                Trophies = i.Trophies.Count,
                 i.AreFriends,
                 i.SentFriendRequestBefore,
-                Friends = i.Friends.Select(j => new
-                {
-                    j.FirstName,
-                    j.LastName,
-                    j.Email,
-                    j.UserName,
-                    j.AvatarUrl,
-                    ProfileStatus = j.ProfileStatus.Humanize(),
-                    j.Gender,
-                    j.ProfileUrl,
-                    j.Birthdate
-                })
+                i.Me,
+                Friends = i.Friends.Count
             });
             return Ok(result);
         }
