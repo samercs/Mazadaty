@@ -41,7 +41,8 @@ namespace Mzayad.Web.Areas.Api.Controllers
                     i.FriendId,
                     i.UserId,
                     i.User.FirstName,
-                    i.User.LastName
+                    i.User.LastName,
+                    i.User.AvatarUrl
                 })
             };
             return Ok(result);
