@@ -1429,6 +1429,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No friend match search criteria..
+        /// </summary>
+        public static string NoFriendsFound {
+            get {
+                return ResourceManager.GetString("NoFriendsFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are no live auctions available at this time..
         /// </summary>
         public static string NoLiveAuctionsMessage {
@@ -2010,6 +2019,15 @@ namespace Mzayad.Web.Resources {
         public static string SaveAndContinue {
             get {
                 return ResourceManager.GetString("SaveAndContinue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Friend.
+        /// </summary>
+        public static string SearchFriend {
+            get {
+                return ResourceManager.GetString("SearchFriend", resourceCulture);
             }
         }
         

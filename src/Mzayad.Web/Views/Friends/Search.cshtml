@@ -1,0 +1,12 @@
+﻿@using OrangeJetpack.Base.Web
+@model IEnumerable<Mzayad.Web.Models.User.UserProfileViewModel>
+
+@{
+    ViewBag.Title = Global.SearchFriend;
+}
+
+@if (!Model.Any())
+{
+    @Html.StatusMessage(Global.NoFriendsFound, StatusMessageType.Information)
+    return;
+}

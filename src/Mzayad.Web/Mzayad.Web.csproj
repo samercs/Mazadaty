@@ -859,6 +859,7 @@
     <Content Include="Views\User\Friends.cshtml" />
     <Content Include="Views\User\Inbox.cshtml" />
     <Content Include="Views\User\BuyPremiumAvatar.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\UserProfileViewModel.cshtml" />
     <TypeScriptCompile Include="Scripts\auctions.ts" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />
@@ -876,6 +877,7 @@
     <Content Include="Views\AutoBid\Edit.cshtml" />
     <Content Include="Views\Friends\Requests.cshtml" />
     <Content Include="Views\Friends\SendMessage.cshtml" />
+    <Content Include="Views\Friends\Search.cshtml" />
     <None Include="Views\Home\SignalR.cshtml" />
     <Content Include="404.html" />
     <Content Include="500.html" />

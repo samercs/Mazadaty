@@ -1,4 +1,5 @@
-﻿using Mzayad.Models;
+﻿using System.Linq;
+using Mzayad.Models;
 using Mzayad.Models.Enums;
 using Mzayad.Services;
 using Mzayad.Services.Identity;
@@ -81,7 +82,17 @@ namespace Mzayad.Web.Controllers
 
             var message = await _messageService.Insert(model.Message);
             TempData["MessageSent"] = true;
-            return RedirectToAction("SendMessage", "Friends", new {userName});
+            return RedirectToAction("SendMessage", "Friends", new { userName });
+        }
+
+        [Route("frinds/search")]
+        [HttpPost, ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<ActionResult> Search(string username)
+        {
+            var user = await AuthService.CurrentUser();
+            var frinds = await _friendService.SearchByUserName(username, user);
+            return View(frinds.Select(i => new UserProfileViewModel(i)));
         }
 
         #region Ajax Calls
