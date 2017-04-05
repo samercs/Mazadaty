@@ -21,12 +21,6 @@ namespace Mzayad.Models
         public  virtual Order Order { get; set; }
 
         [NotMapped]
-        public decimal TotalPrice
-        {
-            get
-            {
-                return Quantity * ItemPrice;
-            }
-        }
+        public decimal TotalPrice => Quantity * ItemPrice;
     }
 }

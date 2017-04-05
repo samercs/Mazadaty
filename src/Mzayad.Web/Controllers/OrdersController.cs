@@ -46,26 +46,30 @@ namespace Mzayad.Web.Controllers
 
         [Route("buy-now/{auctionId:int}")]
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> BuyNow(int auctionId, FormCollection formCollection)
+        public async Task<ActionResult> BuyNow(int auctionId, string action, FormCollection formCollection)
         {
             var auction = await _auctionService.GetAuction(auctionId, Language);
             if (auction == null)
             {
                 return HttpNotFound();
             }
-
             if (!auction.BuyNowAvailable())
             {
                 SetStatusMessage(Global.OutOfStockErrorMessage, StatusMessageType.Error);
                 return RedirectToAction("BuyNow", new { auction.AuctionId });
             }
-
-            var user = await AuthService.CurrentUser();
-            user.Address = await _addressService.GetAddress(user.AddressId);
-
-            var order = await _orderService.CreateOrderForBuyNow(auction, user);
-
-            return RedirectToAction("Shipping", new { order.OrderId });
+            if (action.Equals("1"))// check out
+            {
+                var user = await AuthService.CurrentUser();
+                user.Address = await _addressService.GetAddress(user.AddressId);
+                var order = await _orderService.CreateOrderForBuyNow(auction, user);
+                return RedirectToAction("Shipping", new {order.OrderId});
+            }
+            else// add to cart
+            {
+                return RedirectToAction("AddToCart", "Shop", new { auctionId });
+            }
+            
         }
 
         [Route("auction/{orderId:int}")]
@@ -200,6 +204,9 @@ namespace Mzayad.Web.Controllers
                 KnetTransaction = knetTransaction,
                 RedirectUrl = redirectUrl 
             };
+
+            var shoppingCart = CartService.GetCart();
+            CartService.ClearCart(shoppingCart);
 
             return View(viewModel);
         }
