@@ -20,7 +20,7 @@
             color: #999;
             padding-left: 5px;
         }
-        
+
         .btn-image-selector {
             border: 1px solid transparent !important;
             padding: 0px !important;
@@ -37,25 +37,35 @@
             #product-images {
                 margin-top: 15px;
             }
+        #product-image {
+            border: solid 1px #f1f1f1;
+        }
+
+            @@media (max-width: 600px) {
+                .img-small {
+                    width: 35px !important;
+                    height: 35px !important;
+                }
+}
     </style>
 }
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 col-md-offset-0 col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1">
         <img id="product-image" class="img-responsive" data-zoom-image="@Model.MainImage().ImageLgUrl" alt="@Model.Name" />
         <ul id="product-images" class="list-inline">
             @foreach (var image in Model.ProductImages)
             {
                 <li>
                     <button class="btn btn-link btn-image-selector @(Model.MainImage().ImageLgUrl == image.ImageLgUrl ? "selected" : "")" data-lg-img="@image.ImageLgUrl">
-                        <img class="img-responsive" src="@image.ImageSmUrl"  alt="" width="72" height="72" />
+                        <img class="img-responsive img-small" src="@image.ImageSmUrl"  alt="" width="72" height="72" />
                     </button>
                 </li>
             }
             
         </ul>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-8 col-sm-12 col-xs-12">
         <dl class="dl-horizontal">
             <dt>@Global.Name</dt>
             <dd>@Model.Name</dd>
@@ -69,7 +79,7 @@
             
         </dl>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-12 col-sm-12 col-xs-12">
         <section>
             @Html.Label(Global.Description)
             <div>
