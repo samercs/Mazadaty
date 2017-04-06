@@ -1,4 +1,5 @@
-﻿@using Mzayad.Web.Core.Enums
+﻿@using Mzayad.Models.Enums
+@using Mzayad.Web.Core.Enums
 @using Mzayad.Web.Models.Auctions
 @using OrangeJetpack.Base.Core.Formatting
 @model AuctionViewModel
@@ -68,7 +69,7 @@ foreach (var country in countriesArray)
                 </div>
             </div>
         }
-        @if (Model.BuyNowEnabled)
+        @if (Model.BuyNowEnabled && Model.AuctionStatus == AuctionStatus.Closed)
         {
             <div class="auction-tile-buynow auction-tile-row">
                 <a class="btn btn-default btn-rounded text-uppercase" href="@Url.Action("BuyNow", "Orders", new {language = LanguageCode, auctionId = Model.AuctionId})">
