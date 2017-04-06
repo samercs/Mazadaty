@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Mzayad.Models;
 using Mzayad.Models.Enums;
 using Mzayad.Services;
@@ -92,7 +93,12 @@ namespace Mzayad.Web.Controllers
         {
             var user = await AuthService.CurrentUser();
             var frinds = await _friendService.SearchByUserName(username, user);
-            return View(frinds.Select(i => new UserProfileViewModel(i)));
+            var model = new SearchFriendViewModel
+            {
+                SearchResult = frinds.Select(i => new UserProfileViewModel(i)),
+                Query = username
+            };
+            return View(model);
         }
 
         #region Ajax Calls
@@ -157,5 +163,12 @@ namespace Mzayad.Web.Controllers
             return MvcHtmlString.Create(message.Body);
         }
         #endregion
+    }
+
+    public class SearchFriendViewModel
+    {
+        public IEnumerable<UserProfileViewModel> SearchResult { get; set; }
+        public string Query { get; set; }
+
     }
 }

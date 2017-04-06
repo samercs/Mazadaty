@@ -57,43 +57,47 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="dashboard-cell">
-                            <div class="dashboard-number">@Model.User.Xp</div>
-                            <div class="dashboard-label text-uppercase">@Global.Experience</div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="dashboard-cell">
+                                        <div class="dashboard-number">@Model.User.Xp</div>
+                                        <div class="dashboard-label text-uppercase">@Global.Experience</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a href="@Url.Action("UserTrophies", "User")" class="dashboard-cell">
+                                        <div class="dashboard-number">@Model.Trophies.Count</div>
+                                        <div class="dashboard-label text-uppercase">@Global.Trophies</div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a href="@Url.Action("UserFriends", "User", new { userName = Model.User.UserName })" class="dashboard-cell">
+                                        <div class="dashboard-number">@Model.Friends.Count</div>
+                                        <div class="dashboard-label text-uppercase">@(Model.Friends.Count == 1 ? Global.Friend : Global.Friends)</div>
+                                    </a>
+                                </div>
+                            </div>
+                            @if (Model.AreFriends && !Model.Me)
+                            {
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align:right;padding-right:45px;">
+                                        <a class="btn btn-default btn-rounded text-uppercase" style="padding: 5px 20px;margin-bottom: 10px;"
+                                           href="@Url.Action("SendMessage", "Friends", new { area = "", userName = Model.User.UserName })">
+                                            <i class="fa fa-fw fa-envelope"></i>
+                                            @Global.Chat
+                                        </a>
+                                    </div>
+                                </div>
+                            }
                         </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <a href="@Url.Action("UserTrophies", "User")" class="dashboard-cell">
-                            <div class="dashboard-number">@Model.Trophies.Count</div>
-                            <div class="dashboard-label text-uppercase">@Global.Trophies</div>
-                        </a>
-                    </div>
-                    <div class="col-sm-4">
-                        <a href="@Url.Action("UserFriends", "User", new { userName = Model.User.UserName })" class="dashboard-cell">
-                            <div class="dashboard-number">@Model.Friends.Count</div>
-                            <div class="dashboard-label text-uppercase">@(Model.Friends.Count == 1 ? Global.Friend : Global.Friends)</div>
-                        </a>
-                    </div>
-                </div>
-                @if (Model.AreFriends && !Model.Me)
-                {
-                    <div class="row">
-                        <div class="col-md-12" style="text-align:right;padding-right:45px;">
-                            <a class="btn btn-default btn-rounded text-uppercase" style="padding: 5px 20px;margin-bottom: 10px;"
-                               href="@Url.Action("SendMessage", "Friends", new { area = "", userName = Model.User.UserName })">
-                                <i class="fa fa-fw fa-envelope"></i>
-                                @Global.Chat
-                            </a>
-                        </div>
-                    </div>
-                }
-            </div>
         }
     </div>
 </div>
+
+
+
+
 
 
 

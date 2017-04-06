@@ -183,7 +183,9 @@ namespace Mzayad.Services
             {
                 var userManager = new UserManager(DataContextFactory);
                 var userFrindIds = await dc.UsersFriends.Where(i => i.UserId.Equals(user.Id)).Select(i => i.FriendId).ToListAsync();
-                var users = await userManager.Users.Where(i => i.UserName.Contains(username) && !userFrindIds.Contains(i.Id)).ToListAsync();
+                var users = await userManager.Users.Where(i => i.UserName.Contains(username) && 
+                                                               !userFrindIds.Contains(i.Id) &&
+                                                               i.Id != user.Id).ToListAsync();
                 return users;
             }
 

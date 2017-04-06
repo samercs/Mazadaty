@@ -12,7 +12,7 @@
     }
 </div>
 
-<div >
+<div>
     <div class="row">
         <div class="col-md-4 pull-right">
             @using (Html.BeginForm("Search", "Friends"))
@@ -36,7 +36,7 @@
     <div class="panel-body">
         @foreach (var item in Model)
         {
-            @Html.DisplayForModel(item)
+            @Html.Partial("_layout_friends", item)
         }
     </div>
 </div>
