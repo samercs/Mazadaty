@@ -81,6 +81,11 @@
     </style>
 }
 
+@if (!User.Identity.IsAuthenticated)
+{
+    <p><img class="img-responsive" src="https://az723232.vo.msecnd.net/assets/hero-movie-635750647415139708.jpg" alt="" /></p>
+}
+
 <section class="slider-wrapper theme-default">
     <div id="slider" class="nivoSlider">
         @for (int i=0;i< Model.Banners.Count; i++)
@@ -104,11 +109,6 @@
         }
     </div>
 </section>
-
-@if (!User.Identity.IsAuthenticated)
-{
-    <p><img class="img-responsive" src="https://az723232.vo.msecnd.net/assets/hero-movie-635750647415139708.jpg" alt="" /></p>
-}
 
 @if (!Model.LiveAuctions.Any())
 {
