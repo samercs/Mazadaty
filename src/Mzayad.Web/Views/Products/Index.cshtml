@@ -61,6 +61,8 @@
             <dd>@Model.Name</dd>
             <dt>@Global.RetailPriceLabel</dt>
             <dd>@CurrencyFormatter.Format(Model.RetailPrice)</dd>
+            <dt>@Global.Description</dt>
+            <dd>@Html.Raw(Model.Description)</dd>
             @if (Model.SponsorId.HasValue)
             {
                 <dt>@Global.Sponsor</dt>
@@ -70,13 +72,7 @@
         </dl>
     </div>
     <div class="col-md-12">
-        <section>
-            @Html.Label(Global.Description)
-            <div>
-                @Html.Raw(Model.Description)
-            </div>
-        </section>
-        <hr />
+        <hr/>
         @if (Model.ProductSpecifications.Any())
         {
             <section>
