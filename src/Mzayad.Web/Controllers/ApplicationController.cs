@@ -20,7 +20,7 @@ namespace Mzayad.Web.Controllers
     public abstract class ApplicationController : Controller
     {
         protected string Language { get; set; }
-        
+
         protected readonly IDataContextFactory DataContextFactory;
         protected readonly IAppSettings AppSettings;
         protected readonly IAuthService AuthService;
@@ -31,7 +31,7 @@ namespace Mzayad.Web.Controllers
         protected readonly IStorageService StorageService;
         protected readonly ICmsClient CmsClient;
         protected readonly EmailTemplateService EmailTemplateService;
-        
+
         protected ApplicationController(IAppServices appServices)
         {
             DataContextFactory = appServices.DataContextFactory;
@@ -44,13 +44,13 @@ namespace Mzayad.Web.Controllers
             StorageService = appServices.StorageService;
             CmsClient = appServices.CmsClient;
 
-            EmailTemplateService =new EmailTemplateService(appServices.DataContextFactory);
+            EmailTemplateService = new EmailTemplateService(appServices.DataContextFactory);
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             Language = ViewBag.Language = GetLanguageCode();
-            
+
             base.OnActionExecuting(filterContext);
         }
 
