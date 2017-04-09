@@ -74,9 +74,14 @@
             margin-bottom: 5px;
             margin-top: 10px;
             text-transform: uppercase;
+            height: 22px;
+            overflow: hidden;
+
         }
         .secondary-title {
             margin-bottom: 10px;
+            height: 22px;
+            overflow: hidden;
         }
     </style>
 }
@@ -92,11 +97,11 @@
         {
             var banner = Model.Banners.ElementAt(i);
             <a href="@banner.Url" class="img-container" data-id="@i">
-                <img class="img-responsive" src="@banner.ImgLgUrl" alt="" data-id="@i" />
+                <img data-id="@i" class="img-responsive"  src="@banner.ImgLgUrl" alt=""  />
             </a>
         }
     </div>
-    <div class="paging-container row">
+    <div class="paging-container row hidden-sm hidden-xs">
         @for(int i=0; i<Model.Banners.Count;i++)
         {
             var banner = Model.Banners.ElementAt(i);
@@ -298,29 +303,40 @@ else
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nivoslider/3.2/jquery.nivo.slider.min.js" integrity="sha256-66ApDNLFhIKyILJVmsbuCCSQAsj/j1cETZLc4FD9hGM=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.0/js/swiper.min.js"></script>
     <script>
-        (function(app, $) {
+        (function (app, $) {
 
-            var bindEvents = function() {
+            var bindEvents = function () {
                 $("#slider-image-1").on("load", app.Images.lazyLoad());
-                $(".swiper-slide a").click(function() { window.location.href = $(this).attr("href"); });
+                $(".swiper-slide a").click(function () { window.location.href = $(this).attr("href"); });
             };
 
             $(window)
                 .on('load',
-                    function() {
-                        var slider = $("#slider");
-                        slider.nivoSlider({
-                            effect: 'fade',
-                            animSpeed: 1,
-                            pauseTime: 10000,
-                            controlNav: false,
-                            prevText: '',
-                            nextText: '',
-                            afterChange: function() {
+                function () {
+                    var slider = $("#slider");
+                    slider.nivoSlider({
+                        //effect: 'sliceDownLeft',
+                        pauseTime: 5000,
+                        controlNav: false,
+                        prevText: '',
+                        nextText: '',
+                        beforeChange: function () {
+                            var index = jQuery('#slider').data('nivo:vars').currentImage.data('id');
+                            $(".pagging").removeClass("active");
+                            if ((index + 1) == @Model.Banners.Count) {
+                                    $(".pagging:nth-child(1)").addClass("active");
+                                } else {
+                                    $(".pagging:nth-child(" + (index + 2) + ")").addClass("active");
+                                }
+                            },
+                            afterChange: function () {
                                 var index = jQuery('#slider').data('nivo:vars').currentImage.data('id');
                                 $(".pagging").removeClass("active");
-                                $(".pagging:nth-child(" + (index+1)+ ")").addClass("active");
-                                console.log(index);
+                                if ((index) == @Model.Banners.Count) {
+                                    $(".pagging:nth-child(1)").addClass("active");
+                                } else {
+                                    $(".pagging:nth-child(" + (index+1) + ")").addClass("active");
+                                }
                             }
                         });
                     });
@@ -356,7 +372,7 @@ else
             $(".pagging").click(function() {
                 var id = $(this).data("id");
                 $('#slider').data('nivo:vars').currentSlide = id-1;
-                $("#slider a.nivo-nextNav").trigger('click'); 
+                $("#slider a.nivo-nextNav").trigger('click');
             });
 
         }(App, jQuery));
