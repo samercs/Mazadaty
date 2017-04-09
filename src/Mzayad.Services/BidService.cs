@@ -117,7 +117,7 @@ namespace Mzayad.Services
                 return await dc.Bids
                     .Include(i => i.User)
                     .Where(i => i.AuctionId == auctionId)
-                    .OrderByDescending(i => i.CreatedUtc)
+                    .OrderByDescending(i => i.BidId)
                     .ToListAsync();
             }
         }
