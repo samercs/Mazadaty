@@ -54,8 +54,6 @@ namespace Mzayad.Web.Controllers
                 viewModel.UserCountry = userAddress?.CountryCode ?? "-- No Address --";
             }
 
-
-
             return View(viewModel);
         }
 

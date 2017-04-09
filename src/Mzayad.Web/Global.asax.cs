@@ -4,7 +4,7 @@ using Mzayad.Models;
 using Mzayad.Services;
 using Mzayad.Web.Core.Configuration;
 using Mzayad.Web.Core.ModelBinder;
-using Newtonsoft.Json;
+using Mzayad.Web.Extensions;
 using System;
 using System.Data.Entity;
 using System.Globalization;
@@ -15,7 +15,6 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Mzayad.Web.Extensions;
 
 namespace Mzayad.Web
 {
@@ -74,7 +73,7 @@ namespace Mzayad.Web
 
         protected void Application_AcquireRequestState(object sender, EventArgs e)
         {
-            var cultureInfo = GetCultureFromRoute() ?? GetCultureFromCookie() ?? GetCultureFromThread();
+            var cultureInfo = GetCultureFromRoute() ?? GetCultureFromCookie() ?? GetCultureFromBrowser();
 
             cultureInfo.DateTimeFormat.Calendar = new GregorianCalendar();
             cultureInfo.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
@@ -85,32 +84,32 @@ namespace Mzayad.Web
 
         protected void Session_Start(object sender, EventArgs e)
         {
-            if (HttpContext.Current.User.Identity.IsAuthenticated)
+            if (!HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                var sessionLog = new SessionLogService(new DataContextFactory());
-                try
-                {
-                    sessionLog.Insert(new SessionLog()
-                    {
-                        Browser = Request.UserAgent,
-                        IP = Request.UserHostAddress,
-                        UserId = HttpContext.Current.User.Identity.GetUserId()
-                    });
+                return;
+            }
 
-                }
-                catch
+            var sessionLog = new SessionLogService(new DataContextFactory());
+            try
+            {
+                sessionLog.Insert(new SessionLog
                 {
-                    //ToDo handel session insertion falier.
-                }
-
+                    Browser = Request.UserAgent,
+                    IP = Request.UserHostAddress,
+                    UserId = HttpContext.Current.User.Identity.GetUserId()
+                });
+            }
+            catch
+            {
+                // do nothing
             }
         }
 
         private CultureInfo GetCultureFromRoute()
         {
             var handler = Context.Handler as MvcHandler;
-            var routeData = handler == null ? null : handler.RequestContext.RouteData;
-            var languageRoute = routeData == null ? null : routeData.Values["language"];
+            var routeData = handler?.RequestContext.RouteData;
+            var languageRoute = routeData?.Values["language"];
             return languageRoute == null ? null : CultureInfo.CreateSpecificCulture(languageRoute.ToString());
         }
 
@@ -118,6 +117,17 @@ namespace Mzayad.Web
         {
             var languageCookie = HttpContext.Current.Request.Cookies.Get(CookieKeys.LanguageCode);
             return languageCookie == null ? null : CultureInfo.CreateSpecificCulture(languageCookie.Value);
+        }
+
+        private static CultureInfo GetCultureFromBrowser()
+        {
+            var languagePreference = HttpContext.Current.Request.UserLanguages?.FirstOrDefault() ?? "";
+            if (languagePreference.StartsWith("ar", StringComparison.OrdinalIgnoreCase))
+            {
+                return CultureInfo.CreateSpecificCulture("ar");
+            }
+
+            return CultureInfo.CreateSpecificCulture("en");
         }
 
         private static CultureInfo GetCultureFromThread()
