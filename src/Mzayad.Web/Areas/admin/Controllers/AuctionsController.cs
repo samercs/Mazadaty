@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Mzayad.Core.Exceptions;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
@@ -74,6 +75,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             model.Auction.RetailPrice = product.RetailPrice;
             model.Auction.CreatedByUserId = AuthService.CurrentUserId();
 
+
             return View(model);
         }
 
@@ -98,16 +100,30 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 model.Auction.CountryList = string.Empty;
             }
 
-            var auction = await _auctionService.Add(model.Auction);
-
-            if (auction.Status == AuctionStatus.Public)
+            try
             {
-                await SendAuctionNotifications(auction);
+                var auction = await _auctionService.Add(model.Auction);
+
+                if (auction.Status == AuctionStatus.Public)
+                {
+                    await SendAuctionNotifications(auction);
+                }
+
+                SetStatusMessage("Auction has been added successfully.");
+
+                return RedirectToAction("Index");
+            }
+            catch (InsufficientQuantity insufficientQuantity)
+            {
+                ModelState.AddModelError("Quantity", "there is no enough quantity for this auction");
+                return View(await model.Hydrate(_productService, productId));
+            }
+            catch (ArgumentException argumentException)
+            {
+                ModelState.AddModelError("Product", argumentException.Message);
+                return View(await model.Hydrate(_productService, productId));
             }
 
-            SetStatusMessage("Auction has been added successfully.");
-
-            return RedirectToAction("Index");
         }
 
         private async Task SendAuctionNotifications(Auction auction)
@@ -250,18 +266,32 @@ namespace Mzayad.Web.Areas.admin.Controllers
             {
                 auction.CountryList = string.Empty;
             }
-            await _auctionService.Update(auction);
 
-            if (isActivated)
+            try
             {
-                await SendAuctionNotifications(auction);
+                await _auctionService.Update(auction);
+
+                if (isActivated)
+                {
+                    await SendAuctionNotifications(auction);
+                }
+
+                var productName = auction.Product.Localize("en", i => i.Name).Name;
+
+                SetStatusMessage($"Auction for <strong>{productName}</strong> has been updated successfully.");
+
+                return RedirectToAction("Index", "Auctions");
             }
-
-            var productName = auction.Product.Localize("en", i => i.Name).Name;
-
-            SetStatusMessage($"Auction for <strong>{productName}</strong> has been updated successfully.");
-
-            return RedirectToAction("Index", "Auctions");
+            catch (InsufficientQuantity)
+            {
+                ModelState.AddModelError("Quantity", "there is no enough quantity for this auction");
+                model = await new AddEditViewModel
+                {
+                    Bids = await _bidService.GetBidHistoryForAuction(id),
+                }.Hydrate(_productService, auction);
+                return View(model);
+            }
+            
 
         }
 

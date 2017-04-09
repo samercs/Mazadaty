@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Mzayad.Core.Exceptions;
 using Mzayad.Services.Queues;
 
 namespace Mzayad.Services
@@ -28,7 +29,27 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
+                var product = await dc.Products.SingleOrDefaultAsync(i => i.ProductId == auction.ProductId);
+                if (product == null)
+                {
+                    throw new ArgumentException($"Can't find product with ProductId = {auction.ProductId}");
+                }
+
+                //check product quntity
+                int neededQuntity = 1;
+                if (auction.BuyNowEnabled && auction.BuyNowQuantity.HasValue)
+                {
+                    neededQuntity += auction.BuyNowQuantity.Value;
+                }
+                if (product.Quantity < neededQuntity)
+                {
+                    throw new InsufficientQuantity($"quantity for the product ({product.ProductId}) is {product.Quantity} < auction quantity ({neededQuntity})");
+                }
                 dc.Auctions.Add(auction);
+
+                product.Quantity -= neededQuntity;
+                dc.SetModified(product);
+
                 await dc.SaveChangesAsync();
 
                 return await GetAuction(dc, auction.AuctionId);
@@ -64,7 +85,7 @@ namespace Mzayad.Services
                     .ToListAsync();
 
                 auctions = auctions
-                    .Where(i=>i.IsLive())
+                    .Where(i => i.IsLive())
                     .OrderBy(i => i.StartUtc.AddMinutes(i.Duration)).ToList();
                 return LocalizeAuctions(language, auctions);
             }
@@ -258,9 +279,37 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 var product = await dc.Products.SingleOrDefaultAsync(i => i.ProductId == auction.ProductId);
+                var oldAuction = await dc.Auctions.AsNoTracking().SingleOrDefaultAsync(i => i.AuctionId == auction.AuctionId);
+                if (auction.BuyNowEnabled && auction.BuyNowQuantity.HasValue)
+                {
+                    var diff = auction.BuyNowQuantity.Value - (oldAuction.BuyNowQuantity ?? 0);
+                    if (diff > 0)
+                    {
+                        if (diff > product.Quantity)
+                        {
+                            throw new InsufficientQuantity($"Insufficient Product Quantity.");
+                        }
+                        product.Quantity -= diff;
+                        dc.SetModified(product);
+                    }
+                    else if (diff < 0)
+                    {
+                        product.Quantity += Math.Abs(diff);
+                        dc.SetModified(product);
+                    }
+
+                }
+                else if (!auction.BuyNowEnabled && oldAuction.BuyNowEnabled && oldAuction.BuyNowQuantity.HasValue)
+                {
+                    product.Quantity += oldAuction.BuyNowQuantity.Value;
+                    dc.SetModified(product);
+                }
+
                 auction.Product = product;
                 dc.Auctions.Attach(auction);
                 dc.SetModified(auction);
+
+
                 await dc.SaveChangesAsync();
 
                 return await GetAuction(dc, auction.AuctionId);
@@ -293,7 +342,7 @@ namespace Mzayad.Services
 
                 if (winningBid != null)
                 {
-                    return  await _orderService.CreateOrderForAuction(auction, winningBid);
+                    return await _orderService.CreateOrderForAuction(auction, winningBid);
                 }
 
                 return null;
@@ -335,7 +384,7 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
-                var auction = await dc.Auctions.SingleOrDefaultAsync(i => i.AuctionId == auctionId);
+                var auction = await dc.Auctions.Include(i => i.Product).SingleOrDefaultAsync(i => i.AuctionId == auctionId);
                 if (auction == null)
                 {
                     return;
@@ -343,6 +392,10 @@ namespace Mzayad.Services
 
                 auction.IsDeleted = true;
                 auction.DeletedUtc = DateTime.UtcNow;
+
+                auction.Product.Quantity += 1 + (auction.BuyNowQuantity ?? 0);
+                dc.SetModified(auction.Product);
+
                 await dc.SaveChangesAsync();
             }
         }

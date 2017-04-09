@@ -72,7 +72,6 @@ namespace Mzayad.Data
         {
             Entry(entity).State = EntityState.Modified;
         }
-
         public override int SaveChanges()
         {
             SetModifiedUtc();
@@ -177,7 +176,7 @@ namespace Mzayad.Data
             var userIdParam = GetParam("@UserId", SqlDbType.NVarChar);
             var bidIdParam = GetParam("@BidId", SqlDbType.Int);
             var amountParam = GetParam("@Amount", SqlDbType.Float);
-            var userNameParam = GetParam("@UserName", SqlDbType.NVarChar); 
+            var userNameParam = GetParam("@UserName", SqlDbType.NVarChar);
             var avatarUrlParam = GetParam("@AvatarUrl", SqlDbType.NVarChar);
 
             Database.ExecuteSqlCommand("SubmitAutoBid @AuctionId, @SecondsLeft, @UserId out, @BidId out, @Amount out, @UserName out, @AvatarUrl out",
