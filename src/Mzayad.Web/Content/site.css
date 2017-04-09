@@ -380,6 +380,46 @@ body {
 .hidden {
   display: none;
 }
+#navbar-cart {
+  padding: 20px;
+  min-width: 420px;
+  color: #333;
+}
+#navbar-cart tr.row-top {
+  border-top: 1px solid #ccc;
+}
+#navbar-cart tr.row-bottom td {
+  padding-top: 0;
+  font-size: 0.9em;
+}
+#navbar-cart td {
+  padding: 20px 0;
+  vertical-align: top;
+}
+#navbar-cart .cart-item-product-name {
+  padding-bottom: 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+#navbar-cart .cart-item-image {
+  border: 1px solid #333;
+  margin-right: 20px;
+}
+#navbar-cart .cart-item-image:lang(ar) {
+  margin-left: 20px;
+  margin-right: 0;
+}
+#navbar-cart #navbar-cart-buttons {
+  padding: 20px 0 0 0;
+  border-top: 1px solid #ccc;
+}
+#navbar-cart #navbar-cart-price {
+  margin-top: 10px;
+  font-size: 18px;
+}
+#navbar-cart a.btn {
+  color: #fff !important;
+}
 form section,
 section.form-section {
   background: #f5f5f5;

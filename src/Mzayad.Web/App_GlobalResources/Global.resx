@@ -972,6 +972,54 @@
   <data name="RetailPriceLabel" xml:space="preserve">
     <value>Retail Price</value>
   </data>
+  <data name="AddToCart" xml:space="preserve">
+    <value>Add To Cart</value>
+  </data>
+  <data name="CartIsEmptyMessage" xml:space="preserve">
+    <value>Your shopping cart currently has no items.</value>
+  </data>
+  <data name="Checkout" xml:space="preserve">
+    <value>Checkout</value>
+  </data>
+  <data name="ProductAddedToCartAcknowledgement" xml:space="preserve">
+    <value>&lt;strong&gt;{0}&lt;/strong&gt; added to shopping bag.</value>
+  </data>
+  <data name="QuantityLabelWithValue" xml:space="preserve">
+    <value>Q.ty: &lt;strong&gt;{0}&lt;/strong&gt;</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>Saving</value>
+  </data>
+  <data name="ShoppingCart" xml:space="preserve">
+    <value>Shopping Cart</value>
+  </data>
+  <data name="TotalLabelWithValue" xml:space="preserve">
+    <value>Total: &lt;strong&gt;{0}&lt;/strong&gt;</value>
+  </data>
+  <data name="UnityLabelWithValue" xml:space="preserve">
+    <value>Unity: &lt;strong&gt;{0}&lt;/strong&gt;</value>
+  </data>
+  <data name="CheckoutEmailHintLabel" xml:space="preserve">
+    <value>We'll send your order confirmation to this email address.</value>
+  </data>
+  <data name="CheckoutUserAsGuest" xml:space="preserve">
+    <value>No, checkout as guest</value>
+  </data>
+  <data name="CheckoutUserCreatePassword" xml:space="preserve">
+    <value>No, but I will create one</value>
+  </data>
+  <data name="CheckoutUserWithPassword" xml:space="preserve">
+    <value>Yes, sign in with password</value>
+  </data>
+  <data name="HavePasswordQuestion" xml:space="preserve">
+    <value>Do you have a password?</value>
+  </data>
+  <data name="BuyNowQuntity" xml:space="preserve">
+    <value>Buy Now Quntity: {BuyNowQuntity}</value>
+  </data>
+  <data name="ProductExistInCart" xml:space="preserve">
+    <value>&lt;strong&gt;{0}&lt;/strong&gt; already exist in your shopping bag. You can't add the same product.</value>
+  </data>
   <data name="NoFriendsFound" xml:space="preserve">
     <value>No friend match search criteria.</value>
   </data>

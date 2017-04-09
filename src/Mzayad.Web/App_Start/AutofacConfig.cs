@@ -17,6 +17,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using Mzayad.Services.Queues;
 using Mzayad.Web.Core.Caching;
+using Mzayad.Web.Core.ShoppingCart;
 
 namespace Mzayad.Web
 {
@@ -37,6 +38,7 @@ namespace Mzayad.Web
             builder.RegisterType<AuthService>().As<IAuthService>();
             builder.RegisterType<CookieService>().As<ICookieService>();
             builder.RegisterType<RequestService>().As<IRequestService>();
+            builder.RegisterType<HttpContextService>().As<IHttpContextService>().InstancePerRequest();
 
 
             builder.Register<ICmsClient>(i =>
@@ -55,6 +57,7 @@ namespace Mzayad.Web
             builder.Register<IQueueService>(c => new QueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString));
 
             builder.Register(GetCacheService).SingleInstance();
+            builder.Register(GetCartService).InstancePerRequest();
 
             return Container(builder);
         }
@@ -82,6 +85,13 @@ namespace Mzayad.Web
             }
 
             return new RedisCacheService();
+        }
+
+        private static ICartService GetCartService(IComponentContext c)
+        {
+            var userService = c.Resolve<IHttpContextService>();
+            var cacheService = c.Resolve<ICacheService>();
+            return new CartService(userService, cacheService);
         }
     }
 }

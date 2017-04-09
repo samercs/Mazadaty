@@ -41,6 +41,7 @@
             </ul>
             <ul class="nav navbar-nav @(Html.IsArabic() ? "navbar-left" : "navbar-right")">
                 @Html.Partial("_Layout_UserMyAccount")
+                @Html.Partial("_Layout_NavbarCart")
                 @Html.Partial("_Layout_LanguageSelector")
                 @if (User.IsInRole(Role.Administrator.ToString()))
                 {
