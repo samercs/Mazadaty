@@ -144,7 +144,7 @@ namespace Mzayad.Services
                     .Where(i => i.IsDeleted == false)
                     .Where(i => i.BuyNowEnabled)
                     .Where(i => i.BuyNowQuantity > 0)
-                    .Where(i => i.Product.Quantity > 0)
+                    .Where(i => i.Status == AuctionStatus.Closed)
                     .Include(i => i.Product.ProductImages)
                     .Include(i => i.Product.Sponsor)
                     .ToListAsync();
