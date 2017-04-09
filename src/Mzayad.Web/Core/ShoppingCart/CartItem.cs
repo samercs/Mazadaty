@@ -28,6 +28,7 @@ namespace Mzayad.Web.Core.ShoppingCart
             return new OrderItem
             {
                 ProductId = cartItem.ProductId,
+                AuctionId = cartItem.AuctionId,
                 Quantity = cartItem.Quantity,
                 ItemPrice = cartItem.ItemPrice,
                 Name = new[]

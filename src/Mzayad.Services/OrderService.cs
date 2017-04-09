@@ -353,7 +353,7 @@ namespace Mzayad.Services
         {
             foreach (var item in order.Items)
             {
-                if (item.AuctionId.HasValue && !item.Auction.WonByBidId.HasValue)
+                if (order.Type == OrderType.BuyNow && item.AuctionId.HasValue)
                 {
                     item.Auction.BuyNowQuantity -= 1;
                 }
