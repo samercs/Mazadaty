@@ -20,7 +20,7 @@ namespace Mzayad.Web.Controllers
     {
         private readonly ProductService _productService;
         private readonly AuctionService _auctionService;
-        
+
         public ShopController(IAppServices appServices) : base(appServices)
         {
             _productService = new ProductService(DataContextFactory);
@@ -46,7 +46,7 @@ namespace Mzayad.Web.Controllers
                 SetStatusMessage(string.Format(Global.ProductExistInCart,
                     auction.Product.Localize(Language, LocalizationDepth.OneLevel).Name), StatusMessageType.Warning);
             }
-            
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -87,8 +87,8 @@ namespace Mzayad.Web.Controllers
                 Name = product.Name,
                 ProductId = product.ProductId,
                 ImageUrl = product.MainImage().ImageSmUrl,
-                ItemPrice = auction.BuyNowPrice?? 0,
-                Quantity = auction.BuyNowQuantity ?? 0,
+                ItemPrice = auction.BuyNowPrice ?? 0,
+                Quantity = 1,
                 AuctionId = auction.AuctionId
             };
 

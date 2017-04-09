@@ -63,13 +63,9 @@ namespace Mzayad.Web.Controllers
                 var user = await AuthService.CurrentUser();
                 user.Address = await _addressService.GetAddress(user.AddressId);
                 var order = await _orderService.CreateOrderForBuyNow(auction, user);
-                return RedirectToAction("Shipping", new {order.OrderId});
+                return RedirectToAction("Shipping", new { order.OrderId });
             }
-            else// add to cart
-            {
-                return RedirectToAction("AddToCart", "Shop", new { auctionId });
-            }
-            
+            return RedirectToAction("AddToCart", "Shop", new { auctionId });
         }
 
         [Route("auction/{orderId:int}")]
@@ -202,7 +198,7 @@ namespace Mzayad.Web.Controllers
             {
                 Order = OrderViewModel.Create(order),
                 KnetTransaction = knetTransaction,
-                RedirectUrl = redirectUrl 
+                RedirectUrl = redirectUrl
             };
 
             var shoppingCart = CartService.GetCart();
