@@ -1,4 +1,5 @@
-﻿@using OrangeJetpack.Base.Web
+﻿@using OfficeOpenXml.FormulaParsing.Utilities
+@using OrangeJetpack.Base.Web
 @model Mzayad.Web.Controllers.SearchFriendViewModel
 
 @{
@@ -27,10 +28,33 @@
 }
 
 <div class="panel dashboard-panel">
+    <div class="panel-heading">
+        <h3 class="panel-title">@Global.MyFriends</h3>
+    </div>
     <div class="panel-body">
+        
         @foreach (var item in Model.SearchResult)
         {
-            @Html.Partial("_layout_friends", item)
+            if (item.AreFriends)
+            {
+                @Html.Partial("_layout_friends", item)
+            }
+        }
+    </div>
+</div>
+
+<div class="panel dashboard-panel">
+    <div class="panel-heading">
+        <h3 class="panel-title">@Global.ZeedliUsers</h3>
+    </div>
+    <div class="panel-body">
+       
+        @foreach (var item in Model.SearchResult)
+        {
+            if (!item.AreFriends)
+            {
+                @Html.Partial("_layout_friends", item)
+            }
         }
     </div>
 </div>
