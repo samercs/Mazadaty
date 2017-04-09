@@ -198,7 +198,7 @@ namespace Mzayad.Web.Controllers
             {
                 Order = OrderViewModel.Create(order),
                 KnetTransaction = knetTransaction,
-                RedirectUrl = redirectUrl 
+                RedirectUrl = redirectUrl
             };
 
             return View(viewModel);

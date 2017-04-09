@@ -65,7 +65,7 @@ namespace Mzayad.Models
 
         public bool BuyNowAvailable()
         {
-            return BuyNowEnabled && BuyNowQuantity > 0 && Product.Quantity > 0;
+            return BuyNowEnabled && BuyNowQuantity > 0;
         }
     }
 }

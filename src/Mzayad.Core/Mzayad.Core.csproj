@@ -32,6 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\InsufficientQuantity.cs" />
     <Compile Include="Exceptions\InsufficientTokensException.cs" />
     <Compile Include="Exceptions\SubscriptionCannotBePurchasesWithTokensException.cs" />
     <Compile Include="Exceptions\SubscriptionInvalidForPurchaseException.cs" />

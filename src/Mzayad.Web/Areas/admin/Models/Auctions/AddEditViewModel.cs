@@ -16,6 +16,8 @@ namespace Mzayad.Web.Areas.admin.Models.Auctions
         public Mzayad.Models.Auction Auction { get; set; }
         public IEnumerable<SelectListItem> StatusList { get; set; }
         public IEnumerable<Bid> Bids { get; set; }
+        public Product Product { get; set; }
+        public ActionType ActionType { get; set; }
 
         public IEnumerable<SelectListItem> GccCountryList => new[] {
                 new SelectListItem
@@ -82,6 +84,8 @@ namespace Mzayad.Web.Areas.admin.Models.Auctions
 
             ProductList = await GetProductList(productService, product);
             StatusList = GetStatusList(AuctionStatus.Hidden);
+            Product = product;
+            ActionType = ActionType.Add;
 
 
             return this;
@@ -118,8 +122,15 @@ namespace Mzayad.Web.Areas.admin.Models.Auctions
 
             ProductList = await GetProductList(productService, auction.Product);
             StatusList = GetStatusList(Auction.Status);
-
+            Product = auction.Product;
+            ActionType = ActionType.Edit;
             return this;
         }
+    }
+
+    public enum ActionType
+    {
+        Add = 1,
+        Edit = 2
     }
 }
