@@ -1375,6 +1375,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to My Friends.
+        /// </summary>
+        public static string MyFriends {
+            get {
+                return ResourceManager.GetString("MyFriends", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to My Wishlist.
         /// </summary>
         public static string MyWishList {
@@ -1506,6 +1515,15 @@ namespace Mzayad.Web.Resources {
         public static string NoFriends {
             get {
                 return ResourceManager.GetString("NoFriends", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No friend match search criteria..
+        /// </summary>
+        public static string NoFriendsFound {
+            get {
+                return ResourceManager.GetString("NoFriendsFound", resourceCulture);
             }
         }
         
@@ -2118,6 +2136,15 @@ namespace Mzayad.Web.Resources {
         public static string SaveAndContinue {
             get {
                 return ResourceManager.GetString("SaveAndContinue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Friend.
+        /// </summary>
+        public static string SearchFriend {
+            get {
+                return ResourceManager.GetString("SearchFriend", resourceCulture);
             }
         }
         
@@ -2748,6 +2775,15 @@ namespace Mzayad.Web.Resources {
         public static string Yes {
             get {
                 return ResourceManager.GetString("Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zeedli Users.
+        /// </summary>
+        public static string ZeedliUsers {
+            get {
+                return ResourceManager.GetString("ZeedliUsers", resourceCulture);
             }
         }
         

@@ -1,6 +1,16 @@
-﻿@using Mzayad.Web.Extensions
+﻿@using Mzayad.Web.Areas.admin.Models.Auctions
+@using Mzayad.Web.Extensions
 @model Mzayad.Web.Areas.admin.Models.Auctions.AddEditViewModel
-
+@{
+    var maxQuntity = Model.Product.Quantity - 1;
+    if (Model.ActionType == ActionType.Edit)
+    {
+        if (Model.Auction.BuyNowEnabled && Model.Auction.BuyNowQuantity.HasValue)
+        {
+            maxQuntity += Model.Auction.BuyNowQuantity.Value;
+        }
+    }
+}
 
 <div class="row">
     <div class="@Html.Css().FormWide">
@@ -14,6 +24,7 @@
                     @Html.LabelFor(i => i.Auction.ProductId, "Product")
                     @Html.DropDownListFor(i => i.Auction.ProductId, Model.ProductList, new { @class = "form-control" })
                     @Html.ValidationMessageFor(i => i.Auction.ProductId, "Please select a product")
+                    @Html.ValidationMessage("Product")
                 </div>
                 
                 <div class="form-group">
@@ -135,9 +146,10 @@
                         <div class="form-group form-group-disableable">
                             @Html.LabelFor(i => i.Auction.BuyNowQuantity, "Buy Now Quantity")
                             <div class="input-group">
-                                @Html.TextBoxFor(i => i.Auction.BuyNowQuantity, new { @class = "form-control", @type = "number" })
+                                @Html.TextBoxFor(i => i.Auction.BuyNowQuantity, new { @class = "form-control", @type = "number", @max=maxQuntity })
                                 <span class="input-group-addon">items</span>
                             </div>
+                            @Html.ValidationMessageFor(i => i.Auction.BuyNowQuantity)
                         </div>
                     </div>
                 </div>
@@ -157,6 +169,9 @@
                     }
                 </div>
                 @Html.ValidationMessage("countryList")
+            </section>
+            <section>
+                @Html.ValidationMessage("Quantity")
             </section>
 
             <section class="form-buttons">

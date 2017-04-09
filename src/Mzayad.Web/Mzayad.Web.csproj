@@ -869,6 +869,7 @@
     <Content Include="Views\User\Friends.cshtml" />
     <Content Include="Views\User\Inbox.cshtml" />
     <Content Include="Views\User\BuyPremiumAvatar.cshtml" />
+    <Content Include="Views\Shared\_layout_friends.cshtml" />
     <Content Include="Views\Shared\_Layout_NavbarCart.cshtml" />
     <Content Include="Views\Shop\Cart.cshtml" />
     <TypeScriptCompile Include="Scripts\auctions.ts" />
@@ -888,6 +889,7 @@
     <Content Include="Views\AutoBid\Edit.cshtml" />
     <Content Include="Views\Friends\Requests.cshtml" />
     <Content Include="Views\Friends\SendMessage.cshtml" />
+    <Content Include="Views\Friends\Search.cshtml" />
     <Content Include="Views\Checkout\SignIn.cshtml" />
     <None Include="Views\Home\SignalR.cshtml" />
     <Content Include="404.html" />

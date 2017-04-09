@@ -27,6 +27,7 @@ namespace Mzayad.Services.Payment
                     .Include(i => i.Order)
                     .Include(i => i.Order.Address)
                     .Include(i => i.Order.Items.Select(j => j.Product))
+                    .Include(i => i.Order.Items.Select(j => j.Auction))
                     .Include(i => i.Order.Items.Select(j => j.Subscription))
                     .SingleOrDefaultAsync(i => i.PaymentId == paymentId);
             }

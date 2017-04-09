@@ -21,7 +21,7 @@ namespace Mzayad.Web.Controllers
     public abstract class ApplicationController : Controller
     {
         protected string Language { get; set; }
-        
+
         protected readonly IDataContextFactory DataContextFactory;
         protected readonly IAppSettings AppSettings;
         protected readonly IAuthService AuthService;

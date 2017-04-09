@@ -1,0 +1,103 @@
+﻿@model Mzayad.Web.Models.User.UserProfileViewModel
+@if (Model == null)
+{
+    <p class="form-control-static"></p>
+    return;
+}
+<div id="dashboard-header">
+    <div class="row" id="dv_@Model.User.Id">
+        @if (Model.User.ProfileStatus == Mzayad.Models.Enum.UserProfileStatus.Private && !Model.AreFriends && !Model.Me)
+        {
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div id="dashboard-avatar">
+                            <img class="img-responsive" src="@Model.User.AvatarUrl" alt="@Model.User.UserName" />
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div id="dashboard-details" class="dashboard-cell">
+                            <div id="dashboard-username" class="text-uppercase">
+                                <a href="@Url.Action("UserProfile", "User", new { area = "", userName = Model.User.UserName })" style="color:#33ace0">@Model.User.UserName</a>
+                            </div>
+                            <div class="dashboard-label" style="font-size:1.05em;margin-top:5px;">
+                                @(Global.PrivateProfileMessage + " " + Global.Click) <span style="cursor:pointer;text-decoration:underline" onclick="friendRequest('@Model.User.UserName')">@Global.Here</span> @Global.ToSendFriendRequestMessage
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div id="dashboard-avatar">
+                            <img class="img-responsive" src="@Model.User.AvatarUrl" alt="@Model.User.UserName" />
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div id="dashboard-details" class="dashboard-cell">
+                            <div id="dashboard-username" class="text-uppercase">
+                                <a href="@Url.Action("UserProfile", "User", new { area = "",  userName = Model.User.UserName })" style="color:#33ace0">@Model.User.UserName</a>
+                            </div>
+                            <div id="dashboard-level" class="text-uppercase">
+                                @Global.Level @Model.User.Level
+                            </div>
+                            <div id="dashboard-progress">
+                                <div class="progress pull-left">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="@Model.LevelPercentage" aria-valuemin="0" aria-valuemax="100" style="width: @Model.LevelPercentage%;">
+                                        <span class="sr-only">@Model.LevelPercentage% Complete</span>
+                                    </div>
+                                </div>
+                                <small>@(Model.User.Xp)/@(Model.NextLevel.XpRequired)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="dashboard-cell">
+                                        <div class="dashboard-number">@Model.User.Xp</div>
+                                        <div class="dashboard-label text-uppercase">@Global.Experience</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a href="@Url.Action("UserTrophies", "User")" class="dashboard-cell">
+                                        <div class="dashboard-number">@Model.Trophies.Count</div>
+                                        <div class="dashboard-label text-uppercase">@Global.Trophies</div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a href="@Url.Action("UserFriends", "User", new { userName = Model.User.UserName })" class="dashboard-cell">
+                                        <div class="dashboard-number">@Model.Friends.Count</div>
+                                        <div class="dashboard-label text-uppercase">@(Model.Friends.Count == 1 ? Global.Friend : Global.Friends)</div>
+                                    </a>
+                                </div>
+                            </div>
+                            @if (Model.AreFriends && !Model.Me)
+                            {
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align:right;padding-right:45px;">
+                                        <a class="btn btn-default btn-rounded text-uppercase" style="padding: 5px 20px;margin-bottom: 10px;"
+                                           href="@Url.Action("SendMessage", "Friends", new { area = "", userName = Model.User.UserName })">
+                                            <i class="fa fa-fw fa-envelope"></i>
+                                            @Global.Chat
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+        }
+    </div>
+</div>
+
+
+
+
+
+
+

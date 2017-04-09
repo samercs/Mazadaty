@@ -640,15 +640,20 @@ namespace Mzayad.Web.Areas.Api.Controllers
             {
                 i.User.FirstName,
                 i.User.LastName,
-                i.User.Xp,
+                i.User.Email,
+                i.User.ProfileStatus,
                 i.User.AvatarUrl,
+                i.User.Xp,
                 i.User.Level,
                 i.User.UserName,
-                i.User.Email,
-                i.User.Birthdate,
                 i.User.Gender,
-                i.Trophies,
-                i.NextLevel
+                i.User.Birthdate,
+                i.NextLevel,
+                Trophies = i.Trophies.Count,
+                i.AreFriends,
+                i.SentFriendRequestBefore,
+                i.Me,
+                Friends = i.Friends.Count
             });
 
             return Ok(result);

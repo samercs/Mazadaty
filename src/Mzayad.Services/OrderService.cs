@@ -24,6 +24,7 @@ namespace Mzayad.Services
                 var order = await dc.Orders
                     .Include(i => i.Address)
                     .Include(i => i.Items.Select(j => j.Product))
+                    .Include(i => i.Items.Select(j => j.Auction))
                     .Include(i => i.Items.Select(j => j.Subscription))
                     .Include(i => i.Logs)
                     .SingleOrDefaultAsync(i => i.OrderId == id);
@@ -166,7 +167,7 @@ namespace Mzayad.Services
 
         public async Task<Order> CreateOrder(Order order)
         {
-            using (var dc= DataContext())
+            using (var dc = DataContext())
             {
                 dc.Orders.Add(order);
                 SetStatus(order, OrderStatus.PendingPayment, order.UserId);
@@ -217,7 +218,8 @@ namespace Mzayad.Services
                     ItemPrice = itemPrice.Value,
                     Name = auction.Product.Name,
                     Quantity = 1,
-                    ProductId = auction.ProductId
+                    ProductId = auction.ProductId,
+                    AuctionId = auction.AuctionId
                 }
             };
         }
@@ -351,9 +353,9 @@ namespace Mzayad.Services
         {
             foreach (var item in order.Items)
             {
-                if (item.Product != null)
+                if (item.AuctionId.HasValue && !item.Auction.WonByBidId.HasValue)
                 {
-                    item.Product.Quantity -= item.Quantity;
+                    item.Auction.BuyNowQuantity -= 1;
                 }
 
                 if (item.Subscription != null)

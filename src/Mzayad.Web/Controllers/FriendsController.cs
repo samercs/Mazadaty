@@ -1,4 +1,6 @@
-﻿using Mzayad.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Mzayad.Models;
 using Mzayad.Models.Enums;
 using Mzayad.Services;
 using Mzayad.Services.Identity;
@@ -18,6 +20,7 @@ namespace Mzayad.Web.Controllers
         private readonly UserService _userService;
         private readonly IAuthService _authService;
         private readonly MessageService _messageService;
+        private readonly TrophyService _trophyService;
         public FriendsController(IAppServices appServices)
             : base(appServices)
         {
@@ -25,6 +28,7 @@ namespace Mzayad.Web.Controllers
             _userService = new UserService(appServices.DataContextFactory);
             _authService = appServices.AuthService;
             _messageService = new MessageService(appServices.DataContextFactory);
+            _trophyService = new TrophyService(DataContextFactory);
         }
 
         public int RequestsCount()
@@ -81,7 +85,22 @@ namespace Mzayad.Web.Controllers
 
             var message = await _messageService.Insert(model.Message);
             TempData["MessageSent"] = true;
-            return RedirectToAction("SendMessage", "Friends", new {userName});
+            return RedirectToAction("SendMessage", "Friends", new { userName });
+        }
+
+        [Route("friends/search")]
+        [HttpPost, ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<ActionResult> Search(string username)
+        {
+            var user = await AuthService.CurrentUser();
+            var frinds = await _friendService.SearchByUserName(username, user);
+            var model = new SearchFriendViewModel
+            {
+                SearchResult = await GetFriendsModel(frinds),
+                Query = username
+            };
+            return View(model);
         }
 
         #region Ajax Calls
@@ -146,5 +165,30 @@ namespace Mzayad.Web.Controllers
             return MvcHtmlString.Create(message.Body);
         }
         #endregion
+
+        private async Task<IEnumerable<UserProfileViewModel>> GetFriendsModel(IEnumerable<ApplicationUser> users)
+        {
+            var result = new List<UserProfileViewModel>();
+            foreach (var user in users)
+            {
+                result.Add(new UserProfileViewModel(user)
+                {
+                    Trophies = await _trophyService.GetTrophies(user.Id, Language),
+                    AreFriends = await _friendService.AreFriends(user.Id, AuthService.CurrentUserId()),
+                    SentFriendRequestBefore = await _friendService.SentBefore(AuthService.CurrentUserId(), user.Id),
+                    Friends = await _friendService.GetFriends(user.Id),
+                    Me = user.UserName == (await AuthService.CurrentUser()).UserName
+                });
+            }
+            return result;
+
+        }
+    }
+
+    public class SearchFriendViewModel
+    {
+        public IEnumerable<UserProfileViewModel> SearchResult { get; set; }
+        public string Query { get; set; }
+
     }
 }

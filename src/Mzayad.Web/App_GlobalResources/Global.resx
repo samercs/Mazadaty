@@ -1020,4 +1020,16 @@
   <data name="ProductExistInCart" xml:space="preserve">
     <value>&lt;strong&gt;{0}&lt;/strong&gt; already exist in your shopping bag. You can't add the same product.</value>
   </data>
+  <data name="NoFriendsFound" xml:space="preserve">
+    <value>No friend match search criteria.</value>
+  </data>
+  <data name="SearchFriend" xml:space="preserve">
+    <value>Search Friend</value>
+  </data>
+  <data name="MyFriends" xml:space="preserve">
+    <value>My Friends</value>
+  </data>
+  <data name="ZeedliUsers" xml:space="preserve">
+    <value>Zeedli Users</value>
+  </data>
 </root>
