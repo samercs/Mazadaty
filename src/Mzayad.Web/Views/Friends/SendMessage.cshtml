@@ -102,25 +102,13 @@
 
 @section scripts {
     @Scripts.Render("~/js/validate")
-    <script src="//cdn.ckeditor.com/4.4.4/basic/ckeditor.js"></script>
     <script>
         (function ($) {
             $(function () {
-                //initCkEditor();
-
+                $("html, body").animate({ scrollTop: $(document).height() }, "slow");
             });
-            var initCkEditor = function () {
-                $("textarea").each(function () {
-                    CKEDITOR.replace(this.id, { height: 300 });
-                });
-            };
         })(jQuery);
-
-        function updateEditor() {
-            for (instance in CKEDITOR.instances) {
-                CKEDITOR.instances[instance].updateElement();
-            }
-        }
+        
     </script>
 }
 

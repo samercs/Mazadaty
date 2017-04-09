@@ -1,16 +1,9 @@
 ﻿@using OrangeJetpack.Base.Web
-
-@model IEnumerable<Mzayad.Web.Models.User.UserProfileViewModel>
+@model Mzayad.Web.Controllers.SearchFriendViewModel
 
 @{
-    ViewBag.Title = Global.TheFriends;
+    ViewBag.Title = Global.SearchFriend;
 }
-<div id="dvMessage">
-    @if (ViewBag.MessageSent != null)
-    {
-        @Html.StatusMessage(Global.MessageSentSuccessfully, StatusMessageType.Success)
-    }
-</div>
 
 <div>
     <div class="row">
@@ -19,22 +12,23 @@
             {
                 @Html.AntiForgeryToken()
                 <div class="form-group">
-                    <input type="text" name="username" id="username" class="form-control" placeholder="Search by username"/>
+                    <input value="@Model.Query" type="text" name="username" id="username" class="form-control" placeholder="Search by username" />
+                    
                 </div>
             }
         </div>
     </div>
 </div>
 
-@if (!Model.Any())
+@if (!Model.SearchResult.Any())
 {
-    @Html.StatusMessage(Global.NoFriends, StatusMessageType.Information)
+    @Html.StatusMessage(Global.NoFriendsFound, StatusMessageType.Information)
     return;
 }
 
 <div class="panel dashboard-panel">
     <div class="panel-body">
-        @foreach (var item in Model)
+        @foreach (var item in Model.SearchResult)
         {
             @Html.Partial("_layout_friends", item)
         }
@@ -65,4 +59,5 @@
 
     </script>
 }
+
 

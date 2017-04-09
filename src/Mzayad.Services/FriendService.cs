@@ -5,14 +5,18 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Mzayad.Models.Enums;
+using Mzayad.Services.Identity;
 
 namespace Mzayad.Services
 {
     public class FriendService : ServiceBase
     {
+
+
         public FriendService(IDataContextFactory dataContextFactory)
             : base(dataContextFactory)
-        { }
+        {
+        }
 
         public async Task<FriendRequest> SendRequest(FriendRequest entity)
         {
@@ -171,6 +175,20 @@ namespace Mzayad.Services
                                                             && i.FriendId == friendId
                                                             && i.Status == Models.Enums.FriendRequestStatus.NotDecided);
             }
+        }
+
+        public async Task<IEnumerable<ApplicationUser>> SearchByUserName(string username, ApplicationUser user)
+        {
+            using (var dc = DataContext())
+            {
+                var userManager = new UserManager(DataContextFactory);
+                var userFrindIds = await dc.UsersFriends.Where(i => i.UserId.Equals(user.Id)).Select(i => i.FriendId).ToListAsync();
+                var users = await userManager.Users.Where(i => i.UserName.Contains(username) && 
+                                                               !userFrindIds.Contains(i.Id) &&
+                                                               i.Id != user.Id).ToListAsync();
+                return users;
+            }
+
         }
     }
 

@@ -972,4 +972,10 @@
   <data name="RetailPriceLabel" xml:space="preserve">
     <value>Retail Price</value>
   </data>
+  <data name="NoFriendsFound" xml:space="preserve">
+    <value>No friend match search criteria.</value>
+  </data>
+  <data name="SearchFriend" xml:space="preserve">
+    <value>Search Friend</value>
+  </data>
 </root>

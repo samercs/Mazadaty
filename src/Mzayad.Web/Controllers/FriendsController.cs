@@ -1,4 +1,6 @@
-﻿using Mzayad.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Mzayad.Models;
 using Mzayad.Models.Enums;
 using Mzayad.Services;
 using Mzayad.Services.Identity;
@@ -81,7 +83,22 @@ namespace Mzayad.Web.Controllers
 
             var message = await _messageService.Insert(model.Message);
             TempData["MessageSent"] = true;
-            return RedirectToAction("SendMessage", "Friends", new {userName});
+            return RedirectToAction("SendMessage", "Friends", new { userName });
+        }
+
+        [Route("frinds/search")]
+        [HttpPost, ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<ActionResult> Search(string username)
+        {
+            var user = await AuthService.CurrentUser();
+            var frinds = await _friendService.SearchByUserName(username, user);
+            var model = new SearchFriendViewModel
+            {
+                SearchResult = frinds.Select(i => new UserProfileViewModel(i)),
+                Query = username
+            };
+            return View(model);
         }
 
         #region Ajax Calls
@@ -146,5 +163,12 @@ namespace Mzayad.Web.Controllers
             return MvcHtmlString.Create(message.Body);
         }
         #endregion
+    }
+
+    public class SearchFriendViewModel
+    {
+        public IEnumerable<UserProfileViewModel> SearchResult { get; set; }
+        public string Query { get; set; }
+
     }
 }
