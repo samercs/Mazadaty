@@ -107,6 +107,28 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<Order> CreateOrderForCart(IList<OrderItem> items, ApplicationUser user)
+        {
+            using (var dc = DataContext())
+            {
+                var order = new Order
+                {
+                    Type = OrderType.BuyNow,
+                    UserId = user.Id,
+                    Status = OrderStatus.InProgress,
+                    PaymentMethod = PaymentMethod.Knet,
+                    AllowPhoneSms = false,
+                    Address = ShippingAddress.Create(user),
+                    Items = items,
+                    Logs = CreateOrderLogs(user.Id)
+                };
+
+                dc.Orders.Add(order);
+                await dc.SaveChangesAsync();
+                return order;
+            }
+        }
+
         public async Task<Order> CreateOrderForSubscription(Subscription subscription, ApplicationUser user, PaymentMethod paymentMethod)
         {
             using (var dc = DataContext())
@@ -331,7 +353,7 @@ namespace Mzayad.Services
         {
             foreach (var item in order.Items)
             {
-                if (item.AuctionId.HasValue && !item.Auction.WonByBidId.HasValue)
+                if (order.Type == OrderType.BuyNow && item.AuctionId.HasValue)
                 {
                     item.Auction.BuyNowQuantity -= 1;
                 }

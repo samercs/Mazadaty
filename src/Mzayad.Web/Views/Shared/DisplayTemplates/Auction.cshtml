@@ -31,6 +31,9 @@
                     <div class="buy-now-price">
                         @StringFormatter.ObjectFormat(Global.BuyNowPrice, new { BuyNowPrice = CurrencyFormatter.Format(Model.BuyNowPrice) })
                     </div>
+                    <div class="buy-now-price">
+                        @StringFormatter.ObjectFormat(Global.BuyNowQuntity, new {  BuyNowQuntity = Model.BuyNowQuantity })
+                    </div>
                 }            
             </div>
         </div>

@@ -1,6 +1,7 @@
 ﻿using Mzayad.Data;
 using Mzayad.Services.Activity;
 using Mzayad.Services.Queues;
+using Mzayad.Web.Core.ShoppingCart;
 using OrangeJetpack.Base.Web.Caching;
 using OrangeJetpack.Cms.Client;
 using OrangeJetpack.Services.Client.Messaging;
@@ -20,6 +21,7 @@ namespace Mzayad.Web.Core.Services
         public IStorageService StorageService { get; }
         public ICmsClient CmsClient { get; }
         public IQueueService QueueService { get; }
+        public ICartService CartService { get; }
 
         public AppServices(
             IDataContextFactory dataContextFactory,
@@ -31,7 +33,8 @@ namespace Mzayad.Web.Core.Services
             IRequestService requestService,
             IStorageService storageService,
             ICmsClient cmsClient,
-            IQueueService queueService)
+            IQueueService queueService,
+            ICartService cartService)
         {
             DataContextFactory = dataContextFactory;
             AppSettings = appSettings;
@@ -43,6 +46,7 @@ namespace Mzayad.Web.Core.Services
             StorageService = storageService;
             CmsClient = cmsClient;
             QueueService = queueService;
+            CartService = cartService;
         }
     }
 }

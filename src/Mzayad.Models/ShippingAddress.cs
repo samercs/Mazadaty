@@ -20,14 +20,14 @@ namespace Mzayad.Models
         {
             return new ShippingAddress
             {
-                AddressLine1 = user.Address.AddressLine1,
-                AddressLine2 = user.Address.AddressLine2,
-                AddressLine3 = user.Address.AddressLine3,
-                AddressLine4 = user.Address.AddressLine4,
-                CityArea = user.Address.CityArea,
-                CountryCode = user.Address.CountryCode,
-                PostalCode = user.Address.PostalCode,
-                StateProvince = user.Address.StateProvince,
+                AddressLine1 = user.Address?.AddressLine1 ?? "",
+                AddressLine2 = user.Address?.AddressLine2 ?? "",
+                AddressLine3 = user.Address?.AddressLine3 ?? "",
+                AddressLine4 = user.Address?.AddressLine4 ?? "",
+                CityArea = user.Address?.CityArea ?? "",
+                CountryCode = user.Address?.CountryCode ?? "",
+                PostalCode = user.Address?.PostalCode ?? "",
+                StateProvince = user.Address?.StateProvince ?? "",
 
                 Name = NameFormatter.GetFullName(user.FirstName, user.LastName),
                 PhoneCountryCode = user.PhoneCountryCode,
