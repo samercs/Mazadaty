@@ -331,7 +331,7 @@ namespace Mzayad.Services
         {
             foreach (var item in order.Items)
             {
-                if (item.AuctionId.HasValue)
+                if (item.AuctionId.HasValue && !item.Auction.WonByBidId.HasValue)
                 {
                     item.Auction.BuyNowQuantity -= 1;
                 }
