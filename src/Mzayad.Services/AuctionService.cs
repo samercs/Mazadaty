@@ -64,7 +64,7 @@ namespace Mzayad.Services
                     .ToListAsync();
 
                 auctions = auctions
-                    .Where(i=>i.IsLive())
+                    .Where(i => i.IsLive())
                     .OrderBy(i => i.StartUtc.AddMinutes(i.Duration)).ToList();
                 return LocalizeAuctions(language, auctions);
             }
@@ -123,7 +123,7 @@ namespace Mzayad.Services
                     .Where(i => i.IsDeleted == false)
                     .Where(i => i.BuyNowEnabled)
                     .Where(i => i.BuyNowQuantity > 0)
-                    .Where(i => i.Product.Quantity > 0)
+                    .Where(i => i.Status == AuctionStatus.Closed)
                     .Include(i => i.Product.ProductImages)
                     .Include(i => i.Product.Sponsor)
                     .ToListAsync();
@@ -293,7 +293,7 @@ namespace Mzayad.Services
 
                 if (winningBid != null)
                 {
-                    return  await _orderService.CreateOrderForAuction(auction, winningBid);
+                    return await _orderService.CreateOrderForAuction(auction, winningBid);
                 }
 
                 return null;
