@@ -161,6 +161,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             product.VideoUrl = model.Product.VideoUrl;
             product.Notes = model.Product.Notes;
             product.SponsorId = model.Product.SponsorId;
+            product.WaiveShippingCost = model.Product.WaiveShippingCost;
 
             var specificationsContent = GetSpecificationsLocalizedContent(data);
             var productSpecifications = GetProductSpecifications(model, product, specificationsContent);

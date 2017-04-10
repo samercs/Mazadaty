@@ -1,4 +1,5 @@
-﻿using Mzayad.Models;
+﻿using System.Linq;
+using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Models.Payment;
 using Mzayad.Services;
@@ -131,7 +132,9 @@ namespace Mzayad.Web.Controllers
             order.Address.StateProvince = model.AddressViewModel.StateProvince;
 
             // add local shipping charges
-            order.Shipping = AppSettings.LocalShipping;
+            var applayShippingCost = order.Items.Any(i => !i.Product.WaiveShippingCost);
+            order.Shipping = applayShippingCost ? AppSettings.LocalShipping : 0;
+
             order.RecalculateTotal();
 
             await _orderService.Update(order);

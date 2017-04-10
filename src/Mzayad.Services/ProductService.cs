@@ -294,5 +294,15 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<IEnumerable<Product>> GetProductsByIds(IList<int> ids)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.Products
+                    .Where(i => ids.Contains(i.ProductId))
+                    .Where(i => i.IsDeleted == false)
+                    .ToListAsync();
+            }
+        }
     }
 }

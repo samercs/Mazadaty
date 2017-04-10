@@ -121,6 +121,13 @@
                             @Html.ValidationMessageFor(i => i.Product.Quantity, "Please enter a quantity.")
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(i => i.Product.WaiveShippingCost) Waive Shipping Cost
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </section>
             <section>
