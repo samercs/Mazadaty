@@ -31,10 +31,16 @@ namespace Mzayad.Web.Areas.Api.Controllers
             _knetService = new KnetService(DataContextFactory);
         }
 
-        [Route("shipping")]
-        public IHttpActionResult GetShipping()
+        [Route("{orderId:int}/shipping")]
+        public async Task<IHttpActionResult> GetShipping(int orderId)
         {
-            return Ok(AppSettings.LocalShipping);
+            var order = await _orderService.GetById(orderId);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            var applayShippingCost = order.Items.Any(i => !i.Product.WaiveShippingCost);
+            return Ok(applayShippingCost ? AppSettings.LocalShipping : 0);
         }
 
         [Route("create")]
