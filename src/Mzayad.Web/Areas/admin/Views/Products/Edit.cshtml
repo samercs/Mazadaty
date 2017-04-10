@@ -207,8 +207,9 @@
 
             $(function() {
                 bindEvents();
-                initCkEditor();
                 initSpecifications();
+                initCkEditor();
+                
             });
 
             var bindEvents = function() {
@@ -310,7 +311,7 @@
                 });
 
                 // CK editor breaks localized content validation so disable with hack
-                var hiddenValidator = $("input[name='Product.Description']");
+                var hiddenValidator = $("textarea[name^='Description']");
                 if (hiddenValidator.val().length === 0) {
                     hiddenValidator.val("...");
                     hiddenValidator.siblings(".localized-input").val("<p></p>");
