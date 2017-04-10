@@ -23,23 +23,21 @@ namespace Mzayad.Web.Areas.Api.Controllers
         private readonly AuctionService _auctionService;
         private readonly OrderService _orderService;
         private readonly KnetService _knetService;
+        private readonly ProductService _productService;
 
         public OrdersController(IAppServices appServices) : base(appServices)
         {
             _auctionService = new AuctionService(DataContextFactory, appServices.QueueService);
             _orderService = new OrderService(DataContextFactory);
             _knetService = new KnetService(DataContextFactory);
+            _productService = new ProductService(DataContextFactory);
         }
 
-        [Route("{orderId:int}/shipping")]
-        public async Task<IHttpActionResult> GetShipping(int orderId)
+        [Route("shipping")]
+        public async Task<IHttpActionResult> GetShipping([FromUri]IList<int> productIds)
         {
-            var order = await _orderService.GetById(orderId);
-            if (order == null)
-            {
-                return NotFound();
-            }
-            var applayShippingCost = order.Items.Any(i => !i.Product.WaiveShippingCost);
+            var products = await _productService.GetProductsByIds(productIds);
+            var applayShippingCost = products.Any(i => !i.WaiveShippingCost);
             return Ok(applayShippingCost ? AppSettings.LocalShipping : 0);
         }
 

@@ -408,6 +408,7 @@
     <Compile Include="Areas\Api\Models\Auctions\AuctionModel.cs" />
     <Compile Include="Areas\Api\Models\Friends\FriendRequestModel.cs" />
     <Compile Include="Areas\Api\Models\Friends\UpdateFriendRequestModel.cs" />
+    <Compile Include="Areas\Api\Models\Orders\GetShippingViewModel.cs" />
     <Compile Include="Areas\Api\Models\Orders\KnetTransactionModel.cs" />
     <Compile Include="Areas\Api\Models\Orders\OrderCreateResult.cs" />
     <Compile Include="Areas\Api\Models\Orders\OrderDetailModel.cs" />
