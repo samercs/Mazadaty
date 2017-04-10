@@ -91,7 +91,7 @@ namespace Mzayad.Services
             {
                 var order = new Order
                 {
-                    Type = OrderType.Auction,
+                    Type = OrderType.BuyNow,
                     UserId = user.Id,
                     Status = OrderStatus.InProgress,
                     PaymentMethod = PaymentMethod.Knet,
