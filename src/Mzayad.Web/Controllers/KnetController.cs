@@ -72,15 +72,13 @@ namespace Mzayad.Web.Controllers
             if (transaction.Order.IsSubscription)
             {
                 await _orderService.CompleteSubscriptionOrder(transaction.Order, null, AuthService.UserHostAddress());
+                // TODO: SendNotification(transaction);
+                var prizeUrl = await InsertUserPrize();
+                var redirectUrl = Url.Action("Success", "Orders", new { transaction.OrderId, transaction.PaymentId, Language, redirectUrl = prizeUrl }, RequestService.GetUrlScheme());
+                return Redirect(redirectUrl);
             }
-
-            // TODO: SendNotification(transaction);
-            var prizeUrl = await InsertUserPrize();
-            var redirectUrl = Url.Action("Success", "Orders", new { transaction.OrderId, transaction.PaymentId, Language, redirectUrl = prizeUrl }, RequestService.GetUrlScheme());
-            var redirectResponse = string.Format("REDIRECT={0}", redirectUrl);
-            //return Content(redirectResponse);
-
-            return Redirect(redirectUrl);
+            var successUrl = Url.Action("Success", "Orders", new { transaction.OrderId, transaction.PaymentId, Language }, RequestService.GetUrlScheme());
+            return Redirect(successUrl);
         }
 
         private async Task<string> InsertUserPrize()

@@ -1,6 +1,7 @@
 ﻿using OrangeJetpack.Base.Data;
 using OrangeJetpack.Localization;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -9,13 +10,13 @@ namespace Mzayad.Models
 {
     public class Product : EntityBase, ILocalizable
     {
-        [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProductId { get; set; }
 
         [Required, Localized]
         public string Name { get; set; }
 
-        [Required,Localized]
+        [Required, Localized]
         [UIHint("TextArea")]
         public string Description { get; set; }
 
@@ -31,6 +32,9 @@ namespace Mzayad.Models
         public int? SponsorId { get; set; }
         public string Notes { get; set; }
 
+        [DefaultValue(false)]
+        public bool WaiveShippingCost { get; set; }
+
         [ForeignKey("CreatedByUserId")]
         public virtual ApplicationUser CreatedByUser { get; set; }
 
@@ -38,7 +42,7 @@ namespace Mzayad.Models
         public virtual ICollection<ProductImage> ProductImages { get; set; }
         public virtual ICollection<ProductSpecification> ProductSpecifications { get; set; }
         [ForeignKey("SponsorId")]
-        public virtual Sponsor Sponsor { get; set; } 
+        public virtual Sponsor Sponsor { get; set; }
 
         public ProductImage MainImage()
         {

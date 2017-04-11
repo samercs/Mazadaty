@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Web.Mvc;
+using Mzayad.Web.Core.ShoppingCart;
 
 namespace Mzayad.Web.Controllers
 {
@@ -31,6 +32,7 @@ namespace Mzayad.Web.Controllers
         protected readonly IStorageService StorageService;
         protected readonly ICmsClient CmsClient;
         protected readonly EmailTemplateService EmailTemplateService;
+        protected readonly ICartService CartService;
 
         protected ApplicationController(IAppServices appServices)
         {
@@ -43,14 +45,14 @@ namespace Mzayad.Web.Controllers
             RequestService = appServices.RequestService;
             StorageService = appServices.StorageService;
             CmsClient = appServices.CmsClient;
-
-            EmailTemplateService = new EmailTemplateService(appServices.DataContextFactory);
+            EmailTemplateService =new EmailTemplateService(appServices.DataContextFactory);
+            CartService = appServices.CartService;
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             Language = ViewBag.Language = GetLanguageCode();
-
+            ViewBag.ShoppingCart = CartService.GetCart();
             base.OnActionExecuting(filterContext);
         }
 

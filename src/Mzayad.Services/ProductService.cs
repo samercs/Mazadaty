@@ -279,5 +279,30 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<IEnumerable<Product>> GetProductsByIdList(IEnumerable<int> ids)
+        {
+            using (var dc = DataContext())
+            {
+                var products = await dc.Products
+                    .Include(i => i.Categories)
+                    .Include(i => i.ProductImages)
+                    .Include(i => i.ProductSpecifications)
+                    .Where(i => ids.Contains(i.ProductId))
+                    .ToListAsync();
+
+                return products;
+            }
+        }
+
+        public async Task<IEnumerable<Product>> GetProductsByIds(IList<int> ids)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.Products
+                    .Where(i => ids.Contains(i.ProductId))
+                    .Where(i => i.IsDeleted == false)
+                    .ToListAsync();
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Mzayad.Models;
+﻿using System.Linq;
+using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Models.Payment;
 using Mzayad.Services;
@@ -46,26 +47,26 @@ namespace Mzayad.Web.Controllers
 
         [Route("buy-now/{auctionId:int}")]
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> BuyNow(int auctionId, FormCollection formCollection)
+        public async Task<ActionResult> BuyNow(int auctionId, string action, FormCollection formCollection)
         {
             var auction = await _auctionService.GetAuction(auctionId, Language);
             if (auction == null)
             {
                 return HttpNotFound();
             }
-
             if (!auction.BuyNowAvailable())
             {
                 SetStatusMessage(Global.OutOfStockErrorMessage, StatusMessageType.Error);
                 return RedirectToAction("BuyNow", new { auction.AuctionId });
             }
-
-            var user = await AuthService.CurrentUser();
-            user.Address = await _addressService.GetAddress(user.AddressId);
-
-            var order = await _orderService.CreateOrderForBuyNow(auction, user);
-
-            return RedirectToAction("Shipping", new { order.OrderId });
+            if (action.Equals("1"))// check out
+            {
+                var user = await AuthService.CurrentUser();
+                user.Address = await _addressService.GetAddress(user.AddressId);
+                var order = await _orderService.CreateOrderForBuyNow(auction, user);
+                return RedirectToAction("Shipping", new { order.OrderId });
+            }
+            return RedirectToAction("AddToCart", "Shop", new { auctionId });
         }
 
         [Route("auction/{orderId:int}")]
@@ -131,7 +132,9 @@ namespace Mzayad.Web.Controllers
             order.Address.StateProvince = model.AddressViewModel.StateProvince;
 
             // add local shipping charges
-            order.Shipping = AppSettings.LocalShipping;
+            var applayShippingCost = order.Items.Any(i => !i.Product.WaiveShippingCost);
+            order.Shipping = applayShippingCost ? AppSettings.LocalShipping : 0;
+
             order.RecalculateTotal();
 
             await _orderService.Update(order);
@@ -200,6 +203,9 @@ namespace Mzayad.Web.Controllers
                 KnetTransaction = knetTransaction,
                 RedirectUrl = redirectUrl
             };
+
+            var shoppingCart = CartService.GetCart();
+            CartService.ClearCart(shoppingCart);
 
             return View(viewModel);
         }

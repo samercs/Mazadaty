@@ -1,0 +1,111 @@
+﻿@using Mzayad.Web.Models.Checkout
+
+@model Mzayad.Web.Models.Checkout.CheckoutViewModel
+@{
+    ViewBag.Title = Global.Checkout;
+}
+
+@section styles {
+    <style>
+        .form-group {
+            transition: opacity .5s ease-in-out;
+        }
+
+            .form-group.disabled {
+                opacity: 0.25;
+            }
+    </style>
+}
+
+<div class="row">
+    <div class="@Html.Css().FormNarrow">
+        @using (Html.BeginForm("SignIn", "Checkout"))
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, Global.Email).Required()
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", autofocus = "autofocus" })
+                    @Html.ValidationMessageFor(m => m.Email, Global.EmailRequiredErrorMessage)
+                    <span class="help-block form-indent">@Global.CheckoutEmailHintLabel</span>
+                </div>
+                <div class="form-group">
+                    <label>@Global.HavePasswordQuestion</label>
+                    <div class="radio form-indent">
+                        <label>
+                            @Html.RadioButtonFor(m => m.CheckoutMode, CheckoutMode.AsUser)
+                            @Global.CheckoutUserWithPassword
+                        </label>
+                    </div>
+                    <div class="radio form-indent">
+                        <label>
+                            @Html.RadioButtonFor(m => m.CheckoutMode, CheckoutMode.AsNewUser)
+                            @Global.CheckoutUserCreatePassword
+                        </label>
+                    </div>
+                    <div class="radio form-indent">
+                        <label>
+                            @Html.RadioButtonFor(m => m.CheckoutMode, CheckoutMode.AsGuest)
+                            @Global.CheckoutUserAsGuest
+                        </label>
+                    </div>
+
+                </div>
+                <div id="password-group" class="form-group">
+                    @Html.LabelFor(m => m.Password, Global.Password).Required()
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, Global.PasswordRequiredErrorMessage)
+                    <div class="text-small text-right" style="margin: 6px 0">@Html.ActionLink(Global.NeedPasswordQuestion, "NeedPassword", "Account")</div>
+                </div>
+            </section>
+
+            <section class="form-buttons">
+                <button type="submit" class="btn btn-default">@Global.Continue</button>
+            </section>
+        }
+
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/js/validate")
+
+    <script>
+        (function($) {
+
+            $(function() {
+                bindEvents();
+            });
+
+            var bindEvents = function() {
+                $("input[name='CheckoutMode']").on("change", togglePasswordGroup);
+            };
+
+            var togglePasswordGroup = function() {
+                var val = $(this).val();
+                if (val === "AsGuest") {
+                    disablePasswordGroup();
+                } else {
+                    enablePasswordGroup();
+                }
+            };
+
+            var disablePasswordGroup = function() {
+                $("#password-group")
+                    .addClass("disabled")
+                    .find("input[type='password']")
+                    .prop("disabled", true);
+            };
+
+            var enablePasswordGroup = function() {
+                $("#password-group")
+                    .removeClass("disabled")
+                    .find("input[type='password']")
+                    .prop("disabled", false)
+                    .focus();
+            };
+
+        })(jQuery);
+    </script>
+}

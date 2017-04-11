@@ -408,6 +408,7 @@
     <Compile Include="Areas\Api\Models\Auctions\AuctionModel.cs" />
     <Compile Include="Areas\Api\Models\Friends\FriendRequestModel.cs" />
     <Compile Include="Areas\Api\Models\Friends\UpdateFriendRequestModel.cs" />
+    <Compile Include="Areas\Api\Models\Orders\GetShippingViewModel.cs" />
     <Compile Include="Areas\Api\Models\Orders\KnetTransactionModel.cs" />
     <Compile Include="Areas\Api\Models\Orders\OrderCreateResult.cs" />
     <Compile Include="Areas\Api\Models\Orders\OrderDetailModel.cs" />
@@ -435,6 +436,7 @@
     <Compile Include="Controllers\AuctionsController.cs" />
     <Compile Include="Controllers\AutoBidController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\FriendsController.cs" />
     <Compile Include="Controllers\KnetController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
@@ -442,6 +444,7 @@
     <Compile Include="Controllers\PrizeController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\QueueTestController.cs" />
+    <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Controllers\SubscriptionsController.cs" />
     <Compile Include="Controllers\WishListController.cs" />
     <Compile Include="Core\ActionResults\ExcelResult.cs" />
@@ -462,8 +465,14 @@
     <Compile Include="Core\Identity\IdentityToken.cs" />
     <Compile Include="Core\ModelBinder\DateTimeModelBinder.cs" />
     <Compile Include="Core\Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Core\Services\HttpContextService.cs" />
+    <Compile Include="Core\Services\IHttpContextService.cs" />
     <Compile Include="Core\Services\IRequestService.cs" />
     <Compile Include="Core\Services\RequestService.cs" />
+    <Compile Include="Core\ShoppingCart\CartItem.cs" />
+    <Compile Include="Core\ShoppingCart\CartService.cs" />
+    <Compile Include="Core\ShoppingCart\ICartService.cs" />
+    <Compile Include="Core\ShoppingCart\ShoppingCart.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
@@ -498,6 +507,8 @@
     <Compile Include="Models\Auctions\ClosedAuctionsViewModel.cs" />
     <Compile Include="Models\Auctions\ProductSpecificationViewModel.cs" />
     <Compile Include="Models\BidModel.cs" />
+    <Compile Include="Models\Checkout\CheckoutMode.cs" />
+    <Compile Include="Models\Checkout\CheckoutViewModel.cs" />
     <Compile Include="Models\DateRangeModel.cs" />
     <Compile Include="Models\EditAutoBidViewModel.cs" />
     <Compile Include="Models\Friends\SendMessageViewModel.cs" />
@@ -860,6 +871,8 @@
     <Content Include="Views\User\Inbox.cshtml" />
     <Content Include="Views\User\BuyPremiumAvatar.cshtml" />
     <Content Include="Views\Shared\_layout_friends.cshtml" />
+    <Content Include="Views\Shared\_Layout_NavbarCart.cshtml" />
+    <Content Include="Views\Shop\Cart.cshtml" />
     <TypeScriptCompile Include="Scripts\auctions.ts" />
     <TypeScriptCompile Include="Scripts\site.ts" />
     <Content Include="Scripts\wow.js" />
@@ -878,6 +891,7 @@
     <Content Include="Views\Friends\Requests.cshtml" />
     <Content Include="Views\Friends\SendMessage.cshtml" />
     <Content Include="Views\Friends\Search.cshtml" />
+    <Content Include="Views\Checkout\SignIn.cshtml" />
     <None Include="Views\Home\SignalR.cshtml" />
     <Content Include="404.html" />
     <Content Include="500.html" />

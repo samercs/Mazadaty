@@ -124,6 +124,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add To Cart.
+        /// </summary>
+        public static string AddToCart {
+            get {
+                return ResourceManager.GetString("AddToCart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add to Wishlist.
         /// </summary>
         public static string AddToWishList {
@@ -448,6 +457,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Buy Now Quntity: {BuyNowQuntity}.
+        /// </summary>
+        public static string BuyNowQuntity {
+            get {
+                return ResourceManager.GetString("BuyNowQuntity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Buy Now {BuyNowPrice}.
         /// </summary>
         public static string BuyNowWithPrice {
@@ -480,6 +498,15 @@ namespace Mzayad.Web.Resources {
         public static string CancelRequest {
             get {
                 return ResourceManager.GetString("CancelRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your shopping cart currently has no items..
+        /// </summary>
+        public static string CartIsEmptyMessage {
+            get {
+                return ResourceManager.GetString("CartIsEmptyMessage", resourceCulture);
             }
         }
         
@@ -525,6 +552,51 @@ namespace Mzayad.Web.Resources {
         public static string Chat {
             get {
                 return ResourceManager.GetString("Chat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checkout.
+        /// </summary>
+        public static string Checkout {
+            get {
+                return ResourceManager.GetString("Checkout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We&apos;ll send your order confirmation to this email address..
+        /// </summary>
+        public static string CheckoutEmailHintLabel {
+            get {
+                return ResourceManager.GetString("CheckoutEmailHintLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No, checkout as guest.
+        /// </summary>
+        public static string CheckoutUserAsGuest {
+            get {
+                return ResourceManager.GetString("CheckoutUserAsGuest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No, but I will create one.
+        /// </summary>
+        public static string CheckoutUserCreatePassword {
+            get {
+                return ResourceManager.GetString("CheckoutUserCreatePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes, sign in with password.
+        /// </summary>
+        public static string CheckoutUserWithPassword {
+            get {
+                return ResourceManager.GetString("CheckoutUserWithPassword", resourceCulture);
             }
         }
         
@@ -988,6 +1060,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you have a password?.
+        /// </summary>
+        public static string HavePasswordQuestion {
+            get {
+                return ResourceManager.GetString("HavePasswordQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hello {0}.
         /// </summary>
         public static string HelloFirstName {
@@ -1290,6 +1371,15 @@ namespace Mzayad.Web.Resources {
         public static string MyAvatars {
             get {
                 return ResourceManager.GetString("MyAvatars", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My Friends.
+        /// </summary>
+        public static string MyFriends {
+            get {
+                return ResourceManager.GetString("MyFriends", resourceCulture);
             }
         }
         
@@ -1744,6 +1834,24 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;strong&gt;{0}&lt;/strong&gt; added to shopping bag..
+        /// </summary>
+        public static string ProductAddedToCartAcknowledgement {
+            get {
+                return ResourceManager.GetString("ProductAddedToCartAcknowledgement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;strong&gt;{0}&lt;/strong&gt; already exist in your shopping bag. You can&apos;t add the same product..
+        /// </summary>
+        public static string ProductExistInCart {
+            get {
+                return ResourceManager.GetString("ProductExistInCart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Product or Item Name.
         /// </summary>
         public static string ProductOrItemName {
@@ -1776,6 +1884,15 @@ namespace Mzayad.Web.Resources {
         public static string Quantity {
             get {
                 return ResourceManager.GetString("Quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Q.ty: &lt;strong&gt;{0}&lt;/strong&gt;.
+        /// </summary>
+        public static string QuantityLabelWithValue {
+            get {
+                return ResourceManager.GetString("QuantityLabelWithValue", resourceCulture);
             }
         }
         
@@ -2032,6 +2149,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Saving.
+        /// </summary>
+        public static string Saving {
+            get {
+                return ResourceManager.GetString("Saving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seconds.
         /// </summary>
         public static string Seconds {
@@ -2100,6 +2226,15 @@ namespace Mzayad.Web.Resources {
         public static string ShippingAddress {
             get {
                 return ResourceManager.GetString("ShippingAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shopping Cart.
+        /// </summary>
+        public static string ShoppingCart {
+            get {
+                return ResourceManager.GetString("ShoppingCart", resourceCulture);
             }
         }
         
@@ -2428,6 +2563,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total: &lt;strong&gt;{0}&lt;/strong&gt;.
+        /// </summary>
+        public static string TotalLabelWithValue {
+            get {
+                return ResourceManager.GetString("TotalLabelWithValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trophies.
         /// </summary>
         public static string Trophies {
@@ -2460,6 +2604,15 @@ namespace Mzayad.Web.Resources {
         public static string UAE {
             get {
                 return ResourceManager.GetString("UAE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unity: &lt;strong&gt;{0}&lt;/strong&gt;.
+        /// </summary>
+        public static string UnityLabelWithValue {
+            get {
+                return ResourceManager.GetString("UnityLabelWithValue", resourceCulture);
             }
         }
         
@@ -2622,6 +2775,15 @@ namespace Mzayad.Web.Resources {
         public static string Yes {
             get {
                 return ResourceManager.GetString("Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zeedli Users.
+        /// </summary>
+        public static string ZeedliUsers {
+            get {
+                return ResourceManager.GetString("ZeedliUsers", resourceCulture);
             }
         }
         

@@ -31,7 +31,7 @@
     </style>
 }
 
-@helper RenderSpecification(EditViewProductSpecification model)
+@helper RenderSpecification(EditViewProductSpecification model) 
 {
 
     <div class="form-group specification-group">
@@ -121,6 +121,13 @@
                             @Html.ValidationMessageFor(i => i.Product.Quantity, "Please enter a quantity.")
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(i => i.Product.WaiveShippingCost) Waive Shipping Cost
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </section>
             <section>
@@ -200,8 +207,9 @@
 
             $(function() {
                 bindEvents();
-                initCkEditor();
                 initSpecifications();
+                initCkEditor();
+                
             });
 
             var bindEvents = function() {
@@ -303,7 +311,7 @@
                 });
 
                 // CK editor breaks localized content validation so disable with hack
-                var hiddenValidator = $("input[name='Product.Description']");
+                var hiddenValidator = $("textarea[name^='Description']");
                 if (hiddenValidator.val().length === 0) {
                     hiddenValidator.val("...");
                     hiddenValidator.siblings(".localized-input").val("<p></p>");

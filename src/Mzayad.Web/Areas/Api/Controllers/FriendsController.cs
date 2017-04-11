@@ -1,13 +1,12 @@
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Http;
 using Mzayad.Models;
 using Mzayad.Models.Enums;
 using Mzayad.Services;
 using Mzayad.Services.Identity;
 using Mzayad.Web.Areas.Api.Models.Friends;
 using Mzayad.Web.Core.Services;
-using Mzayad.Web.Models.Friends;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace Mzayad.Web.Areas.Api.Controllers
 {

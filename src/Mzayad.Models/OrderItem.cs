@@ -23,12 +23,6 @@ namespace Mzayad.Models
         public virtual Auction Auction { get; set; }
 
         [NotMapped]
-        public decimal TotalPrice
-        {
-            get
-            {
-                return Quantity * ItemPrice;
-            }
-        }
+        public decimal TotalPrice => Quantity * ItemPrice;
     }
 }
