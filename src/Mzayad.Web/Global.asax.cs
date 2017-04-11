@@ -15,6 +15,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Mindscape.Raygun4Net;
 
 namespace Mzayad.Web
 {
@@ -73,7 +74,16 @@ namespace Mzayad.Web
 
         protected void Application_AcquireRequestState(object sender, EventArgs e)
         {
-            var cultureInfo = GetCultureFromRoute() ?? GetCultureFromCookie() ?? GetCultureFromBrowser();
+            var cultureInfo = new CultureInfo("en");
+
+            try
+            {
+                cultureInfo = GetCultureFromRoute() ?? GetCultureFromCookie() ?? GetCultureFromBrowser();
+            }
+            catch (Exception ex)
+            {
+                new RaygunClient().Send(ex);
+            }
 
             cultureInfo.DateTimeFormat.Calendar = new GregorianCalendar();
             cultureInfo.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
