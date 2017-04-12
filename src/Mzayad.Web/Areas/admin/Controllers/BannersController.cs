@@ -47,7 +47,7 @@ namespace Mzayad.Web.Areas.Admin.Controllers
             banners = banners.Localize(Language, LocalizationDepth.OneLevel);
             return banners;
         }
-
+        [Route("json")]
         public async Task<JsonResult> GetBanners([DataSourceRequest] DataSourceRequest request)
         {
             var result = await GetBanners();
