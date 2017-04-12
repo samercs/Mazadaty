@@ -420,6 +420,15 @@ body {
 #navbar-cart a.btn {
   color: #fff !important;
 }
+.badge-shopping-cart {
+  position: absolute;
+  top: 7px;
+  left: 36px;
+  z-index: 10000;
+}
+.shopping-cart-link {
+  position: relative;
+}
 form section,
 section.form-section {
   background: #f5f5f5;
