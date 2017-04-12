@@ -4,27 +4,18 @@
     var shoppingCart = ViewBag.ShoppingCart as ShoppingCart;
 }
 
-@if (shoppingCart == null || !shoppingCart.Items.Any())
-{
-    <li class="visible-xs">
-        <a class="navbar-link" href="@Url.Action("Cart", "Shop", new {Area = ""})">@Global.ShoppingCart [0]</a>
-    </li>
-    <li class="dropdown hidden-xs">
-        <a href="#" class="navbar-link" >
-            @shoppingCart.Items.Sum(i => i.Quantity) <i class="fa fa-shopping-cart icon-shopping-cart"></i> <span>@Global.ShoppingCart</span>
-        </a>
-    </li>
-}
-
 
 @if (shoppingCart != null && shoppingCart.Items.Any())
 {
     <li class="visible-xs">
-        <a class="navbar-link" href="@Url.Action("Cart", "Shop", new {Area = ""})">@Global.ShoppingCart [@shoppingCart.Items.Sum(i => i.Quantity)]</a>
+        @*<a class="navbar-link" href="@Url.Action("Cart", "Shop", new {Area = ""})"> <i class="fa fa-shopping-cart icon-shopping-cart"></i></a>*@
+        <a href="@Url.Action("Cart", "Shop", new {Area = ""})" class="navbar-link dropdown-toggle shopping-cart-link" data-toggle="dropdown">
+            <span class="badge badge-shopping-cart">@shoppingCart.Items.Sum(i => i.Quantity)</span><i class="fa fa-2x fa-shopping-cart icon-shopping-cart"></i>
+        </a>
     </li>
     <li class="dropdown hidden-xs">
-        <a href="#" class="navbar-link dropdown-toggle" data-toggle="dropdown">
-            @shoppingCart.Items.Sum(i => i.Quantity) <i class="fa fa-shopping-cart icon-shopping-cart"></i> <span>@Global.ShoppingCart</span><i class="fa fa-caret-down fa-pad-left"></i>
+        <a href="#" class="navbar-link dropdown-toggle shopping-cart-link" data-toggle="dropdown">
+            <span class="badge badge-shopping-cart">@shoppingCart.Items.Sum(i => i.Quantity)</span><i class="fa fa-2x fa-shopping-cart icon-shopping-cart"></i>
         </a>
         <ul id="navbar-cart" class="dropdown-menu">
             <li id="navbar-cart-items">
