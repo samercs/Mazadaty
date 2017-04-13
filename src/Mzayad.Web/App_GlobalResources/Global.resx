@@ -1032,4 +1032,7 @@
   <data name="ZeedliUsers" xml:space="preserve">
     <value>Zeedli Users</value>
   </data>
+  <data name="AuctionBuyNowWarnning" xml:space="preserve">
+    <value>We're sorry, the buy now feature is only available to subscribers at the moment, it will be available to all users at {0}</value>
+  </data>
 </root>

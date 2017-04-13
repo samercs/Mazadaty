@@ -214,6 +214,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to We&apos;re sorry, the buy now feature is only available to subscribers at the moment, it will be available to all users at {0}.
+        /// </summary>
+        public static string AuctionBuyNowWarnning {
+            get {
+                return ResourceManager.GetString("AuctionBuyNowWarnning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auctio History.
         /// </summary>
         public static string AuctionHistory {

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Models.Payment;
@@ -9,10 +10,12 @@ using Mzayad.Web.Core.Services;
 using Mzayad.Web.Models.Order;
 using Mzayad.Web.Models.Shared;
 using Mzayad.Web.Resources;
-using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Base.Web;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Mzayad.Models.Enums;
+using OrangeJetpack.Base.Core.Formatting;
+using DateTimeFormatter = Mzayad.Core.Formatting.DateTimeFormatter;
 using DetailsViewModel = Mzayad.Web.Models.Order.DetailsViewModel;
 
 namespace Mzayad.Web.Controllers
@@ -40,6 +43,24 @@ namespace Mzayad.Web.Controllers
             if (auction == null)
             {
                 return HttpNotFound();
+            }
+
+
+            var auctionCloseTime = auction.ClosedUtc ?? DateTime.UtcNow;
+            var closeHoure = DateTime.UtcNow.Subtract(auctionCloseTime).TotalHours;
+            if (closeHoure <= 2)
+            {
+                var user = await AuthService.CurrentUser();
+                if (user == null)
+                {
+                    SetStatusMessage(string.Format(Global.AuctionBuyNowWarnning, DateTimeFormatter.ToTimeOnly(auctionCloseTime.AddHours(3), DateTimeFormatter.Format.Full)), StatusMessageType.Warning);
+                    return View("Blank");
+                }
+                if (user.Subscription != UserSubscriptionStatus.Active)
+                {
+                    SetStatusMessage(string.Format(Global.AuctionBuyNowWarnning, DateTimeFormatter.ToTimeOnly(auctionCloseTime.AddHours(3), DateTimeFormatter.Format.Full)), StatusMessageType.Warning);
+                    return View("Blank");
+                }
             }
 
             return View(auction);
