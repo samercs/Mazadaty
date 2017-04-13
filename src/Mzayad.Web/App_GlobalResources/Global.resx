@@ -1032,4 +1032,7 @@
   <data name="ZeedliUsers" xml:space="preserve">
     <value>Zeedli Users</value>
   </data>
+  <data name="ClickToEdit" xml:space="preserve">
+    <value>Click to edit</value>
+  </data>
 </root>
