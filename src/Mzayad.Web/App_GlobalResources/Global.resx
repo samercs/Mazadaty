@@ -1032,4 +1032,7 @@
   <data name="ZeedliUsers" xml:space="preserve">
     <value>Zeedli Users</value>
   </data>
+  <data name="AuctionBidLimite" xml:space="preserve">
+    <value>Auction Bid Limit: {MaximumBid}</value>
+  </data>
 </root>

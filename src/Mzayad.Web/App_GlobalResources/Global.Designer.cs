@@ -214,6 +214,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auction Bid Limit: {MaximumBid}.
+        /// </summary>
+        public static string AuctionBidLimite {
+            get {
+                return ResourceManager.GetString("AuctionBidLimite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auctio History.
         /// </summary>
         public static string AuctionHistory {

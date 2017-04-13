@@ -1,4 +1,5 @@
-﻿@using Mzayad.Models.Enums
+﻿@using Mzayad.Core.Formatting
+@using Mzayad.Models.Enums
 @using Mzayad.Web.Core.Enums
 @using Mzayad.Web.Models.Auctions
 @using OrangeJetpack.Base.Core.Formatting
@@ -53,6 +54,12 @@ foreach (var country in countriesArray)
             <div class="auction-tile-retail-price">
                 @StringFormatter.ObjectFormat(Global.RetailPriceWithLabel, new { Model.RetailPrice })
             </div>
+            @if (Model.MaximumBid.HasValue)
+            {
+                <div class="auction-tile-retail-price" style="padding-top: 10px;">
+                    @StringFormatter.ObjectFormat(Global.AuctionBidLimite, new { MaximumBid = CurrencyFormatter.Format(Model.MaximumBid.Value) })
+                </div>
+            }
             @if (!string.IsNullOrWhiteSpace(Model.WonByAmount))
             {
                 <div class="auction-tile-winning-price">
