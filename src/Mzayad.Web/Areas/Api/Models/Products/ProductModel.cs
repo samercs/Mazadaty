@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using Mzayad.Models;
+using Mzayad.Web.Areas.Api.Models.Auctions;
 
 namespace Mzayad.Web.Areas.Api.Models.Products
 {
@@ -16,6 +19,8 @@ namespace Mzayad.Web.Areas.Api.Models.Products
         public string MainImageUrl { get; set; }
         public string Description { get; set; }
         public IEnumerable<ProductSpecificationModel> Specifications { get; set; }
+        public DateTime? AuctionCloseUtc { get; set; }
+        public int? BuyNowQuntity { get; set; }
 
         public static ProductModel Create(Product product)
         {
@@ -29,6 +34,7 @@ namespace Mzayad.Web.Areas.Api.Models.Products
                 MainImageUrl = product.MainImage().ImageMdUrl,
                 Description = product.Description,
                 Specifications = product.ProductSpecifications?.Select(ProductSpecificationModel.Create)
+
             };
         }
 
@@ -42,7 +48,9 @@ namespace Mzayad.Web.Areas.Api.Models.Products
                 BuyNowPrice = auction.BuyNowPrice,
                 SponsorName = auction.Product.SponsorId.HasValue ? auction.Product.Sponsor.Name : null,
                 MainImageUrl = auction.Product.MainImage().ImageMdUrl,
-                AuctioId = auction.AuctionId
+                AuctioId = auction.AuctionId,
+                AuctionCloseUtc = auction.ClosedUtc,
+                BuyNowQuntity = auction.BuyNowQuantity
             };
         }
     }
