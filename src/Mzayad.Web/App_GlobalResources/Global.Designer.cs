@@ -2140,20 +2140,20 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search Friend.
-        /// </summary>
-        public static string SearchFriend {
-            get {
-                return ResourceManager.GetString("SearchFriend", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Saving.
         /// </summary>
         public static string Saving {
             get {
                 return ResourceManager.GetString("Saving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Friend.
+        /// </summary>
+        public static string SearchFriend {
+            get {
+                return ResourceManager.GetString("SearchFriend", resourceCulture);
             }
         }
         
@@ -2608,7 +2608,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unity: &lt;strong&gt;{0}&lt;/strong&gt;.
+        ///   Looks up a localized string similar to Unit: &lt;strong&gt;{0}&lt;/strong&gt;.
         /// </summary>
         public static string UnityLabelWithValue {
             get {

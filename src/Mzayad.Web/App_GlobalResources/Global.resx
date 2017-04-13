@@ -997,7 +997,7 @@
     <value>Total: &lt;strong&gt;{0}&lt;/strong&gt;</value>
   </data>
   <data name="UnityLabelWithValue" xml:space="preserve">
-    <value>Unity: &lt;strong&gt;{0}&lt;/strong&gt;</value>
+    <value>Unit: &lt;strong&gt;{0}&lt;/strong&gt;</value>
   </data>
   <data name="CheckoutEmailHintLabel" xml:space="preserve">
     <value>We'll send your order confirmation to this email address.</value>
