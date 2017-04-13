@@ -425,6 +425,8 @@ body {
   top: 7px;
   left: 36px;
   z-index: 10000;
+  background-color: #f90000;
+  color: #fff;
 }
 .shopping-cart-link {
   position: relative;
