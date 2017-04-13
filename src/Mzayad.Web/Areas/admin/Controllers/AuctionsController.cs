@@ -258,6 +258,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             auction.BuyNowEnabled = model.Auction.BuyNowEnabled;
             auction.BuyNowPrice = model.Auction.BuyNowPrice;
             auction.BuyNowQuantity = model.Auction.BuyNowQuantity;
+            auction.AutoBidEnabled = model.Auction.AutoBidEnabled;
             if (countryList != null && countryList.Count < model.GccCountryList.Count())
             {
                 auction.CountryList = string.Join(",", countryList);
@@ -291,7 +292,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 }.Hydrate(_productService, auction);
                 return View(model);
             }
-            
+
 
         }
 

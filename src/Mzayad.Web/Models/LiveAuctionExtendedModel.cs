@@ -20,7 +20,8 @@ namespace Mzayad.Web.Models
                 StartUtc = auction.StartUtc,
                 Duration = auction.Duration,
                 BidIncrement = auction.BidIncrement,
-                Bids = auction.Bids != null ? BidModel.Create(auction.Bids) : null
+                Bids = auction.Bids != null ? BidModel.Create(auction.Bids) : null,
+                AutoBidEnabled = auction.AutoBidEnabled
             };
 
             model.LastBidAmount = model.Bids != null && model.Bids.Any() ? model.Bids.Max(i => i.BidAmount) : 0;
