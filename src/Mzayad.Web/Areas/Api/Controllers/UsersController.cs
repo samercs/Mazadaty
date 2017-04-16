@@ -737,7 +737,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 return ModelStateError(ModelState);
             }
             await _wishListService.Add(wishList);
-            return Ok(new {message  = "Wishlist has been added successfully."});
+            return Ok(new { message = "Wishlist has been added successfully." });
         }
 
         [Route("current/wishlist/{wishlistId:int}")]
@@ -789,7 +789,15 @@ namespace Mzayad.Web.Areas.Api.Controllers
 
                 await _notificationService.AddList(newNotifications);
             }
-            return Ok(new {message = "notifications has been updated successfully"});
+            return Ok(new { message = "notifications has been updated successfully" });
+        }
+
+        [Route("current/subscription")]
+        [HttpGet, Authorize]
+        public async Task<IHttpActionResult> GetSubscriptionStatus()
+        {
+            var user = await AuthService.CurrentUser();
+            return Ok(user.Subscription == UserSubscriptionStatus.Active);
         }
 
 

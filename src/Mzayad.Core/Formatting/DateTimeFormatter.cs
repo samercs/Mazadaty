@@ -32,5 +32,25 @@ namespace Mzayad.Core.Formatting
                     throw new NotImplementedException();
             }
         }
+
+        public static string ToTimeOnly(DateTime? dateTime, Format format = Format.Sortable)
+        {
+            if (!dateTime.HasValue)
+            {
+                return "";
+            }
+
+            var localTime = dateTime.Value.AddHours(3);
+
+            switch (format)
+            {
+                case Format.Sortable:
+                    return string.Format("{0:hh:mm tt} {1}", localTime, "AST");
+                case Format.Full:
+                    return string.Format("{0:hh:mm tt}", localTime);
+                default:
+                    throw new NotImplementedException();
+            }
+        }
     }
 }
