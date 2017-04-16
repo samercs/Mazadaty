@@ -3,6 +3,7 @@ using OrangeJetpack.Base.Data;
 using OrangeJetpack.Localization;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -39,6 +40,9 @@ namespace Mzayad.Models
         public string CreatedByUserId { get; set; }
 
         public DateTime? ClosedUtc { get; set; }
+
+        [DefaultValue(true)]
+        public bool AutoBidEnabled { get; set; }
 
         [ForeignKey("CreatedByUserId")]
         public virtual ApplicationUser CreatedByUser { get; set; }

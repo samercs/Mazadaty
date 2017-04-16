@@ -419,6 +419,10 @@
     <Compile Include="Migrations\201704091326405_AddWaiveShippingCostToProduct.Designer.cs">
       <DependentUpon>201704091326405_AddWaiveShippingCostToProduct.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704131205123_AddAutoBidEnabled.cs" />
+    <Compile Include="Migrations\201704131205123_AddAutoBidEnabled.Designer.cs">
+      <DependentUpon>201704131205123_AddAutoBidEnabled.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -690,6 +694,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704091326405_AddWaiveShippingCostToProduct.resx">
       <DependentUpon>201704091326405_AddWaiveShippingCostToProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704131205123_AddAutoBidEnabled.resx">
+      <DependentUpon>201704131205123_AddAutoBidEnabled.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

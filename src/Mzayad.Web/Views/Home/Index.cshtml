@@ -219,7 +219,7 @@ else
                                 @*<li data-bind="visible: buyNowEnabled">
                                     <a class="btn btn-default btn-rounded" data-bind="attr: { href: buyNowUrl }">@Global.BuyNow</a>
                                 </li>*@
-                                <li>
+                                <li data-bind="visible: autoBidEnabled">
                                     <a class="btn btn-unstyled btn-rounded" data-bind="click:openAutoBidModal ">@Global.AutoBid</a>
                                 </li>
                                 <li>
@@ -401,7 +401,8 @@ else
             var userCountry = "@Model.UserCountry";
             var userName = "@(Model.User?.UserName ?? "--Not Login")";
 
-            var Auction = function(data) {
+            var Auction = function (data) {
+                console.log('autoBidEnabled', data.autoBidEnabled);
                 var self = this;
 
                 self.auctionId = data.auctionId;
@@ -412,6 +413,7 @@ else
                 self.sponsorName = data.sponsorName;
                 self.maximumBid = data.maximumBid;
                 self.bidIncrement = data.bidIncrement;
+                self.autoBidEnabled = data.autoBidEnabled;
                 self.trySetBid = false;
 
                 self.bids = ko.observableArray(data.bids);

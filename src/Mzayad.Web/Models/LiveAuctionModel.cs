@@ -16,6 +16,7 @@ namespace Mzayad.Web.Models
         public DateTime StartUtc;
         public int Duration;
         public decimal BidIncrement;
+        public bool AutoBidEnabled { get; set; }
 
         public LinkedList<BidModel> Bids { get; set; }
 
@@ -27,7 +28,8 @@ namespace Mzayad.Web.Models
                 StartUtc = auction.StartUtc,
                 Duration = auction.Duration,
                 BidIncrement = auction.BidIncrement,
-                Bids = BidModel.Create(auction.Bids)
+                Bids = BidModel.Create(auction.Bids),
+                AutoBidEnabled = auction.AutoBidEnabled
             };
 
             var lastBid = model.Bids.FirstOrDefault();
@@ -44,7 +46,7 @@ namespace Mzayad.Web.Models
 
         internal int GetSecondsList()
         {
-           return (int)Math.Floor(StartUtc.AddMinutes(Duration).Subtract(DateTime.UtcNow).TotalSeconds);
+            return (int)Math.Floor(StartUtc.AddMinutes(Duration).Subtract(DateTime.UtcNow).TotalSeconds);
         }
 
         internal void UpdateSecondsLeft()

@@ -33,6 +33,8 @@ namespace Mzayad.Web.Models.Auctions
         public decimal BidIncrement { get; set; }
         public int Duration { get; set; }
 
+        public bool AutoBidEnabled { get; set; }
+
         public AuctionStatus AuctionStatus { get; set; }
         //public IReadOnlyCollection<AuctionImageViewModel> Images { get; set; }
         //public IReadOnlyCollection<ProductSpecificationViewModel> Specifications { get; set; }
@@ -61,7 +63,8 @@ namespace Mzayad.Web.Models.Auctions
                 MaximumBid = auction.MaximumBid,
                 BidIncrement = auction.BidIncrement,
                 Duration = auction.Duration,
-                AuctionStatus = auction.Status
+                AuctionStatus = auction.Status,
+                AutoBidEnabled = auction.AutoBidEnabled
                 //Images = GetImages(auction)
                 //Specifications = GetSpecifications(auction.Product.ProductSpecifications)
             };
