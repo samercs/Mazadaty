@@ -389,6 +389,7 @@
     <Compile Include="Areas\Admin\Models\WishList\EditViewModel.cs" />
     <Compile Include="Areas\Admin\Models\WishList\IndexViewModel.cs" />
     <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
+    <Compile Include="Areas\Api\Controllers\AdsController.cs" />
     <Compile Include="Areas\Api\Controllers\ApplicationApiController.cs" />
     <Compile Include="Areas\Api\Controllers\AuctionsController.cs" />
     <Compile Include="Areas\Api\Controllers\AutoBidsController.cs" />
@@ -405,6 +406,7 @@
     <Compile Include="Areas\Api\ErrorHandling\ApiErrorResult.cs" />
     <Compile Include="Areas\Api\ErrorHandling\ApiErrorType.cs" />
     <Compile Include="Areas\Api\Filters\LanguageFilter.cs" />
+    <Compile Include="Areas\Api\Models\Ads\AdsViewModel.cs" />
     <Compile Include="Areas\Api\Models\Auctions\AuctionModel.cs" />
     <Compile Include="Areas\Api\Models\Friends\FriendRequestModel.cs" />
     <Compile Include="Areas\Api\Models\Friends\UpdateFriendRequestModel.cs" />
