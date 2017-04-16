@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
+using Mzayad.Services;
 using Mzayad.Web.Areas.Api.Models.Ads;
 using Mzayad.Web.Core.Services;
 
@@ -12,19 +14,22 @@ namespace Mzayad.Web.Areas.Api.Controllers
     [RoutePrefix("api/ads")]
     public class AdsController : ApplicationApiController
     {
+        private readonly SplashAdService _splashAdService;
         public AdsController(IAppServices appServices) : base(appServices)
         {
+            _splashAdService = new SplashAdService(DataContextFactory);
         }
 
         [Route("mobile/random")]
-        public IHttpActionResult GetRandomAds()
+        public async Task<IHttpActionResult> GetRandomAds()
         {
-            var advModel = new AdsViewModel()
+            var ad = await _splashAdService.GetRandom();
+            if (ad == null)
             {
-                ImageUrl = "https://az723232.vo.msecnd.net/assets/zeedli-logo-web-636279368563125419.svg",
-                MobileAdId = 1,
-                Weight = 1
-            };
+                return NotFound();
+            }
+
+            var advModel = AdsViewModel.Create(ad);
             return Ok(advModel);
         }
     }

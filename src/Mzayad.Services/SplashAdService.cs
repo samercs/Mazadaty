@@ -91,5 +91,30 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<SplashAd> GetRandom()
+        {
+            Random rnd = new Random();
+
+            using (var dc = DataContext())
+            {
+                var query = dc.SplashAds
+                    .Where(i => !i.IsDeleted)
+                    .OrderByDescending(i => i.Weight);
+                var data = await query.ToListAsync();
+                var totalWeight = data.Sum(i => (int)(i.Weight));
+                int randomNumber = rnd.Next(0, totalWeight);
+                SplashAd selectedAd = null;
+                foreach (SplashAd ad in data)
+                {
+                    if (randomNumber <= ad.Weight)
+                    {
+                        selectedAd = ad;
+                        break;
+                    }
+                    randomNumber = randomNumber - (int)(ad.Weight);
+                }
+                return selectedAd;
+            }
+        }
     }
 }
