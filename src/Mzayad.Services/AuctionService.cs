@@ -7,6 +7,8 @@ using OrangeJetpack.Localization;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
+using System.Data.Linq.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Mzayad.Core.Exceptions;
@@ -113,7 +115,9 @@ namespace Mzayad.Services
         {
             using (var dc = DataContext())
             {
+
                 var auctions = await GetAuctionsQuery(dc, AuctionStatus.Closed)
+                    .Where(i => DbFunctions.DiffDays(i.StartUtc, DateTime.UtcNow) <= 7)
                     .OrderByDescending(i => i.ClosedUtc)
                     .Take(count)
                     .ToListAsync();
@@ -145,6 +149,7 @@ namespace Mzayad.Services
                     .Where(i => i.BuyNowEnabled)
                     .Where(i => i.BuyNowQuantity > 0)
                     .Where(i => i.Status == AuctionStatus.Closed)
+                    .Where(i => DbFunctions.DiffDays(i.StartUtc, DateTime.UtcNow) <= 7)
                     .Include(i => i.Product.ProductImages)
                     .Include(i => i.Product.Sponsor)
                     .ToListAsync();
@@ -270,6 +275,7 @@ namespace Mzayad.Services
                 .Where(i => i.IsDeleted == false)
                 .Include(i => i.Product.Categories)
                 .Include(i => i.Product.ProductImages)
+                .Include(i => i.Product.Sponsor)
                 .Include(i => i.Product.ProductSpecifications.Select(j => j.Specification))
                 .SingleOrDefaultAsync(i => i.AuctionId == auctionId);
         }

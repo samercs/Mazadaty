@@ -29,7 +29,7 @@ namespace Mzayad.Web.Areas.Api.Models.Products
                 ProductId = product.ProductId,
                 Name = product.Name,
                 RetailPrice = product.RetailPrice,
-                SponsorName = product.SponsorId.HasValue ? product.Sponsor.Name : null,
+                SponsorName = product.Sponsor?.Name ?? null,
                 VideoUrl = product.VideoUrl,
                 MainImageUrl = product.MainImage().ImageMdUrl,
                 Description = product.Description,
