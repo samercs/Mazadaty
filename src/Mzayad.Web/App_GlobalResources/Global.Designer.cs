@@ -628,6 +628,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click to edit.
+        /// </summary>
+        public static string ClickToEdit {
+            get {
+                return ResourceManager.GetString("ClickToEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Click To Select.
         /// </summary>
         public static string ClickToSelect {
