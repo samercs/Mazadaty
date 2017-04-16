@@ -18,15 +18,15 @@ foreach (var country in countriesArray)
 
 }
 
-<div class="auction-tile">
+<div class="auction-tile @(Model.StartUtc > DateTime.UtcNow ? "auction-tile-rounded": "")">
     @if (Model.StartUtc > DateTime.UtcNow)
     {
         <div class="auction-coming-header">
             <div class="row">
-                <div class="col-md-4 pull-left">
-                    <span>@Model.StartUtc.ToString("dd/MM/yyyy")</span>
+                <div class="col-md-12 text-center">
+                    @Model.StartUtc.ToString("dddd, dd MMMM @ h:mm tt") <div class="text-small"><i class="fa fa-clock-o"></i> @Model.Duration @Global.Minutes</div>
                 </div>
-                <div class="col-md-8 pull-right text-right">
+                @*<div class="col-md-8 pull-right text-right">
                     <div>
                         <span>@Model.StartUtc.AddHours(3).ToString("hh:mm")</span>    
                     </div>
@@ -34,7 +34,7 @@ foreach (var country in countriesArray)
                     <div class="duration">
                         @Global.Duration @Model.Duration @Global.MinuteAbbreviation
                     </div>
-                </div>
+                </div>*@
             </div>
         </div>
     }
