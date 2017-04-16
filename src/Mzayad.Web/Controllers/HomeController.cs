@@ -38,7 +38,7 @@ namespace Mzayad.Web.Controllers
             }
 
             var liveAuctions = await _auctionService.GetLiveAuctions(Language);
-            var closedAuctions = await _auctionService.GetClosedAuctions(Language, 12);
+            var closedAuctions = await _auctionService.GetClosedAuctions(Language, 8);
             var upcomingAuctions = await _auctionService.GetUpcomingAuctions(Language, 12);
             var banners = (await _bannerService.GetAll()).ToList();
             banners = banners.Localize<Banner>(Language, LocalizationDepth.OneLevel).ToList();
