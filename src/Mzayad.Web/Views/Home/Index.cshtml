@@ -219,8 +219,8 @@ else
                                 @*<li data-bind="visible: buyNowEnabled">
                                     <a class="btn btn-default btn-rounded" data-bind="attr: { href: buyNowUrl }">@Global.BuyNow</a>
                                 </li>*@
-                                <li>
-                                    <a class="btn btn-unstyled btn-rounded" data-bind="visible: autoBidEnabled, click:openAutoBidModal ">@Global.AutoBid</a>
+                                <li data-bind="visible: autoBidEnabled">
+                                    <a class="btn btn-unstyled btn-rounded" data-bind="click:openAutoBidModal ">@Global.AutoBid</a>
                                 </li>
                                 <li>
                                     <a class="btn btn-unstyled btn-rounded" data-bind="attr: { href: wishListUrl }">@Global.AddToWishList</a>
