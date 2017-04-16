@@ -58,7 +58,7 @@ namespace Mzayad.Web.Controllers
             _messageService = new MessageService(appServices.DataContextFactory);
         }
 
-        [Route("dashboard")]
+        [Route("my-page")]
         public async Task<ActionResult> Dashboard()
         {
             var user = await AuthService.CurrentUser();

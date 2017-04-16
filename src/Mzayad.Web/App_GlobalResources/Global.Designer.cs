@@ -763,7 +763,7 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dashboard.
+        ///   Looks up a localized string similar to My Page.
         /// </summary>
         public static string Dashboard {
             get {
