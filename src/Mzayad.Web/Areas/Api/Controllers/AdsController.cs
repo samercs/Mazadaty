@@ -24,6 +24,10 @@ namespace Mzayad.Web.Areas.Api.Controllers
         public async Task<IHttpActionResult> GetRandomAds()
         {
             var ad = await _splashAdService.GetRandom();
+            if (ad == null)
+            {
+                return NotFound();
+            }
 
             var advModel = AdsViewModel.Create(ad);
             return Ok(advModel);
