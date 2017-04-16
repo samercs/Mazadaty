@@ -26,6 +26,7 @@ namespace Mzayad.Web.Areas.Api.Models.Auctions
         public ProductModel Product { get; set; }
         public UserModel WonByUser { get; set; }
         public IEnumerable<BidModel> RecentBids { get; set; }
+        public bool AutoBidEnabled { get; set; }
 
         public static AuctionModel Create(Auction auction)
         {
@@ -52,7 +53,8 @@ namespace Mzayad.Web.Areas.Api.Models.Auctions
                         .OrderByDescending(i => i.BidId)
                         .Take(3)
                         .Select(BidModel.Create)
-                    : null
+                    : null,
+                AutoBidEnabled = auction.AutoBidEnabled
             };
         }
     }
