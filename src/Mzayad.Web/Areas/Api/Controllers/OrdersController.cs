@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Microsoft.Ajax.Utilities;
 
 namespace Mzayad.Web.Areas.Api.Controllers
 {
@@ -52,13 +53,13 @@ namespace Mzayad.Web.Areas.Api.Controllers
 
             if (model.Items == null || !model.Items.Any())
             {
-                return CartError();
+                return CartError("Order item is null or empty");
             }
 
-            var validationResult = await ValidateOrderItems(model.AuctionId, model.Items.First());
-            if (!validationResult)
+            var validationResult = await ValidateOrderItems(model.AuctionId, model.Items, model.Type);
+            if (!string.IsNullOrEmpty(validationResult))
             {
-                return CartError();
+                return CartError(validationResult);
             }
 
             var order = CreateOrderFromModel(model);
@@ -80,37 +81,91 @@ namespace Mzayad.Web.Areas.Api.Controllers
             return Ok(new { Order = OrderDetailModel.Create(order), KnetTransaction = KnetTransactionModel.Create(knetTransaction) });
         }
 
-        private async Task<bool> ValidateOrderItems(int auctionId, OrderItem orderItem)
+        private async Task<string> ValidateOrderItems(int auctionId, IReadOnlyCollection<OrderItem> orderItems, OrderType type)
         {
             var auction = await _auctionService.GetAuctionById(auctionId);
 
-            if (auction.ProductId != orderItem.ProductId)
+            if (orderItems.Count == 1)
             {
-                return false;
+                var orderItem = orderItems.First();
+                if (type == OrderType.BuyNow)
+                {
+                    return ValidateBuyNowForAuction(auction, orderItem);
+                }
+                else if (type == OrderType.Auction)
+                {
+                    if (string.IsNullOrEmpty(auction.WonByUserId))
+                    {
+                        return "Auction does not have WonByUserId";
+                    }
+                    if (!auction.WonAmount.HasValue)
+                    {
+                        return "Auction does not have WonAmount";
+                    }
+                    if (auction.WonAmount.Value != orderItem.ItemPrice)
+                    {
+                        return "Order item price error";
+                    }
+                }
             }
+            else
+            {
+                var itemAuctionIds = orderItems.Select(i => i.AuctionId).ToList();
+                var itemsAuctions = await _auctionService.GetByIds(itemAuctionIds);
+                foreach (var orderItem in orderItems)
+                {
+                    if (!orderItem.AuctionId.HasValue)
+                    {
+                        return "Order item does not have AuctionId";
+                    }
+                    var itemAuction = itemsAuctions.FirstOrDefault(i => i.AuctionId == orderItem.AuctionId.Value);
+                    var validateResult = ValidateBuyNowForAuction(itemAuction, orderItem);
+                    if (!string.IsNullOrEmpty(validateResult))
+                    {
+                        return validateResult;
+                    }
+                }
+            }
+            return String.Empty;
+        }
 
+        private string ValidateBuyNowForAuction(Auction auction, OrderItem orderItem)
+        {
+            if (orderItem.Quantity != 1)
+            {
+                return "Order item quantity should be 1";
+            }
             if (!auction.BuyNowAvailable())
             {
-                return false;
+                return "Auction does not available for buy now";
             }
 
             if (!auction.BuyNowPrice.HasValue)
             {
-                return false;
+                return "Auction buy now prices not available";
             }
-
-            orderItem.ItemPrice = auction.BuyNowPrice.Value;
-            return true;
+            if (!auction.BuyNowQuantity.HasValue)
+            {
+                return "Action buy now quantity not available";
+            }
+            if (auction.BuyNowPrice.Value != orderItem.ItemPrice)
+            {
+                return "Order item prices does not equals to auction buy now";
+            }
+            if (auction.BuyNowQuantity.Value <= 0)
+            {
+                return "Action buy now quantity is less than 1";
+            }
+            return string.Empty;
         }
 
-        private static IHttpActionResult CartError()
+        private static IHttpActionResult CartError(string message)
         {
-            var errorMessage = Global.OrderItemsValidationErrorMessage;
-
+            //var errorMessage = Global.OrderItemsValidationErrorMessage;
             return new ApiErrorResult(new ApiError
             {
                 Type = ApiErrorType.ModelStateError,
-                Message = errorMessage
+                Message = message
             });
         }
 
@@ -120,7 +175,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
             {
                 UserId = AuthService.CurrentUserId(),
                 Address = model.ShippingAddress,
-                Type = OrderType.BuyNow,
+                Type = model.Type,
                 PaymentMethod = PaymentMethod.Knet,
                 Status = OrderStatus.PendingPayment,
                 Shipping = AppSettings.LocalShipping,
