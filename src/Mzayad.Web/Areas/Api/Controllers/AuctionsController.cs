@@ -1,4 +1,5 @@
-﻿using Mzayad.Services;
+﻿using System;
+using Mzayad.Services;
 using Mzayad.Web.Areas.Api.Models.Auctions;
 using Mzayad.Web.Core.Services;
 using Mzayad.Web.Models;
@@ -58,9 +59,11 @@ namespace Mzayad.Web.Areas.Api.Controllers
             {
                 return NotFound();
             }
-
+            if (DateTime.UtcNow.Subtract(auction.StartUtc).TotalDays > 7)
+            {
+                return NotFound();
+            }
             var viewModel = AuctionModel.Create(auction);
-
             return Ok(viewModel);
         }
 
