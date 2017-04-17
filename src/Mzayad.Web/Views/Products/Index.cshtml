@@ -30,23 +30,31 @@
                 border-color: #777 !important;
             }
 
-            .selected {
-                border-color: #333 !important;
-                cursor: default !important;
-            }
-            #product-images {
-                margin-top: 15px;
-            }
+        .selected {
+            border-color: #333 !important;
+            cursor: default !important;
+        }
+
+        #product-images {
+            margin-top: 15px;
+        }
+
         #product-image {
             border: solid 1px #f1f1f1;
         }
 
-            @@media (max-width: 600px) {
-                .img-small {
-                    width: 35px !important;
-                    height: 35px !important;
-                }
-}
+        @@media (max-width: 600px) {
+            .img-small {
+                width: 35px !important;
+                height: 35px !important;
+            }
+        }
+
+        @@media (max-width: 600px) {
+            iframe {
+                width: 100% !important;
+            }
+        }
     </style>
 }
 
@@ -58,14 +66,15 @@
             {
                 <li>
                     <button class="btn btn-link btn-image-selector @(Model.MainImage().ImageLgUrl == image.ImageLgUrl ? "selected" : "")" data-lg-img="@image.ImageLgUrl">
-                        <img class="img-responsive img-small" src="@image.ImageSmUrl"  alt="" width="72" height="72" />
+                        <img class="img-responsive img-small" src="@image.ImageSmUrl" alt="" width="72" height="72" />
                     </button>
                 </li>
             }
-            
+
         </ul>
     </div>
-    <div class="col-md-8 col-sm-12 col-xs-12">
+    <div class="clearfix visible-sm"></div>
+    <div class="col-md-8 col-md-offset-0 col-xs-12 col-sm-12">
         <dl class="dl-horizontal">
             <dt>@Global.Name</dt>
             <dd>@Model.Name</dd>
@@ -76,28 +85,28 @@
             @if (Model.SponsorId.HasValue)
             {
                 <dt>@Global.Sponsor</dt>
-                <dd>@Model.Sponsor.Name</dd>
+                    <dd>@Model.Sponsor.Name</dd>
             }
-            
+
         </dl>
     </div>
-    <div class="col-md-12">
-        <hr/>
+    <div class="col-md-12 col-xs-12 col-sm-12">
+        <hr />
         @if (Model.ProductSpecifications.Any())
-        {
+            {
             <section>
                 @Html.Label(Global.Specifications)
                 <br />
                 @foreach (var specification in Model.ProductSpecifications)
                 {
                     <span>@specification.Specification.Name:</span>
-                    <span class="spec-span">@specification.Value</span>
-                    <br />
+                        <span class="spec-span">@specification.Value</span>
+                        <br />
                 }
             </section>
         }
         @if (!string.IsNullOrWhiteSpace(Model.VideoUrl))
-        {
+            {
             <iframe width="50%" height="315" src="@Model.VideoUrl" frameborder="0" allowfullscreen></iframe>
         }
     </div>
@@ -136,6 +145,7 @@
 
             $(function() {
                 $(".btn-image-selector").click(function () {
+
                     var $this = $(this);
                     var largImage = $this.data("lg-img");
                     $("#product-image").data("zoom-image", largImage);
@@ -143,7 +153,7 @@
                     $(".btn-image-selector").removeClass("selected");
                     $this.addClass("selected");
                 });
-                
+
                 setZoom("#product-image", "@Model.MainImage().ImageLgUrl");
             });
         });
