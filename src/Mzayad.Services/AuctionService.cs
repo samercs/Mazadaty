@@ -399,5 +399,13 @@ namespace Mzayad.Services
                 await dc.SaveChangesAsync();
             }
         }
+
+        public async Task<IEnumerable<Auction>> GetByIds(List<int?> auctionIds)
+        {
+            using (var dc = DataContext())
+            {
+                return await dc.Auctions.Where(i => auctionIds.Contains(i.AuctionId)).ToListAsync();
+            }
+        }
     }
 }
