@@ -102,6 +102,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
             return Ok(results);
         }
 
+        [Route("")]
         public async Task<IHttpActionResult> Post(RegisterViewModel model)
         {
             ModelState.Remove("model.Address.CreatedUtc");
