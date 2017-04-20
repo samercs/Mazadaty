@@ -85,7 +85,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
         {
             var auction = await _auctionService.GetAuctionById(auctionId);
 
-            if (orderItems.Count == 1)
+            if (auctionId != -1)
             {
                 var orderItem = orderItems.First();
                 if (type == OrderType.BuyNow)
@@ -110,6 +110,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
             }
             else
             {
+                //Shopping cart order.
                 var itemAuctionIds = orderItems.Select(i => i.AuctionId).ToList();
                 var itemsAuctions = await _auctionService.GetByIds(itemAuctionIds);
                 foreach (var orderItem in orderItems)
@@ -131,15 +132,14 @@ namespace Mzayad.Web.Areas.Api.Controllers
 
         private string ValidateBuyNowForAuction(Auction auction, OrderItem orderItem)
         {
+            if (auction == null)
+            {
+                return "Auction not found.";
+            }
             if (orderItem.Quantity != 1)
             {
                 return "Order item quantity should be 1";
             }
-            if (!auction.BuyNowAvailable())
-            {
-                return "Auction does not available for buy now";
-            }
-
             if (!auction.BuyNowPrice.HasValue)
             {
                 return "Auction buy now prices not available";
@@ -147,6 +147,10 @@ namespace Mzayad.Web.Areas.Api.Controllers
             if (!auction.BuyNowQuantity.HasValue)
             {
                 return "Action buy now quantity not available";
+            }
+            if (!auction.BuyNowAvailable())
+            {
+                return "Auction does not available for buy now";
             }
             if (auction.BuyNowPrice.Value != orderItem.ItemPrice)
             {
