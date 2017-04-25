@@ -393,6 +393,7 @@
     <Compile Include="Areas\Api\Controllers\ApplicationApiController.cs" />
     <Compile Include="Areas\Api\Controllers\AuctionsController.cs" />
     <Compile Include="Areas\Api\Controllers\AutoBidsController.cs" />
+    <Compile Include="Areas\Api\Controllers\BannersController.cs" />
     <Compile Include="Areas\Api\Controllers\FriendsController.cs" />
     <Compile Include="Areas\Api\Controllers\MessagesController.cs" />
     <Compile Include="Areas\Api\Controllers\AvatarsController.cs" />
