@@ -45,39 +45,47 @@
             -moz-box-shadow: none;
             box-shadow: none;
         }
+
         .slider-wrapper {
             margin-bottom: 30px !important;
         }
+
         .paging-container {
             background-color: #fcfcfc;
             margin: 0px;
             border: solid 1px #ccc;
         }
+
         .pagging {
             text-align: center;
             border-right: solid 1px #ccc;
         }
-        .pagging:last-child {
-            border-right: none !important;
-        }
+
+            .pagging:last-child {
+                border-right: none !important;
+            }
+
             .pagging:hover {
                 background-color: #33ace0;
                 color: #fff;
                 cursor: pointer;
             }
+
         .active {
             background-color: #33ace0;
             color: #fff;
             cursor: pointer;
-        } .title {
+        }
+
+        .title {
             font-weight: bold;
             margin-bottom: 5px;
             margin-top: 10px;
             text-transform: uppercase;
             height: 22px;
             overflow: hidden;
-
         }
+
         .secondary-title {
             margin-bottom: 10px;
             height: 22px;
@@ -93,16 +101,16 @@
 
 <section class="slider-wrapper theme-default">
     <div id="slider" class="nivoSlider">
-        @for (int i=0;i< Model.Banners.Count; i++)
+        @for (int i = 0; i < Model.Banners.Count; i++)
         {
             var banner = Model.Banners.ElementAt(i);
             <a href="@banner.Url" class="img-container" data-id="@i">
-                <img data-id="@i" class="img-responsive"  src="@banner.ImgLgUrl" alt=""  />
+                <img data-id="@i" class="img-responsive" src="@banner.ImgLgUrl" alt="" />
             </a>
         }
     </div>
     <div class="paging-container row hidden-sm hidden-xs">
-        @for(int i=0; i<Model.Banners.Count;i++)
+        @for (int i = 0; i < Model.Banners.Count; i++)
         {
             var banner = Model.Banners.ElementAt(i);
             <div class="col-xs-2 pagging @(i ==0 ? "active" : "")" data-id="@i">
@@ -187,11 +195,11 @@ else
                                         <span class="input-group-btn">
                                             @if (Request.IsAuthenticated)
                                             {
-                                                <button type="button" class="btn btn-default btn-bid" data-bind="click: submitBid">@Global.Bid</button>
+                                            <button type="button" class="btn btn-default btn-bid" data-bind="click: submitBid">@Global.Bid</button>
                                             }
                                             else
                                             {
-                                                <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new {ReturnUrl = "/"})">@Global.Bid</a>
+                                            <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new {ReturnUrl = "/"})">@Global.Bid</a>
                                             }
                                         </span>
                                     </div>
@@ -217,8 +225,8 @@ else
 
                             <ul class="auction-action-buttons">
                                 @*<li data-bind="visible: buyNowEnabled">
-                                    <a class="btn btn-default btn-rounded" data-bind="attr: { href: buyNowUrl }">@Global.BuyNow</a>
-                                </li>*@
+                                        <a class="btn btn-default btn-rounded" data-bind="attr: { href: buyNowUrl }">@Global.BuyNow</a>
+                                    </li>*@
                                 <li data-bind="visible: autoBidEnabled">
                                     <a class="btn btn-unstyled btn-rounded" data-bind="click:openAutoBidModal ">@Global.AutoBid</a>
                                 </li>
@@ -299,21 +307,40 @@ else
 
     @Scripts.Render("~/js/knockout")
     @Scripts.Render("~/js/signalR")
+    <script src="~/Scripts/hammer.js"></script>
     <script src="//cdn.jsdelivr.net/alertifyjs/1.8.0/alertify.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nivoslider/3.2/jquery.nivo.slider.min.js" integrity="sha256-66ApDNLFhIKyILJVmsbuCCSQAsj/j1cETZLc4FD9hGM=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.0/js/swiper.min.js"></script>
     <script>
-        (function (app, $) {
+        (function(app, $) {
 
-            var bindEvents = function () {
+            var bindEvents = function() {
                 $("#slider-image-1").on("load", app.Images.lazyLoad());
-                $(".swiper-slide a").click(function () { window.location.href = $(this).attr("href"); });
+                $(".swiper-slide a").click(function() { window.location.href = $(this).attr("href"); });
             };
 
             $(window)
                 .on('load',
-                function () {
-                    var slider = $("#slider");
+                    function() {
+                        if ("ontouchstart" in document.documentElement) {
+                            var element = document.getElementById('slider');
+
+                            var hammertime = Hammer(element).on("swipeleft", function (event) {
+                                $('#slider img').attr("data-transition", "slideInLeft");
+                                $('a.nivo-nextNav').trigger('click');
+                                return false;
+
+                            });
+
+                            var hammertime = Hammer(element).on("swiperight", function (event) {
+                                $('#slider img').attr("data-transition", "slideInRight");
+                                $('a.nivo-prevNav').trigger('click');
+                                $('#slider img').attr("data-transition", "slideInLeft");
+                                return false;
+
+                            });
+                        } else {
+                            var slider = $("#slider");
                     slider.nivoSlider({
                         effect: 'fade',
                         animSpeed: 1,
@@ -340,6 +367,7 @@ else
                                 }
                             }
                         });
+                        }
                     });
 
             $(function() {
@@ -372,7 +400,7 @@ else
 
             $(".pagging").click(function() {
                 var id = $(this).data("id");
-                $('#slider').data('nivo:vars').currentSlide = id-1;
+                $('#slider').data('nivo:vars').currentSlide = id - 1;
                 $("#slider a.nivo-nextNav").trigger('click');
             });
 
@@ -401,7 +429,7 @@ else
             var userCountry = "@Model.UserCountry";
             var userName = "@(Model.User?.UserName ?? "--Not Login")";
 
-            var Auction = function (data) {
+            var Auction = function(data) {
                 console.log('autoBidEnabled', data.autoBidEnabled);
                 var self = this;
 
