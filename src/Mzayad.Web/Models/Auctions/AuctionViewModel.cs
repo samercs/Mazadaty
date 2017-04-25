@@ -40,6 +40,7 @@ namespace Mzayad.Web.Models.Auctions
         //public IReadOnlyCollection<ProductSpecificationViewModel> Specifications { get; set; }
 
         public string CountryList { get; set; }
+        public DateTime? ClosedUtc { get; set; }
 
         public static AuctionViewModel Create(Auction auction)
         {
@@ -64,7 +65,8 @@ namespace Mzayad.Web.Models.Auctions
                 BidIncrement = auction.BidIncrement,
                 Duration = auction.Duration,
                 AuctionStatus = auction.Status,
-                AutoBidEnabled = auction.AutoBidEnabled
+                AutoBidEnabled = auction.AutoBidEnabled,
+                ClosedUtc = auction.ClosedUtc
                 //Images = GetImages(auction)
                 //Specifications = GetSpecifications(auction.Product.ProductSpecifications)
             };
