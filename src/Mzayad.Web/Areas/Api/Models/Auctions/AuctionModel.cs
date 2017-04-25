@@ -27,7 +27,7 @@ namespace Mzayad.Web.Areas.Api.Models.Auctions
         public UserModel WonByUser { get; set; }
         public IEnumerable<BidModel> RecentBids { get; set; }
         public bool AutoBidEnabled { get; set; }
-
+        public IList<string> ProductImages { get; set; }
         public static AuctionModel Create(Auction auction)
         {
             return new AuctionModel
@@ -54,49 +54,50 @@ namespace Mzayad.Web.Areas.Api.Models.Auctions
                         .Take(3)
                         .Select(BidModel.Create)
                     : null,
-                AutoBidEnabled = auction.AutoBidEnabled
+                AutoBidEnabled = auction.AutoBidEnabled,
+                ProductImages = auction.Product.ProductImages.Select(i => i.ImageMdUrl).ToList()
             };
         }
     }
 
-public class BidModel
-{
-    public int BidId { get; set; }
-
-    public int AuctionId { get; set; }
-
-    public decimal Amount { get; set; }
-
-    public UserModel User { get; set; }
-
-    public static BidModel Create(Bid bid)
+    public class BidModel
     {
-        return new BidModel
+        public int BidId { get; set; }
+
+        public int AuctionId { get; set; }
+
+        public decimal Amount { get; set; }
+
+        public UserModel User { get; set; }
+
+        public static BidModel Create(Bid bid)
         {
-            BidId = bid.BidId,
-            AuctionId = bid.AuctionId,
-            Amount = bid.Amount,
-            User = UserModel.Create(bid.User)
-        };
+            return new BidModel
+            {
+                BidId = bid.BidId,
+                AuctionId = bid.AuctionId,
+                Amount = bid.Amount,
+                User = UserModel.Create(bid.User)
+            };
+        }
     }
-}
 
-public class UserModel
-{
-    public string Id { get; set; }
-
-    public string Username { get; set; }
-
-    public string AvatarUrl { get; set; }
-
-    public static UserModel Create(ApplicationUser user)
+    public class UserModel
     {
-        return new UserModel
+        public string Id { get; set; }
+
+        public string Username { get; set; }
+
+        public string AvatarUrl { get; set; }
+
+        public static UserModel Create(ApplicationUser user)
         {
-            Id = user.Id,
-            Username = user.UserName,
-            AvatarUrl = user.AvatarUrl
-        };
+            return new UserModel
+            {
+                Id = user.Id,
+                Username = user.UserName,
+                AvatarUrl = user.AvatarUrl
+            };
+        }
     }
-}
 }

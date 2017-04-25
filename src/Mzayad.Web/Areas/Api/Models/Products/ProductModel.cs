@@ -21,6 +21,7 @@ namespace Mzayad.Web.Areas.Api.Models.Products
         public IEnumerable<ProductSpecificationModel> Specifications { get; set; }
         public DateTime? AuctionCloseUtc { get; set; }
         public int? BuyNowQuntity { get; set; }
+        public IList<string> ProductImages { get; set; }
 
         public static ProductModel Create(Product product)
         {
@@ -33,7 +34,8 @@ namespace Mzayad.Web.Areas.Api.Models.Products
                 VideoUrl = product.VideoUrl,
                 MainImageUrl = product.MainImage().ImageMdUrl,
                 Description = product.Description,
-                Specifications = product.ProductSpecifications?.Select(ProductSpecificationModel.Create)
+                Specifications = product.ProductSpecifications?.Select(ProductSpecificationModel.Create),
+                ProductImages = product.ProductImages.Select(i => i.ImageMdUrl).ToList()
 
             };
         }
@@ -50,7 +52,8 @@ namespace Mzayad.Web.Areas.Api.Models.Products
                 MainImageUrl = auction.Product.MainImage().ImageMdUrl,
                 AuctioId = auction.AuctionId,
                 AuctionCloseUtc = auction.ClosedUtc,
-                BuyNowQuntity = auction.BuyNowQuantity
+                BuyNowQuntity = auction.BuyNowQuantity,
+                ProductImages = auction.Product.ProductImages.Select(i => i.ImageMdUrl).ToList()
             };
         }
     }
