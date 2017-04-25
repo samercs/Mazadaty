@@ -1,8 +1,8 @@
 ﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Mindscape.Raygun4Net;
+using Mzayad.Core.Exceptions;
 using Mzayad.Models;
-using Mzayad.Models.Enum;
 using Mzayad.Models.Enums;
 using Mzayad.Services;
 using Mzayad.Web.Areas.admin.Models.Auction;
@@ -22,7 +22,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Mzayad.Core.Exceptions;
 
 namespace Mzayad.Web.Areas.admin.Controllers
 {
@@ -56,7 +55,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             var model = new Models.Products.IndexViewModel
             {
                 Search = "",
-                Products = products
+                Products = products.OrderByDescending(i => i.ProductId)
             };
 
             return View(model);
