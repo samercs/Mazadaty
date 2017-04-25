@@ -195,11 +195,11 @@ else
                                         <span class="input-group-btn">
                                             @if (Request.IsAuthenticated)
                                             {
-                                            <button type="button" class="btn btn-default btn-bid" data-bind="click: submitBid">@Global.Bid</button>
+                                                <button type="button" class="btn btn-default btn-bid" data-bind="click: submitBid">@Global.Bid</button>
                                             }
                                             else
                                             {
-                                            <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new {ReturnUrl = "/"})">@Global.Bid</a>
+                                                <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new {ReturnUrl = "/"})">@Global.Bid</a>
                                             }
                                         </span>
                                     </div>
@@ -321,8 +321,38 @@ else
 
             $(window)
                 .on('load',
-                    function() {
+                function () {
+
+                    var slider = $("#slider");
+                            slider.nivoSlider({
+                            effect: 'fade',
+                            animSpeed: 1,
+                            pauseTime: 5000,
+                            controlNav: false,
+                            prevText: '',
+                            nextText: '',
+                            beforeChange: function () {
+                                var index = jQuery('#slider').data('nivo:vars').currentImage.data('id');
+                                $(".pagging").removeClass("active");
+                                if ((index + 1) == @Model.Banners.Count) {
+                                        $(".pagging:nth-child(1)").addClass("active");
+                                    } else {
+                                        $(".pagging:nth-child(" + (index + 2) + ")").addClass("active");
+                                    }
+                                },
+                                afterChange: function () {
+                                    var index = jQuery('#slider').data('nivo:vars').currentImage.data('id');
+                                    $(".pagging").removeClass("active");
+                                    if ((index) == @Model.Banners.Count) {
+                                        $(".pagging:nth-child(1)").addClass("active");
+                                    } else {
+                                        $(".pagging:nth-child(" + (index+1) + ")").addClass("active");
+                                    }
+                                }
+                            });
+
                         if ("ontouchstart" in document.documentElement) {
+
                             var element = document.getElementById('slider');
 
                             var hammertime = Hammer(element).on("swipeleft", function (event) {
@@ -339,35 +369,7 @@ else
                                 return false;
 
                             });
-                        } else {
-                            var slider = $("#slider");
-                    slider.nivoSlider({
-                        effect: 'fade',
-                        animSpeed: 1,
-                        pauseTime: 5000,
-                        controlNav: false,
-                        prevText: '',
-                        nextText: '',
-                        beforeChange: function () {
-                            var index = jQuery('#slider').data('nivo:vars').currentImage.data('id');
-                            $(".pagging").removeClass("active");
-                            if ((index + 1) == @Model.Banners.Count) {
-                                    $(".pagging:nth-child(1)").addClass("active");
-                                } else {
-                                    $(".pagging:nth-child(" + (index + 2) + ")").addClass("active");
-                                }
-                            },
-                            afterChange: function () {
-                                var index = jQuery('#slider').data('nivo:vars').currentImage.data('id');
-                                $(".pagging").removeClass("active");
-                                if ((index) == @Model.Banners.Count) {
-                                    $(".pagging:nth-child(1)").addClass("active");
-                                } else {
-                                    $(".pagging:nth-child(" + (index+1) + ")").addClass("active");
-                                }
-                            }
-                        });
-                        }
+                        } 
                     });
 
             $(function() {
