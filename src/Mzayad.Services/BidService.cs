@@ -127,7 +127,9 @@ namespace Mzayad.Services
             using (var dc = DataContext())
             {
                 var bids = await dc.Bids
-                    .Include(i => i.Auction)
+                    .Include(i => i.Auction.Product.ProductImages)
+                    .Include(i => i.Auction.WonByUser)
+                    .Include(i => i.Auction.Bids)
                     .Where(i => i.UserId == userId)
                     .OrderByDescending(i => i.CreatedUtc)
                     .ToListAsync();

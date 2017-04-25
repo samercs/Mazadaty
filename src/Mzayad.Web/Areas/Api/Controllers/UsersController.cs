@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -391,14 +392,20 @@ namespace Mzayad.Web.Areas.Api.Controllers
             var bids = await _bidService.GetBidHistoryForUser(userId, Language);
             var model = bids.Select(i => new
             {
+                ProductImageUrl = i.Auction.Product.MainImage().ImageMdUrl,
                 i.Auction.Title,
-                i.CreatedUtc,
-                i.Amount,
-                i.SecondsLeft,
-                i.BidId,
-                i.AuctionId,
-                Type = i.Type.Humanize(),
-                i.UserHostAddress
+                StartUtc = i.Auction.StartUtc,
+                ClosedUtc = i.Auction.ClosedUtc,
+                WonAmount = i.Auction.WonAmount,
+                WonUser = string.IsNullOrWhiteSpace(i.Auction.WonByUserId) ? null : new
+                {
+                    i.Auction.WonByUserId,
+                    i.Auction.WonByUser.UserName,
+                    i.Auction.WonByUser.AvatarUrl
+                },
+                UserBidsCount = i.Auction.Bids.Count(j => j.UserId == userId),
+                MaximumBid = i.Auction.MaximumBid
+
             });
             return Ok(model);
         }
