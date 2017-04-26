@@ -214,20 +214,20 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to We&apos;re sorry, the buy now feature is only available to subscribers at the moment, it will be available to all users at {0}.
-        /// </summary>
-        public static string AuctionBuyNowWarnning {
-            get {
-                return ResourceManager.GetString("AuctionBuyNowWarnning", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Auction Bid Limit: {MaximumBid}.
         /// </summary>
         public static string AuctionBidLimite {
             get {
                 return ResourceManager.GetString("AuctionBidLimite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We&apos;re sorry, the buy now feature is only available to subscribers at the moment, it will be available to all users at {0}.
+        /// </summary>
+        public static string AuctionBuyNowWarnning {
+            get {
+                return ResourceManager.GetString("AuctionBuyNowWarnning", resourceCulture);
             }
         }
         
@@ -480,6 +480,15 @@ namespace Mzayad.Web.Resources {
         public static string BuyNowQuntity {
             get {
                 return ResourceManager.GetString("BuyNowQuntity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search product name or description....
+        /// </summary>
+        public static string BuyNowSearchPlaceholder {
+            get {
+                return ResourceManager.GetString("BuyNowSearchPlaceholder", resourceCulture);
             }
         }
         

@@ -369,6 +369,7 @@
     <Compile Include="Areas\Admin\Models\Avatar\AvatarAddViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Banners\AddViewModel.cs" />
     <Compile Include="Areas\Admin\Controllers\BannersController.cs" />
+    <Compile Include="Areas\Admin\Models\Home\BuyNowModel.cs" />
     <Compile Include="Areas\Admin\Models\Orders\IndexViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Pages\AddEditViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Pages\IndexViewModel.cs" />
