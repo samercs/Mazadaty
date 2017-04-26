@@ -140,19 +140,25 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<IReadOnlyCollection<Auction>> GetBuyNowAuctions(string language)
+        public async Task<IReadOnlyCollection<Auction>> GetBuyNowAuctions(string language, string search = null)
         {
             using (var dc = DataContext())
             {
-                var auctions = await dc.Auctions
-                    .Where(i => i.IsDeleted == false)
+                var query = dc.Auctions
+                    .Include(i => i.Product.ProductImages)
+                    .Include(i => i.Product.Sponsor)
+                    .Where(i => !i.IsDeleted)
                     .Where(i => i.BuyNowEnabled)
                     .Where(i => i.BuyNowQuantity > 0)
                     .Where(i => i.Status == AuctionStatus.Closed)
-                    .Where(i => DbFunctions.DiffDays(i.StartUtc, DateTime.UtcNow) <= 7)
-                    .Include(i => i.Product.ProductImages)
-                    .Include(i => i.Product.Sponsor)
-                    .ToListAsync();
+                    .Where(i => DbFunctions.DiffDays(i.StartUtc, DateTime.UtcNow) <= 7);
+
+                if (!string.IsNullOrWhiteSpace(search))
+                {
+                    query = query.Where(i => i.Product.Name.Contains(search) || i.Product.Description.Contains(search));
+                }
+
+                var auctions = await query.ToListAsync();
 
                 return LocalizeAuctions(language, auctions);
             }
