@@ -1,5 +1,4 @@
-﻿using Mindscape.Raygun4Net;
-using Mzayad.Models;
+﻿using Mzayad.Models;
 using Mzayad.Models.Enum;
 using Mzayad.Models.Enums;
 using Mzayad.Services;
@@ -15,7 +14,6 @@ using OrangeJetpack.Base.Core.Security;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Services.Models;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -198,9 +196,9 @@ namespace Mzayad.Web.Controllers
                 {
                     await MessageService.Send(email.WithTemplate());
                 }
-                catch (Exception ex)
+                catch
                 {
-                    new RaygunClient().Send(ex);
+                    // do nothing
                 }
             }
 

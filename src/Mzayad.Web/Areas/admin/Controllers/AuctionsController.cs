@@ -1,6 +1,5 @@
 ﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
-using Mindscape.Raygun4Net;
 using Mzayad.Core.Exceptions;
 using Mzayad.Models;
 using Mzayad.Models.Enums;
@@ -154,9 +153,9 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 {
                     await MessageService.Send(email.WithTemplate());
                 }
-                catch (Exception ex)
+                catch
                 {
-                    new RaygunClient().Send(ex);
+                    // do nothing
                 }
             }
         }

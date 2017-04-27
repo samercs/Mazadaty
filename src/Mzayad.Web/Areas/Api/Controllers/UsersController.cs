@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
-using Humanizer;
-using Microsoft.AspNet.Identity;
-using Mindscape.Raygun4Net;
+﻿using Microsoft.AspNet.Identity;
 using Mzayad.Core.Exceptions;
 using Mzayad.Models;
 using Mzayad.Models.Enum;
@@ -27,6 +17,13 @@ using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Base.Core.Security;
 using OrangeJetpack.Localization;
 using OrangeJetpack.Services.Models;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
 using WebGrease.Css.Extensions;
 
 namespace Mzayad.Web.Areas.Api.Controllers
@@ -457,9 +454,9 @@ namespace Mzayad.Web.Areas.Api.Controllers
             {
                 await MessageService.Send(email.WithTemplate());
             }
-            catch (Exception ex)
+            catch
             {
-                new RaygunClient().Send(ex);
+                // do nothing
             }
         }
 
@@ -490,18 +487,17 @@ namespace Mzayad.Web.Areas.Api.Controllers
             {
                 await MessageService.Send(email.WithTemplate());
             }
-            catch (Exception ex)
+            catch
             {
-                new RaygunClient().Send(ex);
+                // do nothing
             }
         }
 
         private string GetBaseUrl(string action)
         {
-            Uri baseUri = new Uri(Request.RequestUri.AbsoluteUri.Replace(Request.RequestUri.PathAndQuery, String.Empty));
-
-            string resourceRelative = "~/en/account/" + action;
-            Uri resourceFullPath = new Uri(baseUri, VirtualPathUtility.ToAbsolute(resourceRelative));
+            var baseUri = new Uri(Request.RequestUri.AbsoluteUri.Replace(Request.RequestUri.PathAndQuery, string.Empty));
+            var resourceRelative = "~/en/account/" + action;
+            var resourceFullPath = new Uri(baseUri, VirtualPathUtility.ToAbsolute(resourceRelative));
 
             return resourceFullPath.AbsoluteUri;
         }
