@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Mzayad.Models;
+using Mzayad.Web.Areas.Admin.Models.Home;
 using OrangeJetpack.Localization;
 
 namespace Mzayad.Web.Controllers
@@ -83,10 +84,15 @@ namespace Mzayad.Web.Controllers
         }
 
         [Route("~/{language}/buy-now")]
-        public async Task<ActionResult> BuyNow()
+        public async Task<ActionResult> BuyNow(string q = null)
         {
-            var auctions = await _auctionService.GetBuyNowAuctions(Language);
-            return View(auctions);
+            var model = new BuyNowModel
+            {
+                Search = q,
+                Auctions = await _auctionService.GetBuyNowAuctions(Language, q)
+            };
+
+            return View(model);
         }
 
         [Route("~/{language}/contact-us")]
