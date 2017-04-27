@@ -62,8 +62,17 @@ namespace Mzayad.Web.Areas.Api.Controllers
                 return CartError(validationResult);
             }
 
-            var order = CreateOrderFromModel(model);
-            await _orderService.CreateOrder(order);
+
+            Order order = null;
+            if (model.Type == OrderType.Auction && model.OrderId != 0)
+            {
+                order = await _orderService.GetById(model.OrderId);
+            }
+            else
+            {
+                order = CreateOrderFromModel(model);
+                await _orderService.CreateOrder(order);
+            }
             var result = await _knetService.InitTransaction(order, AuthService.CurrentUserId(), AuthService.UserHostAddress());
             var transaction = await _knetService.GetTransactionByOrderId(order.OrderId);
             return Ok(OrderCreateResult.Create(transaction, result));
