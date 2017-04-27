@@ -390,23 +390,41 @@ namespace Mzayad.Web.Areas.Api.Controllers
         {
             var userId = AuthService.CurrentUserId();
             var bids = await _bidService.GetBidHistoryForUser(userId, Language);
-            var model = bids.Select(i => new
+            var model =bids.GroupBy(i => i.Auction).Select(group => new
             {
-                ProductImageUrl = i.Auction.Product.MainImage().ImageMdUrl,
-                i.Auction.Title,
-                StartUtc = i.Auction.StartUtc,
-                ClosedUtc = i.Auction.ClosedUtc,
-                WonAmount = i.Auction.WonAmount,
-                WonUser = string.IsNullOrWhiteSpace(i.Auction.WonByUserId) ? null : new
+                ProductImageUrl = group.Key.Product.MainImage().ImageMdUrl,
+                group.Key.Title,
+                group.Key.AuctionId,
+                group.Key.StartUtc,
+                group.Key.ClosedUtc,
+                group.Key.WonAmount,
+                WonUser = string.IsNullOrWhiteSpace(group.Key.WonByUserId) ? null : new
                 {
-                    i.Auction.WonByUserId,
-                    i.Auction.WonByUser.UserName,
-                    i.Auction.WonByUser.AvatarUrl
+                    group.Key.WonByUserId,
+                    group.Key.WonByUser.UserName,
+                    group.Key.WonByUser.AvatarUrl
                 },
-                UserBidsCount = i.Auction.Bids.Count(j => j.UserId == userId),
-                MaximumBid = i.Auction.MaximumBid
+                UserBidsCount = group.Count(),
+                group.Key.MaximumBid
 
             });
+            //var model = bids.Select(i => new
+            //{
+            //    ProductImageUrl = i.Auction.Product.MainImage().ImageMdUrl,
+            //    i.Auction.Title,
+            //    StartUtc = i.Auction.StartUtc,
+            //    ClosedUtc = i.Auction.ClosedUtc,
+            //    WonAmount = i.Auction.WonAmount,
+            //    WonUser = string.IsNullOrWhiteSpace(i.Auction.WonByUserId) ? null : new
+            //    {
+            //        i.Auction.WonByUserId,
+            //        i.Auction.WonByUser.UserName,
+            //        i.Auction.WonByUser.AvatarUrl
+            //    },
+            //    UserBidsCount = i.Auction.Bids.Count(j => j.UserId == userId),
+            //    MaximumBid = i.Auction.MaximumBid
+
+            //});
             return Ok(model);
         }
 
