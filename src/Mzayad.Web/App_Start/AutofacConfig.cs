@@ -56,9 +56,9 @@ namespace Mzayad.Web
             builder.Register<IMessageService>(c => new MessageService(c.Resolve<IAppSettings>().EmailSettings));
             builder.Register<IQueueService>(c => new QueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString));
 
-            builder.Register(GetCacheService).SingleInstance();
-            builder.Register(GetCartService).InstancePerRequest();
 
+            builder.Register(GetCacheService).SingleInstance();
+            builder.RegisterType<CartService>().As<ICartService>().InstancePerRequest();
             return Container(builder);
         }
 
@@ -87,11 +87,11 @@ namespace Mzayad.Web
             return new RedisCacheService();
         }
 
-        private static ICartService GetCartService(IComponentContext c)
-        {
-            var userService = c.Resolve<IHttpContextService>();
-            var cacheService = c.Resolve<ICacheService>();
-            return new CartService(userService, cacheService);
-        }
+        //private static ICartService GetCartService(IComponentContext c)
+        //{
+        //    var userService = c.Resolve<IAuthService>();
+        //    var cacheService = c.Resolve<ICacheService>();
+        //    return new CartService(userService, cacheService);
+        //}
     }
 }
