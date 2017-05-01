@@ -7,10 +7,10 @@
 
     if (Model.HasValue)
     {
-        date = Model.Value.ToString("dd/MM/yyyy");
-        dateTime = Model.Value.AddHours(-3).ToString("u"); // AST -> UTC 
-        hour = Model.Value.Hour;
-        minute = Model.Value.Minute;
+        date = Model.Value.AddHours(3).ToString("dd/MM/yyyy");
+        dateTime = Model.Value.AddHours(3).ToString("u"); // AST -> UTC 
+        hour = Model.Value.AddHours(3).Hour;
+        minute = Model.Value.AddHours(3).Minute;
     }
 }
 

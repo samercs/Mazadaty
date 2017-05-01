@@ -25,7 +25,7 @@ foreach (var country in countriesArray)
         <div class="auction-coming-header">
             <div class="row">
                 <div class="col-md-12 text-center">
-                    @Model.StartUtc.ToString("dddd, dd MMMM @ h:mm tt")
+                    @Model.StartUtc.AddHours(3).ToString("dddd, dd MMMM @ h:mm tt")
                     <div class="text-small"><i class="fa fa-clock-o"></i> @Model.Duration @Global.Minutes</div>
                 </div>
                 @*<div class="col-md-8 pull-right text-right">
@@ -45,7 +45,7 @@ foreach (var country in countriesArray)
         <div class="auction-coming-header">
             <div class="row">
                 <div class="col-md-12 text-center">
-                    Auction Ended: @Model.ClosedUtc.Value.ToString("dddd h:mm tt")
+                    Auction Ended: @Model.ClosedUtc.Value.AddHours(3).ToString("dddd h:mm tt")
                 </div>
             </div>
         </div>
