@@ -21,6 +21,6 @@ namespace Mzayad.Web.Core.Services
         IStorageService StorageService { get; }
         ICmsClient CmsClient { get; }
         IQueueService QueueService { get; }
-        ICartService CartService { get; }
+        IHttpContextService HttpContextService { get; }
     }
 }

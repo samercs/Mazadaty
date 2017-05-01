@@ -21,7 +21,7 @@ namespace Mzayad.Web.Core.Services
         public IStorageService StorageService { get; }
         public ICmsClient CmsClient { get; }
         public IQueueService QueueService { get; }
-        public ICartService CartService { get; }
+        public IHttpContextService HttpContextService { get; }
 
         public AppServices(
             IDataContextFactory dataContextFactory,
@@ -34,7 +34,7 @@ namespace Mzayad.Web.Core.Services
             IStorageService storageService,
             ICmsClient cmsClient,
             IQueueService queueService,
-            ICartService cartService)
+            IHttpContextService httpContextService)
         {
             DataContextFactory = dataContextFactory;
             AppSettings = appSettings;
@@ -46,7 +46,7 @@ namespace Mzayad.Web.Core.Services
             StorageService = storageService;
             CmsClient = cmsClient;
             QueueService = queueService;
-            CartService = cartService;
+            HttpContextService = httpContextService;
         }
     }
 }

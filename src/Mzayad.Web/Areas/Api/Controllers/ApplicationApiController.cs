@@ -37,7 +37,6 @@ namespace Mzayad.Web.Areas.Api.Controllers
             CacheService = appServices.CacheService;
             RequestService = appServices.RequestService;
             StorageService = appServices.StorageService;
-
             EmailTemplateService = new EmailTemplateService(appServices.DataContextFactory);
         }
 

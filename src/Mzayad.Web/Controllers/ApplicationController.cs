@@ -46,7 +46,8 @@ namespace Mzayad.Web.Controllers
             StorageService = appServices.StorageService;
             CmsClient = appServices.CmsClient;
             EmailTemplateService =new EmailTemplateService(appServices.DataContextFactory);
-            CartService = appServices.CartService;
+            CartService = new CartService(appServices.HttpContextService, appServices.CacheService);
+            
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
