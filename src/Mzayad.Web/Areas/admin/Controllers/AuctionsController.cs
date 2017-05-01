@@ -42,6 +42,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
             _autoBidService = new AutoBidService(DataContextFactory);
         }
 
+
         [Route("select-product")]
         public async Task<ActionResult> SelectProduct(string search = "")
         {
