@@ -8,7 +8,7 @@
     if (Model.HasValue)
     {
         date = Model.Value.ToString("dd/MM/yyyy");
-        dateTime = Model.Value.ToString("u"); // AST -> UTC 
+        dateTime = Model.Value.AddHours(-3).ToString("u"); // AST -> UTC 
         hour = Model.Value.Hour;
         minute = Model.Value.Minute;
     }

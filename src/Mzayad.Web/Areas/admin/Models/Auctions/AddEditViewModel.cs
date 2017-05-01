@@ -66,7 +66,7 @@ namespace Mzayad.Web.Areas.admin.Models.Auctions
         public async Task<AddEditViewModel> Hydrate(ProductService productService, Product product)
         {
             var minte = DateTime.Now.Minute >= 30 ? 30 : 0;
-            var dateNow = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, minte, 0);
+            var dateNow = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, DateTime.UtcNow.Hour, minte, 0);
 
             Auction = new Mzayad.Models.Auction()
             {
