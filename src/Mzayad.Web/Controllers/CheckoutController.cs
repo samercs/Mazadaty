@@ -86,8 +86,9 @@ namespace Mzayad.Web.Controllers
         private async Task<ActionResult> CreateOrderAndGetResult(ApplicationUser user, ShoppingCart cart)
         {
             user.Address = await _addressService.GetAddress(user.AddressId);
-            var newOrder = await _orderService.CreateOrderForCart(cart.Items.Select(CartItem.Create).ToList(), user);
-            return RedirectToAction("Shipping", "Orders", new {Language, newOrder.OrderId});
+            var items = cart.Items.Select(CartItem.Create).ToList();
+            var order = await _orderService.CreateOrderForCart(items, user);
+            return RedirectToAction("Shipping", "Orders", new {Language, order.OrderId});
         }
     }
 }

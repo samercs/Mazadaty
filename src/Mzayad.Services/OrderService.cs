@@ -293,6 +293,21 @@ namespace Mzayad.Services
             }
         }
 
+        public static int CalculateShipping(Order order, ApplicationUser user)
+        {
+            return CalculateShipping(order.Items.Select(i => i.Product), user);
+        }
+
+        public static int CalculateShipping(IEnumerable<Product> products, ApplicationUser user)
+        {
+            if (products.All(i => i.WaiveShippingCost))
+            {
+                return 0;
+            }
+
+            return user.Subscription == UserSubscriptionStatus.Active ? 1 : 2;
+        }
+
         public async Task SubmitOrderForProcessing(Order order, string modifiedByUserId)
         {
             using (var dc = DataContext())

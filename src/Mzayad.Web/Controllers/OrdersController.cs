@@ -134,6 +134,8 @@ namespace Mzayad.Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Shipping(int orderId, ShippingAddressViewModel model)
         {
+            var user = await AuthService.CurrentUser();
+
             var order = await _orderService.GetById(orderId);
             if (order == null)
             {
@@ -151,10 +153,7 @@ namespace Mzayad.Web.Controllers
             order.Address.AddressLine4 = model.AddressViewModel.AddressLine4;
             order.Address.PostalCode = model.AddressViewModel.PostalCode;
             order.Address.StateProvince = model.AddressViewModel.StateProvince;
-
-            // add local shipping charges
-            var applayShippingCost = order.Items.Any(i => !i.Product.WaiveShippingCost);
-            order.Shipping = applayShippingCost ? AppSettings.LocalShipping : 0;
+            order.Shipping = OrderService.CalculateShipping(order, user);
 
             order.RecalculateTotal();
 
