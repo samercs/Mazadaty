@@ -41,7 +41,6 @@ namespace Mzayad.Models
         public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<ProductImage> ProductImages { get; set; }
         public virtual ICollection<ProductSpecification> ProductSpecifications { get; set; }
-        [ForeignKey("SponsorId")]
         public virtual Sponsor Sponsor { get; set; }
 
         public ProductImage MainImage()

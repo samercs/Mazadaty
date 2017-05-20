@@ -386,21 +386,24 @@ namespace Mzayad.Web.Areas.Api.Controllers
         public async Task<IHttpActionResult> GetBidHistory()
         {
             var userId = AuthService.CurrentUserId();
-            var auctions = await _bidService.GetBidAuctionsForUser(userId, Language);
+            var results = await _bidService.GetAuctionBidHistoryForUser(userId, Language);
 
-            return Ok(auctions.Select(i => new
+            return Ok(results.Select(i => new
             {
                 i.AuctionId,
                 i.Title,
-                ProductImageUrl = i.Product.MainImage().ImageMdUrl
+                i.ProductImageUrl,
+                i.StartUtc,
+                i.ClosedUtc,
+                i.WonAmount,
+                WonUser = new {
+                    wonByUserId = i.WonUser?.Id,
+                    i.WonUser?.UserName,
+                    i.WonUser?.AvatarUrl
+                },
+                i.UserBidCount,
+                i.MaximumBid
             }));
-        }
-
-        public class AuctionBidSummary
-        {
-            public int AuctionId { get; set; }
-            public string Title { get; set; }
-            public string ProductImageUrl { get; set; }
         }
 
         private async Task<List<TrophieViewModel>> GetTrophies(string userId)

@@ -143,7 +143,23 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<IReadOnlyCollection<Auction>> GetBidAuctionsForUser(string userId, string language)
+        public class AuctionBidHistory : ILocalizable
+        {
+            public int AuctionId { get; set; }
+
+            [Localized]
+            public string Title { get; set; }
+            public ProductImage ProductImage { get; set; }
+            public string ProductImageUrl => ProductImage != null ? ProductImage.ImageMdUrl : ProductImage.NoImageUrl;
+            public DateTime StartUtc { get; set; }
+            public DateTime? ClosedUtc { get; set; }
+            public decimal? WonAmount { get; set; }
+            public ApplicationUser WonUser { get; set; }
+            public int UserBidCount { get; set; }
+            public decimal MaximumBid { get; set; }
+        }
+
+        public async Task<IReadOnlyCollection<AuctionBidHistory>> GetAuctionBidHistoryForUser(string userId, string language)
         {
             using (var dc = DataContext())
             {
@@ -153,6 +169,18 @@ namespace Mzayad.Services
                     .Include(i => i.Product.ProductImages)
                     .Where(i => i.Bids.Any(j => j.UserId == userId))
                     .OrderByDescending(i => i.AuctionId)
+                    .Select(i => new AuctionBidHistory
+                    {
+                        AuctionId = i.AuctionId,
+                        Title = i.Title,
+                        ProductImage = i.Product.ProductImages.FirstOrDefault(),
+                        StartUtc = i.StartUtc,
+                        ClosedUtc = i.ClosedUtc,
+                        WonAmount = i.WonAmount,
+                        WonUser = i.WonByUser,
+                        UserBidCount = i.Bids.Count(j => j.UserId == userId),
+                        MaximumBid = i.Bids.Where(j => j.UserId == userId).Max(h => h.Amount)
+                    })
                     .ToListAsync();
 
                 foreach (var auction in auctions.Distinct())
