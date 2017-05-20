@@ -1,6 +1,6 @@
 ﻿@using Mzayad.Web.Areas.admin.Models.Auctions
 @using Mzayad.Web.Extensions
-@model Mzayad.Web.Areas.admin.Models.Auctions.AddEditViewModel
+@model AddEditViewModel
 @{
     var maxQuntity = Model.Product.Quantity - 1;
     if (Model.ActionType == ActionType.Edit)
@@ -23,7 +23,7 @@
                 <div class="form-group">
                     @Html.LabelFor(i => i.Auction.ProductId, "Product")
                     @Html.DropDownListFor(i => i.Auction.ProductId, Model.ProductList, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(i => i.Auction.ProductId, "Please select a product")
+                    @Html.ValidationMessageFor(i => i.Auction.ProductId, "Please select a product.")
                     @Html.ValidationMessage("Product")
                 </div>
 
@@ -37,10 +37,10 @@
                         <div class="form-group">
                             @Html.LabelFor(i => i.Auction.StartUtc, "Date and Time")
                             @Html.EditorFor(i => i.Auction.StartUtc, "DateTimePicker")
-                            @Html.ValidationMessageFor(i => i.Auction.StartUtc, "Please enter date and time")
+                            @Html.ValidationMessageFor(i => i.Auction.StartUtc, "Please select a valid date and time.")
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         <div class="form-group form-group-md">
                             @Html.LabelFor(i => i.Auction.Duration, "Duration")
                             <div class="input-group">

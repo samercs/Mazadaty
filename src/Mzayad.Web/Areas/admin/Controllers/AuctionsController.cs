@@ -87,8 +87,14 @@ namespace Mzayad.Web.Areas.admin.Controllers
                 return View(await model.Hydrate(_productService, productId));
             }
 
+            if (model.Auction.StartUtc < DateTime.UtcNow)
+            {
+                ModelState.AddModelError("Auction.StartUtc", "Start date/time cannot be in the past.");
+                SetStatusMessage("We're sorry but an auction start date/time cannot be in the past.", StatusMessageType.Error);
+                return View(await model.Hydrate(_productService, productId));
+            }
+
             model.Auction.Title = title.Serialize();
-            model.Auction.StartUtc = model.Auction.StartUtc;
 
             if (countryList != null && countryList.Count < model.GccCountryList.Count())
             {
@@ -112,9 +118,9 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch (InsufficientQuantity insufficientQuantity)
+            catch (InsufficientQuantity)
             {
-                ModelState.AddModelError("Quantity", "there is no enough quantity for this auction");
+                ModelState.AddModelError("Quantity", "ERROR: Insufficient product quantity.");
                 return View(await model.Hydrate(_productService, productId));
             }
             catch (ArgumentException argumentException)
