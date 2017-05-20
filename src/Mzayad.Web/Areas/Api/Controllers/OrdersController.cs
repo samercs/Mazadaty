@@ -6,14 +6,12 @@ using Mzayad.Services.Payment;
 using Mzayad.Web.Areas.Api.ErrorHandling;
 using Mzayad.Web.Areas.Api.Models.Orders;
 using Mzayad.Web.Core.Services;
-using Mzayad.Web.Resources;
 using OrangeJetpack.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Microsoft.Ajax.Utilities;
 
 namespace Mzayad.Web.Areas.Api.Controllers
 {
@@ -37,9 +35,11 @@ namespace Mzayad.Web.Areas.Api.Controllers
         [Route("shipping")]
         public async Task<IHttpActionResult> GetShipping([FromUri]IList<int> productIds)
         {
+            var user = await AuthService.CurrentUser();
             var products = await _productService.GetProductsByIds(productIds);
-            var applayShippingCost = products.Any(i => !i.WaiveShippingCost);
-            return Ok(applayShippingCost ? AppSettings.LocalShipping : 0);
+            var shipping = OrderService.CalculateShipping(products, user);
+
+            return Ok(shipping);
         }
 
         [Route("create")]
