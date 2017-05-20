@@ -143,6 +143,27 @@ namespace Mzayad.Services
             }
         }
 
+        public async Task<IReadOnlyCollection<Auction>> GetBidAuctionsForUser(string userId, string language)
+        {
+            using (var dc = DataContext())
+            {
+                ((DbContext)dc).Database.Log = s => Trace.TraceInformation(s);
+
+                var auctions = await dc.Auctions
+                    .Include(i => i.Product.ProductImages)
+                    .Where(i => i.Bids.Any(j => j.UserId == userId))
+                    .OrderByDescending(i => i.AuctionId)
+                    .ToListAsync();
+
+                foreach (var auction in auctions.Distinct())
+                {
+                    auction.Localize(language, i => i.Title);
+                }
+
+                return auctions;
+            }
+        }
+
         public async Task<IReadOnlyCollection<Bid>> GetByUser(string userId, DateTime? from = null)
         {
             using (var dc = DataContext())
