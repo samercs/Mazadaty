@@ -401,7 +401,7 @@ namespace Mzayad.Web.Areas.Api.Controllers
                     i.WonUser?.UserName,
                     i.WonUser?.AvatarUrl
                 },
-                i.UserBidCount,
+                UserBidCount = i.UserBidsCount,
                 i.MaximumBid
             }));
         }

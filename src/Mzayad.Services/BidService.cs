@@ -155,7 +155,7 @@ namespace Mzayad.Services
             public DateTime? ClosedUtc { get; set; }
             public decimal? WonAmount { get; set; }
             public ApplicationUser WonUser { get; set; }
-            public int UserBidCount { get; set; }
+            public int UserBidsCount { get; set; }
             public decimal MaximumBid { get; set; }
         }
 
@@ -178,7 +178,7 @@ namespace Mzayad.Services
                         ClosedUtc = i.ClosedUtc,
                         WonAmount = i.WonAmount,
                         WonUser = i.WonByUser,
-                        UserBidCount = i.Bids.Count(j => j.UserId == userId),
+                        UserBidsCount = i.Bids.Count(j => j.UserId == userId),
                         MaximumBid = i.Bids.Where(j => j.UserId == userId).Max(h => h.Amount)
                     })
                     .ToListAsync();
