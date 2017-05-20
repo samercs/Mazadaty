@@ -347,6 +347,7 @@
     <Compile Include="Areas\Admin\Controllers\AvatarsController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\LevelsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NotificationsController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Admin\Controllers\PageManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\PrizesController.cs" />
@@ -367,6 +368,7 @@
     <Compile Include="Areas\Admin\Models\Banners\AddViewModel.cs" />
     <Compile Include="Areas\Admin\Controllers\BannersController.cs" />
     <Compile Include="Areas\Admin\Models\Home\BuyNowModel.cs" />
+    <Compile Include="Areas\Admin\Models\Notifications\SendViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Orders\IndexViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Pages\AddEditViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Pages\IndexViewModel.cs" />
@@ -743,6 +745,7 @@
     <Content Include="Areas\Admin\Views\Banners\Add.cshtml" />
     <Content Include="Areas\Admin\Views\Banners\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Banners\_AddEditView.cshtml" />
+    <Content Include="Areas\Admin\Views\Notifications\Send.cshtml" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
