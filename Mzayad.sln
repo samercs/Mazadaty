@@ -8,8 +8,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D117DA2C-527F-4A6D-916B-18D5341AF10D}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mzayad.Models", "src\Mzayad.Models\Mzayad.Models.csproj", "{71F89204-EBB2-438A-B56F-C0521C0BBE3C}"
@@ -105,3 +103,4 @@ Global
 		{5B40CFBF-C81B-4757-8034-BD9FF43FD8AA} = {D7C5A7D1-B6B7-48F9-8FAA-1D338668C541}
 	EndGlobalSection
 EndGlobal
+
