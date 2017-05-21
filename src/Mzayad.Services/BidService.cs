@@ -221,14 +221,11 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<int> CountUserBids(string userId, DateTime? from = null)
+        public async Task<int> CountUserBids(string userId)
         {
             using (var db = DataContext())
             {
-                return await db.Bids.CountAsync(i => i.UserId == userId && (
-                                                                (from.HasValue && i.CreatedUtc >= from.Value)
-                                                                ||
-                                                                !from.HasValue));
+                return await db.Bids.CountAsync(i => i.UserId == userId);
             }
         }
     }

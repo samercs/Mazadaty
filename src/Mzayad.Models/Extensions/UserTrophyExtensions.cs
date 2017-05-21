@@ -7,6 +7,11 @@ namespace Mzayad.Models.Extensions
 {
     public static class UserTrophyExtensions
     {
+        public static bool WasEarned(this IEnumerable<UserTrophy> userTrophies, TrophyKey trophyKey)
+        {
+            return userTrophies.Any(i => i.Trophy.Key == trophyKey);
+        }
+
         public static UserTrophy GetLastEarned(this IEnumerable<UserTrophy> userTrophies, TrophyKey trophyKey)
         {
             return userTrophies
