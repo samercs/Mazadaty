@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Mzayad.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Mzayad.Models;
-using Mzayad.Web.Areas.Api.Models.Auctions;
 
 namespace Mzayad.Web.Areas.Api.Models.Products
 {
@@ -36,7 +35,6 @@ namespace Mzayad.Web.Areas.Api.Models.Products
                 Description = product.Description,
                 Specifications = product.ProductSpecifications?.Select(ProductSpecificationModel.Create),
                 ProductImages = product.ProductImages.Select(i => i.ImageMdUrl).ToList()
-
             };
         }
 

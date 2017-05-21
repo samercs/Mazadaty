@@ -27,7 +27,7 @@ namespace Mzayad.Web.Areas.Api.Models.Auctions
         public UserModel WonByUser { get; set; }
         public IEnumerable<BidModel> RecentBids { get; set; }
         public bool AutoBidEnabled { get; set; }
-        public IList<string> ProductImages { get; set; }
+        
         public static AuctionModel Create(Auction auction)
         {
             return new AuctionModel
@@ -47,15 +47,14 @@ namespace Mzayad.Web.Areas.Api.Models.Auctions
                 WonAmount = auction.WonAmount,
                 ClosedUtc = auction.ClosedUtc,
                 Product = ProductModel.Create(auction.Product),
-                WonByUser = string.IsNullOrWhiteSpace(auction.WonByUserId) ? null : UserModel.Create(auction.WonByUser),
+                WonByUser = UserModel.Create(auction.WonByUser),
                 RecentBids = auction.Bids != null && auction.Bids.Any()
                     ? auction.Bids
                         .OrderByDescending(i => i.BidId)
                         .Take(3)
                         .Select(BidModel.Create)
                     : null,
-                AutoBidEnabled = auction.AutoBidEnabled,
-                ProductImages = auction.Product.ProductImages.Select(i => i.ImageMdUrl).ToList()
+                AutoBidEnabled = auction.AutoBidEnabled
             };
         }
     }
@@ -63,11 +62,8 @@ namespace Mzayad.Web.Areas.Api.Models.Auctions
     public class BidModel
     {
         public int BidId { get; set; }
-
         public int AuctionId { get; set; }
-
         public decimal Amount { get; set; }
-
         public UserModel User { get; set; }
 
         public static BidModel Create(Bid bid)
@@ -85,13 +81,16 @@ namespace Mzayad.Web.Areas.Api.Models.Auctions
     public class UserModel
     {
         public string Id { get; set; }
-
         public string Username { get; set; }
-
         public string AvatarUrl { get; set; }
 
         public static UserModel Create(ApplicationUser user)
         {
+            if (user == null)
+            {
+                return null;
+            }
+
             return new UserModel
             {
                 Id = user.Id,

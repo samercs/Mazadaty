@@ -86,9 +86,9 @@ namespace Mzayad.Services.Tests
                 new Bid {UserId = Constants.AnyUserId, CreatedUtc = DateTime.UtcNow.AddDays(-1)},
                 new Bid {UserId = Constants.AnyUserId, CreatedUtc = DateTime.UtcNow.AddDays(-3)}
             });
-            var result = await bidService.CountUserBids(Constants.AnyUserId, DateTime.UtcNow.AddDays(-1));
+            var result = await bidService.CountUserBids(Constants.AnyUserId);
 
-            Assert.AreEqual(2, result);
+            Assert.AreEqual(3, result);
         }
 
 

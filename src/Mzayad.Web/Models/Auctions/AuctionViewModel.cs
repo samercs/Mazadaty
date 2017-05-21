@@ -12,7 +12,6 @@ namespace Mzayad.Web.Models.Auctions
         public int AuctionId { get; set; }
         public string Title { get; set; }
         public string Status { get; set; }
-        //public string Description { get; set; }
         public string RetailPrice { get; set; }
         public string BuyNowPrice { get; set; }
         public bool BuyNowEnabled { get; set; }
@@ -24,7 +23,6 @@ namespace Mzayad.Web.Models.Auctions
         public decimal? LastBidAmount { get; set; }
         public string LastBidUser { get; set; }
         public DateTime StartUtc { get; set; }
-        //public AuctionImageViewModel MainImage { get; set; }
         public string ImageUrl { get; set; }
         public string SponsorName { get; set; }
         public int ProductId { get; set; }
@@ -36,8 +34,6 @@ namespace Mzayad.Web.Models.Auctions
         public bool AutoBidEnabled { get; set; }
 
         public AuctionStatus AuctionStatus { get; set; }
-        //public IReadOnlyCollection<AuctionImageViewModel> Images { get; set; }
-        //public IReadOnlyCollection<ProductSpecificationViewModel> Specifications { get; set; }
 
         public string CountryList { get; set; }
         public DateTime? ClosedUtc { get; set; }
@@ -49,14 +45,12 @@ namespace Mzayad.Web.Models.Auctions
                 AuctionId = auction.AuctionId,
                 Title = auction.Title,
                 Status = GetStatus(auction),
-                //Description = auction.Product.Description,
                 RetailPrice = CurrencyFormatter.Format(auction.Product.RetailPrice),
                 BuyNowPrice = CurrencyFormatter.Format(auction.BuyNowPrice),
                 BuyNowEnabled = auction.BuyNowAvailable(),
                 LastBidAmount = auction.WonAmount,
                 LastBidUser = GetWonByUserName(auction.WonByUser),
                 StartUtc = auction.StartUtc,
-                //MainImage = AuctionImageViewModel.Create(auction.Product.MainImage()),
                 ImageUrl = auction.Product.MainImage().ImageMdUrl,
                 SponsorName = auction.Product.Sponsor != null ? auction.Product.Sponsor.Name : string.Empty,
                 ProductId = auction.ProductId,
@@ -67,8 +61,6 @@ namespace Mzayad.Web.Models.Auctions
                 AuctionStatus = auction.Status,
                 AutoBidEnabled = auction.AutoBidEnabled,
                 ClosedUtc = auction.ClosedUtc
-                //Images = GetImages(auction)
-                //Specifications = GetSpecifications(auction.Product.ProductSpecifications)
             };
 
             if (auction.WonByUser != null)
@@ -86,15 +78,6 @@ namespace Mzayad.Web.Models.Auctions
             return user == null ? "" : user.UserName;
         }
 
-        //private static IReadOnlyCollection<ProductSpecificationViewModel> GetSpecifications(IEnumerable<ProductSpecification> specifications)
-        //{
-        //    return specifications.Select(specification => new ProductSpecificationViewModel
-        //    {
-        //        Name = specification.Specification.Name,
-        //        Value = specification.Value
-        //    }).ToList();
-        //}
-
         private static string GetStatus(Auction auction)
         {
             if (auction.Status == AuctionStatus.Closed)
@@ -106,25 +89,5 @@ namespace Mzayad.Web.Models.Auctions
                 ? AuctionType.Live.ToString()
                 : AuctionType.Upcoming.ToString();
         }
-
-        //private static IReadOnlyCollection<AuctionImageViewModel> GetImages(Auction auction)
-        //{
-        //    if (!auction.Product.ProductImages.Any())
-        //    {
-        //        return new[]
-        //        {
-        //            new AuctionImageViewModel
-        //            {
-        //                ImageSmUrl = ProductImage.NoImageUrl,
-        //                ImageMdUrl = ProductImage.NoImageUrl,
-        //                ImageLgUrl = ProductImage.NoImageUrl
-        //            }
-        //        };
-        //    }
-
-        //    return auction.Product.ProductImages.Select(AuctionImageViewModel.Create).ToList();
-        //}
-
-        // private enum RenderStatus { Live, Closed, Upcoming }
     }
 }

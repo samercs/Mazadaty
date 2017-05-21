@@ -89,6 +89,7 @@ namespace Mzayad.Services
                 auctions = auctions
                     .Where(i => i.IsLive())
                     .OrderBy(i => i.StartUtc.AddMinutes(i.Duration)).ToList();
+
                 return LocalizeAuctions(language, auctions);
             }
         }

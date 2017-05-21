@@ -23,15 +23,17 @@ namespace Mzayad.Web.Areas.Api.Controllers
         [Route("")]
         public async Task<IHttpActionResult> GetLatestAuctions()
         {
-            var liveAuctions = await _auctionService.GetLiveAuctions(Language);
-            var closedAuctions = await _auctionService.GetClosedAuctions(Language, AuctionsCount);
-            var upcomingAuctions = await _auctionService.GetUpcomingAuctions(Language, AuctionsCount);
+            var liveAuctions = _auctionService.GetLiveAuctions(Language);
+            var closedAuctions = _auctionService.GetClosedAuctions(Language, AuctionsCount);
+            var upcomingAuctions = _auctionService.GetUpcomingAuctions(Language, AuctionsCount);
+
+            await Task.WhenAll(liveAuctions, closedAuctions, upcomingAuctions);
 
             return Ok(new
             {
-                live = liveAuctions.Select(AuctionModel.Create),
-                closed = closedAuctions.Select(AuctionModel.Create),
-                upcoming = upcomingAuctions.Select(AuctionModel.Create)
+                live = liveAuctions.Result.Select(AuctionModel.Create),
+                closed = closedAuctions.Result.Select(AuctionModel.Create),
+                upcoming = upcomingAuctions.Result.Select(AuctionModel.Create)
             });
         }
 
