@@ -1,0 +1,139 @@
+﻿@import "variables.less";
+
+#dashboard-header {
+    background-color: #262626;
+    margin-bottom: 20px;
+}
+
+.dashboard-cell {
+    display: block;
+    padding: 24px;
+    text-align: center;
+    text-decoration: none !important;
+
+    @media @media-desktop {
+        padding: 38px 0;
+    }
+}
+
+#dashboard-avatar {
+    padding: 30px;
+
+    @media @media-desktop {
+        padding-right: 0;
+    }
+}
+
+#dashboard-details {
+    @media @media-desktop {
+        text-align: left;
+    }
+}
+
+.dashboard-padded {
+    padding-bottom: 4px;
+}
+
+#dashboard-username {
+    font-size: @font-size + 1.5;
+    font-weight: bold;
+    color: @base;
+    .dashboard-padded();
+}
+
+#dashboard-level {
+    color: @white !important;
+    .dashboard-padded();
+}
+
+#dashboard-progress {
+    color: @white;
+
+    .progress {
+        width: 200px;
+        height: 6px;
+        margin: 8px 8px 0 0;
+    }
+
+    .progress-bar {
+        background-image: none;
+        background-color: @base;
+    }
+}
+
+.dashboard-number {
+    padding-bottom: 16px;
+    font-size: @font-size + 1.5;
+    font-weight: bold;
+    color: @base;
+}
+
+.dashboard-label {
+    font-size: @font-size + 0.5;
+    color: @white;
+}
+
+.dashboard-panel {
+    border: 1px solid @lightgrey;
+    box-shadow: none;
+
+    .panel-heading {
+        background-image: none;
+        background-color: @lightgrey;
+
+        h3 {
+            display: inline-block;
+            font-size: @font-size + 0.3;
+            font-weight: normal;
+        }
+
+        a {
+            display: inline-block;
+            padding: 4px 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background-color: @white;
+            color: @black;
+            border-radius: 500px;
+        }
+    }
+}
+
+.dashboard-flex-list {
+    margin: 0 -10px -20px -10px;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+
+    li {
+        width: 50%;
+        float: left;
+        display: flex;
+        padding: 0 10px 20px 10px;
+
+        .dashboard-flex-item {
+            min-width: 0;
+            border: 1px solid @lightgrey;
+            text-align: center;
+
+            .dashboard-flex-name {
+                padding: 8px;
+                font-size: 1.4rem;
+            }
+        }
+    }
+
+    @media (min-width: 560px) {
+        li {
+            width: 25%;
+        }
+    }
+
+    @media (min-width: 992px) {
+        li {
+            width: 12.5%;
+        }
+    }
+}

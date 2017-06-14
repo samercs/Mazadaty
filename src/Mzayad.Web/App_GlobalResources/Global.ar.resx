@@ -1,0 +1,867 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddNewItem" xml:space="preserve">
+    <value>اضافة عنصر جديد</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>العنوان</value>
+  </data>
+  <data name="AddressRequiredErrorMessage" xml:space="preserve">
+    <value>الرجاء إدخال عنوانك.</value>
+  </data>
+  <data name="AddToWishList" xml:space="preserve">
+    <value>اضافة منتج الى القائمة المفضلة</value>
+  </data>
+  <data name="AliasOrUsername" xml:space="preserve">
+    <value>اسم المستخدم او الاسم المستعار</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>المنطقة</value>
+  </data>
+  <data name="AreaRequiredErrorMessage" xml:space="preserve">
+    <value>الرجاء إدخال المنطقة.</value>
+  </data>
+  <data name="Avatar" xml:space="preserve">
+    <value>الصورة (اختر واحد)</value>
+  </data>
+  <data name="Block" xml:space="preserve">
+    <value>القطعة</value>
+  </data>
+  <data name="BlockRequiredErrorMessage" xml:space="preserve">
+    <value>الرجاء إدخال رقم القطعة.</value>
+  </data>
+  <data name="Building" xml:space="preserve">
+    <value>المبنى</value>
+  </data>
+  <data name="BuildingRequiredErrorMessage" xml:space="preserve">
+    <value>الرجاء إدخال رقم المبنى.</value>
+  </data>
+  <data name="CategoryNotification" xml:space="preserve">
+    <value>إشعارات التصنيف</value>
+  </data>
+  <data name="CategoryNotificationSaveMessage" xml:space="preserve">
+    <value>تم تعديل الإشعارات الخاصة بك بنجاح. شكراً لك</value>
+  </data>
+  <data name="ChangeLanguage" xml:space="preserve">
+    <value>تغيير اللغة</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>تغيير كلمة المرور</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>المدينة</value>
+  </data>
+  <data name="CityRequiredErrorMessage" xml:space="preserve">
+    <value>الرجاء إدخال مدينتك.</value>
+  </data>
+  <data name="ClickToSelect" xml:space="preserve">
+    <value>انقر للاختيار</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>تأكيد كلمة المرور</value>
+  </data>
+  <data name="ConfirmPasswordMatchErrorMessage" xml:space="preserve">
+    <value>إنّ كلمة المرور الجديدة وتأكيد كلمة المرور غير متطابقين</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>المتابعة</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>البلد</value>
+  </data>
+  <data name="CountryRequiredErrorMessage" xml:space="preserve">
+    <value>الرجاء اختيار بلدك.</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>كلمة المرور الحالية</value>
+  </data>
+  <data name="CurrentPasswordValidationMessage" xml:space="preserve">
+    <value>الرجاء إدخال كلمة مرورك الحالية.</value>
+  </data>
+  <data name="DeleteWishList" xml:space="preserve">
+    <value>حذف منتج من القائمة المفضلة؟</value>
+  </data>
+  <data name="EditAccount" xml:space="preserve">
+    <value>تعديل الحساب</value>
+  </data>
+  <data name="EditAccountNameAndEmailSuccessMessage" xml:space="preserve">
+    <value>تم تخزين بياناتك بنجاح . عليك اعادة الدخول الى الموقع</value>
+  </data>
+  <data name="EditAccountNameSuccessMessage" xml:space="preserve">
+    <value>تم تعديل بياناتك بنجاح.</value>
+  </data>
+  <data name="EditProfile" xml:space="preserve">
+    <value>تعديل الملف الشخصى</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>عنوان البريد الإلكتروني</value>
+  </data>
+  <data name="EmailRequiredErrorMessage" xml:space="preserve">
+    <value>الرجاء إدخال عنوان بريد إلكتروني صالح</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>الاسم الأول</value>
+  </data>
+  <data name="FirstNameRequiredErrorMessage" xml:space="preserve">
+    <value>الرجاء إدخال اسمك الأول</value>
+  </data>
+  <data name="HelloFirstName" xml:space="preserve">
+    <value>أهلاً {0}</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>الصفحة الرئيسية</value>
+  </data>
+  <data name="InvalidUserNameOrPassword" xml:space="preserve">
+    <value>عذراً، لكنّ كلمة المرور أو عنوان البريد الإلكتروني غير صحيح.</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>اسم المنتج</value>
+  </data>
+  <data name="ItemPrices" xml:space="preserve">
+    <value>السعر</value>
+  </data>
+  <data name="Jadda" xml:space="preserve">
+    <value>الجادة</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>اسم العائلة</value>
+  </data>
+  <data name="LastNameRequiredErrorMessage" xml:space="preserve">
+    <value>الرجاء إدخال اسم عائلتك.</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>تحميل...</value>
+  </data>
+  <data name="MyAccount" xml:space="preserve">
+    <value>حسابي</value>
+  </data>
+  <data name="MyWishList" xml:space="preserve">
+    <value>القائمة المفضلة</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>الاسم</value>
+  </data>
+  <data name="NameEnteredValidationMessage" xml:space="preserve">
+    <value>الرجاء ادخال  اسم المنتج او العنصر</value>
+  </data>
+  <data name="NeedPassword" xml:space="preserve">
+    <value>تحتاج إلى كلمة مرور</value>
+  </data>
+  <data name="NeedPasswordInstructions" xml:space="preserve">
+    <value>إذا فقدت أو نسيت كلمة مرورك، الرجاء إدخال عنوان بريدك الإلكتروني في الاستمارة أدناه وسنرسل لك تعليمات حول كيفية إعادة ضبط كلمة مرورك.</value>
+  </data>
+  <data name="NeedPasswordQuestion" xml:space="preserve">
+    <value>هل تحتاج إلى كلمة المرور؟</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>كلمة مرور جديدة</value>
+  </data>
+  <data name="NewPasswordValidationMessage" xml:space="preserve">
+    <value>الرجاء إدخال كلمة المرور، يجب ألا تقل عن 6 أحرف.</value>
+  </data>
+  <data name="OptionLabel" xml:space="preserve">
+    <value>اختر...</value>
+  </data>
+  <data name="OrderItems" xml:space="preserve">
+    <value>محتويات الطلب</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>كلمة المرور</value>
+  </data>
+  <data name="PasswordChangeFailureMessage" xml:space="preserve">
+    <value>عذراً، لكننا لم نتمكن من تغيير كلمة مرورك. احرصي على إدخال كلمة مرورك الحالية بشكل صحيح ثم حاولي مجدداً.</value>
+  </data>
+  <data name="PasswordRequiredErrorMessage" xml:space="preserve">
+    <value>الرجاء إدخال كلمة مرورك.</value>
+  </data>
+  <data name="PasswordSuccessfullyChanged" xml:space="preserve">
+    <value>تم تغيير كلمة المرور بنجاح.</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>رقم الهاتف</value>
+  </data>
+  <data name="PostalCode" xml:space="preserve">
+    <value>الرمز البريدي</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>الخصوصية</value>
+  </data>
+  <data name="ProductOrItemName" xml:space="preserve">
+    <value>اسم المنتج او العنصر</value>
+  </data>
+  <data name="ProfileURL" xml:space="preserve">
+    <value>صفحة الملف الشخصى</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>الكمية</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>التسجيل</value>
+  </data>
+  <data name="RegisteredUsers" xml:space="preserve">
+    <value>العملاء المسجلون</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>تذكرني</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>مطلوب</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>إعادة ضبط كلمة المرور</value>
+  </data>
+  <data name="ResetPasswordCannotFindUserAccount" xml:space="preserve">
+    <value>عذراً, لكننا لم نجد بريد إلكترونى مسجل فى هذه المحاولة لإعادة ضبط كلمة المرور.</value>
+  </data>
+  <data name="ResetPasswordEmailSentAcknowledgement" xml:space="preserve">
+    <value>تم إرسال بريد إلكتروني إلى &lt;strong&gt;{0}&lt;/strong&gt; لإعادة ضبط كلمة المرور، اتبع من فضلك التعليمات المدونة في البريد الإلكتروني لإتمام عملية إعادة الضبط.</value>
+  </data>
+  <data name="ResetPasswordExpiredTimestampException" xml:space="preserve">
+    <value>عذراً، لقد انتهت صلاحية الرابط الذي تحاول استخدامه لإعادة ضبط كلمة مرورك.</value>
+  </data>
+  <data name="ResetPasswordInstructions" xml:space="preserve">
+    <value>لإنهاء إعادة ضبط كلمة مرورك، الرجاء إدخال كلمة المرور الجديدة أدناه.</value>
+  </data>
+  <data name="ResetPasswordInvalidTokenException" xml:space="preserve">
+    <value>عذراً، إنّ الرابط الذي تحاول استخدامه لإعادة ضبط كلمة المرور غير صالح.</value>
+  </data>
+  <data name="ResetPasswordMissingParametersException" xml:space="preserve">
+    <value>عذراً، إنّ الرابط الذي تحاول استخدامه ينقصه عنصراً واحد أو أكثر.</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>حفظ</value>
+  </data>
+  <data name="SendInstructions" xml:space="preserve">
+    <value>إرسال التعليمات</value>
+  </data>
+  <data name="ShippingAddress" xml:space="preserve">
+    <value>عنوان التوصيل</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>تسجيل الدخول</value>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>تسجيل الخروج</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>الولاية</value>
+  </data>
+  <data name="StateOrProvince" xml:space="preserve">
+    <value>الولاية أو المحافظة</value>
+  </data>
+  <data name="StateRequiredErrorMessage" xml:space="preserve">
+    <value>الرجاء إدخال الولاية.</value>
+  </data>
+  <data name="Street" xml:space="preserve">
+    <value>الشارع</value>
+  </data>
+  <data name="StreetRequiredErrorMessage" xml:space="preserve">
+    <value>الرجاء إخال رقم أو إسم الشارع.</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>المجموع</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>مرحبا!</value>
+  </data>
+  <data name="WishListItemAddedMessage" xml:space="preserve">
+    <value>تم اضافة المنتج بنجاح .</value>
+  </data>
+  <data name="WishListItemDeleteConfirmation" xml:space="preserve">
+    <value>هل انت متأكد من حذف المنتج من القائمة المفضلة الخاص بك ؟</value>
+  </data>
+  <data name="WishListItemRemoveMessage" xml:space="preserve">
+    <value>تم حذف المنتج من القائمةالمفضلة .</value>
+  </data>
+  <data name="ZipCode" xml:space="preserve">
+    <value>الرمز البريدى</value>
+  </data>
+  <data name="ZipCodeRequiredErrorMessage" xml:space="preserve">
+    <value>الرجاء إدخال الرمز البريدى.</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>المبلغ</value>
+  </data>
+  <data name="ContinueToCheckout" xml:space="preserve">
+    <value>إتمام عملية الدفع</value>
+  </data>
+  <data name="DateSlashTime" xml:space="preserve">
+    <value>التاريخ/الساعة</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>خطأ</value>
+  </data>
+  <data name="KnetAuthLabel" xml:space="preserve">
+    <value>المصادقة</value>
+  </data>
+  <data name="KnetDetails" xml:space="preserve">
+    <value>تفاصيل "كي نت" KNET</value>
+  </data>
+  <data name="KnetPaymentIdLabel" xml:space="preserve">
+    <value>هوية الدفع</value>
+  </data>
+  <data name="KnetRefNoLabel" xml:space="preserve">
+    <value>الرقم المرجعي</value>
+  </data>
+  <data name="KnetResultCodeLabel" xml:space="preserve">
+    <value>رمز النتيجة</value>
+  </data>
+  <data name="KnetTrackIdLabel" xml:space="preserve">
+    <value>رقم تتبع الطلبية</value>
+  </data>
+  <data name="KnetTransactionIdLabel" xml:space="preserve">
+    <value>رقم الصفقة</value>
+  </data>
+  <data name="OrderId" xml:space="preserve">
+    <value>رقم الطلب</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>الدفع</value>
+  </data>
+  <data name="PaymentTransactionErrorMessage" xml:space="preserve">
+    <value>عذراً، لقد حصل خطأ أثناء عملية الدفع. &lt;a href="{0}" class="alert-link"&gt;الرجاء تغيير طريقة الدفع أو المحاولة مجدداً&lt;/a&gt;.</value>
+  </data>
+  <data name="Placed" xml:space="preserve">
+    <value>تاريخ الطلب</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>السعر</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>المنتج</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>الوضع</value>
+  </data>
+  <data name="Subtotal" xml:space="preserve">
+    <value>المجموع الفرعي</value>
+  </data>
+  <data name="AwardedOn" xml:space="preserve">
+    <value>تاريخ الحصول</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>الوصف</value>
+  </data>
+  <data name="Trophies" xml:space="preserve">
+    <value>الجوائز</value>
+  </data>
+  <data name="XpAward" xml:space="preserve">
+    <value>النقاط</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>عن زيدلي</value>
+  </data>
+  <data name="Added" xml:space="preserve">
+    <value>تمت الاضافة</value>
+  </data>
+  <data name="AllowPhoneSmsLabel" xml:space="preserve">
+    <value>السماح بارسال رسائل نصية للهاتف النقال</value>
+  </data>
+  <data name="Auction" xml:space="preserve">
+    <value>مزاد</value>
+  </data>
+  <data name="AuctionHistory" xml:space="preserve">
+    <value>مزادات سابقة</value>
+  </data>
+  <data name="AuctionWinMessage" xml:space="preserve">
+    <value>مبروك {FirstName} رسى عليكم المزاد! من فضلك ادخل العنوان للتوصيل في الاسفل.</value>
+  </data>
+  <data name="AutoBid" xml:space="preserve">
+    <value>مزايدة اوتوماتيكية</value>
+  </data>
+  <data name="AutoBidDeleteConfirmation" xml:space="preserve">
+    <value>هل أنت متأكد انك تريد ايقاف المزايدة الاوتوماتيكيه لهذا المزاد؟</value>
+  </data>
+  <data name="AutoBidDeleteSuccess" xml:space="preserve">
+    <value>تم ايقاف المزايدة الاوتوماتيكية بنجاح</value>
+  </data>
+  <data name="AutoBidDeleteTitle" xml:space="preserve">
+    <value>ايقاف المزايدة الاوتوماتيكية</value>
+  </data>
+  <data name="AutoBidInstructions" xml:space="preserve">
+    <value>المزايدة الاوتوماتيكية: يتم عشوائياً اختيار المستخدمين الراغبين بالمزايدة الاوتوماتيكية لوضع مزايداتهم أثناء المزاد. اختيارك للمزايدة الاوتوماتيكية لا تضمن لك المزايدة.</value>
+  </data>
+  <data name="AutoBidSaveSuccess" xml:space="preserve">
+    <value>تم اختيار المزايدة الاوتوماتيكية بنجاح</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>العودة</value>
+  </data>
+  <data name="Bid" xml:space="preserve">
+    <value>زيد</value>
+  </data>
+  <data name="BidHistory" xml:space="preserve">
+    <value>مزايدات سابقة</value>
+  </data>
+  <data name="BuyForPriceKd" xml:space="preserve">
+    <value>سعر الشراء  {FormattedPrice}</value>
+  </data>
+  <data name="BuyForPriceTokens" xml:space="preserve">
+    <value>شراء ب {PriceTokens} نقاط</value>
+  </data>
+  <data name="BuyNow" xml:space="preserve">
+    <value>اشتر الآن</value>
+  </data>
+  <data name="BuyNowPrice" xml:space="preserve">
+    <value>سعر "اشتر الآن":  {BuyNowPrice}</value>
+  </data>
+  <data name="BuyNowWithPrice" xml:space="preserve">
+    <value>اشتر الآن ب{BuyNowPrice}</value>
+  </data>
+  <data name="BuySubscription" xml:space="preserve">
+    <value>الاشتراك</value>
+  </data>
+  <data name="BuySubscriptionWithName" xml:space="preserve">
+    <value>الاشتراك - {Subscription.Name}</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>الفئات</value>
+  </data>
+  <data name="ClosedAuctions" xml:space="preserve">
+    <value>المزادات المنتهية</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>اتصل بنا</value>
+  </data>
+  <data name="CurrentAuctionPrice" xml:space="preserve">
+    <value>سعر المزاد الحالي</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>لوحة التحكم</value>
+  </data>
+  <data name="DontHaveAccountQuestion" xml:space="preserve">
+    <value>ليس لديك حساب؟</value>
+  </data>
+  <data name="Experience" xml:space="preserve">
+    <value>الخبرة</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>ساعات</value>
+  </data>
+  <data name="ItemsWon" xml:space="preserve">
+    <value>منتجات تم ربحها</value>
+  </data>
+  <data name="Kuwait" xml:space="preserve">
+    <value>الكويت</value>
+  </data>
+  <data name="LiveAuctions" xml:space="preserve">
+    <value>المزادات الفعّالة الآن</value>
+  </data>
+  <data name="MaxBid" xml:space="preserve">
+    <value>اعلى قيمة للمزايدة</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>دقائق</value>
+  </data>
+  <data name="NameOrEmailRequiredErrorMessage" xml:space="preserve">
+    <value>يرجى ادخال اسم المستخدم أو البريد الاالكتروني</value>
+  </data>
+  <data name="NewAuctionsByCategory" xml:space="preserve">
+    <value>مزادات جديدة حسب الفئة</value>
+  </data>
+  <data name="NewAuctionsByCategoryInstructions" xml:space="preserve">
+    <value>يمكننا ابلاغك عندما تتم اضافة مزاد لفئة محددة. لاستقبال هذا الاشعار، يرجى اختيار الفئة المفضلة  لديك:</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>لا</value>
+  </data>
+  <data name="NoSubscription" xml:space="preserve">
+    <value>لا يوجد إشتراك</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>الإشعارات</value>
+  </data>
+  <data name="NotificationsInstructions" xml:space="preserve">
+    <value>يمكنك اختيار عدة اشعارات، يرجى اختيار اي من الاشعارات التي ترغب باستقبالها.</value>
+  </data>
+  <data name="NoTrophiesMessage" xml:space="preserve">
+    <value>ليس لديك جوائز حتى الآن، ولكن هناك العديد من الطرق لتربح الجوائز. استخدم موقع زيدلي وسوف تربح جائزتك قريباً.</value>
+  </data>
+  <data name="NoWishlistMessage" xml:space="preserve">
+    <value>ليس لديك اي منتجات بالقائمة المفضلة حتى الآن، اضغط على رابط اضافة منتج للبدأ باضافة المنتجات المرغوب بشرائها بالقائمة المفضلة</value>
+  </data>
+  <data name="OrderDetails" xml:space="preserve">
+    <value>تفاصيل الطلب</value>
+  </data>
+  <data name="OrderReceived" xml:space="preserve">
+    <value>تم استلام الطلب</value>
+  </data>
+  <data name="OrderSuccessMessage" xml:space="preserve">
+    <value>شكراً لقيامك بعملية الشراء! سوف يتم ارسال رسالة بالبريد الالكتروني لتأكيد طلبك. تحتوي الرسالة على تفاصيل الطلب ورابط لتتبع الطلب</value>
+  </data>
+  <data name="OrderSummary" xml:space="preserve">
+    <value>ملخص الطلب</value>
+  </data>
+  <data name="OutOfStockErrorMessage" xml:space="preserve">
+    <value>نأسف! هذا المنتج غير متوفر الآن.</value>
+  </data>
+  <data name="PasswordInvalidErrorMessage" xml:space="preserve">
+    <value>يرجى إدخال رمز المرور المكون من 6 حروف أو أرقام أو رموز</value>
+  </data>
+  <data name="PaymentMethod" xml:space="preserve">
+    <value>طريقة الدفع</value>
+  </data>
+  <data name="PhoneNumberRequiredErrorMessage" xml:space="preserve">
+    <value>يرجى ادخال رقم هاتفك النقال</value>
+  </data>
+  <data name="RegisterLinkText" xml:space="preserve">
+    <value>سجل مجاناً</value>
+  </data>
+  <data name="RegisterNow" xml:space="preserve">
+    <value>سجل الآن</value>
+  </data>
+  <data name="RegistrationAgreementAcknowledgemen" xml:space="preserve">
+    <value>أنا اوافق على شروط وأحكام زيدلي.</value>
+  </data>
+  <data name="RegistrationErrorMessage" xml:space="preserve">
+    <value>نأسف! حدث خطأ اثناء تسجيل حسابك:  {0}.</value>
+  </data>
+  <data name="RegistrationWelcomeMessage" xml:space="preserve">
+    <value>مرحباً بك في زيدلي {0}! عندما تكون مستعداً &lt;a class='alert-link' href='#'&gt; يرجى مشاهدة المزادات القادمة &lt;i class='fa fa-pad-left fa-angle-right'&gt;&lt;/i&gt;&lt;/a&gt;</value>
+  </data>
+  <data name="RemoveItem" xml:space="preserve">
+    <value>ازالة منتج تم اختياره</value>
+  </data>
+  <data name="RetailPrice" xml:space="preserve">
+    <value>سعر السوق: {RetailPrice}</value>
+  </data>
+  <data name="RetailPriceWithLabel" xml:space="preserve">
+    <value>سعر السوق: {RetailPrice}</value>
+  </data>
+  <data name="SaveAndContinue" xml:space="preserve">
+    <value>حفظ و متابعة</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>ثواني</value>
+  </data>
+  <data name="SetAutoBid" xml:space="preserve">
+    <value>اختيار المزايدة الاوتوماتيكية</value>
+  </data>
+  <data name="Shipping" xml:space="preserve">
+    <value>التوصيل</value>
+  </data>
+  <data name="Specifications" xml:space="preserve">
+    <value>المواصفات</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>موافق</value>
+  </data>
+  <data name="SubmittingPleaseWait" xml:space="preserve">
+    <value>جاري تقديم الطلب، يرجى الانتظار…</value>
+  </data>
+  <data name="SubscriptionActiveUntil" xml:space="preserve">
+    <value>&lt;span class="text-success"&gt;الاشتراك صالح لغاية {DateTime}</value>
+  </data>
+  <data name="SubscriptionBuyInstructions" xml:space="preserve">
+    <value>انت تقوم الآن بعملية شراء  &lt;strong&gt;{Name}&lt;/strong&gt; بقيمة &lt;strong&gt;{FormattedPrice}&lt;/strong&gt;, هذا الاشتراك &lt;strong&gt;{Duration} day&lt;/strong&gt; صالح حتى  &lt;strong&gt;{NewExpiration}&lt;/strong&gt;. سوف يتم تحديث حسابك عند اتمام عملية الشراء.</value>
+  </data>
+  <data name="SubscriptionDurationDetailsLabel" xml:space="preserve">
+    <value>المدة: {Duration} أيام</value>
+  </data>
+  <data name="SubscriptionExpiredOn" xml:space="preserve">
+    <value>&lt;span class="text-danger"&gt;انتهى الاشتراك في{DateTime}</value>
+  </data>
+  <data name="SubscriptionLabelAndStatus" xml:space="preserve">
+    <value>الاشتراك: {StatusText}</value>
+  </data>
+  <data name="SubscriptionPriceDetailsLabel" xml:space="preserve">
+    <value>السعر:  {FormattedPrice}</value>
+  </data>
+  <data name="SubscriptionPriceKdAndTokens" xml:space="preserve">
+    <value>{PriceCurrency} أو {PriceTokens} نقاط</value>
+  </data>
+  <data name="SubscriptionPurchaseAcknowledgement" xml:space="preserve">
+    <value>مبروك، تمت عملية شراء &lt;strong&gt;{Subscription.Name}&lt;/strong&gt;  بنجاح. لقد تم تحديث حسابك.</value>
+  </data>
+  <data name="SubscriptionQuantityDetailsLabel" xml:space="preserve">
+    <value>الكمية:  {Quantity}</value>
+  </data>
+  <data name="SubscriptionQuantityNoLimit" xml:space="preserve">
+    <value>غير محدود</value>
+  </data>
+  <data name="SubscriptionQuantityQuantityRemaining" xml:space="preserve">
+    <value>المتبقي {Quantity} فقط!</value>
+  </data>
+  <data name="SubscriptionQuantitySoldOut" xml:space="preserve">
+    <value>مُباع</value>
+  </data>
+  <data name="TermsAndConditions" xml:space="preserve">
+    <value>الشروط والاحكام</value>
+  </data>
+  <data name="TimeLeft" xml:space="preserve">
+    <value>الوقت المتبقّي للمزاد</value>
+  </data>
+  <data name="Tokens" xml:space="preserve">
+    <value>رصيد النقاط</value>
+  </data>
+  <data name="TrophiesAchieved" xml:space="preserve">
+    <value>الجوائز المحققة</value>
+  </data>
+  <data name="Trophy" xml:space="preserve">
+    <value>جائزة</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>اسم المستخدم</value>
+  </data>
+  <data name="UserNameOrEmail" xml:space="preserve">
+    <value>اسم المستخدم أو البريد الاالكتروني</value>
+  </data>
+  <data name="UserNameRequiredErrorMessage" xml:space="preserve">
+    <value>اسم المستخدم يجب ان يحتوي فقط على حروف وأرقام</value>
+  </data>
+  <data name="UserNameValidateChecking" xml:space="preserve">
+    <value>التحقق من اسم المستخدم</value>
+  </data>
+  <data name="UserNameValidateError" xml:space="preserve">
+    <value>نأسف! اسم المستخدم غير متوفر.</value>
+  </data>
+  <data name="UserNameValidateIsValid" xml:space="preserve">
+    <value>اسم المستخدم رائع!</value>
+  </data>
+  <data name="ViewAll" xml:space="preserve">
+    <value>عرض الكل</value>
+  </data>
+  <data name="ViewAllClosedAuctions" xml:space="preserve">
+    <value>شاهد جميع المزادات المنتهية</value>
+  </data>
+  <data name="WinningPriceWithLabel" xml:space="preserve">
+    <value>سعر ترسية المزاد: {WinningPrice}</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>نعم</value>
+  </data>
+  <data name="HowItWorks" xml:space="preserve">
+    <value>كيف يعمل</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>المستوى</value>
+  </data>
+  <data name="NoLiveAuctionsMessage" xml:space="preserve">
+    <value>لا يوجد مزادات متاحه الآن</value>
+  </data>
+  <data name="Accept" xml:space="preserve">
+    <value>قبول</value>
+  </data>
+  <data name="AreSure" xml:space="preserve">
+    <value>هل أنت متأكد؟</value>
+  </data>
+  <data name="CancelRequest" xml:space="preserve">
+    <value>إلغاء طلب الصداقة</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>محادثة</value>
+  </data>
+  <data name="Decline" xml:space="preserve">
+    <value>رفض</value>
+  </data>
+  <data name="FriendRequest" xml:space="preserve">
+    <value>طلب صداقة</value>
+  </data>
+  <data name="FriendRequests" xml:space="preserve">
+    <value>طلبات الصداقة</value>
+  </data>
+  <data name="Friends" xml:space="preserve">
+    <value>أصدقاء</value>
+  </data>
+  <data name="AcceptFriendRequest" xml:space="preserve">
+    <value>قبول طلب الصداقة</value>
+  </data>
+  <data name="Click" xml:space="preserve">
+    <value>أضغط</value>
+  </data>
+  <data name="DeclineFriendRequest" xml:space="preserve">
+    <value>رفض طلب الصداقة</value>
+  </data>
+  <data name="Friend" xml:space="preserve">
+    <value>صديق</value>
+  </data>
+  <data name="FriendActionFailMessage" xml:space="preserve">
+    <value>نأسف! لقد حدث خطأ أثناء حفظ أختيارك</value>
+  </data>
+  <data name="FriendActionSuccessMessage" xml:space="preserve">
+    <value>لقد تم حفظ أختيارك بنجاح.</value>
+  </data>
+  <data name="FriendRequestFailMessage" xml:space="preserve">
+    <value>نأسف! لقد حدث خطأ أثناء إرسال طلبك</value>
+  </data>
+  <data name="FriendRequestSent" xml:space="preserve">
+    <value>تم إرسال طلب صداقة</value>
+  </data>
+  <data name="FriendRequestSuccessMessage" xml:space="preserve">
+    <value>لقد تم إرسال طلب الصداقة بنجاح</value>
+  </data>
+  <data name="Here" xml:space="preserve">
+    <value>هنا</value>
+  </data>
+  <data name="NoFriendRequests" xml:space="preserve">
+    <value>لا يوجد طلبات صداقة.</value>
+  </data>
+  <data name="NoFriends" xml:space="preserve">
+    <value>ليس لديك أصدقاء!</value>
+  </data>
+  <data name="PrivateProfileMessage" xml:space="preserve">
+    <value>هذا الملف الشخصى خاص!</value>
+  </data>
+  <data name="RemoveFriendSuccessfullyMessage" xml:space="preserve">
+    <value>هذا المستخدم قد تم حذفه من قائمة أصدقائك بنجاح.</value>
+  </data>
+  <data name="SendFriendRequest" xml:space="preserve">
+    <value>أرسل طلب صداقة</value>
+  </data>
+  <data name="TheFriends" xml:space="preserve">
+    <value>الأصدقاء</value>
+  </data>
+  <data name="ToSendFriendRequestMessage" xml:space="preserve">
+    <value>لإرسال طلب صداقة.</value>
+  </data>
+  <data name="RemoveFriend" xml:space="preserve">
+    <value>حذف صديق</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>إغلاق</value>
+  </data>
+  <data name="EmptyMessageErrorMessage" xml:space="preserve">
+    <value>من فضلك أكتب الرسالة المراد ارسالها.</value>
+  </data>
+  <data name="Inbox" xml:space="preserve">
+    <value>صندوق الوارد</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>الرسالة</value>
+  </data>
+  <data name="MessageSentSuccessfully" xml:space="preserve">
+    <value>لقد تم ارسال رسالتك بنجاح.</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>المزيد...</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>إرسال</value>
+  </data>
+  <data name="Reply" xml:space="preserve">
+    <value>الرد</value>
+  </data>
+  <data name="RetailPriceLabel" xml:space="preserve">
+    <value>سعر السوق</value>
+  </data>
+</root>

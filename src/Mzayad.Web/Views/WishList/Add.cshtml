@@ -1,0 +1,58 @@
+﻿@using Newtonsoft.Json
+@model Mzayad.Web.Models.WishList.AddViewModel
+
+@{
+    ViewBag.Title = Global.AddToWishList;
+}
+
+@section styles {
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+}
+
+<div class="row">
+
+    <div class="@Html.Css().FormNormal">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.WishList.NameEntered, Global.ProductOrItemName).Required()
+                    @Html.TextBoxFor(i => i.WishList.NameEntered, new { @class = "form-control auto-complete", autofocus = "autofocus" })
+                    @Html.ValidationMessageFor(i => i.WishList.NameEntered, Global.NameEnteredValidationMessage)
+                </div>
+                @Html.HiddenFor(i => i.WishList.UserId)
+            </section>
+
+            <section class="form-buttons">
+                <button type="submit" class="btn btn-default">@Global.AddToWishList</button>
+            </section>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/js/jquery-ui")
+    @Scripts.Render("~/js/validate")
+
+    <script type="text/javascript">
+        (function($) {
+
+            $(function() {             
+                initAutocomplete();
+            });
+
+            var initAutocomplete = function() {
+                var areas =  @Html.Raw(JsonConvert.SerializeObject(Model.ProductList));
+                $(".auto-complete").autocomplete({
+                    source: areas
+                });
+            };
+
+        })(jQuery);
+    </script>
+}
+
+

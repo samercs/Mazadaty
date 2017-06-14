@@ -1,0 +1,211 @@
+﻿@import "variables";
+
+@border-color: #dbdbdb;
+
+#home-index {
+
+    #page-title {
+        display: none;
+    }
+
+    h2 {
+        margin: 50px 0 25px 0;
+        font-size: @font-size + 1;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    #auction-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        .auction-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid @border-color;
+            background-color: white;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            .live-action-ribbon {
+                position: absolute;
+                z-index: 99;
+                top: 10px;
+                left: 0;
+                padding: 8px 32px 8px 16px;
+                background: transparent url(//az723232.vo.msecnd.net/assets/auctions-ribbon-635761938753702703.png) center right no-repeat;
+                color: white;
+                font-size: @font-size + 0.2;
+                text-transform: uppercase;
+            }
+
+            .auction-status-loading {
+                padding: 15px;
+                font-size: @font-size + 0.2;
+                font-style: italic;
+            }
+
+            .auction-details {
+
+                .auction-title,
+                .auction-retail-price,
+                .auction-status,
+                .auction-specs,
+                .auction-price,
+                .auction-bid-form {
+                    margin-bottom: 15px;
+                }
+
+                .auction-title {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    -ms-text-overflow: ellipsis;
+                    -o-text-overflow: ellipsis;
+                    text-overflow: ellipsis;
+                    font-size: @font-size + 1.6;
+                }
+
+                .auction-retail-price {
+                    text-transform: uppercase;
+                    color: @darkgrey;
+                    font-size: @font-size + 0.2;
+                }
+
+                .auction-time-left {
+                    margin: 0 0 15px 0;
+                    padding: 15px 0;
+                    border-top: 1px solid @border-color;
+                    border-bottom: 1px solid @border-color;
+                    list-style: none;
+                    overflow: hidden;
+
+                    .auction-time-part {
+                        float: left;
+                        margin: 0 30px 0 0;
+                        text-align: center;
+
+                        &:last-child {
+                            margin-right: 0;
+                        }
+
+                        .auction-time-value {
+                            position: relative;
+                            min-width: 76px;
+                            margin: 0 0 10px 0;
+                            padding: 20px 10px;
+                            background-color: @base;
+                            color: @white;
+                            font-size: @font-size + 1;
+                            line-height: normal;
+                            border-radius: 10px;
+
+                            @media @media-desktop {
+                                font-size: @font-size + 2.6;
+                            }
+                        }
+
+                        .auction-time-value:after {
+                            content: "";
+                            position: absolute;
+                            top: 50%;
+                            left: 0;
+                            border-top: 1px solid #389ECF;
+                            height: 1px;
+                            width: 100%;
+                        }
+
+                        .auction-time-label {
+                            color: @base;
+                            text-transform: uppercase;
+                        }
+                    }
+                }
+
+                .auction-bid-details {
+                    text-align: center;
+                }
+
+                .auction-bid-label {
+                    text-transform: uppercase;
+                }
+
+                .auction-bid-form {
+
+                    .form-control,
+                    .btn-default {
+                        font-size: @font-size + 1;
+                        font-weight: bold;
+                        line-height: normal;
+                    }
+
+                    .form-control {
+                        padding: 8px;
+                        background-color: white;
+                        border: 2px solid @orange;
+                        border-top-left-radius: 500px;
+                        border-bottom-left-radius: 500px;
+                        text-align: center;
+                    }
+
+                    .btn-default {
+                        background-color: @orange;
+                        border-top-right-radius: 500px;
+                        border-bottom-right-radius: 500px;
+                        text-transform: uppercase;
+                    }
+                }
+
+                .auction-recent-bids {
+                    margin: 0;
+                    padding: 0;
+                    list-style: none;
+
+                    > li {
+                        margin-bottom: 10px;
+
+                        &:nth-child(2) {
+                            opacity: 0.66;
+                        }
+
+                        &:nth-child(3) {
+                            opacity: 0.33;
+                        }
+                    }
+
+                    .auction-recent-username {
+                        padding: 4px 8px;
+                        -ms-text-overflow: ellipsis;
+                        -o-text-overflow: ellipsis;
+                        text-overflow: ellipsis;
+                    }
+
+                    .auction-recent-bidamount {
+                        padding: 4px 0;
+                    }
+                }
+
+                .auction-action-buttons {
+                    margin: 0 -10px;
+                    padding: 0;
+                    list-style: none;
+
+                    li {
+                        float: left;
+                        padding: 10px;
+
+                        a {
+                            font-size: @font-size - 0.2 !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.text-small{
+    font-size: 14px;
+}

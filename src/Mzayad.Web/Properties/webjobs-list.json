@@ -1,0 +1,14 @@
+﻿{
+  "$schema": "http://schemastore.org/schemas/json/webjobs-list.json",
+  "WebJobs": [
+    {
+      "filePath": "../Mzayad.WebJobs/Mzayad.WebJobs.csproj"
+    },
+    {
+      "filePath": "../Mzayad.AutoBidNotifier/Mzayad.AutoBidNotifier.csproj"
+    },
+    {
+      "filePath": "../Mzayad.AutoBidNotifier/Mzayad.AutoBidNotifier.csproj"
+    }
+  ]
+}

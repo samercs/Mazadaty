@@ -1,0 +1,8 @@
+﻿@model DateTime?
+
+<div class="input-group">
+    <span class="input-group-addon">
+        <i class="fa fa-calendar"></i>
+    </span>
+    @Html.TextBox("", (Model.HasValue ? Model.Value.ToString("dd/MM/yyyy") : ""), new { @class = "form-control date-picker" })
+</div>

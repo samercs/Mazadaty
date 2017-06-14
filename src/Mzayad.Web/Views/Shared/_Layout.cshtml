@@ -1,0 +1,79 @@
+﻿@using Mzayad.Web.Core.Identity
+@using Mzayad.Web.Extensions
+@using OrangeJetpack.Base.Web.Extensions
+<!DOCTYPE html>
+<html lang="@LanguageCode" dir="@(Html.IsArabic() ? "rtl" : "ltr")">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Html.PageTitle()</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" />
+    @Styles.Render("~/css")
+    @RenderSection("styles", false)
+</head>
+<body id="@Html.Ojs().PageIdentifier()">
+<div class="navbar navbar-inverse">
+
+    @{
+        var routeValues = new {area = "", language = LanguageCode };
+    }
+
+    <div class="container">
+        <a href="@Url.Action("Index", "Home", routeValues)" class="navbar-brand"><img src="https://az723232.vo.msecnd.net/assets/zeedli-logo-web-636279368563125419.svg" alt="Zeedli" style="width: 150px;" /></a>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        @Html.Action("SubscriptionStatus", "Home", new { area = "" })
+    </div>
+    <div class="container">
+     
+        <nav class="navbar-collapse collapse">
+            <ul class="nav navbar-nav @(Html.IsArabic() ? "navbar-right" : "navbar-left")">
+                <li>@Html.ActionLink(Global.Home, "Index", "Home", routeValues, null)</li>
+                <li>@Html.ActionLink(Global.HowItWorks, "Index", "Pages", new { Area = "", Language = LanguageCode, Slug = "how-it-works"}, null)</li>
+                <li>@Html.ActionLink(Global.BuyNow, "BuyNow", "Home", routeValues, null)</li>
+                <li>@Html.ActionLink(Global.ContactUs, "Index", "Pages", new { Area = "", Language = LanguageCode, Slug = "contact-us" }, null)</li>
+            </ul>
+            <ul class="nav navbar-nav @(Html.IsArabic() ? "navbar-left" : "navbar-right")">
+                @Html.Partial("_Layout_UserMyAccount")
+                @Html.Partial("_Layout_NavbarCart")
+                @Html.Partial("_Layout_LanguageSelector")
+                @if (User.IsInRole(Role.Administrator.ToString()))
+                {
+                <li>
+                    <a href="@(Url.Action("Index", "Auctions", new { area = "admin" }))"><i class="fa fa-ellipsis-v fa-pad-right"></i></a>
+                </li>
+                }
+                @if (User.IsInRole(Role.Accountant.ToString()))
+                {
+                    <li>
+                        <a href="@(Url.Action("Index", "Products", new { area = "Reports" }))"><i class="fa fa-ellipsis-v fa-pad-right"></i></a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>
+    <div id="main" class="container body-content">
+        @if (!string.IsNullOrWhiteSpace(ViewBag.Title))
+        {
+            <h1 id="page-title">@ViewBag.Title</h1>
+        }
+        @Html.Partial("_Layout_StatusMessage")
+        @RenderBody()
+        <hr />
+        <footer>
+            <p lang="en">&copy; Zeedli</p>
+        </footer>
+    </div>
+    @Scripts.Render("~/js/jquery")
+    @Scripts.Render("~/js/bootstrap")
+    @Scripts.Render("~/js/site")
+    @RenderSection("scripts", false)
+</body>
+</html>

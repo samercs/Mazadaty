@@ -1,0 +1,29 @@
+﻿@using Kendo.Mvc.UI
+@using Mzayad.Web.Extensions
+@model IReadOnlyCollection<OrangeJetpack.Cms.Models.PageViewModel>
+@{
+    ViewBag.Title = "Pages";
+}
+
+
+<ul class="link-list">
+    <li>@Html.ActionLink("Add Page", "Add", "Pages")</li>
+</ul>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning">There are currently no pages.</div>
+
+    return;
+}
+
+@(Html.Kendo().Grid(Model)
+    .Init(ajax => ajax.Action("GetPages", "Pages"))
+    .Columns(columns =>
+    {
+        columns.Bound(i => i.Title);
+        columns.Bound(i => i.Slug).ClientTemplate("/pages/#=Slug#").Title("URL");
+        columns.Bound(i => i.Status).ClientTemplate("# if (data.Status == 1) {# <span class='label label-success'>Public</span> # } else { # <span class='label label-danger'>Private</span> # } #");
+        columns.LinkColumn("Edit", "pages/edit/#=PageId#");
+    })
+)

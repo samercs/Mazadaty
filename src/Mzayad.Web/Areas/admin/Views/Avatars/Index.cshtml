@@ -1,0 +1,99 @@
+﻿@using Kendo.Mvc.UI
+@using Mzayad.Web.Extensions
+@using OrangeJetpack.Base.Web
+@model IEnumerable<Mzayad.Models.Avatar>
+
+@{
+    ViewBag.Title = "Avatars";
+}
+<ul class="link-list">
+    <li>@Html.ActionLink("Upload Avatar", "Add", "Avatars")</li>
+</ul>
+
+@if (!Model.Any())
+{
+    @Html.StatusMessage("There are currently no avatars uploaded.", StatusMessageType.Warning)
+
+    return;
+}
+
+<p>HINT: You can drag the avatar rows to re-order the order they appear in to users.</p>
+
+
+
+@(Html.Kendo().Grid(Model)
+                .Init(ajax => ajax.Action("GetAvatar", "Avatar"))
+    .Columns(columns =>
+    {
+        columns.Bound(i => i.Url).Title("Avatar").ClientTemplate("<img class='imgThum img-thumbnail img-responsive' src='#=data.Url#'  />").ImageCell();
+        columns.Bound(i => i.Url).Title("URL");
+        columns.Bound(i => i.IsPremium).Title("Premium?").ClientTemplate("#=renderIsPremium(data.IsPremium)#");
+        columns.Bound(i => i.Token).Title("Token").ClientTemplate("#= renderToken(data.Token) #");
+        columns.LinkColumn("Edit", "Avatars/Edit/#=data.AvatarId#");
+        columns.LinkColumn("Delete", "Avatars/Delete/#=data.AvatarId#");
+
+    }))
+
+@(Html.Kendo().Sortable()
+        .For("div[id^='Grid_']")
+        .Filter("table > tbody > tr")
+        .Events(events => events.Change("onChange"))
+        .Deferred()
+      )
+
+@section scripts
+{
+    <script>
+        var noHint = $.noop;
+
+        function placeholder(element) {
+            return element.clone().addClass("k-state-hover").css("opacity", 0.65);
+        }
+
+        function onChange(e) {
+            var oldIndex = e.oldIndex;
+            var newIndex = e.newIndex;
+
+            $.ajax({
+                url: "/admin/avatars/UpdateOrder/?oldIndex=" + oldIndex + "&newIndex=" + newIndex,
+                context: document.body
+            }).done(function () {
+
+            });
+
+            //alert("old index : " + oldIndex + " " + " New Index : " + newIndex);
+        }
+
+        var renderToken = function(token) {
+            if (token) {
+                return token;
+            }
+            return "";
+        }
+
+        var renderIsPremium = function (isPremium) {
+            if (isPremium) {
+                return "<span class='label label-success'>Premium</span>";
+            }
+            return "";
+        }
+</script>
+
+}
+
+@section styles
+{
+    <style>
+        
+        .imgThum {
+            width: 100px;
+        }
+
+        .infoP {
+            padding-top: 25px;
+        }
+
+    </style>
+
+}
+

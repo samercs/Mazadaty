@@ -1,0 +1,17 @@
+﻿.navbar-inverse {
+  background: #132e72;
+}
+.navbar-inverse .navbar-brand,
+.navbar-inverse .navbar-nav > li > a {
+  color: white;
+}
+.navbar-nav .btn-link {
+  border: 0;
+  padding: 15px;
+  color: white !important;
+}
+#page-title {
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid #eee;
+}
+/*# sourceMappingURL=site-layout.css.map */

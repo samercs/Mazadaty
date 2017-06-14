@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{71F89204-EBB2-438A-B56F-C0521C0BBE3C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mzayad.Models</RootNamespace>
+    <AssemblyName>Mzayad.Models</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OrangeJetpack.Base.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.27\lib\net452\OrangeJetpack.Base.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OrangeJetpack.Base.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OrangeJetpack.Base.Data.0.1.2\lib\net452\OrangeJetpack.Base.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OrangeJetpack.Localization, Version=1.7.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OrangeJetpack.Localization.1.7.5\lib\net45\OrangeJetpack.Localization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActivityEvent.cs" />
+    <Compile Include="Address.cs" />
+    <Compile Include="ApplicationUser.cs" />
+    <Compile Include="Auction.cs" />
+    <Compile Include="AutoBid.cs" />
+    <Compile Include="Avatar.cs" />
+    <Compile Include="Banner.cs" />
+    <Compile Include="Bid.cs" />
+    <Compile Include="BuyNowTransactionModel.cs" />
+    <Compile Include="Category.cs" />
+    <Compile Include="CategoryNotification.cs" />
+    <Compile Include="EmailTemplate.cs" />
+    <Compile Include="Enums\ActivityType.cs" />
+    <Compile Include="Enums\AuctionStatus.cs" />
+    <Compile Include="Enums\BannerStatus.cs" />
+    <Compile Include="Enums\BidType.cs" />
+    <Compile Include="Enums\FriendRequestStatus.cs" />
+    <Compile Include="Enums\Gender.cs" />
+    <Compile Include="Enums\OrderStatus.cs" />
+    <Compile Include="Enums\PaymentMethod.cs" />
+    <Compile Include="Enums\EmailTemplateType.cs" />
+    <Compile Include="Enums\OrderType.cs" />
+    <Compile Include="Enums\PaymentStatus.cs" />
+    <Compile Include="Enums\PrizeStatus.cs" />
+    <Compile Include="Enums\PrizeType.cs" />
+    <Compile Include="Enums\SubscriptionStatus.cs" />
+    <Compile Include="Enums\UserProfileStatus.cs" />
+    <Compile Include="Enums\TrophyKey.cs" />
+    <Compile Include="Enums\UserSubscriptionStatus.cs" />
+    <Compile Include="Extensions\TrophyKeyExtensions.cs" />
+    <Compile Include="Extensions\UserTrophyExtensions.cs" />
+    <Compile Include="FriendRequest.cs" />
+    <Compile Include="Message.cs" />
+    <Compile Include="Queues\BidMessage.cs" />
+    <Compile Include="Queues\QueueKeys.cs" />
+    <Compile Include="Queues\QueueMessageBase.cs" />
+    <Compile Include="Queues\UserTrophyMessage.cs" />
+    <Compile Include="UserFriend.cs" />
+    <Compile Include="IslamicCalendar.cs" />
+    <Compile Include="Level.cs" />
+    <Compile Include="Order.cs" />
+    <Compile Include="OrderItem.cs" />
+    <Compile Include="OrderLog.cs" />
+    <Compile Include="OrderModel.cs" />
+    <Compile Include="Payment\InitTransactionResult.cs" />
+    <Compile Include="Payment\KnetResponse.cs" />
+    <Compile Include="Payment\KnetTransaction.cs" />
+    <Compile Include="Payment\PaymentTransaction.cs" />
+    <Compile Include="Prize.cs" />
+    <Compile Include="Product.cs" />
+    <Compile Include="ProductImage.cs" />
+    <Compile Include="ProductSpecification.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SessionLog.cs" />
+    <Compile Include="ShippingAddress.cs" />
+    <Compile Include="Specification.cs" />
+    <Compile Include="SplashAd.cs" />
+    <Compile Include="Sponsor.cs" />
+    <Compile Include="Subscription.cs" />
+    <Compile Include="SubscriptionLog.cs" />
+    <Compile Include="TokenLog.cs" />
+    <Compile Include="Trophy.cs" />
+    <Compile Include="UserAvatar.cs" />
+    <Compile Include="UserPrizeLog.cs" />
+    <Compile Include="UserTrophy.cs" />
+    <Compile Include="WishList.cs" />
+    <Compile Include="WishListAdminModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
+

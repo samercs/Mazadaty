@@ -1,0 +1,214 @@
+﻿@using Humanizer
+@using Mzayad.Core.Formatting
+@using DateTimeFormatter = Mzayad.Core.Formatting.DateTimeFormatter
+@model Mzayad.Web.Models.User.DashboardViewModel
+@{
+    ViewBag.Title = Global.Dashboard;
+}
+
+@section styles{
+    <style>
+        #page-title {
+            display: none;
+        }
+
+        .panel-link {
+            background-color: #33ACE0 !important;
+            color: white !important;
+            margin-right: 5px !important;
+        }
+        .text-wight {
+            margin-top: 5px;
+        }
+        .text-wight a {
+            color: #fff;
+            text-decoration: underline;
+        }
+    </style>
+}
+<div id="dashboard-header">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div id="dashboard-avatar">
+                        <a href="@Url.Action("EditProfile", "User")" title="@Global.ClickToEdit">
+                            <img class="img-responsive" src="@Model.User.AvatarUrl" alt="@Model.User.UserName" />
+                        </a>
+                        @*<div class="text-center text-wight">
+                            <a href="@Url.Action("MyAvatars", "User")">@Global.MyAvatars</a>
+                        </div>*@
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                    <div id="dashboard-details" class="dashboard-cell">
+                        <div id="dashboard-username" class="text-uppercase">@Model.User.UserName</div>
+                        <div id="dashboard-level" class="text-uppercase">
+                            @Global.Level @Model.User.Level
+                        </div>
+                        <div id="dashboard-progress">
+                            <div class="progress pull-left">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="@Model.LevelPercentage" aria-valuemin="0" aria-valuemax="100" style="width: @Model.LevelPercentage%;">
+                                    <span class="sr-only">@Model.LevelPercentage% Complete</span>
+                                </div>
+                            </div>
+                            <small>@(Model.User.Xp)/@(Model.NextLevel.XpRequired)</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="dashboard-cell">
+                        <div class="dashboard-number">@Model.User.Xp</div>
+                        <div class="dashboard-label text-uppercase">@Global.Experience</div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <a href="@Url.Action("Index", "Subscriptions")" class="dashboard-cell">
+                        <div class="dashboard-number">@Model.User.Tokens</div>
+                        <div class="dashboard-label text-uppercase">@Global.Tokens</div>
+                    </a>
+                </div>
+                <div class="col-sm-3">
+                    <a href="@Url.Action("Trophies", "User")" class="dashboard-cell">
+                        <div class="dashboard-number">@Model.Trophies.Count</div>
+                        <div class="dashboard-label text-uppercase">@Global.Trophies</div>
+                    </a>
+                </div>
+                <div class="col-sm-3">
+                    <a href="@Url.Action("Friends", "User")" class="dashboard-cell">
+                        <div class="dashboard-number">@Model.Friends.Count</div>
+                        <div class="dashboard-label text-uppercase">@(Model.Friends.Count == 1 ? Global.Friend : Global.Friends)</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.PrizeUrl))
+{
+    @Html.Partial("_UserPrizeNotification", Model.PrizeUrl)
+}
+
+@if (Model.Trophies.Any())
+{
+    <div class="panel dashboard-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title text-uppercase">@Global.TrophiesAchieved</h3>
+            <div class="pull-right"><a class="text-uppercase" href="@Url.Action("Trophies")">@Global.ViewAll</a></div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            <ul class="dashboard-flex-list">
+                @foreach (var trophy in Model.Trophies.Take(10))
+                {
+                    <li>
+                        <div class="dashboard-flex-item">
+                            <img class="img-responsive" src="@trophy.IconUrl" alt="@trophy.Name" />
+                            <div class="dashboard-flex-name text-uppercase">@trophy.Name</div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+}
+
+@if (Model.Auctions.Any())
+{
+    <div class="panel dashboard-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title text-uppercase">@Global.ItemsWon</h3>
+            <div class="pull-right"><a class="text-uppercase" href="@Url.Action("AuctionHistory")">@Global.ViewAll</a></div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            <ul class="dashboard-flex-list">
+                @foreach (var auction in Model.Auctions.Take(10))
+                {
+                    <li>
+                        <div class="dashboard-flex-item">
+                            <img class="img-responsive" src="@auction.Product.MainImage().ImageSmUrl" alt="@auction.Title" />
+                            <div class="dashboard-flex-name text-uppercase">@auction.Title</div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+}
+
+@if (Model.WishLists.Any())
+{
+    <div class="panel dashboard-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title text-uppercase">@Global.MyWishList</h3>
+            <div class="pull-right">
+                <a class="text-uppercase" href="@Url.Action("Index", "WishList")">@Global.ViewAll</a>
+            </div>
+            <div class="pull-right"><a class="text-uppercase panel-link" href="@Url.Action("Add", "WishList")">@Global.AddNewItem</a></div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            <table class="@Html.Css().GridTable">
+                <thead>
+                    <tr>
+                        <th>@Global.ItemName</th>
+                        <th>@Global.Added</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.WishLists)
+                    {
+                        <tr>
+                            <td>@item.NameEntered</td>
+                            <td>@DateTimeFormatter.ToLocalTime(item.CreatedUtc)</td>
+                            <td class="link-cell">
+                                @Html.ActionLink(Global.Remove, "Remove", "WishList", new { id = item.WishListId }, null)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@if (Model.Bids.Any())
+{
+    <div class="panel dashboard-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title text-uppercase">@Global.BidHistory</h3>
+            <div class="pull-right"><a class="text-uppercase" href="@Url.Action("BidHistory")">@Global.ViewAll</a></div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            <table class="@Html.Css().GridTable">
+                <thead>
+                    <tr>
+                        <th>@Global.DateSlashTime</th>
+                        <th>@Global.Auction</th>
+                        <th>@Global.Amount</th>
+                        <th>@Global.TimeLeft</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Bids)
+                    {
+                        <tr>
+                            <td>@DateTimeFormatter.ToLocalTime(item.CreatedUtc, DateTimeFormatter.Format.Full)</td>
+                            <td>@item.Auction.Title</td>
+                            <td>@CurrencyFormatter.Format(item.Amount)</td>
+                            <td>@TimeSpan.FromSeconds(item.SecondsLeft).Humanize(4)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

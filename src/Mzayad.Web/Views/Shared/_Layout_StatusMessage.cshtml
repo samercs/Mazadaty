@@ -1,0 +1,11 @@
+﻿@using Mzayad.Web.Extensions
+@using OrangeJetpack.Base.Web
+
+@{
+    var statusMessage = TempData["StatusMessage"] as StatusMessage;
+}
+
+@if (statusMessage != null)
+{
+    @Html.StatusMessage(statusMessage)
+}

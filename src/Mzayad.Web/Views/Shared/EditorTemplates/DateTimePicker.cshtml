@@ -1,0 +1,44 @@
+﻿@model DateTime?
+@{
+    var date = "";
+    var dateTime = "";
+    int? hour = null;
+    int? minute = null;
+
+    if (Model.HasValue)
+    {
+        date = Model.Value.AddHours(3).ToString("dd/MM/yyyy");
+        dateTime = Model.Value.AddHours(3).ToString("u"); // AST -> UTC 
+        hour = Model.Value.AddHours(3).Hour;
+        minute = Model.Value.AddHours(3).Minute;
+    }
+}
+
+<div class="datetime-picker">
+    <input id="@Html.IdForModel()" name="@Html.NameForModel()" type="hidden" class="datetime-value" value="@dateTime" />
+    <div class="input-group">
+        <span class="input-group-addon">
+            <i class="fa fa-fw fa-calendar"></i>
+        </span>
+        <input id="@Html.IdForModel()_Date" type="text" class="form-control date-picker" value="@date" />
+    </div>
+    <div class="input-group">
+        <span class="input-group-addon">
+            <i class="fa fa-fw fa-clock-o"></i>
+        </span>
+        <select id="@Html.IdForModel()_Hour" class="hour-picker form-control" style="width: auto;">
+            <option value=""></option>
+            @for (var i = 0; i < 24; i++)
+            {
+                <option value="@i" selected="@(i == hour)">@i.ToString("00")</option>
+            }
+        </select>
+        <select id="@Html.IdForModel()_Minute" class="minute-picker form-control" style="width: auto;">
+            <option value=""></option>
+            @for (var i = 0; i < 60; i += 15)
+            {
+                <option value="@i" selected="@(i == minute)">@i.ToString("00")</option>
+            }
+        </select>
+    </div>
+</div>

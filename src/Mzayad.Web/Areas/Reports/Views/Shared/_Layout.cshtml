@@ -1,0 +1,44 @@
+﻿@using Kendo.Mvc.UI
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    @Styles.Render("~/css/admin")
+    @RenderSection("styles", false)
+    <style>
+        a[disabled] {
+            opacity: 0.5;
+        }
+        .sub-menu-item {
+            padding-left: 24px;
+            font-size: 85%;
+        }
+    </style>
+}
+
+<div class="row">
+    @Html.Partial("_Layout_AdminMenu")
+    <div class="col-lg-9 col-md-8">
+        @RenderBody()
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/js/jquery-ui")
+    @Scripts.Render("~/js/validate")
+    <script src="~/scripts/kendo.web.min.js"></script>
+    <script src="~/Scripts/kendo.aspnetmvc.min.js"></script>
+    @Html.Kendo().DeferredScripts()
+    @RenderSection("scripts", false)
+    <script>
+        $(function() {
+            $("a[disabled]").on("click", function(e) {
+                e.preventDefault();
+            });
+            $(".date-picker").datepicker({ dateFormat: "dd/mm/yy" });
+        })
+    </script>
+}

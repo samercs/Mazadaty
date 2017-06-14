@@ -1,0 +1,22 @@
+﻿@model Mzayad.Web.Areas.Admin.Models.Home.BuyNowModel
+
+@{
+    ViewBag.Title = Global.BuyNow;
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "form-inline form-search" }))
+{
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            <input name="q" type="text" class="form-control" style="min-width: 400px;" placeholder="@Global.BuyNowSearchPlaceholder" value="@Model.Search" />
+        </div>
+    </div>
+}
+
+<ol id="closed-auctions">
+    @foreach (var auction in Model.Auctions)
+    {
+        <li>@Html.DisplayFor(i => auction, "BuyNowTile")</li>
+    }
+</ol>

@@ -1,0 +1,169 @@
+﻿@using Mzayad.Core.Formatting
+@using Mzayad.Models.Enum
+@using Mzayad.Web.Extensions
+@using OrangeJetpack.Base.Core.Formatting
+@using OrangeJetpack.Localization
+@using DateTimeFormatter = OrangeJetpack.Base.Core.Formatting.DateTimeFormatter
+@model Mzayad.Models.Order
+
+@{
+    ViewBag.Title = "Order ID " + Model.OrderId;
+    Model.RecalculateTotal();
+}
+
+@section styles {
+    <style>
+        @@media print {
+            #page-title {
+                display: none;
+            }
+
+            a[href]:after {
+                content: none;
+            }
+
+            body {
+                padding: 0 !important;
+                font-size: 10pt !important;
+            }
+
+            h3 {
+                font-size: 12pt !important;
+                font-weight: normal !important;
+            }
+
+            label {
+                padding-top: 7px;
+            }
+        }
+    </style>
+}
+
+<div class="hidden-print">
+    <ul class="link-list">
+        <li><button id="print-invoice" type="button" class="btn btn-default">Print Invoice <i class="fa fa-print"></i></button></li>
+
+        @if (Model.Status != OrderStatus.Delivered)
+        {
+            <li>
+                <a class="btn btn-default" href="@Url.Action("Ship", new { id = Model.OrderId })">Ship Order <i class="fa fa-truck"></i></a>
+            </li>
+        }
+    </ul>
+
+    <p>&nbsp;</p>
+</div>
+
+<section class="form-section form-horizontal">
+    <div class="row">
+        <div class="col-xs-6">
+            <h3>Order Details</h3>
+            <label class="col-xs-4 control-label">Order ID</label>
+            <div class="col-xs-8">
+                <p class="form-control-static">@Model.OrderId</p>
+            </div>
+            <div class="hidden-print">
+                <label class="col-xs-4 control-label">Status</label>
+                <div class="col-xs-8">
+                    <p class="form-control-static">@EnumFormatter.Description(Model.Status)</p>
+                </div>
+            </div>
+            <label class="col-xs-4 control-label">Submitted</label>
+            <div class="col-xs-8">
+                <p class="form-control-static">@DateTimeFormatter.ToLocalTime(Model.SubmittedUtc, DateTimeFormatter.Format.Full)</p>
+            </div>
+            <div class="hidden-print">
+                <label class="col-xs-4 control-label">Delivered</label>
+                <div class="col-xs-8">
+                    <p class="form-control-static">@DateTimeFormatter.ToLocalTime(Model.ShippedUtc, DateTimeFormatter.Format.Full)</p>
+                </div>
+            </div>
+            <label class="col-xs-4 control-label">Payment</label>
+            <div class="col-xs-8">
+                <p class="form-control-static">@EnumFormatter.Description(Model.PaymentMethod)</p>
+            </div>
+           
+        </div>
+        <div class="col-xs-6">
+            <h3>Customer Details</h3>
+            <label class="col-xs-4 control-label">Name</label>
+            <div class="col-xs-8">
+                <p class="form-control-static">@Model.Address.Name</p>
+            </div>
+            <label class="col-xs-4 control-label">Phone</label>
+            <div class="col-xs-8">
+                <p class="form-control-static">@PhoneNumberFormatter.Format(Model.Address.PhoneCountryCode,Model.Address.PhoneLocalNumber)</p>
+            </div>
+            <label class="col-xs-4 control-label">Address</label>
+            <div class="col-xs-8">
+                @Html.DisplayFor(m => m.Address)
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<h3>Order Items</h3>
+
+<table id="cart-table" class="@Html.Css().LayoutTable">
+    <thead>
+        <tr>
+            
+            <th class="force-bg-print">Product</th>
+            <th class="force-bg-print">Price</th>
+            <th class="force-bg-print">Quantity</th>
+            <th class="force-bg-print">Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td><strong class="text-uppercase" dir="ltr">@item.Localize("en",i=>i.Name).Name</strong></td>
+                <td>@CurrencyFormatter.Format(item.ItemPrice, Currency.Kwd)</td>
+                <td>@item.Quantity</td>
+                <td>@CurrencyFormatter.Format(item.ItemPrice * item.Quantity, Currency.Kwd)</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            
+            <th colspan="3" class="text-right">Subtotal</th>
+            <th>@CurrencyFormatter.Format(Model.Subtotal, Currency.Kwd)</th>
+        </tr>
+        
+        <tr>
+            
+            <th colspan="3" class="text-right">Shipping</th>
+            <th id="order-shipping-value">@CurrencyFormatter.Format(Model.Shipping, Currency.Kwd)</th>
+        </tr>
+        <tr>
+            
+            <th colspan="3" class="text-right">Total</th>
+            <th id="order-total-value">@CurrencyFormatter.Format(Model.Total, Currency.Kwd)</th>
+        </tr>
+    </tfoot>
+</table>
+
+<div class="visible-print">
+    <p style="text-align: justify;">We hereby confirm that we have received the above items in good condition. Mazyad will only accept returns within 72 hours of delivery, and ONLY items that have been damaged during delivery or a malfunctioning product.</p>
+    <p class="text-right">Received __________________________________</p>
+</div>
+
+@section scripts {
+
+    <script>
+
+        (function ($) {
+
+            $(function () {
+                $("#print-invoice").on("click", function () {
+                    window.print();
+                });
+            });
+
+        })(jQuery);
+
+    </script>
+}

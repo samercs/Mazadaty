@@ -1,0 +1,1047 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ChangeLanguage" xml:space="preserve">
+    <value>Change Language</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="EmailRequiredErrorMessage" xml:space="preserve">
+    <value>Please a valid email address.</value>
+  </data>
+  <data name="HelloFirstName" xml:space="preserve">
+    <value>Hello {0}</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="MyAccount" xml:space="preserve">
+    <value>My Account</value>
+  </data>
+  <data name="NeedPasswordQuestion" xml:space="preserve">
+    <value>Need Password?</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PasswordRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your password.</value>
+  </data>
+  <data name="RegisteredUsers" xml:space="preserve">
+    <value>Registered Users</value>
+  </data>
+  <data name="RegisterNow" xml:space="preserve">
+    <value>Register Now</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Remember me</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>Sign Out</value>
+  </data>
+  <data name="DontHaveAccountQuestion" xml:space="preserve">
+    <value>Don't have an account?</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="FirstNameRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your first name.</value>
+  </data>
+  <data name="InvalidUserNameOrPassword" xml:space="preserve">
+    <value>We're sorry, but the email address or password you have entered is incorrect.</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="LastNameRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your last name.</value>
+  </data>
+  <data name="NeedPassword" xml:space="preserve">
+    <value>Need Password</value>
+  </data>
+  <data name="NeedPasswordInstructions" xml:space="preserve">
+    <value>If you have lost or forgotten your password please enter your email address in the form below and we will send you instructions on how to reset your password.</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="PasswordInvalidErrorMessage" xml:space="preserve">
+    <value>Please enter a password, it must be at least 6 characters.</value>
+  </data>
+  <data name="PasswordSuccessfullyChanged" xml:space="preserve">
+    <value>Password successfully changed.</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="RegisterLinkText" xml:space="preserve">
+    <value>Register for free&lt;i class="fa fa-pad-left fa-angle-right"&gt;&lt;/i&gt;</value>
+  </data>
+  <data name="RegistrationErrorMessage" xml:space="preserve">
+    <value>We're sorry, an error occurred registering your account: {0}.</value>
+  </data>
+  <data name="RegistrationWelcomeMessage" xml:space="preserve">
+    <value>Welcome to Zeedli {0}! As soon as you are ready &lt;a class='alert-link' href='{1}'&gt;check out our upcoming auctions&lt;i class='fa fa-pad-left fa-angle-right'&gt;&lt;/i&gt;&lt;/a&gt;</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="ResetPasswordCannotFindUserAccount" xml:space="preserve">
+    <value>We're sorry, we cannot find a registered email for this password reset attempt.</value>
+  </data>
+  <data name="ResetPasswordEmailSentAcknowledgement" xml:space="preserve">
+    <value>A password reset email has been sent to &lt;strong&gt;{0}&lt;/strong&gt;, simply follow the instructions in the email to complete the reset.</value>
+  </data>
+  <data name="ResetPasswordExpiredTimestampException" xml:space="preserve">
+    <value>We're sorry, the URL that you are attempting to use to reset your password has expired.</value>
+  </data>
+  <data name="ResetPasswordInstructions" xml:space="preserve">
+    <value>To finish resetting your password please enter your new password below.</value>
+  </data>
+  <data name="ResetPasswordInvalidTokenException" xml:space="preserve">
+    <value>We're sorry, the URL that you are attempting to use to reset your password is invalid.</value>
+  </data>
+  <data name="ResetPasswordMissingParametersException" xml:space="preserve">
+    <value>We're sorry, the URL that you are attempting to use is missing one or more parameters.</value>
+  </data>
+  <data name="SendInstructions" xml:space="preserve">
+    <value>Send Instructions</value>
+  </data>
+  <data name="NameOrEmailRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your username or email address.</value>
+  </data>
+  <data name="TermsAndConditions" xml:space="preserve">
+    <value>Terms and Conditions</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="UserNameOrEmail" xml:space="preserve">
+    <value>Username or Email</value>
+  </data>
+  <data name="UserNameRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter a username containing only letters and numbers.</value>
+  </data>
+  <data name="UserNameValidateChecking" xml:space="preserve">
+    <value>Checking username...</value>
+  </data>
+  <data name="UserNameValidateError" xml:space="preserve">
+    <value>Oops sorry, username not available.</value>
+  </data>
+  <data name="UserNameValidateIsValid" xml:space="preserve">
+    <value>Great username!</value>
+  </data>
+  <data name="RegistrationAgreementAcknowledgement" xml:space="preserve">
+    <value>I agree with zeedli's &lt;a href="{0}"&gt;terms and conditions&lt;/a&gt;.</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="AddressRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your address.</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>Area</value>
+  </data>
+  <data name="AreaRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your area.</value>
+  </data>
+  <data name="Block" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="BlockRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your block.</value>
+  </data>
+  <data name="Building" xml:space="preserve">
+    <value>Building</value>
+  </data>
+  <data name="BuildingRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your building.</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="CityRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your city.</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="CountryRequiredErrorMessage" xml:space="preserve">
+    <value>Please select your country.</value>
+  </data>
+  <data name="Jadda" xml:space="preserve">
+    <value>Jadda</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="OptionLabel" xml:space="preserve">
+    <value>select...</value>
+  </data>
+  <data name="PostalCode" xml:space="preserve">
+    <value>Postal Code</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="StateOrProvince" xml:space="preserve">
+    <value>State/Province</value>
+  </data>
+  <data name="StateRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your state.</value>
+  </data>
+  <data name="Street" xml:space="preserve">
+    <value>Street</value>
+  </data>
+  <data name="StreetRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your street.</value>
+  </data>
+  <data name="ZipCode" xml:space="preserve">
+    <value>Zip Code</value>
+  </data>
+  <data name="ZipCodeRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your zip code.</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Welcome!</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
+  <data name="ConfirmPasswordMatchErrorMessage" xml:space="preserve">
+    <value>Your new password and confirmation password do not match.</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Current Password</value>
+  </data>
+  <data name="CurrentPasswordValidationMessage" xml:space="preserve">
+    <value>Please enter your current password.</value>
+  </data>
+  <data name="NewPasswordValidationMessage" xml:space="preserve">
+    <value>Please enter your new password, it must be at least 6 characters.</value>
+  </data>
+  <data name="PasswordChangeFailureMessage" xml:space="preserve">
+    <value>We're sorry, but we were unable to change your password. Please be sure you enter your current password correctly and try again.</value>
+  </data>
+  <data name="EditAccount" xml:space="preserve">
+    <value>Edit Account</value>
+  </data>
+  <data name="EditAccountNameSuccessMessage" xml:space="preserve">
+    <value>Account successfully updated.</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Kuwait" xml:space="preserve">
+    <value>Kuwait</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="CategoryNotificationSaveMessage" xml:space="preserve">
+    <value>Thank you, your notifications have been saved.</value>
+  </data>
+  <data name="NewAuctionsByCategory" xml:space="preserve">
+    <value>New Auctions by Category</value>
+  </data>
+  <data name="NewAuctionsByCategoryInstructions" xml:space="preserve">
+    <value>We can notify you when auctions are added with items in specific categories. To receive these notifications select your favorite categories:</value>
+  </data>
+  <data name="NotificationsInstructions" xml:space="preserve">
+    <value>You can opt into and subscribe to various notifications on the site, please use the options below to select which notifications you would like to receive.</value>
+  </data>
+  <data name="AliasOrUsername" xml:space="preserve">
+    <value>Alias or Username</value>
+  </data>
+  <data name="Avatar" xml:space="preserve">
+    <value>Avatar (select one)</value>
+  </data>
+  <data name="ClickToSelect" xml:space="preserve">
+    <value>Click To Select</value>
+  </data>
+  <data name="EditProfile" xml:space="preserve">
+    <value>Edit Profile</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="ProfileURL" xml:space="preserve">
+    <value>Profile Page</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>My Page</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>Item Name</value>
+  </data>
+  <data name="ItemPrices" xml:space="preserve">
+    <value>Item Prices</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="OrderItems" xml:space="preserve">
+    <value>Order Items</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Phone Number</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="ShippingAddress" xml:space="preserve">
+    <value>Shipping Address</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="PhoneNumberRequiredErrorMessage" xml:space="preserve">
+    <value>Please enter your phone number.</value>
+  </data>
+  <data name="SaveAndContinue" xml:space="preserve">
+    <value>Save And Continue</value>
+  </data>
+  <data name="AllowPhoneSmsLabel" xml:space="preserve">
+    <value>Allow Phone SMS</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="OrderDetails" xml:space="preserve">
+    <value>Order Details</value>
+  </data>
+  <data name="OrderSummary" xml:space="preserve">
+    <value>Order Summary</value>
+  </data>
+  <data name="PaymentMethod" xml:space="preserve">
+    <value>Payment Method</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="MyWishList" xml:space="preserve">
+    <value>My Wishlist</value>
+  </data>
+  <data name="AddNewItem" xml:space="preserve">
+    <value>Add Item</value>
+  </data>
+  <data name="AddToWishList" xml:space="preserve">
+    <value>Add to Wishlist</value>
+  </data>
+  <data name="RemoveItem" xml:space="preserve">
+    <value>Remove Item</value>
+  </data>
+  <data name="NameEnteredValidationMessage" xml:space="preserve">
+    <value>please enter product or item name</value>
+  </data>
+  <data name="ProductOrItemName" xml:space="preserve">
+    <value>Product or Item Name</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="WishListItemAddedMessage" xml:space="preserve">
+    <value>Wishlist item added successfully.</value>
+  </data>
+  <data name="WishListItemDeleteConfirmation" xml:space="preserve">
+    <value>Are you sure you want to permanently remove this item from your wishlist?</value>
+  </data>
+  <data name="WishListItemRemoveMessage" xml:space="preserve">
+    <value>Item successfully removed.</value>
+  </data>
+  <data name="Shipping" xml:space="preserve">
+    <value>Shipping</value>
+  </data>
+  <data name="SubmittingPleaseWait" xml:space="preserve">
+    <value>Submitting, please wait...</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="PaymentTransactionErrorMessage" xml:space="preserve">
+    <value>We're sorry, an error occurred trying to process credit or debit card transaction. Please &lt;a href="{0}" class="alert-link"&gt;change your payment method or try again&lt;/a&gt;.</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="ContinueToCheckout" xml:space="preserve">
+    <value>Continue to Checkout</value>
+  </data>
+  <data name="DateSlashTime" xml:space="preserve">
+    <value>Date/Time</value>
+  </data>
+  <data name="KnetAuthLabel" xml:space="preserve">
+    <value>Auth</value>
+  </data>
+  <data name="KnetDetails" xml:space="preserve">
+    <value>KNET Details</value>
+  </data>
+  <data name="KnetPaymentIdLabel" xml:space="preserve">
+    <value>Payment ID</value>
+  </data>
+  <data name="KnetRefNoLabel" xml:space="preserve">
+    <value>Ref No</value>
+  </data>
+  <data name="KnetResultCodeLabel" xml:space="preserve">
+    <value>Result Code</value>
+  </data>
+  <data name="KnetTrackIdLabel" xml:space="preserve">
+    <value>Track ID</value>
+  </data>
+  <data name="KnetTransactionIdLabel" xml:space="preserve">
+    <value>Transaction ID</value>
+  </data>
+  <data name="OrderId" xml:space="preserve">
+    <value>Order ID</value>
+  </data>
+  <data name="OrderReceived" xml:space="preserve">
+    <value>Order Received</value>
+  </data>
+  <data name="OrderSuccessMessage" xml:space="preserve">
+    <value>Thank you for your purchase! You will receive an order confirmation email with details of your order and a link to track its progress.</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="Placed" xml:space="preserve">
+    <value>Placed</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Subtotal" xml:space="preserve">
+    <value>Subtotal</value>
+  </data>
+  <data name="NoWishlistMessage" xml:space="preserve">
+    <value>You have no wishlist items yet, click the Add Item link to start your wishlist.</value>
+  </data>
+  <data name="BuySubscription" xml:space="preserve">
+    <value>Buy Subscription</value>
+  </data>
+  <data name="BuySubscriptionWithName" xml:space="preserve">
+    <value>Buy Subscription - {Subscription.Name}</value>
+  </data>
+  <data name="BuyForPriceKd" xml:space="preserve">
+    <value>Buy for {FormattedPrice}</value>
+  </data>
+  <data name="BuyForPriceTokens" xml:space="preserve">
+    <value>Buy with {PriceTokens} tokens</value>
+  </data>
+  <data name="SubscriptionPriceKdAndTokens" xml:space="preserve">
+    <value>{PriceCurrency} or {PriceTokens} tokens</value>
+  </data>
+  <data name="SubscriptionPriceTokens" xml:space="preserve">
+    <value>{PriceTokens} tokens</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="NoSubscription" xml:space="preserve">
+    <value>No Subscription</value>
+  </data>
+  <data name="SubscriptionActiveUntil" xml:space="preserve">
+    <value>&lt;span class="text-success"&gt;ACTIVE&lt;/span&gt; until {DateTime}</value>
+  </data>
+  <data name="SubscriptionExpiredOn" xml:space="preserve">
+    <value>&lt;span class="text-danger"&gt;EXPIRED&lt;/span&gt; on {DateTime}</value>
+  </data>
+  <data name="SubscriptionPurchaseAcknowledgement" xml:space="preserve">
+    <value>Congratulations, you have successfully purchased &lt;strong&gt;{Subscription.Name}&lt;/strong&gt; and we have updated your account. Also you win a prize from Zeedli click on button "Spin to get your prize".</value>
+  </data>
+  <data name="SubscriptionBuyInstructions" xml:space="preserve">
+    <value>You are buying the subscription &lt;strong&gt;{Name}&lt;/strong&gt; for &lt;strong&gt;{FormattedPrice}&lt;/strong&gt;, this &lt;strong&gt;{Duration} day&lt;/strong&gt; subscription will give you a valid subscription until &lt;strong&gt;{NewExpiration}&lt;/strong&gt;. Your account will be updated as soon as the purchase is complete.</value>
+  </data>
+  <data name="Auction" xml:space="preserve">
+    <value>Auction</value>
+  </data>
+  <data name="BidHistory" xml:space="preserve">
+    <value>Bid History</value>
+  </data>
+  <data name="TimeLeft" xml:space="preserve">
+    <value>Time Left in Auction</value>
+  </data>
+  <data name="BuyNow" xml:space="preserve">
+    <value>Buy Now</value>
+  </data>
+  <data name="SubscriptionDurationDetailsLabel" xml:space="preserve">
+    <value>&lt;strong&gt;Duration:&lt;/strong&gt; {Duration} days</value>
+  </data>
+  <data name="SubscriptionPriceDetailsLabel" xml:space="preserve">
+    <value>&lt;strong&gt;Price:&lt;/strong&gt; {FormattedPrice}</value>
+  </data>
+  <data name="SubscriptionQuantityDetailsLabel" xml:space="preserve">
+    <value>&lt;strong&gt;Quantity:&lt;/strong&gt; {Quantity}</value>
+  </data>
+  <data name="SubscriptionQuantityNoLimit" xml:space="preserve">
+    <value>no limit</value>
+  </data>
+  <data name="SubscriptionQuantityQuantityRemaining" xml:space="preserve">
+    <value>only {Quantity} left!</value>
+  </data>
+  <data name="SubscriptionQuantitySoldOut" xml:space="preserve">
+    <value>SOLD OUT</value>
+  </data>
+  <data name="AwardedOn" xml:space="preserve">
+    <value>Awarded on</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Trophies" xml:space="preserve">
+    <value>Trophies</value>
+  </data>
+  <data name="XpAward" xml:space="preserve">
+    <value>XP Earned</value>
+  </data>
+  <data name="RetailPrice" xml:space="preserve">
+    <value>Retail Price: {RetailPrice}</value>
+  </data>
+  <data name="Specifications" xml:space="preserve">
+    <value>Specifications</value>
+  </data>
+  <data name="BuyNowPrice" xml:space="preserve">
+    <value>Buy Now Price: {BuyNowPrice}</value>
+  </data>
+  <data name="OutOfStockErrorMessage" xml:space="preserve">
+    <value>We're sorry, this product is no longer in stock or available.</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Contact Us</value>
+  </data>
+  <data name="BuyNowWithPrice" xml:space="preserve">
+    <value>Buy Now {BuyNowPrice}</value>
+  </data>
+  <data name="ClosedAuctions" xml:space="preserve">
+    <value>Closed Auctions</value>
+  </data>
+  <data name="RetailPriceWithLabel" xml:space="preserve">
+    <value>Retail Price: {RetailPrice}</value>
+  </data>
+  <data name="ViewAllClosedAuctions" xml:space="preserve">
+    <value>View All Closed Auctions</value>
+  </data>
+  <data name="WinningPriceWithLabel" xml:space="preserve">
+    <value>Winning Price: {WinningPrice}</value>
+  </data>
+  <data name="Experience" xml:space="preserve">
+    <value>Experience</value>
+  </data>
+  <data name="SubscriptionLabelAndStatus" xml:space="preserve">
+    <value>Subscription: {StatusText}</value>
+  </data>
+  <data name="Tokens" xml:space="preserve">
+    <value>Tokens</value>
+  </data>
+  <data name="TrophiesAchieved" xml:space="preserve">
+    <value>Trophies Achieved</value>
+  </data>
+  <data name="ViewAll" xml:space="preserve">
+    <value>View All</value>
+  </data>
+  <data name="Trophy" xml:space="preserve">
+    <value>Trophy</value>
+  </data>
+  <data name="Added" xml:space="preserve">
+    <value>Added</value>
+  </data>
+  <data name="AuctionHistory" xml:space="preserve">
+    <value>Auctio History</value>
+  </data>
+  <data name="ItemsWon" xml:space="preserve">
+    <value>Items Won</value>
+  </data>
+  <data name="AutoBid" xml:space="preserve">
+    <value>Auto Bid</value>
+  </data>
+  <data name="Bid" xml:space="preserve">
+    <value>Bid</value>
+  </data>
+  <data name="CurrentAuctionPrice" xml:space="preserve">
+    <value>Current Auction Price</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Hours</value>
+  </data>
+  <data name="LiveAuctions" xml:space="preserve">
+    <value>Live Auctions</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minutes</value>
+  </data>
+  <data name="NoTrophiesMessage" xml:space="preserve">
+    <value>You have no trophies yet but there are a lot of ways to earn them, keep using the site and you'll get one soon.</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>Seconds</value>
+  </data>
+  <data name="AutoBidDeleteConfirmation" xml:space="preserve">
+    <value>Are you sure you want to cancel your auto bid for this auction?</value>
+  </data>
+  <data name="AutoBidDeleteSuccess" xml:space="preserve">
+    <value>Auto bid successfully canceled.</value>
+  </data>
+  <data name="AutoBidDeleteTitle" xml:space="preserve">
+    <value>Cancel Auto Bid</value>
+  </data>
+  <data name="AutoBidInstructions" xml:space="preserve">
+    <value>The auto bid feature randomly selects users that have opted into auto bids and submits bids for them as auctions progress. Opting into auto bids for an auction does not guarantee that we'll auto bid for you.</value>
+  </data>
+  <data name="AutoBidSaveSuccess" xml:space="preserve">
+    <value>Auto bid successfully set.</value>
+  </data>
+  <data name="MaxBid" xml:space="preserve">
+    <value>Max Bid</value>
+  </data>
+  <data name="SetAutoBid" xml:space="preserve">
+    <value>Set Auto Bid</value>
+  </data>
+  <data name="AuctionWinMessage" xml:space="preserve">
+    <value>Congratulations {FirstName} you've won! First things first, please enter your shipping address below.</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="HowItWorks" xml:space="preserve">
+    <value>How it Works</value>
+  </data>
+  <data name="Sponsor" xml:space="preserve">
+    <value>Sponsor</value>
+  </data>
+  <data name="WatchVideo" xml:space="preserve">
+    <value>Watch Video</value>
+  </data>
+  <data name="UpcomingAuctions" xml:space="preserve">
+    <value>Upcoming Auctions</value>
+  </data>
+  <data name="SelectAvatarErrorMessage" xml:space="preserve">
+    <value>Please select your avatar.</value>
+  </data>
+  <data name="Birthdate" xml:space="preserve">
+    <value>Birthdate</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>Day</value>
+  </data>
+  <data name="Female" xml:space="preserve">
+    <value>Female</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Gender</value>
+  </data>
+  <data name="Male" xml:space="preserve">
+    <value>Male</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="NoEnoughTokensErrorMessage" xml:space="preserve">
+    <value>Subscription cannot be purchased, user does not have enough available tokens.</value>
+  </data>
+  <data name="SubscriptionNotValidForPurchaseErrorMessage" xml:space="preserve">
+    <value>Subscription is not valid for purchase.</value>
+  </data>
+  <data name="SubscriptionNotValidForPurchaseWithTokensErrorMessage" xml:space="preserve">
+    <value>Subscription is not valid for purchase with tokens.</value>
+  </data>
+  <data name="AutoBidNotificationInstruction" xml:space="preserve">
+    <value>Notify me for auto bids</value>
+  </data>
+  <data name="FlatNumber" xml:space="preserve">
+    <value>Flat No.</value>
+  </data>
+  <data name="Floor" xml:space="preserve">
+    <value>Floor</value>
+  </data>
+  <data name="NoLiveAuctionsMessage" xml:space="preserve">
+    <value>There are no live auctions available at this time.</value>
+  </data>
+  <data name="Oman" xml:space="preserve">
+    <value>Oman</value>
+  </data>
+  <data name="Qatar" xml:space="preserve">
+    <value>Qatar</value>
+  </data>
+  <data name="SaudiArabia" xml:space="preserve">
+    <value>Saudi Arabia</value>
+  </data>
+  <data name="UAE" xml:space="preserve">
+    <value>UAE</value>
+  </data>
+  <data name="Bahrain" xml:space="preserve">
+    <value>Bahrain</value>
+  </data>
+  <data name="PrizeChanceMessage" xml:space="preserve">
+    <value>You won a prize from Zeedli. &lt;a href="{0}"&gt;Click here to get your prize.&lt;/a&gt;</value>
+  </data>
+  <data name="PrizeMessage" xml:space="preserve">
+    <value>Congratulation ... you win a prize from Zeedli click on button &lt;strong&gt;Spin to get your prize&lt;/strong&gt; to view your prize</value>
+  </data>
+  <data name="Congratulations" xml:space="preserve">
+    <value>Congratulations!</value>
+  </data>
+  <data name="AvatarChangeSuccessfullyMsg" xml:space="preserve">
+    <value>Your avatar has been changed successfully.</value>
+  </data>
+  <data name="MyAvatars" xml:space="preserve">
+    <value>My Avatars</value>
+  </data>
+  <data name="Alert" xml:space="preserve">
+    <value>Alert</value>
+  </data>
+  <data name="BuyAvatar" xml:space="preserve">
+    <value>Buy Avatar</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="OrderItemsValidationErrorMessage" xml:space="preserve">
+    <value>We're sorry, but there was one or more problems with the items in your shopping cart and we've adjusted it to correct the problem. Prices may have changed since items were added to your cart or items aren't available at the quantity requested.]</value>
+  </data>
+  <data name="BidTwiceErrorMessage" xml:space="preserve">
+    <value>You cannot bid twice in a row</value>
+  </data>
+  <data name="Accept" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="AreSure" xml:space="preserve">
+    <value>Are you sure?</value>
+  </data>
+  <data name="CancelRequest" xml:space="preserve">
+    <value>Cancel Request</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>Send Message</value>
+  </data>
+  <data name="Decline" xml:space="preserve">
+    <value>Decline</value>
+  </data>
+  <data name="FriendRequest" xml:space="preserve">
+    <value>Friend Request</value>
+  </data>
+  <data name="FriendRequests" xml:space="preserve">
+    <value>Friend Requests</value>
+  </data>
+  <data name="Friends" xml:space="preserve">
+    <value>Friends</value>
+  </data>
+  <data name="AcceptFriendRequest" xml:space="preserve">
+    <value>Accept Friend Request</value>
+  </data>
+  <data name="Click" xml:space="preserve">
+    <value>Click</value>
+  </data>
+  <data name="DeclineFriendRequest" xml:space="preserve">
+    <value>Decline Friend Request</value>
+  </data>
+  <data name="Friend" xml:space="preserve">
+    <value>Friend</value>
+  </data>
+  <data name="FriendActionFailMessage" xml:space="preserve">
+    <value>Oops sorry, you action not saved, please try later.</value>
+  </data>
+  <data name="FriendActionSuccessMessage" xml:space="preserve">
+    <value>Your action has been saved successfully.</value>
+  </data>
+  <data name="FriendRequestFailMessage" xml:space="preserve">
+    <value>Oops sorry, your request not sent, please try later.</value>
+  </data>
+  <data name="FriendRequestSent" xml:space="preserve">
+    <value>Friend Request Sent</value>
+  </data>
+  <data name="FriendRequestSuccessMessage" xml:space="preserve">
+    <value>Your request has been sent successfully.</value>
+  </data>
+  <data name="Here" xml:space="preserve">
+    <value>Here</value>
+  </data>
+  <data name="NoFriendRequests" xml:space="preserve">
+    <value>No friend requests.</value>
+  </data>
+  <data name="NoFriends" xml:space="preserve">
+    <value>You have no friends!</value>
+  </data>
+  <data name="PrivateProfileMessage" xml:space="preserve">
+    <value>This Profile is private!</value>
+  </data>
+  <data name="SendFriendRequest" xml:space="preserve">
+    <value>Send Friend Request</value>
+  </data>
+  <data name="TheFriends" xml:space="preserve">
+    <value>Friends</value>
+  </data>
+  <data name="ToSendFriendRequestMessage" xml:space="preserve">
+    <value>to send friend request.</value>
+  </data>
+  <data name="RemoveFriend" xml:space="preserve">
+    <value>unfriend</value>
+  </data>
+  <data name="RemoveFriendSuccessfullyMessage" xml:space="preserve">
+    <value>This user has been removed successfully from your friends list.</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="EmptyMessageErrorMessage" xml:space="preserve">
+    <value>Please type your message.</value>
+  </data>
+  <data name="Inbox" xml:space="preserve">
+    <value>Inbox</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="MessageSentSuccessfully" xml:space="preserve">
+    <value>Your message has been sent successfully</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>more...</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="Reply" xml:space="preserve">
+    <value>Reply</value>
+  </data>
+  <data name="Duration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="MinuteAbbreviation" xml:space="preserve">
+    <value>min</value>
+  </data>
+  <data name="SubscriptionPurchaseAcknowledgementApi" xml:space="preserve">
+    <value>Congratulations, you have successfully purchased &lt;strong&gt;Basic&lt;/strong&gt; and we have updated your account. Also you win a prize from Zeedli.</value>
+  </data>
+  <data name="ConverstionWith" xml:space="preserve">
+    <value>Converstion with</value>
+  </data>
+  <data name="RetailPriceLabel" xml:space="preserve">
+    <value>Retail Price</value>
+  </data>
+  <data name="AddToCart" xml:space="preserve">
+    <value>Add To Cart</value>
+  </data>
+  <data name="CartIsEmptyMessage" xml:space="preserve">
+    <value>Your shopping cart currently has no items.</value>
+  </data>
+  <data name="Checkout" xml:space="preserve">
+    <value>Checkout</value>
+  </data>
+  <data name="ProductAddedToCartAcknowledgement" xml:space="preserve">
+    <value>&lt;strong&gt;{0}&lt;/strong&gt; added to shopping bag.</value>
+  </data>
+  <data name="QuantityLabelWithValue" xml:space="preserve">
+    <value>Q.ty: &lt;strong&gt;{0}&lt;/strong&gt;</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>Saving</value>
+  </data>
+  <data name="ShoppingCart" xml:space="preserve">
+    <value>Shopping Cart</value>
+  </data>
+  <data name="TotalLabelWithValue" xml:space="preserve">
+    <value>Total: &lt;strong&gt;{0}&lt;/strong&gt;</value>
+  </data>
+  <data name="UnityLabelWithValue" xml:space="preserve">
+    <value>Unit: &lt;strong&gt;{0}&lt;/strong&gt;</value>
+  </data>
+  <data name="CheckoutEmailHintLabel" xml:space="preserve">
+    <value>We'll send your order confirmation to this email address.</value>
+  </data>
+  <data name="CheckoutUserAsGuest" xml:space="preserve">
+    <value>No, checkout as guest</value>
+  </data>
+  <data name="CheckoutUserCreatePassword" xml:space="preserve">
+    <value>No, but I will create one</value>
+  </data>
+  <data name="CheckoutUserWithPassword" xml:space="preserve">
+    <value>Yes, sign in with password</value>
+  </data>
+  <data name="HavePasswordQuestion" xml:space="preserve">
+    <value>Do you have a password?</value>
+  </data>
+  <data name="BuyNowQuntity" xml:space="preserve">
+    <value>Buy Now Quntity: {BuyNowQuntity}</value>
+  </data>
+  <data name="ProductExistInCart" xml:space="preserve">
+    <value>&lt;strong&gt;{0}&lt;/strong&gt; already exist in your shopping bag. You can't add the same product.</value>
+  </data>
+  <data name="NoFriendsFound" xml:space="preserve">
+    <value>No friend match search criteria.</value>
+  </data>
+  <data name="SearchFriend" xml:space="preserve">
+    <value>Search Friend</value>
+  </data>
+  <data name="MyFriends" xml:space="preserve">
+    <value>My Friends</value>
+  </data>
+  <data name="ZeedliUsers" xml:space="preserve">
+    <value>Zeedli Users</value>
+  </data>
+  <data name="AuctionBidLimite" xml:space="preserve">
+    <value>Auction Bid Limit: {MaximumBid}</value>
+  </data>
+  <data name="ClickToEdit" xml:space="preserve">
+    <value>Click to edit</value>
+  </data>
+  <data name="AuctionBuyNowWarnning" xml:space="preserve">
+    <value>We're sorry, the buy now feature is only available to subscribers at the moment, it will be available to all users at {0}</value>
+  </data>
+  <data name="BuyNowSearchPlaceholder" xml:space="preserve">
+    <value>Search product name or description...</value>
+  </data>
+</root>

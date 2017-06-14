@@ -1,0 +1,77 @@
+﻿@using Kendo.Mvc.UI
+@using Mzayad.Web.Extensions
+@using OrangeJetpack.Base.Web
+@model Mzayad.Web.Areas.admin.Models.Users.IndexViewModel
+@{
+    ViewBag.Title = "Users";
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "form-inline form-search" }))
+{
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            @Html.TextBoxFor(m => m.Search, new { @class = "form-control", placeholder = "Search name or email..." })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.DropDownList("Role", Model.RoleList, "All Roles", new { @class = "form-control auto-submit" })
+    </div>
+}
+
+<ul class="link-list">
+    <li><a href="@Url.Action("UsersExcel", "Users", new { search = Model.Search, role = Model.Role })"><i class="fa fa-file-excel-o fa-pad-right"></i>Download Excel</a></li>
+</ul>
+
+@if (!Model.Users.Any())
+{
+    @Html.StatusMessage("No users match search criteria.", StatusMessageType.Warning)
+
+    return;
+}
+
+@(Html.Kendo().Grid(Model.Users)
+    .Init(ajax => ajax.Action("GetUsers", "Users", new { search = Model.Search, role = Model.Role }))
+    .Columns(columns =>
+    {
+        columns.Bound(i => i.FirstName);
+        columns.Bound(i => i.LastName);
+        columns.Bound(i => i.UserName).Title("Username");
+        columns.Bound(i => i.Email);
+        columns.Bound(i => i.Subscription).ClientTemplate("#=renderSubscription(Subscription)#").Title("Subscription");
+        columns.Bound(i => i.SubscriptionExpire).ClientTemplate("#=renderExpiration(SubscriptionExpire)#").Title("Expiration");
+        //columns.Bound(i => i.CreatedUtc).Format("{0:dd MMM yyyy}").Title("Created");
+        columns.LinkColumn("Details", "users/details/#=Id#");
+    })
+)
+
+
+
+@section scripts
+{
+    <script>
+        var renderSubscription = function(subscription) {
+            switch (subscription) {
+            case 1:
+                return '<div class="label label-default">None</div>';
+            case 2:
+                return '<div class="label label-danger">Expired</div>';
+            case 3:
+                return '<div class="label label-success">Active</div>';
+            default:
+            }
+
+        };
+
+        var renderExpiration = function(expire) {
+            if (expire === 0) {
+                return '';
+            }
+            if (expire > 1) {
+                return expire + ' days';
+            } else {
+                return '1 day';
+            }
+        }
+    </script>
+}

@@ -1,0 +1,16 @@
+﻿@using OrangeJetpack.Base.Web
+@model Mzayad.Models.Payment.KnetTransaction
+
+@{
+    ViewBag.Title = Global.Error;
+}
+
+@Html.StatusMessage(string.Format(Global.PaymentTransactionErrorMessage, Url.Action("Summary", "Orders", new { Model.OrderId, ViewBag.Language })), StatusMessageType.Error)
+
+<section class="form-section form-horizontal">
+    <div class="row">
+        <div class="col-md-6">
+            @Html.DisplayForModel()
+        </div>
+    </div>
+</section>

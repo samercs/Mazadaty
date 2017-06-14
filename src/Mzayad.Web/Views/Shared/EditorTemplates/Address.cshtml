@@ -1,0 +1,20 @@
+﻿@using System.Web.Mvc.Html
+@using Mzayad.Web.Core.Configuration
+@model Mzayad.Web.Models.Shared.AddressViewModel
+
+<section>
+    <div id="addressCountryCode" class="form-group">
+            @Html.LabelFor(m => m.CountryCode, Global.Country).Required()
+            <div class="input-group">
+                <div class="input-group-addon"><i id="AddressEntryFlag" class="flag flag-@Model.CountryCode.ToLowerInvariant()"></i></div>
+                @Html.DropDownListFor(m => m.CountryCode, Model.CountriesList, Global.OptionLabel, new { @class = "form-control" })
+            </div>
+            @Html.ValidationMessageFor(m => m.CountryCode, Global.CountryRequiredErrorMessage)
+        </div>
+    <div id="AddressEntryLoading" class="text-center" style="color: #999; display: none;">
+        <i class="fa fa-spin fa-spinner fa-lg"></i> @Global.Loading
+    </div>
+    <div id="AddressEntryAddress">
+        @Html.Partial(AddressPartialResolver.GetViewName(Model.CountryCode))
+    </div>
+</section>

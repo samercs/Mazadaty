@@ -1,0 +1,56 @@
+﻿@using Mzayad.Web.Extensions
+@using Newtonsoft.Json
+@model Mzayad.Web.Areas.admin.Models.Categories.AddViewModel
+@{
+    ViewBag.Title = "Add Category";
+}
+
+<div class="row">
+    <div class="@Html.Css().FormNarrow">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Category.Name, "Name")
+                    @Html.EditorFor(i=>i.Category.Name,Model.Category)
+                    @Html.ValidationMessageFor(m => m.Category.Name, "Please enter a category name.")
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Category.ParentId, "Parent")
+                    @Html.DropDownListFor(m => m.Category.ParentId, Model.Categories, "Parent Category", new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Category.Slug, "URL")
+                    <div class="input-group">
+                        <span class="input-group-addon">/categories/</span>
+                        @Html.TextBoxFor(i => i.Category.Slug, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(i => i.Category.Slug, "Please enter a valid and unique URL.")
+                </div>
+            </section>
+
+            <section class="form-buttons">
+                <button type="submit" class="btn btn-default">Save And Continue</button>
+            </section>
+        }
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/js/validate")
+    @Scripts.Render("~/js/slugify")
+
+    <script>
+        (function ($) {
+
+            var existingSlugs = @Html.Raw(JsonConvert.SerializeObject(Model.ExistingSlugs));
+
+            $("#Category_Slug").slugify("#Name_0_Value", false)
+                               .addSlugErrorValidation(existingSlugs);
+
+        })(jQuery);
+    </script>
+}

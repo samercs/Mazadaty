@@ -1,0 +1,25 @@
+﻿@model Mzayad.Web.Models.Order.DetailsViewModel
+
+@{
+    ViewBag.Title = "Order Received";
+}
+
+@section styles{
+    <style>
+        .alert {
+            font-size: 16px;
+        }
+        
+    </style>
+}
+
+@Html.StatusMessage(Global.OrderSuccessMessage)
+
+
+@if (!string.IsNullOrEmpty(Model.RedirectUrl))
+{
+    @Html.Partial("_UserPrizeNotification", Model.RedirectUrl)
+}
+
+@Html.Partial("OrderDetailsSummary", Model)
+

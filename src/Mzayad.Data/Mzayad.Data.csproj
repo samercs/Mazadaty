@@ -1,0 +1,710 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E723590F-D2BF-411C-A710-9677E2629FFD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mzayad.Data</RootNamespace>
+    <AssemblyName>Mzayad.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OrangeJetpack.Base.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OrangeJetpack.Base.Core.0.0.27\lib\net452\OrangeJetpack.Base.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OrangeJetpack.Base.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OrangeJetpack.Base.Data.0.1.2\lib\net452\OrangeJetpack.Base.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OrangeJetpack.Localization, Version=1.7.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OrangeJetpack.Localization.1.7.5\lib\net45\OrangeJetpack.Localization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataContext.cs" />
+    <Compile Include="DataContextFactory.cs" />
+    <Compile Include="IDataContext.cs" />
+    <Compile Include="IDataContextFactory.cs" />
+    <Compile Include="Migrations\201502081706012_InitDatabase.cs" />
+    <Compile Include="Migrations\201502081706012_InitDatabase.Designer.cs">
+      <DependentUpon>201502081706012_InitDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502110948210_addEmailTemplate.cs" />
+    <Compile Include="Migrations\201502110948210_addEmailTemplate.Designer.cs">
+      <DependentUpon>201502110948210_addEmailTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502111035575_InsertEmailTemplate.cs" />
+    <Compile Include="Migrations\201502111035575_InsertEmailTemplate.Designer.cs">
+      <DependentUpon>201502111035575_InsertEmailTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502151024093_AddUserPhoneAddress.cs" />
+    <Compile Include="Migrations\201502151024093_AddUserPhoneAddress.Designer.cs">
+      <DependentUpon>201502151024093_AddUserPhoneAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502151052444_IncreasePhoneFieldLength.cs" />
+    <Compile Include="Migrations\201502151052444_IncreasePhoneFieldLength.Designer.cs">
+      <DependentUpon>201502151052444_IncreasePhoneFieldLength.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502191037455_AddCategory.cs" />
+    <Compile Include="Migrations\201502191037455_AddCategory.Designer.cs">
+      <DependentUpon>201502191037455_AddCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502221140450_AddCategorySlug.cs" />
+    <Compile Include="Migrations\201502221140450_AddCategorySlug.Designer.cs">
+      <DependentUpon>201502221140450_AddCategorySlug.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502221814578_AddProductAndProductImage.cs" />
+    <Compile Include="Migrations\201502221814578_AddProductAndProductImage.Designer.cs">
+      <DependentUpon>201502221814578_AddProductAndProductImage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502271214244_AddAuction.cs" />
+    <Compile Include="Migrations\201502271214244_AddAuction.Designer.cs">
+      <DependentUpon>201502271214244_AddAuction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502281032039_RenameProductCategories.cs" />
+    <Compile Include="Migrations\201502281032039_RenameProductCategories.Designer.cs">
+      <DependentUpon>201502281032039_RenameProductCategories.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503011024088_SetBuyNowEnabledToNotNullable.cs" />
+    <Compile Include="Migrations\201503011024088_SetBuyNowEnabledToNotNullable.Designer.cs">
+      <DependentUpon>201503011024088_SetBuyNowEnabledToNotNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503050717507_AddCreatedByUserId_Product_Auction.cs" />
+    <Compile Include="Migrations\201503050717507_AddCreatedByUserId_Product_Auction.Designer.cs">
+      <DependentUpon>201503050717507_AddCreatedByUserId_Product_Auction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503051130240_addSpecification.cs" />
+    <Compile Include="Migrations\201503051130240_addSpecification.Designer.cs">
+      <DependentUpon>201503051130240_addSpecification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503051148052_addProductSpecification.cs" />
+    <Compile Include="Migrations\201503051148052_addProductSpecification.Designer.cs">
+      <DependentUpon>201503051148052_addProductSpecification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503051308345_modifyNameLengthInSpecification.cs" />
+    <Compile Include="Migrations\201503051308345_modifyNameLengthInSpecification.Designer.cs">
+      <DependentUpon>201503051308345_modifyNameLengthInSpecification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503071211582_modifyValueLengthInProductSpecifications.cs" />
+    <Compile Include="Migrations\201503071211582_modifyValueLengthInProductSpecifications.Designer.cs">
+      <DependentUpon>201503071211582_modifyValueLengthInProductSpecifications.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503091000271_AddProductPurchasePriceAndQuantity.cs" />
+    <Compile Include="Migrations\201503091000271_AddProductPurchasePriceAndQuantity.Designer.cs">
+      <DependentUpon>201503091000271_AddProductPurchasePriceAndQuantity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503091033062_AddAuctionReservePrice.cs" />
+    <Compile Include="Migrations\201503091033062_AddAuctionReservePrice.Designer.cs">
+      <DependentUpon>201503091033062_AddAuctionReservePrice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503100814581_AddCategoryNotification.cs" />
+    <Compile Include="Migrations\201503100814581_AddCategoryNotification.Designer.cs">
+      <DependentUpon>201503100814581_AddCategoryNotification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503101633490_AddAuctionCreatedEmailTemplate.cs" />
+    <Compile Include="Migrations\201503101633490_AddAuctionCreatedEmailTemplate.Designer.cs">
+      <DependentUpon>201503101633490_AddAuctionCreatedEmailTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503231152273_AddAuctionTitle.cs" />
+    <Compile Include="Migrations\201503231152273_AddAuctionTitle.Designer.cs">
+      <DependentUpon>201503231152273_AddAuctionTitle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503231711556_AddAuctionClosingProperties.cs" />
+    <Compile Include="Migrations\201503231711556_AddAuctionClosingProperties.Designer.cs">
+      <DependentUpon>201503231711556_AddAuctionClosingProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503301122565_AddSponsor_EditProduct.cs" />
+    <Compile Include="Migrations\201503301122565_AddSponsor_EditProduct.Designer.cs">
+      <DependentUpon>201503301122565_AddSponsor_EditProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503311430571_AddBids.cs" />
+    <Compile Include="Migrations\201503311430571_AddBids.Designer.cs">
+      <DependentUpon>201503311430571_AddBids.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503311444059_AddBidSecondsLeft.cs" />
+    <Compile Include="Migrations\201503311444059_AddBidSecondsLeft.Designer.cs">
+      <DependentUpon>201503311444059_AddBidSecondsLeft.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503311546325_RenameAuctionWinningFields.cs" />
+    <Compile Include="Migrations\201503311546325_RenameAuctionWinningFields.Designer.cs">
+      <DependentUpon>201503311546325_RenameAuctionWinningFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503311609194_AddAuctionWonByBid.cs" />
+    <Compile Include="Migrations\201503311609194_AddAuctionWonByBid.Designer.cs">
+      <DependentUpon>201503311609194_AddAuctionWonByBid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503311614108_RenameAuctionWonUtcToClosedUtc.cs" />
+    <Compile Include="Migrations\201503311614108_RenameAuctionWonUtcToClosedUtc.Designer.cs">
+      <DependentUpon>201503311614108_RenameAuctionWonUtcToClosedUtc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504091125014_AddAvatar.cs" />
+    <Compile Include="Migrations\201504091125014_AddAvatar.Designer.cs">
+      <DependentUpon>201504091125014_AddAvatar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504112203566_AddUserProfile.cs" />
+    <Compile Include="Migrations\201504112203566_AddUserProfile.Designer.cs">
+      <DependentUpon>201504112203566_AddUserProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504140824435_UserProfileMigrationFix.cs" />
+    <Compile Include="Migrations\201504140824435_UserProfileMigrationFix.Designer.cs">
+      <DependentUpon>201504140824435_UserProfileMigrationFix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504140948265_RemoveUserProfileGamertag.cs" />
+    <Compile Include="Migrations\201504140948265_RemoveUserProfileGamertag.Designer.cs">
+      <DependentUpon>201504140948265_RemoveUserProfileGamertag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504221213230_AddShippingAddress_Order_OrderItem_OrderLog.cs" />
+    <Compile Include="Migrations\201504221213230_AddShippingAddress_Order_OrderItem_OrderLog.Designer.cs">
+      <DependentUpon>201504221213230_AddShippingAddress_Order_OrderItem_OrderLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504260649262_AddAllowPhoneSmsToOrder.cs" />
+    <Compile Include="Migrations\201504260649262_AddAllowPhoneSmsToOrder.Designer.cs">
+      <DependentUpon>201504260649262_AddAllowPhoneSmsToOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504291525120_RenameShippingAddressProperties.cs" />
+    <Compile Include="Migrations\201504291525120_RenameShippingAddressProperties.Designer.cs">
+      <DependentUpon>201504291525120_RenameShippingAddressProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505050731291_AddSubscription.cs" />
+    <Compile Include="Migrations\201505050731291_AddSubscription.Designer.cs">
+      <DependentUpon>201505050731291_AddSubscription.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505051159251_AddWishList.cs" />
+    <Compile Include="Migrations\201505051159251_AddWishList.Designer.cs">
+      <DependentUpon>201505051159251_AddWishList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505131328419_AddKnetTransaction.cs" />
+    <Compile Include="Migrations\201505131328419_AddKnetTransaction.Designer.cs">
+      <DependentUpon>201505131328419_AddKnetTransaction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505151256170_AddOrderShippedEmailTemplate.cs" />
+    <Compile Include="Migrations\201505151256170_AddOrderShippedEmailTemplate.Designer.cs">
+      <DependentUpon>201505151256170_AddOrderShippedEmailTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505151644158_SetSubscriptionExpirationUtcNullable.cs" />
+    <Compile Include="Migrations\201505151644158_SetSubscriptionExpirationUtcNullable.Designer.cs">
+      <DependentUpon>201505151644158_SetSubscriptionExpirationUtcNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506091334310_AddSplashAdsAndSubscriptionLogs.cs" />
+    <Compile Include="Migrations\201506091334310_AddSplashAdsAndSubscriptionLogs.Designer.cs">
+      <DependentUpon>201506091334310_AddSplashAdsAndSubscriptionLogs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507081545424_AddSubscriptionPriceAndSortOrder.cs" />
+    <Compile Include="Migrations\201507081545424_AddSubscriptionPriceAndSortOrder.Designer.cs">
+      <DependentUpon>201507081545424_AddSubscriptionPriceAndSortOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507081651230_AddSubscriptionDuration.cs" />
+    <Compile Include="Migrations\201507081651230_AddSubscriptionDuration.Designer.cs">
+      <DependentUpon>201507081651230_AddSubscriptionDuration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507091056012_AddUserLevelXpTokens.cs" />
+    <Compile Include="Migrations\201507091056012_AddUserLevelXpTokens.Designer.cs">
+      <DependentUpon>201507091056012_AddUserLevelXpTokens.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507091144131_RenameSubscriptionPriceFields.cs" />
+    <Compile Include="Migrations\201507091144131_RenameSubscriptionPriceFields.Designer.cs">
+      <DependentUpon>201507091144131_RenameSubscriptionPriceFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507091434549_UpdateOrderItemForSubscription.cs" />
+    <Compile Include="Migrations\201507091434549_UpdateOrderItemForSubscription.Designer.cs">
+      <DependentUpon>201507091434549_UpdateOrderItemForSubscription.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507131452306_AddTokenLogs.cs" />
+    <Compile Include="Migrations\201507131452306_AddTokenLogs.Designer.cs">
+      <DependentUpon>201507131452306_AddTokenLogs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507281150437_AddActivityEvents.cs" />
+    <Compile Include="Migrations\201507281150437_AddActivityEvents.Designer.cs">
+      <DependentUpon>201507281150437_AddActivityEvents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508022203509_AddTrophy.cs" />
+    <Compile Include="Migrations\201508022203509_AddTrophy.Designer.cs">
+      <DependentUpon>201508022203509_AddTrophy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508081237389_AddUsertrophies.cs" />
+    <Compile Include="Migrations\201508081237389_AddUsertrophies.Designer.cs">
+      <DependentUpon>201508081237389_AddUsertrophies.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508111047156_MergeMigration.cs" />
+    <Compile Include="Migrations\201508111047156_MergeMigration.Designer.cs">
+      <DependentUpon>201508111047156_MergeMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508111415388_RemoveOrderLogHostAddress.cs" />
+    <Compile Include="Migrations\201508111415388_RemoveOrderLogHostAddress.Designer.cs">
+      <DependentUpon>201508111415388_RemoveOrderLogHostAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508171441380_DropActivityLogs.cs" />
+    <Compile Include="Migrations\201508171441380_DropActivityLogs.Designer.cs">
+      <DependentUpon>201508171441380_DropActivityLogs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508171445273_AddUserAvatarUrl.cs" />
+    <Compile Include="Migrations\201508171445273_AddUserAvatarUrl.Designer.cs">
+      <DependentUpon>201508171445273_AddUserAvatarUrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508171537047_AddUserProfileStatus.cs" />
+    <Compile Include="Migrations\201508171537047_AddUserProfileStatus.Designer.cs">
+      <DependentUpon>201508171537047_AddUserProfileStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508171554244_RemoveUserProfile.cs" />
+    <Compile Include="Migrations\201508171554244_RemoveUserProfile.Designer.cs">
+      <DependentUpon>201508171554244_RemoveUserProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508292015035_IslamicCalendar.cs" />
+    <Compile Include="Migrations\201508292015035_IslamicCalendar.Designer.cs">
+      <DependentUpon>201508292015035_IslamicCalendar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201509061300297_AddHijriUniqueIndex.cs" />
+    <Compile Include="Migrations\201509061300297_AddHijriUniqueIndex.Designer.cs">
+      <DependentUpon>201509061300297_AddHijriUniqueIndex.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201509091452096_AddSessionLogTable.cs" />
+    <Compile Include="Migrations\201509091452096_AddSessionLogTable.Designer.cs">
+      <DependentUpon>201509091452096_AddSessionLogTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510122033316_AddAutoBid.cs" />
+    <Compile Include="Migrations\201510122033316_AddAutoBid.Designer.cs">
+      <DependentUpon>201510122033316_AddAutoBid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510132306378_InsertNewTrophies.cs" />
+    <Compile Include="Migrations\201510132306378_InsertNewTrophies.Designer.cs">
+      <DependentUpon>201510132306378_InsertNewTrophies.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510171809212_AddXPToActivityEvents.cs" />
+    <Compile Include="Migrations\201510171809212_AddXPToActivityEvents.Designer.cs">
+      <DependentUpon>201510171809212_AddXPToActivityEvents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510232022067_AddLangaugeToActivityEvent.cs" />
+    <Compile Include="Migrations\201510232022067_AddLangaugeToActivityEvent.Designer.cs">
+      <DependentUpon>201510232022067_AddLangaugeToActivityEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608210917433_fixSessionLogsRelation.cs" />
+    <Compile Include="Migrations\201608210917433_fixSessionLogsRelation.Designer.cs">
+      <DependentUpon>201608210917433_fixSessionLogsRelation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608281022427_AddAutoBidStartEmailTemplate.cs" />
+    <Compile Include="Migrations\201608281022427_AddAutoBidStartEmailTemplate.Designer.cs">
+      <DependentUpon>201608281022427_AddAutoBidStartEmailTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608281355219_AddUserGenderAndBirthdate.cs" />
+    <Compile Include="Migrations\201608281355219_AddUserGenderAndBirthdate.Designer.cs">
+      <DependentUpon>201608281355219_AddUserGenderAndBirthdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608290757327_AddCompleteProfileTrophy.cs" />
+    <Compile Include="Migrations\201608290757327_AddCompleteProfileTrophy.Designer.cs">
+      <DependentUpon>201608290757327_AddCompleteProfileTrophy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608300840259_ReplaceModelBaseWithEntityBase.cs" />
+    <Compile Include="Migrations\201608300840259_ReplaceModelBaseWithEntityBase.Designer.cs">
+      <DependentUpon>201608300840259_ReplaceModelBaseWithEntityBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610311118454_AddUserAutoBidNotification.cs" />
+    <Compile Include="Migrations\201610311118454_AddUserAutoBidNotification.Designer.cs">
+      <DependentUpon>201610311118454_AddUserAutoBidNotification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610311207225_AddAccountantRole.cs" />
+    <Compile Include="Migrations\201610311207225_AddAccountantRole.Designer.cs">
+      <DependentUpon>201610311207225_AddAccountantRole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610311300061_AddTokenLogUsage.cs" />
+    <Compile Include="Migrations\201610311300061_AddTokenLogUsage.Designer.cs">
+      <DependentUpon>201610311300061_AddTokenLogUsage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610311352398_AddFloorandFlatToAddress.cs" />
+    <Compile Include="Migrations\201610311352398_AddFloorandFlatToAddress.Designer.cs">
+      <DependentUpon>201610311352398_AddFloorandFlatToAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612210945238_AddAvatarPremiumOptions.cs" />
+    <Compile Include="Migrations\201612210945238_AddAvatarPremiumOptions.Designer.cs">
+      <DependentUpon>201612210945238_AddAvatarPremiumOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612220901460_AddAuctionCountryList.cs" />
+    <Compile Include="Migrations\201612220901460_AddAuctionCountryList.Designer.cs">
+      <DependentUpon>201612220901460_AddAuctionCountryList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612250928298_AddPrize.cs" />
+    <Compile Include="Migrations\201612250928298_AddPrize.Designer.cs">
+      <DependentUpon>201612250928298_AddPrize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612261147475_AddPrizeLog.cs" />
+    <Compile Include="Migrations\201612261147475_AddPrizeLog.Designer.cs">
+      <DependentUpon>201612261147475_AddPrizeLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612270551057_AddUserAvatar.cs" />
+    <Compile Include="Migrations\201612270551057_AddUserAvatar.Designer.cs">
+      <DependentUpon>201612270551057_AddUserAvatar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612270654214_AddUserPrizeLog_IsComplete.cs" />
+    <Compile Include="Migrations\201612270654214_AddUserPrizeLog_IsComplete.Designer.cs">
+      <DependentUpon>201612270654214_AddUserPrizeLog_IsComplete.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701031222488_UpdateUserPrizeLog.cs" />
+    <Compile Include="Migrations\201701031222488_UpdateUserPrizeLog.Designer.cs">
+      <DependentUpon>201701031222488_UpdateUserPrizeLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701031235279_UpdateUserPrizeLogEntity.cs" />
+    <Compile Include="Migrations\201701031235279_UpdateUserPrizeLogEntity.Designer.cs">
+      <DependentUpon>201701031235279_UpdateUserPrizeLogEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702120829386_AddBidType.cs" />
+    <Compile Include="Migrations\201702120829386_AddBidType.Designer.cs">
+      <DependentUpon>201702120829386_AddBidType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702121232504_AddFriendsAndMessages.cs" />
+    <Compile Include="Migrations\201702121232504_AddFriendsAndMessages.Designer.cs">
+      <DependentUpon>201702121232504_AddFriendsAndMessages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703121052413_CreateBidStoredProcs.cs" />
+    <Compile Include="Migrations\201703121052413_CreateBidStoredProcs.Designer.cs">
+      <DependentUpon>201703121052413_CreateBidStoredProcs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703231232011_AddBanner.cs" />
+    <Compile Include="Migrations\201703231232011_AddBanner.Designer.cs">
+      <DependentUpon>201703231232011_AddBanner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704090816372_AddOrderAuction.cs" />
+    <Compile Include="Migrations\201704090816372_AddOrderAuction.Designer.cs">
+      <DependentUpon>201704090816372_AddOrderAuction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704091326405_AddWaiveShippingCostToProduct.cs" />
+    <Compile Include="Migrations\201704091326405_AddWaiveShippingCostToProduct.Designer.cs">
+      <DependentUpon>201704091326405_AddWaiveShippingCostToProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704131205123_AddAutoBidEnabled.cs" />
+    <Compile Include="Migrations\201704131205123_AddAutoBidEnabled.Designer.cs">
+      <DependentUpon>201704131205123_AddAutoBidEnabled.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mzayad.Models\Mzayad.Models.csproj">
+      <Project>{71f89204-ebb2-438a-b56f-c0521c0bbe3c}</Project>
+      <Name>Mzayad.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201502081706012_InitDatabase.resx">
+      <DependentUpon>201502081706012_InitDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502110948210_addEmailTemplate.resx">
+      <DependentUpon>201502110948210_addEmailTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502111035575_InsertEmailTemplate.resx">
+      <DependentUpon>201502111035575_InsertEmailTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502151024093_AddUserPhoneAddress.resx">
+      <DependentUpon>201502151024093_AddUserPhoneAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502151052444_IncreasePhoneFieldLength.resx">
+      <DependentUpon>201502151052444_IncreasePhoneFieldLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502191037455_AddCategory.resx">
+      <DependentUpon>201502191037455_AddCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502221140450_AddCategorySlug.resx">
+      <DependentUpon>201502221140450_AddCategorySlug.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502221814578_AddProductAndProductImage.resx">
+      <DependentUpon>201502221814578_AddProductAndProductImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502271214244_AddAuction.resx">
+      <DependentUpon>201502271214244_AddAuction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502281032039_RenameProductCategories.resx">
+      <DependentUpon>201502281032039_RenameProductCategories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503011024088_SetBuyNowEnabledToNotNullable.resx">
+      <DependentUpon>201503011024088_SetBuyNowEnabledToNotNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503050717507_AddCreatedByUserId_Product_Auction.resx">
+      <DependentUpon>201503050717507_AddCreatedByUserId_Product_Auction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503051130240_addSpecification.resx">
+      <DependentUpon>201503051130240_addSpecification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503051148052_addProductSpecification.resx">
+      <DependentUpon>201503051148052_addProductSpecification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503051308345_modifyNameLengthInSpecification.resx">
+      <DependentUpon>201503051308345_modifyNameLengthInSpecification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503071211582_modifyValueLengthInProductSpecifications.resx">
+      <DependentUpon>201503071211582_modifyValueLengthInProductSpecifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503091000271_AddProductPurchasePriceAndQuantity.resx">
+      <DependentUpon>201503091000271_AddProductPurchasePriceAndQuantity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503091033062_AddAuctionReservePrice.resx">
+      <DependentUpon>201503091033062_AddAuctionReservePrice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503100814581_AddCategoryNotification.resx">
+      <DependentUpon>201503100814581_AddCategoryNotification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503101633490_AddAuctionCreatedEmailTemplate.resx">
+      <DependentUpon>201503101633490_AddAuctionCreatedEmailTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503231152273_AddAuctionTitle.resx">
+      <DependentUpon>201503231152273_AddAuctionTitle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503231711556_AddAuctionClosingProperties.resx">
+      <DependentUpon>201503231711556_AddAuctionClosingProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503301122565_AddSponsor_EditProduct.resx">
+      <DependentUpon>201503301122565_AddSponsor_EditProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503311430571_AddBids.resx">
+      <DependentUpon>201503311430571_AddBids.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503311444059_AddBidSecondsLeft.resx">
+      <DependentUpon>201503311444059_AddBidSecondsLeft.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503311546325_RenameAuctionWinningFields.resx">
+      <DependentUpon>201503311546325_RenameAuctionWinningFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503311609194_AddAuctionWonByBid.resx">
+      <DependentUpon>201503311609194_AddAuctionWonByBid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503311614108_RenameAuctionWonUtcToClosedUtc.resx">
+      <DependentUpon>201503311614108_RenameAuctionWonUtcToClosedUtc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504091125014_AddAvatar.resx">
+      <DependentUpon>201504091125014_AddAvatar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504112203566_AddUserProfile.resx">
+      <DependentUpon>201504112203566_AddUserProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504140824435_UserProfileMigrationFix.resx">
+      <DependentUpon>201504140824435_UserProfileMigrationFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504140948265_RemoveUserProfileGamertag.resx">
+      <DependentUpon>201504140948265_RemoveUserProfileGamertag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504221213230_AddShippingAddress_Order_OrderItem_OrderLog.resx">
+      <DependentUpon>201504221213230_AddShippingAddress_Order_OrderItem_OrderLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504260649262_AddAllowPhoneSmsToOrder.resx">
+      <DependentUpon>201504260649262_AddAllowPhoneSmsToOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504291525120_RenameShippingAddressProperties.resx">
+      <DependentUpon>201504291525120_RenameShippingAddressProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505050731291_AddSubscription.resx">
+      <DependentUpon>201505050731291_AddSubscription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505051159251_AddWishList.resx">
+      <DependentUpon>201505051159251_AddWishList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505131328419_AddKnetTransaction.resx">
+      <DependentUpon>201505131328419_AddKnetTransaction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505151256170_AddOrderShippedEmailTemplate.resx">
+      <DependentUpon>201505151256170_AddOrderShippedEmailTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505151644158_SetSubscriptionExpirationUtcNullable.resx">
+      <DependentUpon>201505151644158_SetSubscriptionExpirationUtcNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506091334310_AddSplashAdsAndSubscriptionLogs.resx">
+      <DependentUpon>201506091334310_AddSplashAdsAndSubscriptionLogs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507081545424_AddSubscriptionPriceAndSortOrder.resx">
+      <DependentUpon>201507081545424_AddSubscriptionPriceAndSortOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507081651230_AddSubscriptionDuration.resx">
+      <DependentUpon>201507081651230_AddSubscriptionDuration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507091056012_AddUserLevelXpTokens.resx">
+      <DependentUpon>201507091056012_AddUserLevelXpTokens.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507091144131_RenameSubscriptionPriceFields.resx">
+      <DependentUpon>201507091144131_RenameSubscriptionPriceFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507091434549_UpdateOrderItemForSubscription.resx">
+      <DependentUpon>201507091434549_UpdateOrderItemForSubscription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507131452306_AddTokenLogs.resx">
+      <DependentUpon>201507131452306_AddTokenLogs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507281150437_AddActivityEvents.resx">
+      <DependentUpon>201507281150437_AddActivityEvents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508022203509_AddTrophy.resx">
+      <DependentUpon>201508022203509_AddTrophy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508081237389_AddUsertrophies.resx">
+      <DependentUpon>201508081237389_AddUsertrophies.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508111047156_MergeMigration.resx">
+      <DependentUpon>201508111047156_MergeMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508111415388_RemoveOrderLogHostAddress.resx">
+      <DependentUpon>201508111415388_RemoveOrderLogHostAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508171441380_DropActivityLogs.resx">
+      <DependentUpon>201508171441380_DropActivityLogs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508171445273_AddUserAvatarUrl.resx">
+      <DependentUpon>201508171445273_AddUserAvatarUrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508171537047_AddUserProfileStatus.resx">
+      <DependentUpon>201508171537047_AddUserProfileStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508171554244_RemoveUserProfile.resx">
+      <DependentUpon>201508171554244_RemoveUserProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508292015035_IslamicCalendar.resx">
+      <DependentUpon>201508292015035_IslamicCalendar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509061300297_AddHijriUniqueIndex.resx">
+      <DependentUpon>201509061300297_AddHijriUniqueIndex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509091452096_AddSessionLogTable.resx">
+      <DependentUpon>201509091452096_AddSessionLogTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510122033316_AddAutoBid.resx">
+      <DependentUpon>201510122033316_AddAutoBid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510132306378_InsertNewTrophies.resx">
+      <DependentUpon>201510132306378_InsertNewTrophies.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510171809212_AddXPToActivityEvents.resx">
+      <DependentUpon>201510171809212_AddXPToActivityEvents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510232022067_AddLangaugeToActivityEvent.resx">
+      <DependentUpon>201510232022067_AddLangaugeToActivityEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608210917433_fixSessionLogsRelation.resx">
+      <DependentUpon>201608210917433_fixSessionLogsRelation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608281022427_AddAutoBidStartEmailTemplate.resx">
+      <DependentUpon>201608281022427_AddAutoBidStartEmailTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608281355219_AddUserGenderAndBirthdate.resx">
+      <DependentUpon>201608281355219_AddUserGenderAndBirthdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608290757327_AddCompleteProfileTrophy.resx">
+      <DependentUpon>201608290757327_AddCompleteProfileTrophy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608300840259_ReplaceModelBaseWithEntityBase.resx">
+      <DependentUpon>201608300840259_ReplaceModelBaseWithEntityBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610311118454_AddUserAutoBidNotification.resx">
+      <DependentUpon>201610311118454_AddUserAutoBidNotification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610311207225_AddAccountantRole.resx">
+      <DependentUpon>201610311207225_AddAccountantRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610311300061_AddTokenLogUsage.resx">
+      <DependentUpon>201610311300061_AddTokenLogUsage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610311352398_AddFloorandFlatToAddress.resx">
+      <DependentUpon>201610311352398_AddFloorandFlatToAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612210945238_AddAvatarPremiumOptions.resx">
+      <DependentUpon>201612210945238_AddAvatarPremiumOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612220901460_AddAuctionCountryList.resx">
+      <DependentUpon>201612220901460_AddAuctionCountryList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612250928298_AddPrize.resx">
+      <DependentUpon>201612250928298_AddPrize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612261147475_AddPrizeLog.resx">
+      <DependentUpon>201612261147475_AddPrizeLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612270551057_AddUserAvatar.resx">
+      <DependentUpon>201612270551057_AddUserAvatar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612270654214_AddUserPrizeLog_IsComplete.resx">
+      <DependentUpon>201612270654214_AddUserPrizeLog_IsComplete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701031222488_UpdateUserPrizeLog.resx">
+      <DependentUpon>201701031222488_UpdateUserPrizeLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701031235279_UpdateUserPrizeLogEntity.resx">
+      <DependentUpon>201701031235279_UpdateUserPrizeLogEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702120829386_AddBidType.resx">
+      <DependentUpon>201702120829386_AddBidType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702121232504_AddFriendsAndMessages.resx">
+      <DependentUpon>201702121232504_AddFriendsAndMessages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703121052413_CreateBidStoredProcs.resx">
+      <DependentUpon>201703121052413_CreateBidStoredProcs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703231232011_AddBanner.resx">
+      <DependentUpon>201703231232011_AddBanner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704090816372_AddOrderAuction.resx">
+      <DependentUpon>201704090816372_AddOrderAuction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704091326405_AddWaiveShippingCostToProduct.resx">
+      <DependentUpon>201704091326405_AddWaiveShippingCostToProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704131205123_AddAutoBidEnabled.resx">
+      <DependentUpon>201704131205123_AddAutoBidEnabled.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
+

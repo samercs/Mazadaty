@@ -1,0 +1,154 @@
+﻿@using System.Globalization
+@using System.Text.RegularExpressions
+@using OrangeJetpack.Localization
+
+@{
+    if (string.IsNullOrWhiteSpace(Model))
+    {
+        ViewData.Model = LocalizedContent.Init();
+    }
+
+    var localizedContents = new LocalizedContent[] { };
+    LocalizedContent.TryDeserialize(Model, out localizedContents);
+    var modelMetaData = ViewData.ModelMetadata;
+    var templateHint = modelMetaData.TemplateHint;
+    var propertyId = $"LocalizedContent-{Guid.NewGuid().ToString("n")}";
+    var propertyName = modelMetaData.PropertyName;
+    var friendlyName = Regex.Replace(
+        Regex.Replace(propertyName, @"(\P{Ll})(\P{Ll}\p{Ll})", "$1 $2"), @"(\p{Ll})(\P{Ll})", "$1 $2")
+        .ToLowerInvariant();
+}
+
+@functions
+{
+    private static TagBuilder GetTextTag(string templateHint, string value)
+    {
+        if (string.Equals(templateHint, "TextArea", StringComparison.OrdinalIgnoreCase))
+        {
+            return GetTextArea(value);
+        }
+
+        return GetTextInput(value);
+    }
+
+    private static TagBuilder GetTextArea(string value)
+    {
+        var tagBuilder = new TagBuilder("textarea");
+        tagBuilder.SetInnerText(value);
+        return tagBuilder;
+    }
+
+    private static TagBuilder GetTextInput(string value)
+    {
+        var tagBuilder = new TagBuilder("input");
+        tagBuilder.MergeAttribute("type", "text");
+        tagBuilder.MergeAttribute("value", value);
+        return tagBuilder;
+    }
+
+}
+
+<style>
+    
+    .localized-content {
+        margin-bottom: 0;
+    }
+
+    .localized-content > li {
+        margin-bottom: 5px;   
+    }
+
+    .localized-content > li:last-child {
+        margin-bottom: 0;   
+    }
+
+    .localized-content .localized-input {
+        max-width: 100%;
+    }
+
+    .localized-content .input-group-addon {
+        font-size: 10px;
+        text-transform: uppercase;
+    }
+
+</style>
+
+<ul id="@propertyId" class="localized-content list-unstyled">
+    @for (var i = 0; i < localizedContents.Length; i++)
+    {
+        var localizedKey = localizedContents[i].Key;
+        var localizedValue = localizedContents[i].Value;
+        var inputId = $"{propertyName}_{i}_Value";
+        var inputName = $"{propertyName}[{i}].Value";
+        var inputKey = $"{propertyName}[{i}].Key";
+        var cultureInfo = CultureInfo.GetCultureInfo(localizedKey);
+        var languageDirection = cultureInfo.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+        var isRequired = modelMetaData.IsRequired && LocalizedContent.RequiredLanguages.Contains(localizedKey);
+
+        <li data-for="@inputId">
+            <input type="hidden" name="@inputKey" value="@localizedKey"/>
+
+            <div class="input-group">
+
+                @if (!cultureInfo.TextInfo.IsRightToLeft)
+                {
+                    <span lang="@localizedKey" class="input-group-addon">@cultureInfo.NativeName</span>
+                }
+
+                @{
+                    var tagBuilder = GetTextTag(templateHint, localizedValue);
+                    tagBuilder.AddCssClass("form-control localized-input");
+                    tagBuilder.MergeAttribute("id", inputId);
+                    tagBuilder.MergeAttribute("name", inputName);
+                    tagBuilder.MergeAttribute("lang", localizedKey);
+                    tagBuilder.MergeAttribute("dir", languageDirection);
+
+                    if (isRequired)
+                    {
+                        tagBuilder.MergeAttribute("data-val", "true");
+                        tagBuilder.MergeAttribute("data-val-required", "true");
+                    }
+                }
+
+                @Html.Raw(tagBuilder.ToString())
+
+                @if (cultureInfo.TextInfo.IsRightToLeft)
+                {
+                    <span lang="@localizedKey" class="input-group-addon">@cultureInfo.NativeName</span>
+                }
+
+            </div>
+            @if (isRequired)
+            {
+                <span class="field-validation-valid" data-valmsg-for="@inputName" data-valmsg-replace="false">Please enter text or content for @friendlyName.</span>
+            }
+        </li>
+    }
+</ul>
+
+<script>
+
+    (function () {
+
+        var getMaxWidth = function(elements) {
+            var width = 0;
+            for (var i = 0; i < elements.length; i++) {
+                width = Math.max(width, elements[i].offsetWidth);
+            }
+            return width;
+        }
+
+        var setMinWidth = function (elements, width) {
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].style.minWidth = `${width}px`;
+            }
+        }
+
+        var parent = document.getElementById('@propertyId');
+        var labels = parent.getElementsByClassName('input-group-addon');
+        var maxWidth = getMaxWidth(labels);
+        setMinWidth(labels, maxWidth);
+
+    })();
+    
+</script>

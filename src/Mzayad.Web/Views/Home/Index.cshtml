@@ -1,0 +1,697 @@
+﻿@using Microsoft.AspNet.Identity
+@using Mzayad.Web.Core.Identity
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+@using OrangeJetpack.Base.Web
+@model Mzayad.Web.Models.Home.IndexViewModel
+
+@{
+    ViewBag.Title = Global.Home;
+}
+
+@section styles {
+    @Styles.Render("~/css/nivo")
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.0/css/swiper.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nivoslider/3.2/nivo-slider.min.css" />
+
+    <link rel="stylesheet" href="/content/flags/flags.css" />
+    <style>
+        .img-container {
+            position: relative;
+        }
+
+        .flag-container {
+            position: absolute;
+            top: -5px;
+            right: 6.5%;
+            z-index: 100;
+        }
+
+        .flag-container2 {
+            position: absolute;
+            top: 2%;
+            right: 4%;
+            z-index: 100;
+        }
+
+        .flag {
+            margin-left: 5px !important;
+        }
+
+        .theme-default .nivoSlider {
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+        }
+
+        .slider-wrapper {
+            margin-bottom: 30px !important;
+        }
+
+        .paging-container {
+            background-color: #fcfcfc;
+            margin: 0px;
+            border: solid 1px #ccc;
+        }
+
+        .pagging {
+            text-align: center;
+            border-right: solid 1px #ccc;
+        }
+
+            .pagging:last-child {
+                border-right: none !important;
+            }
+
+            .pagging:hover {
+                background-color: #33ace0;
+                color: #fff;
+                cursor: pointer;
+            }
+
+        .active {
+            background-color: #33ace0;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            margin-top: 10px;
+            text-transform: uppercase;
+            height: 22px;
+            overflow: hidden;
+        }
+
+        .secondary-title {
+            margin-bottom: 10px;
+            height: 22px;
+            overflow: hidden;
+        }
+    </style>
+}
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <p><img class="img-responsive" src="https://az723232.vo.msecnd.net/assets/hero-movie-635750647415139708.jpg" alt="" /></p>
+}
+
+<section class="slider-wrapper theme-default">
+    <div id="slider" class="nivoSlider">
+        @for (int i = 0; i < Model.Banners.Count; i++)
+        {
+            var banner = Model.Banners.ElementAt(i);
+            <a href="@banner.Url" class="img-container" data-id="@i">
+                <img data-id="@i" class="img-responsive" src="@banner.ImgLgUrl" alt="" />
+            </a>
+        }
+    </div>
+    <div class="paging-container row hidden-sm hidden-xs">
+        @for (int i = 0; i < Model.Banners.Count; i++)
+        {
+            var banner = Model.Banners.ElementAt(i);
+            <div class="col-xs-2 pagging @(i ==0 ? "active" : "")" data-id="@i">
+                <div class="title">@banner.Title</div>
+                <div class="secondary-title">
+                    @banner.SecondaryTitle
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@if (!Model.LiveAuctions.Any())
+{
+    @Html.StatusMessage("There are no live auctions available at this time.", StatusMessageType.Warning)
+}
+else
+{
+    <h2>@Global.LiveAuctions</h2>
+
+    <ol id="auction-list" data-bind="foreach: auctions">
+        <li class="auction-item">
+
+            <!-- ko if: $index() == 0 -->
+            <div class="live-action-ribbon">@Global.LiveAuctions</div>
+            <!-- /ko -->
+
+            <div class="row">
+                <div class="col-md-6 live-ribbon-container img-container">
+                    <a data-bind="attr: {href: productUrl}" href="#">
+                        <img class="auction-image img-responsive" data-bind="attr: { src: imageUrl, alt: title }" alt="">
+                    </a>
+                    <div class="sponsor-ribbon"><span data-bind="text:sponsorName"></span></div>
+                    <div class="flag-container" data-bind="html: countryListHtml"></div>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="auction-details">
+
+                        <h3 class="auction-title" data-bind="text: title"></h3>
+                        <div class="auction-retail-price" data-bind="text: retailPriceFormatted"></div>
+
+                        <div class="auction-status-loading" data-bind="visible: !isLoaded()">
+                            <i class="fa fa-spin fa-cog"></i>
+                            @Global.Loading
+                        </div>
+
+                        <div class="auction-status-details" data-bind="visible: isLoaded()">
+
+                            <ol class="auction-time-left">
+                                <li class="auction-time-part">
+                                    <div class="auction-time-value" data-bind="text: timeLeftHours"></div>
+                                    <div class="auction-time-label">
+                                        <small>@Global.Hours</small>
+                                    </div>
+                                </li>
+                                <li class="auction-time-part">
+                                    <div class="auction-time-value" data-bind="text: timeLeftMinutes"></div>
+                                    <div class="auction-time-label">
+                                        <small>@Global.Minutes</small>
+                                    </div>
+                                </li>
+                                <li class="auction-time-part">
+                                    <div class="auction-time-value" data-bind="text: timeLeftSeconds"></div>
+                                    <div class="auction-time-label">
+                                        <small>@Global.Seconds</small>
+                                    </div>
+                                </li>
+                            </ol>
+
+                            <div class="clearfix"></div>
+
+                            <div class="row">
+                                <div class="auction-bid-details col-md-8">
+                                    <div class="auction-bid-label">
+                                        <small>@Global.CurrentAuctionPrice</small>
+                                    </div>
+                                    <div class="auction-bid-form input-group">
+                                        <input type="text" class="form-control" readonly="readonly" data-bind="value: lastBidFormatted">
+                                        <span class="input-group-btn">
+                                            @if (Request.IsAuthenticated)
+                                            {
+                                                <button type="button" class="btn btn-default btn-bid" data-bind="click: submitBid">@Global.Bid</button>
+                                            }
+                                            else
+                                            {
+                                                <a class="btn btn-default" href="@Url.Action("SignIn", "Account", new {ReturnUrl = "/"})">@Global.Bid</a>
+                                            }
+                                        </span>
+                                    </div>
+                                    <span class="text-danger hidden" data-bind="css: {hidden: showBidErr() == false}">@Global.BidTwiceErrorMessage</span>
+                                    <ol class="auction-recent-bids" data-bind="foreach: bidsReversed">
+                                        <li>
+                                            <div class="pull-left">
+                                                <img data-bind="attr: { src: avatarUrl, alt: userName }" width="32" />
+                                            </div>
+                                            <div class="auction-recent-username pull-left">
+                                                <a data-bind="attr:{href : '@Url.Content("~/"+ LanguageCode+ "/profiles/")'+userName}">
+                                                    <span data-bind="text: userName"></span>
+                                                </a>
+                                            </div>
+                                            <div class="auction-recent-bidamount pull-right">
+                                                KD <span data-bind="text: bidAmount"></span>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+
+                            <ul class="auction-action-buttons">
+                                @*<li data-bind="visible: buyNowEnabled">
+                                        <a class="btn btn-default btn-rounded" data-bind="attr: { href: buyNowUrl }">@Global.BuyNow</a>
+                                    </li>*@
+                                <li data-bind="visible: autoBidEnabled">
+                                    <a class="btn btn-unstyled btn-rounded" data-bind="click:openAutoBidModal ">@Global.AutoBid</a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-unstyled btn-rounded" data-bind="attr: { href: wishListUrl }">@Global.AddToWishList</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ol>
+}
+
+<div id="autoBid" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">@Global.AutoBid</h4>
+            </div>
+            <div class="modal-body">
+                <p class="lead">@Global.AutoBidInstructions</p>
+                <form>
+                    <section>
+                        <label>@Global.Auction</label>
+                        <p id="auctionTitle" class="form-control-static"></p>
+                        <div class="form-group">
+                            <label>@Global.MaxBid</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">KD</span>
+                                <input id="maxBidAmount" type="number" min="1" max="" class="form-control" step="" />
+                                <input id="auctionId" type="hidden" />
+                            </div>
+
+                        </div>
+                    </section>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="setAutoBid" type="submit" class="btn btn-default">@Global.SetAutoBid</button>
+                <button id="deleteAutoBid" class="btn btn-danger">@Global.Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (Model.UpcomingAuctions.Any())
+{
+    <h2>@Global.UpcomingAuctions</h2>
+    <ol id="closed-auctions">
+        @foreach (var auction in Model.UpcomingAuctions)
+        {
+            <li>@Html.DisplayFor(m => auction, "AuctionTile")</li>
+        }
+    </ol>
+}
+
+@if (Model.ClosedAuctions.Any())
+{
+    <h2>@Global.ClosedAuctions</h2>
+
+    <ol id="closed-auctions">
+        @foreach (var auction in Model.ClosedAuctions)
+        {
+            <li>@Html.DisplayFor(m => auction, "AuctionTile")</li>
+        }
+    </ol>
+
+    <p class="text-center"><a class="btn btn-unstyled text-uppercase" href="@Url.Action("Closed", "Auctions", new { Area = "", Language = LanguageCode })">@Global.ViewAllClosedAuctions</a></p>
+}
+
+
+
+@section scripts {
+
+    @Scripts.Render("~/js/knockout")
+    @Scripts.Render("~/js/signalR")
+    <script src="~/Scripts/hammer.js"></script>
+    <script src="//cdn.jsdelivr.net/alertifyjs/1.8.0/alertify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nivoslider/3.2/jquery.nivo.slider.min.js" integrity="sha256-66ApDNLFhIKyILJVmsbuCCSQAsj/j1cETZLc4FD9hGM=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.0/js/swiper.min.js"></script>
+    <script>
+        (function(app, $) {
+
+            var bindEvents = function() {
+                $("#slider-image-1").on("load", app.Images.lazyLoad());
+                $(".swiper-slide a").click(function() { window.location.href = $(this).attr("href"); });
+            };
+
+            $(window)
+                .on('load',
+                function () {
+
+                    var slider = $("#slider");
+                            slider.nivoSlider({
+                            effect: 'fade',
+                            animSpeed: 1,
+                            pauseTime: 5000,
+                            controlNav: false,
+                            prevText: '',
+                            nextText: '',
+                            beforeChange: function () {
+                                var index = jQuery('#slider').data('nivo:vars').currentImage.data('id');
+                                $(".pagging").removeClass("active");
+                                if ((index + 1) == @Model.Banners.Count) {
+                                        $(".pagging:nth-child(1)").addClass("active");
+                                    } else {
+                                        $(".pagging:nth-child(" + (index + 2) + ")").addClass("active");
+                                    }
+                                },
+                                afterChange: function () {
+                                    var index = jQuery('#slider').data('nivo:vars').currentImage.data('id');
+                                    $(".pagging").removeClass("active");
+                                    if ((index) == @Model.Banners.Count) {
+                                        $(".pagging:nth-child(1)").addClass("active");
+                                    } else {
+                                        $(".pagging:nth-child(" + (index+1) + ")").addClass("active");
+                                    }
+                                }
+                            });
+
+                        if ("ontouchstart" in document.documentElement) {
+
+                            var element = document.getElementById('slider');
+
+                            var hammertime = Hammer(element).on("swipeleft", function (event) {
+                                $('#slider img').attr("data-transition", "slideInLeft");
+                                $('a.nivo-nextNav').trigger('click');
+                                return false;
+
+                            });
+
+                            var hammertime = Hammer(element).on("swiperight", function (event) {
+                                $('#slider img').attr("data-transition", "slideInRight");
+                                $('a.nivo-prevNav').trigger('click');
+                                $('#slider img').attr("data-transition", "slideInLeft");
+                                return false;
+
+                            });
+                        } 
+                    });
+
+            $(function() {
+                bindEvents();
+            });
+
+            var getSlideCount = function() {
+                var w = window.innerWidth;
+                var d = w / 200;
+                var r = Math.round(d);
+                return Math.min(r, 5);
+            };
+
+            var swipers = new Swiper('.swiper-container',
+            {
+                paginationClickable: true,
+                nextButton: '.swiper-button-next',
+                prevButton: '.swiper-button-prev',
+                slidesPerView: getSlideCount(),
+                spaceBetween: 15
+            });
+
+            $(window)
+                .resize(function() {
+                    for (var i = 0; i < swipers.length; i++) {
+                        swipers[i].params.slidesPerView = getSlideCount();
+                        swipers[i].update();
+                    }
+                });
+
+            $(".pagging").click(function() {
+                var id = $(this).data("id");
+                $('#slider').data('nivo:vars').currentSlide = id - 1;
+                $("#slider a.nivo-nextNav").trigger('click');
+            });
+
+        }(App, jQuery));
+    </script>
+
+
+
+    @if (Request.IsLocal)
+    {
+        <script src="/signalr/hubs"></script>
+    }
+    else
+    {
+        <script src="https://mzayad.azurewebsites.net/signalr/hubs"></script>
+    }
+
+    <script>
+
+        $(function() {
+
+            var auctions =
+                @Html.Raw(JsonConvert.SerializeObject(Model.LiveAuctions, Formatting.Indented, new JsonSerializerSettings {ContractResolver = new CamelCasePropertyNamesContractResolver()}));
+            var auctionIds = @JsonConvert.SerializeObject(Model.LiveAuctionIds);
+            var auctionHub = $.connection.auctionHub;
+            var userCountry = "@Model.UserCountry";
+            var userName = "@(Model.User?.UserName ?? "--Not Login")";
+
+            var Auction = function(data) {
+                console.log('autoBidEnabled', data.autoBidEnabled);
+                var self = this;
+
+                self.auctionId = data.auctionId;
+                self.title = data.title;
+                self.retailPrice = data.retailPrice;
+                self.buyNowEnabled = data.buyNowEnabled;
+                self.imageUrl = data.imageUrl;
+                self.sponsorName = data.sponsorName;
+                self.maximumBid = data.maximumBid;
+                self.bidIncrement = data.bidIncrement;
+                self.autoBidEnabled = data.autoBidEnabled;
+                self.trySetBid = false;
+
+                self.bids = ko.observableArray(data.bids);
+                self.status = ko.observable(data.status);
+                self.countryList = ko.observable(data.countryList);
+                self.isLoaded = ko.observable(false);
+                self.secondsLeft = ko.observable();
+                self.lastBidAmount = ko.observable(data.lastBidAmount);
+                self.showBidErr = ko.observable(false);
+                self.productUrl = '@LanguageCode/products/' + data.productId;
+
+                self.showBidErr = ko.computed(function() {
+                    var isLastBidder = self.bids().length > 0 && self.bids()[0].userName === userName;
+                    return isLastBidder && self.trySetBid;
+                });
+
+                self.bidsReversed = ko.computed(function() {
+                    return self.bids()
+                        .sort(function(l, r) {
+                            return l.bidAmount < r.bidAmount ? 1 : -1;
+                        });
+                });
+
+                self.timeLeftHours = ko.computed(function() {
+                    return App.TimeUtilities.getHours(self.secondsLeft());
+                });
+
+                self.timeLeftMinutes = ko.computed(function() {
+                    return App.TimeUtilities.getMinutes(self.secondsLeft());
+                });
+
+                self.timeLeftSeconds = ko.computed(function() {
+                    return App.TimeUtilities.getSeconds(self.secondsLeft());
+                });
+
+                self.buyNowUrl = ko.computed(function() {
+                    return "@LanguageCode/orders/buy-now/" + self.auctionId;
+                });
+
+                self.autoBidUrl = ko.computed(function() {
+                    return "@LanguageCode/auto-bid/edit/" + self.auctionId;
+                });
+
+                self.wishListUrl = ko.computed(function() {
+                    return "@LanguageCode/wishlist/add?item=" + self.title;
+                });
+
+                self.retailPriceFormatted = ko.computed(function() {
+                    return "Retail Price: " + self.retailPrice;
+                });
+
+                self.lastBidFormatted = ko.computed(function() {
+                    if (!self.lastBidAmount()) {
+                        return "KD 0";
+                    }
+
+                    return "KD " + self.lastBidAmount();
+                });
+
+                self.submitBid = function() {
+                    var userInBids = false;
+                    for (var i = 0; i < self.bids().length; i++) {
+                        if (self.bids()[i].userName == userName) {
+                            userInBids = true;
+                        }
+                    }
+
+                    if (self.bids().length > 0 && self.bids()[0].userName === userName) {
+                        self.trySetBid = true;
+                        return false;
+                    } else {
+                        self.trySetBid = false;
+                    }
+
+                    if (self.countryList() != "" &&
+                        self.countryList().indexOf(userCountry) <= -1 &&
+                        !userInBids) {
+
+
+                        alertify
+                            .confirm("Are you sure that you still want to bid on this auction although it is not available in your country?",
+                                function() {
+                                    auctionHub.server.submitBid(self.auctionId, '@User.Identity.GetUserId()');
+                                },
+                                function() {
+
+                                })
+                            .set('labels', { ok: 'Yes', cancel: 'No' }).setHeader('@Global.Alert');
+                    } else {
+                        auctionHub.server.submitBid(self.auctionId, '@User.Identity.GetUserId()');
+                    }
+
+                };
+
+                self.closeAuction = function() {
+                    self.status("Closed");
+                };
+
+                self.redirectOrder = function(orderId) {
+                    location.href = "@LanguageCode/orders/auction/" + orderId;
+                };
+
+                self.countryListHtml = ko.computed(function() {
+                    var resultHtml = "";
+                    var countries = self.countryList().split(",");
+                    countries.forEach(function(e) {
+                        resultHtml += "<i class='flag flag-" + e.toLowerCase() + "'></i>";
+                    });
+                    return resultHtml;
+                });
+
+
+                self.openAutoBidModal = function() {
+
+                    @if (!Request.IsAuthenticated)
+                    {
+                        <text>
+                            window.location.href = "@($"{LanguageCode}/account/sign-in?returnUrl=~/")";
+                        </text>
+                    }
+
+                    $("#auctionTitle").html(self.title);
+                    $("#maxBidAmount").attr("max", self.maximumBid);
+                    $("#maxBidAmount").attr("step", self.bidIncrement);
+                    $("#auctionId").val(self.auctionId);
+
+                    $.ajax({
+                        url: '/api/auctions/' + data.auctionId + '/auto-bid',
+                        type: 'GET',
+                        headers: {
+                            "Authorization": "Bearer @IdentityToken.GetToken(Model.User)"
+                        },
+                        success: function(result) {
+                            $("#maxBidAmount").val(result);
+                            $("#autoBid").modal("show");
+                        }
+                    });
+                }
+
+            };
+
+            var AuctionsViewModel = function(data) {
+                var self = this;
+                self.auctions = ko.observableArray([]);
+
+                self.getAuction = function(auctionId) {
+                    for (var i = 0, len = self.auctions().length; i < len; i++) {
+                        if (self.auctions()[i].auctionId === auctionId)
+                            return self.auctions()[i];
+                    }
+                    return null;
+                };
+
+                var mappedAuctions = $.map(data, function(auction) { return new Auction(auction); });
+                self.auctions(mappedAuctions);
+            };
+
+            var viewModel = new AuctionsViewModel(auctions);
+            ko.applyBindings(viewModel);
+
+            auctionHub.client.updateAuctions = function(results) {
+
+                var auctionJson = $.parseJSON(results);
+                console.log("auctionHub.client.updateAuctions", results);
+
+                for (var i = 0, len = auctionJson.length; i < len; ++i) {
+                    var auction = auctionJson[i];
+                    var model = viewModel.getAuction(auction.auctionId);
+                    if (model) {
+                        model.secondsLeft(auction.secondsLeft);
+                        model.lastBidAmount(auction.lastBidAmount);
+                        model.bids(auction.bids);
+                        model.isLoaded(true);
+                    }
+                }
+            };
+
+            auctionHub.client.closeAuction = function(auctionId, userId, orderId) {
+                var auction = viewModel.getAuction(auctionId);
+                if (auction) {
+                    auction.closeAuction();
+                    if (userId === "@User.Identity.GetUserId()") {
+                        auction.redirectOrder(orderId);
+                    } else {
+                        location.reload();
+                    }
+                }
+            }
+
+            $.connection.hub.logging = true;
+
+            @if (!Request.IsLocal)
+            {
+                <text>$.connection.hub.url = "https://mzayad.azurewebsites.net/signalr";</text>
+            }
+
+            $.connection.hub.start()
+                .done(function() {
+                    auctionHub.server.initAuctions(auctionIds)
+                        .done(function(results) {
+                            //console.log(results);
+                        });
+                });
+
+
+            $("#setAutoBid").on("click",
+                function() {
+                    if ($("#maxBidAmount").val() === "") {
+                        return;
+                    }
+
+                    var data = {
+                        auctionId: $("#auctionId").val(),
+                        maximumBid: $("#maxBidAmount").val()
+                    };
+
+                    $.ajax({
+                        url: '/api/auctions/' + data.auctionId + '/auto-bid',
+                        type: 'POST',
+                        data: data,
+                        headers: {
+                            "Authorization": "Bearer @IdentityToken.GetToken(Model.User)"
+                        },
+                        success: function() {
+                            $("#autoBid").modal("toggle");
+                        }
+                    });
+                });
+
+            $("#deleteAutoBid").on("click",
+                function() {
+                    alertify.confirm('@Global.AutoBidDeleteConfirmation',
+                        function() {
+                            $.ajax({
+                                url: '/api/auctions/' + $("#auctionId").val() + '/auto-bid',
+                                type: 'DELETE',
+                                headers: {
+                                    "Authorization": "Bearer @IdentityToken.GetToken(Model.User)"
+                                },
+                                success: function() {
+                                    $("#maxBidAmount").val("");
+                                    $("#autoBid").modal("toggle");
+                                }
+                            });
+                        }).setHeader('@Global.AutoBidDeleteTitle');
+                });
+
+        });
+
+    </script>
+}

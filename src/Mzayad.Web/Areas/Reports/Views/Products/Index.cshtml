@@ -1,0 +1,59 @@
+﻿@using Mzayad.Core.Formatting
+@using Mzayad.Web.Extensions
+@model Mzayad.Web.Areas.Reports.Models.Products.IndexViewModel
+
+@{
+    ViewBag.Title = "Products by Date";
+}
+
+<div class="row">
+    <div class="@Html.Css().FormWide">
+
+        @using (Html.BeginForm("Index", "Products", FormMethod.Post, new { @class = "form-inline" }))
+        {
+            <div class="form-group">
+                @Html.EditorFor(i => i.DateRange, "DateRange")
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </div>
+        }
+
+    </div>
+    <div style="height: 60px;"></div>
+    @if (Model.Products == null || !Model.Products.Any())
+    {
+
+        <div class="alert alert-warning">There are currently no products match the selected dates, please pick another dates and try again.</div>
+        return;
+    }
+
+    <table class="@Html.Css().GridTable">
+        <thead>
+            <tr>
+                <th>Date Added</th>
+                <th>Name</th>
+                <th>Purchase Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Products)
+            {
+                <tr>
+                    <td>@DateTimeFormatter.ToLocalTime(item.CreatedUtc, DateTimeFormatter.Format.Full)</td>
+                    <td>@item.Name</td>
+                    <td>@CurrencyFormatter.Format(@item.PurchasePrice)</td>
+                    <td>@item.Quantity</td>
+                    <td>@CurrencyFormatter.Format(@item.PurchasePrice * item.Quantity)</td>
+                </tr>
+            }
+            <tr>
+                <td colspan="3" class="td-total">@Html.Label("Total")</td>
+                <td>@Model.Products.Sum(i => i.Quantity)</td>
+                <td>@CurrencyFormatter.Format(Model.Products.Sum(i => i.PurchasePrice*i.Quantity))</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,47 @@
+﻿@using Mzayad.Web.Extensions
+<style>
+    .badge-notify {
+        background: red;
+        position: relative;
+        top: -8px;
+        left: 0px;
+    }
+</style>
+@{
+    var requests = Convert.ToInt32(Html.Action("RequestsCount", "Friends", new { Area = "", LanguageCode }).ToString());
+    var messages = Convert.ToInt32(Html.Action("MessagesCount", "Friends", new { Area = "", LanguageCode }).ToString());
+}
+
+@if (Request.IsAuthenticated)
+{
+    var routeValues = new { area = "", language = Html.Language() };
+
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@string.Format(Global.HelloFirstName, User.Identity.GetDisplayName())<i class="fa fa-caret-down fa-pad-left"></i><span class="badge badge-notify">@(requests + messages > 0 ? (requests + messages).ToString() : "")</span></a>
+        <ul class="dropdown-menu">
+            <li><a href="@Url.Action("Dashboard","User", routeValues)"><i class="fa fa-fw fa-pad-right fa-tachometer"></i>@Global.Dashboard</a></li>
+            <li><a href="@Url.Action("EditAccount","User", routeValues)"><i class="fa fa-fw fa-pad-right fa-user"></i>@Global.EditAccount</a></li>
+            <li><a href="@Url.Action("EditProfile", "User", routeValues)"><i class="fa fa-fw fa-pad-right fa-rocket"></i>@Global.EditProfile</a></li>
+            <li><a href="@Url.Action("Index", "Subscriptions", routeValues)"><i class="fa fa-fw fa-pad-right fa-gift"></i>@Global.BuySubscription</a></li>
+            <li><a href="@Url.Action("ChangePassword", "User", routeValues)"><i class="fa fa-fw fa-pad-right fa-lock"></i>@Global.ChangePassword</a></li>
+            <li><a href="@Url.Action("Notifications", "User", routeValues)"><i class="fa fa-fw fa-pad-right fa-bullhorn"></i>@Global.Notifications</a></li>
+            <li><a href="@Url.Action("Trophies", "User", routeValues)"><i class="fa fa-fw fa-pad-right fa-trophy"></i>@Global.Trophies</a></li>
+            <li><a href="@Url.Action("Index","WishList", routeValues)"><i class="fa fa-fw fa-pad-right fa-star"></i>@Global.MyWishList</a></li>
+            <li><a href="@Url.Action("Requests","Friends", routeValues)"><i class="fa fa-fw fa-pad-right fa-users"></i>@Global.FriendRequests<span class="badge badge-notify">@(requests > 0 ? requests.ToString() : "")</span></a></li>
+            <li><a href="@Url.Action("Inbox","User", routeValues)"><i class="fa fa-fw fa-pad-right fa-envelope"></i>@Global.Inbox<span class="badge badge-notify">@(messages > 0 ? messages.ToString() : "")</span></a></li>
+            <li>
+                <a href="javascript:document.getElementById('signout').submit();"><i class="fa fa-fw fa-pad-right fa-sign-out"></i>@Global.SignOut</a>
+                @using (Html.BeginForm("SignOut", "Account", new { area = "", language = Html.Language() }, FormMethod.Post, new { id = "signout" }))
+                {
+                    @Html.AntiForgeryToken()
+                }
+            </li>
+
+        </ul>
+    </li>
+}
+else
+{
+    <li><a href="@Url.Action("SignIn", "Account", new { area = "", language = Html.Language() }, null)">@Global.SignIn</a></li>
+    <li><a id="register-link" href="@Url.Action("Register", "Account", new { area = "", language = Html.Language() }, null)">@Global.Register</a></li>
+}

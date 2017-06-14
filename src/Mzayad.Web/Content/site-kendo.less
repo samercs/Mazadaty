@@ -1,0 +1,51 @@
+﻿@import "variables";
+
+.k-widget {
+    border: none;
+}
+.k-grid table {
+    border-collapse: collapse;
+
+    tbody {
+        font-size: @font-size - 0.2;
+    }
+}
+
+.k-grid-header .k-header:first-child, 
+.k-grid tbody td:first-child, 
+.k-grid tfoot td:first-child {
+    border-left-width: 1px;
+}
+
+.k-alt {
+    background-color: transparent;
+}
+
+.k-pager-wrap {
+    background-color: @base;
+
+    .k-link {
+        border: none;
+        border-radius: 0 !important;
+    }
+}
+
+.k-pager-numbers .k-state-selected {
+    border-radius: 0; 
+}
+
+.k-state-selected, 
+.k-state-selected:link, 
+.k-state-selected:visited, 
+.k-list > .k-state-selected, 
+.k-list > .k-state-highlight, 
+.k-panel > .k-state-selected, 
+.k-ghost-splitbar-vertical, 
+.k-ghost-splitbar-horizontal, 
+.k-draghandle.k-state-selected:hover, 
+.k-scheduler .k-scheduler-toolbar .k-state-selected, 
+.k-scheduler .k-today.k-state-selected, .k-marquee-color {
+    color: @base;
+    background-color: lighten(@base, 50%);
+    border-color: lighten(@base, 50%);
+}

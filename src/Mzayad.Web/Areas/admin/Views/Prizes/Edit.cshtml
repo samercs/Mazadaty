@@ -1,0 +1,39 @@
+﻿@model Mzayad.Web.Areas.Admin.Models.Prizes.AddViewModel
+@using Mzayad.Models.Enums
+@using OrangeJetpack.Localization
+@{
+    ViewBag.Title = "Edit Prize";
+}
+@Html.Partial("_AddEditView", Model)
+
+@section scripts
+{
+    <script>
+        $(function () {
+            var $prizeType = $("input[name='Prize.PrizeType']");
+            var $productIdSection = $("#productIdSection");
+            var $prizeSubscriptionDays = $("#subscriptionDaysSection");
+
+            var configUiForPrize = function () {
+                var prizeTypeValue = $("input[name='Prize.PrizeType']:checked").val();
+                if (prizeTypeValue == "@((int)PrizeType.Product)") {
+                    $productIdSection.show();
+                    $prizeSubscriptionDays.hide();
+                } else if (prizeTypeValue == "@((int)PrizeType.Subscription)") {
+                    $productIdSection.hide();
+                    $prizeSubscriptionDays.show();
+                } else {
+                    $productIdSection.hide();
+                    $prizeSubscriptionDays.hide();
+                }
+            };
+
+            configUiForPrize();
+
+            $prizeType.change(function () {
+                configUiForPrize();
+            });
+            
+        });
+    </script>
+}
