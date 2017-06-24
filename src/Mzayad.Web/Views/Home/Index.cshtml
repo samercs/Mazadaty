@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.0/css/swiper.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nivoslider/3.2/nivo-slider.min.css" />
-
     <link rel="stylesheet" href="/content/flags/flags.css" />
     <style>
         .img-container {
@@ -125,7 +124,7 @@
 
 @if (!Model.LiveAuctions.Any())
 {
-    @Html.StatusMessage("There are no live auctions available at this time.", StatusMessageType.Warning)
+    @Html.StatusMessage(Global.NoLiveAuctionsMessage, StatusMessageType.Warning)
 }
 else
 {
@@ -145,7 +144,6 @@ else
                     </a>
                     <div class="sponsor-ribbon"><span data-bind="text:sponsorName"></span></div>
                     <div class="flag-container" data-bind="html: countryListHtml"></div>
-
                 </div>
 
                 <div class="col-md-6">
