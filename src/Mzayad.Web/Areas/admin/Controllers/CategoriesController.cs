@@ -23,7 +23,7 @@ namespace Mzayad.Web.Areas.admin.Controllers
 
         public async Task<ActionResult> Index()
         {
-            var categories = await _categoryService.GetCategoriesAsHierarchyAsync();
+            var categories = await _categoryService.GetCategoriesAsHierarchy();
 
             return View(categories);
         }

@@ -1,4 +1,4 @@
-﻿@model Mzayad.Web.Areas.Admin.Models.Home.BuyNowModel
+﻿@model Mzayad.Web.Models.Home.BuyNowModel
 
 @{
     ViewBag.Title = Global.BuyNow;
@@ -9,9 +9,15 @@
     <div class="form-group">
         <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-search"></i></span>
-            <input name="q" type="text" class="form-control" style="min-width: 400px;" placeholder="@Global.BuyNowSearchPlaceholder" value="@Model.Search" />
+            <input name="q" type="text" class="form-control" style="min-width: 400px;" placeholder="@Global.BuyNowSearchPlaceholder" value="@Model.Search" />       
         </div>
+        @Html.DisplayFor(m => m.CategoryList)
     </div>
+}
+
+@if (!Model.Auctions.Any())
+{
+    <div class="alert alert-warning">@Global.NoBuyNowWarning</div>
 }
 
 <ol id="closed-auctions">

@@ -10,7 +10,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Mzayad.Models;
-using Mzayad.Web.Areas.Admin.Models.Home;
 using OrangeJetpack.Localization;
 
 namespace Mzayad.Web.Controllers
@@ -22,13 +21,15 @@ namespace Mzayad.Web.Controllers
         private readonly AuctionService _auctionService;
         private readonly AddressService _addressService;
         private readonly BannerService _bannerService;
+        private readonly CategoryService _categoryService;
 
         public HomeController(IAppServices appServices) : base(appServices)
         {
-            _userService = new UserService(appServices.DataContextFactory);
-            _auctionService = new AuctionService(appServices.DataContextFactory, appServices.QueueService);
-            _addressService = new AddressService(appServices.DataContextFactory);
+            _userService = new UserService(DataContextFactory);
+            _auctionService = new AuctionService(DataContextFactory, appServices.QueueService);
+            _addressService = new AddressService(DataContextFactory);
             _bannerService = new BannerService(DataContextFactory);
+            _categoryService = new CategoryService(DataContextFactory);
         }
 
         public async Task<ActionResult> Index(string language)
@@ -84,12 +85,14 @@ namespace Mzayad.Web.Controllers
         }
 
         [Route("~/{language}/buy-now")]
-        public async Task<ActionResult> BuyNow(string q = null)
+        public async Task<ActionResult> BuyNow(string q = null, int? categoryId = null)
         {
             var model = new BuyNowModel
             {
                 Search = q,
-                Auctions = await _auctionService.GetBuyNowAuctions(Language, q)
+                CategoryId = categoryId,
+                Auctions = await _auctionService.GetBuyNowAuctions(Language, q, categoryId),
+                Categories = await _categoryService.GetCategoriesAsHierarchy(Language)
             };
 
             return View(model);

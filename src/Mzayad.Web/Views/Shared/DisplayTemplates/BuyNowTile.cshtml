@@ -13,7 +13,7 @@
     </div>
     <div class="auction-tile-details">
         <a href="@Url.Action("Index", "Products", new {productId = Model.ProductId})">
-            <h3 class="auction-tile-title auction-tile-row">@Model.Title</h3>
+            <h3 class="auction-tile-title auction-tile-row">@Model.Product.Name</h3>
         </a>
     </div>
     <div class="auction-tile-buynow auction-tile-row">
