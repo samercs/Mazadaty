@@ -50,7 +50,7 @@ namespace Mzayad.Web.Areas.Admin.Controllers
                     Status = ItemStatus.Private,
                     UserId = AuthService.CurrentUserId(),
                     Author = NameFormatter.GetFullName(user.FirstName, user.LastName),
-                    ProjectKey = AppSettings.ProjectKey
+                    //ProjectKey = AppSettings.ProjectKey
                 },
             };
 
@@ -66,7 +66,7 @@ namespace Mzayad.Web.Areas.Admin.Controllers
             page.Title = title.Serialize();
             page.UserId = user.Id;
             page.Author = NameFormatter.GetFullName(user.FirstName, user.LastName);
-            page.ProjectKey = AppSettings.ProjectKey;
+            //page.ProjectKey = AppSettings.ProjectKey;
 
             if (!ModelState.IsValid)
             {

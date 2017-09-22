@@ -7,13 +7,13 @@ using OrangeJetpack.Base.Core.Extensions;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Base.Web.Caching;
 using OrangeJetpack.Cms.Client;
-using OrangeJetpack.Services.Client.Messaging;
 using OrangeJetpack.Services.Client.Storage;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Web.Mvc;
+using Mzayad.Services.Messaging;
 using Mzayad.Web.Core.ShoppingCart;
 
 namespace Mzayad.Web.Controllers

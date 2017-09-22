@@ -114,6 +114,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BannerService.cs" />
+    <Compile Include="Messaging\Email.cs" />
+    <Compile Include="Messaging\EmailSettings.cs" />
+    <Compile Include="Messaging\IMessageService.cs" />
+    <Compile Include="Messaging\EmailMessageService.cs" />
     <Compile Include="Queues\ActivityEventService.cs" />
     <Compile Include="Queues\IQueueService.cs" />
     <Compile Include="Queues\QueueService.cs" />
@@ -183,4 +187,3 @@
   </Target>
   -->
 </Project>
-

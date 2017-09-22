@@ -1,10 +1,11 @@
 ﻿using Mzayad.Data;
 using Mzayad.Services.Activity;
+using Mzayad.Services.Messaging;
 using Mzayad.Services.Queues;
-using Mzayad.Web.Core.ShoppingCart;
+
 using OrangeJetpack.Base.Web.Caching;
 using OrangeJetpack.Cms.Client;
-using OrangeJetpack.Services.Client.Messaging;
+
 using OrangeJetpack.Services.Client.Storage;
 
 namespace Mzayad.Web.Core.Services
@@ -28,25 +29,25 @@ namespace Mzayad.Web.Core.Services
             IAppSettings appSettings,
             IAuthService authService,
             ICookieService cookieService,
-            IMessageService messageService,
             ICacheService caceService,
             IRequestService requestService,
             IStorageService storageService,
             ICmsClient cmsClient,
             IQueueService queueService,
-            IHttpContextService httpContextService)
+            IHttpContextService httpContextService,
+            IMessageService messageService)
         {
             DataContextFactory = dataContextFactory;
             AppSettings = appSettings;
             AuthService = authService;
             CookieService = cookieService;
-            MessageService = messageService;
             CacheService = caceService;
             RequestService = requestService;
             StorageService = storageService;
             CmsClient = cmsClient;
             QueueService = queueService;
             HttpContextService = httpContextService;
+            MessageService = messageService;
         }
     }
 }

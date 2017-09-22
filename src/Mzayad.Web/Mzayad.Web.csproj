@@ -31,6 +31,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -724,6 +725,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\site-auctions.less" />
+    <Content Include="Images\Logo-Orginal.jpeg" />
     <Content Include="Scripts\auctions.js.map" />
     <Content Include="Content\site-user.less" />
     <Content Include="Areas\Admin\Views\IslamicCalendar\Index.cshtml" />

@@ -1,4 +1,4 @@
-using OrangeJetpack.Services.Client.Messaging;
+using Mzayad.Services.Messaging;
 
 namespace Mzayad.Web.Core.Services
 {
@@ -7,11 +7,7 @@ namespace Mzayad.Web.Core.Services
         EmailSettings EmailSettings { get; }
         string SiteName { get; }
         string CacheConnection { get; }
-        string StorageConnection { get; }
         decimal LocalShipping { get; }
-        string AzureCdnUrlHost { get; }
-        string ProjectKey { get; }
-        string ProjectToken { get; }
         string CanonicalUrl { get; }
     }
 }

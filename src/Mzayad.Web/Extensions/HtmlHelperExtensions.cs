@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using System.Web.Mvc;
+using Mzayad.Web.Core.Services;
 using OrangeJetpack.Base.Web;
 
 namespace Mzayad.Web.Extensions
@@ -19,9 +20,9 @@ namespace Mzayad.Web.Extensions
             return htmlHelper.Language().Equals("ar");
         }
 
-        public static MvcHtmlString PageTitle(this HtmlHelper htmlHelper)
+        public static MvcHtmlString PageTitle(this HtmlHelper htmlHelper, string oldSiteName)
         {
-            var pageTitle = "Zeedli";
+            var pageTitle = oldSiteName;
 
             if (!string.IsNullOrWhiteSpace(htmlHelper.ViewBag.Title))
             {

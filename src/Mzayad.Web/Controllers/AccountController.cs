@@ -12,10 +12,10 @@ using Mzayad.Web.Resources;
 using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Base.Core.Security;
 using OrangeJetpack.Base.Web;
-using OrangeJetpack.Services.Models;
 using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Mzayad.Services.Messaging;
 
 namespace Mzayad.Web.Controllers
 {
