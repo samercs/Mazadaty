@@ -43,6 +43,7 @@
         $("form.submit-once").on("submit", submitOnce);
         $(".localized-content").on("input", ".localized-input[data-primary='true']", setHiddenLocalizedContent);
         $(".datetime-picker").on("change", "input, select", setDateTimePicker);
+        
     };
     var initRequiredLabels = function () {
         $(".required-label").slice(1).children("span").hide();
@@ -71,6 +72,8 @@ var App;
     App.TimeUtilities = TimeUtilities;
     var CkEditor = (function () {
         function CkEditor() {
+            CKEDITOR.replace('.ckeditor');
+
         }
         CkEditor.init = function () {
             // ReSharper disable SuspiciousThisUsage

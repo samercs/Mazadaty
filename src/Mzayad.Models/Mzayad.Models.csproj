@@ -93,6 +93,7 @@
     <Compile Include="Enums\FriendRequestStatus.cs" />
     <Compile Include="Enums\Gender.cs" />
     <Compile Include="Enums\OrderStatus.cs" />
+    <Compile Include="Enums\PageStatus.cs" />
     <Compile Include="Enums\PaymentMethod.cs" />
     <Compile Include="Enums\EmailTemplateType.cs" />
     <Compile Include="Enums\OrderType.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Extensions\UserTrophyExtensions.cs" />
     <Compile Include="FriendRequest.cs" />
     <Compile Include="Message.cs" />
+    <Compile Include="Page.cs" />
     <Compile Include="Queues\BidMessage.cs" />
     <Compile Include="Queues\QueueKeys.cs" />
     <Compile Include="Queues\QueueMessageBase.cs" />
@@ -155,4 +157,3 @@
   </Target>
   -->
 </Project>
-

@@ -42,6 +42,7 @@ namespace Mzayad.Data
         IDbSet<FriendRequest> FriendsRequests { get; set; }
         IDbSet<Message> Messages { get; set; }
         IDbSet<Banner> Banners { get; set; }
+        IDbSet<Page> Pages { get; set; } 
 
         int SaveChanges();
         Task<int> SaveChangesAsync();

@@ -11,20 +11,19 @@
         @Html.AntiForgeryToken()
 
         @Html.HiddenFor(model => Model.Page.Status)
-        @Html.HiddenFor(model => Model.Page.Html)
         @Html.HiddenFor(model => Model.Page.UserId)
-        @Html.HiddenFor(model => Model.Page.ProjectKey)
+        
 
         <section>
             <div class="form-group">
                 @Html.LabelFor(model => Model.Page.Title, "Title").Required()
-                @Html.EditorFor(model => Model.Page.Title)
+                @Html.TextBoxFor(model => Model.Page.Title, new {@class="form-control"})
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => Model.Page.Slug, "URL")
+                @Html.LabelFor(model => Model.Page.PageTag, "URL")
                 <div class="input-group">
                     <span class="input-group-addon">/pages/</span>
-                    @Html.TextBoxFor(model => Model.Page.Slug, new {@class = "form-control"})
+                    @Html.TextBoxFor(model => Model.Page.PageTag, new {@class = "form-control"})
                 </div>
             </div>
         </section>

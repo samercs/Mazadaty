@@ -79,14 +79,7 @@ namespace Mzayad.Web
         /// </remarks>
         private static ICacheService GetCacheService(IComponentContext c)
         {
-            var hostName = Environment.GetEnvironmentVariable("WEBSITE_HOSTNAME");
-            if (string.IsNullOrEmpty(hostName))
-            {
-                //return new LocalRedisCacheService();
-                return new HttpCacheService();
-            }
-
-            return new RedisCacheService();
+            return new HttpCacheService();
         }
 
         //private static ICartService GetCartService(IComponentContext c)

@@ -50,6 +50,7 @@ namespace Mzayad.Data
         public IDbSet<FriendRequest> FriendsRequests { get; set; }
         public IDbSet<Message> Messages { get; set; }
         public IDbSet<Banner> Banners { get; set; }
+        public IDbSet<Page> Pages { get; set; }
         public DataContext() : base("DefaultConnection")
         {
             Configuration.ProxyCreationEnabled = false;

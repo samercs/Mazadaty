@@ -422,6 +422,14 @@
     <Compile Include="Migrations\201704131205123_AddAutoBidEnabled.Designer.cs">
       <DependentUpon>201704131205123_AddAutoBidEnabled.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709221453104_AddPages.cs" />
+    <Compile Include="Migrations\201709221453104_AddPages.Designer.cs">
+      <DependentUpon>201709221453104_AddPages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709221536585_EditPages.cs" />
+    <Compile Include="Migrations\201709221536585_EditPages.Designer.cs">
+      <DependentUpon>201709221536585_EditPages.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -697,6 +705,12 @@
     <EmbeddedResource Include="Migrations\201704131205123_AddAutoBidEnabled.resx">
       <DependentUpon>201704131205123_AddAutoBidEnabled.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709221453104_AddPages.resx">
+      <DependentUpon>201709221453104_AddPages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709221536585_EditPages.resx">
+      <DependentUpon>201709221536585_EditPages.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -707,4 +721,3 @@
   </Target>
   -->
 </Project>
-

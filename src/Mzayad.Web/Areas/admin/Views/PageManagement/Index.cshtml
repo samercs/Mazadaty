@@ -1,13 +1,14 @@
 ﻿@using Kendo.Mvc.UI
 @using Mzayad.Web.Extensions
-@model IReadOnlyCollection<OrangeJetpack.Cms.Models.PageViewModel>
+@using Page = Mzayad.Models.Page
+@model IReadOnlyCollection<Mzayad.Models.Page>
 @{
     ViewBag.Title = "Pages";
 }
 
 
 <ul class="link-list">
-    <li>@Html.ActionLink("Add Page", "Add", "Pages")</li>
+    <li>@Html.ActionLink("Add Page", "Add", "PageManagement")</li>
 </ul>
 
 @if (!Model.Any())
@@ -17,13 +18,13 @@
     return;
 }
 
-@(Html.Kendo().Grid(Model)
-    .Init(ajax => ajax.Action("GetPages", "Pages"))
+@(Html.Kendo().Grid<Page>()
+    .Init(ajax => ajax.Action("GetPages", "PageManagement"))
     .Columns(columns =>
     {
         columns.Bound(i => i.Title);
-        columns.Bound(i => i.Slug).ClientTemplate("/pages/#=Slug#").Title("URL");
-        columns.Bound(i => i.Status).ClientTemplate("# if (data.Status == 1) {# <span class='label label-success'>Public</span> # } else { # <span class='label label-danger'>Private</span> # } #");
-        columns.LinkColumn("Edit", "pages/edit/#=PageId#");
+        columns.Bound(i => i.PageTag).ClientTemplate("/pages/#=PageTag#").Title("URL");
+        //columns.Bound(i => i.Status).ClientTemplate("# if (data.Status == 1) {# <span class='label label-success'>Public</span> # } else { # <span class='label label-danger'>Private</span> # } #");
+        columns.LinkColumn("Edit", "/admin/pages/edit/#=PageId#");
     })
 )

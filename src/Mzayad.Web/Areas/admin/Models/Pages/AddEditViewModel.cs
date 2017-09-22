@@ -1,4 +1,4 @@
-﻿using OrangeJetpack.Cms.Models;
+﻿using Mzayad.Models;
 
 namespace Mzayad.Web.Areas.Admin.Models.Pages
 {
