@@ -16,7 +16,6 @@ using Mzayad.Web.Resources;
 using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Base.Core.Security;
 using OrangeJetpack.Localization;
-using OrangeJetpack.Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -24,6 +23,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using Mzayad.Services.Messaging;
 using WebGrease.Css.Extensions;
 
 namespace Mzayad.Web.Areas.Api.Controllers

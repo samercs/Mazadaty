@@ -141,13 +141,14 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<IReadOnlyCollection<Auction>> GetBuyNowAuctions(string language, string search = null)
+        public async Task<IReadOnlyCollection<Auction>> GetBuyNowAuctions(string language, string search = null, int? categoryId = null)
         {
             using (var dc = DataContext())
             {
                 var query = dc.Auctions
                     .Include(i => i.Product.ProductImages)
                     .Include(i => i.Product.Sponsor)
+                    .Include(i => i.Product.Categories)
                     .Where(i => !i.IsDeleted)
                     .Where(i => i.BuyNowEnabled)
                     .Where(i => i.BuyNowQuantity > 0)
@@ -157,6 +158,11 @@ namespace Mzayad.Services
                 if (!string.IsNullOrWhiteSpace(search))
                 {
                     query = query.Where(i => i.Product.Name.Contains(search) || i.Product.Description.Contains(search));
+                }
+
+                if (categoryId.HasValue)
+                {
+                    query = query.Where(i => i.Product.Categories.Select(j => j.CategoryId).Contains(categoryId.Value));
                 }
 
                 var auctions = await query.ToListAsync();

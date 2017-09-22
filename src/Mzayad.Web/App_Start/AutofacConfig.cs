@@ -8,13 +8,15 @@ using Mzayad.Services.Activity;
 using Mzayad.Web.Core.Services;
 using OrangeJetpack.Base.Web.Caching;
 using OrangeJetpack.Cms.Client;
-using OrangeJetpack.Services.Client.Messaging;
+
 using OrangeJetpack.Services.Client.Storage;
 using System;
 using System.Configuration;
 using System.Reflection;
 using System.Web.Http;
 using System.Web.Mvc;
+using Mzayad.Services;
+using Mzayad.Services.Messaging;
 using Mzayad.Services.Queues;
 using Mzayad.Web.Core.Caching;
 using Mzayad.Web.Core.ShoppingCart;
@@ -44,16 +46,16 @@ namespace Mzayad.Web
             builder.Register<ICmsClient>(i =>
             {
                 var appSettings = i.Resolve<IAppSettings>();
-                return new CmsClient(appSettings.ProjectKey, appSettings.ProjectToken);
+                return new CmsClient("", "");
             });
 
             builder.Register<IStorageService>(c =>
             {
                 var appSettings = c.Resolve<IAppSettings>();
-                return new AzureBlobService(appSettings.ProjectKey, appSettings.ProjectToken);
+                return new AzureBlobService("", "");
             });
 
-            builder.Register<IMessageService>(c => new MessageService(c.Resolve<IAppSettings>().EmailSettings));
+            builder.Register<IMessageService>(c => new EmailMessageService(c.Resolve<IAppSettings>().EmailSettings));
             builder.Register<IQueueService>(c => new QueueService(ConfigurationManager.ConnectionStrings["QueueConnection"].ConnectionString));
 
 

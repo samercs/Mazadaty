@@ -1044,4 +1044,10 @@
   <data name="BuyNowSearchPlaceholder" xml:space="preserve">
     <value>Search product name or description...</value>
   </data>
+  <data name="AllCategories" xml:space="preserve">
+    <value>All Categories</value>
+  </data>
+  <data name="NoBuyNowWarning" xml:space="preserve">
+    <value>There are currently no active buy now products available. </value>
+  </data>
 </root>

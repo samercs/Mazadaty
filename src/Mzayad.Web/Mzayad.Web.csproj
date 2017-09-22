@@ -31,6 +31,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -366,7 +367,6 @@
     <Compile Include="Areas\Admin\Models\Avatar\AvatarAddViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Banners\AddViewModel.cs" />
     <Compile Include="Areas\Admin\Controllers\BannersController.cs" />
-    <Compile Include="Areas\Admin\Models\Home\BuyNowModel.cs" />
     <Compile Include="Areas\Admin\Models\Notifications\SendViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Orders\IndexViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Pages\AddEditViewModel.cs" />
@@ -514,6 +514,8 @@
     <Compile Include="Models\DateRangeModel.cs" />
     <Compile Include="Models\EditAutoBidViewModel.cs" />
     <Compile Include="Models\Friends\SendMessageViewModel.cs" />
+    <Compile Include="Models\Home\BuyNowModel.cs" />
+    <Compile Include="Models\Home\CategoryListModel.cs" />
     <Compile Include="Models\Home\IndexViewModel.cs" />
     <Compile Include="Models\LiveAuctionExtendedModel.cs" />
     <Compile Include="Models\LiveAuctionModel.cs" />
@@ -723,6 +725,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\site-auctions.less" />
+    <Content Include="Images\Logo-Orginal.jpeg" />
     <Content Include="Scripts\auctions.js.map" />
     <Content Include="Content\site-user.less" />
     <Content Include="Areas\Admin\Views\IslamicCalendar\Index.cshtml" />
@@ -896,6 +899,7 @@
     <Content Include="Views\Friends\SendMessage.cshtml" />
     <Content Include="Views\Friends\Search.cshtml" />
     <Content Include="Views\Checkout\SignIn.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\CategoryListModel.cshtml" />
     <None Include="Views\Home\SignalR.cshtml" />
     <Content Include="404.html" />
     <Content Include="500.html" />
@@ -969,6 +973,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Models\Home\" />
     <Folder Include="Areas\Api\Views\Products\" />
     <Folder Include="Areas\Api\Views\Shared\" />
   </ItemGroup>
@@ -1062,4 +1067,3 @@
   <Target Name="AfterBuild">
   </Target> -->
 </Project>
-

@@ -160,6 +160,15 @@ namespace Mzayad.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Categories.
+        /// </summary>
+        public static string AllCategories {
+            get {
+                return ResourceManager.GetString("AllCategories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Allow Phone SMS.
         /// </summary>
         public static string AllowPhoneSmsLabel {
@@ -1524,6 +1533,15 @@ namespace Mzayad.Web.Resources {
         public static string No {
             get {
                 return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are currently no active buy now products available. .
+        /// </summary>
+        public static string NoBuyNowWarning {
+            get {
+                return ResourceManager.GetString("NoBuyNowWarning", resourceCulture);
             }
         }
         

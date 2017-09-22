@@ -25,7 +25,7 @@ namespace Mzayad.Web.Areas.admin.Models.Products
         public async Task<EditViewModel> Hydrate(ProductService productService, CategoryService categoryService,SpecificationService specificationService,SponsorService sponsorService, Product product, string languageCode)
         {
             Product = product;
-            Categories = await categoryService.GetCategoriesAsHierarchyAsync(languageCode);
+            Categories = await categoryService.GetCategoriesAsHierarchy(languageCode);
             SelectedCategories = Product.Categories.Select(i => i.CategoryId).ToList();
             EditViewProductSpecifications = new List<EditViewProductSpecification>();
 

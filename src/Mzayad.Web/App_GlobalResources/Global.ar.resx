@@ -864,4 +864,10 @@
   <data name="RetailPriceLabel" xml:space="preserve">
     <value>سعر السوق</value>
   </data>
+  <data name="AllCategories" xml:space="preserve">
+    <value>All Categories</value>
+  </data>
+  <data name="NoBuyNowWarning" xml:space="preserve">
+    <value>There are currently no active buy now products available.</value>
+  </data>
 </root>

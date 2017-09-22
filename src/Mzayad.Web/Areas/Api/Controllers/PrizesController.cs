@@ -8,11 +8,12 @@ using Mzayad.Web.Core.Services;
 using Mzayad.Web.Extensions;
 using Newtonsoft.Json;
 using OrangeJetpack.Base.Core.Formatting;
-using OrangeJetpack.Services.Models;
+
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Mzayad.Services.Messaging;
 
 namespace Mzayad.Web.Areas.Api.Controllers
 {

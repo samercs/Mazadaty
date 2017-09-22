@@ -1,5 +1,6 @@
-using OrangeJetpack.Services.Client.Messaging;
+
 using System.Collections.Specialized;
+using Mzayad.Services.Messaging;
 
 namespace Mzayad.Web.Core.Services
 {
@@ -10,9 +11,7 @@ namespace Mzayad.Web.Core.Services
         public string CacheConnection { get; private set; }
         public string StorageConnection { get; private set; }
         public decimal LocalShipping { get; private set; }
-        public string AzureCdnUrlHost { get; private set; }
-        public string ProjectKey { get; private set; }
-        public string ProjectToken { get; private set; }
+        
         public string CanonicalUrl { get; private set; }
 
         public AppSettings(NameValueCollection appSettings)
@@ -20,20 +19,13 @@ namespace Mzayad.Web.Core.Services
             SiteName = appSettings["SiteName"];
             CacheConnection = appSettings["CacheConnection"];
             StorageConnection = appSettings["StorageConnection"];
-            AzureCdnUrlHost = appSettings["AzureCdnUrlHost"];
-
-            ProjectKey = appSettings["OrangeJetpack.Services:Project.Key"];
-            ProjectToken = appSettings["OrangeJetpack.Services:Project.Token"];
             CanonicalUrl = appSettings["CanonicalUrl"];
+            LocalShipping = decimal.Parse(appSettings["LocalShipping"]);
             EmailSettings = new EmailSettings
             {
-                ProjectKey = ProjectKey,
-                ProjectToken = ProjectToken,
-                SenderAddress = "noreply@zeedli.com",
-                SenderName = "Zeedli"
+                FromEmail = appSettings["FromEmail"],
+                FromName = appSettings["FromName"]
             };
-
-            LocalShipping = decimal.Parse(appSettings["LocalShipping"]);
         }
     }
 }

@@ -46,6 +46,11 @@ namespace Mzayad.Web.Core.Configuration
             get { return ViewBag.Language ?? "en"; }
         }
 
+        public string SiteTitle
+        {
+            get { return ConfigurationManager.AppSettings["SiteName"]; }
+        }
+
         /// <summary>
         /// Gets a formatting string from OrangeJetpack.Base.Core.Formatting.StringFormatter.ObjectFormat();
         /// </summary>

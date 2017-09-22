@@ -21,7 +21,7 @@ namespace Mzayad.Web.Models.User
             UserId = authService.CurrentUserId();
             CategoryNotification = await notificationService.GetByUser(UserId);
             
-            Categories = await categoryService.GetCategoriesAsHierarchyAsync(languageCode);
+            Categories = await categoryService.GetCategoriesAsHierarchy(languageCode);
             SelectedCategories = CategoryNotification.Select(i => i.CategoryId).ToList();
 
             return this;

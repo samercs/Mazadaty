@@ -29,7 +29,7 @@ namespace Mzayad.Services
             }
         }
 
-        public async Task<IEnumerable<Category>> GetCategoriesAsHierarchyAsync(string languageCode = "en")
+        public async Task<IReadOnlyCollection<Category>> GetCategoriesAsHierarchy(string languageCode = "en")
         {
             using (var dc = DataContext())
             {

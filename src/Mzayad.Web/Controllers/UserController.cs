@@ -13,13 +13,14 @@ using Mzayad.Web.Models.User;
 using Mzayad.Web.Resources;
 using OrangeJetpack.Base.Web;
 using OrangeJetpack.Localization;
-using OrangeJetpack.Services.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Mzayad.Services.Messaging;
 
 namespace Mzayad.Web.Controllers
 {

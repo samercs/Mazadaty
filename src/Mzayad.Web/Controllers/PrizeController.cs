@@ -4,18 +4,17 @@ using Mzayad.Services;
 using Mzayad.Services.Identity;
 using Mzayad.Web.Core.Identity;
 using Mzayad.Web.Core.Services;
-using Mzayad.Web.Extensions;
 using Mzayad.Web.Models.Prize;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using OrangeJetpack.Base.Core.Formatting;
 using OrangeJetpack.Base.Web;
-using OrangeJetpack.Localization;
-using OrangeJetpack.Services.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Mzayad.Services.Messaging;
+using Mzayad.Web.Extensions;
 
 namespace Mzayad.Web.Controllers
 {
