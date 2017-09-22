@@ -1,9 +1,9 @@
-﻿@model OrangeJetpack.Services.Models.Email
+﻿@model Mzayad.Services.Messaging.Email
 @{
     const string bodyBackground = "#ebedee";
     const string headerBackground = "#f7f7f7";
     const string emailBackground = "#ffffff";
-    const string logoUrl = "https://az723232.vo.msecnd.net/assets/zeedli-logo-636092669308502810-636225031066265166.png";
+    const string logoUrl = "https://ibb.co/idGQZQ";
     const int logoWidth = 150;
     const int logoHeight = 58 ;
     const string fontFamily = "Arial, sans-serif";
@@ -91,7 +91,7 @@
                     <table bgcolor="@headerBackground" style="width: 100%; background-color: @headerBackground">
                         <tr>
                             <td style="padding: 15px;">
-                                <img src="@logoUrl" style="max-width: 100%; width: @(logoWidth)px; height: @(logoHeight)px;" width="@logoWidth" height="@logoHeight" alt="Zeedli" />
+                                <img src="@logoUrl" style="max-width: 100%; width: @(logoWidth)px; height: @(logoHeight)px;" width="@logoWidth" height="@logoHeight" alt="Mazadaty" />
                             </td>
                         </tr>
                     </table>
@@ -109,7 +109,7 @@
                         <tr>
                             <td style="padding: 15px; font-family: @fontFamily;">
                                 @Html.Raw(Model.Message)
-                                <p>Zeedli Team</p>
+                                <p>Mazadaty Team</p>
                             </td>
                         </tr>
                     </table>

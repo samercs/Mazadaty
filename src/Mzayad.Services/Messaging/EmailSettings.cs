@@ -10,5 +10,6 @@ namespace Mzayad.Services.Messaging
     {
         public string FromEmail { get; set; }
         public string FromName { get; set; }
+        public string EmailPassword { get; set; }
     }
 }

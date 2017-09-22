@@ -24,7 +24,8 @@ namespace Mzayad.Web.Core.Services
             EmailSettings = new EmailSettings
             {
                 FromEmail = appSettings["FromEmail"],
-                FromName = appSettings["FromName"]
+                FromName = appSettings["FromName"],
+                EmailPassword = appSettings["EmailPassword"]
             };
         }
     }
