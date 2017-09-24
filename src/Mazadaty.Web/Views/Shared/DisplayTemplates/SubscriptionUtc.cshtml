@@ -1,0 +1,19 @@
+@using OrangeJetpack.Base.Core.Formatting
+@using DateTimeFormatter = Mazadaty.Core.Formatting.DateTimeFormatter
+@model DateTime?
+
+@if (!Model.HasValue)
+{
+    <span class="text-warning">@Global.NoSubscription</span>
+}
+else
+{
+    if (Model.Value > DateTime.UtcNow)
+    {
+        <span>@Html.Raw(StringFormatter.ObjectFormat(Global.SubscriptionActiveUntil, new { DateTime = DateTimeFormatter.ToLocalTime(Model.Value, DateTimeFormatter.Format.Full) }))</span>
+    }
+    else
+    {
+        <span>@Html.Raw(StringFormatter.ObjectFormat(Global.SubscriptionExpiredOn, new { DateTime = DateTimeFormatter.ToLocalTime(Model.Value, DateTimeFormatter.Format.Full) }))</span>
+    }
+}

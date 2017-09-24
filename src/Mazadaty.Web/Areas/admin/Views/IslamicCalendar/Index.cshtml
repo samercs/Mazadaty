@@ -1,0 +1,35 @@
+@using Mazadaty.Web.Extensions
+@model IEnumerable<Mazadaty.Models.IslamicCalendar>
+@{
+    ViewBag.Title = "Islamic Calendar";
+
+}
+<table class="@Html.Css().GridTable">
+    <thead>
+        <tr>
+            <th>Hijri Year</th>
+            <th>New Year</th>
+            <th>Eid Fetr From</th>
+            <th>Eid Fetr To</th>
+            <th>Eid Adha From</th>
+            <th>Eid Adha To</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.HijriYear</td>
+                <td>@item.NewYear.ToString("dd-MM-yyyy")</td>
+                <td>@item.EidFetrFrom.ToString("dd-MM-yyyy")</td>
+                <td>@item.EidFetrTo.ToString("dd-MM-yyyy")</td>
+                <td>@item.EidAdhaFrom.ToString("dd-MM-yyyy")</td>
+                <td>@item.EidAdhaTo.ToString("dd-MM-yyyy")</td>
+                <td class="link-cell">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.IslamicCalendarId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

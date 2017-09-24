@@ -1,0 +1,20 @@
+@using Mazadaty.Web.Extensions
+@using OrangeJetpack.Base.Web
+@model Mazadaty.Models.Specification
+
+@{
+    ViewBag.Title = "Delete Specification";  
+}
+
+
+@Html.StatusMessage(string.Format("Are you sure that you want to permanently delete the specification <strong>{0}</strong>?", Model.Name), StatusMessageType.Warning)
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <section class="form-buttons">
+        <button type="submit" class="btn btn-default">Yes</button>
+        <button type="button" class="btn btn-default btn-cancel">Cancel</button>
+        @Html.HiddenFor(i=>i.SpecificationId)
+    </section>
+}

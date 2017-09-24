@@ -1,0 +1,21 @@
+@using Mazadaty.Web.Extensions
+
+@{
+    ViewBag.Title = "Upload Splash Ad";
+}
+
+<div class="@Html.Css().FormNormal">
+    @using (Html.BeginForm("Upload", "SplashAds", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <section>
+            <div class="form-group">
+                <label for="file">Splash Ad Image</label>
+                <input id="file" name="file" type="file" class="form-control" />
+            </div>
+        </section>
+        <section class="form-buttons">
+            <button type="submit" class="btn btn-default">Upload</button>
+        </section>
+    }
+</div>

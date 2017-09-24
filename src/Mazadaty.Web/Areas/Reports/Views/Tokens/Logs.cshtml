@@ -1,0 +1,27 @@
+@using Kendo.Mvc.UI
+@using Mazadaty.Web.Extensions
+@model IEnumerable<Mazadaty.Web.Areas.Reports.Models.Tokens.TokenLogViewModel>
+
+@{
+    ViewBag.Title = "Token Logs";
+}
+
+<ul class="link-list">
+    <li>
+        <a href="@Url.Action("LogsAsExcel", "Tokens", new { area = "Reports" })"><span class="fa fa-file-excel-o fa-pad-right"></span>Export to Excel</a>
+    </li>
+</ul>
+
+@(Html.Kendo().Grid(Model)
+    .Init(ajax => ajax.Action("LogsAsJson", "Subscriptions"))
+    .Columns(columns =>
+    {
+        columns.Bound(i => i.Created).FormatDateTime().Title("Date/Time");
+        columns.Bound(i => i.UserFullName).ClientTemplate("<a href='/admin/users/details/#= UserId #'>#= UserFullName #</a>").Title("User");
+        columns.Bound(i => i.OriginalTokenAmount).Title("Original Amount");
+        columns.Bound(i => i.ModifiedTokenAmount).Title("Updated Amount");
+        columns.Bound(i => i.TokensAdded).ClientTemplate("#= TokensAdded # tokens").Title("Tokens Added");
+        columns.Bound(i => i.ModifiedByUserFullName).Title("Updated By");
+        columns.Bound(i => i.Usage).Title("Usage");
+    })
+)

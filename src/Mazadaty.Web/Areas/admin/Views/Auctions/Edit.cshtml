@@ -1,0 +1,107 @@
+@using Humanizer
+@using Mazadaty.Core.Formatting
+@using Mazadaty.Models.Enums
+@using Mazadaty.Web.Extensions
+@using OrangeJetpack.Base.Core.Formatting
+@using DateTimeFormatter = Mazadaty.Core.Formatting.DateTimeFormatter
+@model Mazadaty.Web.Areas.admin.Models.Auctions.AddEditViewModel
+@{
+    ViewBag.Title = "Edit Auction";
+}
+
+@section styles
+{
+    <link rel="stylesheet" href="/content/flags/flags.css" />
+}
+
+<ul class="link-list">
+    <li><a href="@Url.Action("Delete", "Auctions", new {id = @Model.Auction.AuctionId})">Delete Auction</a></li>
+</ul>
+
+@Html.Partial("_AddEditAuction")
+
+@if (Model.Bids.Any())
+{
+    <section>
+        <h2>Bids History</h2>
+        <table class="@Html.Css().GridTable">
+            <thead>
+                <tr>
+                    <th>Date\Time</th>
+                    <th>User</th>
+                    <th>Amount</th>
+                    <th>Time Left in Auction</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var bid in Model.Bids)
+                {
+                    <tr>
+                        <td>@DateTimeFormatter.ToLocalTime(bid.CreatedUtc, DateTimeFormatter.Format.Full)</td>
+                        <td>@NameFormatter.GetFullName(bid.User.FirstName, bid.User.LastName)</td>
+                        <td>@CurrencyFormatter.Format(bid.Amount)</td>
+                        <td>@TimeSpan.FromSeconds(bid.SecondsLeft).Humanize(4)</td>
+                        <td>
+                            @if (bid.Type == BidType.Auto)
+                            {
+                                <span class="label label-success">Auto Bid</span>
+                            }
+                            else
+                            {
+                                <span class="label label-default">Manual</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+}
+
+@section scripts {
+    <script>
+
+        var toggleBuyNow = function() {
+            var checkbox = $("#Auction_BuyNowEnabled");
+            var section = checkbox.parents("section");
+            var formGroups = section.find(".form-group-disableable");
+            var formControls = formGroups.find(".form-control");
+
+            if (checkbox.is(":checked")) {
+                formGroups.removeClass("form-group-disabled");
+                formControls.prop("disabled", false);
+            } else {
+                formGroups.addClass("form-group-disabled");
+                formControls.prop("disabled", true);
+            }
+        }
+
+        $(function() {
+            $("#Auction_BuyNowEnabled").on("change", toggleBuyNow);
+            toggleBuyNow();
+        });
+
+        jQuery.validator.addMethod("countryList",
+            function() {
+                var count = 0;
+                $("input[name='countryList']")
+                    .each(function() {
+                        if ($(this).is(":checked")) {
+                            ++count;
+                        }
+                    });
+                if (count == @Model.GccCountryList.Count()) {
+                    return false;
+            }
+                return true;
+        },
+        "You can select up to 5 countries only, because selecting all of the 6 countries means that this auction will be available for all users from all countries.");
+
+        jQuery.validator.addClassRules("country-list",
+        {
+            countryList: true
+        });
+
+    </script>
+}

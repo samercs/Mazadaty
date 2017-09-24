@@ -1,0 +1,135 @@
+@model Mazadaty.Web.Models.User.EditProfileModel
+
+@{
+    ViewBag.Title = Global.EditProfile;
+}
+
+@section styles
+{
+    <style>
+        .premium-unowned {
+            -ms-opacity: 0.75;
+            opacity: 0.75;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="@Html.Css().FormWide">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.User.ProfileStatus, Global.Privacy)
+                    @foreach (var item in Model.PrivacyList)
+                    {
+                        <div class="radio">
+                            <label>@Html.RadioButtonFor(i => i.User.ProfileStatus, item.Value) @Html.Raw(item.Text)</label>
+                        </div>
+                    }
+                </div>
+                <div class="form-group">
+                    <label>@Global.ProfileURL</label>
+                    @Html.TextBoxFor(i => i.User.ProfileUrl, new { @class = "form-control", @readonly = true })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(i => i.User.Gender, Global.Gender)
+                    @Html.RadioButtonList("User.Gender", Model.GenderList)
+                </div>
+
+                <div class="form-group">
+                    @Html.Label(Global.Birthdate)
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(i => i.BirthDay, Model.DayList, Global.Day, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(i => i.BirthMonth, Model.MonthList, Global.Month, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(i => i.BirthYear, Model.YearList, Global.Year, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>@Global.Avatar</label>
+                    <div class="row">
+                        @foreach (var item in Model.Avatars)
+                        {
+                            if (Model.User.AvatarUrl == item.Url)
+                            {
+                                <div class="col-md-3">
+                                    <div class="avatar-container">
+                                        <img data-id="@item.AvatarId" src="@item.Url" alt="@item.Url" class="img-thumbnail img-responsive normalImg selectedImg" />
+                                        @if (item.IsPremium)
+                                        {
+                                            <div class="avatar-premium">Premium</div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-3">
+                                    @if (item.IsPremium && !Model.UserAvatarIds.Contains(item.AvatarId))
+                                    {
+                                        <a href="@Url.Action("BuyPremiumAvatar", "User", new {avatarId = item.AvatarId})">
+                                            <div class="avatar-container premium-unowned">
+                                                <img data-id="@item.AvatarId" src="@item.Url" title="@Global.ClickToSelect" alt="@item.Url" class="img-thumbnail img-responsive normalImg" />
+                                                @if (item.IsPremium)
+                                                {
+                                                    <div class="avatar-premium">Premium</div>
+                                                }
+                                            </div>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <div class="avatar-container">
+                                            <img data-id="@item.AvatarId" src="@item.Url" title="@Global.ClickToSelect" alt="@item.Url" class="img-thumbnail img-responsive normalImg" />
+                                            @if (item.IsPremium)
+                                            {
+                                                <div class="avatar-premium">Premium</div>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            }
+
+                        }
+                        <input type="hidden" name="selectedAvatar" id="selectedAvatar" />
+                    </div>
+                </div>
+
+            </section>
+
+            <section class="form-buttons">
+                <button id="btnSubmit" type="submit" class="btn btn-default">@Global.Save</button>
+            </section>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/js/validate")
+
+    <script>
+        (function ($) {
+
+            $(".normalImg").click(function () {
+
+                var $this = $(this);
+                var id = $this.attr("data-id");
+                $("#selectedAvatar").val(id);
+                $(".normalImg").removeClass("selectedImg");
+                $this.addClass("selectedImg");
+            });
+
+        })(jQuery);
+
+    </script>
+}

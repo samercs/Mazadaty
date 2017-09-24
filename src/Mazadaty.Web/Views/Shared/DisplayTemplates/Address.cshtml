@@ -1,0 +1,51 @@
+@model Mazadaty.Models.Address
+
+@if (Model == null)
+{
+    <p class="form-control-static"></p>
+    return;
+}
+
+@if (Model.CountryCode.Equals("KW", StringComparison.OrdinalIgnoreCase))
+{
+    <p class="form-control-static">
+        @Model.CityArea<br />
+        @Global.Block @Model.AddressLine1<br />
+        @if (!string.IsNullOrWhiteSpace(Model.AddressLine2))
+        {
+            <text>@Global.Street @Model.AddressLine2</text><br />
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.AddressLine4))
+        {
+            <text>@Global.Jadda @Model.AddressLine4</text><br />
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.AddressLine3))
+        {
+            <text>@Global.Building @Model.AddressLine3</text><br />
+        }
+    </p>
+}
+else
+{
+    <p class="form-control-static">
+        @Model.AddressLine1<br />
+        @if (!string.IsNullOrWhiteSpace(Model.AddressLine2))
+        {
+            @Model.AddressLine2<br />
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.AddressLine3))
+        {
+            @Model.AddressLine3<br />
+        }
+        @Model.CityArea
+        @if (!string.IsNullOrWhiteSpace(Model.StateProvince))
+        {
+            @Model.StateProvince
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.PostalCode))
+        {
+            @Model.PostalCode
+        }
+        @Model.CountryCode
+    </p>
+}

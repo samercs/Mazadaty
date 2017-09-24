@@ -1,0 +1,38 @@
+@model Mazadaty.Web.Models.WishList.IndexViewModel
+
+@{
+    ViewBag.Title = Global.MyWishList;
+}
+
+<ul class="link-list">
+    <li>
+        @Html.ActionLink(Global.AddNewItem, "Add", "WishList")
+    </li>
+</ul>
+
+@if (!Model.WishList.Any())
+{
+    <div class="alert alert-warning">@Global.NoWishlistMessage</div>
+
+    return;
+}
+
+<table class="@Html.Css().GridTable">
+    <thead>
+        <tr>
+            <th>@Global.ProductOrItemName</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.WishList)
+        {
+            <tr>
+                <td>@item.NameEntered</td>
+                <td class="link-cell">
+                    @Html.ActionLink(Global.Remove, "Remove", "WishList", new { id = item.WishListId }, null)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

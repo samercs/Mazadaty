@@ -1,0 +1,78 @@
+@using Mazadaty.Models.Enums
+@using Mazadaty.Web.Extensions
+@using OrangeJetpack.Cms.Models
+@model Mazadaty.Web.Areas.Admin.Models.Pages.AddEditViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<ul class="link-list">
+    <li><a href="@Url.Action("Delete", "PageManagement")">Delete Page</a></li>
+</ul>
+
+<div class="@Html.Css().FormWide">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <section>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Page.Title, "Title").Required()
+                @Html.TextBoxFor(model => model.Page.Title, new {@class="form-control"})
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Page.Author, "Author")
+                @Html.TextBoxFor(model => model.Page.Author, new {@class = "form-control"})
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Page.PageTag, "URL")
+                <div class="input-group">
+                    <span class="input-group-addon">/pages/</span>
+                    @Html.TextBoxFor(model => model.Page.PageTag, new {@class = "form-control"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Page.Status, "Status")
+                <div class="radio">
+                    <label>
+                        @Html.RadioButtonFor(s => s.Page.Status, PageStatus.Pupblic)
+                        <strong class="text-success">Public</strong> <small>&mdash; Page is public and visible to all website users</small>
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        @Html.RadioButtonFor(s => s.Page.Status, PageStatus.Private)
+                        <strong class="text-danger">Private</strong> <small>&mdash; Page is unpublished and NOT visible to users</small>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Page.Content, "Content").Required()
+                @Html.TextAreaFor(model => model.Page.Content, new {@class= "form-control ckeditor" })
+            </div>
+
+        </section>
+
+        <section class="form-buttons">
+            <button type="submit" class="btn btn-default">Save</button>
+        </section>
+    }
+</div>
+
+@section scripts {
+    @Scripts.Render("~/js/slugify")
+    <script src="//cdn.ckeditor.com/4.5.2/standard/ckeditor.js"></script>
+    <script>
+            (function($, App) {
+                $(function () {
+                    $("#Page_Slug").slugify("input[Name='Title\\[0\\]\\.Value']", false);
+                    App.CkEditor.init();
+                });
+            })(jQuery, App);
+    </script>
+}

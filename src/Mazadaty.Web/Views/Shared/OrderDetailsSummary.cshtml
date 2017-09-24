@@ -1,0 +1,64 @@
+@using System.Globalization
+@using Mazadaty.Core.Formatting
+@using Mazadaty.Models.Enum
+@using OrangeJetpack.Base.Core.Formatting
+@model Mazadaty.Web.Models.Order.DetailsViewModel
+
+@helper FormatDateTime(DateTime? dt)
+{
+    if (!dt.HasValue)
+    {
+        return;
+    }
+    <time datetime="@dt.Value.ToString("s")">@dt.Value.AddHours(3).ToString("dddd, dd MMMM yyyy")</time>
+}
+
+<section class="form-section form-horizontal">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Order Details</h3>
+            <label class="col-sm-4 control-label">@Global.OrderId</label>
+            <div class="col-sm-8">
+                <p class="form-control-static">@Html.ActionLink(Model.Order.OrderId.ToString(CultureInfo.InvariantCulture), "Details", "Orders", new { Model.Order.OrderId }, null)</p>
+            </div>
+            <label class="col-sm-4 control-label">@Global.Placed</label>
+            <div class="col-sm-8">
+                <p class="form-control-static">@FormatDateTime(Model.Order.SubmittedUtc)</p>
+            </div>
+            <label class="col-sm-4 control-label">@Global.Status</label>
+            <div class="col-sm-8">
+                <p class="form-control-static">
+                    @EnumFormatter.Description(Model.Order.Status)
+                    
+                    @if (Model.Order.Status.Equals(OrderStatus.InProgress))
+                    {
+                        @Html.ActionLink(Global.ContinueToCheckout, "Shipping", "Orders", new { Model.Order.OrderId }, null)
+                    }
+
+                    @if (Model.Order.Status.Equals(OrderStatus.PendingPayment))
+                    {
+                        @Html.ActionLink(Global.ContinueToCheckout, "Summary", "Orders", new { Model.Order.OrderId }, null)
+                    }
+
+                </p>
+            </div>
+            <label class="col-sm-4 control-label">@Global.Total</label>
+            <div class="col-sm-8">
+                <p class="form-control-static">@CurrencyFormatter.Format(Model.Order.Total)</p>
+            </div>
+            <label class="col-sm-4 control-label">@Global.Payment</label>
+            <div class="col-sm-8">
+                <p class="form-control-static">@EnumFormatter.Description(Model.Order.PaymentMethod)</p>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            @if (Model.KnetTransaction != null)
+            {
+                @Html.DisplayFor(m => m.KnetTransaction)
+            }
+        </div>
+    </div>
+</section>
+
+@Html.Partial("OrderItemsTable", Model.Order)

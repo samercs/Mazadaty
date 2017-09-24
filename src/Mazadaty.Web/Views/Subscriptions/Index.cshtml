@@ -1,0 +1,53 @@
+@model IEnumerable<Mazadaty.Models.Subscription>
+
+@{
+    ViewBag.Title = Global.BuySubscription;
+}
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+
+            <div class="panel panel-default text-center">
+                <div class="panel-heading">@item.Name</div>
+                <div class="panel-body">
+
+                    <p>@F(Global.SubscriptionDurationDetailsLabel, new { item.Duration })</p>
+                    <p>@F(Global.SubscriptionPriceDetailsLabel, new { FormattedPrice = item.FormattedPrice() })</p>
+                    <p>
+                        @{
+                            MvcHtmlString quantity;
+
+                            if (!item.Quantity.HasValue)
+                            {
+                                quantity = MvcHtmlString.Create(Global.SubscriptionQuantityNoLimit);
+                            }
+                            else if (item.IsSoldOut)
+                            {
+                                quantity = MvcHtmlString.Create("<span class='label label-danger'>" + Global.SubscriptionQuantitySoldOut + "</span>");
+                            }
+                            else
+                            {
+                                quantity = F(Global.SubscriptionQuantityQuantityRemaining, new { item.Quantity });
+                            } 
+                        }
+
+                        @F(Global.SubscriptionQuantityDetailsLabel, new { quantity })
+                    </p>
+
+                    @if (item.IsSoldOut)
+                    {
+                        <a class="btn btn-default btn-block" disabled>@Global.BuyNow</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-default btn-block" href="@Url.Action("Buy", new {subscriptionId = item.SubscriptionId})">@Global.BuyNow</a>
+                    }
+
+                </div>
+            </div>
+
+        </div>
+    }
+</div>

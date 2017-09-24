@@ -1,0 +1,28 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+    @RenderSection("styles", false)
+}
+
+<div class="row">
+    <div class="col-lg-3 col-md-4 col-sm-5">
+        <ul class="menu-list">
+            <li><a href="@Url.Action("EditAccount","User")"><i class="fa fa-fw fa-pad-right fa-user"></i>@Global.EditAccount</a></li>
+            <li><a href="@Url.Action("EditProfile", "User")"><i class="fa fa-fw fa-pad-right fa-rocket"></i>@Global.EditProfile</a></li>
+            <li><a href="@Url.Action("Index", "Subscriptions")"><i class="fa fa-fw fa-pad-right fa-gift"></i>@Global.BuySubscription</a></li>
+            <li><a href="@Url.Action("ChangePassword", "User")"><i class="fa fa-fw fa-pad-right fa-lock"></i>@Global.ChangePassword</a></li>
+            <li><a href="@Url.Action("Notifications", "User")"><i class="fa fa-fw fa-pad-right fa-bullhorn"></i>@Global.Notifications</a></li>
+            <li><a href="@Url.Action("Trophies", "User")"><i class="fa fa-fw fa-pad-right fa-trophy"></i>@Global.Trophies</a></li>
+            <li><a href="@Url.Action("Index","WishList")"><i class="fa fa-fw fa-pad-right fa-star"></i>@Global.MyWishList</a></li>
+        </ul>
+    </div>
+    <div class="col-lg-9 col-md-8 col-sm-7">
+        @RenderBody()
+    </div>
+</div>
+
+@section scripts {
+    @RenderSection("scripts", false)
+}

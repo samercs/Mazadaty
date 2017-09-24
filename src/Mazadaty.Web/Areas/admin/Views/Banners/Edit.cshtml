@@ -1,0 +1,46 @@
+@using Mazadaty.Web.Extensions
+@model Mazadaty.Web.Areas.Admin.Models.Banners.AddViewModel
+@{
+    ViewBag.Title = "Edit Banner";
+}
+@section styles
+{
+    @Styles.Render("~/css/image-uploader")
+}
+<div class="row">
+    <div class="@Html.Css().FormWide">
+        <ul class="link-list">
+            <li>
+                <a href="@Url.Action("Delete", "Banners", new { bannerId = Model.Banner.BannerId})">Delete this banner</a>
+            </li>
+        </ul>
+        @using (Html.BeginForm())
+        {
+            @Html.Partial("_AddEditView", Model)
+        }
+    </div>
+</div>
+@section scripts
+{
+    @Scripts.Render("~/js/validate")
+    @Scripts.Render("~/js/image-uploader")
+    <script>
+        $(function (){
+            var bindEvents = function () {
+                var multiUploaders = $(".multipleUploadContainer .image-uploader");
+                $(multiUploaders.get(0)).fileUpload({
+                    itemId: "@Model.Banner.BannerId",
+                    parentId: "",
+                    imageUrl: "@Model.Banner.ImgSmUrl",
+                    uploadUrl: "/admin/banners/upload-image",
+                    deleteUrl: "/admin/banners/delete-image",
+                    onUploadSuccessCallback: function (file, response) {
+                    },
+                    onDeleteSuccessCallback: function () {
+                    }
+                });
+            };
+            bindEvents();
+        });
+    </script>
+}

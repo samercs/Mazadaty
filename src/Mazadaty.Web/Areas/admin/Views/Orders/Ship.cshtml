@@ -1,0 +1,54 @@
+@using Mazadaty.Web.Extensions
+@using OrangeJetpack.Base.Core.Formatting
+@model Mazadaty.Models.Order
+@{
+    ViewBag.Title = "Ship Order " + Model.OrderId;
+}
+
+<div class="row">
+    <div class="@Html.Css().FormNarrow">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+
+                <div class="form-group">
+                    <label>Order ID</label>
+                    <p class="form-control-static">@Model.OrderId</p>
+                </div>
+
+                <div class="form-group">
+                    <label>Customer</label>
+                    <p class="form-control-static">@Model.Address.Name</p>
+                </div>
+
+                <div class="form-group">
+                    <label>Address</label>
+                    @Html.DisplayFor(m => m.Address)
+                </div>
+                <div class="form-group hidden">
+                    <label>Send Notification</label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="SendNotification" name="SendNotification" value="true" />
+                        Send shipment notification email and/or SMS to customer.
+                    </label>
+                </div>
+
+            </section>
+
+            <section class="form-buttons">
+                <button type="submit" class="btn btn-default">Update Order to SHIPPED</button>
+            </section>
+        }
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        (function($) {
+
+            
+        })(jQuery);
+    </script>
+}

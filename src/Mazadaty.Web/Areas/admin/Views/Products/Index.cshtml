@@ -1,0 +1,42 @@
+@using Kendo.Mvc.UI
+@using Mazadaty.Web.Extensions
+@using OrangeJetpack.Base.Web
+@model Mazadaty.Web.Areas.admin.Models.Products.IndexViewModel
+
+@{
+    ViewBag.Title = "Products";
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "form-inline form-search" }))
+{
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            @Html.TextBoxFor(m => m.Search, new { @class = "form-control", placeholder = "Search products" })
+        </div>
+    </div> 
+}
+
+<ul class="link-list">
+    <li>@Html.ActionLink("Add Product", "Add", "Products")</li>
+</ul>
+
+@if (!Model.Products.Any())
+{
+    @Html.StatusMessage("No products match search criteria.", StatusMessageType.Warning)
+
+    return;
+}
+
+@(Html.Kendo().Grid(Model.Products)
+            .Init(ajax => ajax.Action("GetProducts", "Products", new { search = Model.Search }))
+    .Columns(columns =>
+    {
+        columns.Bound(i => i.Name);
+        columns.Bound(i => i.RetailPrice).Format("KD {0}");
+        columns.Bound(i => i.PurchasePrice).Format("KD {0}");
+        columns.Bound(i => i.Quantity);
+        columns.Bound(i => i.CreatedUtc).Format("{0:dd/MM/yyyy}").Title("Added");
+        columns.LinkColumn("Details", "products/edit/#=ProductId#");
+    })
+)

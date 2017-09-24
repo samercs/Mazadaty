@@ -1,0 +1,48 @@
+@using Mazadaty.Models
+@using Mazadaty.Web.Extensions
+@model IEnumerable<Category>
+
+@{
+    ViewBag.Title = "Categories";
+}
+
+@helper RenderCategory(Category category, int depth)
+{
+    var url = Url.Action("Index", "Categories", new { area = "", language = "en", slug = category.Slug }, "https");
+    
+    <tr>
+        <td>
+            <span style="padding-left: @(depth * 20)px;">@category.Name</span>
+        </td>
+        <td><a href="@url">@url</a></td>
+        <td class="link-cell">@Html.ActionLink("Edit", "Edit", "Categories", new { id = category.CategoryId }, null)</td>
+    </tr>
+
+    if (category.Children.Any())
+    {
+        foreach (var child in category.Children)
+        {
+            @RenderCategory(child, depth + 1)
+        }
+    }
+}
+
+<ul class="link-list">
+    <li>@Html.ActionLink("Add Category", "Add", "Categories")</li>
+</ul>
+
+<table class="@Html.Css().GridTable">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>URL</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            @RenderCategory(category, 0)
+        }
+    </tbody>
+</table>

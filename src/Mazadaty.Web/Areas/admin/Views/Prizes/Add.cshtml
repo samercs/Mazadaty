@@ -1,0 +1,36 @@
+@model Mazadaty.Web.Areas.Admin.Models.Prizes.AddViewModel
+@using Mazadaty.Models.Enums
+@{
+    ViewBag.Title = "Add New Prize";
+}
+@Html.Partial("_AddEditView", Model)
+
+@section scripts
+{
+    <script>
+        $(function () {
+            var $prizeType = $("input[name='Prize.PrizeType']");
+            var $productIdSection = $("#productIdSection");
+            var $prizeSubscriptionDays = $("#subscriptionDaysSection");
+
+            $productIdSection.hide();
+            $prizeSubscriptionDays.hide();
+
+            $prizeType.change(function () {
+                var prizeTypeValue = $("input[name='Prize.PrizeType']:checked").val();
+                var $this = $(this);
+                if (prizeTypeValue == "@((int)PrizeType.Product)") {
+                    $productIdSection.show();
+                    $prizeSubscriptionDays.hide();
+                } else if (prizeTypeValue == "@((int)PrizeType.Subscription)") {
+                    $productIdSection.hide();
+                    $prizeSubscriptionDays.show();
+                } else {
+                    $productIdSection.hide();
+                    $prizeSubscriptionDays.hide();
+                }
+
+            });
+        });
+    </script>
+}

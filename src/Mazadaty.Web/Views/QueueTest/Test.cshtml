@@ -1,0 +1,11 @@
+
+@{
+    ViewBag.Title = "Queue Test";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <button type="submit" class="btn btn-default">Post Queue Test</button>
+}

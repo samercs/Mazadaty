@@ -1,0 +1,13 @@
+@model IEnumerable<FileInfo>
+@{
+    ViewBag.Title = "Development Docs";
+}
+
+<ul>
+    @foreach (var file in Model)
+    {
+        <li>
+            @Html.ActionLink(Path.GetFileNameWithoutExtension(file.FullName), "Item", new {file = file.Name})
+        </li>
+    }
+</ul>

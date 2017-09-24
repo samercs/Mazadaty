@@ -1,0 +1,48 @@
+@using Mazadaty.Web.Extensions
+@model Mazadaty.Web.Areas.Admin.Models.Pages.AddEditViewModel
+
+@{
+    ViewBag.Title = "Add Page";
+}
+
+<div class="@Html.Css().FormNormal">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(model => Model.Page.Status)
+        @Html.HiddenFor(model => Model.Page.UserId)
+        
+
+        <section>
+            <div class="form-group">
+                @Html.LabelFor(model => Model.Page.Title, "Title").Required()
+                @Html.TextBoxFor(model => Model.Page.Title, new {@class="form-control"})
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => Model.Page.PageTag, "URL")
+                <div class="input-group">
+                    <span class="input-group-addon">/pages/</span>
+                    @Html.TextBoxFor(model => Model.Page.PageTag, new {@class = "form-control"})
+                </div>
+            </div>
+        </section>
+
+        <section class="form-buttons">
+            <button type="submit" class="btn btn-default">Continue</button>
+        </section>
+    }
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/js/slugify")
+
+    <script type="text/javascript">
+        (function ($) {
+             $("#Page_Slug").slugify("input[Name='Title\\[0\\]\\.Value']", false);
+        })(jQuery);
+
+    </script>
+}
+

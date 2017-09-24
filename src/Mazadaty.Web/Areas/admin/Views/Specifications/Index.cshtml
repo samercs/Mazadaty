@@ -1,0 +1,35 @@
+@using Mazadaty.Models
+@using Mazadaty.Web.Extensions
+@model IEnumerable<Specification>
+
+@{
+    ViewBag.Title = "Specifications";
+}
+
+<ul class="link-list">
+    <li>@Html.ActionLink("Add Specification", "Add", "Specifications")</li>
+</ul>
+
+<table class="@Html.Css().GridTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th></th>
+            <th></th>
+        </tr> 
+    </thead>
+    <tbody>
+        @foreach (var specification in Model)
+        {
+            <tr>
+                <td>@specification.Name</td>
+                <td class="link-cell">
+                    @Html.ActionLink("Edit","Edit","Specifications",new {id=@specification.SpecificationId},null)
+                </td>
+                <td class="link-cell">
+                    @Html.ActionLink("Delete", "Delete", "Specifications", new { id = @specification.SpecificationId }, null)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

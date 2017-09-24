@@ -1,0 +1,36 @@
+@using Mazadaty.Web.Extensions
+@model System.Collections.Generic.IEnumerable<Mazadaty.Models.Sponsor>
+
+@{
+    ViewBag.Title = "Sponsors";
+    
+}
+
+<ul class="link-list">
+    <li>@Html.ActionLink("Add Sponsor", "Add", "Sponsors")</li>
+</ul>
+
+<table class="@Html.Css().GridTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sponsor in Model)
+        {
+            <tr>
+                <td>@sponsor.Name</td>
+                <td class="link-cell">
+                    @Html.ActionLink("Edit", "Edit", "Sponsors", new { id = @sponsor.SponsorId }, null)
+                </td>
+                <td class="link-cell">
+                    @Html.ActionLink("Delete", "Delete", "Sponsors", new { id = @sponsor.SponsorId }, null)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

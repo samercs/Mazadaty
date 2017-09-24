@@ -1,0 +1,30 @@
+@using System.Web.Mvc.Html
+@model Mazadaty.Web.Models.Shared.AddressViewModel
+
+<div class="form-group">
+    @Html.LabelFor(m => m.AddressLine1, Global.Address).Required()
+    @Html.TextBoxFor(m => m.AddressLine1, new { @class = "form-control" })
+    @Html.TextBoxFor(m => m.AddressLine2, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.AddressLine1, Global.AddressRequiredErrorMessage)
+</div>
+<div class="row">
+    <div class="col-md-5">
+        <div class="form-group">
+            @Html.LabelFor(m => m.CityArea, Global.City).Required()
+            @Html.TextBoxFor(m => m.CityArea, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.CityArea, Global.CityRequiredErrorMessage)
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            @Html.LabelFor(m => m.StateProvince, Global.StateOrProvince)
+            @Html.TextBoxFor(m => m.StateProvince, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            @Html.LabelFor(m => m.PostalCode, Global.PostalCode)
+            @Html.TextBoxFor(m => m.PostalCode, new { @class = "form-control" })
+        </div>
+    </div>
+</div>

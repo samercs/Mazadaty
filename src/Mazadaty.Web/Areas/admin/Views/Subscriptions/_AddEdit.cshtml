@@ -1,0 +1,76 @@
+@using Mazadaty.Web.Extensions
+@model Mazadaty.Web.Areas.admin.Models.Subscription.AddViewModel
+<div class="row">
+    <div class="@Html.Css().FormWide">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Subscription.Name, "Name").Required("Required")
+                    @Html.EditorFor(i => i.Subscription.Name, Model)
+                    @Html.ValidationMessageFor(i => i.Subscription.Name, "Please enter a subscription name.")
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Subscription.Status, "Status").Required()
+                    @Html.DropDownListFor(i => i.Subscription.Status, Model.StatusList, new {@class = "form-control"})
+                    @Html.ValidationMessageFor(i => i.Subscription.Status, "Please select a status.")
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(i => i.Subscription.PriceCurrency, "Price (KD)")
+                            <div class="input-group">
+                                @Html.TextBoxFor(i => i.Subscription.PriceCurrency, new {@class = "form-control", @type = "number"})
+                                <span class="input-group-addon">KD</span> 
+                            </div>
+                            @Html.ValidationMessageFor(i => i.Subscription.PriceCurrency, "Please enter a price (KD or tokens).")
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(i => i.Subscription.PriceTokens, "Price (tokens)")
+                            <div class="input-group">
+                                @Html.TextBoxFor(i => i.Subscription.PriceTokens, new {@class = "form-control", @type = "number"})
+                                <span class="input-group-addon">tokens</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.LabelFor(i => i.Subscription.Duration, "Duration")
+                        <div class="input-group">
+                            @Html.TextBoxFor(i => i.Subscription.Duration, new { @class = "form-control", @type = "number" })
+                            <span class="input-group-addon">days</span>
+                        </div>
+                        @Html.ValidationMessageFor(i => i.Subscription.Duration, "Please enter a duration.")
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(i => i.Subscription.ExpirationUtc, "Expiration") <small>[optional]</small>
+                            @Html.EditorFor(i => i.Subscription.ExpirationUtc)
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Subscription.Quantity, "Quantity") <small>[optional]</small>
+                    @Html.TextBoxFor(i => i.Subscription.Quantity, new { @class = "form-control", @type = "number" })
+                </div>
+            </section>
+
+            <section class="form-buttons">
+                <button type="submit" class="btn btn-default">Save</button>
+            </section>
+
+        }
+    </div>
+</div>
+
+

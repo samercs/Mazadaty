@@ -1,0 +1,41 @@
+@using System.Web.Mvc.Html
+@model Mazadaty.Web.Models.Shared.AddressViewModel
+
+<div class="form-group">
+    @Html.LabelFor(m => m.CityArea, Global.Area).Required()
+    @Html.TextBoxFor(m => m.CityArea, new { @class = "form-control kuwait-area" })
+    @Html.ValidationMessageFor(m => m.CityArea, Global.AreaRequiredErrorMessage)
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.AddressLine1, Global.Block).Required()
+    @Html.TextBoxFor(m => m.AddressLine1, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.AddressLine1, Global.BlockRequiredErrorMessage)
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.AddressLine2, Global.Street).Required()
+    @Html.TextBoxFor(m => m.AddressLine2, new { @class = "form-control", data_val = "true", data_val_required = "*" })
+    @Html.ValidationMessageFor(m => m.AddressLine2, Global.StreetRequiredErrorMessage)
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.AddressLine4, Global.Jadda)
+    @Html.TextBoxFor(m => m.AddressLine4, new { @class = "form-control" })
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.AddressLine3, Global.Building).Required()
+    @Html.TextBoxFor(m => m.AddressLine3, new { @class = "form-control", data_val = "true", data_val_required = "*" })
+    @Html.ValidationMessageFor(m => m.AddressLine3, Global.BuildingRequiredErrorMessage)
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Floor, Global.Floor)
+    @Html.TextBoxFor(m => m.Floor, new { @class = "form-control" })
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.FlatNumber, Global.FlatNumber)
+    @Html.TextBoxFor(m => m.FlatNumber, new { @class = "form-control" })
+</div>

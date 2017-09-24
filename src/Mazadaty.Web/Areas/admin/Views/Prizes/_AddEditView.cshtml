@@ -1,0 +1,87 @@
+@using Mazadaty.Web.Extensions
+@model Mazadaty.Web.Areas.Admin.Models.Prizes.AddViewModel
+<div class="row">
+    <div class="@Html.Css().FormWide">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Prize.Title, "Title")
+                    @Html.EditorFor(i => i.Prize.Title)
+                    @Html.ValidationMessageFor(i => i.Prize.Title, "Please enter prize title")
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Prize.PrizeType, "Prize Type")
+                    <div class="row">
+                        @foreach (var item in Model.PrizeTypeList)
+                        {
+                            <div class="col-md-4">
+                                <div class="radio">
+                                    <label>
+                                        @if (item.Selected)
+                                        {
+                                            @Html.RadioButtonFor(i => i.Prize.PrizeType, item.Value, new { @checked = "checked" })
+                                            @Html.Raw(item.Text)
+                                        }
+                                        else
+                                        {
+                                            @Html.RadioButtonFor(i => i.Prize.PrizeType, item.Value)
+                                            @Html.Raw(item.Text)
+                                        }
+                                    </label>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    @Html.ValidationMessageFor(i => i.Prize.PrizeType, "Please select prize type")
+                </div>
+                <div class="form-group" id="productIdSection">
+                    @Html.LabelFor(i => i.Prize.ProductId, "Product")
+                    @Html.DropDownListFor(i => i.Prize.ProductId, Model.ProductList, new { @class = "form-control" })
+                </div>
+                <div class="form-group" id="subscriptionDaysSection">
+                    @Html.LabelFor(i => i.Prize.SubscriptionDays, "Subscription Days")
+                    @Html.TextBoxFor(i => i.Prize.SubscriptionDays, new { @class = "form-control" })
+                </div>
+
+                <div class="form-group">
+                    <label>Status</label>
+                    @foreach (var item in Model.StatusList)
+                    {
+                        <div class="radio">
+                            <label>
+                                @if (item.Selected)
+                                {
+                                    @Html.RadioButtonFor(i => i.Prize.Status, item.Value, new { @checked = "checked" })
+                                    @Html.Raw(item.Text)
+                                }
+                                else
+                                {
+                                    @Html.RadioButtonFor(i => i.Prize.Status, item.Value)
+                                    @Html.Raw(item.Text)
+                                }
+                            </label>
+                        </div>
+                    }
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Prize.Limit, "Limit")
+                    @Html.TextBoxFor(i => i.Prize.Limit, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Prize.Weight, "Weight")
+                    @Html.TextBoxFor(i => i.Prize.Weight, new { @class = "form-control", @type = "number" })
+                    @Html.ValidationMessageFor(i => i.Prize.Weight, "Prize weight must be more than 0 and less than 1")
+                </div>
+            </section>
+            <section class="form-buttons">
+                <button type="submit" class="btn btn-default">Save</button>
+            </section>
+
+        }
+    </div>
+</div>
+

@@ -1,0 +1,24 @@
+@using Mazadaty.Web.Extensions
+@model Mazadaty.Web.Areas.admin.Models.Sponsors.AddViewModel
+
+@{
+    ViewBag.Title = "Add new sponsor";
+
+}
+
+<div class="row">
+    <div class="@Html.Css().FormNarrow">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.Partial("_AddEdit")
+            
+        }
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/js/validate")
+}

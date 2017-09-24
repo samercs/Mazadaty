@@ -1,0 +1,53 @@
+@using System.Collections.Concurrent
+@using Mazadaty.Core.Formatting
+@using Mazadaty.Web.Extensions
+@model Mazadaty.Web.Areas.Reports.Models.Transactions.BuyNowViewModel
+
+@{
+    ViewBag.Title = "Buy Now Transactions";
+}
+
+<div class="row">
+    <div class="@Html.Css().FormWide">
+        @using (Html.BeginForm("BuyNow", "Transactions", FormMethod.Post, new { @class = "form-inline" }))
+        {
+            <div class="form-group">
+                @Html.EditorFor(i => i.DateRange, "DateRange")
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+    <div style="height: 60px;"></div>
+    @if (Model.BuyNowTransactions == null || !Model.BuyNowTransactions.Any())
+    {
+        <div class="alert alert-warning">There are no transactions match the selected dates, please pick another dates and try again.</div>
+        return;
+    }
+
+    <table class="@Html.Css().GridTable">
+        <thead>
+            <tr>
+                <th>Order Id</th>
+                <th>User</th>
+                <th>Item</th>
+                <th>Amount</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.BuyNowTransactions)
+            {
+                <tr>
+                    <td>@item.OrderId</td>
+                    <td>@item.UserName</td>
+                    <td>@item.ItemName</td>
+                    <td>@CurrencyFormatter.Format(item.Amount)</td>
+                    <td>@DateTimeFormatter.ToLocalTime(item.OrderDate, DateTimeFormatter.Format.Full)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

@@ -1,0 +1,19 @@
+@model Mazadaty.Web.Models.Shared.PhoneNumberViewModel
+
+@Html.HiddenFor(i => i.PhoneCountryCode)
+    <div class="form-group">
+        @Html.LabelFor(m => m.CountryCode, Global.Country).Required()
+        <div class="input-group">
+            <div class="input-group-addon"><i id="AddressEntryFlag" class="flag flag-@Model.CountryCode.ToLowerInvariant()"></i></div>
+            @Html.DropDownListFor(m => m.CountryCode, Model.CountriesList, Global.OptionLabel, new { @class = "form-control country-code" })
+        </div>
+        @Html.ValidationMessageFor(m => m.CountryCode, Global.CountryRequiredErrorMessage)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(i => i.PhoneLocalNumber, Global.PhoneNumber)
+        <div id="phoneNumber" class="input-group">
+            <div id="input-group-addon-country-code" class="input-group-addon">@Model.PhoneCountryCode</div>
+            @Html.TextBoxFor(i => i.PhoneLocalNumber, new { @class = "form-control", type = "number" })
+        </div>
+        @Html.ValidationMessageFor(m => m.PhoneLocalNumber, "Please enter a valid phone number.")
+    </div>

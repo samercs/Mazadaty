@@ -1,0 +1,37 @@
+@model List<Level>
+@using Mazadaty.Models
+@using Mazadaty.Web.Extensions
+@{
+    ViewBag.Title = "Levels (1 - 100)";
+}
+
+<table class="@Html.Css().GridTable">
+    <thead>
+        <tr>
+            <th>Level</th>
+            <th>XP Required<sup>1</sup></th>
+            <th>Tokens Awarded<sup>2</sup></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var level in Model)
+        {
+            <tr>
+                <td>@level.Name</td>
+                <td>@level.XpRequired</td>
+                <td>@level.TokensAwarded</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<ol>
+    <li>
+        Uses a linear rising level gap formula (<small><a href="http://gamedev.stackexchange.com/a/13639">http://gamedev.stackexchange.com/a/13639</a></small>):
+        <pre>50(level<sup>2</sup> - level)</pre>
+    </li>
+    <li>
+        Uses the token amount awarded at the previous level + 5 tokens more:
+        <pre>5 * level</pre>
+    </li>
+</ol>

@@ -1,0 +1,233 @@
+@using Newtonsoft.Json
+@model Mazadaty.Web.Models.Account.RegisterViewModel
+@{
+    ViewBag.Title = Global.Register;
+}
+
+@section styles {
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" href="/content/flags/flags.css" />
+    <style>
+        #username-validate {
+            display: none;
+            margin: 8px 0;
+            line-height: normal;
+        }
+
+        #username-checking {
+            font-style: italic;
+        }
+
+        .selectedImg {
+            border: solid 2px #000000;
+            padding: 5px;
+        }
+
+        .normalImg {
+            cursor: pointer;
+        }
+
+        .radio label:last-child {
+            margin-left: 100px;
+        }
+
+        #phoneNumber {
+            direction: ltr !important;
+        }
+
+        #addressCountryCode {
+            display: none;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="@Html.Css().FormNarrow">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(i => i.PhoneCountryCode)
+
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FirstName, Global.FirstName).Required("Required")
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", autocorrect = "off", spellcheck = "false", autofocus = "autofocus" })
+                    @Html.ValidationMessageFor(m => m.FirstName, Global.FirstNameRequiredErrorMessage)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.LastName, Global.LastName).Required()
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", autocorrect = "off", spellcheck = "false" })
+                    @Html.ValidationMessageFor(m => m.LastName, Global.LastNameRequiredErrorMessage)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Gender, Global.Gender)
+                    @Html.RadioButtonListHorizontally(Html.IdFor(i => i.Gender).ToString(), Model.GenderList)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.Birthdate, Global.Birthdate)
+                    @Html.EditorFor(i => i.Birthdate, "DateTime")
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UserName, Global.UserName).Required()
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-fw fa-user"></i></span>
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", autocorrect = "off", spellcheck = "false" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.UserName, Global.UserNameRequiredErrorMessage)
+                    <div id="username-validate" class="text-right">
+                        <div id="username-checking" class="text-warning">
+                            <i class="fa fa-spin fa-cog fa-lg"></i> @Global.UserNameValidateChecking
+                        </div>
+                        <div id="username-valid" class="text-success">
+                            <i class="fa fa-lg fa-check-square-o"></i> @Global.UserNameValidateIsValid
+                        </div>
+                        <div id="username-error" class="text-danger">
+                            <i class="fa fa-lg fa-frown-o"></i> @Global.UserNameValidateError
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, Global.Email).Required()
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-fw fa-envelope"></i></span>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Email, Global.EmailRequiredErrorMessage)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, Global.Password).Required()
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Password, Global.PasswordInvalidErrorMessage)
+                </div>
+
+                @Html.EditorFor(i => i.PhoneNumberViewModel, "PhoneNumber", Model.PhoneNumberViewModel)
+
+            </section>
+
+            @Html.EditorFor(m => m.Address)
+
+            <section>
+                <div class="form-group">
+                    <label>@Global.Avatar</label>
+                    <div class="row">
+                        @foreach (var item in Model.Avatars)
+                        {
+                            <div class="col-md-3" style="margin-bottom: 30px;">
+                                <img data-id="@item.AvatarId" src="@item.Url" title="@Global.ClickToSelect" alt="@item.Url" class="img-thumbnail img-responsive normalImg" />
+                            </div>
+                        }
+
+                        @Html.HiddenFor(i => i.SelectedAvatar, new { @class = "avatar" })
+                    </div>
+                    @Html.ValidationMessageFor(i => i.SelectedAvatar, Global.SelectAvatarErrorMessage)
+                </div>
+            </section>
+
+            <section>
+                <div class="form-group">
+                    <i class="fa fa-lg fa-check-square-o"></i>
+                    @Html.Raw(string.Format(Global.RegistrationAgreementAcknowledgement, Url.Action("TermsAndConditions", "Home", new { Language = Html.Language() })))
+                </div>
+            </section>
+
+            <section class="form-buttons">
+                <button type="submit" class="btn btn-default">@Global.Register</button>
+            </section>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/js/jquery-ui")
+    @Scripts.Render("~/js/validate")
+    <script src="~/scripts/address.js"></script>
+    <script>
+
+        (function($) {
+
+            $(function() {
+
+                $.datepicker._generateMonthYearHeader_original = $.datepicker._generateMonthYearHeader;
+
+                $.datepicker._generateMonthYearHeader = function(inst, dm, dy, mnd, mxd, s, mn, mns) {
+                    var header = $($.datepicker._generateMonthYearHeader_original(inst, dm, dy, mnd, mxd, s, mn, mns)),
+                        years = header.find('.ui-datepicker-year');
+
+                    // reverse the years
+                    years.html(Array.prototype.reverse.apply(years.children()));
+
+                    // return our new html
+                    return $('<div />').append(header).html();
+                }
+
+                $(".date-picker").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat: "dd/mm/yy",
+                    yearRange: "-80:+0"
+                });
+
+                bindEvents();
+                initAutocomplete();
+
+                $(".normalImg").click(function() {
+                    var $this = $(this);
+                    var id = $this.attr("data-id");
+                    $("#SelectedAvatar").val(id);
+                    $(".normalImg").removeClass("selectedImg");
+                    $this.addClass("selectedImg");
+                });
+            });
+
+            var bindEvents = function() {
+                $("#UserName").on("blur", validateUserName);
+            };
+
+            var validateUserName = function() {
+                var username = $(this).val();
+                if (username.length === 0) {
+                    return;
+                }
+
+                if ($(this).hasClass("input-validation-error")) {
+                    return;
+                }
+
+                $("#username-validate").show().children("div").hide();
+                $("#username-checking").show();
+
+                var url = "@Url.Action("ValidateUserName")";
+                var data = { username: username };
+
+                $.getJSON(url, data, function(d) {
+                    $("#username-checking").hide();
+                    if (d.IsValid) {
+                        $("#username-valid").show();
+                    } else {
+                        $("#username-error").show();
+                    }
+                });
+            };
+
+            var initAutocomplete = function() {
+                var areas =  @Html.Raw(JsonConvert.SerializeObject(Model.Address.KuwaitAreas));
+                $(".kuwait-area").autocomplete({
+                    source: areas
+                });
+            };
+
+            $.validator.addMethod("avatar", function(value) {
+                if (value === "" || parseInt(value) === 0) {
+                    return false;
+                }
+
+                return true;
+            });
+
+
+        })(jQuery);
+    </script>
+}

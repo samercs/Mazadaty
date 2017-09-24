@@ -1,0 +1,13 @@
+@model Mazadaty.Web.Areas.admin.Models.Sponsors.AddViewModel
+<section>
+    <div class="form-group">
+        @Html.LabelFor(i => i.Sponsor.Name, "Name")
+        @Html.EditorFor(i => i.Sponsor.Name, Model.Sponsor)
+        @Html.ValidationMessageFor(m => m.Sponsor.Name, "Please enter a sponsor name.")
+    </div>
+
+</section>
+
+<section class="form-buttons">
+    <button type="submit" class="btn btn-default">Save</button>
+</section>

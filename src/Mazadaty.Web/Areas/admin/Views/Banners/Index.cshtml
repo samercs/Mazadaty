@@ -1,0 +1,39 @@
+@using Kendo.Mvc.UI
+@using Mazadaty.Models
+@using Mazadaty.Web.Extensions
+@using OrangeJetpack.Base.Web
+
+@{
+    ViewBag.Title = "Banners";
+}
+
+<ul class="link-list">
+    <li>@Html.ActionLink("Add Banner", "Add", "Banners")</li>
+</ul>
+
+<div id="grid-no-items-warning" class="alert alert-warning hidden">There are currently no banners found.</div>
+
+@(Html.Kendo().Grid<Banner>()
+            .Init(ajax => ajax.Action("GetBanners", "Banners"))
+            .Events(events => events.DataBound("onDataBound"))
+    .Columns(columns =>
+    {
+        columns.Bound(i => i.ImgSmUrl).ImageCell().ClientTemplate("<img src='#=ImgSmUrl#' />").Title("Image");
+        columns.Bound(i => i.Title);
+        columns.Bound(i => i.SecondaryTitle);
+        columns.Bound(i => i.Url).Title("Url");
+        columns.LinkColumn("Edit", "banners/#=BannerId#");
+    })
+)
+@section scripts {
+    <script>
+
+        var onDataBound = function(e) {
+            if (e.sender._data.length === 0) {
+                e.sender.element.hide();
+                $("#grid-no-items-warning").removeClass('hidden');
+            }
+        }
+
+    </script>
+}

@@ -1,0 +1,15 @@
+@using System.Globalization
+@using Mazadaty.Web.Extensions
+@{
+    var otherLanguage = CultureInfo.GetCultureInfo(Html.Language() == "en" ? "ar" : "en");  
+}
+
+<li>
+    @using (Html.BeginForm("ChangeLanguage", "Home", new { area = "", language = Html.Language() }))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="returnUrl" value="@Request.Url" />
+        <input type="hidden" name="language" value="@otherLanguage.TwoLetterISOLanguageName" />
+        <button type="submit" class="btn btn-link" lang="@otherLanguage.TwoLetterISOLanguageName" title="@Global.ChangeLanguage">@otherLanguage.NativeName</button>
+    }
+</li>

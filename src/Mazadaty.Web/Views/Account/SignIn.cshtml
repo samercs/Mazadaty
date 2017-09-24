@@ -1,0 +1,56 @@
+@model Mazadaty.Web.Models.Account.SignInViewModel
+@{
+    ViewBag.Title = Global.SignIn;
+}
+
+<div class="row">
+    <div class="@Html.Css().FormNarrow">
+
+        @using (Html.BeginForm("SignIn", "Account", new { Model.ReturnUrl }, FormMethod.Post, new { id = "sign-in" }))
+        {
+            @Html.AntiForgeryToken()
+            <section>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UsernameOrEmail, new { @class = "sr-only" })
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-user fa-fw"></i></div>
+                        @Html.TextBoxFor(m => m.UsernameOrEmail, new { @class = "form-control", placeholder = Global.UserNameOrEmail, autofocus = "autofocus" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.UsernameOrEmail, Global.NameOrEmailRequiredErrorMessage)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "sr-only" })
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = Global.Password })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Password, Global.PasswordRequiredErrorMessage)
+
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label class="checkbox-inline">
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                @Global.RememberMe
+                            </label>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="text-right"><small>@Html.ActionLink(Global.NeedPasswordQuestion, "NeedPassword")</small></div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+            <section class="form-buttons">
+                <button type="submit" class="btn btn-default">@Global.Continue</button>
+            </section>
+            
+            <p class="text-larger text-center">@Global.DontHaveAccountQuestion <a href="@Url.Action("Register", new { language = Html.Language() })">@Html.Raw(Global.RegisterLinkText)</a></p>
+        }
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("/js/validate")
+}

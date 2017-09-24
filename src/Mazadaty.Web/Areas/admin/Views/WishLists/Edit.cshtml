@@ -1,0 +1,37 @@
+@using Mazadaty.Web.Extensions
+@model Mazadaty.Web.Areas.admin.Models.WishList.EditViewModel
+
+@{
+    ViewBag.Title = "Edit Wishlist";
+}
+
+<div class="row">
+    <div class="@Html.Css().FormWide">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <section>
+                <div class="form-group">
+                    @Html.Label("User's Wishlist Item")
+                    <div>
+                        <code>
+                            @string.Join(",", Model.WishLists.Select(i => i.NameEntered))
+                        </code>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(i => i.NameNormalized, "Name Normalized")
+                    @Html.TextBoxFor(m => m.NameNormalized, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(i => i.NameNormalized)
+                </div>
+
+            </section>
+
+            <section class="form-buttons">
+                <button type="submit" class="btn btn-default">Save</button>
+            </section>
+        }
+    </div>
+</div>
